@@ -110,3 +110,17 @@ for _html in ROOT.rglob('*.html'):
         _letters=''.join(ch for ch in _t if ch.isalpha())
         if _letters and _letters.upper()==_letters and _t.endswith('.'):
             raise SystemExit(f'{_html.relative_to(ROOT)} uppercase heading label ends with a period: {_t}')
+
+
+# Greek translation consistency invariants added 2026-09-25.
+_home_en=BeautifulSoup((ROOT/'index.html').read_text(encoding='utf-8',errors='replace'),'html.parser')
+_home_gr=BeautifulSoup((ROOT/'el/index.html').read_text(encoding='utf-8',errors='replace'),'html.parser')
+_en_intro=_home_en.select_one('.home-decision-section .sales-section-intro')
+_gr_intro=_home_gr.select_one('.home-decision-section .sales-section-intro')
+if not _en_intro or not _gr_intro or _gr_intro.get('data-en') != _en_intro.get('data-en') or _gr_intro.get('data-gr') != _en_intro.get('data-gr'):
+    raise SystemExit('Greek homepage decision intro is out of sync with the English source')
+for _rel in ('el/index.html','el/Pages/learn-about-the-tools.html'):
+    _raw=(ROOT/_rel).read_text(encoding='utf-8',errors='replace')
+    for _bad in ('Χρησιμοποίησε την πληρωμένη διαδρομή', ':χρονολόγιο', 'Μετά το αρχική ρύθμιση', 'να κάνει δημοσιεύσει', 'το καταγεγραμμένα evidence'):
+        if _bad in _raw:
+            raise SystemExit(f'{_rel} contains stale/broken Greek translation: {_bad}')
