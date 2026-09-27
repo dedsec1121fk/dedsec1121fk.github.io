@@ -1,6 +1,0 @@
-data,method,last_backup,restore_tested
-contacts,account-sync,2026-07-20,yes
-photos,cloud-copy,2026-07-26,no
-documents,usb-copy,2026-07-25,yes
-authenticator,export,never,no
-messages,vendor-backup,2026-06-01,no

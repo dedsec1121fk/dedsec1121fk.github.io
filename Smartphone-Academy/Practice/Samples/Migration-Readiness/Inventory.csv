@@ -1,6 +1,0 @@
-item,location,migration_method,recovery_dependency
-contacts,account,cloud sync,email access
-photos,internal storage,USB copy,none
-authenticator,app,secure export,recovery codes
-eSIM,carrier,carrier transfer,identity verification
-termux-home,private app data,tar archive,storage access

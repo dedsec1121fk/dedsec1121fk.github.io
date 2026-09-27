@@ -1,5 +1,0 @@
-time,event,app,free_ram_mb,free_storage_mb,battery_policy
-10:00,launch,chat,1400,5200,optimized
-10:05,background_killed,chat,320,5150,restricted
-10:07,crash,editor,850,120,unrestricted
-10:10,anr,maps,600,110,optimized

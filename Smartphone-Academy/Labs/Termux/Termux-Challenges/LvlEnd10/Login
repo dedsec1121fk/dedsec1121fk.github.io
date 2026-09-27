@@ -1,5 +1,0 @@
-#!/usr/bin/env python
-from getpass import getpass
-previous='761496791b8e5990363c1c5107b6a7f44a1340d67b038906af5b08b5bae6d1e3'
-final='123f98787e46f4723557c50e15c68ca3372523285541e71846f03f8c3be3efefs'
-print(final if getpass('Enter previous flag to login: ').strip()==previous else 'Wrong flag!')

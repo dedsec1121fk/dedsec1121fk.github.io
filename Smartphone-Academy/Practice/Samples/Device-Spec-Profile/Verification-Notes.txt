@@ -1,1 +1,0 @@
-Exact SoC model missing. Storage standard missing. Regional bands missing. USB data speed missing. Support years not stated.

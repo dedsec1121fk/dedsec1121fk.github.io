@@ -1,7 +1,0 @@
-file,type,value,version,signer
-base.apk,base,all,8.1,CERT-A
-config.arm64.apk,abi,arm64-v8a,8.1,CERT-A
-config.x86.apk,abi,x86,8.1,CERT-A
-config.xxhdpi.apk,density,xxhdpi,8.1,CERT-A
-config.el.apk,language,el,8.1,CERT-A
-config.en-old.apk,language,en,7.9,CERT-A

@@ -6,9 +6,7 @@
    ============================================================================ */
 document.addEventListener('DOMContentLoaded', () => {
     // --- GLOBAL STATE ---
-    const academyGreekPath = /\/el\/Smartphone-Academy(?:\/|$)/i.test(window.location.pathname);
-    const academyHomePath = /(?:\/Smartphone-Academy|\/el\/Smartphone-Academy)\/(?:home|index)\.html$/i.test(window.location.pathname);
-    const pageLanguage = (/\/el(?:\/|$)/.test(window.location.pathname) || academyGreekPath) ? 'gr' : 'en';
+    const pageLanguage = /\/el(?:\/|$)/.test(window.location.pathname) ? 'gr' : 'en';
     let currentLanguage = pageLanguage;
 
     // --- NAV WORD STACK + MENU OFFSET (keeps navbar compact so logo stays visible) ---
@@ -104,28 +102,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const getLanguagePath = (pathname, targetLanguage) => {
         let relative = stripSiteBase(pathname);
-
         if (targetLanguage === 'gr') {
-            if (/^\/el(?:\/|$)/i.test(relative)) return addSiteBase(relative);
-            if (/^\/Smartphone-Academy\/pages\//i.test(relative)) {
-                relative = relative.replace(/^\/Smartphone-Academy\/pages\//i, '/el/Smartphone-Academy/Pages/');
-            } else if (/^\/Smartphone-Academy\//i.test(relative)) {
-                relative = relative.replace(/^\/Smartphone-Academy\//i, '/el/Smartphone-Academy/');
-            } else if (relative === '/') {
-                relative = '/el/';
-            } else {
-                relative = `/el${relative}`;
-            }
-        } else {
-            if (/^\/el\/Smartphone-Academy\/pages\//i.test(relative)) {
-                relative = relative.replace(/^\/el\/Smartphone-Academy\/pages\//i, '/Smartphone-Academy/Pages/');
-            } else if (/^\/el\/Smartphone-Academy\//i.test(relative)) {
-                relative = relative.replace(/^\/el\/Smartphone-Academy\//i, '/Smartphone-Academy/');
-            } else if (/^\/el(?:\/|$)/i.test(relative)) {
-                relative = relative.replace(/^\/el(?=\/|$)/i, '') || '/';
-            }
+            if (!/^\/el(?:\/|$)/i.test(relative)) relative = relative === '/' ? '/el/' : `/el${relative}`;
+        } else if (/^\/el(?:\/|$)/i.test(relative)) {
+            relative = relative.replace(/^\/el(?=\/|$)/i, '') || '/';
         }
-
         return addSiteBase(relative);
     };
 

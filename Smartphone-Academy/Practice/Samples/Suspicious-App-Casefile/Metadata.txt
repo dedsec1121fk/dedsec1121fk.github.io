@@ -1,4 +1,0 @@
-package=com.demo.cleaner
-version=1.0
-source=unverified
-permissions=accessibility,overlay,notifications

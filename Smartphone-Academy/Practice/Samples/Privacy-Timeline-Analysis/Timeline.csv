@@ -1,5 +1,0 @@
-time,app,resource,foreground,user_action
-09:00,Maps,location,true,navigation started
-09:12,Recorder,microphone,false,none
-09:15,Camera,camera,true,photo taken
-11:30,Weather,location,false,widget refresh

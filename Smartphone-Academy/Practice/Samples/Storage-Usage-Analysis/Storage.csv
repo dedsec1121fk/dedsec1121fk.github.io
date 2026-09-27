@@ -1,6 +1,0 @@
-category,item,size_mb,backed_up,recoverable
-cache,video-app,420,yes,yes
-downloads,old-installers,810,no,yes
-photos,camera,5320,yes,no
-offline,maps,1600,yes,yes
-app-data,messenger,2400,no,unknown

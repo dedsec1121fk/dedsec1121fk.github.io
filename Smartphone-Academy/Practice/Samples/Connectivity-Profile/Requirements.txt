@@ -1,5 +1,0 @@
-Carrier: bands 3,20,28,78
-Earbuds: Bluetooth LE Audio preferred
-Transit: NFC required
-Navigation: Galileo preferred
-Hotel: Wi-Fi 6 optional

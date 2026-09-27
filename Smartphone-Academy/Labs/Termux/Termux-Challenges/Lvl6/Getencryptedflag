@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-printf '%s\n' 'Your flag is : MTIzNDU2Nzg5MTAK'
-printf '%s\n' 'Hint: base64'

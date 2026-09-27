@@ -97,10 +97,6 @@ def counterpart(relative: Path, root: Path) -> Path | None:
     elif parts and parts[0] == "el":
         tail = list(parts[1:])
         candidate = Path(*tail)
-    elif parts[:2] == ("Smartphone-Academy", "Pages"):
-        candidate = Path("el", "Smartphone-Academy", "Pages", *parts[2:])
-    elif parts and parts[0] == "Smartphone-Academy":
-        candidate = Path("el", *parts)
     elif parts and parts[0] in {"Pages", "Assistance"}:
         candidate = Path("el", *parts)
     if candidate and (root / candidate).exists():
@@ -436,13 +432,10 @@ def generate_search_index(root: Path) -> None:
             continue
         if path.name in excluded_names:
             continue
-        if rel == "Smartphone-Academy/index.html":
-            continue
         if not (
             rel == "index.html"
             or rel.startswith("Pages/")
             or rel.startswith("Assistance/")
-            or rel.startswith("Smartphone-Academy/")
         ):
             continue
 

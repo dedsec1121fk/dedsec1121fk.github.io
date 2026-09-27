@@ -1,1 +1,0 @@
-User needs a durable Android phone for Termux, secure banking, offline notes, photos, Bluetooth earbuds and travel. A manually downloaded notes APK fails to update, battery drain increased, and the existing charger is 25 W USB-C. Produce a complete support casefile using the supplied evidence.

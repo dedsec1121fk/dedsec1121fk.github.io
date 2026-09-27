@@ -1,8 +1,0 @@
-Model: Phone Z Global
-SoC: Octa-Core X
-RAM: 8 GB
-Storage: 256 GB fast
-Display: 6.6 inch 120 Hz
-5G: supported
-USB: Type-C
-Updates: long support

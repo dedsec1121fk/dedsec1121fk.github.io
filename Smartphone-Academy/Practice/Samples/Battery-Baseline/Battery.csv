@@ -1,6 +1,0 @@
-time,battery_pct,screen_min,signal_dbm,wifi,top_app,temp_c
-08:00,100,0,-82,on,none,27
-10:00,89,45,-88,on,browser,31
-14:00,65,70,-112,off,maps,38
-20:00,38,95,-95,on,video,36
-23:00,31,10,-90,on,messenger,30

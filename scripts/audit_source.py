@@ -4,22 +4,10 @@ from pathlib import Path
 from bs4 import BeautifulSoup
 ROOT=Path(__file__).resolve().parents[1]
 issues=[]
-cat=json.loads((ROOT/'Smartphone-Academy/Smartphone-Academy-Catalog.json').read_text(encoding='utf-8'))
-pcat=json.loads((ROOT/'Smartphone-Academy/Practice/Catalog.json').read_text(encoding='utf-8'))
-if len(cat['lessons'])!=235:issues.append(f"catalog lessons={len(cat['lessons'])}")
-if len(pcat['labs'])!=123:issues.append(f"practical labs={len(pcat['labs'])}")
-if sum(x.get('hours',0) for x in pcat['labs'])!=382:issues.append('practical hours mismatch')
 for rel in ('Pages/about-founder.html','el/Pages/about-founder.html'):
  s=BeautifulSoup((ROOT/rel).read_text(encoding='utf-8'),'html.parser');sec=s.find(id='keep-android-open');vision=s.find(id='project-vision')
  if not sec or not vision or not sec.find('a',href='https://keepandroidopen.org'):issues.append(rel+' missing compact Founder/Vision integration')
-for base in (ROOT/'Smartphone-Academy',ROOT/'el/Smartphone-Academy'):
- for page in base.rglob('*.html'):
-  s=BeautifulSoup(page.read_text(encoding='utf-8',errors='replace'),'html.parser');f=s.find('footer',class_='main-footer')
-  if not f:issues.append(str(page.relative_to(ROOT))+' missing footer');continue
-  text=f.get_text(' ',strip=True)
-  if 'Smartphone Academy Home' in text or 'Αρχική Ακαδημίας Smartphone' in text:issues.append(str(page.relative_to(ROOT))+' footer not global')
-
-# Main-deployment SEO, Assistance, and Academy checks.
+# Main-deployment SEO and Assistance checks.
 import re
 for page in ROOT.rglob('*.html'):
  s=BeautifulSoup(page.read_text(encoding='utf-8',errors='replace'),'html.parser')
@@ -70,10 +58,7 @@ if issues:
 print('Source audit passed.')
 
 
-# Sponsor-route and Academy canonicalization invariants.
-for _removed in ('Smartphone-Academy/Home.html','el/Smartphone-Academy/Home.html'):
-    if (ROOT/_removed).exists():
-        raise SystemExit(f'Removed duplicate Academy route still exists: {_removed}')
+# Sponsor-route canonicalization invariants.
 for _removed in ('Pages/sponsors.html','el/Pages/sponsors.html'):
     if (ROOT/_removed).exists():
         raise SystemExit(f'Removed sponsor page still exists: {_removed}')
@@ -82,10 +67,8 @@ for _rel in ('Pages/learn-about-the-tools.html','el/Pages/learn-about-the-tools.
     for _required in ('$25', 'sponsor-ebooks', 'ebook-data-analytics', 'ebook-faith', 'ebook-termux', 'ebook-website', 'ebook-ai-prompts'):
         if _required not in _raw:
             raise SystemExit(f'{_rel} missing embedded $25 sponsor-library marker: {_required}')
-for _html in ROOT.rglob('*.html'):
-    _raw=_html.read_text(encoding='utf-8',errors='ignore')
-    if '/Smartphone-Academy/Home.html' in _raw:
-        raise SystemExit(f'{_html.relative_to(ROOT)} references the removed duplicate Academy route')
+
+
 
 # Content CTA centering invariant added 2026-08-07n.
 CENTERING_MARKER = 'GLOBAL CONTENT CTA CENTERING LOCK 20260807n'

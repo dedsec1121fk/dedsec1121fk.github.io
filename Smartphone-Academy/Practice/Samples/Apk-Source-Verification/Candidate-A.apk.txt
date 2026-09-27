@@ -1,4 +1,0 @@
-TRAINING APK PLACEHOLDER
-package=com.example.notes
-version=4.2.1
-signer=TRAINING-CERT-A

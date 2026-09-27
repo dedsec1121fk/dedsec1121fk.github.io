@@ -85,17 +85,6 @@ def main() -> int:
             if not {"noopener", "noreferrer"}.issubset(rels):
                 issues.append((rel, f"unsafe target blank: {anchor.get('href')}"))
 
-        is_academy = rel.startswith("Smartphone-Academy/") or rel.startswith("el/Smartphone-Academy/") or rel in {"Pages/Smartphone-Academy.html", "el/Pages/Smartphone-Academy.html"}
-        if is_academy:
-            footer_text = soup.find("footer", class_="main-footer").get_text(" ", strip=True) if soup.find("footer", class_="main-footer") else ""
-            required = ["DedSec Project", "dedsec1121fk", "Google"]
-            if not all(value in footer_text for value in required):
-                issues.append((rel, "Academy footer is not in full DedSec format"))
-            hrefs = {a.get("href") for a in soup.select("footer a")}
-            for required_url in ["https://github.com/dedsec1121fk/DedSec", "https://ded-sec.online", "https://github.com/sal-scar/DedSec"]:
-                if required_url not in hrefs:
-                    issues.append((rel, f"Academy footer missing {required_url}"))
-
         for tag_name, attr in {"a": "href", "link": "href", "script": "src", "img": "src", "source": "src", "iframe": "src", "video": "poster", "form": "action"}.items():
             for tag in soup.find_all(tag_name):
                 value = tag.get(attr)

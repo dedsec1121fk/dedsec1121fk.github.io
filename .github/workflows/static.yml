@@ -47,7 +47,7 @@ jobs:
           done
 
       - name: Check Python syntax
-        run: python3 -m compileall -q _site/Smartphone-Academy
+        run: python3 -m compileall -q scripts
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

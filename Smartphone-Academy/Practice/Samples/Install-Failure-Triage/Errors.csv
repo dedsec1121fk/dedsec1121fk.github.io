@@ -1,6 +1,0 @@
-case,message,context
-1,App not installed as package conflicts with an existing package,update from unknown source
-2,There was a problem parsing the package,APK truncated during download
-3,App not installed,only 120 MB free
-4,Package appears to be invalid,minSdk 35 device API 33
-5,Version downgrade is not allowed,installed 12 candidate 10

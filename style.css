@@ -8498,7 +8498,7 @@ html body :is(
 }
 
 /* ========================================================================== 
-   DedSec Smartphone Academy — native DedSec Project presentation
+   Legacy learning styles — native DedSec Project presentation
    Uses the same variables, typography, cards, navigation and themes as the site.
    ========================================================================== */
 .academy-page{width:min(1320px,100%);margin-inline:auto}
@@ -8542,7 +8542,7 @@ html body :is(
 @media(max-width:1000px){.academy-module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.academy-lesson-layout{grid-template-columns:1fr}.academy-lesson-aside{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:700px){.academy-main-header,.academy-lesson-header{padding-inline:16px}.academy-hero-actions .btn{width:100%}.academy-module-grid,.academy-command-list,.academy-lab-brief,.academy-quality-grid,.academy-navigation-grid,.academy-lesson-aside{grid-template-columns:1fr}.academy-section-heading{align-items:stretch}.academy-filter{width:100%}.academy-safety-banner{align-items:stretch}.academy-safety-banner .academy-hero-actions{width:100%}.academy-breadcrumbs{font-size:.68rem}.academy-meta-row{align-items:stretch}.academy-meta-row span{flex:1 1 100%;justify-content:center}}
 
-/* === Smartphone Academy v67: sharp DedSec geometry ===
+/* === Legacy learning styles v67: sharp DedSec geometry ===
    Every Academy surface uses true square corners. This intentionally overrides
    inherited card, pill, button, input, code-block and icon rounding. */
 html body.academy-dedsec-page,
@@ -8621,7 +8621,7 @@ html body.academy-dedsec-page .academy-module-grid {
   }
 }
 
-/* === Smartphone Academy v68: compact three-card overview grid ===
+/* === Legacy learning styles v68: compact three-card overview grid ===
    The public Academy overview keeps three equally sized cards on every row,
    including narrow phone layouts, without changing the larger curriculum grid. */
 html body.academy-dedsec-page .academy-three-card-grid {
@@ -8700,7 +8700,7 @@ html body .main-footer {
     margin-right: auto !important;
 }
 
-/* === Smartphone Academy practical curriculum buttons — repaired v70 === */
+/* === Legacy practical curriculum buttons — repaired v70 === */
 .curriculum-list {
   display: grid;
   gap: 22px;
@@ -9599,7 +9599,7 @@ html body.academy-dedsec-page pre {
 }
 
 
-/* === Smartphone Academy width reflow v85 === */
+/* === Legacy learning width reflow v85 === */
 html body.academy-dedsec-page .academy-three-card-grid {
   width: 100% !important;
   max-width: none !important;

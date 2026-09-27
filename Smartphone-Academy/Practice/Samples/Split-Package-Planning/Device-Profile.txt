@@ -1,4 +1,0 @@
-api=35
-abi=arm64-v8a
-density=xxhdpi
-language=en,el

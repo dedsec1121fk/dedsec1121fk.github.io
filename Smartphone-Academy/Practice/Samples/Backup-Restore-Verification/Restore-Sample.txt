@@ -1,2 +1,0 @@
-Important training document
-Line 2: restore integrity check

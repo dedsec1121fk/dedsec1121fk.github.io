@@ -1,5 +1,0 @@
-#!/usr/bin/env python
-from getpass import getpass
-secret='59429f0c9bf2abf462b6ebff4109c603a9ae82eecfba721f3dfd8ac0765d73c0'
-flag='E2mwHInF9yI5KZUhu4qHUg5/3xFoDGKomMWo4DJDYsk='
-print(flag if getpass('Enter the previous flag: ').strip()==secret else 'Wrong flag!')

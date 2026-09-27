@@ -1,5 +1,0 @@
-permission,type,requested
-CAMERA,runtime,yes
-LOCATION,runtime,yes
-READ_CONTACTS,runtime,yes
-DRAW_OVER_OTHER_APPS,special,yes

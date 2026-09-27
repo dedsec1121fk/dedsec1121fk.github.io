@@ -1,29 +1,8 @@
-# DedSec Website Final Integration Audit
+# DedSec Website Audit
 
-## Shared page parity
-
-- Smartphone Academy pages use the same main navigation, theme/language controls, footer links, analytics notice, privacy/contact/Sponsors paths, icons, typography, and square-corner visual system as the rest of the DedSec Project website.
-- Every button has an explicit non-submit type where appropriate.
-- External links that open a new tab include `noopener` and `noreferrer`.
-- Every page includes a title, description, viewport, language, canonical URL, robots directive, main navigation, and main footer in the generated deployment.
-
-## Repository-aware deployment
-
-The build script supports exactly these repositories:
-
-- `dedsec1121fk/dedsec1121fk.github.io`
-- `sal-scar/ded-sec`
-- `dedsec1121fk/test`
-
-It selects the correct domain, URL base, CNAME, sitemap, robots policy, canonical URLs, social URLs, language alternates, manifest paths, and internal links from `GITHUB_REPOSITORY`.
-
-## Automated checks
-
-The workflow builds and validates all three deployment modes. Validation covers HTML structure, local references, language metadata, canonical host, robots policy, Academy footer parity, JSON files, JavaScript syntax, and Python syntax.
-
-Current source audit:
-
-- 648 HTML pages
-- 475 Smartphone Academy/public Academy pages
-- 26,532 deployment references checked in the main target build
-- zero broken internal references in main, backup, and test builds
+- Main navigation, theme/language controls, footer links, analytics notice, privacy/contact paths, icons, typography, and square-corner visual system are shared across the current site.
+- Installation documentation supports Termux on Android, Ubuntu, Kali Linux, and Linux Mint.
+- Assistance includes dedicated Linux setup, path, repair, and update guides.
+- The tool catalog documents platform support and per-system save paths for all 87 actual tool/script entries.
+- Credits include `Help By: zyxen.gr Systems Engineered` directly after the creator credit.
+- Removed legacy learning routes are no longer published or indexed.

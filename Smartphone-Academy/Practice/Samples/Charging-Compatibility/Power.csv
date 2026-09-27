@@ -1,7 +1,0 @@
-device_or_accessory,usb_pd,pps,max_voltage,max_current,cable_current,data_gbps
-Phone,yes,yes,11,3,n/a,n/a
-Charger-A,yes,no,9,3,n/a,n/a
-Charger-B,yes,yes,11,4,n/a,n/a
-Cable-1,n/a,n/a,20,3,3,0.48
-Cable-2,n/a,n/a,20,5,5,10
-PowerBank,yes,no,9,2.22,n/a,n/a

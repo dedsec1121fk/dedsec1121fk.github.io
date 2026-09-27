@@ -1,6 +1,0 @@
-minute,temp_c,cpu_mhz,fps,charging,workload
-0,29,2400,60,no,idle
-5,38,2400,59,no,game
-10,43,2100,52,no,game
-15,46,1600,39,yes,game
-20,41,1900,48,no,game
