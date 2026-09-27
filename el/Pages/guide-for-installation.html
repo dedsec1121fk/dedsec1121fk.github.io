@@ -118,6 +118,7 @@
 <li data-en="Supported system: Termux on Android, Ubuntu, Kali Linux, or Linux Mint." data-gr="Υποστηριζόμενο σύστημα: Termux σε Android, Ubuntu, Kali Linux ή Linux Mint.">Υποστηριζόμενο σύστημα: Termux σε Android, Ubuntu, Kali Linux ή Linux Mint.</li>
 <li data-en="Storage: Minimum 6GB free space for the DedSec Project installation." data-gr="Αποθηκευτικός Χώρος: Ελάχιστο 6GB ελεύθερος χώρος για την εγκατάσταση του DedSec Project.">Αποθηκευτικός Χώρος: Ελάχιστο 6GB ελεύθερος χώρος για την εγκατάσταση του DedSec Project.</li>
 <li data-en="RAM: Minimum 2GB." data-gr="RAM: Ελάχιστο 2GB.">RAM: Ελάχιστο 2GB.</li>
+<li data-en="Internet: Required for the first installation and for updates." data-gr="Internet: Απαιτείται για την πρώτη εγκατάσταση και για ενημερώσεις.">Internet: Required for the first installation and for updates.</li>
 </ul>
 <div class="note note-warning">
 <p data-en="Storage warning: The 6GB requirement covers the DedSec Project installation itself. Scripts that capture or save additional content—such as photos, screenshots, videos, recordings, logs, downloads, or other generated files—can require extra storage beyond the 6GB project requirement." data-gr="Προειδοποίηση αποθηκευτικού χώρου: Η απαίτηση των 6GB αφορά την ίδια την εγκατάσταση του DedSec Project. Scripts που καταγράφουν ή αποθηκεύουν επιπλέον περιεχόμενο—όπως φωτογραφίες, screenshots, βίντεο, ηχογραφήσεις, logs, λήψεις ή άλλα αρχεία που δημιουργούνται—μπορούν να χρειαστούν επιπλέον χώρο πέρα από την απαίτηση των 6GB του project.">Προειδοποίηση αποθηκευτικού χώρου: Η απαίτηση των 6GB αφορά την ίδια την εγκατάσταση του DedSec Project. Scripts που καταγράφουν ή αποθηκεύουν επιπλέον περιεχόμενο—όπως φωτογραφίες, screenshots, βίντεο, ηχογραφήσεις, logs, λήψεις ή άλλα αρχεία που δημιουργούνται—μπορούν να χρειαστούν επιπλέον χώρο πέρα από την απαίτηση των 6GB του project.</p>
@@ -125,91 +126,92 @@
 <div class="tip">
 <p data-en="Installation time: A complete installation can take approximately 20–50 minutes, depending on your internet connection and your device's processor." data-gr="Χρόνος εγκατάστασης: Η πλήρης εγκατάσταση μπορεί να διαρκέσει περίπου 20–50 λεπτά, ανάλογα με τη σύνδεσή σας στο internet και τον επεξεργαστή της συσκευής σας.">Χρόνος εγκατάστασης: Η πλήρης εγκατάσταση μπορεί να διαρκέσει περίπου 20–50 λεπτά, ανάλογα με τη σύνδεσή σας στο internet και τον επεξεργαστή της συσκευής σας.</p>
 </div>
-<h2 data-en="Installation Steps" data-gr="Βήματα Εγκατάστασης">Βήματα Εγκατάστασης</h2>
-<div class="note">
-<p data-en="Supported platforms: Termux on Android, Ubuntu, Kali Linux, and Linux Mint. Follow the Termux-specific preparation below if you are on Android; desktop Linux users can skip the Android/F-Droid steps and use the Linux command shown in Step 2." data-gr="Υποστηριζόμενες πλατφόρμες: Termux σε Android, Ubuntu, Kali Linux και Linux Mint. Αν χρησιμοποιείς Android, ακολούθησε την προετοιμασία για Termux παρακάτω· οι χρήστες desktop Linux μπορούν να παραλείψουν τα βήματα Android/F-Droid και να χρησιμοποιήσουν την εντολή Linux στο Βήμα 2.">Υποστηριζόμενες πλατφόρμες: Termux σε Android, Ubuntu, Kali Linux και Linux Mint. Αν χρησιμοποιείς Android, ακολούθησε την προετοιμασία για Termux παρακάτω· οι χρήστες desktop Linux μπορούν να παραλείψουν τα βήματα Android/F-Droid και να χρησιμοποιήσουν την εντολή Linux στο Βήμα 2.</p>
-</div>
-<h3 data-en="1. Termux On Android: Install Termux &amp; Add-Ons" data-gr="1. Termux Σε Android: Εγκατάσταση Termux &amp; Πρόσθετων">1. Termux Σε Android: Εγκατάσταση Termux &amp; Πρόσθετων</h3>
-<div class="tip">
-<p data-en="Note: To install APKs (e.g., F-Droid), ensure you enable unknown sources in Settings &gt; Security &gt; Install Unknown Apps." data-gr="Σημείωση: Για την εγκατάσταση APKs (π.χ. F-Droid), βεβαιωθείτε ότι έχετε ενεργοποιήσει άγνωστες πηγές στις Ρυθμίσεις &gt; Ασφάλεια &gt; Εγκατάσταση άγνωστων εφαρμογών.">Σημείωση: Για την εγκατάσταση APKs (π.χ. F-Droid), βεβαιωθείτε ότι έχετε ενεργοποιήσει άγνωστες πηγές στις Ρυθμίσεις &gt; Ασφάλεια &gt; Εγκατάσταση άγνωστων εφαρμογών.</p>
-</div>
-<h3 data-en="Install F-Droid" data-gr="Εγκατάσταση F-Droid">Εγκατάσταση F-Droid</h3>
-<p data-en="F-Droid is an alternative app store for Android that provides free and open-source software. It's the recommended way to install Termux and other security tools." data-gr="Το F-Droid είναι ένα εναλλακτικό κατάστημα εφαρμογών για Android που παρέχει ελεύθερο και ανοιχτού κώδικα λογισμικό. Είναι ο συνιστώμενος τρόπος για να εγκαταστήσετε το Termux και άλλα εργαλεία ασφαλείας.">Το F-Droid είναι ένα εναλλακτικό κατάστημα εφαρμογών για Android που παρέχει ελεύθερο και ανοιχτού κώδικα λογισμικό. Είναι ο συνιστώμενος τρόπος για να εγκαταστήσετε το Termux και άλλα εργαλεία ασφαλείας.</p>
-<div class="contact-grid" style="margin: 20px 0;">
-<a class="app-icon" href="https://f-droid.org/" rel="noopener noreferrer" target="_blank">
-<i class="fab fa-android"></i>
-<span data-en="Download F-Droid" data-gr="Λήψη F-Droid">Λήψη F-Droid</span>
-</a>
-</div>
-<div class="note">
-<h4 data-en="How To Install APK Files On Android:" data-gr="Πώς Να Εγκαταστήσετε Αρχεία APK Στο Android:">Πώς Να Εγκαταστήσετε Αρχεία APK Στο Android:</h4>
-<ol>
-<li data-en="Download the F-Droid APK from the link above." data-gr="Κατεβάστε το APK του F-Droid από τον παραπάνω σύνδεσμο.">Κατεβάστε το APK του F-Droid από τον παραπάνω σύνδεσμο.</li>
-<li data-en="Open your device's Settings &gt; Security (or Apps &amp; Notifications)." data-gr="Ανοίξτε τις Ρυθμίσεις της συσκευής σας &gt; Ασφάλεια (ή Εφαρμογές &amp; Ειδοποιήσεις).">Ανοίξτε τις Ρυθμίσεις της συσκευής σας &gt; Ασφάλεια (ή Εφαρμογές &amp; Ειδοποιήσεις).</li>
-<li data-en="Enable 'Install unknown apps' or 'Unknown sources' for your browser or file manager." data-gr="Ενεργοποιήστε την 'Εγκατάσταση από άγνωστες πηγές' για το πρόγραμμα πλοήγησης ή τον διαχειριστή αρχείων.">Ενεργοποιήστε την 'Εγκατάσταση από άγνωστες πηγές' για το πρόγραμμα πλοήγησης ή τον διαχειριστή αρχείων.</li>
-<li data-en="Open the downloaded APK file and tap 'Install'." data-gr="Ανοίξτε το κατεβασμένο αρχείο APK και πατήστε 'Εγκατάσταση'.">Ανοίξτε το κατεβασμένο αρχείο APK και πατήστε 'Εγκατάσταση'.</li>
-<li data-en="Once installed, open F-Droid and search for 'Termux' to install it." data-gr="Μόλις εγκατασταθεί, ανοίξτε το F-Droid και αναζητήστε 'Termux' για να το εγκαταστήσετε.">Μόλις εγκατασταθεί, ανοίξτε το F-Droid και αναζητήστε 'Termux' για να το εγκαταστήσετε.</li>
-</ol>
-</div>
-<h3 data-en="Install Termux Add-Ons" data-gr="Εγκατάσταση Πρόσθετων Termux">Εγκατάσταση Πρόσθετων Termux</h3>
-<p data-en="For full functionality, we recommend installing these Termux add-ons from F-Droid:" data-gr="Για πλήρη λειτουργικότητα, συνιστούμε την εγκατάσταση των παρακάτω πρόσθετων Termux από το F-Droid:">Για πλήρη λειτουργικότητα, συνιστούμε την εγκατάσταση των παρακάτω πρόσθετων Termux από το F-Droid:</p>
-<div class="contact-grid" style="margin: 20px 0;">
-<a class="app-icon" href="https://f-droid.org/packages/com.termux/" rel="noopener noreferrer" target="_blank">
-<i class="fas fa-terminal"></i>
-<span data-en="Termux (Terminal Emulator)" data-gr="Termux (Προσομοιωτής Τερματικού)">Termux (Προσομοιωτής Τερματικού)</span>
-</a>
-<a class="app-icon" href="https://f-droid.org/packages/com.termux.api/" rel="noopener noreferrer" target="_blank">
-<i class="fas fa-code"></i>
-<span data-en="Termux:API" data-gr="Termux:API">Termux:API</span>
-</a>
-<a class="app-icon" href="https://f-droid.org/packages/com.termux.styling/" rel="noopener noreferrer" target="_blank">
-<i class="fas fa-paint-brush"></i>
-<span data-en="Termux:Styling" data-gr="Termux:Styling">Termux:Styling</span>
-</a>
-</div>
-<h3 data-en="Termux Tips" data-gr="Συμβουλές Για Το Termux">Συμβουλές Για Το Termux</h3>
-<h4 data-en="Keep Screen On" data-gr="Διατήρηση Οθόνης Ανοιχτής">Διατήρηση Οθόνης Ανοιχτής</h4>
-<p data-en="To prevent the screen from turning off during long operations: long-press the Termux terminal, then tap 'More' and select 'Keep screen on'." data-gr="Για να αποτρέψετε την απενεργοποίηση της οθόνης κατά τη διάρκεια μεγάλων εργασιών: κρατήστε πατημένη την οθόνη του Termux, μετά πατήστε 'Περισσότερα' και επιλέξτε 'Διατήρηση οθόνης ανοιχτής'.">Για να αποτρέψετε την απενεργοποίηση της οθόνης κατά τη διάρκεια μεγάλων εργασιών: κρατήστε πατημένη την οθόνη του Termux, μετά πατήστε 'Περισσότερα' και επιλέξτε 'Διατήρηση οθόνης ανοιχτής'.</p>
-<h4 data-en="Change Terminal Style" data-gr="Αλλαγή Στυλ Τερματικού">Αλλαγή Στυλ Τερματικού</h4>
-<p data-en="You can customize the terminal appearance: long-press the Termux terminal, tap 'More' and select 'Style' to change colors and themes." data-gr="Μπορείτε να προσαρμόσετε την εμφάνιση του τερματικού: κρατήστε πατημένη την οθόνη του Termux, πατήστε 'Περισσότερα' και επιλέξτε 'Στυλ' για να αλλάξετε χρώματα και θέματα.">Μπορείτε να προσαρμόσετε την εμφάνιση του τερματικού: κρατήστε πατημένη την οθόνη του Termux, πατήστε 'Περισσότερα' και επιλέξτε 'Στυλ' για να αλλάξετε χρώματα και θέματα.</p>
 
-<h3 data-en="Desktop Linux Preparation" data-gr="Προετοιμασία Desktop Linux">Προετοιμασία Desktop Linux</h3>
-<p data-en="Ubuntu, Kali Linux, and Linux Mint do not need F-Droid or Termux add-ons. Open your normal terminal and continue with Step 2 below." data-gr="Τα Ubuntu, Kali Linux και Linux Mint δεν χρειάζονται F-Droid ή πρόσθετα Termux. Άνοιξε το κανονικό terminal του συστήματός σου και συνέχισε με το Βήμα 2 παρακάτω.">Τα Ubuntu, Kali Linux και Linux Mint δεν χρειάζονται F-Droid ή πρόσθετα Termux. Άνοιξε το κανονικό terminal του συστήματός σου και συνέχισε με το Βήμα 2 παρακάτω.</p>
-<h3 data-en="2. Update Packages &amp; Install Git" data-gr="2. Ενημέρωση Πακέτων &amp; Εγκατάσταση Git">2. Ενημέρωση Πακέτων &amp; Εγκατάσταση Git</h3>
-<h4 data-en="Termux (Android)" data-gr="Termux (Android)">Termux (Android)</h4>
+<h2 data-en="Choose Your Platform" data-gr="Επίλεξε Την Πλατφόρμα Σου">Επίλεξε Την Πλατφόρμα Σου</h2>
+<p class="platform-selector-intro" data-en="Tap your platform to open the installation instructions." data-gr="Πάτησε την πλατφόρμα σου για να ανοίξουν οι οδηγίες εγκατάστασης.">Πάτησε την πλατφόρμα σου για να ανοίξουν οι οδηγίες εγκατάστασης.</p>
+<div class="platform-install-selector">
+<details class="platform-install-card" name="dedsec-platform">
+<summary><i class="fab fa-android"></i><span data-en="Termux (Android)" data-gr="Termux (Android)">Termux (Android)</span></summary>
+<div class="platform-install-body">
+<h3 data-en="Install Termux &amp; Add-Ons" data-gr="Εγκατάσταση Termux &amp; Πρόσθετων">Εγκατάσταση Termux &amp; Πρόσθετων</h3>
+<div class="tip"><p data-en="To install APKs such as F-Droid, enable installation from unknown apps for your browser or file manager in Android settings." data-gr="Για να εγκαταστήσεις APK όπως το F-Droid, ενεργοποίησε την εγκατάσταση από άγνωστες εφαρμογές για τον browser ή τον file manager στις ρυθμίσεις Android.">Για να εγκαταστήσεις APK όπως το F-Droid, ενεργοποίησε την εγκατάσταση από άγνωστες εφαρμογές για τον browser ή τον file manager στις ρυθμίσεις Android.</p></div>
+<h4 data-en="1. Install F-Droid" data-gr="1. Εγκατάσταση F-Droid">1. Εγκατάσταση F-Droid</h4>
+<p data-en="F-Droid is the recommended source for Termux and its add-ons." data-gr="Το F-Droid είναι η προτεινόμενη πηγή για το Termux και τα πρόσθετά του.">Το F-Droid είναι η προτεινόμενη πηγή για το Termux και τα πρόσθετά του.</p>
+<div class="contact-grid" style="margin:20px 0;"><a class="app-icon" href="https://f-droid.org/" rel="noopener noreferrer" target="_blank"><i class="fab fa-android"></i><span data-en="Download F-Droid" data-gr="Λήψη F-Droid">Λήψη F-Droid</span></a></div>
+<div class="note"><h4 data-en="How To Install The F-Droid APK" data-gr="Πώς Να Εγκαταστήσεις Το F-Droid APK">Πώς Να Εγκαταστήσεις Το F-Droid APK</h4><ol>
+<li data-en="Download the F-Droid APK from the link above." data-gr="Κατέβασε το F-Droid APK από τον παραπάνω σύνδεσμο.">Κατέβασε το F-Droid APK από τον παραπάνω σύνδεσμο.</li>
+<li data-en="Open Android Settings, then Security or Apps &amp; Notifications." data-gr="Άνοιξε τις Ρυθμίσεις Android και μετά Ασφάλεια ή Εφαρμογές &amp; Ειδοποιήσεις.">Άνοιξε τις Ρυθμίσεις Android και μετά Ασφάλεια ή Εφαρμογές &amp; Ειδοποιήσεις.</li>
+<li data-en="Allow your browser or file manager to install unknown apps." data-gr="Επίτρεψε στον browser ή τον file manager να εγκαθιστά άγνωστες εφαρμογές.">Επίτρεψε στον browser ή τον file manager να εγκαθιστά άγνωστες εφαρμογές.</li>
+<li data-en="Open the downloaded APK and tap Install." data-gr="Άνοιξε το APK που κατέβασες και πάτησε Εγκατάσταση.">Άνοιξε το APK που κατέβασες και πάτησε Εγκατάσταση.</li>
+<li data-en="Open F-Droid and install Termux." data-gr="Άνοιξε το F-Droid και εγκατέστησε το Termux.">Άνοιξε το F-Droid και εγκατέστησε το Termux.</li>
+</ol></div>
+<h4 data-en="2. Install Termux Add-Ons" data-gr="2. Εγκατάσταση Πρόσθετων Termux">2. Εγκατάσταση Πρόσθετων Termux</h4>
+<p data-en="For the full Android feature set, install Termux and the supported add-ons from F-Droid." data-gr="Για το πλήρες σύνολο λειτουργιών Android, εγκατέστησε το Termux και τα υποστηριζόμενα πρόσθετα από το F-Droid.">Για το πλήρες σύνολο λειτουργιών Android, εγκατέστησε το Termux και τα υποστηριζόμενα πρόσθετα από το F-Droid.</p>
+<div class="contact-grid" style="margin:20px 0;">
+<a class="app-icon" href="https://f-droid.org/packages/com.termux/" rel="noopener noreferrer" target="_blank"><i class="fas fa-terminal"></i><span>Termux</span></a>
+<a class="app-icon" href="https://f-droid.org/packages/com.termux.api/" rel="noopener noreferrer" target="_blank"><i class="fas fa-code"></i><span>Termux:API</span></a>
+<a class="app-icon" href="https://f-droid.org/packages/com.termux.styling/" rel="noopener noreferrer" target="_blank"><i class="fas fa-paint-brush"></i><span>Termux:Styling</span></a>
+</div>
+<h4 data-en="3. Update Termux &amp; Install Git" data-gr="3. Ενημέρωση Termux &amp; Εγκατάσταση Git">3. Ενημέρωση Termux &amp; Εγκατάσταση Git</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'termux_pkg_cmd')" type="button">Copy</button><code id="termux_pkg_cmd">pkg update -y &amp;&amp; pkg upgrade -y &amp;&amp; pkg install git nano -y &amp;&amp; termux-setup-storage</code></div>
+<h4 data-en="4. Clone DedSec" data-gr="4. Κλωνοποίηση DedSec">4. Κλωνοποίηση DedSec</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'termux_clone_cmd')" type="button">Copy</button><code id="termux_clone_cmd">git clone https://github.com/dedsec1121fk/DedSec</code></div>
+<h4 data-en="5. Install DedSec" data-gr="5. Εγκατάσταση DedSec">5. Εγκατάσταση DedSec</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'termux_setup_cmd')" type="button">Copy</button><code id="termux_setup_cmd">cd DedSec &amp;&amp; bash Setup.sh</code></div>
+<h4 data-en="6. Launch DedSec Later" data-gr="6. Άνοιγμα DedSec Αργότερα">6. Άνοιγμα DedSec Αργότερα</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'termux_run_cmd')" type="button">Copy</button><code id="termux_run_cmd">cd ~/DedSec &amp;&amp; ./Run.sh</code></div>
+<div class="tip"><p data-en="Termux tip: for long operations, long-press the terminal, open More, and enable Keep screen on. You can also use More → Style to customize the terminal." data-gr="Συμβουλή Termux: για μεγάλες εργασίες, κράτησε πατημένο το terminal, άνοιξε το More και ενεργοποίησε το Keep screen on. Μπορείς επίσης να χρησιμοποιήσεις More → Style για εμφάνιση.">Συμβουλή Termux: για μεγάλες εργασίες, κράτησε πατημένο το terminal, άνοιξε το More και ενεργοποίησε το Keep screen on. Μπορείς επίσης να χρησιμοποιήσεις More → Style για εμφάνιση.</p></div>
+<div class="tip"><p data-en="After the first setup in Termux, choose your prompt, menu style and language, then run Save DedSec Project so a backup package is created. You can quickly open the English or Greek menu later by typing e or g." data-gr="Μετά το πρώτο setup στο Termux, επίλεξε prompt, στυλ μενού και γλώσσα και μετά τρέξε το Save DedSec Project ώστε να δημιουργηθεί backup package. Αργότερα μπορείς να ανοίγεις γρήγορα το Αγγλικό ή Ελληνικό μενού γράφοντας e ή g.">Μετά το πρώτο setup στο Termux, επίλεξε prompt, στυλ μενού και γλώσσα και μετά τρέξε το Save DedSec Project ώστε να δημιουργηθεί backup package. Αργότερα μπορείς να ανοίγεις γρήγορα το Αγγλικό ή Ελληνικό μενού γράφοντας e ή g.</p></div>
+</div></details>
+<details class="platform-install-card" name="dedsec-platform">
+<summary><i class="fab fa-ubuntu"></i><span>Ubuntu</span></summary>
+<div class="platform-install-body">
+<h3 data-en="Install DedSec On Ubuntu" data-gr="Εγκατάσταση DedSec Σε Ubuntu">Εγκατάσταση DedSec Σε Ubuntu</h3>
+<p data-en="Open Terminal and run the following commands in order." data-gr="Άνοιξε το Terminal και τρέξε τις παρακάτω εντολές με τη σειρά.">Άνοιξε το Terminal και τρέξε τις παρακάτω εντολές με τη σειρά.</p>
+<h4 data-en="1. Install Requirements" data-gr="1. Εγκατάσταση Απαιτήσεων">1. Εγκατάσταση Απαιτήσεων</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'ubuntu_pkg_cmd')" type="button">Copy</button><code id="ubuntu_pkg_cmd">sudo apt update &amp;&amp; sudo apt install -y git python3 python3-venv python3-pip</code></div>
+<h4 data-en="2. Clone DedSec" data-gr="2. Κλωνοποίηση DedSec">2. Κλωνοποίηση DedSec</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'ubuntu_clone_cmd')" type="button">Copy</button><code id="ubuntu_clone_cmd">git clone https://github.com/dedsec1121fk/DedSec</code></div>
+<h4 data-en="3. Run Setup" data-gr="3. Εκτέλεση Setup">3. Εκτέλεση Setup</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'ubuntu_setup_cmd')" type="button">Copy</button><code id="ubuntu_setup_cmd">cd DedSec &amp;&amp; bash Setup.sh</code></div>
+<h4 data-en="4. Launch DedSec Later" data-gr="4. Άνοιγμα DedSec Αργότερα">4. Άνοιγμα DedSec Αργότερα</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'ubuntu_run_cmd')" type="button">Copy</button><code id="ubuntu_run_cmd">cd ~/DedSec &amp;&amp; ./Run.sh</code></div>
+<div class="note"><p data-en="On Ubuntu, Setup.sh creates and uses the project-local .venv so the distro-managed Python installation is not replaced." data-gr="Στο Ubuntu, το Setup.sh δημιουργεί και χρησιμοποιεί το τοπικό .venv του project ώστε να μην αντικαθίσταται η Python που διαχειρίζεται η διανομή.">Στο Ubuntu, το Setup.sh δημιουργεί και χρησιμοποιεί το τοπικό .venv του project ώστε να μην αντικαθίσταται η Python που διαχειρίζεται η διανομή.</p></div>
+</div></details>
+<details class="platform-install-card" name="dedsec-platform">
+<summary><i class="fas fa-dragon"></i><span>Kali Linux</span></summary>
+<div class="platform-install-body">
+<h3 data-en="Install DedSec On Kali Linux" data-gr="Εγκατάσταση DedSec Σε Kali Linux">Εγκατάσταση DedSec Σε Kali Linux</h3>
+<p data-en="Open Terminal and run the following commands in order." data-gr="Άνοιξε το Terminal και τρέξε τις παρακάτω εντολές με τη σειρά.">Άνοιξε το Terminal και τρέξε τις παρακάτω εντολές με τη σειρά.</p>
+<h4 data-en="1. Install Requirements" data-gr="1. Εγκατάσταση Απαιτήσεων">1. Εγκατάσταση Απαιτήσεων</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'kali_pkg_cmd')" type="button">Copy</button><code id="kali_pkg_cmd">sudo apt update &amp;&amp; sudo apt install -y git python3 python3-venv python3-pip</code></div>
+<h4 data-en="2. Clone DedSec" data-gr="2. Κλωνοποίηση DedSec">2. Κλωνοποίηση DedSec</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'kali_clone_cmd')" type="button">Copy</button><code id="kali_clone_cmd">git clone https://github.com/dedsec1121fk/DedSec</code></div>
+<h4 data-en="3. Run Setup" data-gr="3. Εκτέλεση Setup">3. Εκτέλεση Setup</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'kali_setup_cmd')" type="button">Copy</button><code id="kali_setup_cmd">cd DedSec &amp;&amp; bash Setup.sh</code></div>
+<h4 data-en="4. Launch DedSec Later" data-gr="4. Άνοιγμα DedSec Αργότερα">4. Άνοιγμα DedSec Αργότερα</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'kali_run_cmd')" type="button">Copy</button><code id="kali_run_cmd">cd ~/DedSec &amp;&amp; ./Run.sh</code></div>
+<div class="note"><p data-en="On Kali Linux, Setup.sh uses the project-local .venv and keeps the system Python environment separate." data-gr="Στο Kali Linux, το Setup.sh χρησιμοποιεί το τοπικό .venv του project και κρατά ξεχωριστό το Python environment του συστήματος.">Στο Kali Linux, το Setup.sh χρησιμοποιεί το τοπικό .venv του project και κρατά ξεχωριστό το Python environment του συστήματος.</p></div>
+</div></details>
+<details class="platform-install-card" name="dedsec-platform">
+<summary><i class="fab fa-linux"></i><span>Linux Mint</span></summary>
+<div class="platform-install-body">
+<h3 data-en="Install DedSec On Linux Mint" data-gr="Εγκατάσταση DedSec Σε Linux Mint">Εγκατάσταση DedSec Σε Linux Mint</h3>
+<p data-en="Open Terminal and run the following commands in order." data-gr="Άνοιξε το Terminal και τρέξε τις παρακάτω εντολές με τη σειρά.">Άνοιξε το Terminal και τρέξε τις παρακάτω εντολές με τη σειρά.</p>
+<h4 data-en="1. Install Requirements" data-gr="1. Εγκατάσταση Απαιτήσεων">1. Εγκατάσταση Απαιτήσεων</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'mint_pkg_cmd')" type="button">Copy</button><code id="mint_pkg_cmd">sudo apt update &amp;&amp; sudo apt install -y git python3 python3-venv python3-pip</code></div>
+<h4 data-en="2. Clone DedSec" data-gr="2. Κλωνοποίηση DedSec">2. Κλωνοποίηση DedSec</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'mint_clone_cmd')" type="button">Copy</button><code id="mint_clone_cmd">git clone https://github.com/dedsec1121fk/DedSec</code></div>
+<h4 data-en="3. Run Setup" data-gr="3. Εκτέλεση Setup">3. Εκτέλεση Setup</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'mint_setup_cmd')" type="button">Copy</button><code id="mint_setup_cmd">cd DedSec &amp;&amp; bash Setup.sh</code></div>
+<h4 data-en="4. Launch DedSec Later" data-gr="4. Άνοιγμα DedSec Αργότερα">4. Άνοιγμα DedSec Αργότερα</h4>
+<div class="code-container"><button class="copy-btn" onclick="copyToClipboard(this, 'mint_run_cmd')" type="button">Copy</button><code id="mint_run_cmd">cd ~/DedSec &amp;&amp; ./Run.sh</code></div>
+<div class="note"><p data-en="On Linux Mint, Setup.sh creates the project-local .venv and does not replace the distro-managed Python installation." data-gr="Στο Linux Mint, το Setup.sh δημιουργεί το τοπικό .venv του project και δεν αντικαθιστά την Python που διαχειρίζεται η διανομή.">Στο Linux Mint, το Setup.sh δημιουργεί το τοπικό .venv του project και δεν αντικαθιστά την Python που διαχειρίζεται η διανομή.</p></div>
+</div></details>
+</div>
+<aside aria-label="GitHub repository discovery" class="github-discovery-block"><h4 data-en="Want To Inspect DedSec Before Installing It?" data-gr="Θέλεις Να Ελέγξεις Το DedSec Πριν Το Εγκαταστήσεις;">Θέλεις Να Ελέγξεις Το DedSec Πριν Το Εγκαταστήσεις;</h4><p data-en="View the source code, README, updates and community activity directly on GitHub." data-gr="Δες τον πηγαίο κώδικα, το README, τις ενημερώσεις και τη δραστηριότητα της κοινότητας απευθείας στο GitHub.">Δες τον πηγαίο κώδικα, το README, τις ενημερώσεις και τη δραστηριότητα της κοινότητας απευθείας στο GitHub.</p><a class="starter-path-btn github-discovery-cta" data-en="Open DedSec on GitHub" data-gr="Άνοιξε το DedSec στο GitHub" href="https://github.com/dedsec1121fk/DedSec" rel="noopener noreferrer" target="_blank">Άνοιξε το DedSec στο GitHub</a></aside>
 
-<div class="note note-warning">
-<p data-en="Important: Open the Termux application on your device before copying and pasting the command below." data-gr="Σημαντικό: Ανοίξτε την εφαρμογή Termux στη συσκευή σας πριν αντιγράψετε και επικολλήσετε την παρακάτω εντολή.">Σημαντικό: Ανοίξτε την εφαρμογή Termux στη συσκευή σας πριν αντιγράψετε και επικολλήσετε την παρακάτω εντολή.</p>
-</div>
-<div class="code-container">
-<button class="copy-btn" onclick="copyToClipboard(this, 'pkg_cmd')" type="button">Copy</button>
-<code id="pkg_cmd">pkg update -y &amp;&amp; pkg upgrade -y &amp;&amp; pkg install git nano -y &amp;&amp; termux-setup-storage</code>
-</div>
-
-<h4 data-en="Ubuntu / Kali Linux / Linux Mint" data-gr="Ubuntu / Kali Linux / Linux Mint">Ubuntu / Kali Linux / Linux Mint</h4>
-<div class="note">
-<p data-en="Run this in your normal Linux terminal. The project setup will create and use a local .venv, so it does not replace the distro-managed Python environment." data-gr="Τρέξε το παρακάτω στο κανονικό Linux terminal. Το setup του project θα δημιουργήσει και θα χρησιμοποιήσει τοπικό .venv, ώστε να μην αντικαθιστά το Python environment που διαχειρίζεται η διανομή.">Τρέξε το παρακάτω στο κανονικό Linux terminal. Το setup του project θα δημιουργήσει και θα χρησιμοποιήσει τοπικό .venv, ώστε να μην αντικαθιστά το Python environment που διαχειρίζεται η διανομή.</p>
-</div>
-<div class="code-container">
-<button class="copy-btn" onclick="copyToClipboard(this, 'linux_pkg_cmd')" type="button">Copy</button>
-<code id="linux_pkg_cmd">sudo apt update &amp;&amp; sudo apt install -y git python3 python3-venv python3-pip</code>
-</div>
-<aside aria-label="GitHub repository discovery" class="github-discovery-block"><h4 data-en="Want To Inspect DedSec Before Installing It?" data-gr="Θέλεις Να Ελέγξεις Το DedSec Πριν Το Εγκαταστήσεις;">Θέλεις Να Ελέγξεις Το DedSec Πριν Το Εγκαταστήσεις;</h4><p data-en="View the source code, README, updates and community activity directly on GitHub." data-gr="Δες τον πηγαίο κώδικα, το README, τις ενημερώσεις και τη δραστηριότητα της κοινότητας απευθείας στο GitHub.">Δες τον πηγαίο κώδικα, το README, τις ενημερώσεις και τη δραστηριότητα της κοινότητας απευθείας στο GitHub.</p><a class="starter-path-btn github-discovery-cta" data-en="Open DedSec on GitHub" data-gr="Άνοιξε το DedSec στο GitHub" href="https://github.com/dedsec1121fk/DedSec" rel="noopener noreferrer" target="_blank">Άνοιξε το DedSec στο GitHub</a></aside><h3 data-en="3. Clone The Repository" data-gr="3. Κλωνοποιήστε Το Αποθετήριο">3. Κλωνοποιήστε Το Αποθετήριο</h3>
-<div class="code-container">
-<button class="copy-btn" onclick="copyToClipboard(this, 'clone_cmd')" type="button">Copy</button>
-<code id="clone_cmd">git clone https://github.com/dedsec1121fk/DedSec</code>
-</div>
-<h3 data-en="4. Run The Setup Script" data-gr="4. Εκτελέστε Το Script Εγκατάστασης">4. Εκτελέστε Το Script Εγκατάστασης</h3>
-<div class="code-container">
-<button class="copy-btn" onclick="copyToClipboard(this, 'setup_cmd')" type="button">Copy</button>
-<code id="setup_cmd">cd DedSec &amp;&amp; bash Setup.sh</code>
-</div>
-<div class="note">
-<p data-en="Setup.sh automatically detects the platform. Termux uses the native Termux installer; Ubuntu, Kali Linux, and Linux Mint use apt dependencies plus the project-local .venv. After setup, you can launch the project with ./Run.sh on every supported system." data-gr="Το Setup.sh εντοπίζει αυτόματα την πλατφόρμα. Το Termux χρησιμοποιεί τον native installer του Termux, ενώ Ubuntu, Kali Linux και Linux Mint χρησιμοποιούν apt dependencies μαζί με το τοπικό .venv του project. Μετά το setup, μπορείς να ανοίγεις το project με ./Run.sh σε κάθε υποστηριζόμενο σύστημα.">Το Setup.sh εντοπίζει αυτόματα την πλατφόρμα. Το Termux χρησιμοποιεί τον native installer του Termux, ενώ Ubuntu, Kali Linux και Linux Mint χρησιμοποιούν apt dependencies μαζί με το τοπικό .venv του project. Μετά το setup, μπορείς να ανοίγεις το project με ./Run.sh σε κάθε υποστηριζόμενο σύστημα.</p>
-</div>
-<div class="tip">
-<p data-en="The script will handle the complete installation. On Termux, after setup, you must change the prompt, change the menu style (list or numbered menu styles are the best for new users), choose the language, and run the Save DedSec Project option on your first run so your backup package is created immediately. Save DedSec Project may take a while depending on your internet connection, and the terminal may stay blank until it is ready. Run Save DedSec Project again a few times every year to keep your saved DedSec Project package fresh and ready if you ever need it. After that, close Termux from your phone's notification panel using the exit button, then open Termux again. Tip: You can quickly open the menu by typing 'e' (English) or 'g' (Greek) in Termux." data-gr="Το script θα αναλάβει την πλήρη εγκατάσταση. Στο Termux, μετά την εγκατάσταση, πρέπει να αλλάξετε το prompt, να αλλάξετε το στυλ του μενού (τα στυλ λίστας ή αριθμημένου μενού είναι τα καλύτερα για νέους χρήστες), να επιλέξετε γλώσσα και να τρέξετε την επιλογή Save DedSec Project στο πρώτο σας άνοιγμα ώστε να δημιουργηθεί αμέσως το backup package. Το Save DedSec Project μπορεί να πάρει λίγη ώρα ανάλογα με τη σύνδεσή σας στο internet και το terminal μπορεί να μένει κενό μέχρι να ολοκληρωθεί. Τρέχετε ξανά το Save DedSec Project λίγες φορές κάθε χρόνο ώστε το αποθηκευμένο πακέτο του DedSec Project να μένει φρέσκο και έτοιμο αν το χρειαστείτε. Μετά από αυτό, κλείστε το Termux από το πάνελ ειδοποιήσεων του κινητού σας χρησιμοποιώντας το κουμπί εξόδου και έπειτα ανοίξτε ξανά το Termux. Συμβουλή: Μπορείτε να ανοίξετε γρήγορα το μενού πληκτρολογώντας 'e' (Αγγλικά) ή 'g' (Ελληνικά) στο Termux.">Το script θα αναλάβει την πλήρη εγκατάσταση. Στο Termux, μετά την εγκατάσταση, πρέπει να αλλάξετε το prompt, να αλλάξετε το στυλ του μενού (τα στυλ λίστας ή αριθμημένου μενού είναι τα καλύτερα για νέους χρήστες), να επιλέξετε γλώσσα και να τρέξετε την επιλογή Save DedSec Project στο πρώτο σας άνοιγμα ώστε να δημιουργηθεί αμέσως το backup package. Το Save DedSec Project μπορεί να πάρει λίγη ώρα ανάλογα με τη σύνδεσή σας στο internet και το terminal μπορεί να μένει κενό μέχρι να ολοκληρωθεί. Τρέχετε ξανά το Save DedSec Project λίγες φορές κάθε χρόνο ώστε το αποθηκευμένο πακέτο του DedSec Project να μένει φρέσκο και έτοιμο αν το χρειαστείτε. Μετά από αυτό, κλείστε το Termux από το πάνελ ειδοποιήσεων του κινητού σας χρησιμοποιώντας το κουμπί εξόδου και έπειτα ανοίξτε ξανά το Termux. Συμβουλή: Μπορείτε να ανοίξετε γρήγορα το μενού πληκτρολογώντας 'e' (Αγγλικά) ή 'g' (Ελληνικά) στο Termux.</p>
-</div><section class="content-section post-install-value-block"><span class="sales-section-label" data-en="AFTER IT WORKS" data-gr="ΑΦΟΥ ΛΕΙΤΟΥΡΓΗΣΕΙ">ΑΦΟΥ ΛΕΙΤΟΥΡΓΗΣΕΙ</span><h2 data-en="DedSec Working On Your System?" data-gr="Λειτουργεί Το DedSec Στο Σύστημά Σου;">Λειτουργεί Το DedSec Στο Σύστημά Σου;</h2><p data-en="Once DedSec opens successfully on your system and you have received value from it, star the repository so you can find it again and help more users discover the project." data-gr="Μόλις το DedSec ανοίξει σωστά στο σύστημά σου και το χρησιμοποιήσεις, βάλε star στο repository ώστε να το βρίσκεις ξανά και να βοηθήσεις περισσότερους χρήστες να ανακαλύψουν το project.">Μόλις το DedSec ανοίξει σωστά στο σύστημά σου και το χρησιμοποιήσεις, βάλε star στο repository ώστε να το βρίσκεις ξανά και να βοηθήσεις περισσότερους χρήστες να ανακαλύψουν το project.</p><a class="starter-path-btn" data-en="Star DedSec on GitHub" data-gr="Βάλε Star στο DedSec στο GitHub" href="https://github.com/dedsec1121fk/DedSec" rel="noopener noreferrer" target="_blank">Βάλε Star στο DedSec στο GitHub</a><p class="post-install-sponsor-note"><span data-en="Using DedSec regularly? Sponsor-only extras are optional and help fund future updates." data-gr="Χρησιμοποιείς το DedSec τακτικά; Τα sponsor-only extras είναι προαιρετικά και βοηθούν στη χρηματοδότηση μελλοντικών ενημερώσεων.">Χρησιμοποιείς το DedSec τακτικά; Τα sponsor-only extras είναι προαιρετικά και βοηθούν στη χρηματοδότηση μελλοντικών ενημερώσεων.</span> <a data-en="GitHub Sponsors" data-gr="GitHub Sponsors" href="https://github.com/sponsors/dedsec1121fk" rel="noopener noreferrer" target="_blank">GitHub Sponsors.</a></p></section>
+<section class="content-section post-install-value-block"><span class="sales-section-label" data-en="AFTER IT WORKS" data-gr="ΑΦΟΥ ΛΕΙΤΟΥΡΓΗΣΕΙ">ΑΦΟΥ ΛΕΙΤΟΥΡΓΗΣΕΙ</span><h2 data-en="DedSec Working On Your System?" data-gr="Λειτουργεί Το DedSec Στο Σύστημά Σου;">Λειτουργεί Το DedSec Στο Σύστημά Σου;</h2><p data-en="Once DedSec opens successfully on your system and you have received value from it, star the repository so you can find it again and help more users discover the project." data-gr="Μόλις το DedSec ανοίξει σωστά στο σύστημά σου και το χρησιμοποιήσεις, βάλε star στο repository ώστε να το βρίσκεις ξανά και να βοηθήσεις περισσότερους χρήστες να ανακαλύψουν το project.">Μόλις το DedSec ανοίξει σωστά στο σύστημά σου και το χρησιμοποιήσεις, βάλε star στο repository ώστε να το βρίσκεις ξανά και να βοηθήσεις περισσότερους χρήστες να ανακαλύψουν το project.</p><a class="starter-path-btn" data-en="Star DedSec on GitHub" data-gr="Βάλε Star στο DedSec στο GitHub" href="https://github.com/dedsec1121fk/DedSec" rel="noopener noreferrer" target="_blank">Βάλε Star στο DedSec στο GitHub</a><p class="post-install-sponsor-note"><span data-en="Using DedSec regularly? Sponsor-only extras are optional and help fund future updates." data-gr="Χρησιμοποιείς το DedSec τακτικά; Τα sponsor-only extras είναι προαιρετικά και βοηθούν στη χρηματοδότηση μελλοντικών ενημερώσεων.">Χρησιμοποιείς το DedSec τακτικά; Τα sponsor-only extras είναι προαιρετικά και βοηθούν στη χρηματοδότηση μελλοντικών ενημερώσεων.</span> <a data-en="GitHub Sponsors" data-gr="GitHub Sponsors" href="https://github.com/sponsors/dedsec1121fk" rel="noopener noreferrer" target="_blank">GitHub Sponsors.</a></p></section>
 <div aria-label="Free Termux PDF download" class="features-grid guide-pdf-grid">
 <a class="feature-card ebook-download-card guide-pdf-download-card" data-en-link="https://github.com/dedsec1121fk/dedsec1121fk.github.io/raw/565c8a71e42e75919ca45cedb92fde33edcad455/Assets/Master%20Termux%20In%207%20Days%20English.pdf" data-gr-link="https://github.com/dedsec1121fk/dedsec1121fk.github.io/raw/565c8a71e42e75919ca45cedb92fde33edcad455/Assets/Master%20Termux%20In%207%20Days%20Greek.pdf" download="" href="https://github.com/dedsec1121fk/dedsec1121fk.github.io/raw/565c8a71e42e75919ca45cedb92fde33edcad455/Assets/Master%20Termux%20In%207%20Days%20English.pdf" rel="noopener noreferrer" target="_blank">
 <span class="ebook-badge" data-en="Free PDF" data-gr="Δωρεάν PDF">Δωρεάν PDF</span>

@@ -28,7 +28,7 @@ On desktop Linux, setup uses apt packages, a project-local `.venv`, and `Compat/
 
 ## Website Documentation Updates
 
-The installation page keeps the original Termux/F-Droid walkthrough and adds platform-specific preparation for Ubuntu, Kali Linux, and Linux Mint. The homepage names all four supported systems directly. Assistance includes Linux installation, `.venv` and path guidance, repair steps, and update steps. Tool descriptions include platform support and save paths for each supported system. The retired learning section and its old homepage references were removed.
+The installation page shows the shared requirements first, then lets visitors choose Termux, Ubuntu, Kali Linux, or Linux Mint. Each platform opens its own installation instructions, keeping the detailed Termux/F-Droid setup inside the Termux section and the Linux steps inside their respective platform sections. Assistance includes Linux installation, `.venv` and path guidance, repair steps, and update steps. Tool descriptions include platform support and save paths for each supported system. The retired learning section and its old homepage references were removed.
 
 The homepage no longer shows the old `Free core project`, `No root required`, or `English + Greek` fact rows below the repository statistics.
 

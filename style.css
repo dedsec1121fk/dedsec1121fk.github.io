@@ -11003,3 +11003,20 @@ body.light-theme .sponsor-tier-summary-group .sponsor-tier-benefits li{
   color:var(--nm-text-muted);
 }
 
+
+
+/* DedSec platform installation selector */
+.platform-selector-intro{max-width:760px;margin:0 auto 18px;text-align:center;}
+.platform-install-selector{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin:20px 0 28px;align-items:start;}
+.platform-install-card{margin:0!important;padding:0!important;border:1px solid var(--nm-border)!important;background:var(--nm-container)!important;overflow:hidden;}
+.platform-install-card>summary{display:flex!important;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:16px 18px!important;cursor:pointer;font-weight:800;text-align:center;color:var(--nm-text-accent)!important;list-style:none;background:var(--nm-container)!important;border:0!important;}
+.platform-install-card>summary::-webkit-details-marker{display:none;}
+.platform-install-card>summary::after{content:"+";margin-left:auto;font-size:1.35rem;line-height:1;}
+.platform-install-card[open]>summary::after{content:"−";}
+.platform-install-card>summary i{font-size:1.25rem;min-width:24px;}
+.platform-install-card[open]{grid-column:1/-1;}
+.platform-install-body{padding:20px clamp(14px,3vw,26px) 24px;border-top:1px solid var(--nm-border);}
+.platform-install-body>h3:first-child{margin-top:0;}
+.platform-install-body .code-container{margin:10px 0 18px;}
+.platform-install-body .contact-grid{max-width:780px;margin-left:auto!important;margin-right:auto!important;}
+@media(max-width:720px){.platform-install-selector{grid-template-columns:1fr}.platform-install-card[open]{grid-column:auto}.platform-install-card>summary{min-height:54px;}}
