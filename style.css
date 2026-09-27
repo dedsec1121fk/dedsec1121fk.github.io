@@ -6971,6 +6971,7 @@ body.light-theme .ebook-badge{
 .guide-pdf-grid .ebook-download-card .feature-icon-wrapper {
     border-color: rgba(255,255,255,0.52) !important;
     background: rgba(255,255,255,0.10) !important;
+    margin: 0 auto 15px;
 }
 
 .guide-pdf-grid .ebook-download-card .feature-icon,
