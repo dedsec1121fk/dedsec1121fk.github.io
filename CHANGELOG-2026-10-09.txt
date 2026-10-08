@@ -1,0 +1,10 @@
+DedSec Project website — site updates (2026-10-09)
+
+- Founder story + all main founder page sections changed to closed-by-default disclosure bullets on English and Greek pages.
+- Story, skills, vision, and worldview cards have individually expandable subitems.
+- Added foundation date (2024-10-20), validated platform list (Android/Termux, Ubuntu, Kali Linux, Linux Mint), and a bilingual editorial section on technology risks, poverty/inequality, corruption/accountability, the potential decline of physical cash and independence.
+- Removed shared footer credit for zyxen.gr (still present in both Credits main sections).
+- Removed the Easter egg search navigation for the nonexistent unused-template.html (no template files in ZIP).
+- Added a mobile/desktop seven-tap title triggered page-collapse Easter egg with restore button.
+- Updated global asset version query strings to refresh caches.
+- No GitHub push was performed.

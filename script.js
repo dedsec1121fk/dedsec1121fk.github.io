@@ -5,6 +5,59 @@
    - NAV highlights & mobile menu behaviors are also here.
    ============================================================================ */
 document.addEventListener('DOMContentLoaded', () => {
+    // Hidden Easter egg: seven deliberate taps/clicks on the navbar title.
+    // Uses the shared script so the effect applies to whichever page is open.
+    const setupPageCollapseEasterEgg = () => {
+        const title = document.querySelector('.main-nav .site-title');
+        if (!title) return;
+        let taps = 0;
+        let lastTap = 0;
+        let activated = false;
+        title.setAttribute('tabindex', '0');
+        title.setAttribute('role', 'button');
+        title.setAttribute('aria-label', 'DedSec Project — tap seven times for a surprise');
+
+        const activate = () => {
+            if (activated) return;
+            activated = true;
+            const page = document.querySelector('.page-content') || document.querySelector('main') || document.querySelector('.content-container') || document.body;
+            let blocks = Array.from(page.children).filter(el => el.nodeType === 1 && !['SCRIPT', 'STYLE'].includes(el.tagName));
+            if (blocks.length < 2) blocks = Array.from(page.querySelectorAll(':scope > section, :scope > div, :scope > article')).slice(0, 32);
+            const footer = document.querySelector('.main-footer');
+            const nav = document.querySelector('.main-nav');
+            if (footer && !blocks.includes(footer)) blocks.push(footer);
+            if (nav && !blocks.includes(nav)) blocks.push(nav);
+            blocks.slice(0, 65).forEach((el, i) => {
+                el.classList.add('dedsec-collapse-piece');
+                el.style.setProperty('--collapse-delay', `${Math.min(i * 0.095, 2.1)}s`);
+                el.style.setProperty('--collapse-tilt', `${(i % 2 === 0 ? 1 : -1) * (7 + (i % 5) * 3)}deg`);
+                el.style.setProperty('--collapse-shift', `${(i % 2 === 0 ? -1 : 1) * (35 + (i % 4) * 19)}px`);
+            });
+            const overlay = document.createElement('div');
+            overlay.className = 'dedsec-collapse-overlay';
+            overlay.setAttribute('role', 'status');
+            overlay.innerHTML = '<div class="dedsec-collapse-message"><span class="dedsec-collapse-warning">// REALITY.EXE HAS STOPPED //</span><strong>DEDSEC SYSTEM COLLAPSE</strong><button type="button" class="dedsec-collapse-restore">Restore page ↻</button></div>';
+            document.body.appendChild(overlay);
+            document.body.classList.add('dedsec-collapse-active');
+            overlay.querySelector('.dedsec-collapse-restore').addEventListener('click', () => window.location.reload());
+        };
+
+        const registerTap = () => {
+            const now = Date.now();
+            taps = (now - lastTap <= 3500) ? taps + 1 : 1;
+            lastTap = now;
+            if (taps >= 7) activate();
+        };
+        title.addEventListener('click', registerTap);
+        title.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+                event.preventDefault();
+                registerTap();
+            }
+        });
+    };
+    setupPageCollapseEasterEgg();
+
     // --- GLOBAL STATE ---
     const pageLanguage = /\/el(?:\/|$)/.test(window.location.pathname) ? 'gr' : 'en';
     let currentLanguage = pageLanguage;
@@ -461,7 +514,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const openBtn = document.getElementById('nav-search');
         if (!overlay || !input || !resultsEl || !closeBtn || !openBtn) return;
 
-        const SECRET_PAGE_PATH = 'Pages/unused-template.html';
         const SEARCH_INDEX_PATH = 'Assets/search-index.json';
         const MAX_RESULTS = 16;
         const INPUT_DEBOUNCE_MS = 120;
@@ -539,15 +591,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
             return Array.from(variants).filter(Boolean);
-        };
-
-        const shouldOpenSecretLevel = (value) => {
-            const normalized = normalizeSearchTerm(value);
-            return normalized === 'watch dogs'
-                || normalized === 'ubisoft'
-                || normalized === 'dead space 2'
-                || normalized === 'arcade master'
-                || normalized.startsWith('arcade master ');
         };
 
         const slugify = (str) => (str || '')
@@ -874,11 +917,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (e.key === 'Enter') {
                 e.preventDefault();
                 const query = input.value.trim();
-                if (shouldOpenSecretLevel(query)) {
-                    setOverlayVisible(false);
-                    navigate(resolveUrl(SECRET_PAGE_PATH));
-                    return;
-                }
+                // No secret game page is bundled: Enter uses real search results only.
                 const firstLink = resultsEl.querySelector('a.search-item[href]');
                 if (firstLink) {
                     setOverlayVisible(false);
