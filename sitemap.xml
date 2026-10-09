@@ -1,1605 +1,1077 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://ded-sec.space/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/"/>
+  </url>
+  <url>
     <loc>https://ded-sec.space/Assistance/dedsec-linux-venv-paths.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/dedsec-linux-venv-paths.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/dedsec-linux-venv-paths.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/dedsec-linux-venv-paths.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/dedsec-linux-venv-paths.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/dedsec-linux-venv-paths.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/dedsec-linux-venv-paths.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/dedsec-linux-venv-paths.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-dedsec-broken-install.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-dedsec-broken-install.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-dedsec-broken-install.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-dedsec-broken-install.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-dedsec-broken-install.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-dedsec-linux-setup.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-dedsec-linux-setup.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-dedsec-linux-setup.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-dedsec-linux-setup.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-dedsec-linux-setup.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-dedsec-linux-setup.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-dedsec-linux-setup.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-dedsec-linux-setup.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-github-ssh-authentication-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-github-ssh-authentication-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-github-ssh-authentication-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-github-ssh-authentication-termux.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-github-ssh-authentication-termux.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-github-ssh-authentication-termux.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-github-ssh-authentication-termux.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-github-ssh-authentication-termux.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-localhost-server-not-opening-android.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-localhost-server-not-opening-android.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-localhost-server-not-opening-android.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-localhost-server-not-opening-android.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-localhost-server-not-opening-android.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-localhost-server-not-opening-android.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-localhost-server-not-opening-android.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-localhost-server-not-opening-android.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-node-npm-errors-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-node-npm-errors-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-node-npm-errors-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-node-npm-errors-termux.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-node-npm-errors-termux.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-node-npm-errors-termux.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-node-npm-errors-termux.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-node-npm-errors-termux.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-pip-errors-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-pip-errors-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-pip-errors-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-pip-errors-termux.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-pip-errors-termux.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-pip-errors-termux.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-pip-errors-termux.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-pip-errors-termux.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-python-module-not-found-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-python-module-not-found-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-python-module-not-found-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-python-module-not-found-termux.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-python-module-not-found-termux.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-python-module-not-found-termux.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-python-module-not-found-termux.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-python-module-not-found-termux.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-python-syntax-errors-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-python-syntax-errors-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-python-syntax-errors-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-python-syntax-errors-termux.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-python-syntax-errors-termux.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-python-syntax-errors-termux.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-python-syntax-errors-termux.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-python-syntax-errors-termux.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-dpkg-apt-lock.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-dpkg-apt-lock.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-dpkg-apt-lock.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-dpkg-apt-lock.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-dpkg-apt-lock.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-dpkg-apt-lock.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-dpkg-apt-lock.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-dpkg-apt-lock.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-git-push-email-identity.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-git-push-email-identity.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-git-push-email-identity.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-git-push-email-identity.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-git-push-email-identity.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-git-push-email-identity.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-git-push-email-identity.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-git-push-email-identity.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-no-space-left.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-no-space-left.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-no-space-left.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-no-space-left.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-no-space-left.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-no-space-left.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-no-space-left.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-no-space-left.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-no-such-file-or-directory.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-no-such-file-or-directory.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-no-such-file-or-directory.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-no-such-file-or-directory.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-no-such-file-or-directory.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-no-such-file-or-directory.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-no-such-file-or-directory.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-no-such-file-or-directory.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-permission-denied-executable.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-permission-denied-executable.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-permission-denied-executable.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-permission-denied-executable.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-permission-denied-executable.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-permission-denied-executable.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-permission-denied-executable.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-permission-denied-executable.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-port-already-in-use.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-port-already-in-use.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-port-already-in-use.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-port-already-in-use.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-port-already-in-use.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-port-already-in-use.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-port-already-in-use.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-port-already-in-use.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-repository-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-repository-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-repository-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-repository-errors.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-repository-errors.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-repository-errors.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-repository-errors.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-repository-errors.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-ssl-certificate-curl-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-ssl-certificate-curl-errors.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-storage-permission.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-storage-permission.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-storage-permission.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-storage-permission.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-storage-permission.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-storage-permission.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-storage-permission.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-storage-permission.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/fix-termux-widget-scripts.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-widget-scripts.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-widget-scripts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-widget-scripts.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/fix-termux-widget-scripts.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-widget-scripts.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-widget-scripts.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-widget-scripts.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/github-clone-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/github-clone-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/github-clone-termux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/github-clone-termux.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/github-clone-termux.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/github-clone-termux.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/github-clone-termux.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/github-clone-termux.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/install-dedsec-project-android.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/install-dedsec-project-android.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/install-dedsec-project-android.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/install-dedsec-project-android.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/install-dedsec-project-android.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/install-dedsec-project-android.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/install-dedsec-project-android.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/install-dedsec-project-android.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/install-dedsec-project-linux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/install-dedsec-project-linux.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/install-dedsec-project-linux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/install-dedsec-project-linux.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/install-dedsec-project-linux.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/install-dedsec-project-linux.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/install-dedsec-project-linux.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/install-dedsec-project-linux.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/keep-termux-running-background.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/keep-termux-running-background.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/keep-termux-running-background.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/keep-termux-running-background.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/keep-termux-running-background.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/keep-termux-running-background.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/keep-termux-running-background.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/keep-termux-running-background.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-android-webview-browser-tips.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-android-webview-browser-tips.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-android-webview-browser-tips.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-android-webview-browser-tips.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-android-webview-browser-tips.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-android-webview-browser-tips.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-android-webview-browser-tips.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-android-webview-browser-tips.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-backup-restore-workflow.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-backup-restore-workflow.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-backup-restore-workflow.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-backup-restore-workflow.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-backup-restore-workflow.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-backup-restore-workflow.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-backup-restore-workflow.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-backup-restore-workflow.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-beginner-guide-android.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-beginner-guide-android.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-beginner-guide-android.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-beginner-guide-android.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-beginner-guide-android.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-beginner-guide-android.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-beginner-guide-android.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-beginner-guide-android.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-build-dedsec-style-tool.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-build-dedsec-style-tool.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-build-dedsec-style-tool.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-build-dedsec-style-tool.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-build-dedsec-style-tool.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-build-dedsec-style-tool.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-build-dedsec-style-tool.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-build-dedsec-style-tool.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-check-broken-links-locally.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-check-broken-links-locally.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-check-broken-links-locally.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-check-broken-links-locally.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-check-broken-links-locally.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-check-broken-links-locally.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-check-broken-links-locally.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-check-broken-links-locally.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-clean-cache-safely.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-clean-cache-safely.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-clean-cache-safely.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-clean-cache-safely.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-clean-cache-safely.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-clean-cache-safely.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-clean-cache-safely.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-clean-cache-safely.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-cloudflared-local-link-help.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-cloudflared-local-link-help.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-cloudflared-local-link-help.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-cloudflared-local-link-help.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-cloudflared-local-link-help.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-cloudflared-local-link-help.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-cloudflared-local-link-help.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-cloudflared-local-link-help.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-command-cheat-sheet.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-command-cheat-sheet.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-command-cheat-sheet.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-command-cheat-sheet.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-command-cheat-sheet.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-command-cheat-sheet.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-command-cheat-sheet.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-command-cheat-sheet.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-command-history-and-aliases.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-command-history-and-aliases.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-command-history-and-aliases.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-command-history-and-aliases.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-command-history-and-aliases.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-command-history-and-aliases.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-command-history-and-aliases.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-command-history-and-aliases.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-common-exit-codes.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-common-exit-codes.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-common-exit-codes.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-common-exit-codes.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-common-exit-codes.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-common-exit-codes.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-common-exit-codes.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-common-exit-codes.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-cool-script-ideas.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-cool-script-ideas.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-cool-script-ideas.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-cool-script-ideas.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-cool-script-ideas.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-cool-script-ideas.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-cool-script-ideas.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-cool-script-ideas.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-create-python-menu-script.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-create-python-menu-script.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-create-python-menu-script.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-create-python-menu-script.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-create-python-menu-script.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-create-python-menu-script.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-create-python-menu-script.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-create-python-menu-script.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-debug-log-files.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-debug-log-files.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-debug-log-files.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-debug-log-files.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-debug-log-files.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-debug-log-files.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-debug-log-files.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-debug-log-files.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-download-with-curl-wget.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-download-with-curl-wget.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-download-with-curl-wget.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-download-with-curl-wget.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-download-with-curl-wget.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-download-with-curl-wget.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-download-with-curl-wget.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-download-with-curl-wget.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-edit-files-with-nano.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-edit-files-with-nano.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-edit-files-with-nano.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-edit-files-with-nano.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-edit-files-with-nano.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-edit-files-with-nano.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-edit-files-with-nano.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-edit-files-with-nano.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-bash-bad-interpreter.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-bash-bad-interpreter.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-bash-bad-interpreter.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-bash-bad-interpreter.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-bash-bad-interpreter.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-bash-bad-interpreter.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-bash-bad-interpreter.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-bash-bad-interpreter.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-crontab-alternatives.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-crontab-alternatives.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-crontab-alternatives.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-crontab-alternatives.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-crontab-alternatives.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-crontab-alternatives.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-crontab-alternatives.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-crontab-alternatives.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-git-auth-token-github.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-git-auth-token-github.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-git-auth-token-github.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-git-auth-token-github.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-git-auth-token-github.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-git-auth-token-github.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-git-auth-token-github.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-git-auth-token-github.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-git-large-file-push.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-git-large-file-push.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-git-large-file-push.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-git-large-file-push.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-git-large-file-push.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-git-large-file-push.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-git-large-file-push.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-git-large-file-push.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-line-endings-windows-crlf.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-line-endings-windows-crlf.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-line-endings-windows-crlf.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-line-endings-windows-crlf.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-line-endings-windows-crlf.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-line-endings-windows-crlf.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-line-endings-windows-crlf.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-line-endings-windows-crlf.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-pyinstaller-on-android-alternatives.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-pyinstaller-on-android-alternatives.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-python-encoding-unicode-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-python-encoding-unicode-errors.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-requests-ssl-and-api-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-requests-ssl-and-api-errors.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-shebang-env-python.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-shebang-env-python.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-shebang-env-python.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-shebang-env-python.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-shebang-env-python.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-shebang-env-python.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-shebang-env-python.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-shebang-env-python.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-fix-termux-api-not-working.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-termux-api-not-working.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-termux-api-not-working.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-termux-api-not-working.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-fix-termux-api-not-working.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-termux-api-not-working.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-termux-api-not-working.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-termux-api-not-working.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-flask-app-not-loading.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-flask-app-not-loading.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-flask-app-not-loading.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-flask-app-not-loading.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-flask-app-not-loading.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-flask-app-not-loading.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-flask-app-not-loading.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-flask-app-not-loading.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-git-branch-basics.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-git-branch-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-git-branch-basics.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-git-branch-basics.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-git-branch-basics.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-git-branch-basics.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-git-branch-basics.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-git-branch-basics.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-git-pull-conflicts.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-git-pull-conflicts.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-git-pull-conflicts.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-git-pull-conflicts.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-git-pull-conflicts.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-git-pull-conflicts.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-git-pull-conflicts.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-git-pull-conflicts.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-github-pages-update-workflow.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-github-pages-update-workflow.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-github-pages-update-workflow.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-github-pages-update-workflow.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-github-pages-update-workflow.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-github-pages-update-workflow.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-github-pages-update-workflow.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-github-pages-update-workflow.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-html-css-js-editing-from-phone.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-html-css-js-editing-from-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-html-css-js-editing-from-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-html-css-js-editing-from-phone.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-html-css-js-editing-from-phone.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-html-css-js-editing-from-phone.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-html-css-js-editing-from-phone.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-html-css-js-editing-from-phone.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-install-common-python-libraries.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-install-common-python-libraries.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-install-common-python-libraries.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-install-common-python-libraries.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-install-common-python-libraries.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-install-common-python-libraries.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-install-common-python-libraries.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-install-common-python-libraries.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-install-source-and-first-setup.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-install-source-and-first-setup.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-install-source-and-first-setup.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-install-source-and-first-setup.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-install-source-and-first-setup.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-install-source-and-first-setup.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-install-source-and-first-setup.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-install-source-and-first-setup.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-json-file-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-json-file-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-json-file-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-json-file-errors.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-json-file-errors.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-json-file-errors.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-json-file-errors.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-json-file-errors.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-learn-python-by-building-tools.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-learn-python-by-building-tools.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-learn-python-by-building-tools.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-learn-python-by-building-tools.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-learn-python-by-building-tools.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-learn-python-by-building-tools.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-learn-python-by-building-tools.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-learn-python-by-building-tools.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-learning-roadmap.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-learning-roadmap.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-learning-roadmap.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-learning-roadmap.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-learning-roadmap.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-learning-roadmap.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-learning-roadmap.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-learning-roadmap.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-local-website-python-server.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-local-website-python-server.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-local-website-python-server.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-local-website-python-server.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-local-website-python-server.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-local-website-python-server.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-local-website-python-server.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-local-website-python-server.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-low-end-phone-performance-tips.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-low-end-phone-performance-tips.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-low-end-phone-performance-tips.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-low-end-phone-performance-tips.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-low-end-phone-performance-tips.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-low-end-phone-performance-tips.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-low-end-phone-performance-tips.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-low-end-phone-performance-tips.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-manage-large-projects-on-phone.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-manage-large-projects-on-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-manage-large-projects-on-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-manage-large-projects-on-phone.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-manage-large-projects-on-phone.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-manage-large-projects-on-phone.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-manage-large-projects-on-phone.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-manage-large-projects-on-phone.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-no-root-limitations.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-no-root-limitations.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-no-root-limitations.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-no-root-limitations.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-no-root-limitations.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-no-root-limitations.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-no-root-limitations.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-no-root-limitations.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-offline-documentation-folder.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-offline-documentation-folder.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-offline-documentation-folder.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-offline-documentation-folder.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-offline-documentation-folder.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-offline-documentation-folder.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-offline-documentation-folder.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-offline-documentation-folder.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-package-command-not-found.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-package-command-not-found.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-package-command-not-found.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-package-command-not-found.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-package-command-not-found.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-package-command-not-found.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-package-command-not-found.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-package-command-not-found.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-phone-coding-workflow.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-phone-coding-workflow.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-phone-coding-workflow.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-phone-coding-workflow.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-phone-coding-workflow.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-phone-coding-workflow.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-phone-coding-workflow.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-phone-coding-workflow.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-project-folder-structure.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-project-folder-structure.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-project-folder-structure.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-project-folder-structure.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-project-folder-structure.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-project-folder-structure.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-project-folder-structure.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-project-folder-structure.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-python-error-debugging-roadmap.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-python-error-debugging-roadmap.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-python-error-debugging-roadmap.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-python-error-debugging-roadmap.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-python-error-debugging-roadmap.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-python-error-debugging-roadmap.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-python-error-debugging-roadmap.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-python-error-debugging-roadmap.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-python-virtual-environment.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-python-virtual-environment.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-python-virtual-environment.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-python-virtual-environment.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-python-virtual-environment.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-python-virtual-environment.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-python-virtual-environment.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-python-virtual-environment.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-run-python-script-correctly.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-run-python-script-correctly.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-run-python-script-correctly.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-run-python-script-correctly.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-run-python-script-correctly.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-run-python-script-correctly.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-run-python-script-correctly.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-run-python-script-correctly.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-safe-automation-ideas.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-automation-ideas.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-automation-ideas.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-automation-ideas.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-safe-automation-ideas.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-automation-ideas.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-automation-ideas.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-automation-ideas.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-safe-copy-paste.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-copy-paste.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-copy-paste.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-copy-paste.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-safe-copy-paste.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-copy-paste.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-copy-paste.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-copy-paste.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-safe-update-routine.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-update-routine.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-update-routine.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-update-routine.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-safe-update-routine.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-update-routine.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-update-routine.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-update-routine.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-secure-api-keys-env-file.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-secure-api-keys-env-file.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-secure-api-keys-env-file.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-secure-api-keys-env-file.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-secure-api-keys-env-file.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-secure-api-keys-env-file.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-secure-api-keys-env-file.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-secure-api-keys-env-file.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-site-seo-checklist-from-phone.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-site-seo-checklist-from-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-site-seo-checklist-from-phone.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-site-seo-checklist-from-phone.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-site-seo-checklist-from-phone.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-site-seo-checklist-from-phone.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-site-seo-checklist-from-phone.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-site-seo-checklist-from-phone.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-troubleshooting-checklist.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-troubleshooting-checklist.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-troubleshooting-checklist.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-troubleshooting-checklist.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-troubleshooting-checklist.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-troubleshooting-checklist.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-troubleshooting-checklist.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-troubleshooting-checklist.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-websocket-socketio-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-websocket-socketio-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-websocket-socketio-errors.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-websocket-socketio-errors.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-websocket-socketio-errors.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-websocket-socketio-errors.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-websocket-socketio-errors.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-websocket-socketio-errors.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/termux-write-better-readme.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-write-better-readme.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-write-better-readme.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-write-better-readme.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/termux-write-better-readme.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-write-better-readme.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-write-better-readme.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-write-better-readme.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/unzip-files-termux-android.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/unzip-files-termux-android.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/unzip-files-termux-android.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/unzip-files-termux-android.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/unzip-files-termux-android.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/unzip-files-termux-android.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/unzip-files-termux-android.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/unzip-files-termux-android.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/update-dedsec-project-linux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/update-dedsec-project-linux.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/update-dedsec-project-linux.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/update-dedsec-project-linux.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/update-dedsec-project-linux.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/update-dedsec-project-linux.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/update-dedsec-project-linux.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/update-dedsec-project-linux.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Assistance/update-dedsec-project.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/update-dedsec-project.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/update-dedsec-project.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/update-dedsec-project.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Assistance/update-dedsec-project.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/update-dedsec-project.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/update-dedsec-project.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/update-dedsec-project.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Pages/about-founder.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/about-founder.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/about-founder.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/about-founder.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Pages/about-founder.html</loc>
+    <lastmod>2026-10-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/about-founder.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/about-founder.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/about-founder.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Pages/assistance.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/assistance.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/assistance.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/assistance.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Pages/assistance.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/assistance.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/assistance.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/assistance.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Pages/butsystem-exclusive.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/butsystem-exclusive.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/butsystem-exclusive.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/butsystem-exclusive.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Pages/butsystem-exclusive.html</loc>
+    <lastmod>2026-10-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/butsystem-exclusive.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/butsystem-exclusive.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/butsystem-exclusive.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Pages/contact-credits.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/contact-credits.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/contact-credits.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/contact-credits.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Pages/contact-credits.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/contact-credits.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/contact-credits.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/contact-credits.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Pages/faq.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-10-09</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/faq.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/faq.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Pages/faq.html</loc>
+    <lastmod>2026-10-09</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/faq.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/faq.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/faq.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Pages/guide-for-installation.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/guide-for-installation.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/guide-for-installation.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/guide-for-installation.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Pages/guide-for-installation.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/guide-for-installation.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/guide-for-installation.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/guide-for-installation.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Pages/learn-about-the-tools.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/learn-about-the-tools.html"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/learn-about-the-tools.html"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/learn-about-the-tools.html"/>
+  </url>
+  <url>
+    <loc>https://ded-sec.space/el/Pages/learn-about-the-tools.html</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/learn-about-the-tools.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/learn-about-the-tools.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/learn-about-the-tools.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/Pages/privacy-policy.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/privacy-policy.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/privacy-policy.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/privacy-policy.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/dedsec-linux-venv-paths.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/dedsec-linux-venv-paths.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/dedsec-linux-venv-paths.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/dedsec-linux-venv-paths.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-dedsec-broken-install.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-dedsec-broken-install.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-dedsec-linux-setup.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-dedsec-linux-setup.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-dedsec-linux-setup.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-dedsec-linux-setup.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-github-ssh-authentication-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-github-ssh-authentication-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-github-ssh-authentication-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-github-ssh-authentication-termux.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-localhost-server-not-opening-android.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-localhost-server-not-opening-android.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-localhost-server-not-opening-android.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-localhost-server-not-opening-android.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-node-npm-errors-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-node-npm-errors-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-node-npm-errors-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-node-npm-errors-termux.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-pip-errors-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-pip-errors-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-pip-errors-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-pip-errors-termux.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-python-module-not-found-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-python-module-not-found-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-python-module-not-found-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-python-module-not-found-termux.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-python-syntax-errors-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-python-syntax-errors-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-python-syntax-errors-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-python-syntax-errors-termux.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-dpkg-apt-lock.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-dpkg-apt-lock.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-dpkg-apt-lock.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-dpkg-apt-lock.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-git-push-email-identity.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-git-push-email-identity.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-git-push-email-identity.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-git-push-email-identity.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-no-space-left.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-no-space-left.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-no-space-left.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-no-space-left.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-no-such-file-or-directory.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-no-such-file-or-directory.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-no-such-file-or-directory.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-no-such-file-or-directory.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-permission-denied-executable.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-permission-denied-executable.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-permission-denied-executable.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-permission-denied-executable.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-port-already-in-use.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-port-already-in-use.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-port-already-in-use.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-port-already-in-use.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-repository-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-repository-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-repository-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-repository-errors.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-ssl-certificate-curl-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-ssl-certificate-curl-errors.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-storage-permission.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-storage-permission.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-storage-permission.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-storage-permission.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/fix-termux-widget-scripts.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/fix-termux-widget-scripts.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/fix-termux-widget-scripts.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/fix-termux-widget-scripts.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/github-clone-termux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/github-clone-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/github-clone-termux.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/github-clone-termux.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/install-dedsec-project-android.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/install-dedsec-project-android.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/install-dedsec-project-android.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/install-dedsec-project-android.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/install-dedsec-project-linux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/install-dedsec-project-linux.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/install-dedsec-project-linux.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/install-dedsec-project-linux.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/keep-termux-running-background.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/keep-termux-running-background.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/keep-termux-running-background.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/keep-termux-running-background.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-android-webview-browser-tips.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-android-webview-browser-tips.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-android-webview-browser-tips.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-android-webview-browser-tips.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-backup-restore-workflow.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-backup-restore-workflow.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-backup-restore-workflow.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-backup-restore-workflow.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-beginner-guide-android.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-beginner-guide-android.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-beginner-guide-android.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-beginner-guide-android.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-build-dedsec-style-tool.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-build-dedsec-style-tool.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-build-dedsec-style-tool.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-build-dedsec-style-tool.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-check-broken-links-locally.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-check-broken-links-locally.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-check-broken-links-locally.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-check-broken-links-locally.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-clean-cache-safely.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-clean-cache-safely.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-clean-cache-safely.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-clean-cache-safely.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-cloudflared-local-link-help.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-cloudflared-local-link-help.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-cloudflared-local-link-help.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-cloudflared-local-link-help.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-command-cheat-sheet.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-command-cheat-sheet.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-command-cheat-sheet.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-command-cheat-sheet.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-command-history-and-aliases.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-command-history-and-aliases.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-command-history-and-aliases.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-command-history-and-aliases.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-common-exit-codes.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-common-exit-codes.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-common-exit-codes.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-common-exit-codes.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-cool-script-ideas.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-cool-script-ideas.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-cool-script-ideas.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-cool-script-ideas.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-create-python-menu-script.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-create-python-menu-script.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-create-python-menu-script.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-create-python-menu-script.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-debug-log-files.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-debug-log-files.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-debug-log-files.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-debug-log-files.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-download-with-curl-wget.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-download-with-curl-wget.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-download-with-curl-wget.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-download-with-curl-wget.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-edit-files-with-nano.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-edit-files-with-nano.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-edit-files-with-nano.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-edit-files-with-nano.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-bash-bad-interpreter.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-bash-bad-interpreter.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-bash-bad-interpreter.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-bash-bad-interpreter.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-crontab-alternatives.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-crontab-alternatives.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-crontab-alternatives.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-crontab-alternatives.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-git-auth-token-github.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-git-auth-token-github.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-git-auth-token-github.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-git-auth-token-github.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-git-large-file-push.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-git-large-file-push.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-git-large-file-push.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-git-large-file-push.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-line-endings-windows-crlf.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-line-endings-windows-crlf.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-line-endings-windows-crlf.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-line-endings-windows-crlf.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-pyinstaller-on-android-alternatives.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-pyinstaller-on-android-alternatives.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-python-encoding-unicode-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-python-encoding-unicode-errors.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-requests-ssl-and-api-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-requests-ssl-and-api-errors.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-shebang-env-python.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-shebang-env-python.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-shebang-env-python.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-shebang-env-python.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-fix-termux-api-not-working.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-fix-termux-api-not-working.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-fix-termux-api-not-working.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-fix-termux-api-not-working.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-flask-app-not-loading.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-flask-app-not-loading.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-flask-app-not-loading.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-flask-app-not-loading.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-git-branch-basics.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-git-branch-basics.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-git-branch-basics.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-git-branch-basics.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-git-pull-conflicts.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-git-pull-conflicts.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-git-pull-conflicts.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-git-pull-conflicts.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-github-pages-update-workflow.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-github-pages-update-workflow.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-github-pages-update-workflow.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-github-pages-update-workflow.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-html-css-js-editing-from-phone.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-html-css-js-editing-from-phone.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-html-css-js-editing-from-phone.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-html-css-js-editing-from-phone.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-install-common-python-libraries.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-install-common-python-libraries.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-install-common-python-libraries.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-install-common-python-libraries.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-install-source-and-first-setup.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-install-source-and-first-setup.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-install-source-and-first-setup.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-install-source-and-first-setup.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-json-file-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-json-file-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-json-file-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-json-file-errors.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-learn-python-by-building-tools.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-learn-python-by-building-tools.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-learn-python-by-building-tools.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-learn-python-by-building-tools.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-learning-roadmap.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-learning-roadmap.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-learning-roadmap.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-learning-roadmap.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-local-website-python-server.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-local-website-python-server.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-local-website-python-server.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-local-website-python-server.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-low-end-phone-performance-tips.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-low-end-phone-performance-tips.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-low-end-phone-performance-tips.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-low-end-phone-performance-tips.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-manage-large-projects-on-phone.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-manage-large-projects-on-phone.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-manage-large-projects-on-phone.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-manage-large-projects-on-phone.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-no-root-limitations.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-no-root-limitations.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-no-root-limitations.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-no-root-limitations.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-offline-documentation-folder.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-offline-documentation-folder.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-offline-documentation-folder.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-offline-documentation-folder.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-package-command-not-found.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-package-command-not-found.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-package-command-not-found.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-package-command-not-found.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-phone-coding-workflow.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-phone-coding-workflow.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-phone-coding-workflow.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-phone-coding-workflow.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-project-folder-structure.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-project-folder-structure.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-project-folder-structure.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-project-folder-structure.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-python-error-debugging-roadmap.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-python-error-debugging-roadmap.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-python-error-debugging-roadmap.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-python-error-debugging-roadmap.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-python-virtual-environment.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-python-virtual-environment.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-python-virtual-environment.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-python-virtual-environment.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-run-python-script-correctly.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-run-python-script-correctly.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-run-python-script-correctly.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-run-python-script-correctly.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-safe-automation-ideas.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-automation-ideas.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-automation-ideas.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-automation-ideas.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-safe-copy-paste.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-copy-paste.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-copy-paste.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-copy-paste.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-safe-update-routine.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-safe-update-routine.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-safe-update-routine.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-safe-update-routine.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-secure-api-keys-env-file.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-secure-api-keys-env-file.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-secure-api-keys-env-file.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-secure-api-keys-env-file.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-site-seo-checklist-from-phone.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-site-seo-checklist-from-phone.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-site-seo-checklist-from-phone.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-site-seo-checklist-from-phone.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-troubleshooting-checklist.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-troubleshooting-checklist.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-troubleshooting-checklist.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-troubleshooting-checklist.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-websocket-socketio-errors.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-websocket-socketio-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-websocket-socketio-errors.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-websocket-socketio-errors.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/termux-write-better-readme.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/termux-write-better-readme.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/termux-write-better-readme.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/termux-write-better-readme.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/unzip-files-termux-android.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/unzip-files-termux-android.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/unzip-files-termux-android.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/unzip-files-termux-android.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/update-dedsec-project-linux.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/update-dedsec-project-linux.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/update-dedsec-project-linux.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/update-dedsec-project-linux.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Assistance/update-dedsec-project.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Assistance/update-dedsec-project.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Assistance/update-dedsec-project.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Assistance/update-dedsec-project.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Pages/about-founder.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/about-founder.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/about-founder.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/about-founder.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Pages/assistance.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/assistance.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/assistance.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/assistance.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Pages/butsystem-exclusive.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/butsystem-exclusive.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/butsystem-exclusive.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/butsystem-exclusive.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Pages/contact-credits.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/contact-credits.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/contact-credits.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/contact-credits.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Pages/faq.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/faq.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/faq.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/faq.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Pages/guide-for-installation.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/guide-for-installation.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/guide-for-installation.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/guide-for-installation.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/Pages/learn-about-the-tools.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/learn-about-the-tools.html"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/learn-about-the-tools.html"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/learn-about-the-tools.html"/>
   </url>
   <url>
     <loc>https://ded-sec.space/el/Pages/privacy-policy.html</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/Pages/privacy-policy.html"/>
     <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/Pages/privacy-policy.html"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/Pages/privacy-policy.html"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/el/</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/"/>
-  </url>
-  <url>
-    <loc>https://ded-sec.space/</loc>
-    <lastmod>2026-09-27</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://ded-sec.space/"/>
-    <xhtml:link rel="alternate" hreflang="el" href="https://ded-sec.space/el/"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://ded-sec.space/"/>
   </url>
 </urlset>

@@ -5,6 +5,7 @@ import argparse
 import json
 import sys
 from pathlib import Path
+from xml.etree import ElementTree as ET
 from urllib.parse import unquote, urlsplit
 
 from bs4 import BeautifulSoup
@@ -108,6 +109,15 @@ def main() -> int:
             host = urlsplit(canonical.get("href", "")).netloc
             if host != config["host"]:
                 issues.append((rel, f"wrong canonical host {host}"))
+        if canonical:
+            canonical_url = canonical.get("href", "")
+            for key, attrs in (
+                ("og:url", {"property": "og:url"}),
+                ("twitter:url", {"name": "twitter:url"}),
+            ):
+                meta = soup.find("meta", attrs=attrs)
+                if meta and meta.get("content") != canonical_url:
+                    issues.append((rel, f"{key} differs from canonical {canonical_url}"))
         robots = soup.find("meta", attrs={"name": "robots"})
         if robots:
             value = robots.get("content", "").lower()
@@ -129,6 +139,29 @@ def main() -> int:
     sitemap = root / "sitemap.xml"
     if config.get("sitemap") and not sitemap.exists():
         issues.append(("sitemap.xml", "missing sitemap"))
+    if config.get("sitemap") and sitemap.exists():
+        try:
+            xml = ET.parse(sitemap)
+            ns = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9",
+                  "x": "http://www.w3.org/1999/xhtml"}
+            entries = xml.findall("s:url", ns)
+            urls = [entry.findtext("s:loc", namespaces=ns) for entry in entries]
+            indexed = {p for p in htmls if p.name != "404.html" and "unused-template" not in p.name}
+            expected = set()
+            for p in indexed:
+                doc = BeautifulSoup(p.read_text(encoding="utf-8", errors="replace"), "html.parser")
+                tag = doc.find("link", rel="canonical")
+                if tag:
+                    expected.add(tag.get("href", ""))
+            if len(urls) != len(set(urls)) or set(urls) != expected:
+                issues.append(("sitemap.xml", f"canonical sitemap mismatch: expected {len(expected)}, got {len(urls)}"))
+            for entry in entries:
+                loc = entry.findtext("s:loc", namespaces=ns)
+                links = {alt.get("hreflang"): alt.get("href") for alt in entry.findall("x:link", ns)}
+                if set(links) != {"en", "el", "x-default"} or any(v not in expected for v in links.values()):
+                    issues.append(("sitemap.xml", f"missing/invalid language alternate for {loc}"))
+        except ET.ParseError as exc:
+            issues.append(("sitemap.xml", f"invalid XML: {exc}"))
     if not config.get("sitemap") and sitemap.exists():
         issues.append(("sitemap.xml", "deployment must not contain sitemap"))
     llms_files = [root / "llms.txt", root / "llms-full.txt"]

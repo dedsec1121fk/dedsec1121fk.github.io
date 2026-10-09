@@ -125,8 +125,11 @@ Individual tools may have different requirements, limitations, or risks. Read th
 - **Main toolkit repository:** https://github.com/dedsec1121fk/DedSec
 - **Backup toolkit repository:** https://github.com/sal-scar/DedSec
 - **Backup website:** https://ded-sec.online/
+- **Google/XML sitemap:** https://ded-sec.space/sitemap.xml
+- **Crawler directives:** https://ded-sec.space/robots.txt
+- **AI-readable site summaries:** https://ded-sec.space/llms.txt and https://ded-sec.space/llms-full.txt
 
-**For maintainers:** This repository contains website files; the toolkit source belongs in the main DedSec repository. Keep English and Greek pages in sync, ensure links point to existing pages, and check platform-specific statements before publishing.
+**For maintainers:** This repository contains website files; the toolkit source belongs in the main DedSec repository. Keep English and Greek pages in sync, ensure links point to existing pages, and check platform-specific statements before publishing. Update `sitemap.xml` and both `llms` files when public pages change; only specify `lastmod` for verified substantial content edits. Google uses the XML sitemap, not `llms.txt`, for URL discovery.
 
 </details>
 
@@ -259,8 +262,11 @@ bash Setup.sh
 - **Κύριο αποθετήριο toolkit:** https://github.com/dedsec1121fk/DedSec
 - **Εφεδρικό αποθετήριο toolkit:** https://github.com/sal-scar/DedSec
 - **Εφεδρική ιστοσελίδα:** https://ded-sec.online/
+- **XML sitemap για Google:** https://ded-sec.space/sitemap.xml
+- **Οδηγίες για crawlers:** https://ded-sec.space/robots.txt
+- **Αρχεία περίληψης για AI:** https://ded-sec.space/llms.txt και https://ded-sec.space/llms-full.txt
 
-**Για όσους συντηρούν το project:** Αυτό το αποθετήριο περιέχει τα αρχεία της ιστοσελίδας· ο κώδικας του toolkit βρίσκεται στο κύριο αποθετήριο DedSec. Κράτησε τις ελληνικές και αγγλικές σελίδες συγχρονισμένες, έλεγχε ότι οι σύνδεσμοι αντιστοιχούν σε υπαρκτές σελίδες και επιβεβαίωνε τις πληροφορίες συμβατότητας πριν από τη δημοσίευση.
+**Για όσους συντηρούν το project:** Αυτό το αποθετήριο περιέχει τα αρχεία της ιστοσελίδας· ο κώδικας του toolkit βρίσκεται στο κύριο αποθετήριο DedSec. Κράτησε τις ελληνικές και αγγλικές σελίδες συγχρονισμένες, έλεγχε ότι οι σύνδεσμοι αντιστοιχούν σε υπαρκτές σελίδες και επιβεβαίωνε τις πληροφορίες συμβατότητας πριν από τη δημοσίευση. Όταν αλλάζουν δημόσιες σελίδες, ενημέρωνε το `sitemap.xml` και τα δύο αρχεία `llms`. Το `lastmod` μπαίνει μόνο για επιβεβαιωμένες, ουσιαστικές αλλαγές· η Google χρησιμοποιεί το XML sitemap και όχι το `llms.txt` για την ανακάλυψη URLs.
 
 </details>
 

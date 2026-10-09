@@ -5633,7 +5633,6 @@ body.light-theme .tool-personal-note{
 @media (max-width: 620px){
   
   .value-card{padding:14px;}
-  .hero-store-cta .btn{width:100%;}
   .faq-cta{flex-direction:column; align-items:stretch;}
 }
 
@@ -8092,7 +8091,7 @@ html body :is(.assistance-quick-actions, .inline-action-buttons) > a:is(.starter
 
 
 
-html body :is(.assistance-store-cta, .assistance-path-section, .text-center) {
+html body :is(.assistance-path-section, .text-center) {
   text-align: center !important;
 }
 

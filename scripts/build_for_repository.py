@@ -8,10 +8,12 @@ import os
 import posixpath
 import shutil
 import sys
-from datetime import date
+from datetime import datetime
+from zoneinfo import ZoneInfo
 from pathlib import Path
 from urllib.parse import quote, unquote, urlsplit
 from xml.sax.saxutils import escape
+from xml.etree import ElementTree as ET
 
 from bs4 import BeautifulSoup
 
@@ -333,13 +335,33 @@ def link_has_hreflang(rel_value) -> bool:
     return True
 
 
-def generate_sitemap(root: Path, config: dict) -> None:
+def generate_sitemap(root: Path, config: dict, source: Path) -> None:
+    """Build an accurate canonical sitemap, retaining only verified source lastmods.
+
+    Do not mark every page newly modified on each GitHub Pages build: deployment
+    timestamps aren't significant page-content edits. Maintainers supply any
+    verified edit dates in the checked-in sitemap.xml.
+    """
     if not config.get("sitemap", False):
         return
+    prev_dates: dict[str, str] = {}
+    source_xml = source / "sitemap.xml"
+    if source_xml.exists():
+        sitemap_ns = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+        try:
+            source_tree = ET.parse(source_xml)
+            for entry in source_tree.findall(f"{sitemap_ns}url"):
+                loc = entry.findtext(f"{sitemap_ns}loc")
+                lastmod = entry.findtext(f"{sitemap_ns}lastmod")
+                if loc and lastmod:
+                    prev_dates[loc] = lastmod
+        except ET.ParseError as exc:
+            raise ValueError(f"Malformed source sitemap: {source_xml}") from exc
+
     urls = []
-    for p in sorted(root.rglob("*.html")):
-        rel = p.relative_to(root)
-        if p.name == "404.html" or "unused-template" in p.name:
+    for path in sorted(root.rglob("*.html")):
+        rel = path.relative_to(root)
+        if path.name == "404.html" or "unused-template" in path.name:
             continue
         url = page_url(config["site_url"], rel)
         other = counterpart(rel, root)
@@ -351,6 +373,8 @@ def generate_sitemap(root: Path, config: dict) -> None:
             el_url = url
             if other:
                 en_url = page_url(config["site_url"], other)
+
+        date_xml = f"\n    <lastmod>{escape(prev_dates[url])}</lastmod>" if url in prev_dates else ""
         alternate = ""
         if other:
             alternate = (
@@ -360,11 +384,7 @@ def generate_sitemap(root: Path, config: dict) -> None:
             )
         urls.append(
             "  <url>\n"
-            f"    <loc>{escape(url)}</loc>\n"
-            f"    <lastmod>{date.today().isoformat()}</lastmod>\n"
-            "    <changefreq>weekly</changefreq>\n"
-            f"    <priority>{'1.0' if rel.as_posix() == 'index.html' else '0.7'}</priority>"
-            f"{alternate}\n"
+            f"    <loc>{escape(url)}</loc>{date_xml}{alternate}\n"
             "  </url>"
         )
     xml = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + "\n".join(urls) + "\n</urlset>\n"
@@ -467,7 +487,7 @@ def generate_search_index(root: Path) -> None:
     assets.mkdir(parents=True, exist_ok=True)
     payload = {
         "version": 1,
-        "generated_on": date.today().isoformat(),
+        "generated_on": datetime.now(ZoneInfo('Europe/Athens')).date().isoformat(),
         "items": items,
     }
     (assets / "search-index.json").write_text(
@@ -523,9 +543,14 @@ def main() -> int:
     ]
     if config.get("sitemap", False):
         robots_lines += ["", f"Sitemap: {config['site_url'].rstrip('/')}/sitemap.xml"]
-    (output / "robots.txt").write_text("\n".join(robots_lines) + "\n", encoding="utf-8")
-    generate_sitemap(output, config)
-    info = {"repository": repository, **config, "built_on": date.today().isoformat()}
+    # Preserve the readable robots.txt annotations on the canonical deployment;
+    # other environments keep their deployment-specific rules.
+    if config["mode"] == "main" and (source / "robots.txt").exists():
+        shutil.copy2(source / "robots.txt", output / "robots.txt")
+    else:
+        (output / "robots.txt").write_text("\n".join(robots_lines) + "\n", encoding="utf-8")
+    generate_sitemap(output, config, source)
+    info = {"repository": repository, **config, "built_on": datetime.now(ZoneInfo('Europe/Athens')).date().isoformat()}
     (output / "Other Files").mkdir(parents=True, exist_ok=True)
     (output / "Other Files" / "deployment-info.json").write_text(json.dumps(info, indent=2) + "\n", encoding="utf-8")
     (output / ".nojekyll").write_text("", encoding="utf-8")
