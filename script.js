@@ -5,8 +5,9 @@
    - NAV highlights & mobile menu behaviors are also here.
    ============================================================================ */
 document.addEventListener('DOMContentLoaded', () => {
-    // Hidden Easter egg: seven deliberate taps/clicks on the navbar title.
-    // Uses the shared script so the effect applies to whichever page is open.
+    // Hidden Easter egg — seven taps on the navbar's DedSec Project text.
+    // This is visual-only: it animates real, on-screen DOM pieces, cracks the
+    // screen, and shows an accessible restore button. No content is deleted.
     const setupPageCollapseEasterEgg = () => {
         const title = document.querySelector('.main-nav .site-title');
         if (!title) return;
@@ -20,26 +21,142 @@ document.addEventListener('DOMContentLoaded', () => {
         const activate = () => {
             if (activated) return;
             activated = true;
-            const page = document.querySelector('.page-content') || document.querySelector('main') || document.querySelector('.content-container') || document.body;
-            let blocks = Array.from(page.children).filter(el => el.nodeType === 1 && !['SCRIPT', 'STYLE'].includes(el.tagName));
-            if (blocks.length < 2) blocks = Array.from(page.querySelectorAll(':scope > section, :scope > div, :scope > article')).slice(0, 32);
-            const footer = document.querySelector('.main-footer');
-            const nav = document.querySelector('.main-nav');
-            if (footer && !blocks.includes(footer)) blocks.push(footer);
-            if (nav && !blocks.includes(nav)) blocks.push(nav);
-            blocks.slice(0, 65).forEach((el, i) => {
-                el.classList.add('dedsec-collapse-piece');
-                el.style.setProperty('--collapse-delay', `${Math.min(i * 0.095, 2.1)}s`);
-                el.style.setProperty('--collapse-tilt', `${(i % 2 === 0 ? 1 : -1) * (7 + (i % 5) * 3)}deg`);
-                el.style.setProperty('--collapse-shift', `${(i % 2 === 0 ? -1 : 1) * (35 + (i % 4) * 19)}px`);
+            const vw = Math.max(320, window.innerWidth);
+            const vh = Math.max(400, window.innerHeight);
+            const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            // Gather independent, visible bits of the ACTUAL page (rather than
+            // just changing a message). The same selectors work on EN/EL,
+            // the home page, instructions, FAQ, and other sub-pages.
+            const selectors = [
+                '.main-nav .site-title', '.main-nav .nav-action-btn', '.main-nav .burger-menu',
+                '.main-nav .nav-link', '.home-page-header > *',
+                '.home-intro-panel > *', '.home-intro-panel .trust-item',
+                '.home-intro-panel .project-fact-row', '.home-decision-card',
+                '.home-decision-card > *', '.home-screen > section',
+                '.home-screen > section > h2', '.home-screen > section > p',
+                '.home-screen .sales-btn', '.home-screen .btn',
+                '.page-content > *', '.page-header > *',
+                '.content-section > *', '.content-section .feature-card',
+                '.content-section h2', '.content-section h3',
+                '.content-section p', '.platform-install-card',
+                '.page-content summary', '.main-footer', '.footer-content',
+                '.dedsec-cookie-banner', '.dedsec-cookie-settings', '.dedsec-cookie-status'
+            ];
+            const seen = new Set();
+            const pieces = [];
+            document.querySelectorAll(selectors.join(', ')).forEach(el => {
+                if (seen.has(el) || el.closest('.dedsec-collapse-stage')) return;
+                seen.add(el);
+                const rect = el.getBoundingClientRect();
+                if (rect.width < 16 || rect.height < 10 || rect.bottom < -15 ||
+                    rect.top > vh + 40 || rect.right < -20 || rect.left > vw + 20) return;
+                const style = window.getComputedStyle(el);
+                if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') return;
+                pieces.push({ el, rect });
             });
-            const overlay = document.createElement('div');
-            overlay.className = 'dedsec-collapse-overlay';
-            overlay.setAttribute('role', 'status');
-            overlay.innerHTML = '<div class="dedsec-collapse-message"><span class="dedsec-collapse-warning">// REALITY.EXE HAS STOPPED //</span><strong>DEDSEC SYSTEM COLLAPSE</strong><button type="button" class="dedsec-collapse-restore">Restore page ↻</button></div>';
-            document.body.appendChild(overlay);
+
+            // Include generic visible page pieces when the page is structured
+            // differently. Do not move layout or wrap any original elements.
+            if (pieces.length < 8) {
+                document.querySelectorAll('main h1, main h2, main h3, main p, main button, main a, main article, main section, main details, main img').forEach(el => {
+                    if (seen.has(el) || pieces.length >= 65) return;
+                    const rect = el.getBoundingClientRect();
+                    if (rect.width > 20 && rect.height > 12 && rect.top < vh && rect.bottom > 0) {
+                        pieces.push({ el, rect });
+                        seen.add(el);
+                    }
+                });
+            }
+
+            const stage = document.createElement('div');
+            stage.className = 'dedsec-collapse-stage';
+            stage.setAttribute('aria-label', 'DedSec Project page collapse Easter egg');
+            stage.innerHTML = '<div class="dedsec-collapse-flash" aria-hidden="true"></div>' +
+                '<svg class="dedsec-collapse-cracks" aria-hidden="true"></svg>' +
+                '<div class="dedsec-collapse-debris" aria-hidden="true"></div>' +
+                '<div class="dedsec-collapse-finale" role="status" aria-live="polite">' +
+                '<div class="dedsec-collapse-finale-inner"><div class="dedsec-collapse-status">// SYSTEM FRACTURED //</div>' +
+                '<button type="button" class="dedsec-collapse-restore">↻ Restore page</button></div></div>';
+            document.body.appendChild(stage);
             document.body.classList.add('dedsec-collapse-active');
-            overlay.querySelector('.dedsec-collapse-restore').addEventListener('click', () => window.location.reload());
+
+            // Animated screen cracks converge around the title then branch out
+            // across the current visible viewport. An SVG scales with the device.
+            const svg = stage.querySelector('.dedsec-collapse-cracks');
+            svg.setAttribute('viewBox', `0 0 ${vw} ${vh}`);
+            svg.setAttribute('preserveAspectRatio', 'none');
+            const origin = title.getBoundingClientRect();
+            const cx = Math.min(vw - 18, Math.max(18, origin.left + origin.width * .6));
+            const cy = Math.min(vh - 18, Math.max(18, origin.top + origin.height * .5));
+            const ns = 'http://www.w3.org/2000/svg';
+            for (let i = 0; i < 14; i++) {
+                const theta = Math.PI * 2 * i / 14;
+                const reach = Math.max(vw, vh) * (i % 3 === 0 ? 1.5 : 1.05);
+                let path = `M ${cx.toFixed(1)} ${cy.toFixed(1)}`;
+                for (let k = 1; k <= 8; k++) {
+                    const d = reach * k / 8;
+                    const jitter = (Math.sin((i + 2) * (k + 3) * 2.37) * 13) * (k / 8);
+                    const x = cx + Math.cos(theta) * d - Math.sin(theta) * jitter;
+                    const y = cy + Math.sin(theta) * d + Math.cos(theta) * jitter;
+                    path += ` L ${x.toFixed(1)} ${y.toFixed(1)}`;
+                }
+                const line = document.createElementNS(ns, 'path');
+                line.setAttribute('d', path);
+                line.setAttribute('class', i % 3 === 0 ? 'dedsec-crack-bright' : 'dedsec-crack');
+                line.style.setProperty('--crack-delay', `${i * 24}ms`);
+                svg.appendChild(line);
+            }
+
+            // Individual live elements twist and FALL AWAY. Web Animations
+            // changes only presentation; the DOM stays intact until a reload.
+            pieces.slice(0, 90).forEach(({ el, rect }, i) => {
+                const side = (i % 2 === 0 ? -1 : 1);
+                const sway = side * (vw * (.17 + (i % 6) * .032));
+                const fall = vh + Math.max(0, vh - rect.top) * (.55 + (i % 3) * .16);
+                const angle = side * (14 + (i % 7) * 8);
+                const delay = reducedMotion ? 0 : (i % 11) * 66 + Math.floor(i / 11) * 48;
+                const duration = reducedMotion ? 110 : 1150 + (i % 5) * 145;
+                el.classList.add('dedsec-collapse-fragment');
+                if (typeof el.animate === 'function') {
+                    el.animate([
+                        { transform: 'translate3d(0,0,0) rotate(0deg)', opacity: 1, filter: 'none', offset: 0 },
+                        { transform: `translate3d(${side * 9}px,-9px,0) rotate(${side * 2}deg)`, opacity: 1, filter: 'contrast(1.3)', offset: .18 },
+                        { transform: `translate3d(${sway * .22}px,24px,0) rotate(${angle * .23}deg) skewX(${side * 4}deg)`, opacity: 1, offset: .40 },
+                        { transform: `translate3d(${sway}px,${fall}px,0) rotate(${angle}deg) skewX(${side * 18}deg) scale(.62)`, opacity: 0, filter: 'blur(7px)', offset: 1 }
+                    ], { duration, delay, easing: 'cubic-bezier(.33,.03,.72,.45)', fill: 'forwards' });
+                } else {
+                    el.style.setProperty('--collapse-shift', `${sway}px`);
+                    el.style.setProperty('--collapse-fall', `${fall}px`);
+                    el.style.setProperty('--collapse-tilt', `${angle}deg`);
+                    el.style.setProperty('--collapse-delay', `${delay}ms`);
+                    el.style.setProperty('--collapse-duration', `${duration}ms`);
+                    el.classList.add('dedsec-collapse-fragment-fallback');
+                }
+            });
+
+            const debris = stage.querySelector('.dedsec-collapse-debris');
+            if (!reducedMotion) {
+                for (let i = 0; i < 44; i++) {
+                    const shard = document.createElement('i');
+                    shard.className = 'dedsec-collapse-shard';
+                    const x = ((i * 73) % 100) / 100 * vw;
+                    const y = ((i * 37) % 81) / 100 * vh;
+                    const side = i % 2 === 0 ? -1 : 1;
+                    shard.style.left = `${x}px`;
+                    shard.style.top = `${y}px`;
+                    shard.style.setProperty('--shard-x', `${side * (70 + (i % 8) * 32)}px`);
+                    shard.style.setProperty('--shard-y', `${vh * (.3 + (i % 6) / 8)}px`);
+                    shard.style.setProperty('--shard-rot', `${side * (140 + (i % 7) * 43)}deg`);
+                    shard.style.setProperty('--shard-delay', `${140 + (i % 9) * 58}ms`);
+                    debris.appendChild(shard);
+                }
+            }
+
+            stage.querySelector('.dedsec-collapse-restore').addEventListener('click', () => window.location.reload());
+            // Drop the remaining background once the shards have fallen off.
+            window.setTimeout(() => document.body.classList.add('dedsec-collapse-ended'), reducedMotion ? 300 : 3500);
+            window.setTimeout(() => stage.querySelector('.dedsec-collapse-restore').focus({ preventScroll: true }), reducedMotion ? 350 : 4200);
         };
 
         const registerTap = () => {
@@ -50,6 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
         title.addEventListener('click', registerTap);
         title.addEventListener('keydown', (event) => {
+            if (event.target !== title) return;
             if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 registerTap();

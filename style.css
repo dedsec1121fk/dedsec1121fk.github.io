@@ -11048,18 +11048,36 @@ body.founder-page .founder-world-grid { grid-template-columns:repeat(auto-fit,mi
 body.founder-page .founder-section-disclosure-body .founder-compact-header { margin:0 0 15px; }
 @media(max-width:640px) { body.founder-page .founder-section-summary h2 { font-size:1.1rem; } body.founder-page .founder-section-summary::before {font-size:1.3rem;} }
 
-/* Seven-tap collapse Easter egg: only runs after activation. */
-.main-nav .site-title[role="button"] { cursor:pointer; }
-.dedsec-collapse-active { overflow:hidden !important; }
-.dedsec-collapse-active::before { content:'';position:fixed;inset:0;z-index:2147483000; pointer-events:none; background: repeating-linear-gradient(112deg,transparent 0 55px,rgba(215,125,255,.13) 56px 57px,transparent 58px 125px); animation:dedsec-crack-flash 1.2s ease-out both; }
-.dedsec-collapse-active .dedsec-collapse-piece { position:relative; transform-origin: center top; animation: dedsec-physical-collapse 3.2s cubic-bezier(.35,0,.77,.26) var(--collapse-delay,0s) forwards !important; will-change:transform,opacity,filter; }
-.dedsec-collapse-overlay { position:fixed; inset:0; z-index:2147483001; pointer-events:none; display:grid; place-items:center; background:radial-gradient(circle at 50% 50%,rgba(28,7,40,.1),rgba(0,0,0,.94)); opacity:0; animation:dedsec-overlay-show 1.5s 2.1s forwards; padding:20px; }
-.dedsec-collapse-message {display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;max-width:500px;color:#f0dbff;text-shadow:0 0 28px #bd65f7;}
-.dedsec-collapse-warning { color:#f39dfc; letter-spacing:.15em; font-size:.79rem; }
-.dedsec-collapse-message strong {font-size:clamp(1.25rem,5vw,2.35rem);line-height:1.2;}
-.dedsec-collapse-restore {pointer-events:auto;cursor:pointer;border:1px solid #d6a4ff;background:#2b123b;color:white;border-radius:14px;padding:13px 23px;font:inherit;font-weight:700;}
-.dedsec-collapse-restore:hover,.dedsec-collapse-restore:focus-visible {background:#552376;}
-@keyframes dedsec-physical-collapse {0% {transform:translate(0,0) rotate(0);filter:none;opacity:1;} 12%{transform:translate(-7px,2px) rotate(1deg);filter:contrast(1.45);} 22%{transform:translate(9px,-3px) rotate(-1.5deg);filter:contrast(1.8);} 40%{opacity:1;} 100%{transform:translate(var(--collapse-shift,60px),115vh) rotate(var(--collapse-tilt,15deg)) scale(.65);filter:blur(12px) brightness(.25);opacity:0;}}
-@keyframes dedsec-crack-flash { 0%{opacity:0} 25%{opacity:1} 100%{opacity:0} }
-@keyframes dedsec-overlay-show {to{opacity:1;pointer-events:auto;}}
-@media (prefers-reduced-motion: reduce) { .dedsec-collapse-active .dedsec-collapse-piece {animation:dedsec-physical-collapse 0.1s var(--collapse-delay,0s) forwards !important;} .dedsec-collapse-overlay{animation:dedsec-overlay-show .1s 0.1s forwards;} .dedsec-collapse-active::before { animation:none; } }
+/* Easter egg: visually shatters live page elements after seven title taps.
+   No normal layout, navigation, or colors change before activation. */
+.main-nav .site-title[role="button"] { cursor: pointer; }
+body.dedsec-collapse-active { overflow: hidden !important; }
+/* The existing cookie panel normally sits above everything else. Move its
+   stacking level below the shatter stage only while the Easter egg runs. */
+body.dedsec-collapse-active .dedsec-cookie-banner,
+body.dedsec-collapse-active .dedsec-cookie-settings,
+body.dedsec-collapse-active .dedsec-cookie-status { z-index:2147483590 !important; }
+body.dedsec-collapse-active .dedsec-collapse-fragment { transform-origin: center 35%; will-change: transform, opacity, filter; }
+body.dedsec-collapse-active .dedsec-collapse-fragment-fallback { animation: dedsec-fragment-fall var(--collapse-duration,1600ms) var(--collapse-delay,0ms) ease-in forwards !important; }
+@keyframes dedsec-fragment-fall { to { transform:translate3d(var(--collapse-shift,150px),var(--collapse-fall,120vh),0) rotate(var(--collapse-tilt,28deg)) scale(.6); opacity:0; filter:blur(7px); } }
+.dedsec-collapse-stage { position:fixed; inset:0; width:100vw; height:100vh; z-index:2147483600; pointer-events:none; overflow:hidden; isolation:isolate; }
+.dedsec-collapse-flash { position:absolute; inset:0; background:#df9fff; opacity:0; animation:dedsec-break-flash 820ms steps(1,end) forwards; }
+@keyframes dedsec-break-flash {0%{opacity:0} 7%{opacity:.45} 12%{opacity:0} 19%{opacity:.28} 23%,100%{opacity:0} }
+.dedsec-collapse-cracks { position:absolute; width:100%;height:100%;top:0;left:0; overflow:visible; filter:drop-shadow(0 0 5px rgba(198,117,255,.84)); }
+.dedsec-collapse-cracks path { fill:none; stroke:rgba(210,151,255,.8); stroke-width:1.65px; stroke-linejoin:round; stroke-linecap:round; stroke-dasharray:1900; stroke-dashoffset:1900; animation:dedsec-cracks-spread 480ms var(--crack-delay,0ms) cubic-bezier(.24,.7,.7,1) forwards, dedsec-cracks-fade 1100ms 1100ms forwards; }
+.dedsec-collapse-cracks .dedsec-crack-bright { stroke:rgba(249,230,255,.96);stroke-width:2.4px; }
+@keyframes dedsec-cracks-spread { to{ stroke-dashoffset:0; } }
+@keyframes dedsec-cracks-fade {to{ opacity:0; }}
+.dedsec-collapse-shard { position:absolute; display:block; width:clamp(7px,2vw,17px);height:clamp(10px,2.8vw,25px); background:linear-gradient(130deg,rgba(218,150,255,.85),rgba(43,7,78,.28)); border:1px solid rgba(233,193,255,.8);clip-path:polygon(50% 0,100% 85%,0 100%);filter:drop-shadow(0 0 8px #b77af8);opacity:0; animation:dedsec-shard-flight 1700ms var(--shard-delay,0ms) cubic-bezier(.19,.42,.65,.9) forwards; }
+@keyframes dedsec-shard-flight {0%{opacity:0;transform:translate(0,0) rotate(0) scale(.6)}9%{opacity:1}65%{opacity:1}100%{opacity:0;transform:translate(var(--shard-x,90px),var(--shard-y,400px)) rotate(var(--shard-rot,180deg)) scale(.5)} }
+.dedsec-collapse-finale { position:absolute;inset:0;display:grid;place-items:center;padding:20px; opacity:0;background:rgba(5,4,11,.91);animation:dedsec-final-reveal 950ms 2950ms forwards; }
+.dedsec-collapse-finale-inner {display:flex;flex-direction:column;gap:20px;align-items:center;text-align:center;max-width:90vw;transform:translateY(10px);}
+.dedsec-collapse-status {font:700 clamp(1.05rem,4vw,2rem)/1.3 ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.065em;color:#ead3ff;text-shadow:0 0 25px #a855f7;}
+.dedsec-collapse-restore {cursor:pointer;pointer-events:auto;color:#fff;background:#7133b1;border:1px solid #c591fa;box-shadow:0 0 25px rgba(168,85,247,.28);border-radius:10px;padding:13px 22px;font:700 1rem/1.3 system-ui,sans-serif;min-height:47px;}
+.dedsec-collapse-restore:hover,.dedsec-collapse-restore:focus-visible {background:#873dce;outline:2px solid #f0caff;outline-offset:3px;}
+@keyframes dedsec-final-reveal {to{opacity:1;pointer-events:auto}}
+body.dedsec-collapse-ended > :not(.dedsec-collapse-stage):not(script):not(style) { visibility:hidden !important; }
+@media (prefers-reduced-motion: reduce) {
+  .dedsec-collapse-flash,.dedsec-collapse-cracks,.dedsec-collapse-shard{display:none !important;}
+  .dedsec-collapse-finale{animation:dedsec-final-reveal .12s .15s forwards;}
+}
