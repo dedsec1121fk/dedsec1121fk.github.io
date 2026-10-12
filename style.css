@@ -11081,3 +11081,22 @@ body.dedsec-collapse-ended > :not(.dedsec-collapse-stage):not(script):not(style)
   .dedsec-collapse-flash,.dedsec-collapse-cracks,.dedsec-collapse-shard{display:none !important;}
   .dedsec-collapse-finale{animation:dedsec-final-reveal .12s .15s forwards;}
 }
+
+
+/* Founder page: combine four related blocks under the single GitHub Stats disclosure.
+   Scoped decorative styling only: the existing grids/cards and theme variables remain intact. */
+body.founder-page #github-stats .founder-github-subsection {
+  margin-top: 1.5rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--nm-border);
+  scroll-margin-top: calc(var(--nav-h, 70px) + 20px);
+}
+body.founder-page #github-stats .founder-github-subsection-title {
+  color: var(--nm-text-accent);
+  text-align: center;
+  font-family: var(--font-secondary);
+  font-size: clamp(1.02rem, 2.5vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.4;
+  margin: 0 0 1rem;
+}
