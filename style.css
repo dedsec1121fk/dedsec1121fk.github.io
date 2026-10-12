@@ -5327,7 +5327,7 @@ body.light-theme .nav-link:hover {
     -webkit-text-fill-color: #111111 !important;
 }
 
-body.light-theme a:not(.btn):not(.sponsor-btn):not(.faq-link-btn):not(.assistant-open-link):not(.assistant-chip):not(.sales-btn):not(.footer-mini-btn):not(.starter-path-btn) {
+body.light-theme a:not(.btn):not(.sponsor-btn):not(.faq-link-btn):not(.assistant-open-link):not(.assistant-chip) {
     color: #A855F7 !important;
     -webkit-text-fill-color: #A855F7 !important;
 }
@@ -8913,8 +8913,13 @@ html body .main-footer {
   --radius-pill: 0px !important;
 }
 
-/* Premium 2026-10-11: replaced universal square-corner enforcement with
-   component-level geometry so critical controls can remain rounded. */
+/* Remove rounded corners from every visual surface, including rules defined
+   in older component-specific and mobile-specific styles. */
+html body *,
+html body *::before,
+html body *::after {
+  border-radius: 0px !important;
+}
 
 /* Native selection controls stay recognizable and usable. */
 html body input[type="radio"],
@@ -9261,8 +9266,15 @@ body.light-theme :is(i,.material-icons,.fa,.fab,.fas,.far) {
 }
 
 
-/* Premium 2026-10-11: removed obsolete universal white/black text lock.
-   Contextual muted, accent, and primary-action contrast can now work. */
+/* Absolute theme text-color lock: no muted gray or pink text remains. */
+html body.dark-theme *:not(i):not(svg):not(path):not(.material-icons):not(.fa):not(.fab):not(.fas):not(.far) {
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+}
+html body.light-theme *:not(i):not(svg):not(path):not(.material-icons):not(.fa):not(.fab):not(.fas):not(.far) {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+}
 html body.dark-theme :is(input,textarea)::placeholder {
     color: #ffffff !important;
     -webkit-text-fill-color: #ffffff !important;
@@ -11051,230 +11063,3 @@ body.founder-page .founder-section-disclosure-body .founder-compact-header { mar
 @keyframes dedsec-crack-flash { 0%{opacity:0} 25%{opacity:1} 100%{opacity:0} }
 @keyframes dedsec-overlay-show {to{opacity:1;pointer-events:auto;}}
 @media (prefers-reduced-motion: reduce) { .dedsec-collapse-active .dedsec-collapse-piece {animation:dedsec-physical-collapse 0.1s var(--collapse-delay,0s) forwards !important;} .dedsec-collapse-overlay{animation:dedsec-overlay-show .1s 0.1s forwards;} .dedsec-collapse-active::before { animation:none; } }
- 
-
-/* ===========================================================================
-   DedSec Premium Theme • 2026-10-11
-   Derived from the approved standalone DedSec light/dark concept.
-   Global color tokens and component refinement; existing content/behaviors intact.
-   All changes below are scoped to common site components and remain reversible.
-   =========================================================================== */
-:root {
-  --premium-page:#080910;
-  --premium-surface:#11121b;
-  --premium-card:#15131f;
-  --premium-card-alt:#1b1728;
-  --premium-text:#f5f4fb;
-  --premium-muted:#b7b3c4;
-  --premium-accent:#a855f7;
-  --premium-accent-soft:#c89bff;
-  --premium-on-accent:#100a19;
-  --premium-outline:rgba(190,163,232,.20);
-  --premium-outline-strong:rgba(190,141,255,.42);
-  --premium-glow:rgba(168,85,247,.12);
-  --premium-green:#79e4b3;
-  --premium-amber:#f5c879;
-  color-scheme:dark;
-}
-html:has(body.light-theme) { color-scheme:light; }
-html body.dark-theme {
-  --nm-abyss-blue:var(--premium-page) !important;
-  --nm-nav-solid:#0d0e16 !important;
-  --nm-menu-solid:var(--premium-surface) !important;
-  --nm-dark:var(--premium-card) !important;
-  --nm-darkest:#0d0e16 !important;
-  --nm-container:var(--premium-card) !important;
-  --nm-disclaimer-bg:var(--premium-card) !important;
-  --nm-border:var(--premium-outline) !important;
-  --nm-accent:var(--premium-accent) !important;
-  --nm-accent-hover:#bb7cff !important;
-  --nm-text:var(--premium-text) !important;
-  --nm-text-muted:var(--premium-muted) !important;
-  --nm-text-accent:var(--premium-text) !important;
-  --nm-text-on-accent:var(--premium-on-accent) !important;
-  --nm-text-on-status:var(--premium-on-accent) !important;
-  --nm-success:var(--premium-green) !important;
-  --nm-warning:var(--premium-amber) !important;
-  --ded-card-surface-dark:var(--premium-card) !important;
-  --ded-accent-lavender:var(--premium-accent-soft) !important;
-  --ded-accent-purple:var(--premium-accent) !important;
-  --ded-border-dark:var(--premium-outline) !important;
-  --glow-rgb:168,85,247 !important;
-}
-html body.light-theme {
-  --premium-page:#f7f5fb;
-  --premium-surface:#ffffff;
-  --premium-card:#ffffff;
-  --premium-card-alt:#f0eafa;
-  --premium-text:#1d1728;
-  --premium-muted:#565166;
-  --premium-accent:#7832c6;
-  --premium-accent-soft:#6824ac;
-  --premium-on-accent:#ffffff;
-  --premium-outline:rgba(89,56,135,.18);
-  --premium-outline-strong:rgba(120,50,198,.37);
-  --premium-glow:rgba(168,85,247,.08);
-  --premium-green:#15734e;
-  --premium-amber:#8a5300;
-  --nm-abyss-blue:var(--premium-page) !important;
-  --nm-nav-solid:var(--premium-page) !important;
-  --nm-menu-solid:#ffffff !important;
-  --nm-dark:var(--premium-card) !important;
-  --nm-darkest:var(--premium-surface) !important;
-  --nm-container:var(--premium-card) !important;
-  --nm-disclaimer-bg:var(--premium-card) !important;
-  --nm-border:var(--premium-outline) !important;
-  --nm-accent:var(--premium-accent) !important;
-  --nm-accent-hover:#6721b1 !important;
-  --nm-text:var(--premium-text) !important;
-  --nm-text-muted:var(--premium-muted) !important;
-  --nm-text-accent:var(--premium-text) !important;
-  --nm-text-on-accent:var(--premium-on-accent) !important;
-  --nm-text-on-status:var(--premium-on-accent) !important;
-  --nm-success:var(--premium-green) !important;
-  --nm-warning:var(--premium-amber) !important;
-  --ded-card-surface-light:var(--premium-card) !important;
-  --ded-accent-lavender:var(--premium-accent-soft) !important;
-  --ded-accent-purple:var(--premium-accent) !important;
-  --ded-border-light:var(--premium-outline) !important;
-  --glow-rgb:120,50,198 !important;
-}
-html body.dark-theme,
-html body.light-theme { background:var(--premium-page) !important; color:var(--premium-text) !important; }
-/* Softer radial lighting gives dimension without a distracting background image. */
-html body:not(.assistant-page-body)::before {
-  background:radial-gradient(ellipse 47% 55% at 85% 20%,var(--premium-glow),transparent 90%),
-             radial-gradient(ellipse 35% 39% at 7% 55%,rgba(var(--glow-rgb),.055),transparent 95%) !important;
-  opacity:1 !important;
-  background-size:100% 100% !important;
-  background-repeat:no-repeat !important;
-  background-attachment:fixed !important;
-}
-/* Remove old universal black/white text locks only where semantic color matters. */
-html body.dark-theme :is(.sales-hero-subtitle,.sales-section-intro,.home-decision-note,.founder-home-layout p,.founder-story-copy p,.footer-links-note,.footer-tracker-note,.page-header p,.feature-description,.sales-step-card p,.home-decision-card p,.premium-muted),
-html body.light-theme :is(.sales-hero-subtitle,.sales-section-intro,.home-decision-note,.founder-home-layout p,.founder-story-copy p,.footer-links-note,.footer-tracker-note,.page-header p,.feature-description,.sales-step-card p,.home-decision-card p,.premium-muted) {
-  color:var(--premium-muted) !important;
-  -webkit-text-fill-color:var(--premium-muted) !important;
-}
-html body.dark-theme :is(.sales-section-label,.sales-eyebrow,.home-product-tag,.home-decision-number),
-html body.light-theme :is(.sales-section-label,.sales-eyebrow,.home-product-tag,.home-decision-number) {
-  color:var(--premium-accent-soft) !important;
-  -webkit-text-fill-color:var(--premium-accent-soft) !important;
-}
-/* Solid but softly separated content surfaces; exclude full-screen assistant UI. */
-html body.dark-theme :is(.content-section,.feature-card,.community-card,.home-decision-card,.founder-story-card,.founder-vision-card,.sales-step-card,.sales-transparency-card,.home-intro-panel,.platform-install-card,.starter-path-card,.glance-card),
-html body.light-theme :is(.content-section,.feature-card,.community-card,.home-decision-card,.founder-story-card,.founder-vision-card,.sales-step-card,.sales-transparency-card,.home-intro-panel,.platform-install-card,.starter-path-card,.glance-card) {
-  background:var(--premium-card) !important;
-  background-image:none !important;
-  border:1px solid var(--premium-outline) !important;
-  border-radius:16px !important;
-  box-shadow:0 12px 34px rgba(0,0,0,.07) !important;
-}
-html body.dark-theme :is(.home-decision-card,.feature-card,.sales-step-card):hover,
-html body.light-theme :is(.home-decision-card,.feature-card,.sales-step-card):hover {
-  border-color:var(--premium-outline-strong) !important;
-}
-/* Main navigation, menus and accessible theme controls. */
-html body .main-nav {
-  background:var(--nm-nav-solid) !important;
-  border-bottom:1px solid var(--premium-outline) !important;
-  box-shadow:0 10px 30px rgba(0,0,0,.055) !important;
-}
-html body .main-nav::before { opacity:.35; }
-html body .main-nav .nav-title .site-title { color:var(--premium-text) !important; -webkit-text-fill-color:var(--premium-text) !important; }
-html body .nav-menu {
-  background:var(--nm-menu-solid) !important;
-  border-color:var(--premium-outline) !important;
-  box-shadow:0 25px 70px rgba(0,0,0,.18) !important;
-}
-html body .nav-menu .nav-link {
-  background:transparent !important;
-  color:var(--premium-text) !important;
-  -webkit-text-fill-color:var(--premium-text) !important;
-  border:1px solid var(--premium-outline) !important;
-  border-radius:10px !important;
-  transition:background .18s ease,border-color .18s ease !important;
-}
-html body .nav-menu .nav-link:is(:hover,:focus-visible,.active) {
-  background:var(--premium-card-alt) !important;
-  border-color:var(--premium-outline-strong) !important;
-  transform:none !important;
-}
-html body .main-nav :is(.nav-action-btn,.burger-menu) {
-  background:var(--premium-card-alt) !important;
-  color:var(--premium-text) !important;
-  -webkit-text-fill-color:var(--premium-text) !important;
-  border:1px solid var(--premium-outline-strong) !important;
-  border-radius:12px !important;
-  min-width:44px;
-  min-height:44px;
-  box-shadow:none !important;
-}
-html body .main-nav :is(.nav-action-btn,.burger-menu):is(:hover,:focus-visible) {
-  background:var(--premium-surface) !important;
-  border-color:var(--premium-accent) !important;
-  transform:none !important;
-}
-html body .main-nav :is(.nav-action-label,.burger-label),
-html body .main-nav :is(.nav-action-btn,.burger-menu) span {
-  color:var(--premium-text) !important;
-  -webkit-text-fill-color:var(--premium-text) !important;
-}
-html body :is(a,button,summary,[role="button"]):focus-visible {
-  outline:3px solid var(--premium-accent) !important;
-  outline-offset:3px !important;
-}
-/* Primary calls-to-action: purple fill, dark text in dark mode, white in light. */
-html body.dark-theme :is(a.sales-btn-primary,a.btn-primary,button.btn-primary,.home-decision-card--free > a.sales-btn-primary),
-html body.light-theme :is(a.sales-btn-primary,a.btn-primary,button.btn-primary,.home-decision-card--free > a.sales-btn-primary) {
-  background:var(--nm-accent) !important;
-  background-image:none !important;
-  color:var(--nm-text-on-accent) !important;
-  -webkit-text-fill-color:var(--nm-text-on-accent) !important;
-  border:1px solid var(--nm-accent) !important;
-  box-shadow:0 10px 28px var(--premium-glow) !important;
-}
-html body.dark-theme :is(a.sales-btn-primary,a.btn-primary,button.btn-primary):is(:hover,:focus-visible,:active),
-html body.light-theme :is(a.sales-btn-primary,a.btn-primary,button.btn-primary):is(:hover,:focus-visible,:active) {
-  background:var(--nm-accent-hover) !important;
-  border-color:var(--nm-accent-hover) !important;
-  color:var(--nm-text-on-accent) !important;
-  -webkit-text-fill-color:var(--nm-text-on-accent) !important;
-}
-html body.dark-theme :is(a.sales-btn-primary,a.btn-primary,button.btn-primary) :is(i,svg,span,strong,b),
-html body.light-theme :is(a.sales-btn-primary,a.btn-primary,button.btn-primary) :is(i,svg,span,strong,b) {
-  color:var(--nm-text-on-accent) !important;
-  -webkit-text-fill-color:var(--nm-text-on-accent) !important;
-}
-/* Secondary actions stay quiet and readable. */
-html body.dark-theme :is(a.sales-btn-secondary,a.btn-ghost,.starter-path-btn,.footer-mini-btn),
-html body.light-theme :is(a.sales-btn-secondary,a.btn-ghost,.starter-path-btn,.footer-mini-btn) {
-  background:var(--premium-surface) !important;
-  border-color:var(--premium-outline-strong) !important;
-  color:var(--premium-text) !important;
-  -webkit-text-fill-color:var(--premium-text) !important;
-}
-html body.dark-theme :is(a.sales-btn-secondary,a.btn-ghost,.starter-path-btn,.footer-mini-btn):is(:hover,:focus-visible),
-html body.light-theme :is(a.sales-btn-secondary,a.btn-ghost,.starter-path-btn,.footer-mini-btn):is(:hover,:focus-visible) {
-  background:var(--premium-card-alt) !important;
-  border-color:var(--premium-accent) !important;
-  color:var(--premium-text) !important;
-  -webkit-text-fill-color:var(--premium-text) !important;
-}
-html body :is(.sales-btn,.btn,.starter-path-btn,.sponsor-btn,.footer-mini-btn) {
-  border-radius:12px !important;
-  transition:background .18s ease,border-color .18s ease,transform .18s ease !important;
-  min-height:44px;
-}
-/* Dedicated semantic status colors without changing legacy ANSI output. */
-html body.dark-theme :is(.premium-success,.status-success),
-html body.light-theme :is(.premium-success,.status-success) { color:var(--premium-green) !important; -webkit-text-fill-color:var(--premium-green) !important; }
-html body.dark-theme :is(.premium-warning,.status-warning),
-html body.light-theme :is(.premium-warning,.status-warning) { color:var(--premium-amber) !important; -webkit-text-fill-color:var(--premium-amber) !important; }
-@media (prefers-reduced-motion:reduce) {
-  html body :is(.nav-menu .nav-link,.nav-action-btn,.sales-btn,.btn) { transition:none !important; }
-}
-
-/* Premium nav menu has the same rounded affordance as the theme selector. */
-html body .main-nav #burger-menu {border-radius:12px !important;}
-html body .main-nav #burger-menu:is(:hover,:focus-visible) {border-color:var(--premium-accent) !important;}

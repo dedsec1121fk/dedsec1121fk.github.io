@@ -310,25 +310,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const themeBtn = document.getElementById('nav-theme-switcher');
         if (!themeBtn) return;
 
-        // Restore saved theme; update browser chrome color to match both palettes.
-        const applyBrowserTheme = () => {
-            const light = document.body.classList.contains('light-theme');
-            const meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', light ? '#f7f5fb' : '#080910');
-            document.documentElement.style.colorScheme = light ? 'light' : 'dark';
-        };
-        try { if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme'); } catch (_) {}
-        // These classes must be mutually exclusive; keeping both applied old
-        // high-specificity dark rules over the light palette.
-        document.body.classList.toggle('dark-theme', !document.body.classList.contains('light-theme'));
-        applyBrowserTheme();
+        // Restore saved theme
+        if (localStorage.getItem('theme') === 'light') document.body.classList.add('light-theme');
 
         themeBtn.addEventListener('click', () => {
             document.body.classList.toggle('light-theme');
             const isLight = document.body.classList.contains('light-theme');
-            document.body.classList.toggle('dark-theme', !isLight);
-            try { localStorage.setItem('theme', isLight ? 'light' : 'dark'); } catch (_) {}
-            applyBrowserTheme();
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
             if (typeof applyThemeAssets === 'function') applyThemeAssets();
             refreshCompactNavButtons();
             try { window.dispatchEvent(new CustomEvent('dedsec:themechange', { detail: { theme: isLight ? 'light' : 'dark' } })); } catch (_) {}
