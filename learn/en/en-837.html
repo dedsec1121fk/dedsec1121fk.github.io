@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>powershell — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-837.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="powershell — consolidated language guide PowerShell How the language behaves PowerShell transports structured objects through pipelines and can access .NET functionality, unlike shells…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="powershell — consolidated language guide — DedSec Project">
+<meta property="og:description" content="powershell — consolidated language guide PowerShell How the language behaves PowerShell transports structured objects through pipelines and can access .NET functionality, unlike shells…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-837.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="powershell — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="powershell — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="powershell — consolidated language guide PowerShell How the language behaves PowerShell transports structured objects through pipelines and can access .NET functionality, unlike shells…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="powershell — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>powershell — consolidated language guide — DedSec Project</h1><p>powershell — consolidated language guide PowerShell How the language behaves PowerShell transports structured objects through pipelines and can access .NET functionality, unlike shells…</p><section><h2>PowerShell</h2>
+<h3>How the language behaves</h3>
+<p>PowerShell transports structured objects through pipelines and can access .NET functionality, unlike shells whose pipes are mostly text.</p>
+<h3>Source fragment to analyze</h3>
+<pre><code class="language-text">1..5 | Where-Object { $_ % 2 -eq 1 } | Measure-Object -Sum
+</code></pre>
+<h3>Deliberate exercise</h3>
+<p>Inspect the Sum property and then send the same pipeline an empty sequence. Determine whether you are holding an object or formatted text.</p>
+<h3>Check a failure condition</h3>
+<p>Formatting commands are for display and often make downstream property access unreliable; retain objects until the end.</p>
+<p>Record input, expected output and observed output with the actual PowerShell implementation and version. If no compatible runtime exists on your current platform, label the fragment unexecuted and reason from its semantics rather than claiming a successful run. Run a second isolated experiment that changes only the mechanism under investigation; preserve the exact diagnostic while removing private data.</p>
+<h2>PowerShell — Expanded practice workbook</h2>
+<h3>The task</h3>
+<p>Count valid statuses from CSV without treating paths as wildcard patterns. PowerShell returns objects, not just arbitrary text streams. Use Import-Csv and validate properties before accessing them as trusted application data.</p>
+<h3>Run</h3>
+<p>Save as report.ps1. Create events.csv with header name,status and rows Ada,ok; Grace,fail; Ada,ok. With PowerShell installed, call ./report.ps1 -Path ./events.csv. Expected output: ok=2; fail=1. Script execution policy and trust configuration depend on the system; do not disable security controls blindly.</p>
+<pre><code class="language-powershell">param([Parameter(Mandatory=$true)][string]$Path)
+$ErrorActionPreference = &quot;Stop&quot;
+if (-not (Test-Path -LiteralPath $Path -PathType Leaf)) {
+    throw &quot;Missing input file&quot;
+}
+$counts = @{ ok = 0; fail = 0 }
+foreach ($row in (Import-Csv -LiteralPath $Path -Encoding utf8)) {
+    if ([string]::IsNullOrWhiteSpace($row.name)) {
+        throw &quot;Missing name&quot;
+    }
+    if ($row.status -notin @(&quot;ok&quot;, &quot;fail&quot;)) {
+        throw &quot;Invalid status&quot;
+    }
+    $counts[$row.status] = [int]$counts[$row.status] + 1
+}
+&quot;ok=$($counts['ok']); fail=$($counts['fail'])&quot;
+</code></pre>
+<h3>Why these parameters matter</h3>
+<p>-LiteralPath prevents [ and ] from becoming wildcard patterns. -Encoding utf8 clarifies text interpretation. ErrorActionPreference Stop promotes nonterminating errors, while throw represents a deliberate contract failure. The hashtable stores counts; this sample expects lowercase statuses exactly.</p>
+<h3>Challenges</h3>
+<p>Test an empty file, nonexistent path, missing header, a comma in a quoted name, a status in uppercase and a row with blank name. The sample currently accepts an empty file as zero counts and rejects uppercase status; decide whether that matches the contract. Improve header validation before processing rows.</p>
+<h3>Troubleshooting</h3>
+<p>Verify $PSVersionTable.PSVersion and Get-Command Import-Csv. On Linux/Termux PowerShell might not be installed even though Bash exists. Check file encoding and try a path containing brackets or spaces. Avoid using Invoke-Expression on rows or executing user-controlled CSV fields.
+Success: two ok, one fail, no external modules. https://learn.microsoft.com/powershell/module/microsoft.powershell.utility/import-csv</p>
+<h2>PowerShell — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>pwsh -File {file}</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>PowerShell — Focused mastery pathway</h2>
+<h3>Contract</h3>
+<p>Produce a sorted CSV with Relative and Bytes columns for ordinary files below a caller-selected directory. Input paths can contain spaces, literal brackets and Unicode. Permission failures should terminate rather than return a deceptively incomplete report. The scanner must never rename or delete input files; the report is explicitly an output artifact stored outside the scanned root.</p>
+<h3>Executable PowerShell 7 lab</h3>
+<p>Save the source as inventory.ps1 and call pwsh -NoProfile -File ./inventory.ps1 -Root './fixture [demo]' -Output './inventory.csv'. Create fixture files first using a throwaway directory. PowerShell 7 with modern .NET is required for GetRelativePath.</p>
+<pre><code class="language-powershell">param(
+  [Parameter(Mandatory = $true)][string]$Root,
+  [Parameter(Mandatory = $true)][string]$Output
+)
+$ErrorActionPreference = 'Stop'
+$dir = (Resolve-Path -LiteralPath $Root -ErrorAction Stop).ProviderPath
+if (-not (Test-Path -LiteralPath $dir -PathType Container)) {
+    throw 'Root must be a directory'
+}
+# The output should be OUTSIDE Root to avoid including a previous report.
+$records = @(Get-ChildItem -LiteralPath $dir -File -Recurse -ErrorAction Stop |
+    Sort-Object -Property FullName |
+    ForEach-Object {
+        [pscustomobject]@{
+            Relative = [System.IO.Path]::GetRelativePath($dir, $_.FullName)
+            Bytes    = [int64]$_.Length
+        }
+    })
+if ($records.Count -eq 0) {
+    Set-Content -LiteralPath $Output -Value 'Relative,Bytes' -Encoding utf8
+} else {
+    $records | Export-Csv -LiteralPath $Output -NoTypeInformation -Encoding utf8
+}
+Write-Output (&quot;PASS: {0} files inventoried&quot; -f $records.Count)
+</code></pre>
+<h3>What to verify</h3>
+<p>Run it against an empty folder: the CSV still needs Relative,Bytes headers. Add alpha.txt (3 UTF-8 bytes), a nested file, and a Greek-named file, then open the CSV in a text editor and confirm stable column names and the sizes in <strong>bytes</strong>, not characters. Repeat twice with unchanged inputs: line order should remain stable after Sort-Object. The output location must remain outside the root; otherwise a second run may include the old report.</p>
+<h3>Edge cases and diagnostics</h3>
+<ol>
+<li>Rename the fixture directory to include square brackets. -LiteralPath must resolve the exact name; contrast with Get-ChildItem -Path only as a controlled exercise.</li>
+<li>Pass an absent root or a file instead of a directory; capture the terminating error. Run an inaccessible test folder only where permission controls are available, and do not elevate privileges.</li>
+<li>Use a read-only test destination and confirm that a failed Export-Csv cannot legitimately emit success. Review what happens if an old report already exists: production tooling should write to a temporary file and rename only after completion.</li>
+<li>CSV formula injection matters if inventories are opened in spreadsheet applications. Treat untrusted file names as data and document an escaping policy before sharing reports externally.</li>
+</ol>
+<p><strong>Evidence:</strong> sample CSV, UTF-8 verification, a deterministic second run, two handled failures and the observed PowerShell version. Pester tests may automate these checks, but no Pester installation is assumed.</p>
+<h2>PowerShell — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>PowerShell pipelines pass objects rather than merely byte streams of text.</li>
+<li>Use -LiteralPath where path characters should not be treated as wildcards.</li>
+<li>Avoid Invoke-Expression with untrusted input and review side effects before running cmdlets.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

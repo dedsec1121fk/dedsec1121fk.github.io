@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unit-test fixtures and reproducibility — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/deep-dive-testing-fixtures-en.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Unit-test fixtures and reproducibility What is happening A good test specifies setup, action and expected observation. Use small deterministic inputs instead of relying on random output or…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Unit-test fixtures and reproducibility — DedSec Project">
+<meta property="og:description" content="Unit-test fixtures and reproducibility What is happening A good test specifies setup, action and expected observation. Use small deterministic inputs instead of relying on random output or…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/deep-dive-testing-fixtures-en.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Unit-test fixtures and reproducibility — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unit-test fixtures and reproducibility — DedSec Project">
+<meta name="twitter:description" content="Unit-test fixtures and reproducibility What is happening A good test specifies setup, action and expected observation. Use small deterministic inputs instead of relying on random output or…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Unit-test fixtures and reproducibility — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Unit-test fixtures and reproducibility — DedSec Project</h1><p>Unit-test fixtures and reproducibility What is happening A good test specifies setup, action and expected observation. Use small deterministic inputs instead of relying on random output or…</p><section><h2>What is happening</h2>
+<p>A good test specifies setup, action and expected observation. Use small deterministic inputs instead of relying on random output or live websites.</p>
+<h2>Practical investigation</h2>
+<p>For code that talks to external services, mock the HTTP boundary. Unit tests should fail because your logic changed, not because a network provider is offline.</p>
+<h2>Common traps</h2>
+<p>Test the error path as carefully as success. Preserve a regression test whenever you fix a bug found in production.</p>
+<h2>Adaptable demonstration</h2>
+<pre><code class="language-text">python -m unittest discover -v
+</code></pre>
+<h2>Make the negative case observable</h2>
+<pre><code class="language-python">from tempfile import TemporaryDirectory
+from pathlib import Path
+import json
+
+with TemporaryDirectory() as folder:
+    path = Path(folder) / 'settings.json'
+    path.write_text('{broken', encoding='utf8')
+    before = path.read_bytes()
+    try:
+        json.loads(path.read_text(encoding='utf8'))
+    except json.JSONDecodeError:
+        pass
+    else:
+        raise AssertionError('malformed JSON was accepted')
+    assert path.read_bytes() == before
+</code></pre>
+<p>This fixture checks both rejection and the preservation of the input. A test that only confirms an exception could miss code that corrupts the file before failing. Extend it with valid empty configuration, a Unicode value and a wrong-type top-level value. Parsing valid JSON does not imply the resulting configuration has the intended schema.</p>
+<p>Keep mutable fixtures local to the test, not in a shared module-level list. Inject clocks and transport functions for expiry or network behavior. Assert the application's response and side effects rather than every internal helper call, so a harmless refactor does not require rewriting the whole suite.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

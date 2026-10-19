@@ -1,0 +1,60 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux υπηρεσίες: systemd status και αναζήτηση logs — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/expanded-el-ops-29-systemd-journal-diagnostics.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Η κατάσταση active δεν εγγυάται ότι μια υπηρεσία εξυπηρετεί σωστά Ανακατασκεύασε το χρονολόγιο Σε κανονική εγκατάσταση Linux με systemd, το systemctl status δείχνει κατάσταση και πρόσφατα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Linux υπηρεσίες: systemd status και αναζήτηση logs — DedSec Project">
+<meta property="og:description" content="Η κατάσταση active δεν εγγυάται ότι μια υπηρεσία εξυπηρετεί σωστά Ανακατασκεύασε το χρονολόγιο Σε κανονική εγκατάσταση Linux με systemd, το systemctl status δείχνει κατάσταση και πρόσφατα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/expanded-el-ops-29-systemd-journal-diagnostics.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Linux υπηρεσίες: systemd status και αναζήτηση logs — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Linux υπηρεσίες: systemd status και αναζήτηση logs — DedSec Project">
+<meta name="twitter:description" content="Η κατάσταση active δεν εγγυάται ότι μια υπηρεσία εξυπηρετεί σωστά Ανακατασκεύασε το χρονολόγιο Σε κανονική εγκατάσταση Linux με systemd, το systemctl status δείχνει κατάσταση και πρόσφατα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Linux υπηρεσίες: systemd status και αναζήτηση logs — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Linux υπηρεσίες: systemd status και αναζήτηση logs — DedSec Project</h1><p>Η κατάσταση active δεν εγγυάται ότι μια υπηρεσία εξυπηρετεί σωστά Ανακατασκεύασε το χρονολόγιο Σε κανονική εγκατάσταση Linux με systemd, το systemctl status δείχνει κατάσταση και πρόσφατα…</p><section><h1>Η κατάσταση active δεν εγγυάται ότι μια υπηρεσία εξυπηρετεί σωστά</h1>
+<h2>Ανακατασκεύασε το χρονολόγιο</h2>
+<p>Σε κανονική εγκατάσταση Linux με systemd, το <code>systemctl status</code> δείχνει κατάσταση και πρόσφατα μηνύματα. Το <code>journalctl -u</code> μπορεί να δώσει τη σειρά αποτυχίας με timestamps. Εξέτασε πρώτα το unit και τον δηλωμένο working directory. Μία υπηρεσία που φαίνεται <code>active (running)</code> μπορεί να μην μπορεί να ανταποκριθεί σε κανένα αίτημα.</p>
+<pre><code class="language-sh">systemctl status example.service --no-pager
+systemctl cat example.service
+journalctl -u example.service -n 80 --no-pager
+systemctl show example.service -p User -p WorkingDirectory -p ExecStart
+</code></pre>
+<h2>Τέσσερις πιθανές αιτίες</h2>
+<p>Το ExecStart μπορεί να δείχνει λάθος binary, ο service user να μην έχει δικαίωμα αρχείων, οι environment variables να λείπουν ή το πρόγραμμα να κρασάρει μετά την εκκίνηση. Κατάγραψε το πρώτο σχετικό μήνυμα και τον πραγματικό χρήστη της διεργασίας. Εντολή που λειτουργεί στο προσωπικό shell μπορεί να βασίζεται σε alias ή PATH που η υπηρεσία δεν διαθέτει. Μη δίνεις root δικαιώματα χωρίς ανάγκη.</p>
+<h2>Ασφαλές εκπαιδευτικό fixture</h2>
+<p>Δημιούργησε προσωρινό user service που εκτυπώνει τον working directory και τερματίζει σκόπιμα με μη μηδενικό status. Παρατήρησε το αποτέλεσμα μέσω journal και διόρθωσε μόνο τη σχετική διαδρομή. Στο Termux proot μην υποθέτεις ότι τρέχει systemd ως PID 1· σε τέτοιο περιβάλλον ισχύει διαφορετικός τρόπος διαχείρισης διεργασιών.</p>
+<h2>Κριτήριο επίλυσης</h2>
+<p>Κράτησε unit path, state, service user, πρώτη ώρα σφάλματος, log χωρίς ευαίσθητα στοιχεία και μία πραγματικά επιτυχημένη λειτουργία εφαρμογής. Restart επιτρέπεται μόνο όταν έχει εγκριθεί, επειδή μπορεί να διακόψει ενεργούς χρήστες.</p>
+<h2>Κατάλογος εργασίας και περιβάλλον διαφορετικά από διαδραστικό κέλυφος</h2>
+<p>Μια υπηρεσία που δουλεύει σε τερματικό μπορεί να αποτύχει στον διαχειριστή υπηρεσιών λόγω άλλου χρήστη, καταλόγου, PATH ή περιβάλλοντος. Τα αρχεία εκκίνησης κελύφους δεν είναι καθολική διεπαφή ρυθμίσεων υπηρεσίας. Χρησιμοποίησε ρητά εκτελέσιμα και τεκμηριωμένες εισόδους αντί διαδραστικής συνεδρίας διαχειριστή.</p>
+<p>Στη σύγκριση εμφάνισε επιλεγμένα μη μυστικά στοιχεία. Πλήρης εκτύπωση περιβάλλοντος μπορεί να εκθέσει tokens. Το δείγμα απομονώνει παιδί με ελεγχόμενο περιβάλλον και κατάλογο, δείχνοντας γιατί σχετικό όνομα ή κληρονομημένη τιμή αλλάζει συμπεριφορά.</p>
+<pre><code class="language-python">import os, subprocess, sys, tempfile
+with tempfile.TemporaryDirectory() as folder:
+    result=subprocess.run([sys.executable,&quot;-c&quot;,
+        &quot;import os; print(os.getcwd()); print(os.environ.get('APP_MODE'))&quot;],
+        cwd=folder,env={&quot;APP_MODE&quot;:&quot;fixture&quot;},text=True,capture_output=True,
+        timeout=2,check=True)
+    lines=result.stdout.splitlines()
+    assert lines == [folder,&quot;fixture&quot;]
+print(&quot;service inputs explicit&quot;)
+</code></pre>
+<p>Πρόκειται για υποδιεργασία και όχι ισχυρισμό ύπαρξης systemd σε Android. Σε πραγματική μονάδα εξέτασε χρήστη, WorkingDirectory, ExecStart και άδειες αρχείου περιβάλλοντος. Περιόρισε καταγραφές και απόκρυψε μυστικά πριν μοιραστείς διαγνωστικά.</p>
+<p><a href="https://www.freedesktop.org/software/systemd/man/latest/systemd.exec.html">Τεχνική αναφορά</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

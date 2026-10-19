@@ -1,0 +1,4103 @@
+{
+  "scope": "Test only; local validation snapshot before CI browser run",
+  "source_commit": "ee61216679c43b86bed8d53ae6cab8c0a31cb193",
+  "effective_records": 1740,
+  "edited_effective_records": 501,
+  "substantively_revised_guides": 62,
+  "revised_technical_ids": [
+    "expanded-en-ops-23-linux-disk-inodes-mounts",
+    "expanded-el-ops-23-linux-disk-inodes-mounts",
+    "expanded-en-ops-24-linux-dns-and-tls",
+    "expanded-el-ops-24-linux-dns-and-tls",
+    "expanded-en-ops-22-linux-permissions-acls",
+    "expanded-el-ops-22-linux-permissions-acls",
+    "expanded-en-ops-25-git-recovery-before-reset",
+    "expanded-el-ops-25-git-recovery-before-reset",
+    "expanded-en-ops-21-proot-container-limitations",
+    "expanded-el-ops-21-proot-container-limitations",
+    "expanded-en-ops-31-windows-powershell-path",
+    "expanded-el-ops-31-windows-powershell-path",
+    "expanded-en-language-5-paths-and-safe-shell",
+    "expanded-el-language-5-paths-and-safe-shell",
+    "expanded-en-language-5-transaction-migration",
+    "expanded-el-language-5-transaction-migration",
+    "expanded-en-reverse-20-binary-header-validation",
+    "expanded-el-reverse-20-binary-header-validation",
+    "expanded-en-reverse-21-elf-and-pe-read-only",
+    "expanded-el-reverse-21-elf-and-pe-read-only",
+    "en-967",
+    "el-742",
+    "en-746",
+    "el-575",
+    "deep-dive-python-tracebacks-en",
+    "deep-dive-python-tracebacks-el",
+    "deep-dive-javascript-async-en",
+    "deep-dive-javascript-async-el",
+    "deep-dive-css-cascade-en",
+    "deep-dive-css-cascade-el",
+    "deep-dive-html-semantics-en",
+    "deep-dive-html-semantics-el",
+    "deep-dive-git-rebase-en",
+    "deep-dive-git-rebase-el",
+    "deep-dive-github-actions-permissions-en",
+    "deep-dive-github-actions-permissions-el",
+    "deep-dive-http-rate-limits-en",
+    "deep-dive-http-rate-limits-el",
+    "deep-dive-sql-transactions-en",
+    "deep-dive-sql-transactions-el",
+    "deep-dive-bash-errors-en",
+    "deep-dive-bash-errors-el",
+    "deep-dive-python-asyncio-en",
+    "deep-dive-python-asyncio-el",
+    "deep-dive-testing-fixtures-en",
+    "deep-dive-testing-fixtures-el",
+    "deep-dive-termux-ssl-en",
+    "deep-dive-termux-ssl-el",
+    "deep-dive-gitignore-secrets-en",
+    "deep-dive-gitignore-secrets-el",
+    "deep-dive-web-performance-en",
+    "deep-dive-web-performance-el",
+    "deep-dive-node-process-en",
+    "deep-dive-node-process-el",
+    "deep-dive-data-encoding-en",
+    "deep-dive-data-encoding-el",
+    "deep-dive-releases-and-rollback-en",
+    "deep-dive-releases-and-rollback-el",
+    "deep-dive-offlines-first-en",
+    "deep-dive-offlines-first-el"
+  ],
+  "beginner_project_collections": [
+    "en-281",
+    "el-1044"
+  ],
+  "catalogue_audit": {
+    "effective_records": 1740,
+    "locales": {
+      "en": 870,
+      "el": 870
+    },
+    "markdown_records": 1234,
+    "repeated_prose_groups": 0,
+    "issues": [],
+    "limits": "No automated check establishes the truth of every technical statement or full semantic uniqueness."
+  },
+  "local_checks": {
+    "python_unittests": 21,
+    "reviewed_python_bash_snippets": 22,
+    "practical_scripts": 48,
+    "python_syntax_files": 142,
+    "renderer_adverse_format_fixtures": 9,
+    "effective_fenced_lessons_rendered": 904
+  },
+  "browser_checks": "Run by the Test workflow; see Actions for final result",
+  "changes": [
+    {
+      "id": "en-158",
+      "locale": "en",
+      "path": "Error_Encyclopedia/077_No_such_file_or_directory.md",
+      "before_characters": 2295,
+      "after_characters": 2289,
+      "body_sha256": "64816ef2145b28642083f0443f5b36e0fa2c31de49348d35915af243ece5264b"
+    },
+    {
+      "id": "en-166",
+      "locale": "en",
+      "path": "Error_Encyclopedia/085_fatal_refusing_to_merge_unrelated_histories.md",
+      "before_characters": 4381,
+      "after_characters": 4133,
+      "body_sha256": "5ff2ddeeeeb296a0d952634512e41de16d70d2c4c3959ffeff0e8a2e1bf556b2"
+    },
+    {
+      "id": "en-170",
+      "locale": "en",
+      "path": "Error_Encyclopedia/089_pytest_collected_0_items.md",
+      "before_characters": 4604,
+      "after_characters": 4232,
+      "body_sha256": "8ee7dd62fcbe8ab10890f62e166d12b12cc158ecf2cf1042f9beb49b3a8a9be9"
+    },
+    {
+      "id": "en-173",
+      "locale": "en",
+      "path": "Error_Encyclopedia/092_connection_refused.md",
+      "before_characters": 4872,
+      "after_characters": 4494,
+      "body_sha256": "f2b562b8ec95ae23d1284118bc26e771f9eb339061dfaa651d42fe7a19b15e07"
+    },
+    {
+      "id": "en-193",
+      "locale": "en",
+      "path": "Foundations/15_Git.md",
+      "before_characters": 3719,
+      "after_characters": 3595,
+      "body_sha256": "8f5d902a3778c2979c2ee79e7b48ca553ac77cfc57d21dbea1bde819b605dfbc"
+    },
+    {
+      "id": "en-281",
+      "locale": "en",
+      "path": "Learning_Projects/collection/01_LESSON.md",
+      "before_characters": 5492,
+      "after_characters": 6358,
+      "body_sha256": "1ea752a75ed21cbd11d260ee560f7d8cdca9673b42be61bb206fc3de1c4991e9"
+    },
+    {
+      "id": "en-417",
+      "locale": "en",
+      "path": "Programming_Languages/Data/SQL_SQLite.md",
+      "before_characters": 8591,
+      "after_characters": 8506,
+      "body_sha256": "6b001de34e28ace7c49a261a859ccf785e2ca2a0bfcf96f1b18e01b18a83b98a"
+    },
+    {
+      "id": "en-457",
+      "locale": "en",
+      "path": "Programming_Languages/Functional/Elixir.md",
+      "before_characters": 3482,
+      "after_characters": 3428,
+      "body_sha256": "b346b4b1d7bc4ea9837f1288da14cc926724a4739d3a6ab76a9010c014a12de7"
+    },
+    {
+      "id": "en-466",
+      "locale": "en",
+      "path": "Programming_Languages/Functional/Erlang/01_EXPANDED_WORKBOOK.md",
+      "before_characters": 2924,
+      "after_characters": 2866,
+      "body_sha256": "8c7bf88341ce338ac9e41b6a188c9a9689776412d2c734e1dbed627474b6ff9b"
+    },
+    {
+      "id": "en-471",
+      "locale": "en",
+      "path": "Programming_Languages/Functional/F_Sharp.md",
+      "before_characters": 3253,
+      "after_characters": 3197,
+      "body_sha256": "b48472b2ccf91f76f711a3e8b4b5862cf6b0f3024949ac1f4798b691d9dbf984"
+    },
+    {
+      "id": "en-485",
+      "locale": "en",
+      "path": "Programming_Languages/Functional/Haskell.md",
+      "before_characters": 3532,
+      "after_characters": 3478,
+      "body_sha256": "e07e4b503c6c623fcffbc2c82df10a16cbc2510cc56e3e271fee4031686b9ed8"
+    },
+    {
+      "id": "en-516",
+      "locale": "en",
+      "path": "Programming_Languages/Functional/Scala.md",
+      "before_characters": 3024,
+      "after_characters": 2968,
+      "body_sha256": "36f6078c78c33996ebf837763a1e2c4f532aa60168386cd05fbf29e94dd9ea5f"
+    },
+    {
+      "id": "en-544",
+      "locale": "en",
+      "path": "Programming_Languages/General/C_Sharp.md",
+      "before_characters": 4164,
+      "after_characters": 4111,
+      "body_sha256": "c152fb7bca24661ad7362053688895834c32c7c2bff63f3a9b76209c5ce7a19f"
+    },
+    {
+      "id": "en-563",
+      "locale": "en",
+      "path": "Programming_Languages/General/Dart.md",
+      "before_characters": 4505,
+      "after_characters": 4450,
+      "body_sha256": "2553998eea3e02e4016815fc29639e96a2a6d56c6da26b1199edb3d8e6d202fb"
+    },
+    {
+      "id": "en-574",
+      "locale": "en",
+      "path": "Programming_Languages/General/Java.md",
+      "before_characters": 6676,
+      "after_characters": 6624,
+      "body_sha256": "8fbd5b2428e4991274e26b0fa02f8c13670b379deec68c3ad033294525f64a00"
+    },
+    {
+      "id": "en-581",
+      "locale": "en",
+      "path": "Programming_Languages/General/Kotlin.md",
+      "before_characters": 8019,
+      "after_characters": 7959,
+      "body_sha256": "56132786b515a256aa9a574123a59bc305b4f913c170a42449300aca8c98a068"
+    },
+    {
+      "id": "en-592",
+      "locale": "en",
+      "path": "Programming_Languages/General/Python.md",
+      "before_characters": 16062,
+      "after_characters": 15701,
+      "body_sha256": "7d85cc73422e877828f670f0d3029383c950c5d7bc5cc8b7196ff61c1ba1effe"
+    },
+    {
+      "id": "en-616",
+      "locale": "en",
+      "path": "Programming_Languages/General/Ruby.md",
+      "before_characters": 7027,
+      "after_characters": 6943,
+      "body_sha256": "6db54dcebf4948e7fd039e729186ba3b2415675baef88a85ae3747b2dc2d6092"
+    },
+    {
+      "id": "en-624",
+      "locale": "en",
+      "path": "Programming_Languages/General/Swift.md",
+      "before_characters": 6777,
+      "after_characters": 6716,
+      "body_sha256": "beb919f5b38496f224ca60f6366bdd208fc1932d692804d446b23ded2bfc6811"
+    },
+    {
+      "id": "en-725",
+      "locale": "en",
+      "path": "Programming_Languages/Scientific/Fortran.md",
+      "before_characters": 1818,
+      "after_characters": 1761,
+      "body_sha256": "4b9ddd544d7558f228ad638d1639bb4f8bdf4027fc2e84ce59991a5afc6f4999"
+    },
+    {
+      "id": "en-739",
+      "locale": "en",
+      "path": "Programming_Languages/Scientific/Julia.md",
+      "before_characters": 2415,
+      "after_characters": 2359,
+      "body_sha256": "555dee6b63506537ca1f7b99147e6f64e98288e9f4fcc308d55123e3c4832e3a"
+    },
+    {
+      "id": "en-746",
+      "locale": "en",
+      "path": "Programming_Languages/Scientific/MATLAB.md",
+      "before_characters": 1699,
+      "after_characters": 2346,
+      "body_sha256": "d3684ff73db763771a5a3bdfc2b528133c1ef38b9669d32264d61eaabb8b79f8"
+    },
+    {
+      "id": "en-750",
+      "locale": "en",
+      "path": "Programming_Languages/Scientific/R.md",
+      "before_characters": 2415,
+      "after_characters": 2360,
+      "body_sha256": "cfe48d218742eeab08f4c07efec7523ccfc82a835ec0175a2071a01a0cb96904"
+    },
+    {
+      "id": "en-773",
+      "locale": "en",
+      "path": "Programming_Languages/Scripting/AWK.md",
+      "before_characters": 5044,
+      "after_characters": 4987,
+      "body_sha256": "95473dd055c467d4eda96945e33c54da2f1b7de718f73efdd6decbeeb3994462"
+    },
+    {
+      "id": "en-780",
+      "locale": "en",
+      "path": "Programming_Languages/Scripting/Bash.md",
+      "before_characters": 8354,
+      "after_characters": 8170,
+      "body_sha256": "75b7b29774b121cdb61a3f9af5714597ad8fd0219f1a458537f33dc08fd8157c"
+    },
+    {
+      "id": "en-814",
+      "locale": "en",
+      "path": "Programming_Languages/Scripting/Lua.md",
+      "before_characters": 7468,
+      "after_characters": 7384,
+      "body_sha256": "f67af1ae832d06c1272da40a78768f04a558d20e5e44d0ecce5c586c6cdbe344"
+    },
+    {
+      "id": "en-826",
+      "locale": "en",
+      "path": "Programming_Languages/Scripting/Perl.md",
+      "before_characters": 3891,
+      "after_characters": 3836,
+      "body_sha256": "5e8612676f1206d14074b55e5441c56c7f16bbcc12d6def96f31f98da8ed620c"
+    },
+    {
+      "id": "en-837",
+      "locale": "en",
+      "path": "Programming_Languages/Scripting/PowerShell.md",
+      "before_characters": 7198,
+      "after_characters": 7140,
+      "body_sha256": "7089d5643ba960ccf2cae2e2ea0e8653d4e442f957cc4e8bcee5a40c9705b2fe"
+    },
+    {
+      "id": "en-893",
+      "locale": "en",
+      "path": "Programming_Languages/Systems/C_Plus_Plus.md",
+      "before_characters": 4796,
+      "after_characters": 4679,
+      "body_sha256": "9a553f9d6f1fc898d0cdfedcfa4f98a83f285a66afbfefd091912b34d828e89c"
+    },
+    {
+      "id": "en-902",
+      "locale": "en",
+      "path": "Programming_Languages/Systems/C.md",
+      "before_characters": 10019,
+      "after_characters": 9895,
+      "body_sha256": "8563c0abf03b9dead984a9985e0637dcb4ee4ca1499ece1aff7c30a38525b285"
+    },
+    {
+      "id": "en-915",
+      "locale": "en",
+      "path": "Programming_Languages/Systems/Go.md",
+      "before_characters": 5289,
+      "after_characters": 5182,
+      "body_sha256": "d07aeaf06befce7e93506f68047d3d4acbe14ad760f5a3b07f379367e7e15f00"
+    },
+    {
+      "id": "en-932",
+      "locale": "en",
+      "path": "Programming_Languages/Systems/Nim.md",
+      "before_characters": 2039,
+      "after_characters": 1979,
+      "body_sha256": "68b6d0c7251c1aa46c489b688310067d6d0b3777d1978d5fecb361a264d92bb7"
+    },
+    {
+      "id": "en-950",
+      "locale": "en",
+      "path": "Programming_Languages/Systems/Rust.md",
+      "before_characters": 5772,
+      "after_characters": 5666,
+      "body_sha256": "92edd75db22717bde57d4ea221b672ded1a030b2a367ffdb39207d488824ed18"
+    },
+    {
+      "id": "en-967",
+      "locale": "en",
+      "path": "Programming_Languages/Systems/x86_64_Assembly_NASM_Linux.md",
+      "before_characters": 1621,
+      "after_characters": 2444,
+      "body_sha256": "47d95cfabf55d845f2b1046bb7122e9d6b656c3fb29366edcd8cd6fad46d94e9"
+    },
+    {
+      "id": "en-971",
+      "locale": "en",
+      "path": "Programming_Languages/Systems/Zig.md",
+      "before_characters": 1975,
+      "after_characters": 1920,
+      "body_sha256": "7740cecd255f5a5e3d8a2e3be1584c996a06bbca0e7711645e5cf1ccfdd31787"
+    },
+    {
+      "id": "en-998",
+      "locale": "en",
+      "path": "Programming_Languages/Web/JavaScript.md",
+      "before_characters": 11850,
+      "after_characters": 11653,
+      "body_sha256": "f8c052d09efa25c9256503a1e4b59ed3a642cd4c4115506dbbb6272ed583f82e"
+    },
+    {
+      "id": "en-1025",
+      "locale": "en",
+      "path": "Programming_Languages/Web/TypeScript.md",
+      "before_characters": 4455,
+      "after_characters": 4348,
+      "body_sha256": "977cb1215f8348970ec5e7205cb5e8afef0ca5f15e183c0e6ebe2ab1127b201c"
+    },
+    {
+      "id": "en-1046",
+      "locale": "en",
+      "path": "Security_Engineering/00_START_HERE.md",
+      "before_characters": 2440,
+      "after_characters": 2459,
+      "body_sha256": "cb17381dd486a7c25bf02f9223d446f4a0957f1301ed8495c7206a5ffc6eb15e"
+    },
+    {
+      "id": "en-1047",
+      "locale": "en",
+      "path": "Security_Engineering/01_THREAT_MODEL.md",
+      "before_characters": 4443,
+      "after_characters": 4122,
+      "body_sha256": "52ac9e24c03bc8e52ba155f951b83d8fc018749f825a9569300184d302d16479"
+    },
+    {
+      "id": "en-1050",
+      "locale": "en",
+      "path": "Security_Engineering/04_WEB_INPUT.md",
+      "before_characters": 4231,
+      "after_characters": 3910,
+      "body_sha256": "e0c9a626497d49427dc2b069f206fce5eed62d5c6e29e80d72b97c7c57472be3"
+    },
+    {
+      "id": "en-1053",
+      "locale": "en",
+      "path": "Security_Engineering/07_SUPPLY_CHAIN.md",
+      "before_characters": 4094,
+      "after_characters": 3773,
+      "body_sha256": "aa1c8a7d8daac80274fa03be50df30762fe5fda5453299a987ba9d0b42043e49"
+    },
+    {
+      "id": "en-1056",
+      "locale": "en",
+      "path": "Security_Engineering/10_NETWORKING.md",
+      "before_characters": 4024,
+      "after_characters": 3703,
+      "body_sha256": "50d4e92870950ce0a851f43ccccd0bf3bb019c1d534419c0f158c09448ee49da"
+    },
+    {
+      "id": "en-1059",
+      "locale": "en",
+      "path": "Security_Engineering/13_MALWARE_TRIAGE.md",
+      "before_characters": 5328,
+      "after_characters": 4900,
+      "body_sha256": "8e0460fc7c05d1c8558d810e3f9372e232ccecdfb0b14fa470c330c543bb9625"
+    },
+    {
+      "id": "rev-en-3",
+      "locale": "en",
+      "path": "Reverse Engineering/English/03_BYTES.md",
+      "before_characters": 2319,
+      "after_characters": 2194,
+      "body_sha256": "9be3c5fbe097860eaf560bf393e46553cf025af0de45148ba0aa40184bf06f4e"
+    },
+    {
+      "id": "rev-en-4",
+      "locale": "en",
+      "path": "Reverse Engineering/English/04_STRINGS.md",
+      "before_characters": 2222,
+      "after_characters": 2097,
+      "body_sha256": "8a917ac93333280dab7eccf7c445fd462d92d7d9b4b06609cca5e01dc41b75a1"
+    },
+    {
+      "id": "rev-en-6",
+      "locale": "en",
+      "path": "Reverse Engineering/English/06_JS_GRAPHS.md",
+      "before_characters": 2372,
+      "after_characters": 2247,
+      "body_sha256": "d555502feb5351778da21a34d603a4802b1e97d64da4179800bb0f0f05b53326"
+    },
+    {
+      "id": "rev-en-7",
+      "locale": "en",
+      "path": "Reverse Engineering/English/07_BROWSER.md",
+      "before_characters": 2379,
+      "after_characters": 2254,
+      "body_sha256": "bd4b93d7c340328e45d53b3f93eb701c720c432ae09c867b8916a610fae7d64a"
+    },
+    {
+      "id": "rev-en-12",
+      "locale": "en",
+      "path": "Reverse Engineering/English/12_PCAP.md",
+      "before_characters": 2528,
+      "after_characters": 2403,
+      "body_sha256": "d76255ba6042c45d4c4f5da8f31aeafeb25de7b6cd60b56661db8cdb0a3f7616"
+    },
+    {
+      "id": "rev-en-13",
+      "locale": "en",
+      "path": "Reverse Engineering/English/13_STATIC_DYNAMIC.md",
+      "before_characters": 2289,
+      "after_characters": 2164,
+      "body_sha256": "e38ed978fec176e2759cf385d171e43a37859f39809e1ca61ad32dec7a9fe9ff"
+    },
+    {
+      "id": "rev-en-14",
+      "locale": "en",
+      "path": "Reverse Engineering/English/14_DIFF.md",
+      "before_characters": 2302,
+      "after_characters": 2177,
+      "body_sha256": "20c3d21d8f4d7367970542745b6a86256fbe89ac8775dc6cfe3b1ce39d1c0183"
+    },
+    {
+      "id": "rev-en-15",
+      "locale": "en",
+      "path": "Reverse Engineering/English/15_SPEC.md",
+      "before_characters": 2504,
+      "after_characters": 2379,
+      "body_sha256": "61d613a3c99c02fca16793b4c5b72957d077244ec833ecbbd2c9b8953e4935b6"
+    },
+    {
+      "id": "curated-en-2001",
+      "locale": "en",
+      "path": "Knowledge_Encyclopedia/Security/047_Threat_modeling.md",
+      "before_characters": 4316,
+      "after_characters": 4314,
+      "body_sha256": "70b58a01dfaa0dcabf5f72cce3818645b068e9378f25e640499ebd80580787de"
+    },
+    {
+      "id": "curated-en-2603",
+      "locale": "en",
+      "path": "Error_Encyclopedia/052_Go_Runtime_Errors.md",
+      "before_characters": 2194,
+      "after_characters": 2188,
+      "body_sha256": "e02b741dba0a2d1e8d1ebf9c4a3b994e8f05f03a3749f9ed0687a20c2e2a91ef"
+    },
+    {
+      "id": "curated-en-2604",
+      "locale": "en",
+      "path": "Error_Encyclopedia/055_JVM_Class_Loading.md",
+      "before_characters": 2266,
+      "after_characters": 2264,
+      "body_sha256": "414902279aab7c7d813828a164006a056fdd18882ec1aef94533e14bd234724d"
+    },
+    {
+      "id": "expanded-en-ops-21-proot-container-limitations",
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/21_Proot_Container_Limitations.md",
+      "before_characters": 1785,
+      "after_characters": 3057,
+      "body_sha256": "5289cefac40288ce3556796c040759f1f7d575f409abe48d3200b714deb3e04d"
+    },
+    {
+      "id": "expanded-en-ops-22-linux-permissions-acls",
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/22_Linux_Permissions_ACLs.md",
+      "before_characters": 1724,
+      "after_characters": 3045,
+      "body_sha256": "8c01b446d2060a36e1c6da4c1783d6d730c11d7d0d604bd2a32004849d7ce9f8"
+    },
+    {
+      "id": "expanded-en-ops-23-linux-disk-inodes-mounts",
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/23_Linux_Disk_Inodes_Mounts.md",
+      "before_characters": 1573,
+      "after_characters": 2816,
+      "body_sha256": "921befa04e062c5d9e14d9fadd15a2b23cdf21d8e8925f62a87bfa4a9e4e9e19"
+    },
+    {
+      "id": "expanded-en-ops-24-linux-dns-and-tls",
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/24_Linux_DNS_And_TLS.md",
+      "before_characters": 1804,
+      "after_characters": 3482,
+      "body_sha256": "eb1415862ffe4476b50fc1ccf24187565097b65f78a2869608abea868e3f0975"
+    },
+    {
+      "id": "expanded-en-ops-25-git-recovery-before-reset",
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/25_Git_Recovery_Before_Reset.md",
+      "before_characters": 1841,
+      "after_characters": 3171,
+      "body_sha256": "59fb8ee67d9fee366cf10e26533657c876c3333f13f46932abcafb8f597a7549"
+    },
+    {
+      "id": "expanded-en-reverse-20-binary-header-validation",
+      "locale": "en",
+      "path": "Reverse Engineering/English/20_Binary_Header_Validation.md",
+      "before_characters": 1839,
+      "after_characters": 3802,
+      "body_sha256": "9049dfb139ecfbe8ba4ffa6078c688ab11cbb9d5c019e5a81cced59ce270e44f"
+    },
+    {
+      "id": "expanded-en-reverse-21-elf-and-pe-read-only",
+      "locale": "en",
+      "path": "Reverse Engineering/English/21_ELF_And_PE_Read_Only.md",
+      "before_characters": 1868,
+      "after_characters": 3387,
+      "body_sha256": "23e97c5f0f4d87a7e237e7de0ea1c7861f0985eb6ccb5b9673585a53ed4cf5f7"
+    },
+    {
+      "id": "expanded-en-language-5-paths-and-safe-shell",
+      "locale": "en",
+      "path": "Programming_Languages/Scripting/Bash/05_Paths_And_Safe_Shell.md",
+      "before_characters": 1743,
+      "after_characters": 3178,
+      "body_sha256": "562a1849b4fc9847eeb5a5351bdb1a60fa9a79cb018aa752c7ae2ec5332bdbc6"
+    },
+    {
+      "id": "expanded-en-language-5-transaction-migration",
+      "locale": "en",
+      "path": "Programming_Languages/Data/SQL_SQLite/05_Transaction_Migration.md",
+      "before_characters": 1928,
+      "after_characters": 3767,
+      "body_sha256": "c866bbe64bd61e8a0f3c1d2829bcab5a95d172b549d95604449085ec1dc277d8"
+    },
+    {
+      "id": "expanded-en-ops-31-windows-powershell-path",
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/31_Windows_PowerShell_Path.md",
+      "before_characters": 1829,
+      "after_characters": 3156,
+      "body_sha256": "e3022995fa123e0f227e1ca39a75f94dfaeb72aa013904bd0c58c7b1a55e9803"
+    },
+    {
+      "id": "el-220",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Αυτοματισμός και σενάρια/Lua.md",
+      "before_characters": 7033,
+      "after_characters": 6958,
+      "body_sha256": "1b87729714744517f48449db81f7d80de3e9bce0f1c9cb0f1bd4583107718b14"
+    },
+    {
+      "id": "el-232",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Αυτοματισμός και σενάρια/Perl.md",
+      "before_characters": 3627,
+      "after_characters": 3581,
+      "body_sha256": "b045f17a3534419b241849ed1b8881db04f800b18029bfb02897455f1ba322a3"
+    },
+    {
+      "id": "el-243",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Αυτοματισμός και σενάρια/PowerShell.md",
+      "before_characters": 6880,
+      "after_characters": 6831,
+      "body_sha256": "b714d414ec605fbc7c6c2f47705469d3247d6ce318f76a4d7d6f9543bb550389"
+    },
+    {
+      "id": "el-304",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Βάσεις και επεξεργασία δεδομένων/SQL_SQLite.md",
+      "before_characters": 8283,
+      "after_characters": 8207,
+      "body_sha256": "6fdc86fba018b9f8fcaeaf11e202b804a010fafd451553e370f6d8629aaba1c0"
+    },
+    {
+      "id": "el-320",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Βάσεις και επεξεργασία δεδομένων/XQuery.md",
+      "before_characters": 3524,
+      "after_characters": 3500,
+      "body_sha256": "6909a03c979dc6e3a9bec6cb562e8c8a44799cf5b8fbf91ba1c68b3b1333816c"
+    },
+    {
+      "id": "el-341",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/C_Sharp.md",
+      "before_characters": 5590,
+      "after_characters": 5546,
+      "body_sha256": "6b4e6498bf74434dcfbfb5a85350e7600cb72b4869b36ef00f40338521c040bc"
+    },
+    {
+      "id": "el-360",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/Dart.md",
+      "before_characters": 4057,
+      "after_characters": 4011,
+      "body_sha256": "0ccae33e4b464867fe5ab8c3433842665b4c3cbcb8fcb7a1e9fe4715202b7d91"
+    },
+    {
+      "id": "el-371",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/Java.md",
+      "before_characters": 6401,
+      "after_characters": 6358,
+      "body_sha256": "bc05607e958450a0a7b84904c8cc7cf68a03f6d1bae56eb253fd6e0bd0691e58"
+    },
+    {
+      "id": "el-378",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/Kotlin.md",
+      "before_characters": 7794,
+      "after_characters": 7743,
+      "body_sha256": "7d8828fbdf1414070075f1eebc95709693d3927f1a9226729f54706c94e97c74"
+    },
+    {
+      "id": "el-389",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/Python.md",
+      "before_characters": 15086,
+      "after_characters": 14731,
+      "body_sha256": "15f9a071b3db158e742873ff4cf3bcf0730abf8a4cd8c4b1e6e370a5060aedc9"
+    },
+    {
+      "id": "el-413",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/Ruby.md",
+      "before_characters": 6811,
+      "after_characters": 6736,
+      "body_sha256": "856e782889675bcdaf1adf0e6ff7d67ef998c7e0ef365c38f85f2ec7703cd7ca"
+    },
+    {
+      "id": "el-421",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/Swift.md",
+      "before_characters": 6392,
+      "after_characters": 6340,
+      "body_sha256": "65d015422d377c34feb8a68b55f0302dd7869564f1116fecc063701896fd5827"
+    },
+    {
+      "id": "el-436",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/ClojureScript.md",
+      "before_characters": 2745,
+      "after_characters": 2624,
+      "body_sha256": "cd064554a1f5fccc9fcfa994a641db55c17356b6825a2adcd3b28e4f86cd4177"
+    },
+    {
+      "id": "el-440",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/CoffeeScript.md",
+      "before_characters": 2686,
+      "after_characters": 2566,
+      "body_sha256": "ddd5b9fc5c58ba6c9bd76cecd4308eada4ab6d2a9f4dd08dc0c089ba15c9e7a4"
+    },
+    {
+      "id": "el-448",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/Hack.md",
+      "before_characters": 3875,
+      "after_characters": 3851,
+      "body_sha256": "678454a08b5cc044e27a003e4c3ea59376cdee9daeb03cdb1bce528306173f51"
+    },
+    {
+      "id": "el-456",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/JavaScript.md",
+      "before_characters": 11604,
+      "after_characters": 11413,
+      "body_sha256": "cb06a8bd8641f7e91b2cf15b5a725f7e6aa1e5c10462af0b97587156b651132d"
+    },
+    {
+      "id": "el-467",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/LiveScript.md",
+      "before_characters": 3084,
+      "after_characters": 2966,
+      "body_sha256": "d26cbcdf7f31a508a6b0d6b20b338a10ceef61b4e77198f86b992324a42ff748"
+    },
+    {
+      "id": "el-479",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/ReScript.md",
+      "before_characters": 1711,
+      "after_characters": 1595,
+      "body_sha256": "a9ceca49f3d9f91b74b02c2de25aa755ecfc74bc1eb471d2994a681d6e390cb3"
+    },
+    {
+      "id": "el-483",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/TypeScript.md",
+      "before_characters": 6385,
+      "after_characters": 6287,
+      "body_sha256": "395ac8b91dee50e1c69e47f26ee18b0d5ba54fbb4138a55e7337cb7ef14d2917"
+    },
+    {
+      "id": "el-505",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες πινάκων/APL.md",
+      "before_characters": 2093,
+      "after_characters": 1982,
+      "body_sha256": "6c78dd587cb85c4338ce6e2cb923424a3757b36492bfbc8864e0dbea764a489f"
+    },
+    {
+      "id": "el-509",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες πινάκων/BQN.md",
+      "before_characters": 2099,
+      "after_characters": 1988,
+      "body_sha256": "48620b474b1a2760e877d53390b28e8c3ed29f592c58e650d1eb215e754f0439"
+    },
+    {
+      "id": "el-513",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες πινάκων/J.md",
+      "before_characters": 2102,
+      "after_characters": 1993,
+      "body_sha256": "098fb711b5d92ed4dc855fa089d02749605cad355f9da758e50b45eb96df84f9"
+    },
+    {
+      "id": "el-517",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες πινάκων/Uiua.md",
+      "before_characters": 2772,
+      "after_characters": 2748,
+      "body_sha256": "e5b61d6bb3b26dda8dbe807f65a621de0b6fc483a0cd0473a3490662e64e4334"
+    },
+    {
+      "id": "el-521",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες ρυθμίσεων/Dhall.md",
+      "before_characters": 3558,
+      "after_characters": 3534,
+      "body_sha256": "9fe6e25ceb4204c285ee36b59e26a160ec6d258de40be004850e802ef821cbd1"
+    },
+    {
+      "id": "el-525",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες ρυθμίσεων/Jsonnet.md",
+      "before_characters": 2266,
+      "after_characters": 2151,
+      "body_sha256": "70f0be007e10d314fc21f0a96d8642594e8eb28f69b20e139a56a3d60e27dc6a"
+    },
+    {
+      "id": "el-534",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες ρυθμίσεων/Starlark.md",
+      "before_characters": 2249,
+      "after_characters": 2133,
+      "body_sha256": "cf52289890e8c0a280daaddecec12192c6e6713b1f365e0acf6d35f9500088b7"
+    },
+    {
+      "id": "el-538",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Δημιουργικός προγραμματισμός/Processing_Java_mode.md",
+      "before_characters": 2827,
+      "after_characters": 2803,
+      "body_sha256": "2f28920b1719fc6fb98c70eaccb64beeca520212861fff915a707c9c07434130"
+    },
+    {
+      "id": "el-550",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/Chapel.md",
+      "before_characters": 1780,
+      "after_characters": 1666,
+      "body_sha256": "b59eed3c11a135ed2445cd389d2849fab1fe2d58aeb01452cf1ae1c715fee9b2"
+    },
+    {
+      "id": "el-554",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/Fortran.md",
+      "before_characters": 1944,
+      "after_characters": 1781,
+      "body_sha256": "9b2688e1546d8eaf2b93463b59d96cf9aca9cf2e3ee90804892c4b4f32ec760c"
+    },
+    {
+      "id": "el-560",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/Futhark.md",
+      "before_characters": 1677,
+      "after_characters": 1562,
+      "body_sha256": "da0ad81f9cb128bbb0e17370cbec1f311a25f26ce67edeeae8dc945f0a0f0e8f"
+    },
+    {
+      "id": "el-564",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/GNU_Octave.md",
+      "before_characters": 1733,
+      "after_characters": 1615,
+      "body_sha256": "e1af23eff614c74538fdb1359ae836c5ef31c8d5a753dad05a0cc55720bfa893"
+    },
+    {
+      "id": "el-568",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/Julia.md",
+      "before_characters": 4076,
+      "after_characters": 4029,
+      "body_sha256": "81a7db4eeae1b5f6c64203df9d1ff091d38b88dbc2d5a843168386e9d2e7f6ce"
+    },
+    {
+      "id": "el-575",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/MATLAB.md",
+      "before_characters": 1663,
+      "after_characters": 2157,
+      "body_sha256": "b0d14b6c6d8d722de0980e265694990f81afa08a382bc2520e7989165e4f5d25"
+    },
+    {
+      "id": "el-579",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/R.md",
+      "before_characters": 2248,
+      "after_characters": 2094,
+      "body_sha256": "e7669e56c1bbdac320399bca2e50630adc0b66312a0451fd9ff6b4727fb417f9"
+    },
+    {
+      "id": "el-586",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/Stan.md",
+      "before_characters": 3523,
+      "after_characters": 3499,
+      "body_sha256": "e82b8704f638b7005583b7e5b247e18780d99735513012e9837e63522ddcb934"
+    },
+    {
+      "id": "el-590",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Επιστημονικός και αριθμητικός υπολογισμός/Wolfram_Language.md",
+      "before_characters": 1773,
+      "after_characters": 1649,
+      "body_sha256": "fd81921fe737a46ea418b23682543c0906247577f344f58dfd0b32868a23a1ae"
+    },
+    {
+      "id": "el-634",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Κβαντικός προγραμματισμός/Q_Sharp.md",
+      "before_characters": 2153,
+      "after_characters": 2129,
+      "body_sha256": "1c30c219df0e49c4aab06556619c35d9fd289fe63120c06f92d7e9a6f2812755"
+    },
+    {
+      "id": "el-639",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Λογικός προγραμματισμός/Mercury.md",
+      "before_characters": 2187,
+      "after_characters": 2163,
+      "body_sha256": "68c2c82eb4c92c0bc1303c7c1727408a6e5b0fc9b5926b20e253f161c45ae009"
+    },
+    {
+      "id": "el-647",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Περιγραφή υλικού/SystemVerilog.md",
+      "before_characters": 5715,
+      "after_characters": 5691,
+      "body_sha256": "73b07737177b0c0b85e81f376b879a963bbe0207b3deb6fd689ca7002059a9df"
+    },
+    {
+      "id": "el-651",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Περιγραφή υλικού/Verilog.md",
+      "before_characters": 1780,
+      "after_characters": 1666,
+      "body_sha256": "faebbd1a8c25fda5880a338012007b06476fb0956690af5ac041fdd763d654fc"
+    },
+    {
+      "id": "el-668",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/C_Plus_Plus.md",
+      "before_characters": 6606,
+      "after_characters": 6513,
+      "body_sha256": "57a4c5c13d3565ce845279008ed4113c8cceded57afb18bd3a1c43022ee4b0ef"
+    },
+    {
+      "id": "el-677",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/C.md",
+      "before_characters": 17766,
+      "after_characters": 17666,
+      "body_sha256": "a82a8ca09ec1a527365c7204bfe8d64f51129f65c3015161dc308c1fe12fab15"
+    },
+    {
+      "id": "el-690",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/Go.md",
+      "before_characters": 7040,
+      "after_characters": 6942,
+      "body_sha256": "53b9cd4d907150fd9b2314c1de04a115c5a9f87c5eb58a341bea9f6afd2edccb"
+    },
+    {
+      "id": "el-707",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/Nim.md",
+      "before_characters": 3829,
+      "after_characters": 3779,
+      "body_sha256": "d06df5794158f081b60662c20a4663449c12d3eb89b9fe48123b8968b99000d1"
+    },
+    {
+      "id": "el-725",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/Rust.md",
+      "before_characters": 7364,
+      "after_characters": 7267,
+      "body_sha256": "01b16bfc4edab55ae16757a794dba3c14faf8e822eb5cf5c0b2ddcd02126a6f0"
+    },
+    {
+      "id": "el-742",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/x86_64_Assembly_NASM_Linux.md",
+      "before_characters": 3665,
+      "after_characters": 2199,
+      "body_sha256": "80f33fb6c8383e6cd54dde73a37d57cd9870bbb35cb2babe8cdb22ac0d0b39d0"
+    },
+    {
+      "id": "el-746",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/Zig.md",
+      "before_characters": 3918,
+      "after_characters": 3872,
+      "body_sha256": "25919c089c1b38e54dfc5a2748a0063eb6795d9655457f3aeab79e92eb03cc74"
+    },
+    {
+      "id": "el-763",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Clojure.md",
+      "before_characters": 3386,
+      "after_characters": 3362,
+      "body_sha256": "d379449ec45d0d671486901e56087562f0e1f210eba0262a76d413191fc5af25"
+    },
+    {
+      "id": "el-767",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Common_Lisp.md",
+      "before_characters": 2846,
+      "after_characters": 2727,
+      "body_sha256": "14e35de453562dbbed26796981c2bb9eea690b947189a2d5eae04025cc9cce61"
+    },
+    {
+      "id": "el-771",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Elixir.md",
+      "before_characters": 3447,
+      "after_characters": 3289,
+      "body_sha256": "5665510a02d9db3329cad8a9f5d276a6150ca2c1dd011132f888df3de5e04a04"
+    },
+    {
+      "id": "el-780",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Erlang/01_ΟΔΗΓΟΣ_ΑΣΚΗΣΕΩΝ.md",
+      "before_characters": 4408,
+      "after_characters": 4246,
+      "body_sha256": "e5034e6b87559b8f0499d896b746fd1cac49c9be604f9aa95c07d7c836067470"
+    },
+    {
+      "id": "el-785",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/F_Sharp.md",
+      "before_characters": 3074,
+      "after_characters": 2912,
+      "body_sha256": "6cf541990db06bc316417c556c88c3a9af161e7f824da1ffe9798ba125ce6a6f"
+    },
+    {
+      "id": "el-793",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Factor/01_ΟΔΗΓΟΣ_ΑΣΚΗΣΕΩΝ.md",
+      "before_characters": 2239,
+      "after_characters": 2125,
+      "body_sha256": "c9fe35f0163ae4d793c1a101ac98537b8407af31980577e424255b6f8c6abec2"
+    },
+    {
+      "id": "el-797",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Gleam/01_ΟΔΗΓΟΣ_ΑΣΚΗΣΕΩΝ.md",
+      "before_characters": 2582,
+      "after_characters": 2469,
+      "body_sha256": "e7340ebdfa51e8c92c2b0a01df3f0b38e60e48e957df7bd16c5a1b8f5a5a9d6d"
+    },
+    {
+      "id": "el-799",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Haskell.md",
+      "before_characters": 3395,
+      "after_characters": 3236,
+      "body_sha256": "5566f898b309d49fff1921f74b379fd6f0e94a59b60a67708f48e5f4754fdd9c"
+    },
+    {
+      "id": "el-806",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Io.md",
+      "before_characters": 2695,
+      "after_characters": 2585,
+      "body_sha256": "412ff385b1abf4f7ad3f2a5a9b3d9065309a7b9703dd3a75b2922d5b356d534c"
+    },
+    {
+      "id": "el-810",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Koka.md",
+      "before_characters": 3053,
+      "after_characters": 2941,
+      "body_sha256": "b8cba56fb327bfaf9807463e9c85b742d7908f235a9e349eb800e06bb0996ee0"
+    },
+    {
+      "id": "el-814",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/OCaml.md",
+      "before_characters": 2785,
+      "after_characters": 2672,
+      "body_sha256": "07bd65396c23eff2717c5a8a2f7fe4b2e0d8f0fea44185fe6fa9127e0b0e1a8f"
+    },
+    {
+      "id": "el-820",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/PureScript/01_ΟΔΗΓΟΣ_ΑΣΚΗΣΕΩΝ.md",
+      "before_characters": 2317,
+      "after_characters": 2199,
+      "body_sha256": "fc8f8a330ab41d49a7304c786d99c5ac6102342c4a00a4f3d8cc3c88a3c20b20"
+    },
+    {
+      "id": "el-822",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Racket.md",
+      "before_characters": 2941,
+      "after_characters": 2827,
+      "body_sha256": "f8ea58cfb9dfeb92d483ae28c494f00d8f3d0ac4361c1d0481418b734063a17f"
+    },
+    {
+      "id": "el-828",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/ReasonML/01_ΟΔΗΓΟΣ_ΑΣΚΗΣΕΩΝ.md",
+      "before_characters": 2746,
+      "after_characters": 2630,
+      "body_sha256": "3b9f9001948b0fda0e1a2359fd02c32e374ba1ba4ffd11b77a1c54ff04fccc9f"
+    },
+    {
+      "id": "el-830",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Scala.md",
+      "before_characters": 3072,
+      "after_characters": 2913,
+      "body_sha256": "e5a99402b648d26e5e6853f679026c21487babdcca769f66b4eb29aaee45ac97"
+    },
+    {
+      "id": "el-841",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Συναρτησιακός προγραμματισμός/Standard_ML.md",
+      "before_characters": 2766,
+      "after_characters": 2647,
+      "body_sha256": "2f0610ec4bfd589a8fa4e2f09ac66babf0059a1b50093d1ecd01112d114abdb9"
+    },
+    {
+      "id": "el-849",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Τυπικές αποδείξεις και εξαρτημένοι τύποι/Coq_Gallina.md",
+      "before_characters": 1704,
+      "after_characters": 1585,
+      "body_sha256": "f85662697f4841373b20c611d1477405b9d6c8ad4c274b1002a202d5786d54c1"
+    },
+    {
+      "id": "el-853",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Τυπικές αποδείξεις και εξαρτημένοι τύποι/Idris_2.md",
+      "before_characters": 1733,
+      "after_characters": 1618,
+      "body_sha256": "052b0488485712322e67b3a8368f0a86c10cf0ec00a492c251dead413bb15f7e"
+    },
+    {
+      "id": "el-857",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Τυπικές αποδείξεις και εξαρτημένοι τύποι/Isabelle.md",
+      "before_characters": 3429,
+      "after_characters": 3405,
+      "body_sha256": "a58aa081805c420c18ed7edc58d2db11eb010a07a0c6638cc0bd220351be92dc"
+    },
+    {
+      "id": "el-861",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Τυπικές αποδείξεις και εξαρτημένοι τύποι/Lean_4.md",
+      "before_characters": 1700,
+      "after_characters": 1586,
+      "body_sha256": "a69b44c3b0446c8ac5c391f57aedb22ea4e2c0bdb74fc73eaf9dd28e4b049ca9"
+    },
+    {
+      "id": "el-1020",
+      "locale": "el",
+      "path": "Εγχειρίδιο_Σφαλμάτων/077_No_such_file_or_directory.md",
+      "before_characters": 2091,
+      "after_characters": 2085,
+      "body_sha256": "9419d7689fcdb0eb3124a2b525847401c45252b56a287bd8304a20c268b0a21b"
+    },
+    {
+      "id": "el-1028",
+      "locale": "el",
+      "path": "Εγχειρίδιο_Σφαλμάτων/085_fatal_refusing_to_merge_unrelated_histories.md",
+      "before_characters": 4224,
+      "after_characters": 3968,
+      "body_sha256": "4c2b6348bd4389472ce1dd51ccd442975297f9653dac89a28c6de9297f3dc088"
+    },
+    {
+      "id": "el-1032",
+      "locale": "el",
+      "path": "Εγχειρίδιο_Σφαλμάτων/089_pytest_collected_0_items.md",
+      "before_characters": 4338,
+      "after_characters": 3954,
+      "body_sha256": "c0d77e2f428365b4d6dfafcead6dae8061aa377b025dadac5f8739d596cf21c5"
+    },
+    {
+      "id": "el-1035",
+      "locale": "el",
+      "path": "Εγχειρίδιο_Σφαλμάτων/092_connection_refused.md",
+      "before_characters": 4629,
+      "after_characters": 4239,
+      "body_sha256": "dd8a128640fd0a12d3cfe26178a224cc84c4137ce0f367cdb7f63ddc7b70310c"
+    },
+    {
+      "id": "el-1044",
+      "locale": "el",
+      "path": "Εκπαιδευτικά_Έργα/collection/01_ΜΑΘΗΜΑ.md",
+      "before_characters": 6276,
+      "after_characters": 5766,
+      "body_sha256": "95ea9572fdebaddb211730482b1d6103c93dbcdb038fc0c401245f26600e328d"
+    },
+    {
+      "id": "el-1081",
+      "locale": "el",
+      "path": "Θεμέλια/15_Git.md",
+      "before_characters": 3469,
+      "after_characters": 3341,
+      "body_sha256": "14c3ee4d980ac33925b6369787dff02cea8ea651063495b85a983782ad8213b9"
+    },
+    {
+      "id": "el-1087",
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/00_ΞΕΚΙΝΑ_ΕΔΩ.md",
+      "before_characters": 2306,
+      "after_characters": 2325,
+      "body_sha256": "e6ada49c3f9ca828e15af4f8ba67d85181d9355b8a46e32fce7addda5b1f87dd"
+    },
+    {
+      "id": "el-1088",
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/01_THREAT_MODEL.md",
+      "before_characters": 4104,
+      "after_characters": 3440,
+      "body_sha256": "1877ca9888df50fc631ebd5cf1aa32b7d2d774ede4106951b36f0ac1716752cb"
+    },
+    {
+      "id": "el-1091",
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/04_WEB_INPUT.md",
+      "before_characters": 4167,
+      "after_characters": 3363,
+      "body_sha256": "bcef7529f6bcb7b1dcd82e58d853260edb1b3167fba5776a1fee07603e246df3"
+    },
+    {
+      "id": "el-1094",
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/07_SUPPLY_CHAIN.md",
+      "before_characters": 3985,
+      "after_characters": 3181,
+      "body_sha256": "87ce0e51b0df793a54e7bf89309eed6ba520a410d12312e10d82b6e47fcb399f"
+    },
+    {
+      "id": "el-1097",
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/10_NETWORKING.md",
+      "before_characters": 3910,
+      "after_characters": 3106,
+      "body_sha256": "26d45ebafef5d1d185dac8c2d775c974cd9f36beca193b3e3457adfed7c475d9"
+    },
+    {
+      "id": "el-1100",
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/13_MALWARE_TRIAGE.md",
+      "before_characters": 5389,
+      "after_characters": 4317,
+      "body_sha256": "21af8e2c3974201c3a5fd48202c236b647c763ca0cb3bebda9a42027721e711f"
+    },
+    {
+      "id": "rev-el-3",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/03_BYTES.md",
+      "before_characters": 2169,
+      "after_characters": 2049,
+      "body_sha256": "920b421927765657f72419259cd89447fce6cbe00090016530d0501c4e2232f7"
+    },
+    {
+      "id": "rev-el-4",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/04_STRINGS.md",
+      "before_characters": 2210,
+      "after_characters": 2090,
+      "body_sha256": "fc82418f936bc87f8e70a63e39afaf01e7c075e4441d1adc13bd2834d3d62a34"
+    },
+    {
+      "id": "rev-el-6",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/06_JS_GRAPHS.md",
+      "before_characters": 2198,
+      "after_characters": 2078,
+      "body_sha256": "dc0f46121e665a4fac7fc3b2349ce186945439fb24250beb7ed2efc3a2b5237d"
+    },
+    {
+      "id": "rev-el-7",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/07_BROWSER.md",
+      "before_characters": 2172,
+      "after_characters": 2052,
+      "body_sha256": "f98db5fe4abdfb2398585c256092a28a3eb3978d1004b1e14ed85eda50a9739a"
+    },
+    {
+      "id": "rev-el-12",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/12_PCAP.md",
+      "before_characters": 2284,
+      "after_characters": 2164,
+      "body_sha256": "dca1ef4386b65f918a39faf3c6317b76d347e59eee2e50976d73b24aadc1873a"
+    },
+    {
+      "id": "rev-el-13",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/13_STATIC_DYNAMIC.md",
+      "before_characters": 2128,
+      "after_characters": 2008,
+      "body_sha256": "e2908f3d8cc497b50d75d2c7ca1c8a564e4dad5150613ef920bf125bbf088f8f"
+    },
+    {
+      "id": "rev-el-14",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/14_DIFF.md",
+      "before_characters": 2177,
+      "after_characters": 2057,
+      "body_sha256": "982429f6c955c56f436c6a06b6be5a3e8fb3dfa06b2411cfc2963eadbea224fe"
+    },
+    {
+      "id": "rev-el-15",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/15_SPEC.md",
+      "before_characters": 2481,
+      "after_characters": 2361,
+      "body_sha256": "b76254adcd35984146ec909bce302ef4861c33d84f072b537bc022f9405a151d"
+    },
+    {
+      "id": "curated-el-2001",
+      "locale": "el",
+      "path": "Εγκυκλοπαίδεια_Γνώσης/Ασφάλεια/047_Threat_modeling.md",
+      "before_characters": 4039,
+      "after_characters": 4037,
+      "body_sha256": "33c291e22475cea02cde9a789aeac4c60ef0606b2ebe9b4cbd89b0dff7ba2c91"
+    },
+    {
+      "id": "curated-el-2603",
+      "locale": "el",
+      "path": "Εγχειρίδιο_Σφαλμάτων/052_Go_Runtime_Errors.md",
+      "before_characters": 1995,
+      "after_characters": 1989,
+      "body_sha256": "ae48046ccae7c162a0b9ef5747d041fb2d7e5e224be17b784b7467d63a4b4a82"
+    },
+    {
+      "id": "curated-el-2604",
+      "locale": "el",
+      "path": "Εγχειρίδιο_Σφαλμάτων/055_JVM_Class_Loading.md",
+      "before_characters": 2085,
+      "after_characters": 2083,
+      "body_sha256": "4d0357d40857752fd583f4155690d8fccaef243e1b988ea14b84141537805c62"
+    },
+    {
+      "id": "expanded-el-ops-21-proot-container-limitations",
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/21_Proot_Container_Limitations.md",
+      "before_characters": 1629,
+      "after_characters": 2871,
+      "body_sha256": "eb5861ec1c19b813ce969e5fcf69914a7bd984d8043c9a2b1da10513cb934cee"
+    },
+    {
+      "id": "expanded-el-ops-22-linux-permissions-acls",
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/22_Linux_Permissions_ACLs.md",
+      "before_characters": 1605,
+      "after_characters": 2830,
+      "body_sha256": "d07d91625016be36a0724ac7a42ef99bff1d17f9296e7d677fabf5e1185b5988"
+    },
+    {
+      "id": "expanded-el-ops-23-linux-disk-inodes-mounts",
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/23_Linux_Disk_Inodes_Mounts.md",
+      "before_characters": 1540,
+      "after_characters": 2504,
+      "body_sha256": "0b1e444d9a7d514e751a4fbe4c90ee5e630861e3b0d93e1e24cb0df8e2845866"
+    },
+    {
+      "id": "expanded-el-ops-24-linux-dns-and-tls",
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/24_Linux_DNS_And_TLS.md",
+      "before_characters": 1594,
+      "after_characters": 3179,
+      "body_sha256": "c00eddb8abdc5ce908ad02a0da984093afbcfe8c681a8b11d4f8c0f3c932b04c"
+    },
+    {
+      "id": "expanded-el-ops-25-git-recovery-before-reset",
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/25_Git_Recovery_Before_Reset.md",
+      "before_characters": 1655,
+      "after_characters": 2973,
+      "body_sha256": "008d31fb719a3b96ddc9ce179801849ca31b08626de60b5321de63a945cce8f2"
+    },
+    {
+      "id": "expanded-el-reverse-20-binary-header-validation",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/20_Binary_Header_Validation.md",
+      "before_characters": 1611,
+      "after_characters": 3524,
+      "body_sha256": "569eb68e145aedf66cab5969f8f046f5640f25defe8b2647360e6f28e3951d02"
+    },
+    {
+      "id": "expanded-el-reverse-21-elf-and-pe-read-only",
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/21_ELF_And_PE_Read_Only.md",
+      "before_characters": 1661,
+      "after_characters": 3055,
+      "body_sha256": "7cd801832c320b5b04f37e8d23f539528128f5b4c7c1a2718bd191b992cd7fdd"
+    },
+    {
+      "id": "expanded-el-language-5-paths-and-safe-shell",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Αυτοματισμός και σενάρια/Bash/05_Paths_And_Safe_Shell.md",
+      "before_characters": 1594,
+      "after_characters": 2899,
+      "body_sha256": "5620a2ac2a614b1de59f99559234a7f32dcf11f828bd31b96122ad03d2a86c51"
+    },
+    {
+      "id": "expanded-el-language-5-transaction-migration",
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Βάσεις και επεξεργασία δεδομένων/SQL_SQLite/05_Transaction_Migration.md",
+      "before_characters": 1701,
+      "after_characters": 3444,
+      "body_sha256": "bed8ac040be0be9a7a549d430e400f3c08f26f284fe38de00833a6b30993f7f4"
+    },
+    {
+      "id": "expanded-el-ops-31-windows-powershell-path",
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/31_Windows_PowerShell_Path.md",
+      "before_characters": 1671,
+      "after_characters": 2871,
+      "body_sha256": "3d0193930605b264dd43a19a88e1b690f2a59b971286c9f1e1e5eef1738e1b60"
+    },
+    {
+      "id": "method-0",
+      "locale": "en",
+      "path": "Thinking/English/01_INTENT_TO_RESULT.md",
+      "before_characters": 1252,
+      "after_characters": 1251,
+      "body_sha256": "bea61958715579e18a56fa33060ceef3656e0a02f54666cac03dec730651bb87"
+    },
+    {
+      "id": "method-1",
+      "locale": "el",
+      "path": "Thinking/Greek/01_INTENT_TO_RESULT.md",
+      "before_characters": 1084,
+      "after_characters": 1083,
+      "body_sha256": "f97f97b2931eda30a17b4eb53d54954da0b797824d1fabf658a2a6a149faec6c"
+    },
+    {
+      "id": "method-2",
+      "locale": "en",
+      "path": "Logic/English/01_CONSTRAINTS_AND_PRECEDENCE.md",
+      "before_characters": 1228,
+      "after_characters": 1227,
+      "body_sha256": "25b6d075e76426698aebd8b402359fe8943e2fbbc2fa3debb228df4891b34e65"
+    },
+    {
+      "id": "method-3",
+      "locale": "el",
+      "path": "Logic/Greek/01_CONSTRAINTS_AND_PRECEDENCE.md",
+      "before_characters": 1032,
+      "after_characters": 1031,
+      "body_sha256": "ff5145a8a84f9aa4f397bb9ca0d1d2acc3bfb59482c4ed68ac6309a2c6a9e854"
+    },
+    {
+      "id": "method-4",
+      "locale": "en",
+      "path": "Problem Solving/English/01_REPRODUCE_ISOLATE_REPAIR.md",
+      "before_characters": 1046,
+      "after_characters": 1045,
+      "body_sha256": "5b4f921b55d9ecd7e3f35b52163e4510a150790fc835d26920b8c1b31429210d"
+    },
+    {
+      "id": "method-5",
+      "locale": "el",
+      "path": "Problem Solving/Greek/01_REPRODUCE_ISOLATE_REPAIR.md",
+      "before_characters": 899,
+      "after_characters": 898,
+      "body_sha256": "7c871c21be5f8ff4f2ff7397f5c3c2971c803a24d9bc8323923b4dfdf77f289f"
+    },
+    {
+      "id": "method-6",
+      "locale": "en",
+      "path": "Decision Making/English/01_BUDGET_AND_SCOPE.md",
+      "before_characters": 1026,
+      "after_characters": 1025,
+      "body_sha256": "c0d4502c22e4720283fc88b1de93580ff23e95c25b2a9eca4ac4f9585ccb6fa4"
+    },
+    {
+      "id": "method-7",
+      "locale": "el",
+      "path": "Decision Making/Greek/01_BUDGET_AND_SCOPE.md",
+      "before_characters": 821,
+      "after_characters": 820,
+      "body_sha256": "8e700ecf3c218be1f796d7711b26ac88cf2693547f39dec5c5ac7ae5edc05289"
+    },
+    {
+      "id": "method-8",
+      "locale": "en",
+      "path": "Learning/English/01_LEARN_WITH_OR_WITHOUT_AI.md",
+      "before_characters": 1132,
+      "after_characters": 1131,
+      "body_sha256": "1a70b9f810000d2c19f501cf5d11aec8bb406c52bef6cdecfd12a7c96b5522f2"
+    },
+    {
+      "id": "method-9",
+      "locale": "el",
+      "path": "Learning/Greek/01_LEARN_WITH_OR_WITHOUT_AI.md",
+      "before_characters": 911,
+      "after_characters": 910,
+      "body_sha256": "7a95ee1d513f3372d759faf937005703abdff8cf5f3c07fe2096ef530d243de9"
+    },
+    {
+      "id": "method-10",
+      "locale": "en",
+      "path": "AI Collaboration/English/01_EVIDENCE_BASED_ASSISTANT.md",
+      "before_characters": 1181,
+      "after_characters": 1180,
+      "body_sha256": "aca57f0bd621fe2e0232a46f63cfbb18aeba8600e5a5f4612663ffa5ac89d9a2"
+    },
+    {
+      "id": "method-11",
+      "locale": "el",
+      "path": "AI Collaboration/Greek/01_EVIDENCE_BASED_ASSISTANT.md",
+      "before_characters": 914,
+      "after_characters": 913,
+      "body_sha256": "538170839c6c5704a0bbf1097b5342a328e076d2d209092d11592c7417d6f1c6"
+    },
+    {
+      "id": "method-12",
+      "locale": "en",
+      "path": "Case Studies/English/01_CONSTRAINT_CHAIN.md",
+      "before_characters": 1030,
+      "after_characters": 1029,
+      "body_sha256": "d349344cfc0ec953eb083b1927ed0f2b22bf6922ac005234437d99328c34d00e"
+    },
+    {
+      "id": "method-13",
+      "locale": "el",
+      "path": "Case Studies/Greek/01_CONSTRAINT_CHAIN.md",
+      "before_characters": 822,
+      "after_characters": 821,
+      "body_sha256": "7834075ccc59b87de1fe6630c0c881119429227a6c482efc817cbc873778025d"
+    },
+    {
+      "id": "termux-01-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/01_install-trusted-termux-builds.md",
+      "before_characters": 1900,
+      "after_characters": 1899,
+      "body_sha256": "7293300797677238081a88693e6cdd3133181ada8569ca476d4de4c27cf08ff5"
+    },
+    {
+      "id": "termux-01-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/01_install-trusted-termux-builds.md",
+      "before_characters": 1839,
+      "after_characters": 1838,
+      "body_sha256": "ee6a95ec758153a908ca0af97ace64000effa6416140eff03b5ac7ea040954d2"
+    },
+    {
+      "id": "termux-02-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/02_resolve-apt-repository-failures.md",
+      "before_characters": 1830,
+      "after_characters": 1576,
+      "body_sha256": "983864353cd42cd7bae26a7d0c2238e8e912f31de04c002bb2082c898605457f"
+    },
+    {
+      "id": "termux-02-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/02_resolve-apt-repository-failures.md",
+      "before_characters": 1718,
+      "after_characters": 1318,
+      "body_sha256": "e55e7d15cfebdadf44ad6cab36cf06141b54fbe48f9713171847a75126752798"
+    },
+    {
+      "id": "termux-03-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/03_fix-storage-permission-errors.md",
+      "before_characters": 1885,
+      "after_characters": 1631,
+      "body_sha256": "80735b0995a2d1652f36391dbdc6d01ce6314143d948f9f149e9c4bdbd00e66b"
+    },
+    {
+      "id": "termux-03-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/03_fix-storage-permission-errors.md",
+      "before_characters": 1817,
+      "after_characters": 1417,
+      "body_sha256": "306ca9cfa98e5309da38ef0a38988d447b42cb07fdb5d2f4d59a3f61ee99611a"
+    },
+    {
+      "id": "termux-04-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/04_permission-denied-and-executable-bits.md",
+      "before_characters": 1614,
+      "after_characters": 1613,
+      "body_sha256": "da443da9c1335685b01e259573ec444e17096bdeedf8aff0979c1ca1f70b405b"
+    },
+    {
+      "id": "termux-04-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/04_permission-denied-and-executable-bits.md",
+      "before_characters": 1584,
+      "after_characters": 1583,
+      "body_sha256": "a5d43175cae0601135b60a5dbef19da6c1eadda291195d129f59e450f0a00089"
+    },
+    {
+      "id": "termux-05-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/05_file-path-and-working-directory-errors.md",
+      "before_characters": 1643,
+      "after_characters": 1462,
+      "body_sha256": "350198abb621222cfa608675b78071fbc9c5718b783151e37b69de7373b648e4"
+    },
+    {
+      "id": "termux-05-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/05_file-path-and-working-directory-errors.md",
+      "before_characters": 1605,
+      "after_characters": 1447,
+      "body_sha256": "017b8c95ededddccf506284498c06d3f3de4b73ba70c5982d8501a8a1c5796ff"
+    },
+    {
+      "id": "termux-06-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/06_python-package-import-errors.md",
+      "before_characters": 1827,
+      "after_characters": 1573,
+      "body_sha256": "4b0522309da4cd525a5faee1db7dbdd5e7c2f613211bc60441dceea03798391f"
+    },
+    {
+      "id": "termux-06-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/06_python-package-import-errors.md",
+      "before_characters": 1786,
+      "after_characters": 1386,
+      "body_sha256": "08176fb4163ab68746a65ff0cd2fd52840044e9277a17ec3c5e06826b16e6ce5"
+    },
+    {
+      "id": "termux-07-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/07_virtual-environment-recovery.md",
+      "before_characters": 1704,
+      "after_characters": 1523,
+      "body_sha256": "13c62fc292b16cde068fe6ba6af841403c5c95fbd6a7dfd92a463692eccc087f"
+    },
+    {
+      "id": "termux-07-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/07_virtual-environment-recovery.md",
+      "before_characters": 1594,
+      "after_characters": 1436,
+      "body_sha256": "3c0aaa24f46c6fd161b9158016985d3225bca862bd6ddec77126206d8926e2b5"
+    },
+    {
+      "id": "termux-08-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/08_git-clone-or-authentication-failures.md",
+      "before_characters": 1800,
+      "after_characters": 1546,
+      "body_sha256": "46ceba4fc71f0e274027823cb47627299551aad2f1b4ce4859e16d940494f21a"
+    },
+    {
+      "id": "termux-08-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/08_git-clone-or-authentication-failures.md",
+      "before_characters": 1639,
+      "after_characters": 1239,
+      "body_sha256": "15e551c293ce87a55390bfc80cdde2f9ace8aea7e86107fb9f19c09d39526cf9"
+    },
+    {
+      "id": "termux-09-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/09_git-pull-and-merge-conflicts.md",
+      "before_characters": 1918,
+      "after_characters": 1664,
+      "body_sha256": "b698220ada3998ff1911f08b41d2c79bb040048ac0a4ed434c3f76f0d3bd4032"
+    },
+    {
+      "id": "termux-09-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/09_git-pull-and-merge-conflicts.md",
+      "before_characters": 1827,
+      "after_characters": 1427,
+      "body_sha256": "efa27eea378bbaf3103b633ada0d77a30cda4a9f5e7e99b8e8a51b0fe1481f3c"
+    },
+    {
+      "id": "termux-10-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/10_dns-and-https-connectivity.md",
+      "before_characters": 1868,
+      "after_characters": 1614,
+      "body_sha256": "c0a85989f9b6851a17c9d0a188b36897d2268cb25d42f3a042ff90ceaacd2538"
+    },
+    {
+      "id": "termux-10-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/10_dns-and-https-connectivity.md",
+      "before_characters": 1708,
+      "after_characters": 1308,
+      "body_sha256": "11fcd162d68f48cedc4fe113aab7a4aa5f5ef9f96cf22e25be47847784667af5"
+    },
+    {
+      "id": "termux-11-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/11_local-development-server-access.md",
+      "before_characters": 1667,
+      "after_characters": 1486,
+      "body_sha256": "cbf93efc00c971f30620373d19cf1592f12da1e194480b1aaa2d0a565222f45c"
+    },
+    {
+      "id": "termux-11-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/11_local-development-server-access.md",
+      "before_characters": 1563,
+      "after_characters": 1405,
+      "body_sha256": "d47800ec08d8c7f914210413d1acb669864b1c3aa07763f8eac4812d5ea0dec8"
+    },
+    {
+      "id": "termux-12-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/12_port-already-in-use.md",
+      "before_characters": 1655,
+      "after_characters": 1474,
+      "body_sha256": "6dcbd6b6546efa1ad066fbb8ccc29a4f4b45682278a468394bdcd8d10d2f77aa"
+    },
+    {
+      "id": "termux-12-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/12_port-already-in-use.md",
+      "before_characters": 1594,
+      "after_characters": 1436,
+      "body_sha256": "40cb44ff5aab9820529651c4f6656ce109c35fc74722ea35bb74a7835995c9ac"
+    },
+    {
+      "id": "termux-13-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/13_crlf-and-shebang-incompatibility.md",
+      "before_characters": 1722,
+      "after_characters": 1541,
+      "body_sha256": "882dbb9a21d57db5b250ca981ee49dd31252462f3fbc1f8deb46521680eefd2a"
+    },
+    {
+      "id": "termux-13-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/13_crlf-and-shebang-incompatibility.md",
+      "before_characters": 1625,
+      "after_characters": 1467,
+      "body_sha256": "2368c867123c600925f5acc6377f814566a505056050c58ee85d499c8cc70687"
+    },
+    {
+      "id": "termux-14-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/14_phone-memory-and-background-termination.md",
+      "before_characters": 1949,
+      "after_characters": 1695,
+      "body_sha256": "eb83a3331dd15fa5c37a53012a0e1123c626720cdb25b904312c520115d7bc52"
+    },
+    {
+      "id": "termux-14-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/14_phone-memory-and-background-termination.md",
+      "before_characters": 1826,
+      "after_characters": 1426,
+      "body_sha256": "b1728d49d0f0ae0e0b7dbac30c058784c66562159427ebd429ad936197642f62"
+    },
+    {
+      "id": "termux-15-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/15_package-and-pip-disk-exhaustion.md",
+      "before_characters": 1707,
+      "after_characters": 1526,
+      "body_sha256": "1723be9804516aef1bd8f56f9fd5d633b52756a33e52d8104692454ada5c1c3d"
+    },
+    {
+      "id": "termux-15-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/15_package-and-pip-disk-exhaustion.md",
+      "before_characters": 1629,
+      "after_characters": 1471,
+      "body_sha256": "30b7af64b1da92557f1da001f8e171088a70a85d1742664c936fa468164baa3c"
+    },
+    {
+      "id": "termux-16-en",
+      "locale": "en",
+      "path": "Termux_Troubleshooting/en/16_github-actions-and-pages-preview-checks.md",
+      "before_characters": 1876,
+      "after_characters": 1695,
+      "body_sha256": "28eca3052bab37c65c45ed083db2410794712e589fe244dee9781d28aa44c1ef"
+    },
+    {
+      "id": "termux-16-el",
+      "locale": "el",
+      "path": "Termux_Troubleshooting/el/16_github-actions-and-pages-preview-checks.md",
+      "before_characters": 1721,
+      "after_characters": 1563,
+      "body_sha256": "3ab50a1ac7d38e30f542bcb8be12be523f3a7c98ef385467900235022c68c121"
+    },
+    {
+      "id": "deep-dive-python-tracebacks-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/01_python-tracebacks.md",
+      "before_characters": 724,
+      "after_characters": 1834,
+      "body_sha256": "4c48d3995218ce176f749f4a2f4fe4eb9503986356a39b176b58e9840ecbbd8c"
+    },
+    {
+      "id": "deep-dive-python-tracebacks-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/01_python-tracebacks.md",
+      "before_characters": 714,
+      "after_characters": 1686,
+      "body_sha256": "c09dce3ff6331221226fc2b22ec0d23ced8cb5c0d32d4170fb7f08f53f879a63"
+    },
+    {
+      "id": "deep-dive-javascript-async-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/02_javascript-async.md",
+      "before_characters": 794,
+      "after_characters": 1722,
+      "body_sha256": "18df3cc6e625e21d834142ee9e96c94b3747403fc97dd86dd7aab466ee65457b"
+    },
+    {
+      "id": "deep-dive-javascript-async-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/02_javascript-async.md",
+      "before_characters": 771,
+      "after_characters": 1647,
+      "body_sha256": "b267d9f0a8e97a84a46198fae5df07805d689c7d6ec23e01b9454ba108e0eafd"
+    },
+    {
+      "id": "deep-dive-css-cascade-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/03_css-cascade.md",
+      "before_characters": 885,
+      "after_characters": 1876,
+      "body_sha256": "7439ebc91c152b5a58bf223f83e85ed59f4c9fe1b57c9a68abf87947eefc8d99"
+    },
+    {
+      "id": "deep-dive-css-cascade-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/03_css-cascade.md",
+      "before_characters": 867,
+      "after_characters": 1815,
+      "body_sha256": "84cb647333728c611fe2e4a9378fafa4783abe16b01808aa559a3609b8d5348f"
+    },
+    {
+      "id": "deep-dive-html-semantics-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/04_html-semantics.md",
+      "before_characters": 859,
+      "after_characters": 1666,
+      "body_sha256": "49912135a3e43cd3107d9efed5aa4ae3b013e3cc14db13de0e106976293d6c16"
+    },
+    {
+      "id": "deep-dive-html-semantics-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/04_html-semantics.md",
+      "before_characters": 815,
+      "after_characters": 1739,
+      "body_sha256": "27d1363c87ff4bfca0a2310bff40d165fa1c4ba1f37abdb18b86c0c9bb2090be"
+    },
+    {
+      "id": "deep-dive-git-rebase-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/05_git-rebase.md",
+      "before_characters": 768,
+      "after_characters": 1622,
+      "body_sha256": "34fcd130705bc5cc0f5324fcc270b5898c7f665a65ec5bdf400c0921efb9007a"
+    },
+    {
+      "id": "deep-dive-git-rebase-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/05_git-rebase.md",
+      "before_characters": 760,
+      "after_characters": 1503,
+      "body_sha256": "7650b76a7c000948ad2b462352b3cae995cb44d11bc8183f7bb89c4b44133c53"
+    },
+    {
+      "id": "deep-dive-github-actions-permissions-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/06_github-actions-permissions.md",
+      "before_characters": 785,
+      "after_characters": 1741,
+      "body_sha256": "6c5d2194df6ff37ecededaa8af328b02b301f4561eeb4946f26d35c5f7a28cd7"
+    },
+    {
+      "id": "deep-dive-github-actions-permissions-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/06_github-actions-permissions.md",
+      "before_characters": 775,
+      "after_characters": 1696,
+      "body_sha256": "3a81817902e3508d5b61c803078c2f51bd1f4ad3c49415ab38ab0cef3a622fdd"
+    },
+    {
+      "id": "deep-dive-http-rate-limits-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/07_http-rate-limits.md",
+      "before_characters": 800,
+      "after_characters": 1685,
+      "body_sha256": "635cc9b5ca9a74ee01c6e4ef7245e9e02eb2544a666e134123bafdfdd9537591"
+    },
+    {
+      "id": "deep-dive-http-rate-limits-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/07_http-rate-limits.md",
+      "before_characters": 740,
+      "after_characters": 1603,
+      "body_sha256": "bbd52096c38077e32fe47d0ddb526a7b4de39bac4f742f5a70b80e5946c3f28a"
+    },
+    {
+      "id": "deep-dive-sql-transactions-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/08_sql-transactions.md",
+      "before_characters": 770,
+      "after_characters": 1667,
+      "body_sha256": "37b42d905c9d4a7bef98fa9baed31a66d6be1e09eae87edc3d77d1558bed5f57"
+    },
+    {
+      "id": "deep-dive-sql-transactions-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/08_sql-transactions.md",
+      "before_characters": 772,
+      "after_characters": 1551,
+      "body_sha256": "ce044fc64b30dbe5aa816ab151f9f8e6febf20678216ab2d4641571ba95d9d35"
+    },
+    {
+      "id": "deep-dive-bash-errors-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/09_bash-errors.md",
+      "before_characters": 694,
+      "after_characters": 1520,
+      "body_sha256": "4f60c040f124023df50a376216f97a0b298570deb45892596d1447d684023001"
+    },
+    {
+      "id": "deep-dive-bash-errors-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/09_bash-errors.md",
+      "before_characters": 699,
+      "after_characters": 1460,
+      "body_sha256": "06ffb81b0a2ebc56ba66961b52b83c5bacc6b800a4d798ea434594d243e21559"
+    },
+    {
+      "id": "deep-dive-python-asyncio-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/10_python-asyncio.md",
+      "before_characters": 721,
+      "after_characters": 1767,
+      "body_sha256": "bd27c46a8bc88b28f4e6df3bd057ae7ddc890adc904c5e98c32315a1388d1eca"
+    },
+    {
+      "id": "deep-dive-python-asyncio-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/10_python-asyncio.md",
+      "before_characters": 713,
+      "after_characters": 1744,
+      "body_sha256": "6ce98783e536243208889b7e5b0da5ee9af4f64ff320143043fadd5ec91e04ed"
+    },
+    {
+      "id": "deep-dive-testing-fixtures-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/11_testing-fixtures.md",
+      "before_characters": 744,
+      "after_characters": 1753,
+      "body_sha256": "a34ca7bab17a8de7ccdeb67d886915cc6ab3ff1d0c6118c1aff2782459c7bb83"
+    },
+    {
+      "id": "deep-dive-testing-fixtures-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/11_testing-fixtures.md",
+      "before_characters": 749,
+      "after_characters": 1689,
+      "body_sha256": "fa8c340c16b0315a347dbcd3d6ed77693e52db5bc38ea7198d20668ea2a4443d"
+    },
+    {
+      "id": "deep-dive-termux-ssl-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/12_termux-ssl.md",
+      "before_characters": 739,
+      "after_characters": 1657,
+      "body_sha256": "e74218200a95538208a26e6c0339983049d7bf3c65f3f70a71e044dd94fafc3d"
+    },
+    {
+      "id": "deep-dive-termux-ssl-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/12_termux-ssl.md",
+      "before_characters": 674,
+      "after_characters": 1511,
+      "body_sha256": "7eec172d51356ecbe06e78b917089dfac4a6b2b6d08bcb2390c27807cb5e2128"
+    },
+    {
+      "id": "deep-dive-gitignore-secrets-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/13_gitignore-secrets.md",
+      "before_characters": 746,
+      "after_characters": 1690,
+      "body_sha256": "b6fd127df003eaebaf2f8d3ddac0aa80f6fb38c94f173b14177aa8724b512142"
+    },
+    {
+      "id": "deep-dive-gitignore-secrets-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/13_gitignore-secrets.md",
+      "before_characters": 699,
+      "after_characters": 1622,
+      "body_sha256": "dddd406975d610ddbf404e1ebb1446524b352eacbf93027656e45cc5cd1c8f2c"
+    },
+    {
+      "id": "deep-dive-web-performance-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/14_web-performance.md",
+      "before_characters": 776,
+      "after_characters": 1761,
+      "body_sha256": "71f37530450429dc0e96aaf823b49cc657afa90d50880f9195659db5e5ead198"
+    },
+    {
+      "id": "deep-dive-web-performance-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/14_web-performance.md",
+      "before_characters": 750,
+      "after_characters": 1648,
+      "body_sha256": "63219b0cceb38fff4bbab1e903ccb703972fcedb89789e1a67e1a67cad9d8647"
+    },
+    {
+      "id": "deep-dive-node-process-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/15_node-process.md",
+      "before_characters": 704,
+      "after_characters": 1657,
+      "body_sha256": "f3634c8e153ccd4ec1075b39060cf9c20e6750613d387a193912b791e12888fa"
+    },
+    {
+      "id": "deep-dive-node-process-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/15_node-process.md",
+      "before_characters": 675,
+      "after_characters": 1495,
+      "body_sha256": "3c0ccc8b7d02f502cb4784a1d9ef0749d81fbe402e7cd7422167dc41cd2a1870"
+    },
+    {
+      "id": "deep-dive-data-encoding-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/16_data-encoding.md",
+      "before_characters": 749,
+      "after_characters": 1666,
+      "body_sha256": "c517cd3a53cd766a60a5be097db87365998212dcba3b89629f01fc3b866ebee5"
+    },
+    {
+      "id": "deep-dive-data-encoding-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/16_data-encoding.md",
+      "before_characters": 709,
+      "after_characters": 1577,
+      "body_sha256": "f46309b484c338f8316b6946297f1d734ec12f16564624556a22cf91093af4c8"
+    },
+    {
+      "id": "deep-dive-releases-and-rollback-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/17_releases-and-rollback.md",
+      "before_characters": 791,
+      "after_characters": 1751,
+      "body_sha256": "5a618a2c9d76c0c51a29438844de0776fa36bf162b0140a8840ea9906c6103e9"
+    },
+    {
+      "id": "deep-dive-releases-and-rollback-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/17_releases-and-rollback.md",
+      "before_characters": 742,
+      "after_characters": 1581,
+      "body_sha256": "521647eef9920266c82426445ffb687eb6b82d81f38fcbc490b72d7e2c5e3c92"
+    },
+    {
+      "id": "deep-dive-offlines-first-en",
+      "locale": "en",
+      "path": "Deep_Dive/en/18_offlines-first.md",
+      "before_characters": 748,
+      "after_characters": 1762,
+      "body_sha256": "e0c5f5d6fd1921f64c53c52c99afadea718c4e3d74ba16a823029da75b16dfb3"
+    },
+    {
+      "id": "deep-dive-offlines-first-el",
+      "locale": "el",
+      "path": "Deep_Dive/el/18_offlines-first.md",
+      "before_characters": 706,
+      "after_characters": 1659,
+      "body_sha256": "b73eeb6735ae995dfad89e49cf558d58db2627056f46afa92dc671ec6bd82ab4"
+    },
+    {
+      "id": "hgp-en-001",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/001.md",
+      "before_characters": 8280,
+      "after_characters": 8286,
+      "body_sha256": "8a9cefbe06e76a5e8caf898000634473ead79812eb1289aaab95600804427923"
+    },
+    {
+      "id": "hgp-en-002",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/002.md",
+      "before_characters": 7488,
+      "after_characters": 7494,
+      "body_sha256": "d31965353da81f5f64a778e92d25871e0fb3315faa1da41608d37cef1113a6df"
+    },
+    {
+      "id": "hgp-en-003",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/003.md",
+      "before_characters": 5810,
+      "after_characters": 5816,
+      "body_sha256": "954ccf9534edb1856a0ecc79afb01f7c04d7bd217f83db83451c504dc314c3f4"
+    },
+    {
+      "id": "hgp-en-004",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/004.md",
+      "before_characters": 5694,
+      "after_characters": 5700,
+      "body_sha256": "be1d038746348d9d7da25c340d0d6a84b74c16fc92ac52f41f2162feeeda1f20"
+    },
+    {
+      "id": "hgp-en-005",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/005.md",
+      "before_characters": 5331,
+      "after_characters": 5337,
+      "body_sha256": "0d2557a318cd9e51c2b27bc44b39b26676c75b10a37c78dca0edeaaa1497cb27"
+    },
+    {
+      "id": "hgp-en-006",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/006.md",
+      "before_characters": 7337,
+      "after_characters": 7343,
+      "body_sha256": "d95c7b581104059309278be4dcca10624b462b36c79378e69a007e8885687a44"
+    },
+    {
+      "id": "hgp-en-007",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/007.md",
+      "before_characters": 6266,
+      "after_characters": 6272,
+      "body_sha256": "1d1b83eba7c1e3a2f1a3ff258272f52250eb9e4de4c4d86d0b91abc737e9f692"
+    },
+    {
+      "id": "hgp-en-008",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/008.md",
+      "before_characters": 5485,
+      "after_characters": 5491,
+      "body_sha256": "a03cb6d985deeb359ca78416c6aad68ab1d266bb699e3b1109ac068d85d2dab6"
+    },
+    {
+      "id": "hgp-en-009",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/009.md",
+      "before_characters": 5219,
+      "after_characters": 5225,
+      "body_sha256": "7eb093cb9e41dff7bff9fb922ec26364c13bd151648ca7c3bb44e1f1c8d5965d"
+    },
+    {
+      "id": "hgp-en-010",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/010.md",
+      "before_characters": 5286,
+      "after_characters": 5292,
+      "body_sha256": "69b6d519a2b3121d4e6afd8fdc0dcfcfd2c3bf4fd7c304403e98f50d94b66fd0"
+    },
+    {
+      "id": "hgp-en-011",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/011.md",
+      "before_characters": 4873,
+      "after_characters": 4879,
+      "body_sha256": "8ccf4eb86f33cbfbf8afb3ee011f072d0f908087ecc698d1d89b23675204cee6"
+    },
+    {
+      "id": "hgp-en-012",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/012.md",
+      "before_characters": 4865,
+      "after_characters": 4871,
+      "body_sha256": "7a89b01034caea65a62855d4322cb23f63c7ef4778216b8a1a2e6f3a9eda6cdc"
+    },
+    {
+      "id": "hgp-en-013",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/013.md",
+      "before_characters": 4906,
+      "after_characters": 4912,
+      "body_sha256": "ea3fbb8cdf90c1b074dc14ff01085c4567c46312a19cbfd50d37ca134e035383"
+    },
+    {
+      "id": "hgp-en-014",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/014.md",
+      "before_characters": 5821,
+      "after_characters": 5827,
+      "body_sha256": "2d110ae70415b0d4329e022385132a6dee53530124944cca37f42231e6448e4d"
+    },
+    {
+      "id": "hgp-en-015",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/015.md",
+      "before_characters": 5015,
+      "after_characters": 5021,
+      "body_sha256": "7d09f6c863c87319af4b7faf1d6ee9a88c64e98657fd49430dd284ed55c9a471"
+    },
+    {
+      "id": "hgp-en-016",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/016.md",
+      "before_characters": 5565,
+      "after_characters": 5571,
+      "body_sha256": "9fd2893492caa6e5d4ccd6dba1d8a03f8e0d26000662341042b3ac0c46051b52"
+    },
+    {
+      "id": "hgp-en-017",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/017.md",
+      "before_characters": 12380,
+      "after_characters": 12386,
+      "body_sha256": "f4fb27550ad6eadcd24fb46e35cf7e68cf0b2dbb15e23fec2ff052ab35792be3"
+    },
+    {
+      "id": "hgp-en-018",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/018.md",
+      "before_characters": 6230,
+      "after_characters": 6236,
+      "body_sha256": "e3284b0a35af53f07817814a8747b9959b1cfbdf29d11ae9095ca33e9a1ed058"
+    },
+    {
+      "id": "hgp-en-019",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/019.md",
+      "before_characters": 12042,
+      "after_characters": 12048,
+      "body_sha256": "c64234115b586beff5dfbb1261985ba9b4ca3c56ef85a5592cc0f6a141e5ce85"
+    },
+    {
+      "id": "hgp-en-020",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/020.md",
+      "before_characters": 6078,
+      "after_characters": 6084,
+      "body_sha256": "b4e7b04dec7c061fa60f57677b7861355fe842bba7f1aeb3fc97e64a39f87d1e"
+    },
+    {
+      "id": "hgp-en-021",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/021.md",
+      "before_characters": 11001,
+      "after_characters": 10465,
+      "body_sha256": "ad1eb11aa8b67eee4a414ddd4100ca36dea7493b7febddc51f09b6bc1a48310e"
+    },
+    {
+      "id": "hgp-en-022",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/022.md",
+      "before_characters": 11350,
+      "after_characters": 10814,
+      "body_sha256": "0a5a864fcddf7a38ca5ce2040c4907c9000ec28b403ccff7c9bf0c2fdd930a03"
+    },
+    {
+      "id": "hgp-en-023",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/023.md",
+      "before_characters": 9804,
+      "after_characters": 9268,
+      "body_sha256": "779c8e433ca8fedbe2b107f3fa8d444c6041728dfeeda873ea875cd3c7df7a30"
+    },
+    {
+      "id": "hgp-en-024",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/024.md",
+      "before_characters": 9491,
+      "after_characters": 8955,
+      "body_sha256": "7efae638bfbccefb035b7db16eb1208407137e3fe55a0f28483c3af3f599e881"
+    },
+    {
+      "id": "hgp-en-025",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/025.md",
+      "before_characters": 11307,
+      "after_characters": 10771,
+      "body_sha256": "aa6e3e01a5171e4ca75f5ffdfc096a7887c8637058f0c265e101da84fc44dd50"
+    },
+    {
+      "id": "hgp-en-026",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/026.md",
+      "before_characters": 9209,
+      "after_characters": 8673,
+      "body_sha256": "805c65f85bdf360bdb1aa310ac35423e11d30f6e26a37b2cbf6baf3f023c5674"
+    },
+    {
+      "id": "hgp-en-027",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/027.md",
+      "before_characters": 12859,
+      "after_characters": 12323,
+      "body_sha256": "dd138111c6b91a8a992a6dadaa8c2072a6195cfbdc1566d93e3a2b7ca4cc0f04"
+    },
+    {
+      "id": "hgp-en-028",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/028.md",
+      "before_characters": 9564,
+      "after_characters": 9028,
+      "body_sha256": "912b7f905f0a72395c6acf3e86eea2e883de3893c54934a94dc87586ec33645b"
+    },
+    {
+      "id": "hgp-en-029",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/029.md",
+      "before_characters": 8057,
+      "after_characters": 7521,
+      "body_sha256": "b1be144c9741d6c638ef88ddd0c64f7f2cc475efcfe3839b88c753e9826c0e1c"
+    },
+    {
+      "id": "hgp-en-030",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/030.md",
+      "before_characters": 7233,
+      "after_characters": 6697,
+      "body_sha256": "c7d395cace099d19395f4dcbcca5b7028894f786f497bc7ec8d7d407e977abc4"
+    },
+    {
+      "id": "hgp-en-031",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/031.md",
+      "before_characters": 6706,
+      "after_characters": 6170,
+      "body_sha256": "3c70b60073650ba2966267874c31fc17c41d17012de1532ec279b5d461076928"
+    },
+    {
+      "id": "hgp-en-032",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/032.md",
+      "before_characters": 7335,
+      "after_characters": 6799,
+      "body_sha256": "d838619f830ed2879082b59d5b57777857994fb50cea22f58f8abeba206888e2"
+    },
+    {
+      "id": "hgp-en-033",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/033.md",
+      "before_characters": 6567,
+      "after_characters": 6031,
+      "body_sha256": "1d6bfa336529997e653268b680aedefb9eed6380f3439cee63d358aa28b08af9"
+    },
+    {
+      "id": "hgp-en-034",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/034.md",
+      "before_characters": 6298,
+      "after_characters": 5762,
+      "body_sha256": "74d6fafaa3d2b688f1d85dd799f7c425dee5877e5468fe53d78242b174bd236e"
+    },
+    {
+      "id": "hgp-en-035",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/035.md",
+      "before_characters": 5937,
+      "after_characters": 5401,
+      "body_sha256": "99801c53bbb4c53f65d7a124e643580308b16b98df153391e90e325db69159a4"
+    },
+    {
+      "id": "hgp-en-036",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/036.md",
+      "before_characters": 6100,
+      "after_characters": 5564,
+      "body_sha256": "8b27bc5c9e3365ca22299d3cd345b3a4170a696244a847e9f9b133512639dc48"
+    },
+    {
+      "id": "hgp-en-037",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/037.md",
+      "before_characters": 5716,
+      "after_characters": 5180,
+      "body_sha256": "e306766639043589a2fec5454957517c1150169ca52edd47ccae8951399954fd"
+    },
+    {
+      "id": "hgp-en-038",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/038.md",
+      "before_characters": 6243,
+      "after_characters": 5707,
+      "body_sha256": "ef7da3e0c865855d770e1a9b704b1205b5a8b00bca0ab4ba150bca05ee1f3482"
+    },
+    {
+      "id": "hgp-en-039",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/039.md",
+      "before_characters": 5874,
+      "after_characters": 5338,
+      "body_sha256": "8b28d9733f43a45364a81a8f213a5932ba4c13ae8d107da5df5e3575b3966c4d"
+    },
+    {
+      "id": "hgp-en-040",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/040.md",
+      "before_characters": 6743,
+      "after_characters": 6207,
+      "body_sha256": "d0d2910c598bdfe263ff59129782b721bf1f485304eb538213a2b435c35218ab"
+    },
+    {
+      "id": "hgp-en-041",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/041.md",
+      "before_characters": 5718,
+      "after_characters": 5182,
+      "body_sha256": "4cc898638189b59b5248b262d442ca444d2dfec73cfdaf602f83c64e8326e5f1"
+    },
+    {
+      "id": "hgp-en-042",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/042.md",
+      "before_characters": 5792,
+      "after_characters": 5256,
+      "body_sha256": "a29943308aabd0a43f7ce54ec20c280e883fb2bb62333843e0330acd06816bca"
+    },
+    {
+      "id": "hgp-en-043",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/043.md",
+      "before_characters": 5141,
+      "after_characters": 4605,
+      "body_sha256": "6021f616241d03f2500bae179a201d65bc8b92d82ec2d24191d5df526bdc7c33"
+    },
+    {
+      "id": "hgp-en-044",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/044.md",
+      "before_characters": 4976,
+      "after_characters": 4440,
+      "body_sha256": "8e0d3ea251267cf3e21a9129beb6e03a6ab4abac1a97abc2969c30b922da4373"
+    },
+    {
+      "id": "hgp-en-045",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/045.md",
+      "before_characters": 7626,
+      "after_characters": 7090,
+      "body_sha256": "d156858f238e5b98c5b00421f86d86cd6a0f0253e6483f8cf20f493786f36e64"
+    },
+    {
+      "id": "hgp-en-046",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/046.md",
+      "before_characters": 7477,
+      "after_characters": 6941,
+      "body_sha256": "e75f13e4b73d540547ee68dc4f8967511be857281da76ce46ab569616ece1f59"
+    },
+    {
+      "id": "hgp-en-047",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/047.md",
+      "before_characters": 5026,
+      "after_characters": 4490,
+      "body_sha256": "02f1806afdf866c5bbe94129cc6b94fb00acaf1bb1f9ce499547df41e1486f62"
+    },
+    {
+      "id": "hgp-en-048",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/048.md",
+      "before_characters": 4713,
+      "after_characters": 4177,
+      "body_sha256": "08c85bbbb9a0e0edb69dd742cbfa86446049ff5647d47d672e83f6f1e0bca757"
+    },
+    {
+      "id": "hgp-en-049",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/049.md",
+      "before_characters": 4972,
+      "after_characters": 4436,
+      "body_sha256": "3491c415e01cac69e7d1517d672e02ca040eb8756085a81cfa867500a0d545a2"
+    },
+    {
+      "id": "hgp-en-050",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/050.md",
+      "before_characters": 5469,
+      "after_characters": 4933,
+      "body_sha256": "de2fee04b183745eb8ea927eed6e4e5af7ce80e8cc308c8f6d8f0a1c3335d73d"
+    },
+    {
+      "id": "hgp-en-051",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/051.md",
+      "before_characters": 8198,
+      "after_characters": 7662,
+      "body_sha256": "f3c38999fa1049109b9b72251c7a5e818a3a21b45bdde4ab72db4beee1b35ea4"
+    },
+    {
+      "id": "hgp-en-052",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/052.md",
+      "before_characters": 7030,
+      "after_characters": 6494,
+      "body_sha256": "4adf9c6ca97a8515a5deff5e48cd62ce4d523e846bca69788d93f9808fec535d"
+    },
+    {
+      "id": "hgp-en-053",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/053.md",
+      "before_characters": 6188,
+      "after_characters": 5652,
+      "body_sha256": "efe2604d4b95ef7a3dcaa66dbf85ffda4ddb92a442abd5a67012c3a0620600b1"
+    },
+    {
+      "id": "hgp-en-054",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/054.md",
+      "before_characters": 5401,
+      "after_characters": 4865,
+      "body_sha256": "39e2da803c3b1ccbe3396ffd39aafc32230c2201bed68a56ecbca1839deac475"
+    },
+    {
+      "id": "hgp-en-055",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/055.md",
+      "before_characters": 4550,
+      "after_characters": 4014,
+      "body_sha256": "c108637dc7b518fe56905599422c65c768c4a69237d34e2bce8c34b5b9f773af"
+    },
+    {
+      "id": "hgp-en-056",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/056.md",
+      "before_characters": 6004,
+      "after_characters": 5468,
+      "body_sha256": "3ed009424a0bba157e0e4e2cf876de94f7405314dcab11bb75a8d5f21d7109bd"
+    },
+    {
+      "id": "hgp-en-057",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/057.md",
+      "before_characters": 4451,
+      "after_characters": 3915,
+      "body_sha256": "7c03b3911134a5621eb284a0d387f886d3cdd656fdaf6b65986983af74d90bfb"
+    },
+    {
+      "id": "hgp-en-058",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/058.md",
+      "before_characters": 5151,
+      "after_characters": 4615,
+      "body_sha256": "478ef3d4e2fa22a3abc2a4ff1613415f7f2320e5c1f45d29795a142c8f14816f"
+    },
+    {
+      "id": "hgp-en-059",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/059.md",
+      "before_characters": 5224,
+      "after_characters": 4688,
+      "body_sha256": "b98fb39aa5059501184a955ec60f5c6cc9998950731e18c651531034b697fa26"
+    },
+    {
+      "id": "hgp-en-060",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/060.md",
+      "before_characters": 4742,
+      "after_characters": 4206,
+      "body_sha256": "d52f9adedf3f7e4729f75289b9e6b5d4380c25f61e2526c674b7776682963631"
+    },
+    {
+      "id": "hgp-el-001",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/001.md",
+      "before_characters": 7635,
+      "after_characters": 7641,
+      "body_sha256": "6d1bb7f57430020072d76c2484cd88ffb06b4478df0069aab1b53eabafa630c4"
+    },
+    {
+      "id": "hgp-el-002",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/002.md",
+      "before_characters": 5996,
+      "after_characters": 6002,
+      "body_sha256": "0b806af1b747166b7e886282b1b6480b4ca7ab0ab87c95acb88f33ae2e8586d3"
+    },
+    {
+      "id": "hgp-el-003",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/003.md",
+      "before_characters": 4336,
+      "after_characters": 4342,
+      "body_sha256": "7e890fdb21c2444340b980ce61c85398a3ca57ab33079c2a5087f5a579e2a54c"
+    },
+    {
+      "id": "hgp-el-004",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/004.md",
+      "before_characters": 3947,
+      "after_characters": 3953,
+      "body_sha256": "360db7b572bd4d2209a293701f4769c48c5c2fe290de48dc68984e4074f43dfc"
+    },
+    {
+      "id": "hgp-el-005",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/005.md",
+      "before_characters": 3529,
+      "after_characters": 3535,
+      "body_sha256": "5d2ae068cf84e60ca8b71afe583bbaa353f826c14c3897f4b7ee0e0603b1a809"
+    },
+    {
+      "id": "hgp-el-006",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/006.md",
+      "before_characters": 4884,
+      "after_characters": 4890,
+      "body_sha256": "499f1a7082d7f1dc3aa977eb4f56f411aeedeb592ca97b42011b39cf55e67ff5"
+    },
+    {
+      "id": "hgp-el-007",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/007.md",
+      "before_characters": 4037,
+      "after_characters": 4043,
+      "body_sha256": "9bdda8a44b82e46f9cf6401c581959236ce55e104d2d4b7ffa0f1cca57e8b015"
+    },
+    {
+      "id": "hgp-el-008",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/008.md",
+      "before_characters": 3506,
+      "after_characters": 3512,
+      "body_sha256": "d5a37f2b9673f2842cd4b9f336b75c27063c43fcd3846b0ed35ff69f62b599f2"
+    },
+    {
+      "id": "hgp-el-009",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/009.md",
+      "before_characters": 4334,
+      "after_characters": 4340,
+      "body_sha256": "70c67d5db562704597e76ea2a506ea4353ed8e2d7a239ecf19e9e891b3806705"
+    },
+    {
+      "id": "hgp-el-010",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/010.md",
+      "before_characters": 4432,
+      "after_characters": 4438,
+      "body_sha256": "bb51fe3fcaf0240d917041bbdacadc863bbbc0d09fee89f268febb085725b4ed"
+    },
+    {
+      "id": "hgp-el-011",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/011.md",
+      "before_characters": 4166,
+      "after_characters": 4172,
+      "body_sha256": "2951ccd3db79f1c139be1d3f5cbf61ecfb9aa925a4ce9fc7f30ec5a939f68642"
+    },
+    {
+      "id": "hgp-el-012",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/012.md",
+      "before_characters": 3690,
+      "after_characters": 3696,
+      "body_sha256": "95e219000c023c111286bbca8089aa0f20f9b02647cbb4cce91f582468f15ea9"
+    },
+    {
+      "id": "hgp-el-013",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/013.md",
+      "before_characters": 3854,
+      "after_characters": 3860,
+      "body_sha256": "b2960be122fc50f628e3526d0ab7bf59597ac595b7164619863de6964975d83f"
+    },
+    {
+      "id": "hgp-el-014",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/014.md",
+      "before_characters": 4242,
+      "after_characters": 4248,
+      "body_sha256": "8c8b5a545368e869c5eaac4703ceaf98b7f7d9bf6cb7ad5811ef174d6c705067"
+    },
+    {
+      "id": "hgp-el-015",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/015.md",
+      "before_characters": 4101,
+      "after_characters": 4107,
+      "body_sha256": "9ed057fdc412ffa5c89db58e0330da5a924aff0b3bd83e3d3c41c516397267d3"
+    },
+    {
+      "id": "hgp-el-016",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/016.md",
+      "before_characters": 4498,
+      "after_characters": 4504,
+      "body_sha256": "7de93402ef52ffa2d833b254481c9dd213f78d7c887d16ab660671b5f4d4fe6d"
+    },
+    {
+      "id": "hgp-el-017",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/017.md",
+      "before_characters": 7529,
+      "after_characters": 7494,
+      "body_sha256": "604dca5582993280d065151df4fe1a2bb5e346569d98ecbc3a8adeb926be861a"
+    },
+    {
+      "id": "hgp-el-018",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/018.md",
+      "before_characters": 5786,
+      "after_characters": 5792,
+      "body_sha256": "f33c953300a368bf19aafbf547c38a49663822f3ecc59a426cb3652a23b02bf0"
+    },
+    {
+      "id": "hgp-el-019",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/019.md",
+      "before_characters": 5370,
+      "after_characters": 5208,
+      "body_sha256": "0bd279663fea66169fe4ce01f8a4c0484566eade1a2afa9553b5f783551f33c0"
+    },
+    {
+      "id": "hgp-el-020",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/020.md",
+      "before_characters": 5565,
+      "after_characters": 5571,
+      "body_sha256": "f5029124c37ae60ad2aa60d778d44c72988ddac5b5843ce071f1bfaa60c88d47"
+    },
+    {
+      "id": "hgp-el-021",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/021.md",
+      "before_characters": 8914,
+      "after_characters": 8729,
+      "body_sha256": "f80559b9fecd9706abf88609a6c61b3a2bb62aad201118e26c318d06ff5bcea5"
+    },
+    {
+      "id": "hgp-el-022",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/022.md",
+      "before_characters": 9070,
+      "after_characters": 8436,
+      "body_sha256": "da1ae0f48d0d2c5b49ae4a80267cf6711c3480f9ffe77c2d0f5578bb86c6aa37"
+    },
+    {
+      "id": "hgp-el-023",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/023.md",
+      "before_characters": 8489,
+      "after_characters": 8291,
+      "body_sha256": "83ecbb0f92c618f7443151f39de2c5c853e4b14e411c59fd958e17e1789ef392"
+    },
+    {
+      "id": "hgp-el-024",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/024.md",
+      "before_characters": 8586,
+      "after_characters": 7954,
+      "body_sha256": "893ed41fb1780fee42e7c1e8b82b9f93a3b12ba7cb3dd58bca23dd66ee8a5eaf"
+    },
+    {
+      "id": "hgp-el-025",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/025.md",
+      "before_characters": 8651,
+      "after_characters": 8479,
+      "body_sha256": "a71286618bab800f281428a4514edbbfd36fa2a0509408c9ae744cc36d0b31c8"
+    },
+    {
+      "id": "hgp-el-026",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/026.md",
+      "before_characters": 9152,
+      "after_characters": 8961,
+      "body_sha256": "05422b0eb9ca094a4c6cb253bed6e33ac016b2f5ba8e2856bc5fbaa1d2bbe46d"
+    },
+    {
+      "id": "hgp-el-027",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/027.md",
+      "before_characters": 8677,
+      "after_characters": 8513,
+      "body_sha256": "712ec2add4ef09f4b096bf9b0129d2d0fbe8b71c0f9aa7541dc8f6cc7fa057be"
+    },
+    {
+      "id": "hgp-el-028",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/028.md",
+      "before_characters": 8307,
+      "after_characters": 8126,
+      "body_sha256": "57cf854e7db81cbf7cb343703398e84a40aa429052e5250525ba10e333a60bcd"
+    },
+    {
+      "id": "hgp-el-029",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/029.md",
+      "before_characters": 8483,
+      "after_characters": 7811,
+      "body_sha256": "050c26595bd4f26025608eda5bbbdf53fe84dfc8a3fe3cc0367faefda140b884"
+    },
+    {
+      "id": "hgp-el-030",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/030.md",
+      "before_characters": 7628,
+      "after_characters": 6957,
+      "body_sha256": "d4914d429e4b1d9c03a6d24d469782382d771a0178d27cc762d251768b757e6b"
+    },
+    {
+      "id": "hgp-el-031",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/031.md",
+      "before_characters": 7553,
+      "after_characters": 6872,
+      "body_sha256": "3246884e1fe2b742ace4539ae63bdc50d09a0ef7863f7b5b3520308d56b88f99"
+    },
+    {
+      "id": "hgp-el-032",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/032.md",
+      "before_characters": 7397,
+      "after_characters": 6618,
+      "body_sha256": "a9bda6a5055e6362dbe80d3b3ee68392c481bc0973c45301d205eb3f2c7ac086"
+    },
+    {
+      "id": "hgp-el-033",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/033.md",
+      "before_characters": 8035,
+      "after_characters": 7853,
+      "body_sha256": "b7cb7b050a696c8a645189f1aaa97a56de2b3cd9255eba12a7e821bce938095e"
+    },
+    {
+      "id": "hgp-el-034",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/034.md",
+      "before_characters": 7517,
+      "after_characters": 6854,
+      "body_sha256": "938d29a3d717d9b9eb0a89daab33629558eb1e95d3ea70662f0ea9344488453f"
+    },
+    {
+      "id": "hgp-el-035",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/035.md",
+      "before_characters": 7385,
+      "after_characters": 7212,
+      "body_sha256": "b30863ffcd01eab071fd1f46de8b38d8a47b331e065774382fe4bf67c1e8052a"
+    },
+    {
+      "id": "hgp-el-036",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/036.md",
+      "before_characters": 7615,
+      "after_characters": 6954,
+      "body_sha256": "c06097940731b18dc90e7ec864167794e5bb03b5bc6178e357bd45af80a19a2e"
+    },
+    {
+      "id": "hgp-el-037",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/037.md",
+      "before_characters": 7111,
+      "after_characters": 6438,
+      "body_sha256": "3be6286447d0bcf727375001007b04f527029b8862d224bbc1c565945d7e1a55"
+    },
+    {
+      "id": "hgp-el-038",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/038.md",
+      "before_characters": 6562,
+      "after_characters": 5894,
+      "body_sha256": "7efef8d6d8cb1ee511be1b594a7361d13e8392d18ef1a5a7afabb10ba80315bc"
+    },
+    {
+      "id": "hgp-el-039",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/039.md",
+      "before_characters": 7587,
+      "after_characters": 6800,
+      "body_sha256": "3353e1bd0c9d217ec93313efd71d6aed8f3927a02e68e7afa122fa95ba96cb31"
+    },
+    {
+      "id": "hgp-el-040",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/040.md",
+      "before_characters": 9034,
+      "after_characters": 8860,
+      "body_sha256": "47e5342df4f612e8055f271f1d20eae02e6e24a8de0e01baffdd460d4a9cbb88"
+    },
+    {
+      "id": "hgp-el-041",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/041.md",
+      "before_characters": 7565,
+      "after_characters": 6863,
+      "body_sha256": "89f17423babf19d0bc1923dd7aefb484ea4ec2e761e241e22d0d1afbf277cd8a"
+    },
+    {
+      "id": "hgp-el-042",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/042.md",
+      "before_characters": 6684,
+      "after_characters": 6028,
+      "body_sha256": "b78e2f4420d95ee0e702342af9cb7b435529b7a8aca70cc3795893b30f28d54e"
+    },
+    {
+      "id": "hgp-el-043",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/043.md",
+      "before_characters": 6687,
+      "after_characters": 5982,
+      "body_sha256": "c8d107678126294f884a3f4fd030ca95579c82c13b5a92bc81ca02602e385d47"
+    },
+    {
+      "id": "hgp-el-044",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/044.md",
+      "before_characters": 6893,
+      "after_characters": 6225,
+      "body_sha256": "cb7c6d54f22c83582de68516ba096240ae8ce38f82e4a6eca60c313e60f69037"
+    },
+    {
+      "id": "hgp-el-045",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/045.md",
+      "before_characters": 8576,
+      "after_characters": 7990,
+      "body_sha256": "bc264e1e447d4554c2df38097dbe48f4ef1792a1035da0824507b69248c89ed7"
+    },
+    {
+      "id": "hgp-el-046",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/046.md",
+      "before_characters": 7614,
+      "after_characters": 6964,
+      "body_sha256": "bc513993ed0621ea3f4be8cd0787dea505dae08c0b12d558218550ef7b7c294d"
+    },
+    {
+      "id": "hgp-el-047",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/047.md",
+      "before_characters": 6270,
+      "after_characters": 5598,
+      "body_sha256": "1bc6b740932d3aa9f4489ef2fccf36629cd9f0137a9ed62bf14ca1a266e4d6c6"
+    },
+    {
+      "id": "hgp-el-048",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/048.md",
+      "before_characters": 6470,
+      "after_characters": 5776,
+      "body_sha256": "a6cd5416f8e7e625e02aec881e1ae1ff0b848f55f997483f96db90af185643f0"
+    },
+    {
+      "id": "hgp-el-049",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/049.md",
+      "before_characters": 6116,
+      "after_characters": 5344,
+      "body_sha256": "41e2843b8c277b7033bcc8f4c8c3e63612563f4a2626448c49d69cc653439094"
+    },
+    {
+      "id": "hgp-el-050",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/050.md",
+      "before_characters": 8188,
+      "after_characters": 7473,
+      "body_sha256": "d7cbd2e1ceb8ca1c18102b7c6fd7c70a09e67d84de2d776a7d74d52337c1433b"
+    },
+    {
+      "id": "hgp-el-051",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/051.md",
+      "before_characters": 6678,
+      "after_characters": 5987,
+      "body_sha256": "c849b6108029e48a35d31198328e7c69c13c43107cffbd88027c59414dc764b2"
+    },
+    {
+      "id": "hgp-el-052",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/052.md",
+      "before_characters": 6378,
+      "after_characters": 5586,
+      "body_sha256": "8bfc1d0b4fef4cee62c3543a695e6a307ac438cff6634d39cec466ecc4541946"
+    },
+    {
+      "id": "hgp-el-053",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/053.md",
+      "before_characters": 6531,
+      "after_characters": 5751,
+      "body_sha256": "b561e2f9994ee8defe82924087fe84f1900f5e32ab286f9f4e04f5db8f61a47a"
+    },
+    {
+      "id": "hgp-el-054",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/054.md",
+      "before_characters": 5580,
+      "after_characters": 4919,
+      "body_sha256": "4b5ba2b3b1eba5695c325446d8312515fb138e39e65b85b456ae0098091f75e9"
+    },
+    {
+      "id": "hgp-el-055",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/055.md",
+      "before_characters": 5117,
+      "after_characters": 4455,
+      "body_sha256": "fe0835b6ee89f1c94faa7a6919cf71b9994b113c1f38e139b4dfb7a29a0f1e8b"
+    },
+    {
+      "id": "hgp-el-056",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/056.md",
+      "before_characters": 6315,
+      "after_characters": 5663,
+      "body_sha256": "0ba3ff249a3833d8c5713776ccf0df2883e013992aa58ba1e84b824e0078b195"
+    },
+    {
+      "id": "hgp-el-057",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/057.md",
+      "before_characters": 5066,
+      "after_characters": 4401,
+      "body_sha256": "b8e6c9991f3e59f17bfe8d565be08a3e17515aff155db9b26109f84fa4b129ed"
+    },
+    {
+      "id": "hgp-el-058",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/058.md",
+      "before_characters": 7961,
+      "after_characters": 7371,
+      "body_sha256": "99a8789a4750e3d880b19c7e420014a71d2e0f064e04d37826bf5fd5ead3fc28"
+    },
+    {
+      "id": "hgp-el-059",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/059.md",
+      "before_characters": 5572,
+      "after_characters": 4914,
+      "body_sha256": "edc461479fea3b8ab3363826bf2e89c8bac8828aad053ab959f828608bc9cc40"
+    },
+    {
+      "id": "hgp-el-060",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/060.md",
+      "before_characters": 5160,
+      "after_characters": 4504,
+      "body_sha256": "fcba927631af575b5b230be2dd93769c94b3fb387e44b2b1939a4f2c07e10b98"
+    },
+    {
+      "id": "hgp-el-061",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/061.md",
+      "before_characters": 7521,
+      "after_characters": 6802,
+      "body_sha256": "f3e92bbf7ebfc1cdebcd170938bd1bbecf0ca96572fb88f5faf74ca26f06ec50"
+    },
+    {
+      "id": "hgp-el-062",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/062.md",
+      "before_characters": 7347,
+      "after_characters": 6560,
+      "body_sha256": "cfa3c11585151c918064e2b24273e188cd257512abe23d06482935f9a8d39fe6"
+    },
+    {
+      "id": "hgp-el-063",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/063.md",
+      "before_characters": 6930,
+      "after_characters": 6140,
+      "body_sha256": "697bfd4e152af2ff841dfb078b931adffaab5d9f969ddc736a3a123dbc66ec25"
+    },
+    {
+      "id": "hgp-el-064",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/064.md",
+      "before_characters": 6527,
+      "after_characters": 5738,
+      "body_sha256": "df6c2296e76491f7a583cb8c22eca187714e09e09ff0e7cb62cf53903da34788"
+    },
+    {
+      "id": "hgp-el-065",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/065.md",
+      "before_characters": 7779,
+      "after_characters": 6990,
+      "body_sha256": "eb869317ea63634bd75305be60205584820d1b934ef4b4f8cfc37c7437b2d358"
+    },
+    {
+      "id": "hgp-el-066",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/066.md",
+      "before_characters": 7301,
+      "after_characters": 6507,
+      "body_sha256": "df7ad5decdec9f9e532ca91d735294620f2563438cf75d3f0adad2f32f253697"
+    },
+    {
+      "id": "hgp-el-067",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/067.md",
+      "before_characters": 7220,
+      "after_characters": 6437,
+      "body_sha256": "f39e9c1eef93df686625bdda71fe04e6977ff010c70bfee8944dcfa159877502"
+    },
+    {
+      "id": "hgp-el-068",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/068.md",
+      "before_characters": 8019,
+      "after_characters": 7226,
+      "body_sha256": "ce2b1c05c03f468e0f82babcabe0d968a8e40d89251e501561877bb68318dfd7"
+    },
+    {
+      "id": "hgp-el-069",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/069.md",
+      "before_characters": 7611,
+      "after_characters": 6793,
+      "body_sha256": "e1aceddb16e3b3b0d2ec2a3303e601ed53dea70728223f03b31cb3410737f02e"
+    },
+    {
+      "id": "hgp-el-070",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/070.md",
+      "before_characters": 7500,
+      "after_characters": 6682,
+      "body_sha256": "e5dde9543582f922f5e3115b7047c710916e65a22af1828f3f6d1d2e4702809d"
+    },
+    {
+      "id": "hgp-en-086",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/086.md",
+      "before_characters": 6086,
+      "after_characters": 6092,
+      "body_sha256": "cc29303a4e7deb8efe63c482e4fe7ac7b404d0cba29f64618764ae04b85bcaed"
+    },
+    {
+      "id": "hgp-en-087",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/087.md",
+      "before_characters": 6095,
+      "after_characters": 4661,
+      "body_sha256": "24816090fe41efad2a96d4310e4e3dc232203fec6adcd30224c11f14a031d6df"
+    },
+    {
+      "id": "hgp-en-088",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/088.md",
+      "before_characters": 6113,
+      "after_characters": 4679,
+      "body_sha256": "6749fd991d402124f75ca5fbb8c4e748e4e70f93aec92d09ade526793788bf3c"
+    },
+    {
+      "id": "hgp-en-089",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/089.md",
+      "before_characters": 5874,
+      "after_characters": 4440,
+      "body_sha256": "66cd35faf6f4c824c86b146ec522702eaced3c7999b365c09b59b8c53617c296"
+    },
+    {
+      "id": "hgp-en-090",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/090.md",
+      "before_characters": 6023,
+      "after_characters": 4589,
+      "body_sha256": "45acbc00a77e97139ac4b206893d79b89005767cbb8d045e18ea53b878eb6d10"
+    },
+    {
+      "id": "hgp-en-091",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/091.md",
+      "before_characters": 5925,
+      "after_characters": 4491,
+      "body_sha256": "d4244de7717fa59796f836cc6df1909181a0fc9f7827202ccdee6fc9c340160c"
+    },
+    {
+      "id": "hgp-en-092",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/092.md",
+      "before_characters": 5841,
+      "after_characters": 4407,
+      "body_sha256": "a09cad0f7b6d6c425f4698ed3dfc8ec4001c4ff4f10d84af9cd9b16a6814f9e8"
+    },
+    {
+      "id": "hgp-en-093",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/093.md",
+      "before_characters": 5521,
+      "after_characters": 4087,
+      "body_sha256": "85b831ecdf12bbd2e2820b01dc450e680e4e671d592f3faa8f11f6caa5148929"
+    },
+    {
+      "id": "hgp-en-094",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/094.md",
+      "before_characters": 5790,
+      "after_characters": 4356,
+      "body_sha256": "49d25f368b4c0b86287b0db2a30d91f3c55b153bfd8ae22814e738420a3796ae"
+    },
+    {
+      "id": "hgp-en-095",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/095.md",
+      "before_characters": 6003,
+      "after_characters": 4569,
+      "body_sha256": "088133e26fd0746279cc01bdb8dda0b07918c5715980c5e657d7931286a298af"
+    },
+    {
+      "id": "hgp-en-096",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/096.md",
+      "before_characters": 5865,
+      "after_characters": 4431,
+      "body_sha256": "a555377212e32e83fecb7ef54fee1dff1665cc59bd683a79d8f7a9159640a978"
+    },
+    {
+      "id": "hgp-en-097",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/097.md",
+      "before_characters": 5668,
+      "after_characters": 4234,
+      "body_sha256": "6ef1a68dceddbaef5a3c2a73a081eb6c256589f8f97954269db6f009c87f7b54"
+    },
+    {
+      "id": "hgp-en-098",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/098.md",
+      "before_characters": 5667,
+      "after_characters": 4233,
+      "body_sha256": "6589f25ce39ca5b23786e76800b5bea8560ab0cd7e35eb53af1a9db3c7aebc66"
+    },
+    {
+      "id": "hgp-en-099",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/099.md",
+      "before_characters": 5847,
+      "after_characters": 4413,
+      "body_sha256": "19656774b25c0483c92c7d12b37f63e01fe0bf8d3801e36811cfb3dc2af094eb"
+    },
+    {
+      "id": "hgp-en-100",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/100.md",
+      "before_characters": 5826,
+      "after_characters": 4392,
+      "body_sha256": "4058a1dfc0edb2a0c97ec5b841edcec580ec08e9b238411601d3c860278d4116"
+    },
+    {
+      "id": "hgp-en-101",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/101.md",
+      "before_characters": 5775,
+      "after_characters": 4341,
+      "body_sha256": "37d0f1950bd255b5885448869f3a2af2090aabdf5217ac8c4361a27c9905988b"
+    },
+    {
+      "id": "hgp-en-102",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/102.md",
+      "before_characters": 5877,
+      "after_characters": 4443,
+      "body_sha256": "cbb156c3f21d143f3c01045fa38ad48e9df63e6177c40ba0036109833d8a5731"
+    },
+    {
+      "id": "hgp-en-103",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/103.md",
+      "before_characters": 5600,
+      "after_characters": 4166,
+      "body_sha256": "8bb45920e4bcb5546af08972ca7ce0699a5c639c79fe8221046b5f7d61d89a84"
+    },
+    {
+      "id": "hgp-en-104",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/104.md",
+      "before_characters": 5412,
+      "after_characters": 3978,
+      "body_sha256": "3e4cfa6e91e5afa34511a44623326065c14e458c07e389c2c98d6d16a5970f44"
+    },
+    {
+      "id": "hgp-en-105",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/105.md",
+      "before_characters": 5814,
+      "after_characters": 4380,
+      "body_sha256": "795bf7ee6926b05def6c6ef8dd6e8d3896fa8c9aaf679529c2be75ef7e1d17aa"
+    },
+    {
+      "id": "hgp-en-106",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/106.md",
+      "before_characters": 5654,
+      "after_characters": 4220,
+      "body_sha256": "8bf6addf13d93b2bb2866d1f64909e0b9a61564875c5095760f37274327ecbc6"
+    },
+    {
+      "id": "hgp-en-107",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/107.md",
+      "before_characters": 5424,
+      "after_characters": 3990,
+      "body_sha256": "aec9137527aa65fd82867ec3714512625035b63519ffb3bf721d2cb7e4870883"
+    },
+    {
+      "id": "hgp-en-108",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/108.md",
+      "before_characters": 5535,
+      "after_characters": 4101,
+      "body_sha256": "adc8e49dd9dba4a0604c320183a4cac6cce97c8a5e2f9813d7d6ae2c3b26e80e"
+    },
+    {
+      "id": "hgp-en-109",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/109.md",
+      "before_characters": 5528,
+      "after_characters": 4094,
+      "body_sha256": "17ce027c34f51c6ad2096bc4b3aea8500ef65f9d837d8ebf1839fd9a691fb630"
+    },
+    {
+      "id": "hgp-en-110",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/110.md",
+      "before_characters": 5251,
+      "after_characters": 3817,
+      "body_sha256": "38cc9ef5626cbd1aa1c42bc10b2311c5ea99442c5d87406d692552775af50580"
+    },
+    {
+      "id": "hgp-en-111",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/111.md",
+      "before_characters": 5593,
+      "after_characters": 4159,
+      "body_sha256": "3051dd42b8a5ae4ef5cd4a5fe155bb74705e6d5627486c944ad605487754dae1"
+    },
+    {
+      "id": "hgp-en-112",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/112.md",
+      "before_characters": 5524,
+      "after_characters": 4090,
+      "body_sha256": "db17c2019d5e73a4d0703756bd760dedf6e30f43d4cdf1129b1add805054a78c"
+    },
+    {
+      "id": "hgp-en-113",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/113.md",
+      "before_characters": 5561,
+      "after_characters": 4127,
+      "body_sha256": "065ea24dc6a79ff97d8a4b4dc3a078574bd11d4503250919b55ef252d8ac2f87"
+    },
+    {
+      "id": "hgp-en-114",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/114.md",
+      "before_characters": 5484,
+      "after_characters": 4050,
+      "body_sha256": "9369fa05542f232ea7e4dc0e61e69f9ed3134e1ccf746bb70b070fd08c11b15d"
+    },
+    {
+      "id": "hgp-en-115",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/115.md",
+      "before_characters": 5578,
+      "after_characters": 4144,
+      "body_sha256": "7a0b0f6c5d4c53957d2e81c6ef064befea3e77441063b9073a4dcfb93a55f305"
+    },
+    {
+      "id": "hgp-en-116",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/116.md",
+      "before_characters": 6033,
+      "after_characters": 6051,
+      "body_sha256": "a182f4ab2b4636f0f641476a45262f4a832b36abbc3d7dcd4782e0a6b82db4e4"
+    },
+    {
+      "id": "hgp-en-117",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/117.md",
+      "before_characters": 5933,
+      "after_characters": 4201,
+      "body_sha256": "d83c600395ba9d8ba2087cf9f7eb894503a96281fd2b79766cbe2812452228eb"
+    },
+    {
+      "id": "hgp-en-118",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/118.md",
+      "before_characters": 5905,
+      "after_characters": 4173,
+      "body_sha256": "f22dc63f0cfc5e7f93e53dc6b01219fc952b0ca9f3d2e4da21c894d8e831ec90"
+    },
+    {
+      "id": "hgp-en-119",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/119.md",
+      "before_characters": 6004,
+      "after_characters": 4272,
+      "body_sha256": "a89869e52605f5c6559019ee3b4394bc413da929664cccf3fcb6e5cbd1c1067e"
+    },
+    {
+      "id": "hgp-en-120",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/120.md",
+      "before_characters": 6057,
+      "after_characters": 4325,
+      "body_sha256": "c6050c195afa668d26a96b18f60cb1de93d5f21581005aeb6ca32cf6dc8be059"
+    },
+    {
+      "id": "hgp-en-121",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/121.md",
+      "before_characters": 5934,
+      "after_characters": 4202,
+      "body_sha256": "b0cca5cd44ba1cde459e79149286b2eaa7cb86f6fbeff234342354872c71fd07"
+    },
+    {
+      "id": "hgp-en-122",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/122.md",
+      "before_characters": 6037,
+      "after_characters": 4305,
+      "body_sha256": "daa3e6fb0a9b9a0fd8d64cbc19b935826f6308b966fae2e2095f628113ff3073"
+    },
+    {
+      "id": "hgp-en-123",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/123.md",
+      "before_characters": 5890,
+      "after_characters": 4158,
+      "body_sha256": "72c055096d9c035518f19dfe8830b7bfdfc9bb4f6784ceb4214226d6211591f6"
+    },
+    {
+      "id": "hgp-en-124",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/124.md",
+      "before_characters": 5833,
+      "after_characters": 4101,
+      "body_sha256": "8fe34a9fc83dc1fa0c2410867a6a35e20aa9bf5a7940839d4d325c4b7cb71c05"
+    },
+    {
+      "id": "hgp-en-125",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/125.md",
+      "before_characters": 5778,
+      "after_characters": 4046,
+      "body_sha256": "baca6af1167bb1c0db8e833792c6f522945dcb40489ccc46d118b162013ed3ff"
+    },
+    {
+      "id": "hgp-en-126",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/126.md",
+      "before_characters": 5966,
+      "after_characters": 4234,
+      "body_sha256": "ba3a004830269dd35977a002f3be286155c253c048cc1182e58c7c90bab0ed47"
+    },
+    {
+      "id": "hgp-en-127",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/127.md",
+      "before_characters": 5915,
+      "after_characters": 4183,
+      "body_sha256": "96d55a45241da1d1b8a2cfe5f7e59fcd4bdac159570862f6a0daccdd33a8b96c"
+    },
+    {
+      "id": "hgp-en-128",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/128.md",
+      "before_characters": 5840,
+      "after_characters": 4108,
+      "body_sha256": "f88c5aee96b0038036b4c5a78952724630324c54c6187c2678959317be0759b6"
+    },
+    {
+      "id": "hgp-en-129",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/129.md",
+      "before_characters": 5782,
+      "after_characters": 4050,
+      "body_sha256": "ef39c79759dfb34822b74a14552a302c0bd2633b8af86b8f0589d4c0813d2aea"
+    },
+    {
+      "id": "hgp-en-130",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/130.md",
+      "before_characters": 5803,
+      "after_characters": 4071,
+      "body_sha256": "4e43a18d81b9fb99582bfbd6367520e7140c516b5d3bb65ea34565130cc4dbcd"
+    },
+    {
+      "id": "hgp-en-131",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/131.md",
+      "before_characters": 5967,
+      "after_characters": 4235,
+      "body_sha256": "8026b6d0af3eb2575918983df03dea98c4c29de8e883aada523c3f048518035a"
+    },
+    {
+      "id": "hgp-en-132",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/132.md",
+      "before_characters": 5830,
+      "after_characters": 4098,
+      "body_sha256": "d2cac9ee5e6ed646d35ea7684e72b27accd408ae089e7490ed5538d4e7d6a2f0"
+    },
+    {
+      "id": "hgp-en-133",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/133.md",
+      "before_characters": 5937,
+      "after_characters": 4205,
+      "body_sha256": "c1ee11b19dd1ab9455f4eb225f8de41d4acf393240207d415f6f4695f2ba7cc6"
+    },
+    {
+      "id": "hgp-en-134",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/134.md",
+      "before_characters": 5916,
+      "after_characters": 4184,
+      "body_sha256": "b828e14c1cf7b2289ca709da0116feff99deb52f0e886a44515be84aa99798cc"
+    },
+    {
+      "id": "hgp-en-135",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/135.md",
+      "before_characters": 5846,
+      "after_characters": 4114,
+      "body_sha256": "4d3fc16459c6e6d2cb1116888d65a14ae0fbd69850eac13eeeadc07cc286dc69"
+    },
+    {
+      "id": "hgp-en-136",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/136.md",
+      "before_characters": 5900,
+      "after_characters": 4168,
+      "body_sha256": "d0060f7a5105a732378c33ee5485447c1ca1b41837d110a125adad1cdc56fe39"
+    },
+    {
+      "id": "hgp-en-137",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/137.md",
+      "before_characters": 5985,
+      "after_characters": 4253,
+      "body_sha256": "f81070ecba2d5478fec446b9667268524388ed0fde37e1b0aaed54e0896a4025"
+    },
+    {
+      "id": "hgp-en-138",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/138.md",
+      "before_characters": 5997,
+      "after_characters": 4265,
+      "body_sha256": "f5bad884c13d226f03c0e52bd5225dd731fa155901170960e8b72615c5358859"
+    },
+    {
+      "id": "hgp-en-139",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/139.md",
+      "before_characters": 6096,
+      "after_characters": 4364,
+      "body_sha256": "c12dc33405bfb0e854e1d2e3a257d38a0f2bb92976dc3d3199be020dbeb30794"
+    },
+    {
+      "id": "hgp-en-140",
+      "locale": "en",
+      "path": "Hacking_Guide_Complete/English/140.md",
+      "before_characters": 5807,
+      "after_characters": 4075,
+      "body_sha256": "7eaf184e1d446823c3c333bc127863150c94ccec89651e66ef67c26a8ded2d27"
+    },
+    {
+      "id": "hgp-el-071",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/071.md",
+      "before_characters": 7782,
+      "after_characters": 6960,
+      "body_sha256": "7f35857f855d4f49019aae192f95772653f17906b7f2f4af02fc8f9c4cf2e596"
+    },
+    {
+      "id": "hgp-el-072",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/072.md",
+      "before_characters": 7817,
+      "after_characters": 7016,
+      "body_sha256": "c7511a79ef1290e0e78be3029b40fd564b08adcc308f97002c9b6e79e3c885c3"
+    },
+    {
+      "id": "hgp-el-073",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/073.md",
+      "before_characters": 7220,
+      "after_characters": 6407,
+      "body_sha256": "b2baeb72da3c4ac80869ed1493bea95ce06f0d4111c4a34b08fef2242b84be3b"
+    },
+    {
+      "id": "hgp-el-074",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/074.md",
+      "before_characters": 7128,
+      "after_characters": 6316,
+      "body_sha256": "eb88ecf5c3b49f3aad6228f6a07519da3f9eafc27b1998f489928035111b0a70"
+    },
+    {
+      "id": "hgp-el-075",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/075.md",
+      "before_characters": 6669,
+      "after_characters": 6028,
+      "body_sha256": "a613cecff4b2f050f127902067d87e7c7933a1fb76da912640f4221676e80070"
+    },
+    {
+      "id": "hgp-el-076",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/076.md",
+      "before_characters": 6904,
+      "after_characters": 6248,
+      "body_sha256": "a5a722cf417e5cb870cd08b4cd8e29f049a40dc159ce32a7707736371c0abe7a"
+    },
+    {
+      "id": "hgp-el-077",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/077.md",
+      "before_characters": 7759,
+      "after_characters": 7031,
+      "body_sha256": "a7b14f72075c8df7b3c31facb17cef471be69e85e90329f0ab3d8e265b4fe237"
+    },
+    {
+      "id": "hgp-el-078",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/078.md",
+      "before_characters": 7163,
+      "after_characters": 6372,
+      "body_sha256": "62d7a6e62eace0effc706eb85954eff1075224ab1e3ded331f04e05ea32cfcc7"
+    },
+    {
+      "id": "hgp-el-079",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/079.md",
+      "before_characters": 6978,
+      "after_characters": 6197,
+      "body_sha256": "c00e49de7a9e13ff20dc2da40a244a9fa91dab13ca207f4530f9e53b0f539c66"
+    },
+    {
+      "id": "hgp-el-080",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/080.md",
+      "before_characters": 7382,
+      "after_characters": 6703,
+      "body_sha256": "13038f03f0022a234da025bd7f49bfd08ef2c6af8aa02247ca1d8a1d5a23ea1a"
+    },
+    {
+      "id": "hgp-el-081",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/081.md",
+      "before_characters": 7252,
+      "after_characters": 6559,
+      "body_sha256": "e7c5d2674025103e3705f51c0b9fb7e8dc2769cc7270d33e7a5d4da3e7a7b187"
+    },
+    {
+      "id": "hgp-el-082",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/082.md",
+      "before_characters": 7279,
+      "after_characters": 6589,
+      "body_sha256": "5012c2ef8c1c04a072694016ff2cd43730f21fbcb20a852bb6800a05c26433e7"
+    },
+    {
+      "id": "hgp-el-083",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/083.md",
+      "before_characters": 6191,
+      "after_characters": 5508,
+      "body_sha256": "2eb0763fdc8b2b63787348bde46ebea3d3ab96ecfea2a56db166df03875f66ab"
+    },
+    {
+      "id": "hgp-el-084",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/084.md",
+      "before_characters": 6648,
+      "after_characters": 5836,
+      "body_sha256": "71e7d10db893c0a562179a8bf4ed175ca4c482a621398b77469d7c4d4dd80842"
+    },
+    {
+      "id": "hgp-el-085",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/085.md",
+      "before_characters": 8024,
+      "after_characters": 7448,
+      "body_sha256": "c159a60c834ce1781d7049132ef82767131212044e5687a77f77f058c3212bdf"
+    },
+    {
+      "id": "hgp-el-086",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/086.md",
+      "before_characters": 3775,
+      "after_characters": 3681,
+      "body_sha256": "c0a85a029b0b117674888f8971d02de49266990c6a2ddc32c468918d49686c88"
+    },
+    {
+      "id": "hgp-el-087",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/087.md",
+      "before_characters": 3877,
+      "after_characters": 2967,
+      "body_sha256": "e477c2cf4bc74ccd80f5c087378064f0919c7b46d22a092556e6e4bb8b0ab40b"
+    },
+    {
+      "id": "hgp-el-088",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/088.md",
+      "before_characters": 3859,
+      "after_characters": 2954,
+      "body_sha256": "8b9a98b0d65930960e5ad117ba83d3beade70b023e4b8b850fa3f647d798b79b"
+    },
+    {
+      "id": "hgp-el-089",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/089.md",
+      "before_characters": 3874,
+      "after_characters": 2965,
+      "body_sha256": "301a7e1c5a2140dd358d4b981588d0b7ad8c7e76ae3eafcaded5f6a0af85bcec"
+    },
+    {
+      "id": "hgp-el-090",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/090.md",
+      "before_characters": 3918,
+      "after_characters": 3013,
+      "body_sha256": "a68c6a466fdf6f7adb3f417ffa8cf8db980e6174382c1beed61ae74f0daa5d13"
+    },
+    {
+      "id": "hgp-el-091",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/091.md",
+      "before_characters": 3944,
+      "after_characters": 3020,
+      "body_sha256": "ae41790aa1c621f555d42d5d96195b24d752523a73d92545c35607c13b103af1"
+    },
+    {
+      "id": "hgp-el-092",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/092.md",
+      "before_characters": 3965,
+      "after_characters": 3050,
+      "body_sha256": "4cd2dd5d7d912aad6f9542a8129239e96802b3e4e609c8be124898352e15042d"
+    },
+    {
+      "id": "hgp-el-093",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/093.md",
+      "before_characters": 3671,
+      "after_characters": 2756,
+      "body_sha256": "0b2b246b8a4932d641f5493fc769c16c501055c4b29e3f725dcb537f7438e894"
+    },
+    {
+      "id": "hgp-el-094",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/094.md",
+      "before_characters": 3806,
+      "after_characters": 2887,
+      "body_sha256": "a0d06821350b957bd61cba02faedb1b3786bb59cd8ee8c3957807b77364d7bb1"
+    },
+    {
+      "id": "hgp-el-095",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/095.md",
+      "before_characters": 3814,
+      "after_characters": 2887,
+      "body_sha256": "ed5f7a6da1a13eca46f727bbf9c5a29ef3faf85b30bff35b9eb2566ae633e691"
+    },
+    {
+      "id": "hgp-el-096",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/096.md",
+      "before_characters": 3792,
+      "after_characters": 2864,
+      "body_sha256": "993cc9d27204cc9f832acabd2ad0faef7185cf7e6109969e68da1dde642847a3"
+    },
+    {
+      "id": "hgp-el-097",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/097.md",
+      "before_characters": 3735,
+      "after_characters": 2825,
+      "body_sha256": "5c048db936ba966ea48c9eb67df8444f99123dc86291cb7f3f35fcbe5ecfcff7"
+    },
+    {
+      "id": "hgp-el-098",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/098.md",
+      "before_characters": 3684,
+      "after_characters": 2761,
+      "body_sha256": "5622caab9f0216674f58d9a818577ee36121b2d8c62b5ad91f2be52bb3c56a81"
+    },
+    {
+      "id": "hgp-el-099",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/099.md",
+      "before_characters": 3838,
+      "after_characters": 2915,
+      "body_sha256": "44467efcdc58913cc923829864e0cab245d020fd0418dffa2a76407b2c4d919e"
+    },
+    {
+      "id": "hgp-el-100",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/100.md",
+      "before_characters": 3807,
+      "after_characters": 2879,
+      "body_sha256": "7dd9d3f10dee66abf0f034bf11113551efd126622f66de93e357f81b4c8b5bf4"
+    },
+    {
+      "id": "hgp-el-101",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/101.md",
+      "before_characters": 4094,
+      "after_characters": 3174,
+      "body_sha256": "d8e2955c955d0e8bd725ca0e95df5f5629616840b017c69239475b9c4cf01734"
+    },
+    {
+      "id": "hgp-el-102",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/102.md",
+      "before_characters": 4015,
+      "after_characters": 3093,
+      "body_sha256": "043fbda8eeb5a739423481e7b2deb87030f5187f887826b48ec8de8440e57a6e"
+    },
+    {
+      "id": "hgp-el-103",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/103.md",
+      "before_characters": 3816,
+      "after_characters": 2911,
+      "body_sha256": "73797d83105ea8b0a01959bc98e2f66f9ef10000e8e456796481912ff4190fe9"
+    },
+    {
+      "id": "hgp-el-104",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/104.md",
+      "before_characters": 3816,
+      "after_characters": 2888,
+      "body_sha256": "2590fa37ff9aa6ed722fb305676c2ec8c2b302f22790c146fb0a4cadd3dac97c"
+    },
+    {
+      "id": "hgp-el-105",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/105.md",
+      "before_characters": 3887,
+      "after_characters": 2961,
+      "body_sha256": "2fbdda53258df0f7582353ea4c1c98ea873b3a36aba3f834163911b962255f0c"
+    },
+    {
+      "id": "hgp-el-106",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/106.md",
+      "before_characters": 3832,
+      "after_characters": 2907,
+      "body_sha256": "abf3b9a6f3adc394732591803f3cf8b8bf7334ed35eb081454c763a714aaf33f"
+    },
+    {
+      "id": "hgp-el-107",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/107.md",
+      "before_characters": 3727,
+      "after_characters": 2796,
+      "body_sha256": "d3062dd2264f2abecc0d1762b642c26e37ba847d996ad5c0bee7aaa91190e4fe"
+    },
+    {
+      "id": "hgp-el-108",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/108.md",
+      "before_characters": 3727,
+      "after_characters": 2799,
+      "body_sha256": "50c6c40900d419658514c0cd3c46478115a91f36ee159eda78621168985f3b29"
+    },
+    {
+      "id": "hgp-el-109",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/109.md",
+      "before_characters": 3701,
+      "after_characters": 2759,
+      "body_sha256": "dc97e72e78b2f834a1e02d76f5170cdbf6a297ceaa93a12dab1616d8f5c6d560"
+    },
+    {
+      "id": "hgp-el-110",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/110.md",
+      "before_characters": 3595,
+      "after_characters": 2665,
+      "body_sha256": "8ca7408674d15389be1ef4cbdb24f76d0aac0f0f0204d1c22419c12cfae9d544"
+    },
+    {
+      "id": "hgp-el-111",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/111.md",
+      "before_characters": 3686,
+      "after_characters": 2769,
+      "body_sha256": "983e0e58264e12e39e3169e423e3d9aa34fa36a87db8a7098f6b110c809ea20d"
+    },
+    {
+      "id": "hgp-el-112",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/112.md",
+      "before_characters": 3767,
+      "after_characters": 2838,
+      "body_sha256": "61a557b5847313608b1dbb56d41ce8afed7f65b3d170370bb0e1b1690b4e6fe7"
+    },
+    {
+      "id": "hgp-el-113",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/113.md",
+      "before_characters": 3773,
+      "after_characters": 2845,
+      "body_sha256": "d71440859384ac05188a3d7ea08a46cee009dadf1462a27ab08b2260478efd0e"
+    },
+    {
+      "id": "hgp-el-114",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/114.md",
+      "before_characters": 3788,
+      "after_characters": 2851,
+      "body_sha256": "d62c1fae23d7519bdcf13d8d04d4a7e82c2202e03aec11add16166384fd52e94"
+    },
+    {
+      "id": "hgp-el-115",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/115.md",
+      "before_characters": 3668,
+      "after_characters": 2751,
+      "body_sha256": "764a38e3eb4ca2fbe341427fa4ead4fb478474869ca6c8fdf9f7ef7c09b200ef"
+    },
+    {
+      "id": "hgp-el-116",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/116.md",
+      "before_characters": 7290,
+      "after_characters": 7203,
+      "body_sha256": "61328b1308fd352a21ad6a13f7706838e4c24218cce3ce3b596a750f21c4b695"
+    },
+    {
+      "id": "hgp-el-117",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/117.md",
+      "before_characters": 7046,
+      "after_characters": 3817,
+      "body_sha256": "f40a99b533794e414b5b103332686efba8d94c74a439cc18d7ce2380500414d7"
+    },
+    {
+      "id": "hgp-el-118",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/118.md",
+      "before_characters": 7106,
+      "after_characters": 3881,
+      "body_sha256": "718da3405769a19016af9cb2e65004831083ca632d8317c77cf7e793963c1195"
+    },
+    {
+      "id": "hgp-el-119",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/119.md",
+      "before_characters": 7152,
+      "after_characters": 3916,
+      "body_sha256": "3ad856e697806dbd60b7589baa8edc5c429454a2c6d9e72f43c00a594b7547ff"
+    },
+    {
+      "id": "hgp-el-120",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/120.md",
+      "before_characters": 7163,
+      "after_characters": 3913,
+      "body_sha256": "c7fa3b51e9328f1c933cacd9336b051c750d5b93bed57e755ce42a6188dee91c"
+    },
+    {
+      "id": "hgp-el-121",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/121.md",
+      "before_characters": 7035,
+      "after_characters": 3793,
+      "body_sha256": "805b8497cf6232b3236897fd471fd4bde22b742d5b74c5cae33a9d4dabc4d0f1"
+    },
+    {
+      "id": "hgp-el-122",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/122.md",
+      "before_characters": 7076,
+      "after_characters": 3840,
+      "body_sha256": "be9cf6fc775aa685ea847bc3219d6fad8ec2ce6691bd26a1d99a39e37e524dfa"
+    },
+    {
+      "id": "hgp-el-123",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/123.md",
+      "before_characters": 6835,
+      "after_characters": 3626,
+      "body_sha256": "1f2de8486f09e6f7ed5ab5fac321e84da3f63c0c3728bcf33eca37bded800f01"
+    },
+    {
+      "id": "hgp-el-124",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/124.md",
+      "before_characters": 7009,
+      "after_characters": 3784,
+      "body_sha256": "ab07fdcced486d2a4dbf5f23db098793ab300978259c88e0696071970493d7c7"
+    },
+    {
+      "id": "hgp-el-125",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/125.md",
+      "before_characters": 6818,
+      "after_characters": 3602,
+      "body_sha256": "327087a8de1524148ddebd0bf9056d26f42fce55d9ab8c96d858fa7c55b83366"
+    },
+    {
+      "id": "hgp-el-126",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/126.md",
+      "before_characters": 7076,
+      "after_characters": 3862,
+      "body_sha256": "60534c95449fc062d242cc9db1e3791527c969982c2f3a146e1db68affadec17"
+    },
+    {
+      "id": "hgp-el-127",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/127.md",
+      "before_characters": 7036,
+      "after_characters": 3814,
+      "body_sha256": "b429df301b0aa22ac50496acd9654ecbc403ccd14e6e21a94308306601cf6a8a"
+    },
+    {
+      "id": "hgp-el-128",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/128.md",
+      "before_characters": 7157,
+      "after_characters": 3937,
+      "body_sha256": "3586b63b27a25b40928d495e4472752b55d2d78c261ca94a25642abe7821e45d"
+    },
+    {
+      "id": "hgp-el-129",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/129.md",
+      "before_characters": 7031,
+      "after_characters": 3809,
+      "body_sha256": "f463dc6068f2571dec7bfbf387819980e45534a71d136ad951c499eeab4e4bc2"
+    },
+    {
+      "id": "hgp-el-130",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/130.md",
+      "before_characters": 7000,
+      "after_characters": 3766,
+      "body_sha256": "63581d3b358912eac6b52663c91d322f9250035071955b3e540abfc74198bfbc"
+    },
+    {
+      "id": "hgp-el-131",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/131.md",
+      "before_characters": 7000,
+      "after_characters": 3791,
+      "body_sha256": "0be19428a0e8f68f9a362149ca424ec0a06b7ed22c274fb208b87de355d5dc50"
+    },
+    {
+      "id": "hgp-el-132",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/132.md",
+      "before_characters": 6869,
+      "after_characters": 3635,
+      "body_sha256": "78656c367ecda2af37f438ded5fbc7f35bbdee09dd26fc9b9092d9046a63c67a"
+    },
+    {
+      "id": "hgp-el-133",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/133.md",
+      "before_characters": 7066,
+      "after_characters": 3825,
+      "body_sha256": "e8897898b008710611dc4d16ce129a78a3c2a5022f5fb861996918a0edb6dded"
+    },
+    {
+      "id": "hgp-el-134",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/134.md",
+      "before_characters": 6878,
+      "after_characters": 3643,
+      "body_sha256": "ea9efb1e71939556716b39927a0cdc80cd2d3d3f2aba767637248889d2812bae"
+    },
+    {
+      "id": "hgp-el-135",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/135.md",
+      "before_characters": 6868,
+      "after_characters": 3627,
+      "body_sha256": "90aef417e004aa6e60d5a93eacfcf0ba4bbca114c8c5979da38d046924a6199f"
+    },
+    {
+      "id": "hgp-el-136",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/136.md",
+      "before_characters": 6882,
+      "after_characters": 3652,
+      "body_sha256": "b014265220f11fc6d52595e56f13f5f8082aedd40f5dddd25decb24b59ba411b"
+    },
+    {
+      "id": "hgp-el-137",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/137.md",
+      "before_characters": 6985,
+      "after_characters": 3753,
+      "body_sha256": "08aa6e4f57a2fae0efdae1e161b21a0232168bdd52ad6523a8935610f062390d"
+    },
+    {
+      "id": "hgp-el-138",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/138.md",
+      "before_characters": 6926,
+      "after_characters": 3700,
+      "body_sha256": "8756239e778edf4f1eb92e73cd3230f17496733a74be7dac3f1bbd33456fe1cc"
+    },
+    {
+      "id": "hgp-el-139",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/139.md",
+      "before_characters": 7126,
+      "after_characters": 3899,
+      "body_sha256": "3b6ebea339c9a3c70ec2e20084b13486b79ddb5430764e703bfa1e31786dd01e"
+    },
+    {
+      "id": "hgp-el-140",
+      "locale": "el",
+      "path": "Hacking_Guide_Complete/Greek/140.md",
+      "before_characters": 6892,
+      "after_characters": 3645,
+      "body_sha256": "0edb9a45dca72c165a4713b5197d014118dbe84dd43afdb0b57fdf715455c311"
+    }
+  ]
+}

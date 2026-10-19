@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>CSV import contracts and spreadsheet formula boundaries — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/fieldnotes-en-40.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="CSV import contracts and spreadsheet formula boundaries Mechanism and contract CSV defines rows and fields, not a complete data schema. A quoted comma is part of one field; splitting a line…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="CSV import contracts and spreadsheet formula boundaries — DedSec Project">
+<meta property="og:description" content="CSV import contracts and spreadsheet formula boundaries Mechanism and contract CSV defines rows and fields, not a complete data schema. A quoted comma is part of one field; splitting a line…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/fieldnotes-en-40.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CSV import contracts and spreadsheet formula boundaries — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CSV import contracts and spreadsheet formula boundaries — DedSec Project">
+<meta name="twitter:description" content="CSV import contracts and spreadsheet formula boundaries Mechanism and contract CSV defines rows and fields, not a complete data schema. A quoted comma is part of one field; splitting a line…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="CSV import contracts and spreadsheet formula boundaries — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>CSV import contracts and spreadsheet formula boundaries — DedSec Project</h1><p>CSV import contracts and spreadsheet formula boundaries Mechanism and contract CSV defines rows and fields, not a complete data schema. A quoted comma is part of one field; splitting a line…</p><section><h2>Mechanism and contract</h2>
+<p>CSV defines rows and fields, not a complete data schema. A quoted comma is part of one field; splitting a line on commas loses that structure. Decide the delimiter, encoding, newline handling, header order, maximum field size and required types before import. Preserve identifiers such as 0012 as text unless the schema explicitly says otherwise.</p>
+<p>Spreadsheet software may interpret a cell beginning with a formula marker as executable spreadsheet syntax. That is a different boundary from parsing CSV on a server. For untrusted exports, choose a documented text-only spreadsheet format or a target-specific escaping policy and verify behavior in the actual spreadsheet client. Merely quoting a CSV field does not universally stop formula interpretation.</p>
+<h2>Worked local example</h2>
+<pre><code class="language-python">import csv, io
+text = 'id,name\r\n0012,&quot;Alice, Example&quot;\r\n' 
+rows = list(csv.DictReader(io.StringIO(text, newline=&quot;&quot;)))
+assert rows == [{&quot;id&quot;:&quot;0012&quot;, &quot;name&quot;:&quot;Alice, Example&quot;}]
+def validate(row):
+    return set(row) == {&quot;id&quot;, &quot;name&quot;} and row[&quot;id&quot;].isascii() and row[&quot;id&quot;].isdigit()
+assert validate(rows[0])
+assert not validate({&quot;id&quot;:&quot;bad&quot;, &quot;name&quot;:&quot;fixture&quot;})
+print(&quot;CSV schema respected&quot;)
+</code></pre>
+<h2>Failure checks and limits</h2>
+<p>Add fixtures for embedded newlines, missing columns, extra columns and invalid byte sequences. Reject or quarantine malformed rows with their row numbers, without logging personal fields. This parser example is not a spreadsheet-export sanitizer. If exporting formulas is a legitimate feature, isolate trusted formula generation from user-supplied text and test both paths.</p>
+<h2>Primary reference</h2>
+<p><a href="https://docs.python.org/3/library/csv.html">Official documentation</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

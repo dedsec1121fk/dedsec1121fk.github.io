@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Validate a numeric user choice — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1045.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Recipe: strict JSON configuration validation before applying settings Scenario and acceptance criteria A local offline tool accepts a configuration with exactly mode, retries and tags. Mode…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Validate a numeric user choice — DedSec Project">
+<meta property="og:description" content="Recipe: strict JSON configuration validation before applying settings Scenario and acceptance criteria A local offline tool accepts a configuration with exactly mode, retries and tags. Mode…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1045.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Validate a numeric user choice — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Validate a numeric user choice — DedSec Project">
+<meta name="twitter:description" content="Recipe: strict JSON configuration validation before applying settings Scenario and acceptance criteria A local offline tool accepts a configuration with exactly mode, retries and tags. Mode…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Validate a numeric user choice — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Validate a numeric user choice — DedSec Project</h1><p>Recipe: strict JSON configuration validation before applying settings Scenario and acceptance criteria A local offline tool accepts a configuration with exactly mode, retries and tags. Mode…</p><section><h1>Recipe: strict JSON configuration validation before applying settings</h1>
+<h2>Scenario and acceptance criteria</h2>
+<p>A local offline tool accepts a configuration with exactly mode, retries and tags. Mode may be offline or preview; retries must be an integer from zero through three; tags is a list containing at most five unique nonempty short strings. Reject extra fields before they become accidental capabilities, including a fabricated admin flag.</p>
+<h2>Complete executable example</h2>
+<p>Save as <code>12_Data_validation.py</code> and run with Python 3 and the standard library. The fixture works without internet or access to your real files.</p>
+<pre><code class="language-python">import json
+def validate_config(text):
+    config=json.loads(text)
+    if type(config) is not dict or set(config)!={&quot;mode&quot;,&quot;retries&quot;,&quot;tags&quot;}:
+        raise ValueError(&quot;unexpected structure&quot;)
+    if config[&quot;mode&quot;] not in (&quot;offline&quot;,&quot;preview&quot;):
+        raise ValueError(&quot;unsupported mode&quot;)
+    if type(config[&quot;retries&quot;]) is not int or not 0&lt;=config[&quot;retries&quot;]&lt;=3:
+        raise ValueError(&quot;retry limit&quot;)
+    tags=config[&quot;tags&quot;]
+    if (type(tags) is not list or len(tags)&gt;5 or
+        any(type(x) is not str or not 1&lt;=len(x)&lt;=12 for x in tags)
+        or len(set(tags))!=len(tags)):
+        raise ValueError(&quot;invalid or duplicate tags&quot;)
+    return config
+good='{&quot;mode&quot;:&quot;offline&quot;,&quot;retries&quot;:1,&quot;tags&quot;:[&quot;math&quot;,&quot;code&quot;]}'
+assert validate_config(good)[&quot;tags&quot;]==[&quot;math&quot;,&quot;code&quot;]
+for bad in ('{&quot;mode&quot;:&quot;unknown&quot;,&quot;retries&quot;:1,&quot;tags&quot;:[]}',
+            '{&quot;mode&quot;:&quot;offline&quot;,&quot;retries&quot;:true,&quot;tags&quot;:[]}',
+            '{&quot;mode&quot;:&quot;offline&quot;,&quot;retries&quot;:1,&quot;tags&quot;:[&quot;x&quot;,&quot;x&quot;]}',
+            '{&quot;mode&quot;:&quot;offline&quot;,&quot;retries&quot;:1,&quot;tags&quot;:[],&quot;admin&quot;:true}'):
+    try: validate_config(bad)
+    except ValueError: pass
+    else: raise AssertionError(&quot;invalid configuration accepted&quot;)
+print(&quot;PASS strict configuration domain checks&quot;)
+</code></pre>
+<h2>Technical explanation</h2>
+<p>json.loads checks JSON syntax, not schema intent. In Python, bool is a subclass of int, so <code>type(x) is int</code> prevents the JSON true value from slipping through numeric validation. The uniqueness check prevents duplicate tags while the explicit maximum bounds memory growth. Validated configuration data can still be unsafe if passed directly into SQL, HTML or shell commands; validate at the input boundary and encode again for the actual output context.</p>
+<h2>Bounded practice</h2>
+<p>Test zero retries, three retries, an empty tag list, a sixth tag, a tag longer than 12 characters and an unknown mode. Change the validation order and confirm that duplicate tags remain rejected. Extend the design with a schema version and a documented migration instead of accepting arbitrary legacy keys. Ensure a failed validation never modifies persisted settings.</p>
+<h2>Diagnostics and safety</h2>
+<p>When the JSON parser succeeds but the configuration is rejected, show which rule failed without dumping private settings into logs. For unknown keys, prefer explicit migration or rejection to silent coercion. Keep default values documented rather than inventing them after encountering malformed input.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

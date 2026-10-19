@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Depth-first search — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-30.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Depth-first search — explicit stack and reproducible order Python 3 reference program Mechanism Depth-first search explores one branch before returning to pending neighbors. The adjacent…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Depth-first search — DedSec Project">
+<meta property="og:description" content="Depth-first search — explicit stack and reproducible order Python 3 reference program Mechanism Depth-first search explores one branch before returning to pending neighbors. The adjacent…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-30.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Depth-first search — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Depth-first search — DedSec Project">
+<meta name="twitter:description" content="Depth-first search — explicit stack and reproducible order Python 3 reference program Mechanism Depth-first search explores one branch before returning to pending neighbors. The adjacent…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Depth-first search — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Depth-first search — DedSec Project</h1><p>Depth-first search — explicit stack and reproducible order Python 3 reference program Mechanism Depth-first search explores one branch before returning to pending neighbors. The adjacent…</p><section><h1>Depth-first search — explicit stack and reproducible order</h1>
+<h2>Python 3 reference program</h2>
+<pre><code class="language-python">def dfs(graph, start):
+    seen, order, stack = set(), [], [start]
+    while stack:
+        node = stack.pop()
+        if node in seen: continue
+        seen.add(node); order.append(node)
+        stack.extend(reversed(graph.get(node, ())))
+    return order
+assert dfs({'a':['b','c'],'b':['d']}, 'a') == ['a','b','d','c']
+</code></pre>
+<h2>Mechanism</h2>
+<p>Depth-first search explores one branch before returning to pending neighbors. The adjacent Python source uses a LIFO stack rather than recursive calls. This avoids recursion-depth failure on long chains, although the explicit stack can still grow proportional to the number of vertices.</p>
+<h2>Neighbor-order invariant</h2>
+<p>The reference appends reversed neighbors so that, when popped from the end, the leftmost listed neighbor is visited first. For a→b,c and b→d the expected traversal is a,b,d,c. Without reversed, the first pop after a would visit c. Order is a policy determined by the graph representation, not a universal DFS property.</p>
+<h2>Test design</h2>
+<ol>
+<li>Add c→a to form a cycle: the seen set must prevent repeated visits.</li>
+<li>Add duplicate edges a→b twice. The implementation may temporarily push duplicates, but the seen test must keep each vertex in output once.</li>
+<li>Build a graph of 10000 nodes in a chain and compare iterative versus recursive implementations without claiming recursion is always safe.</li>
+<li>Add a disconnected z: starting at a should not visit it. For a full graph traversal, iterate over all vertices and launch DFS for those not yet seen.</li>
+<li>Change neighbor ordering deliberately and record the new traversal; assert membership separately from exact order when order is not required.</li>
+</ol>
+<h2>When DFS is not enough</h2>
+<p>DFS does <strong>not</strong> guarantee minimum hop count. For cycle detection in directed graphs, a single seen set is insufficient: also track an active recursion/stack path or colors. Record O(V+E) traversal work with adjacency lists and a potentially O(V) seen/stack footprint.</p>
+<h2>07 dfs — boundary study</h2>
+<p>Iterative DFS stores work explicitly on a stack and avoids recursion depth limits. Its visitation order depends on adjacency ordering, and reversing neighbors on push is what makes the provided example visit the leftmost neighbor first.</p>
+<p>Cycles are safe because already-seen nodes are skipped. Traversal order is not a shortest-path guarantee; for fewest hops use BFS.</p>
+<p>&lt;!-- [curated-algorithm-detail:07_dfs.md] --&gt;</p>
+<h2>Explicit DFS frames preserve recursive postorder</h2>
+<p>A stack of vertices is enough for reachability, but not always enough to reproduce a recursive DFS that performs work after all children finish. A frame must retain whether it is entering or leaving a vertex, or retain an iterator over unfinished children. Losing that state changes postorder-dependent algorithms.</p>
+<p>The example traverses a tree and emits a node only on exit. For a general graph, add a visited set and, where needed, separate active-path state. A visited set prevents repeated work; active-path state answers whether an edge returns to the current recursion chain.</p>
+<pre><code class="language-python">children = {&quot;a&quot;:[&quot;b&quot;,&quot;c&quot;], &quot;b&quot;:[&quot;d&quot;], &quot;c&quot;:[], &quot;d&quot;:[]}
+stack = [(&quot;a&quot;, False)]
+postorder = []
+while stack:
+    node, exiting = stack.pop()
+    if exiting:
+        postorder.append(node)
+    else:
+        stack.append((node, True))
+        stack.extend((child, False) for child in reversed(children[node]))
+assert postorder == [&quot;d&quot;,&quot;b&quot;,&quot;c&quot;,&quot;a&quot;]
+print(postorder)
+</code></pre>
+<p>Compare the iterative result with a recursive oracle on small generated trees. Test a deep chain to demonstrate why explicit frames avoid the interpreter recursion limit. A tree-only fixture is not evidence of correct cycle detection in an arbitrary directed graph.</p>
+<p><a href="https://docs.python.org/3/library/stdtypes.html#lists">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

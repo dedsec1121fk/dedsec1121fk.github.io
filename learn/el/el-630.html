@@ -1,0 +1,76 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>smalltalk — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-630.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="smalltalk — συγκεντρωτικός οδηγός Smalltalk Μοντέλο λειτουργίας Τα Smalltalk συστήματα βασίζονται σε αποστολή μηνυμάτων και live image, όχι μόνο σε standalone αρχεία κώδικα. Παράδειγμα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="smalltalk — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="smalltalk — συγκεντρωτικός οδηγός Smalltalk Μοντέλο λειτουργίας Τα Smalltalk συστήματα βασίζονται σε αποστολή μηνυμάτων και live image, όχι μόνο σε standalone αρχεία κώδικα. Παράδειγμα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-630.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="smalltalk — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="smalltalk — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="smalltalk — συγκεντρωτικός οδηγός Smalltalk Μοντέλο λειτουργίας Τα Smalltalk συστήματα βασίζονται σε αποστολή μηνυμάτων και live image, όχι μόνο σε standalone αρχεία κώδικα. Παράδειγμα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="smalltalk — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>smalltalk — συγκεντρωτικός οδηγός — DedSec Project</h1><p>smalltalk — συγκεντρωτικός οδηγός Smalltalk Μοντέλο λειτουργίας Τα Smalltalk συστήματα βασίζονται σε αποστολή μηνυμάτων και live image, όχι μόνο σε standalone αρχεία κώδικα. Παράδειγμα…</p><section><h2>Smalltalk</h2>
+<h3>Μοντέλο λειτουργίας</h3>
+<p>Τα Smalltalk συστήματα βασίζονται σε αποστολή μηνυμάτων και live image, όχι μόνο σε standalone αρχεία κώδικα.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-text">Transcript show: (3 + 4) printString; cr.
+</code></pre>
+<h3>Δοκίμασέ το με νόημα</h3>
+<p>Παρατήρησε message sends σε workspace και ξεχώρισε object inspection από serialization.</p>
+<h3>Σφάλμα που πρέπει να ξεχωρίσεις</h3>
+<p>Το image state και τα πακέτα επηρεάζουν τα αποτελέσματα· κράτα καθαρό snapshot.</p>
+<p>Για να κρίνεις την άσκηση, κατέγραψε την αρχική είσοδο, την πρόβλεψη και την παρατήρηση σε πραγματικό, συμβατό περιβάλλον Smalltalk. Δώσε ξεχωριστό παράδειγμα όπου αλλάζει μόνο μία μεταβλητή ή ένα όρισμα. Αν εργάζεσαι χωρίς την αναγκαία εφαρμογή, μελέτησε τη σύνταξη ως παράδειγμα και μην παρουσιάζεις το κείμενο ως εκτελεσμένο test.</p>
+<h2>Smalltalk — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Μικρή αφετηρία πηγαίου κώδικα</h3>
+<pre><code class="language-text">Transcript show: 'Hello, Ada!'; cr.
+</code></pre>
+<p><strong>Περιβάλλον:</strong> Load in Pharo or another Smalltalk image.. Κράτησε αντίγραφο του αρχικού κώδικα και σημείωσε έκδοση εργαλείου. Ξεχώρισε αν η εκτέλεση επιστρέφει τιμή, εμφανίζει κείμενο ή αλλάζει state. Για τις πρώτες δοκιμές χρησιμοποίησε απομονωμένο περιβάλλον, όχι πραγματικούς λογαριασμούς ή δεδομένα.</p>
+<h3>Ανάλυση του ιδιαίτερου μηχανισμού</h3>
+<p>Στείλε messages σε collection με collect:/select: και εξέτασε self έναντι super σε μικρή class.</p>
+<h3>Διάγνωση κρίσιμου ορίου</h3>
+<p>Smalltalk image κρατά state μεταξύ συνεδριών· επανάλαβε σε καθαρό image για αξιόπιστο αποτέλεσμα.</p>
+<h2>Smalltalk — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Περιβάλλον και τρόπος σκέψης</h3>
+<p>Χρησιμοποίησε Pharo Smalltalk Playground. Τα αντικείμενα δέχονται messages: το stock at: 'bolt' put: 3 στέλνει keyword message με δύο παραμέτρους. Στα cascades, το ελληνικό ερωτηματικό (;) στέλνει επόμενα μηνύματα <strong>στον ίδιο αρχικό παραλήπτη</strong>, όχι στην επιστρεφόμενη τιμή προηγούμενης εντολής.</p>
+<h3>Εκτέλεση σε Playground</h3>
+<pre><code class="language-smalltalk">| stock total |
+stock := Dictionary new.
+stock at: 'bolt' put: 3.
+stock at: 'nut' put: 2.
+total := stock values inject: 0 into: [ :sum :quantity |
+    sum + quantity
+].
+Transcript show: total printString; cr.
+Transcript show: (total = 5) printString; cr.
+</code></pre>
+<p>Στο Transcript περιμένουμε 5 και true. Το Dictionary συνδέει κλειδιά με τιμές. Νέα καταχώρηση με το ίδιο κλειδί αντικαθιστά την ποσότητα και δεν δημιουργεί τρίτη εγγραφή. Το inject:into: ξεκινά από το 0 και αθροίζει, ανεξάρτητα από τη σειρά του dictionary.</p>
+<h3>Ελεγχόμενα πειράματα</h3>
+<ol>
+<li>Άλλαξε bolt από 3 σε 7. Έλεγξε ότι οι εγγραφές παραμένουν δύο.</li>
+<li>Ζήτησε κλειδί που δεν υπάρχει με at: και διάβασε το exception. Με at:ifAbsent: όρισε ρητό fallback.</li>
+<li>Σύγκρινε Dictionary με OrderedCollection: πότε χρειάζεται key lookup και πότε προβλέψιμη θέση στοιχείου;</li>
+<li>Δοκίμασε κενή συλλογή. Το fold με αρχική τιμή 0 πρέπει να δώσει 0.</li>
+<li>Φτιάξε SUnit δοκιμή για replacement και διαφορετική δοκιμή για απουσία κλειδιού έναντι αποθέματος μηδέν.</li>
+</ol>
+<h3>Απόδειξη</h3>
+<p>Κράτησε Pharo image/version, κώδικα Playground, έξοδο Transcript και πραγματικά αποτελέσματα SUnit. Οι Smalltalk διάλεκτοι διαφέρουν σε εργαλεία και globals. Αναφορά: https://ctskennerton.github.io/2020/12/21/using-dictionaries-in-pharo-smalltalk/</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Data pipelines and ETL — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-204.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="ETL pipelines — atomic batches, replay and conflicting records Scenario A local synchronizer receives a sequence of item IDs and statuses. It should validate before insertion, store…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Data pipelines and ETL — DedSec Project">
+<meta property="og:description" content="ETL pipelines — atomic batches, replay and conflicting records Scenario A local synchronizer receives a sequence of item IDs and statuses. It should validate before insertion, store…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-204.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Data pipelines and ETL — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Data pipelines and ETL — DedSec Project">
+<meta name="twitter:description" content="ETL pipelines — atomic batches, replay and conflicting records Scenario A local synchronizer receives a sequence of item IDs and statuses. It should validate before insertion, store…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Data pipelines and ETL — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Data pipelines and ETL — DedSec Project</h1><p>ETL pipelines — atomic batches, replay and conflicting records Scenario A local synchronizer receives a sequence of item IDs and statuses. It should validate before insertion, store…</p><section><h1>ETL pipelines — atomic batches, replay and conflicting records</h1>
+<h2>Scenario</h2>
+<p>A local synchronizer receives a sequence of item IDs and statuses. It should validate before insertion, store accepted rows, and permit identical input to be replayed after a crash without introducing duplicates. An identical ID paired with different content is <em>not</em> automatically safe to overwrite: it may indicate a corrupt source, a version conflict or an actual update with a different schema. This exercise chooses to reject conflicts rather than invent update semantics.</p>
+<h2>Runnable SQLite/Python lab</h2>
+<p>Save as etl_lab.py and run python3 etl_lab.py. The database is entirely in memory, uses bound parameters, and tests rollback after an error late in a batch.</p>
+<pre><code class="language-python">import sqlite3
+
+def etl(db, records):
+    for identifier, status in records:
+        if type(identifier) is not int or identifier &lt;= 0:
+            raise ValueError(&quot;invalid ID&quot;)
+        if status not in {&quot;new&quot;, &quot;done&quot;}:
+            raise ValueError(&quot;invalid status&quot;)
+        old = db.execute(&quot;SELECT status FROM item WHERE id=?&quot;, (identifier,)).fetchone()
+        if old:
+            if old[0] != status:
+                raise ValueError(&quot;conflicting replay&quot;)
+        else:
+            db.execute(&quot;INSERT INTO item VALUES (?,?)&quot;, (identifier, status))
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;CREATE TABLE item (id INTEGER PRIMARY KEY, status TEXT NOT NULL)&quot;)
+with db:
+    etl(db, [(1, &quot;new&quot;), (2, &quot;done&quot;)])
+with db:
+    etl(db, [(1, &quot;new&quot;), (2, &quot;done&quot;)])
+assert db.execute(&quot;SELECT count(*) FROM item&quot;).fetchone()[0] == 2
+try:
+    with db:
+        etl(db, [(3, &quot;new&quot;), (2, &quot;new&quot;)])
+except ValueError:
+    pass
+else:
+    raise AssertionError(&quot;conflicting replay accepted&quot;)
+assert db.execute(&quot;SELECT count(*) FROM item&quot;).fetchone()[0] == 2
+print(&quot;PASS: replay, conflict detection, atomic rollback&quot;)
+</code></pre>
+<h2>Atomicity and checkpoint semantics</h2>
+<p>The sqlite3 context manager commits the transaction when its body exits successfully and rolls it back if an exception propagates. When the second row of the failing batch conflicts, the earlier row with ID 3 must also disappear. This prevents partially applied batches. A durable ETL pipeline should advance its checkpoint only in the same transaction as the rows it considers committed, otherwise crash recovery can skip data or repeat uncommitted work. Retried upserts are not automatically correct when source records can change without a version or timestamp.</p>
+<h2>Hands-on fault boundaries</h2>
+<ol>
+<li>Replace the second replay with a feed containing an identical ID but changed status. Capture the conflict and verify the old row remains.</li>
+<li>Reverse the order of the failing batch: compare the immediate error position with the final stored state. Test a separate invalid status and a negative ID.</li>
+<li>Store a source version with each ID and define an explicit policy for an authorized update. Show how that differs from blind INSERT OR REPLACE.</li>
+<li>Create a disposable file-based SQLite database, close and reopen it, and show that a committed checkpoint survives process exit. Never use a production database as a fixture.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, before/after row counts, a crash-replay matrix and a documented contract for conflicting data. The demonstration models small batches, not a streaming job controller.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

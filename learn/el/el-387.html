@@ -1,0 +1,53 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Objective_C — Αναλυτικός οδηγός εξάσκησης — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-387.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Objective-C — αντικείμενα Foundation και ακέραιοι C Υπολόγισε άθροισμα NSNumber Αποθήκευσε ως main.m. Σε πραγματικό Apple Foundation SDK το αριθμητικό μέρος της αναμενόμενης εκτύπωσης είναι…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Objective_C — Αναλυτικός οδηγός εξάσκησης — DedSec Project">
+<meta property="og:description" content="Objective-C — αντικείμενα Foundation και ακέραιοι C Υπολόγισε άθροισμα NSNumber Αποθήκευσε ως main.m. Σε πραγματικό Apple Foundation SDK το αριθμητικό μέρος της αναμενόμενης εκτύπωσης είναι…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-387.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Objective_C — Αναλυτικός οδηγός εξάσκησης — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Objective_C — Αναλυτικός οδηγός εξάσκησης — DedSec Project">
+<meta name="twitter:description" content="Objective-C — αντικείμενα Foundation και ακέραιοι C Υπολόγισε άθροισμα NSNumber Αποθήκευσε ως main.m. Σε πραγματικό Apple Foundation SDK το αριθμητικό μέρος της αναμενόμενης εκτύπωσης είναι…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Objective_C — Αναλυτικός οδηγός εξάσκησης — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Objective_C — Αναλυτικός οδηγός εξάσκησης — DedSec Project</h1><p>Objective-C — αντικείμενα Foundation και ακέραιοι C Υπολόγισε άθροισμα NSNumber Αποθήκευσε ως main.m. Σε πραγματικό Apple Foundation SDK το αριθμητικό μέρος της αναμενόμενης εκτύπωσης είναι…</p><section><h1>Objective-C — αντικείμενα Foundation και ακέραιοι C</h1>
+<h2>Υπολόγισε άθροισμα NSNumber</h2>
+<pre><code class="language-objective-c">#import &lt;Foundation/Foundation.h&gt;
+int main(void) {
+  @autoreleasepool {
+    NSArray&lt;NSNumber *&gt; *values = @[@2, @3, @4];
+    NSInteger total = 0;
+    for (NSNumber *item in values) {
+      total += item.integerValue;
+    }
+    NSLog(@&quot;%ld&quot;, (long)total);
+  }
+  return 0;
+}
+</code></pre>
+<p>Αποθήκευσε ως main.m. Σε πραγματικό Apple Foundation SDK το αριθμητικό μέρος της αναμενόμενης εκτύπωσης είναι 9· η NSLog μπορεί να προσθέτει ώρα και στοιχεία διεργασίας. Το NSNumber είναι αντικείμενο και η integerValue παρέχει τιμή ακεραίου.</p>
+<h2>Εξέτασε λάθος τύπο</h2>
+<p>Βάλε NSString σε ξεχωριστό δοκιμαστικό πίνακα χωρίς σαφή generics και σύγκρινε compiler warnings με τη συμπεριφορά μηνυμάτων κατά την εκτέλεση. Μη θεωρείς ότι οποιοδήποτε Foundation object υποστηρίζει integerValue. Εξήγησε τον ρόλο του @autoreleasepool και των χρόνων ζωής αντικειμένων.</p>
+<h2>Έλεγχος πλατφόρμας</h2>
+<p>Τα Apple Foundation και GNUstep απαιτούν διαφορετικές ρυθμίσεις build. Το Termux δεν παρέχει αυτομάτως Apple SDK. Κατάγραψε compiler, SDK, εντολές και διαγνωστικά· δεν έγινε Objective-C compilation εδώ.</p>
+<h2>Έλεγξε τα περιεχόμενα πραγματικής συλλογής</h2>
+<p>Ο τύπος NSArray&lt;NSNumber *&gt; περιγράφει τις προσδοκίες του compiler, αλλά δεν αποδεικνύει ότι ένα αντικείμενο από JSON ή δυναμική εισαγωγή έχει σωστό τύπο κατά την εκτέλεση. Αν προέρχεται από εξωτερικά δεδομένα, έλεγξε την πραγματική κλάση Foundation πριν μετατρέψεις. Εξέτασε αν Boolean πρέπει να θεωρείται αριθμός. Σύγκρινε NSInteger, που εξαρτάται από την αρχιτεκτονική, με ακέραιο συγκεκριμένου πλάτους για δυαδικό format. Σε κενό NSArray το άθροισμα πρέπει να είναι 0 χωρίς εκτέλεση του βρόχου. Το autorelease pool διαχειρίζεται συγκεκριμένα αντικείμενα Objective-C, όχι οποιαδήποτε κατανομή C και δεν εξασφαλίζει από μόνο του τη διάρκεια ζωής όλων των pointers.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

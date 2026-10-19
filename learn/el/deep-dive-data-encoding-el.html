@@ -1,0 +1,53 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/deep-dive-data-encoding-el.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο Τι συμβαίνει Το UTF-8 κωδικοποιεί Unicode με μεταβλητά bytes. Αλλοιωμένοι ελληνικοί χαρακτήρες συνήθως σημαίνουν ότι τα bytes…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο — DedSec Project">
+<meta property="og:description" content="Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο Τι συμβαίνει Το UTF-8 κωδικοποιεί Unicode με μεταβλητά bytes. Αλλοιωμένοι ελληνικοί χαρακτήρες συνήθως σημαίνουν ότι τα bytes…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/deep-dive-data-encoding-el.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο — DedSec Project">
+<meta name="twitter:description" content="Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο Τι συμβαίνει Το UTF-8 κωδικοποιεί Unicode με μεταβλητά bytes. Αλλοιωμένοι ελληνικοί χαρακτήρες συνήθως σημαίνουν ότι τα bytes…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο — DedSec Project</h1><p>Κωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο Τι συμβαίνει Το UTF-8 κωδικοποιεί Unicode με μεταβλητά bytes. Αλλοιωμένοι ελληνικοί χαρακτήρες συνήθως σημαίνουν ότι τα bytes…</p><section><h2>Τι συμβαίνει</h2>
+<p>Το UTF-8 κωδικοποιεί Unicode με μεταβλητά bytes. Αλλοιωμένοι ελληνικοί χαρακτήρες συνήθως σημαίνουν ότι τα bytes αποκωδικοποιήθηκαν λάθος.</p>
+<h2>Πρακτικός έλεγχος</h2>
+<p>Διάβαζε και γράφε κείμενο με ρητή κωδικοποίηση, ξεχώρισε αντικατάσταση χαρακτήρων από normalization και κράτα τα αρχικά bytes.</p>
+<h2>Συνήθεις παγίδες</h2>
+<p>Για JSON στα Ελληνικά, εμφάνισε Unicode χωρίς περιττά ASCII escapes αλλά διατήρησε έγκυρη JSON σύνταξη.</p>
+<h2>Μικρό παράδειγμα για προσαρμογή</h2>
+<pre><code class="language-text">python -c 'print(&quot;Ελληνικά&quot;.encode(&quot;utf-8&quot;))'
+</code></pre>
+<h2>Διατήρησε bytes όταν δοκιμάζεις normalization</h2>
+<pre><code class="language-python">import unicodedata
+text = 'Ελληνικά'
+encoded = text.encode('utf-8')
+assert encoded.decode('utf-8') == text
+assert len(encoded) &gt; len(text)
+a = '\u03ac'
+b = '\u03b1\u0301'
+assert a != b
+assert unicodedata.normalize('NFC', a) == unicodedata.normalize('NFC', b)
+</code></pre>
+<p>Οι δύο συμβολοσειρές δείχνουν το ίδιο τονισμένο γράμμα με διαφορετική ακολουθία code points. Το normalization δεν είναι decoding και δεν ανακατασκευάζει bytes που αντικαταστάθηκαν από replacement character. Το <code>errors='ignore'</code> μπορεί να κρύβει απώλεια πετώντας άκυρα bytes και δεν αποτελεί γενική επισκευή εγγράφου.</p>
+<p>Διατήρησε το αρχικό αρχείο, δες μικρό byte sample και δοκίμασε ρητό candidate encoding σε αντίγραφο. Σωστό round trip βοηθά αλλά δεν εντοπίζει πάντα μοναδικά το προβλεπόμενο encoding. Σε JSON, escaped και literal Unicode μπορούν να αναπαριστούν ίδια string value. Το ensure_ascii=False βελτιώνει αναγνωσιμότητα χωρίς να καταργεί την απαίτηση έγκυρου UTF-8 output.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

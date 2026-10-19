@@ -1,0 +1,96 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Γλωσσάρι: injection, interfaces και interpreters — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-117.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Γλωσσάρι: injection, interfaces και interpreters Injection Σημασία και περιορισμοί Injection υπάρχει όταν μη έμπιστα δεδομένα ερμηνεύονται ως εντολές ή σύνταξη αντί να παραμένουν data. SQL…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Γλωσσάρι: injection, interfaces και interpreters — DedSec Project">
+<meta property="og:description" content="Γλωσσάρι: injection, interfaces και interpreters Injection Σημασία και περιορισμοί Injection υπάρχει όταν μη έμπιστα δεδομένα ερμηνεύονται ως εντολές ή σύνταξη αντί να παραμένουν data. SQL…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-117.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γλωσσάρι: injection, interfaces και interpreters — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Γλωσσάρι: injection, interfaces και interpreters — DedSec Project">
+<meta name="twitter:description" content="Γλωσσάρι: injection, interfaces και interpreters Injection Σημασία και περιορισμοί Injection υπάρχει όταν μη έμπιστα δεδομένα ερμηνεύονται ως εντολές ή σύνταξη αντί να παραμένουν data. SQL…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Γλωσσάρι: injection, interfaces και interpreters — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Γλωσσάρι: injection, interfaces και interpreters — DedSec Project</h1><p>Γλωσσάρι: injection, interfaces και interpreters Injection Σημασία και περιορισμοί Injection υπάρχει όταν μη έμπιστα δεδομένα ερμηνεύονται ως εντολές ή σύνταξη αντί να παραμένουν data. SQL…</p><section><h2>Injection</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Injection υπάρχει όταν μη έμπιστα δεδομένα ερμηνεύονται ως εντολές ή σύνταξη αντί να παραμένουν data. SQL concatenation, shell execution και HTML interpolation έχουν διαφορετικά trust boundaries. Το escaping ενός context δεν προστατεύει άλλο.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">import sqlite3
+c = sqlite3.connect(':memory:')
+c.execute('CREATE TABLE users(name TEXT)')
+c.execute('INSERT INTO users VALUES (?)', ('Ada',))
+assert c.execute('SELECT * FROM users WHERE name=?', (&quot;' OR 1=1 --&quot;,)).fetchall() == []
+c.close()
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Σύγκρινε bound SQL parameters με string concatenation μόνο σε προσωρινή τοπική DB. Εξήγησε γιατί τα SQL identifiers χρειάζονται allowlist και τα subprocess args arrays με shell=False.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</p>
+<h2>Interface</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Interface περιγράφει πράξεις που μπορεί να καλέσει κάποιος χωρίς να γνωρίζει implementation. Το σωστό contract περιέχει εισόδους, αποτελέσματα, errors και side effects. Δύο implementations με ίδια ονόματα μεθόδων δεν είναι απαραίτητα συμβατές.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">from typing import Protocol
+class Store(Protocol):
+    def get(self, key: str) -&gt; str | None: ...
+class MemoryStore:
+    def __init__(self): self.data = {'x':'ok'}
+    def get(self, key): return self.data.get(key)
+assert MemoryStore().get('x') == 'ok'
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Φτιάξε δεύτερο Store που διαβάζει προσωρινό αρχείο και έλεγξε ίδια συμπεριφορά για missing keys. Τα Protocol annotations δεν προσφέρουν πλήρη runtime validation.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/library/typing.html#typing.Protocol</p>
+<h2>Interpreter</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Interpreter εκτελεί πρόγραμμα ή ενδιάμεση αναπαράσταση, συχνά αξιολογώντας εντολές κατά την εκτέλεση. Η CPython πρώτα μετατρέπει source σε bytecode· το 'interpreted' δεν σημαίνει ότι δεν υπάρχει compile phase.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">import dis
+def add(a, b): return a + b
+assert add(2,3) == 5
+dis.dis(add)  # shows bytecode for the current interpreter
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Σύγκρινε <code>python -m py_compile example.py</code> με εκτέλεση script. Syntax compile μπορεί να περάσει ενώ runtime branch έχει division by zero. Το bytecode/dis output διαφέρει ανά Python version.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/library/dis.html</p>
+<h2>Invariant</h2>
+<h3>Έννοια και όρια</h3>
+<p>Ιδιότητα που διατηρείται μετά από κάθε επιτρεπτή πράξη. Αν μία χρέωση επιτρέπεται μόνο με επαρκές υπόλοιπο, το balance &gt;= 0 παραμένει αληθές. Δεν αρκεί ένας αρχικός έλεγχος.</p>
+<h3>Πρακτικό δείγμα</h3>
+<pre><code class="language-text">def debit(balance, amount):
+    if not 0 &lt;= amount &lt;= balance: raise ValueError('bad debit')
+    return balance-amount
+assert debit(10,3)==7
+</code></pre>
+<h3>Οδηγούμενη διερεύνηση</h3>
+<p>Δοκίμασε χρέωση 0, 10 και 11 από υπόλοιπο 10. Απόδειξε ότι κάθε έγκυρη πράξη διατηρεί μη αρνητικό αποτέλεσμα και ότι η άκυρη απορρίπτεται.</p>
+<h3>Πρακτική απόδειξη του invariant</h3>
+<p>Στα prefix sums πριν την επανάληψη i το total είναι το άθροισμα των προηγούμενων τιμών. Αρχικά μηδέν, διατηρείται με πρόσθεση και στον τερματισμό έχουμε συμπεριλάβει όλες τις τιμές.</p>
+<pre><code class="language-python">def prefix(items):
+    total, result = 0, []
+    for i, value in enumerate(items):
+        assert total == sum(items[:i])
+        total += value
+        result.append(total)
+    return result
+assert prefix([2,-1,4]) == [2,1,5]
+assert prefix([]) == []
+</code></pre>
+<p>Βάλε το assert μετά την ενημέρωση και παρατήρησε το σφάλμα. Τα Python assertions μπορεί να απενεργοποιηθούν σε optimized execution· δεν υποκαθιστούν validation.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,3 @@
+% MATLAB: format a message using fprintf.
+name = "Ada";
+fprintf('Hello, %s!\n', name);

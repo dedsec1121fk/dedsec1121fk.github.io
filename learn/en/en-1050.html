@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Secure inputs, identity sessions and secret handling — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1050.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Secure inputs, identity sessions and secret handling 04. Input parsing, SQL and browser output Focus: Input parsing, SQL and browser output. Treat validation and output encoding as…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Secure inputs, identity sessions and secret handling — DedSec Project">
+<meta property="og:description" content="Secure inputs, identity sessions and secret handling 04. Input parsing, SQL and browser output Focus: Input parsing, SQL and browser output. Treat validation and output encoding as…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1050.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Secure inputs, identity sessions and secret handling — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Secure inputs, identity sessions and secret handling — DedSec Project">
+<meta name="twitter:description" content="Secure inputs, identity sessions and secret handling 04. Input parsing, SQL and browser output Focus: Input parsing, SQL and browser output. Treat validation and output encoding as…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Secure inputs, identity sessions and secret handling — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Secure inputs, identity sessions and secret handling — DedSec Project</h1><p>Secure inputs, identity sessions and secret handling 04. Input parsing, SQL and browser output Focus: Input parsing, SQL and browser output. Treat validation and output encoding as…</p><section><h2>04. Input parsing, SQL and browser output</h2>
+<p><strong>Focus:</strong> Input parsing, SQL and browser output.</p>
+<p>Treat validation and output encoding as different defenses. Validate data type, length and business rules at the trust boundary. Use parameterized queries for SQL values rather than concatenating external text into query strings. For browser output, choose textContent unless HTML rendering is explicitly required.</p>
+<p><strong>Tiny SQL example (Python sqlite3):</strong></p>
+<pre><code>row = db.execute(&quot;SELECT name FROM notes WHERE id = ?&quot;, (note_id,)).fetchone()</code></pre>
+<p>The placeholder separates SQL structure from a value; it does not authorize which note may be read. Authorization still belongs in policy.</p>
+<p><strong>HTML example:</strong> rendering a user's title via textContent makes angle brackets literal. Escaping once and then decoding it somewhere else may reintroduce risk; follow the complete data path.</p>
+<p><strong>Practice:</strong> write tests for empty input, very long input, non-ASCII Greek, unexpected types, and text containing quotes. Observe which layer rejects or encodes each case.</p>
+<p>Never treat a sanitizer as a substitute for correct context-specific encoding and server-side authorization.</p>
+<hr />
+<p>Further reading: <a href="../en/hgp-en-040.html">Hacking Guide Project — module 40</a>.</p>
+<h2>05. Sessions, OAuth, MFA and passkeys</h2>
+<p><strong>Focus:</strong> Sessions, OAuth, MFA and passkeys.</p>
+<p>A session cookie identifies a login session; it should not contain reusable credentials in readable form. Set appropriate Secure, HttpOnly and SameSite properties for browser contexts, rotate identifiers after sensitive transitions, and make logout invalidate server-side state where applicable.</p>
+<p>OAuth is delegated authorization; OpenID Connect adds an identity layer. An access token has an intended audience and scope. Verify issuer, audience, expiry and signature according to the protocol and deployment; do not treat “looks like a JWT” as validation. Distinguish authentication from resource access.</p>
+<p>MFA reduces account takeover risk but recovery flows can become the weakest path. Passkeys use public-key credentials bound to relying-party origin rather than sending a reusable password secret.</p>
+<p><strong>Design exercise:</strong> draw login, session refresh, logout and account recovery as four state transitions. For each, list who can initiate it, what evidence is required, whether a token can be replayed, and how to revoke access.</p>
+<p><strong>Failure:</strong> testing only successful login overlooks expired refresh tokens and cross-account session confusion.</p>
+<hr />
+<p>Further reading: <a href="../en/hgp-en-039.html">Hacking Guide Project — module 39</a>.</p>
+<h2>06. Secrets, encryption and passwords</h2>
+<p><strong>Focus:</strong> Secrets, encryption and passwords.</p>
+<p>A hash, encryption and digital signature solve different problems. Hashing checks equality/integrity; authenticated encryption provides confidentiality plus tamper detection; signatures provide a verifiable claim tied to a signing key. Do not invent cryptographic algorithms.</p>
+<p>Passwords should be stored with a dedicated slow password-hashing function such as Argon2id when supported by the platform, with unique salts and calibrated resource settings. General-purpose SHA-256 alone is not suitable for password storage. Store secrets in an OS keystore or managed secret store where available, not in Git or logs.</p>
+<p><strong>Threat example:</strong> an API key accidentally committed to a repository. Removing it from the latest file does not revoke the old key or erase every copy. First revoke/rotate, inspect authorized usage logs, and then perform coordinated history cleanup if necessary.</p>
+<p><strong>Practice:</strong> sketch key creation, deployment, access, rotation and destruction. Who can read each key? How can a compromised key be revoked without disabling the whole product?</p>
+<p>Security depends on lifecycle and access boundaries, not on secret-looking strings.</p>
+<hr />
+<p>Further reading: <a href="../en/hgp-en-049.html">Hacking Guide Project — module 49</a>.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

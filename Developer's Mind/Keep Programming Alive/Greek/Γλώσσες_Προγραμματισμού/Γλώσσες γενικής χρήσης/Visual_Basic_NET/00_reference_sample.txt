@@ -1,0 +1,5 @@
+Module Program
+  Sub Main()
+    Console.WriteLine("Hello, Ada!")
+  End Sub
+End Module

@@ -1,0 +1,155 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Software diagnostics — stack traces, logging and testing — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-227.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Software diagnostics — stack traces, logging and testing Stack traces Practical explanation A stack trace records active call frames at a failure. Read from the triggering exception and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Software diagnostics — stack traces, logging and testing — DedSec Project">
+<meta property="og:description" content="Software diagnostics — stack traces, logging and testing Stack traces Practical explanation A stack trace records active call frames at a failure. Read from the triggering exception and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-227.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Software diagnostics — stack traces, logging and testing — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Software diagnostics — stack traces, logging and testing — DedSec Project">
+<meta name="twitter:description" content="Software diagnostics — stack traces, logging and testing Stack traces Practical explanation A stack trace records active call frames at a failure. Read from the triggering exception and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Software diagnostics — stack traces, logging and testing — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Software diagnostics — stack traces, logging and testing — DedSec Project</h1><p>Software diagnostics — stack traces, logging and testing Stack traces Practical explanation A stack trace records active call frames at a failure. Read from the triggering exception and…</p><section><h2>Stack traces</h2>
+<h3>Practical explanation</h3>
+<p>A stack trace records active call frames at a failure. Read from the triggering exception and locate the nearest relevant frame in your own code, while distinguishing cause from later propagation.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-python">def read_score(data): return int(data['score'])
+def handle(data): return read_score(data)
+try: handle({'score':'oops'})
+except ValueError as exc: assert 'invalid' in str(exc)
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Capture and inspect traceback on a disposable input. Compare original failure with a broad except that hides it, and show how to preserve exception chaining.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for Stack traces from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+<h2>Logging and observability</h2>
+<h3>Practical explanation</h3>
+<p>Logs record events; metrics summarize numerical signals and traces connect operations across components. Combining them can identify bottlenecks, but they answer different questions and require privacy controls.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-python">import logging
+logging.basicConfig(level=logging.INFO)
+logging.info('batch completed count=%d',3)
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Add a request correlation ID and timing metric for a synthetic batch. Keep tokens and raw personal records out of the log message.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for Logging and observability from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+<h2>Unit integration and end-to-end tests</h2>
+<h3>Practical explanation</h3>
+<p>A unit test isolates a function, an integration test exercises boundaries such as a real database, and an end-to-end test covers a user flow. They expose different failures and have different cost/stability.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-python">def normalize(text):return text.strip().casefold()
+assert normalize(' Ada ')=='ada'
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Turn the assertion into unittest. Then build a SQLite integration check using a temporary database, without calling the integration check a unit test.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for Unit integration and end to end tests from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+<h2>Regression protection</h2>
+<h3>Practical explanation</h3>
+<p>A regression test preserves the smallest case that exposed a previously fixed defect. Without checking that it failed before the fix, the new test might not guard the actual bug.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-python">def safe_ratio(a,b):
+    if b==0:raise ZeroDivisionError('denominator')
+    return a/b
+assert safe_ratio(4,2)==2
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Write a test requiring the expected exception for a zero denominator and compare with a previous version that returned a misleading default.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for Regression protection from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+<h2>Performance profiling</h2>
+<h3>Practical explanation</h3>
+<p>Profiling observes where CPU time, allocations or IO waits occur. Optimizing the most visually complex function without measurement may not affect actual latency.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-python">import cProfile
+cProfile.run('sum(i*i for i in range(10000))')
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Profile an intentionally slow nested-loop duplicate finder and a set-based alternative. Run multiple trials and avoid conflating startup with steady-state behavior.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for Performance profiling from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+<h2>Unit, integration, regression and property-based testing</h2>
+<h3>Separate a contract from implementation details</h3>
+<p>A good unit test asserts behavior that would remain true after an internal refactor. For a parser that accepts two comma-separated positive integers, define an explicit contract: either return both positive integers or raise ValueError for malformed input. Do not duplicate the parser logic inside the assertion, as both implementation and test could share the same mistake.</p>
+<pre><code class="language-python">def parse_pair(raw: str) -&gt; tuple[int, int]:
+    chunks = raw.split(&quot;,&quot;)
+    if len(chunks) != 2:
+        raise ValueError(&quot;expected two fields&quot;)
+    try:
+        left, right = (int(chunk.strip()) for chunk in chunks)
+    except ValueError as exc:
+        raise ValueError(&quot;invalid integer&quot;) from exc
+    if left &lt;= 0 or right &lt;= 0:
+        raise ValueError(&quot;both integers must be positive&quot;)
+    return left, right
+
+assert parse_pair(&quot;2, 3&quot;) == (2, 3)
+for malformed in (&quot;&quot;, &quot;2&quot;, &quot;2,a&quot;, &quot;0,3&quot;, &quot;2,3,4&quot;):
+    try:
+        parse_pair(malformed)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(&quot;accepted invalid input&quot;)
+</code></pre>
+<p>Test a case like &quot; 2 , 3 &quot; to specify whitespace behavior. Explain whether &quot;+2,3&quot; should be accepted: the current int conversion permits plus signs, so the test suite must either document that or enforce a stricter grammar.</p>
+<h3>Unit, integration and end-to-end scope</h3>
+<p>A unit test checks this small parsing contract. An integration test would check that the value reaches the database or downstream function as expected. An end-to-end test would exercise the actual user's form and error rendering. Passing a syntax check on JavaScript does not imply that mobile scrolling, visibility or input focus works.</p>
+<h3>Property-based versus examples</h3>
+<p>For generated positive pairs, parsing their decimal representation should return the same pair. But a generator restricted to valid values will miss invalid boundary cases; explicitly test empty input, non-ASCII digits, overflow policy and extra delimiters. Preserve a reproducible failing seed when generated tests expose a defect.</p>
+<h3>Regression discipline</h3>
+<p>Before a fix, write a test that reproduces the observed failure and fails for the old implementation. Only then change the code and confirm the same test passes. Keep the smallest failing fixture in version control without private user data.</p>
+<h3>Verification</h3>
+<p>Submit test command, environment/version, failures observed before the fix and successful output afterward. Do not claim a test was run merely because the snippet contains assertions; assertions are proposed checks until executed.</p>
+<h2>Logs, metrics, traces and actionable diagnostics</h2>
+<p>Logs describe discrete events; metrics summarize quantities over time; traces show causality across calls. Use structured event names, timestamps with timezone, severity levels and stable correlation identifiers. Error messages should explain <em>what</em> failed, <em>where</em>, and <em>what to do next</em>, without exposing credentials.</p>
+<h3>Example</h3>
+<pre><code class="language-python">import json
+from datetime import datetime, timezone
+record = {'event': 'backup.finished',
+          'time': datetime.now(timezone.utc).isoformat(),
+          'files': 12}
+assert json.loads(json.dumps(record))['files'] == 12
+</code></pre>
+<h3>Practice</h3>
+<ol>
+<li>Make setup logs readable on a phone.</li>
+<li>Record a failed update without capturing secret environment variables.</li>
+<li>Add a correlation ID to a multi-step request.</li>
+<li>Create diagnostic output for missing dependencies without reinstalling them automatically.</li>
+</ol>
+<h2>Reproducing a bug</h2>
+<h3>Practical explanation</h3>
+<p>A reproducible bug report contains environment, input, steps, expected behavior and actual behavior. Remove irrelevant setup until the smallest case still fails; otherwise debugging effort can chase unrelated symptoms.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-python">def broken(items=[]):
+    items.append(1)
+    return len(items)
+assert broken()==1
+assert broken()==2
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Change the default to None and create a new list per call. Write a regression assertion that fails on the original implementation and passes on the fix.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for Reproducing a bug from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,81 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>scheme — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-837.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="scheme — συγκεντρωτικός οδηγός Scheme Μοντέλο λειτουργίας Η Scheme είναι Lisp γλώσσα με lexical scope, συναρτήσεις και μικρό πυρήνα, με διαφορές μεταξύ standards. Παράδειγμα Δοκίμασέ το με…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="scheme — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="scheme — συγκεντρωτικός οδηγός Scheme Μοντέλο λειτουργίας Η Scheme είναι Lisp γλώσσα με lexical scope, συναρτήσεις και μικρό πυρήνα, με διαφορές μεταξύ standards. Παράδειγμα Δοκίμασέ το με…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-837.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="scheme — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="scheme — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="scheme — συγκεντρωτικός οδηγός Scheme Μοντέλο λειτουργίας Η Scheme είναι Lisp γλώσσα με lexical scope, συναρτήσεις και μικρό πυρήνα, με διαφορές μεταξύ standards. Παράδειγμα Δοκίμασέ το με…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="scheme — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>scheme — συγκεντρωτικός οδηγός — DedSec Project</h1><p>scheme — συγκεντρωτικός οδηγός Scheme Μοντέλο λειτουργίας Η Scheme είναι Lisp γλώσσα με lexical scope, συναρτήσεις και μικρό πυρήνα, με διαφορές μεταξύ standards. Παράδειγμα Δοκίμασέ το με…</p><section><h2>Scheme</h2>
+<h3>Μοντέλο λειτουργίας</h3>
+<p>Η Scheme είναι Lisp γλώσσα με lexical scope, συναρτήσεις και μικρό πυρήνα, με διαφορές μεταξύ standards.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-text">(define (sum xs)
+  (if (null? xs) 0 (+ (car xs) (sum (cdr xs)))))
+</code></pre>
+<h3>Δοκίμασέ το με νόημα</h3>
+<p>Παρακολούθησε αναδρομικό άθροισμα και απόδειξε ότι η κενή λίστα τερματίζει· δοκίμασε μία τιμή.</p>
+<h3>Σφάλμα που πρέπει να ξεχωρίσεις</h3>
+<p>Η σύνταξη και οι βιβλιοθήκες διαφέρουν σε R5RS/R7RS και implementations.</p>
+<p>Για να κρίνεις την άσκηση, κατέγραψε την αρχική είσοδο, την πρόβλεψη και την παρατήρηση σε πραγματικό, συμβατό περιβάλλον Scheme. Δώσε ξεχωριστό παράδειγμα όπου αλλάζει μόνο μία μεταβλητή ή ένα όρισμα. Αν εργάζεσαι χωρίς την αναγκαία εφαρμογή, μελέτησε τη σύνταξη ως παράδειγμα και μην παρουσιάζεις το κείμενο ως εκτελεσμένο test.</p>
+<h2>Scheme — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Παράδειγμα με βασικές μορφές R5RS</h3>
+<p>Οι υλοποιήσεις Scheme έχουν διαφορετικές επεκτάσεις. Μείνε αρχικά σε βασική σύνταξη:</p>
+<pre><code class="language-scheme">(define (first-result xs)
+  (if (null? xs)
+      (list 'empty)
+      (list 'value (car xs))))
+(display (first-result '(7 8)))
+(newline)
+(display (first-result '()))
+(newline)
+</code></pre>
+<p>Αναμένονται <code>(value 7)</code> και <code>(empty)</code>. Το tag έχει σημασία: αν επέστρεφες μόνο <code>#f</code> για κενή είσοδο, θα το μπέρδευες με λίστα που περιέχει νόμιμη τιμή <code>#f</code>. Σύγκρινε με <code>(first-result '(#f 2))</code>. Χρησιμοποίησε συμβατό mode R5RS και κατέγραψε υλοποίηση/έκδοση, επειδή διαφέρουν οι παρεχόμενες επεκτάσεις.</p>
+<h3>Έλεγξε πριν από το car</h3>
+<p>Η κλήση <code>car</code> με άδεια λίστα παραβιάζει το συμβόλαιο εισόδου της. Η <code>null?</code> πρέπει να προηγείται. Δημιούργησε ξεχωριστά σκόπιμα λανθασμένη συνάρτηση χωρίς έλεγχο και κράτησε το πραγματικό diagnostic. Δεν παρέχουν όλα τα Scheme dialects τις ίδιες βιβλιοθήκες ή μηχανισμούς εξαιρέσεων· μην παρουσιάζεις κάποια επέκταση ως καθολικό κανόνα.</p>
+<h3>Δομή αναδρομής</h3>
+<p>Όρισε άθροισμα λίστας με βάση την <code>(null? xs)</code> και υπολογισμό <code>(+ (car xs) (sum-list (cdr xs)))</code>. Δείξε γιατί η <code>cdr</code> μειώνει την πεπερασμένη σωστή λίστα μέχρι τη βασική περίπτωση. Δοκίμασε κενή λίστα και αρνητικούς αριθμούς. Ένα dotted pair δεν είναι κανονική λίστα και μπορεί να αποτύχει όταν η αναδρομή περιμένει κενή κατάληξη.</p>
+<h3>Πρόσθετη δοκιμή</h3>
+<p>Σύγκρινε <code>eq?</code> με <code>equal?</code> σε ζεύγη και αριθμούς. Διευκρίνισε αν χρειάζεσαι δομική ισότητα ή ταυτότητα αντικειμένων. Μη βασίζεσαι στην τυχαία ταυτότητα για σύγκριση περιεχομένου. Σημείωσε αν ο διερμηνευτής ακολουθεί R5RS ή πιο σύγχρονο dialect. Πρότυπο: https://standards.scheme.org/</p>
+<h2>Scheme — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Αναδρομικό άθροισμα</h3>
+<p>Μια συνάρτηση Scheme επεξεργάζεται τις λίστες αναδρομικά. Στην παρακάτω έκδοση ο accumulator κρατά το άθροισμα των θετικών τιμών που έχουν ήδη εξεταστεί, ενώ το remaining αντιστοιχεί στο ανεπεξέργαστο μέρος.</p>
+<pre><code class="language-scheme">(define (sum-positive xs)
+  (let loop ((remaining xs) (total 0))
+    (cond ((null? remaining) total)
+          ((&gt; (car remaining) 0)
+           (loop (cdr remaining) (+ total (car remaining))))
+          (else (loop (cdr remaining) total)))))
+(sum-positive '(4 -2 0 7))
+(sum-positive '())
+</code></pre>
+<p>Η πρώτη κλήση αναμένεται να δώσει 11, η δεύτερη 0. Εδώ η αναδρομική κλήση βρίσκεται σε tail position, πράγμα σημαντικό για την εγγύηση proper tail recursion της γλώσσας. Σύγκρινέ τη με μια έκδοση που πρώτα καλεί recursively και μετά προσθέτει· στη δεύτερη χρειάζεται να διατηρείται εκκρεμής πρόσθεση.</p>
+<h3>Ελεγχόμενη αποτυχία</h3>
+<p>Η car σε κενή λίστα δεν επιστρέφει κενή λίστα ούτε μηδέν: είναι σφάλμα. Το null? πρέπει να προηγείται. Αν η λίστα περιλαμβάνει συμβολοσειρά, η &gt; δεν ορίζεται για αυτή την τιμή. Δοκίμασε '(4 &quot;bad&quot; 7) σε ελεγχόμενο interpreter και πρόσθεσε number? αν θέλεις να επιτρέπεις ετερογενείς λίστες. Προτίμησε σαφή απόρριψη αντί για σιωπηρή μετατροπή.</p>
+<h3>Παρενέργειες και όρια</h3>
+<p>Η map παράγει νέο αποτέλεσμα από την αρχική λίστα χωρίς μεταβολή της εισόδου. Το set! αλλάζει μια δέσμευση, όχι κατ' ανάγκη το ίδιο το αντικείμενο, και συνεπώς δεν αποτελεί ισοδύναμη πράξη. Το set-car! υπάρχει μόνο σε ορισμένες διαλέκτους/τύπους ζευγών. Γράψε μια έκδοση με fold-left μόνο εφόσον το παρέχει ο interpreter που χρησιμοποιείς.</p>
+<h3>Άσκηση επαλήθευσης</h3>
+<p>Υλοποίησε την ίδια συνάρτηση για λίστα μόνο με αρνητικά, για κενή λίστα και για δέκα χιλιάδες αριθμούς. Σημείωσε ακριβή διάλεκτο, interpreter και αποτέλεσμα κάθε περίπτωσης. Παράδωσε το invariant του accumulator με δικά σου λόγια και ένα counterexample για λανθασμένο null? έλεγχο. Το παράδειγμα εδώ είναι στατικό εκπαιδευτικό υλικό· δεν ισχυρίζεται εκτέλεση στο συγκεκριμένο audit.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

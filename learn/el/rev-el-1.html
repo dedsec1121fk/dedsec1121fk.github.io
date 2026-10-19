@@ -1,0 +1,51 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Εξουσιοδοτημένη έρευνα — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/rev-el-1.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Εξουσιοδοτημένο reverse engineering — σαφής άδεια πριν την τεχνική εργασία Πρώτα το πεδίο άδειας Ένα δημόσιο αρχείο, APK, πακέτο ή website δεν σημαίνει αυτομάτως άδεια για παράκαμψη…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Εξουσιοδοτημένη έρευνα — DedSec Project">
+<meta property="og:description" content="Εξουσιοδοτημένο reverse engineering — σαφής άδεια πριν την τεχνική εργασία Πρώτα το πεδίο άδειας Ένα δημόσιο αρχείο, APK, πακέτο ή website δεν σημαίνει αυτομάτως άδεια για παράκαμψη…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/rev-el-1.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Εξουσιοδοτημένη έρευνα — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Εξουσιοδοτημένη έρευνα — DedSec Project">
+<meta name="twitter:description" content="Εξουσιοδοτημένο reverse engineering — σαφής άδεια πριν την τεχνική εργασία Πρώτα το πεδίο άδειας Ένα δημόσιο αρχείο, APK, πακέτο ή website δεν σημαίνει αυτομάτως άδεια για παράκαμψη…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Εξουσιοδοτημένη έρευνα — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Εξουσιοδοτημένη έρευνα — DedSec Project</h1><p>Εξουσιοδοτημένο reverse engineering — σαφής άδεια πριν την τεχνική εργασία Πρώτα το πεδίο άδειας Ένα δημόσιο αρχείο, APK, πακέτο ή website δεν σημαίνει αυτομάτως άδεια για παράκαμψη…</p><section><h1>Εξουσιοδοτημένο reverse engineering — σαφής άδεια πριν την τεχνική εργασία</h1>
+<h2>Πρώτα το πεδίο άδειας</h2>
+<p>Ένα δημόσιο αρχείο, APK, πακέτο ή website δεν σημαίνει αυτομάτως άδεια για παράκαμψη σύνδεσης, υποκλοπή επικοινωνιών ή δοκιμές σε production endpoints. Ξεχώρισε (1) δικαίωμα κατοχής αντιγράφου, (2) ανάλυσης/τροποποίησης, (3) ενεργών δοκιμών και (4) δημοσίευσης ευρημάτων. Οι απαντήσεις μπορεί να διαφέρουν. Νόμοι και συμβάσεις εξαρτώνται από δικαιοδοσία· ζήτησε εξουσιοδότηση όπου υπάρχει αμφιβολία.</p>
+<h2>Γραπτό σημείωμα για δικό σου εργαστήριο</h2>
+<p>Κατέγραψε <strong>πριν</strong> την εκτέλεση:</p>
+<ul>
+<li><strong>Artifact και έκδοση:</strong> <code>dmr1_lab.py</code>, SHA-256 και απόδειξη ότι ο πηγαίος κώδικας είναι δικός σου.</li>
+<li><strong>Επιτρεπόμενα:</strong> δύο fixtures, έλεγχος hex, αλλαγές σε αντίγραφα και σύγκριση αποτελεσμάτων του parser.</li>
+<li><strong>Εξαιρούμενα:</strong> ξένα websites, δικτυακές σαρώσεις, λογαριασμοί τρίτων, πραγματικά προσωπικά δεδομένα και άγνωστα binaries.</li>
+<li><strong>Περιβάλλον:</strong> offline Python 3, απομονωμένος φάκελος και μόνο loopback αν χρειαστεί τοπικός server.</li>
+<li><strong>Διατήρηση:</strong> μόνο αβλαβή δοκιμαστικά αρχεία και μετρήσεις, διαγραφή μετά την ολοκλήρωση της αναφοράς.</li>
+<li><strong>Όρος διακοπής:</strong> αβέβαιη προέλευση, απρόσμενα προσωπικά δεδομένα, εξωτερική κίνηση ή αλλαγή scope.</li>
+</ul>
+<p>Για <strong>ξένο</strong> artifact χρειάζεται πραγματική άδεια για τους συγκεκριμένους στόχους και ενέργειες. Δεν γράφουμε μόνοι μας φανταστική συναίνεση ούτε τη ζητάμε από AI.</p>
+<h2>Άσκηση τεκμηρίωσης ευρημάτων</h2>
+<p>Φτιάξε δύο εκδόσεις αβλαβούς fixture δικής σου δημιουργίας. Σημείωσε source paths, SHA-256, εκδόσεις εργαλείων και ακριβείς διαφορές. Κράτα πίνακα <code>ισχυρισμός | απόδειξη | αντίπαραδειγμα | άγνωστο</code>. Για παράδειγμα, το <code>little-endian</code> χρειάζεται ανεξάρτητο έλεγχο με μεγεθύνσεις που κάνουν ορατή τη σειρά των bytes, όχι μία εικασία από μικρό αρχείο. Κράτα τα αρχικά bytes αμετάβλητα και δοκίμασε αντίγραφα.</p>
+<h2>Αν δεν υπάρχει σαφής εξουσιοδότηση</h2>
+<p>Μάθε πάνω σε δικό σου compiled πρόγραμμα, επίσημο εκπαιδευτικό δείγμα ή στο φανταστικό DMR1. Η στατική ανάγνωση αρχείου και η ενεργή δοκιμή server έχουν διαφορετικούς κινδύνους. Μην εκτελείς άγνωστα προγράμματα στο κινητό και μην συλλέγεις ιδιωτική δικτυακή κίνηση.</p>
+<h2>Χρήση AI και κριτήριο επιτυχίας</h2>
+<p>Το AI μπορεί να επισημάνει ασάφειες στους όρους, ποτέ να χορηγήσει εξουσιοδότηση. Επαλήθευσε χωριστά νομικές πληροφορίες. <strong>Επιτυχία:</strong> τρίτος αναγνώστης καταλαβαίνει ακριβώς τι επιτρέπεται, τι απαγορεύεται, γιατί και πότε σταματά η έρευνα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

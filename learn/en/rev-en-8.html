@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Electron process boundaries — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/rev-en-8.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Electron process boundaries Concept Electron packaging includes main process, renderer, possible preload scripts and assets. ASAR is a container, not by definition encrypted code; static…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Electron process boundaries — DedSec Project">
+<meta property="og:description" content="Electron process boundaries Concept Electron packaging includes main process, renderer, possible preload scripts and assets. ASAR is a container, not by definition encrypted code; static…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/rev-en-8.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Electron process boundaries — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Electron process boundaries — DedSec Project">
+<meta name="twitter:description" content="Electron process boundaries Concept Electron packaging includes main process, renderer, possible preload scripts and assets. ASAR is a container, not by definition encrypted code; static…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Electron process boundaries — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Electron process boundaries — DedSec Project</h1><p>Electron process boundaries Concept Electron packaging includes main process, renderer, possible preload scripts and assets. ASAR is a container, not by definition encrypted code; static…</p><section><h2>Concept</h2>
+<p>Electron packaging includes main process, renderer, possible preload scripts and assets. ASAR is a container, not by definition encrypted code; static presence does not equal runtime use.</p>
+<h2>Without AI: practice</h2>
+<p>Inspect a self-built Electron demo. Diagram file access in main versus UI updates in renderer, and note IPC or preload boundaries.</p>
+<h2>Verify it</h2>
+<p>Find one resource included in a package but not reached by the demonstrated interaction.</p>
+<h2>With AI (optional)</h2>
+<p>Have AI review a diagram and request source or observed evidence for every edge.</p>
+<h2>Practical lab: trace the Electron privilege boundary</h2>
+<p>Electron applications separate a browser renderer from a privileged main process. A renderer button is not permission to run arbitrary Node code. Inspect only an application you own or have permission to examine.</p>
+<p>Build a toy Electron window with context isolation enabled and Node integration disabled. Expose exactly one operation through preload instead of exposing unrestricted ipcRenderer. In your main process, handle only a named channel and return a fixed harmless result.</p>
+<pre><code class="language-javascript">// preload.js
+const {contextBridge, ipcRenderer} = require('electron');
+contextBridge.exposeInMainWorld('demoAPI', {
+  readDemoName: () =&gt; ipcRenderer.invoke('demo:filename')
+});
+// main process: register handler after ipcMain is imported
+ipcMain.handle('demo:filename', () =&gt; 'fixture.txt');
+</code></pre>
+<p>Draw the path DOM button -&gt; preload -&gt; allowed IPC channel -&gt; main handler -&gt; response. Add a list of which stage can read disk, which arguments can cross, and where untrusted input would need validation. Change the renderer channel to demo:missing: it should fail, not discover a general-purpose file-reading interface. Restore the channel and confirm the expected fixture.txt response.</p>
+<p>Observed UI, IPC behavior and source-code inspection answer three different questions. Disabling DevTools is not a substitute for limiting privileges. References: https://www.electronjs.org/docs/latest/tutorial/security.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

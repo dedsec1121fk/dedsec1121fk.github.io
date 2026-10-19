@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Compiler diagnostic reference — C++, Rust and Go — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-122.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Compiler diagnostic reference — C++, Rust and Go no matching function for call Meaning Overload resolution cannot find a function accepting the supplied arguments. Read the rejected…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Compiler diagnostic reference — C++, Rust and Go — DedSec Project">
+<meta property="og:description" content="Compiler diagnostic reference — C++, Rust and Go no matching function for call Meaning Overload resolution cannot find a function accepting the supplied arguments. Read the rejected…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-122.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Compiler diagnostic reference — C++, Rust and Go — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Compiler diagnostic reference — C++, Rust and Go — DedSec Project">
+<meta name="twitter:description" content="Compiler diagnostic reference — C++, Rust and Go no matching function for call Meaning Overload resolution cannot find a function accepting the supplied arguments. Read the rejected…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Compiler diagnostic reference — C++, Rust and Go — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Compiler diagnostic reference — C++, Rust and Go — DedSec Project</h1><p>Compiler diagnostic reference — C++, Rust and Go no matching function for call Meaning Overload resolution cannot find a function accepting the supplied arguments. Read the rejected…</p><section><h2>no matching function for call</h2>
+<h3>Meaning</h3>
+<p>Overload resolution cannot find a function accepting the supplied arguments. Read the rejected candidate signatures, including argument count, order, namespace, constness, references and template constraints.</p>
+<h3>Reproducible example</h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string_view&gt;
+void repeat(std::string_view text, int count) {
+    for (int i=0; i&lt;count; ++i) std::cout &lt;&lt; text &lt;&lt; '\n';
+}
+int main() {
+    // repeat(2, &quot;hi&quot;); // wrong argument order
+    repeat(&quot;hi&quot;, 2);
+}
+</code></pre>
+<p>Build using <code>g++ -std=c++17 -Wall -Wextra -pedantic example.cpp -o example &amp;&amp; ./example</code>. The repaired program prints hi twice. Uncomment the invalid call and compile again to inspect the diagnostic.</p>
+<h3>Investigate in order</h3>
+<p>First compare argument number and position against the declaration. Then check whether conversions are allowed. Non-const references cannot bind to arbitrary temporaries, while const references often can. For templates inspect deduction failure and constraints rather than guessing type arguments. If the signature appears correct, confirm the actual included header and namespace.</p>
+<h3>Lab</h3>
+<p>Create an overload accepting only <code>std::string_view</code> that delegates to <code>repeat(text, 1)</code>. Verify both overloads. Next try <code>repeat(&quot;hi&quot;, 2.5)</code> with <code>-Wconversion -Werror</code> and observe the narrowing warning. Keep the original failing call as a compile-fail regression test.</p>
+<h3>Evidence</h3>
+<p>Record compiler version, build flags, expected function signature, actual candidate list, and the smallest change that resolves the mismatch. Avoid casts that merely suppress the type error without proving the API contract.</p>
+<h2>use of deleted function</h2>
+<p><strong>Language / environment:</strong> C++</p>
+<h3>Meaning</h3>
+<p>An operation requires a method that was deleted or cannot be generated.</p>
+<h3>Repair</h3>
+<p>Review ownership, copying and moving; avoid copying unique_ptr values.</p>
+<h2>cargo: failed to select a version</h2>
+<p><strong>Language / environment:</strong> Rust</p>
+<h3>Meaning</h3>
+<p>Dependency version constraints cannot be resolved.</p>
+<h3>Repair</h3>
+<p>Inspect Cargo.toml/Cargo.lock and supported versions; avoid blind updates.</p>
+<h2>cannot use X as Y in argument</h2>
+<p><strong>Language / environment:</strong> Go</p>
+<h3>Meaning</h3>
+<p>A value does not satisfy an expected Go argument type.</p>
+<h3>Repair</h3>
+<p>Read the actual type, interface contract and conversion requirements.</p>
+<h2>imported and not used</h2>
+<p><strong>Language / environment:</strong> Go</p>
+<h3>Meaning</h3>
+<p>The compiler rejects unused imports.</p>
+<h3>Repair</h3>
+<p>Remove unused imports, or use their declarations deliberately.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

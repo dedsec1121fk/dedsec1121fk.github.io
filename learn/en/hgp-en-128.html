@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SAML, WS-Federation and Enterprise SSO Internals — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-128.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="SAML, WS-Federation and Enterprise SSO Internals Develop a deep model of enterprise browser federation: assertions, bindings, metadata, signatures, audience, subject confirmation, relay…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SAML, WS-Federation and Enterprise SSO Internals — DedSec Project">
+<meta property="og:description" content="SAML, WS-Federation and Enterprise SSO Internals Develop a deep model of enterprise browser federation: assertions, bindings, metadata, signatures, audience, subject confirmation, relay…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-128.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SAML, WS-Federation and Enterprise SSO Internals — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SAML, WS-Federation and Enterprise SSO Internals — DedSec Project">
+<meta name="twitter:description" content="SAML, WS-Federation and Enterprise SSO Internals Develop a deep model of enterprise browser federation: assertions, bindings, metadata, signatures, audience, subject confirmation, relay…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SAML, WS-Federation and Enterprise SSO Internals — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>SAML, WS-Federation and Enterprise SSO Internals — DedSec Project</h1><p>SAML, WS-Federation and Enterprise SSO Internals Develop a deep model of enterprise browser federation: assertions, bindings, metadata, signatures, audience, subject confirmation, relay…</p><section><p>Develop a deep model of enterprise browser federation: assertions, bindings, metadata, signatures, audience, subject confirmation, relay state, session lifetime and trust between identity providers and service providers.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>IdP and SP trust roles</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>SAML assertions and conditions</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>browser SSO profiles and bindings</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>metadata and signing keys</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>audience and recipient validation</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>NameID and attribute mapping</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. IdP and SP trust</h3>
+<p>SAML separates an Identity Provider that asserts identity from a Service Provider that consumes assertions. The SP must trust only configured issuers/keys and apply its own authorization; a valid assertion from the wrong tenant or relationship is not sufficient.</p>
+<h3>2. assertions and conditions</h3>
+<p>Assertions contain subject, authentication, attributes, and conditions such as time windows. Validate the complete security context—issuer, signature, audience, recipient/destination, time, subject confirmation, and expected flow—not just the presence of a signature.</p>
+<h3>3. browser SSO profiles and bindings</h3>
+<p>SAML browser SSO moves protocol messages through the browser using defined bindings. Track which message is request/response state, which values are attacker-controlled in transit, and how the SP correlates the response to the initiating session.</p>
+<h3>4. metadata and signing keys</h3>
+<p>Metadata distributes entity identifiers, endpoints, certificates, and capabilities. Treat metadata changes and key rollover as high-impact configuration events with authenticated distribution, overlap windows, audit trail, and tested rollback.</p>
+<h3>5. audience and recipient validation</h3>
+<p>Audience and recipient/destination fields prevent an assertion intended for one service or endpoint from being reused elsewhere. Validation must compare against canonical local configuration rather than values learned from the incoming request.</p>
+<h3>6. NameID and attribute mapping</h3>
+<p>Attributes become local identity/role data only after mapping rules are applied. Avoid trusting mutable display names or email strings as stable privileged identifiers; define collision, case, domain, and missing-attribute behavior explicitly.</p>
+<h3>7. RelayState and request correlation</h3>
+<p>RelayState carries application navigation/context and should not become an unvalidated open redirect or authorization source. Correlate responses with the original authentication request/session and keep application state separate from identity proof.</p>
+<h3>8. logout and session lifetime</h3>
+<p>SAML logout and local application sessions have different lifecycles and reliability. Define what local tokens are revoked when upstream identity changes, what happens if single logout fails, and how administrators terminate sessions during an incident.</p>
+<h2>Authorized lab sequence</h2>
+<ul>
+<li><p><strong>Lab 1 — Draw an SP-initiated SSO flow and annotate every signed/unsigned value plus who validates it.</strong></p>
+</li>
+<li><p><strong>Lab 2 — Create a fictional assertion-validation checklist and test it against synthetic good/bad assertion descriptions, not real accounts.</strong></p>
+</li>
+<li><p><strong>Lab 3 — Model key rollover where old and new IdP signing keys overlap and define safe acceptance windows.</strong></p>
+</li>
+</ul>
+<h2>Knowledge checks</h2>
+<p>Answer these without looking at the notes:</p>
+<h2>Next modules</h2>
+<p>Recommended related modules: <strong>021, 032, 039, 072, 092, 093</strong>. From the main menu, choose <strong>Search lessons</strong> to find related sections across the full guide.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

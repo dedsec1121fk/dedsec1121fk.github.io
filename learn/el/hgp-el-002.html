@@ -1,0 +1,124 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Footprinting, Reconnaissance και Ανακάλυψη Attack Surface — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-002.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Footprinting, Reconnaissance και Ανακάλυψη Attack Surface Reconnaissance είναι η διαδικασία δημιουργίας μιας ακριβούς εικόνας ενός εξουσιοδοτημένου target πριν από βαθύτερο testing. Το καλό…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Footprinting, Reconnaissance και Ανακάλυψη Attack Surface — DedSec Project">
+<meta property="og:description" content="Footprinting, Reconnaissance και Ανακάλυψη Attack Surface Reconnaissance είναι η διαδικασία δημιουργίας μιας ακριβούς εικόνας ενός εξουσιοδοτημένου target πριν από βαθύτερο testing. Το καλό…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-002.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Footprinting, Reconnaissance και Ανακάλυψη Attack Surface — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Footprinting, Reconnaissance και Ανακάλυψη Attack Surface — DedSec Project">
+<meta name="twitter:description" content="Footprinting, Reconnaissance και Ανακάλυψη Attack Surface Reconnaissance είναι η διαδικασία δημιουργίας μιας ακριβούς εικόνας ενός εξουσιοδοτημένου target πριν από βαθύτερο testing. Το καλό…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Footprinting, Reconnaissance και Ανακάλυψη Attack Surface — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Footprinting, Reconnaissance και Ανακάλυψη Attack Surface — DedSec Project</h1><p>Footprinting, Reconnaissance και Ανακάλυψη Attack Surface Reconnaissance είναι η διαδικασία δημιουργίας μιας ακριβούς εικόνας ενός εξουσιοδοτημένου target πριν από βαθύτερο testing. Το καλό…</p><section><p>Reconnaissance είναι η διαδικασία δημιουργίας μιας ακριβούς εικόνας ενός <strong>εξουσιοδοτημένου</strong> target πριν από βαθύτερο testing. Το καλό reconnaissance είναι evidence-driven: ξεχωρίζει πληροφορίες που είναι δημόσια παρατηρήσιμες από πληροφορίες που αποκτώνται με άμεση αλληλεπίδραση και κρατά source/confidence για κάθε συμπέρασμα.</p>
+<blockquote>
+<p><strong>Όριο εξουσιοδοτημένης χρήσης:</strong> Ακόμη και passive OSINT μπορεί να έχει privacy ή policy περιορισμούς. Active discovery πρέπει να παραμένει μέσα στο γραπτό scope. Για labs χρησιμοποίησε <code>example.com</code>, localhost ή δικό σου lab domain.</p>
+</blockquote>
+<h2>Μαθησιακοί στόχοι</h2>
+<ul>
+<li>ξεχώρισε passive, active, authenticated και internal discovery,</li>
+<li>δημιούργησε asset inventory από πολλαπλές πηγές,</li>
+<li>κατανόησε DNS, certificates, registration και web metadata,</li>
+<li>εντόπισε cloud/SaaS/repository exposure με ασφαλή τρόπο,</li>
+<li>κράτησε provenance και confidence,</li>
+<li>μετέτρεψε recon findings σε prioritized attack-surface map.</li>
+</ul>
+<h2>Reconnaissance ως πρόβλημα inventory</h2>
+<p>Στόχος δεν είναι να συγκεντρώσεις όσες περισσότερες ονομασίες γίνεται. Στόχος είναι να ξέρεις ποια assets ανήκουν στον οργανισμό, ποια είναι Internet-facing, ποια identities τα διαχειρίζονται, ποιες technologies/dependencies χρησιμοποιούνται, ποια assets φαίνονται abandoned και ποια observations είναι confirmed ή μόνο hypotheses.</p>
+<h2>Passive discovery</h2>
+<p>Παραδείγματα passive sources:</p>
+<ul>
+<li>public DNS και Certificate Transparency,</li>
+<li>registration και autonomous-system information,</li>
+<li>public repositories και package registries,</li>
+<li>websites, documentation, job postings και status pages,</li>
+<li>vendor advisories,</li>
+<li>public cloud/SaaS references που δημοσιεύτηκαν από τον owner.</li>
+</ul>
+<p>Passive δεν σημαίνει unrestricted. Μην συλλέγεις προσωπικά δεδομένα που δεν χρειάζονται και μην προσπαθείς να αποκτήσεις private account content.</p>
+<h2>DNS για reconnaissance</h2>
+<p>Χρήσιμα records:</p>
+<ul>
+<li><strong>A / AAAA:</strong> IPv4/IPv6 addresses,</li>
+<li><strong>CNAME:</strong> alias hostname,</li>
+<li><strong>MX:</strong> mail exchangers,</li>
+<li><strong>NS:</strong> authoritative name servers,</li>
+<li><strong>TXT:</strong> SPF/DKIM/domain verification και άλλα metadata,</li>
+<li><strong>CAA:</strong> policy για certificate authorities.</li>
+</ul>
+<p>Ασφαλή examples:</p>
+<pre><code class="language-bash">nslookup example.com
+dig example.com A
+dig example.com AAAA
+dig example.com MX
+</code></pre>
+<p>Ένα DNS answer είναι evidence για DNS state, όχι απόδειξη ownership ή vulnerability. Κατέγραψε resolver, timestamp, TTL και πιθανό caching/split-horizon context.</p>
+<h2>Certificate και TLS metadata</h2>
+<p>Certificates μπορούν να αποκαλύψουν hostnames, issuer και validity periods. Certificate Transparency βοηθά στο discovery δημόσια εκδομένων ονομάτων, αλλά μια παλιά εγγραφή δεν αποδεικνύει ότι το hostname είναι ακόμη reachable ή ανήκει στην ίδια ομάδα.</p>
+<h2>Web metadata</h2>
+<p>Σε authorized property, ασφαλή read-only observations είναι response status, redirect chain, TLS certificate, security headers, public <code>robots.txt</code>, <code>security.txt</code>, sitemaps, documented APIs και intentionally exposed metadata.</p>
+<p>Μην μετατρέπεις reconnaissance σε uncontrolled content brute forcing. Αν directory enumeration είναι στο scope, κάν' το σε deliberately vulnerable ή locally hosted app με συμφωνημένο rate.</p>
+<h2>Repositories και packages</h2>
+<p>Public repositories μπορεί να αποκαλύψουν architecture, dependencies, historical filenames, CI configuration και accidentally committed secrets. Αν βρεις suspected secret, <strong>μην το δοκιμάσεις</strong>. Ενημέρωσε τον owner μέσω του συμφωνημένου channel ώστε να γίνει rotation/revocation.</p>
+<p>Για dependency research ξεχώρισε declared package από deployed package, direct από transitive dependency, package-name similarity από verified identity και CVE match από πραγματικά reachable vulnerable code.</p>
+<h2>Cloud και SaaS surface</h2>
+<p>Cloud load balancers, object storage endpoints, IdP domains, SaaS tenants, support portals και development platforms μπορεί να φαίνονται δημόσια. Μην θεωρείς ownership μόνο από naming pattern. Επιβεβαίωσε με approved inventory, DNS/certificate relationships ή owner context.</p>
+<h2>Provenance και confidence</h2>
+<p>Για κάθε asset κράτησε asset name, source, first-seen time, confidence, environment, owner, exposure και next minimal validation. Αυτό αποτρέπει το συχνό λάθος να θεωρείται stale search-engine data ως current truth.</p>
+<h2>Active reconnaissance σε lab</h2>
+<p>Active recon αλληλεπιδρά άμεσα με service. Μπορεί να είναι DNS lookup, normal HTTP request, μικρό approved port check ή benign banner retrieval.</p>
+<p>Local lab:</p>
+<pre><code class="language-bash">mkdir -p ~/hgp-lab/recon &amp;&amp; cd ~/hgp-lab/recon
+printf 'lab page\n' &gt; index.html
+python -m http.server 8000 --bind 127.0.0.1
+</code></pre>
+<p>Σε δεύτερο Termux session:</p>
+<pre><code class="language-bash">curl -I http://127.0.0.1:8000/
+</code></pre>
+<p>Σταμάτησε τον server όταν τελειώσεις.</p>
+<h2>Attack-surface map</h2>
+<p>Ομαδοποίησε assets ανά trust boundary: Internet edge, identity, email, source control, CI/CD, cloud control plane, APIs, remote access, mobile backends, third-party integrations και monitoring/recovery.</p>
+<p>Δώσε προτεραιότητα όπου συνδυάζονται υψηλό authority, sensitive data, broad exposure, αδύναμο ownership ή περιορισμένο observability.</p>
+<h2>Συχνά λάθη</h2>
+<ul>
+<li>Χρήση παλιών command examples πάνω σε public domains.</li>
+<li>Θεώρηση κάθε hostname ως in-scope asset.</li>
+<li>Θεώρηση fingerprint ως confirmed vulnerable version.</li>
+<li>Συλλογή άσχετων προσωπικών δεδομένων.</li>
+<li>Παράβλεψη IPv6 ή third-party identity surfaces.</li>
+<li>Findings χωρίς timestamp.</li>
+</ul>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Φτιάξε attack-surface worksheet για fictional organization με website, API, IdP, code repository και cloud account. Για κάθε asset γράψε trust boundary, owner, evidence source, sensitive data και ένα minimal validation step.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ol>
+<li>Γιατί το provenance είναι σημαντικό στο OSINT;</li>
+<li>Ποια η διαφορά passive και active recon;</li>
+<li>Γιατί certificate data μπορεί να είναι stale;</li>
+<li>Τι κάνει ένα repository finding σημαντικό;</li>
+<li>Πώς αποφεύγεις false ownership conclusions;</li>
+</ol>
+<h2>Καθοδηγούμενη μελέτη</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>. Ολοκλήρωσε πρώτα το attack-surface worksheet.</p>
+<h3>Συνέχεια</h3>
+<p>Προτεινόμενα μαθήματα: <strong>03, 34, 35, 43</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

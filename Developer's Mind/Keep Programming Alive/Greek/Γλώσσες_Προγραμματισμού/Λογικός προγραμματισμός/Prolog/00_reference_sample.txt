@@ -1,0 +1,2 @@
+greet(Name) :- format('Hello, ~w!~n', [Name]).
+main :- greet('Ada').

@@ -1,0 +1,145 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>c_plus_plus — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-668.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="c_plus_plus — συγκεντρωτικός οδηγός C++ Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .cpp . Εκτέλεση / περιβάλλον: c++ -std=c++17 main.cpp -o main &amp;&amp; ./main…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="c_plus_plus — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="c_plus_plus — συγκεντρωτικός οδηγός C++ Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .cpp . Εκτέλεση / περιβάλλον: c++ -std=c++17 main.cpp -o main &amp;&amp; ./main…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-668.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="c_plus_plus — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="c_plus_plus — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="c_plus_plus — συγκεντρωτικός οδηγός C++ Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .cpp . Εκτέλεση / περιβάλλον: c++ -std=c++17 main.cpp -o main &amp;&amp; ./main…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="c_plus_plus — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>c_plus_plus — συγκεντρωτικός οδηγός — DedSec Project</h1><p>c_plus_plus — συγκεντρωτικός οδηγός C++ Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .cpp . Εκτέλεση / περιβάλλον: c++ -std=c++17 main.cpp -o main &amp;&amp; ./main…</p><section><h2>C++</h2>
+<p><strong>Συνήθης χρήση:</strong> Προγραμματισμός συστημάτων.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.cpp</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> c++ -std=c++17 main.cpp -o main &amp;&amp; ./main.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+std::string greet(const std::string&amp; n) { return &quot;Hello, &quot; + n + &quot;!&quot;; }
+int main() { std::cout &lt;&lt; greet(&quot;Ada&quot;) &lt;&lt; '\n'; }
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Χρησιμοποίησε τυπικές δομές και RAII για ασφαλείς πόρους.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Χρησιμοποίησε τυπικές δομές και RAII για ασφαλείς πόρους. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h3>Πρώτα ownership, έπειτα αφαιρέσεις στην C++</h3>
+<p>Στη σύγχρονη C++ προτίμησε values και RAII αντί για ατελείωτο <code>new</code>/<code>delete</code>. Το <code>std::vector</code> κατέχει στοιχεία, το <code>std::string</code> κείμενο και το <code>std::unique_ptr</code> μοναδική ιδιοκτησία heap allocation. Το <code>std::span</code> είναι view, δεν παρατείνει lifetime.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;numeric&gt;
+#include &lt;stdexcept&gt;
+int average_floor(const std::vector&lt;int&gt;&amp; values) {
+    if (values.empty()) throw std::invalid_argument(&quot;empty&quot;);
+    long long total = std::accumulate(values.begin(), values.end(), 0LL);
+    return static_cast&lt;int&gt;(total / static_cast&lt;long long&gt;(values.size()));
+}
+</code></pre>
+<p>Χρησιμοποίησε <code>const&amp;</code> για μεγάλα read-only objects όταν χρειάζεται, value για μικρές scalar τιμές και move semantics για μεταφορά ownership. Πρόσεχε dangling references, invalidated iterators μετά από vector reallocation, και ότι τα bytes του <code>std::string</code> δεν είναι αυτομάτως Unicode χαρακτήρες.</p>
+<p><strong>Εργαστήριο:</strong> έλεγξε θετικές/αρνητικές τιμές· εξήγησε γιατί ένα span σε προσωρινό container είναι επικίνδυνο. Χρησιμοποίησε sanitizers σε δικά σου binaries.</p>
+<h2>C_Plus_Plus — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Επιλογή interface</h3>
+<p>Η συνάρτηση CLI μπορεί να επιστρέψει std::optional&lt;int&gt; αντί για ειδική τιμή αποτυχίας -1. Η std::from_chars αποφεύγει exceptions και μετατροπές αριθμών που εξαρτώνται από locale. Ο έλεγχος του τελικού pointer απορρίπτει μη επιθυμητά επιθήματα.</p>
+<h3>Μεταγλώττιση</h3>
+<p>Αποθήκευσε main.cpp και τρέξε g++ -std=c++17 -Wall -Wextra main.cpp -o parser &amp;&amp; ./parser. Περιμένεις C++ parser OK. Απαιτείται υποστήριξη C++17 για optional και charconv.</p>
+<pre><code class="language-cpp">#include &lt;charconv&gt;
+#include &lt;iostream&gt;
+#include &lt;optional&gt;
+#include &lt;string_view&gt;
+std::optional&lt;int&gt; parsePort(std::string_view text) {
+    if (text.empty()) return std::nullopt;
+    int value = 0;
+    auto first = text.data();
+    auto last = first + text.size();
+    auto answer = std::from_chars(first, last, value);
+    if (answer.ec != std::errc{} || answer.ptr != last ||
+        value &lt; 1 || value &gt; 65535) return std::nullopt;
+    return value;
+}
+int main() {
+    if (parsePort(&quot;443&quot;) != 443 ||
+        parsePort(&quot;12x&quot;).has_value() ||
+        parsePort(&quot;65536&quot;).has_value()) return 1;
+    std::cout &lt;&lt; &quot;C++ parser OK\n&quot;;
+}
+</code></pre>
+<h3>Κατανόηση</h3>
+<p>Το ec ενημερώνει για αποτυχία μετατροπής, ενώ το ptr δείχνει πού σταμάτησε η ανάγνωση. Με ptr != last απορρίπτεται το &quot;12x&quot;. Η παρούσα υλοποίηση απορρίπτει αρχικά κενά, δεν τα αφαιρεί αυτόματα. Ελέγχει επίσης 1..65535.</p>
+<h3>Παραλλαγές</h3>
+<p>Δοκίμασε κενό, -1, +42, 0008, τελικά κενά και υπερβολικά μεγάλο αριθμό. Εξέτασε πώς χειρίζεται το from_chars το + και αποφάσισε αν επιτρέπεται. Πρόσθεσε trim που επιστρέφει string_view χωρίς νέα allocation και επανέλαβε τα tests.</p>
+<h3>Lifetimes και σφάλματα</h3>
+<p>Το string_view δεν κατέχει τη μνήμη. Μην αποθηκεύεις view που δείχνει σε προσωρινή συμβολοσειρά που καταστράφηκε. Το optional αποτέλεσμα κατέχει έναν int και δεν έχει το ίδιο πρόβλημα. Αν η βιβλιοθήκη δεν παρέχει from_chars, εξέτασε έκδοση compiler και standard library αντί να προσθέτεις άσχετα headers.
+Επιτυχία: μία έγκυρη και δύο λανθασμένες τιμές. https://en.cppreference.com/w/cpp/utility/from_chars.html</p>
+<h2>C_Plus_Plus — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>c++ -std=c++17 -Wall -Wextra {file} -o demo &amp;&amp; ./demo</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>C_Plus_Plus — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Μια όψη χωρίς αντιγραφή</h3>
+<p>Το std::span αποθηκεύει μη ιδιοκτησιακή όψη σε συνεχόμενα στοιχεία. Δεν παρατείνει τη ζωή της αρχικής περιοχής μνήμης και δεν αποκλείει δείκτες που αργότερα θα πάψουν να ισχύουν. Η ασφάλεια προκύπτει από τις συμβάσεις ownership, όχι από το όνομα του container.</p>
+<pre><code class="language-cpp">#include &lt;array&gt;
+#include &lt;span&gt;
+#include &lt;iostream&gt;
+int sum_first_two(std::span&lt;const int&gt; values) {
+    if (values.size() &lt; 2) return 0;
+    return values[0] + values[1];
+}
+int main() {
+    std::array&lt;int, 3&gt; data{3, 5, 7};
+    std::cout &lt;&lt; sum_first_two(data) &lt;&lt; '\n';
+}
+</code></pre>
+<p>Η αναμενόμενη εκτύπωση είναι 8. Ο έλεγχος size γίνεται πριν από κάθε χρήση του operator[] επειδή η indexing πράξη δεν παρέχει γενική εγγύηση runtime bounds validation. Για span με 0 ή 1 στοιχείο, η συνάρτηση επιστρέφει 0 χωρίς να διαβάσει ανύπαρκτο δεύτερο στοιχείο.</p>
+<h3>Κίνδυνος με dangling views</h3>
+<p>Αν κατασκευάσεις τοπικό std::vector μέσα σε συνάρτηση και επιστρέψεις span προς αυτό, το span θα αναφέρεται σε μνήμη της οποίας η διάρκεια ζωής τελείωσε. Η σωστή διόρθωση είναι να επιστρέφεις owning container ή να ζητάς από τον caller να διατηρεί τον owner όσο χρησιμοποιείται η όψη. Δοκίμασε το επικίνδυνο αντιπαράδειγμα μόνο σε ελεγχόμενο sanitizer harness και μη θεωρείς ότι κάθε μη ασφαλές πρόγραμμα θα καταρρεύσει εμφανώς.</p>
+<h3>Επιλογές ιδιοκτησίας</h3>
+<p>Το std::unique_ptr εκφράζει μοναδική ιδιοκτησία ενός πόρου. Το std::shared_ptr προσθέτει shared ownership, αλλά κύκλοι shared_ptr μπορούν να κρατούν αντικείμενα ζωντανά χωρίς λόγο· η std::weak_ptr προσφέρει μη owning αναφορά για τέτοιες σχέσεις.</p>
+<h3>Εργασία ελέγχου</h3>
+<p>Γράψε parser με std::span&lt;const std::byte&gt; που διαβάζει big-endian κεφαλίδα 2 bytes μόνο αφού ελέγξει το μέγεθος. Δοκίμασε κενό input, ακριβώς δύο bytes και δηλωμένο payload μεγαλύτερο από το buffer. Χρησιμοποίησε compiler με C++20 mode, warnings και sanitizers όπου υπάρχουν. Κατάγραψε τι εκτελέστηκε και τι παραμένει θεωρητική αναμενόμενη συμπεριφορά.</p>
+<h2>C Plus Plus — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Το RAII συνδέει καθαρισμό πόρων με χρόνο ζωής αντικειμένου· προτίμησε βιβλιοθήκες συλλογών.</li>
+<li>Αναφορές, απλοί δείκτες και smart pointers έχουν διαφορετικούς κανόνες ιδιοκτησίας.</li>
+<li>Η απροσδιόριστη συμπεριφορά δεν είναι κανονική εξαίρεση και μπορεί να δώσει απρόβλεπτα αποτελέσματα.</li>
+</ol>
+<h2>RAII σε μερική κατασκευή και εξαιρέσεις</h2>
+<p>Το RAII συνδέει την ιδιοκτησία πόρου με τη διάρκεια ζωής αντικειμένου. Αν μεταγενέστερη πράξη πετάξει εξαίρεση, ήδη κατασκευασμένα αυτόματα αντικείμενα καταστρέφονται κατά την εκτύλιξη στοίβας. Ένας σκέτος δείκτης ή ακέραιος descriptor δεν αποκτά αυτή τη συμπεριφορά μόνο επειδή είναι τοπικός.</p>
+<p>Προτίμησε μικρό περιτύλιγμα ιδιοκτησίας ή τυπικό smart pointer και ρητή μεταβίβαση. Ο destructor κανονικά απελευθερώνει χωρίς να πετά εξαίρεση. Το δείγμα μετρά ενεργούς πόρους ώστε η διαδρομή εξαίρεσης να δίνει μετρήσιμα στοιχεία και όχι απλώς απουσία κατάρρευσης.</p>
+<pre><code class="language-cpp">#include &lt;cassert&gt;
+#include &lt;memory&gt;
+#include &lt;stdexcept&gt;
+struct Resource {
+    static int live;
+    Resource() { ++live; }
+    ~Resource() { --live; }
+    Resource(const Resource&amp;)=delete;
+    Resource&amp; operator=(const Resource&amp;)=delete;
+};
+int Resource::live=0;
+int main() {
+    try { auto item=std::make_unique&lt;Resource&gt;(); throw std::runtime_error(&quot;fixture&quot;); }
+    catch (const std::runtime_error&amp;) {}
+    assert(Resource::live==0);
+}
+</code></pre>
+<p>Δοκίμασε αποτυχία κατά την απόκτηση δεύτερου πόρου και επιτυχή μεταβίβαση. Δανεισμένες αναφορές δεν πρέπει να επιβιώνουν του ιδιοκτήτη. Το RAII καλύπτει καθαρισμό μέσα στη διεργασία, χωρίς υπόσχεση destructor μετά από απότομο τερματισμό ή διακοπή ρεύματος.</p>
+<p><a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii">Τεχνική αναφορά</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

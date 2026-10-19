@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Validation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1165.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Validation — enforce rules at the trust boundary Definition versus parsing Parsing answers whether some input can be interpreted as a value. Validation decides whether that value is…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Validation — DedSec Project">
+<meta property="og:description" content="Validation — enforce rules at the trust boundary Definition versus parsing Parsing answers whether some input can be interpreted as a value. Validation decides whether that value is…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1165.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Validation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Validation — DedSec Project">
+<meta name="twitter:description" content="Validation — enforce rules at the trust boundary Definition versus parsing Parsing answers whether some input can be interpreted as a value. Validation decides whether that value is…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Validation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Validation — DedSec Project</h1><p>Validation — enforce rules at the trust boundary Definition versus parsing Parsing answers whether some input can be interpreted as a value. Validation decides whether that value is…</p><section><h1>Validation — enforce rules at the trust boundary</h1>
+<h2>Definition versus parsing</h2>
+<p>Parsing answers whether some input can be interpreted as a value. Validation decides whether that value is permitted for a specific operation. A network port must be an integer from 1 through 65535, but an internal function should not silently accept a Python bool, string or float. At the command-line boundary, the contract can separately accept <strong>ASCII decimal strings without leading zeroes</strong> and convert them to validated integers.</p>
+<h2>Executable Python 3 example</h2>
+<p>Save as validate_lab.py and run python3 validate_lab.py. The parser deliberately restricts input to ASCII 0–9 instead of using str.isdigit, which also accepts some non-ASCII numerals. Both the internal contract and the external string boundary have explicit negative tests.</p>
+<pre><code class="language-python">import re
+
+def validate_port(value):
+    if type(value) is not int or not 1 &lt;= value &lt;= 65535:
+        raise ValueError('port must be integer 1..65535')
+    return value
+
+def parse_cli_port(raw):
+    if not isinstance(raw, str) or not re.fullmatch(r'[1-9][0-9]{0,4}', raw):
+        raise ValueError('ASCII decimal port with no leading zero required')
+    return validate_port(int(raw))
+
+assert validate_port(443) == 443
+assert parse_cli_port('443') == 443
+assert parse_cli_port('65535') == 65535
+for wrong in (0, 65536, '443', True, 3.14):
+    try: validate_port(wrong)
+    except ValueError: pass
+    else: raise AssertionError(f'invalid core value accepted: {wrong!r}')
+for wrong in ('0', '65536', '0443', '+443', '-1', '٤٤٣', '443 ', '', None):
+    try: parse_cli_port(wrong)
+    except ValueError: pass
+    else: raise AssertionError(f'invalid CLI text accepted: {wrong!r}')
+print('PASS validation: internal type, untrusted ASCII CLI, bounds')
+</code></pre>
+<h2>Why two layers exist</h2>
+<p>validate_port checks an already parsed Python integer and rejects True, despite isinstance(True, int) normally succeeding, because a boolean is not semantically a port. parse_cli_port first enforces a lexical rule, so '+443', '0443', whitespace and Arabic-Indic digits are rejected. It then converts to integer and delegates range checking to the single authoritative internal validator. Do not assume a type annotation alone checks these conditions at runtime. When designing a public API, explicitly decide whether to allow Unicode digits, plus signs, leading zeroes and normalized input; do not let accidental library behavior define policy.</p>
+<h2>Investigations with evidence</h2>
+<ol>
+<li>Change the accepted range to include 0 and explain when port zero is meaningful as an API request to select an ephemeral port rather than as a destination port.</li>
+<li>Contrast raw.isdigit() with the ASCII regular expression using '٤٤٣'. Record why an internationalized UI might have a different requirement.</li>
+<li>Test 65535 and 65536, True and 1, '0443' and '443'. Explain why similar representations do not necessarily share the same contract.</li>
+<li>Introduce a second external boundary such as JSON and ensure it delegates to the internal validator without secretly redefining the port range.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS output, five invalid internal values, nine rejected CLI strings and a published parsing policy.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

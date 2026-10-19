@@ -1,0 +1,90 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Erlang — Αναλυτικός οδηγός εξάσκησης — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-780.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Erlang — αναδρομή και αντιστοίχιση προτύπων Δημιούργησε πραγματικό module Αποθήκευσε ως sums.erl, κάλεσε c(sums). στο Erlang shell και στη συνέχεια sums:sum( 2,3,4 ). Αναμένεται 9. Κάθε…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Erlang — Αναλυτικός οδηγός εξάσκησης — DedSec Project">
+<meta property="og:description" content="Erlang — αναδρομή και αντιστοίχιση προτύπων Δημιούργησε πραγματικό module Αποθήκευσε ως sums.erl, κάλεσε c(sums). στο Erlang shell και στη συνέχεια sums:sum( 2,3,4 ). Αναμένεται 9. Κάθε…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-780.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Erlang — Αναλυτικός οδηγός εξάσκησης — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Erlang — Αναλυτικός οδηγός εξάσκησης — DedSec Project">
+<meta name="twitter:description" content="Erlang — αναδρομή και αντιστοίχιση προτύπων Δημιούργησε πραγματικό module Αποθήκευσε ως sums.erl, κάλεσε c(sums). στο Erlang shell και στη συνέχεια sums:sum( 2,3,4 ). Αναμένεται 9. Κάθε…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Erlang — Αναλυτικός οδηγός εξάσκησης — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Erlang — Αναλυτικός οδηγός εξάσκησης — DedSec Project</h1><p>Erlang — αναδρομή και αντιστοίχιση προτύπων Δημιούργησε πραγματικό module Αποθήκευσε ως sums.erl, κάλεσε c(sums). στο Erlang shell και στη συνέχεια sums:sum( 2,3,4 ). Αναμένεται 9. Κάθε…</p><section><h1>Erlang — αναδρομή και αντιστοίχιση προτύπων</h1>
+<h2>Δημιούργησε πραγματικό module</h2>
+<pre><code class="language-erlang">-module(sums).
+-export([sum/1]).
+sum([]) -&gt; 0;
+sum([Head | Tail]) when is_integer(Head) -&gt;
+    Head + sum(Tail).
+</code></pre>
+<p>Αποθήκευσε ως sums.erl, κάλεσε c(sums). στο Erlang shell και στη συνέχεια sums:sum([2,3,4]). Αναμένεται 9. Κάθε βήμα απομακρύνει ένα στοιχείο της λίστας και η κενή λίστα τερματίζει την αναδρομή. Το guard απαιτεί ακέραιο, χωρίς αυτόματη μετατροπή κειμένου.</p>
+<h2>Αναπαραγωγή αποτυχίας</h2>
+<p>Κάλεσε sums:sum([2,apple]). Για το atom δεν υπάρχει κατάλληλο clause. Κατάγραψε το πραγματικό exception και αποφάσισε αν το API πρέπει να απορρίπτει ή να επιστρέφει ειδικό αποτέλεσμα λάθους. Μην αγνοείς άκυρα στοιχεία.</p>
+<h2>Πείραμα με διεργασία</h2>
+<p>Όρισε Receiver = self() και χρησιμοποίησε spawn(fun() -&gt; Receiver ! sums:sum([1,2,3]) end). Παραλαβή με receive δείχνει τη μεταφορά μηνύματος. Εξήγησε τη διαφορά με κοινή μεταβλητή και σημείωσε OTP έκδοση και αποτελέσματα. Δεν έχει εκτελεστεί εδώ.</p>
+<h2>Πρόσθεσε ρητό αποτέλεσμα σφάλματος</h2>
+<p>Μια πραγματική συνάρτηση μπορεί να επιστρέφει {ok, Total} για έγκυρη λίστα και {error, bad_item} όταν ένα στοιχείο παραβιάζει το guard. Σύγκρινε προέλεγχο όλης της λίστας με πρόσθετο clause που επιστρέφει το πρώτο άκυρο στοιχείο. Χρησιμοποίησε [1,2], [], [1,apple] και [1,2.5]. Η Erlang διαχωρίζει ακέραιους από κινητής υποδιαστολής: το 2.5 απορρίπτεται από is_integer. Στο πείραμα με διεργασίες πρόσθεσε αναγνωριστικό αίτησης στο μήνυμα και receive ... after με όριο αναμονής. Εξήγησε πώς διαχειρίζεσαι διεργασία που αποτυγχάνει πριν απαντήσει, αντί να περιμένεις για πάντα.</p>
+<h2>Erlang</h2>
+<h3>Η ανταλλαγή μηνυμάτων δεν είναι κοινή μνήμη</h3>
+<p>Στην Erlang οι processes είναι ελαφριές οντότητες με ξεχωριστά mailboxes. Η send expression στέλνει μήνυμα αλλά δεν περιμένει ότι ο receiver το επεξεργάστηκε. Αυτή η διάκριση είναι κρίσιμη όταν σχεδιάζεις request/response πρωτόκολλο.</p>
+<pre><code class="language-erlang">-module(echo_demo).
+-export([start/0, loop/0]).
+
+loop() -&gt;
+    receive
+        {From, Ref, Value} -&gt;
+            From ! {Ref, Value},
+            loop();
+        stop -&gt;
+            ok
+    end.
+
+start() -&gt;
+    Pid = spawn(?MODULE, loop, []),
+    Ref = make_ref(),
+    Pid ! {self(), Ref, hello},
+    Result = receive
+        {Ref, Answer} -&gt; Answer
+    after 1000 -&gt;
+        timeout
+    end,
+    Pid ! stop,
+    Result.
+</code></pre>
+<p>Αφού μεταγλωττίσεις το module και καλέσεις echo_demo:start()., το κανονικό αποτέλεσμα αναμένεται να είναι hello. Η μοναδική Ref βοηθά στην αντιστοίχιση της απάντησης με το συγκεκριμένο request και αποτρέπει λανθασμένη κατανάλωση άσχετης απάντησης όταν υπάρχουν πολλαπλές κλήσεις.</p>
+<h3>Τι αποδεικνύει το timeout</h3>
+<p>Αν το receive τελειώσει με timeout, αυτό δεν αποδεικνύει ότι το μήνυμα χάθηκε: μπορεί να καθυστέρησε ο scheduler ή να βρίσκεται στο mailbox. Ο sender δεν γνωρίζει από μόνος του αν ο receiver επεξεργάστηκε, απέτυχε ή τερμάτισε. Για πιο αξιόπιστο lifecycle εξέτασε process monitors και πότε ταιριάζει OTP gen_server αντί ιδιοκατασκευής πρωτοκόλλου.</p>
+<h3>Μηνύματα σε σειρά</h3>
+<p>Τα μηνύματα από τον ίδιο sender στον ίδιο receiver διατηρούν τη σειρά αποστολής, αλλά μην συμπεραίνεις συνολική σειρά όταν πολλοί senders γράφουν στο ίδιο mailbox. Ο receiver έχει δική του σειρά εξυπηρέτησης και selective receive μπορεί να παρακάμψει παλαιότερα μηνύματα που δεν ταιριάζουν στο pattern.</p>
+<h3>Πρόκληση</h3>
+<p>Πρόσθεσε δεύτερο request με διαφορετική Ref και σύγκρινε αποτελέσματα. Μετά βάλε τεχνητή καθυστέρηση στη worker ώστε να ενεργοποιηθεί το after clause. Έλεγξε τι συμβαίνει σε late replies. Κατάγραψε OTP/Erlang έκδοση, πραγματικά outputs, και σημείωσε πώς ο caller προστατεύει το mailbox από απαντήσεις που δεν περιμένει πλέον.</p>
+<h2>Erlang — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>escript {file}</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Erlang — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Οι διεργασίες επικοινωνούν με μηνύματα αντί για κοινό μεταβαλλόμενο heap όπως στα νήματα.</li>
+<li>Το pattern matching χρησιμοποιείται σε συναρτήσεις και μηνύματα.</li>
+<li>Οι δομές OTP και supervision υποστηρίζουν υπηρεσίες ανθεκτικές σε αστοχίες.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

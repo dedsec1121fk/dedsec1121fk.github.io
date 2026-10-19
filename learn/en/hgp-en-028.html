@@ -1,0 +1,176 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Termux Foundations and Android Linux — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-028.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Termux Foundations and Android Linux Purpose: Learn how Termux works on Android, how its environment differs from a conventional GNU/Linux installation, and how to build a safe…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Termux Foundations and Android Linux — DedSec Project">
+<meta property="og:description" content="Termux Foundations and Android Linux Purpose: Learn how Termux works on Android, how its environment differs from a conventional GNU/Linux installation, and how to build a safe…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-028.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Termux Foundations and Android Linux — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Termux Foundations and Android Linux — DedSec Project">
+<meta name="twitter:description" content="Termux Foundations and Android Linux Purpose: Learn how Termux works on Android, how its environment differs from a conventional GNU/Linux installation, and how to build a safe…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Termux Foundations and Android Linux — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Termux Foundations and Android Linux — DedSec Project</h1><p>Termux Foundations and Android Linux Purpose: Learn how Termux works on Android, how its environment differs from a conventional GNU/Linux installation, and how to build a safe…</p><section><blockquote>
+<p><strong>Purpose:</strong> Learn how Termux works on Android, how its environment differs from a conventional GNU/Linux installation, and how to build a safe, maintainable mobile command-line workspace.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Install Termux from an official source and understand package/signature compatibility.</li>
+<li>Navigate the Termux filesystem and Android shared storage without confusing the two.</li>
+<li>Use <code>pkg</code>, <code>apt</code>, shell tools, permissions, environment variables, and process controls confidently.</li>
+<li>Understand Android sandboxing, application UIDs, scoped storage, and why Termux is not a rooted Linux distribution.</li>
+<li>Build a clean baseline that can be backed up and recovered.</li>
+</ul>
+<h2>What Termux actually is</h2>
+<p>Termux is an Android terminal application and Linux environment. It provides a user-space package ecosystem compiled for Android and exposes a familiar shell without requiring root. This is important: the environment feels Linux-like, but Android remains the host operating system and continues to enforce its application sandbox and permission model.</p>
+<p>The default Termux home directory is private application storage. That private area is normally the best place for scripts, Git repositories, virtual environments, configuration files, SSH keys, and other content that needs normal Unix permissions. Android shared storage is convenient for exchanging files with Downloads, Documents, and other apps, but it does not behave exactly like a normal Linux filesystem.</p>
+<h2>Installation and update hygiene</h2>
+<p>Use an official Termux distribution source. The upstream Termux project documents F-Droid and GitHub builds. Keep the main app and add-ons from compatible signing sources; Android package signatures matter for Termux add-ons that communicate with the main app.</p>
+<p>After installation, refresh package metadata and upgrade installed packages:</p>
+<pre><code class="language-bash">pkg update
+pkg upgrade
+</code></pre>
+<p>Use <code>pkg search NAME</code> before assuming a package exists. Termux package availability and names can differ from Debian, Ubuntu, Kali, or Arch.</p>
+<h2>Storage model</h2>
+<p>Important locations include:</p>
+<ul>
+<li><code>$HOME</code> — private Termux home. Prefer this for code and configuration.</li>
+<li><code>$PREFIX</code> — Termux installation prefix, normally containing <code>bin</code>, <code>lib</code>, <code>etc</code>, and package data.</li>
+<li><code>~/storage</code> — convenience links created after storage access is configured on supported Android versions.</li>
+<li>Android Downloads/Documents — useful for user-visible exports and imports.</li>
+</ul>
+<p>A common setup command is:</p>
+<pre><code class="language-bash">termux-setup-storage
+</code></pre>
+<p>Grant only the Android permissions you actually need. Do not treat shared storage as a replacement for <code>$HOME</code>: executable bits, symlinks, ownership semantics, and filesystem behavior can differ.</p>
+<h2>Core shell navigation</h2>
+<pre><code class="language-bash">pwd
+ls -la
+cd &quot;$HOME&quot;
+mkdir -p ~/projects
+cp source.txt destination.txt
+mv old-name.txt new-name.txt
+rm -i unwanted.txt
+</code></pre>
+<p>Prefer quoting variables and paths. Mobile storage often contains spaces, punctuation, or filenames copied from browsers and messaging apps.</p>
+<h2>Files, permissions, and executables</h2>
+<p>Unix permission notation still matters inside the Termux private filesystem:</p>
+<pre><code class="language-bash">ls -l
+chmod u+x script.py
+</code></pre>
+<p>Avoid reflexively using <code>chmod 777</code>. Broad write permissions usually hide a design problem and make accidental modification easier.</p>
+<p>For secrets such as private keys or token files, use restrictive permissions where supported:</p>
+<pre><code class="language-bash">chmod 600 ~/.ssh/id_ed25519
+</code></pre>
+<h2>Environment variables</h2>
+<p>Useful values:</p>
+<pre><code class="language-bash">printf '%s\n' &quot;$HOME&quot;
+printf '%s\n' &quot;$PREFIX&quot;
+printf '%s\n' &quot;$PATH&quot;
+</code></pre>
+<p>Put persistent shell customizations in the configuration file for the shell you actually use. Keep configuration readable and comment non-obvious changes.</p>
+<h2>Package management fundamentals</h2>
+<p>Common operations:</p>
+<pre><code class="language-bash">pkg search python
+pkg install python git
+pkg list-installed
+pkg show python
+</code></pre>
+<p>Before adding third-party repositories, understand who maintains them, what signing model they use, and whether you need them at all. Fewer repositories mean a smaller trust surface.</p>
+<h2>Processes and jobs</h2>
+<p>Learn the difference between foreground, background, and suspended jobs:</p>
+<pre><code class="language-bash">ps -ef
+jobs
+</code></pre>
+<p>Android may stop background work to save battery. A command that works indefinitely on a server can be interrupted on a phone because Android lifecycle and battery policies still apply.</p>
+<h2>Networking basics in Termux</h2>
+<p>Useful defensive and diagnostic commands include:</p>
+<pre><code class="language-bash">ip addr
+ip route
+ss -lnt
+curl -I https://example.com
+</code></pre>
+<p>Use network tools only against systems you own or are authorized to test. Localhost (<code>127.0.0.1</code>) is ideal for learning service behavior safely.</p>
+<h2>Android sandboxing and root</h2>
+<p>Without root, Termux cannot bypass Android's application sandbox. It does not automatically gain access to another application's private data, privileged network interfaces, protected kernel features, or system partitions.</p>
+<p>Rooting changes the trust and attack model of the entire device. It is not required for the learning paths in this guide.</p>
+<h2>Termux add-ons</h2>
+<p>The Termux ecosystem includes add-ons such as Termux:API and Termux:X11. Add-ons should come from compatible official sources. Termux:API exposes selected Android device functions to command-line programs after the corresponding app and package are installed and permissions are granted. Termux:X11 can provide graphical application support on compatible Android versions, but it is optional for this guide.</p>
+<h2>Baseline setup lesson</h2>
+<p>Create a clean workspace:</p>
+<pre><code class="language-bash">mkdir -p ~/projects ~/notes ~/backups
+printf '# Termux notes\n' &gt; ~/notes/README.md
+</code></pre>
+<p>Then record:</p>
+<ol>
+<li>Android version.</li>
+<li>Termux source and build.</li>
+<li>Shell in use.</li>
+<li>Installed packages needed for your studies.</li>
+<li>Storage permissions granted.</li>
+<li>Backup method.</li>
+</ol>
+<p>The goal is reproducibility, not collecting as many packages as possible.</p>
+<h2>Common mistakes</h2>
+<ul>
+<li>Installing obsolete Termux builds from random APK mirrors.</li>
+<li>Mixing app/add-on signing sources.</li>
+<li>Keeping code only in shared storage.</li>
+<li>Copying Linux tutorials that assume <code>systemd</code>, <code>sudo</code>, or a standard filesystem layout.</li>
+<li>Running every command as root on a rooted device.</li>
+<li>Installing large tool collections without understanding dependencies or maintenance.</li>
+<li>Exposing development services on <code>0.0.0.0</code> when localhost would be sufficient.</li>
+</ul>
+<h2>Mini lab — Build a known-good Termux baseline</h2>
+<ol>
+<li>Update packages.</li>
+<li>Create <code>~/projects</code>, <code>~/notes</code>, and <code>~/backups</code>.</li>
+<li>Install only Python and Git.</li>
+<li>Record <code>python --version</code>, <code>git --version</code>, <code>$PREFIX</code>, and <code>$HOME</code> in a notes file.</li>
+<li>Start a localhost-only Python web server in a disposable directory and confirm it is reachable from the same device.</li>
+<li>Stop the service and verify with <code>ss</code> that it is no longer listening.</li>
+</ol>
+<p><strong>Learning goal:</strong> understand the environment before using it for security work.</p>
+<h2>Primary references</h2>
+<ul>
+<li>Termux app: https://github.com/termux/termux-app</li>
+<li>Termux packages: https://github.com/termux/termux-packages</li>
+<li>Termux:API: https://github.com/termux/termux-api</li>
+<li>Termux:X11: https://github.com/termux/termux-x11</li>
+</ul>
+<h2>Practical Termux foundation drills</h2>
+<h3>Drill 1 — Know your environment</h3>
+<p>Record the output of <code>pwd</code>, <code>echo &quot;$HOME&quot;</code>, <code>echo &quot;$PREFIX&quot;</code>, <code>python -V</code>, and <code>uname -a</code> in a lab note. Do not treat the strings as trivia: explain what each value tells you about paths, package locations, interpreter version, and host/kernel context. Then identify which files are private to Termux and which are intentionally shared with Android.</p>
+<h3>Drill 2 — Permission reasoning</h3>
+<p>Create a disposable file and directory under <code>$HOME</code>. Inspect permissions with <code>ls -la</code>, change only the owner's permissions, and explain the difference between read, write, and execute for a file versus a directory. Avoid applying broad permissions recursively. The goal is to understand access semantics, not to make permission errors disappear.</p>
+<h3>Drill 3 — Rebuildability</h3>
+<p>Create <code>~/notes/termux-baseline.md</code> containing the packages you intentionally installed, storage setup, important project directories, and any configuration you changed. Imagine the app is removed tomorrow: your notes should tell you how to recreate the workspace without copying unknown caches or hidden state.</p>
+<h2>Android-specific guidance</h2>
+<p>When desktop Linux instructions fail in Termux, check whether they assume systemd, root access, <code>/usr</code>, privileged raw sockets, kernel modules, desktop filesystem layout, or always-on background services. Termux uses its own prefix and runs inside Android's application model. Adapt the workflow rather than trying to force Android to behave like a conventional server.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>No Linux experience required; Module 01 helps.</p>
+<h3>Practice task</h3>
+<p>Build a clean Termux workspace under $HOME, configure shared storage only if needed, install a minimal baseline, and write a recovery note explaining where every important file lives.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>29, 30, 31, 56</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -74,82 +74,40 @@
     });
   };
 
+  // One searchable bilingual guide list: no categories or collapsed guide sections.
   const initFinder = () => {
-    const finder = document.querySelector('.assistance-finder');
-    const main = document.querySelector('main.assistance-page');
-    if (!finder || !main) return;
-
-    const filterButtons = [...finder.querySelectorAll('.assistance-filter-btn')];
-    const cards = [...main.querySelectorAll('.assistance-card')];
-    const sections = [...main.querySelectorAll('.assistance-category-section')];
+    const search = document.getElementById('assistance-search');
+    const cards = [...document.querySelectorAll('.assistance-flat-grid .assistance-card')];
     const status = document.getElementById('assistance-results-status');
     const noResults = document.getElementById('assistance-no-results');
-    let activeFilter = 'all';
-
-    const updateExpandButton = (section, eligibleCards, expanded, filtering) => {
-      const button = section.querySelector('.assistance-expand-btn');
-      if (!button) return;
-      const total = eligibleCards.length;
-      button.hidden = filtering || total <= Number(section.dataset.visibleLimit || 6);
-      button.setAttribute('aria-expanded', String(expanded));
-      if (button.hidden) return;
-      button.textContent = expanded
-        ? (isGreek() ? 'Εμφάνιση λιγότερων' : 'Show fewer')
-        : (isGreek() ? `Εμφάνιση και των ${total} οδηγών` : `Show all ${total} guides`);
-    };
+    if (!search || !cards.length) return;
 
     const apply = () => {
-      const filtering = activeFilter !== 'all';
-
-      cards.forEach((card) => {
-        const categoryMatch = activeFilter === 'all' || card.dataset.category === activeFilter;
-        card.classList.toggle('is-filtered-out', !categoryMatch);
-        card.classList.remove('is-collapsed-card');
-        card.style.order = '';
-      });
-
-      sections.forEach((section) => {
-        const expanded = section.dataset.expanded === 'true';
-        const matching = [...section.querySelectorAll('.assistance-card:not(.is-filtered-out)')];
-        const limit = Number(section.dataset.visibleLimit || 6);
-        if (!filtering && !expanded) {
-          matching.slice(limit).forEach((card) => card.classList.add('is-collapsed-card'));
-        }
-        const sectionVisible = matching.some((card) => !card.classList.contains('is-collapsed-card'));
-        section.classList.toggle('is-filtered-out', !sectionVisible);
-        updateExpandButton(section, matching, expanded, filtering);
-      });
-
-      const totalMatches = cards.filter((card) => !card.classList.contains('is-filtered-out')).length;
+      const needle = normalize(search.value);
+      let count = 0;
+      for (const card of cards) {
+        const haystack = normalize([card.dataset.search, card.dataset.title,
+          card.dataset.signatures, card.textContent].join(' '));
+        const matches = !needle || haystack.includes(needle);
+        card.hidden = !matches;
+        card.classList.toggle('is-filtered-out', !matches);
+        if (matches) count++;
+      }
       if (status) {
         status.textContent = isGreek()
-          ? `${totalMatches} ${totalMatches === 1 ? 'οδηγός' : 'οδηγοί'} ${filtering ? 'εμφανίζονται' : 'διαθέσιμοι'}.`
-          : `${totalMatches} ${totalMatches === 1 ? 'guide' : 'guides'} ${filtering ? 'shown' : 'available'}.`;
+          ? `${count} ${count === 1 ? 'οδηγός' : 'οδηγοί'} ${needle ? 'βρέθηκαν' : 'διαθέσιμοι'}.`
+          : `${count} ${count === 1 ? 'guide' : 'guides'} ${needle ? 'found' : 'available'}.`;
       }
-      if (noResults) noResults.hidden = totalMatches !== 0;
+      if (noResults) noResults.hidden = count > 0;
     };
 
-    sections.forEach((section) => {
-      section.dataset.expanded = 'false';
-      section.querySelector('.assistance-expand-btn')?.addEventListener('click', () => {
-        const expanded = section.dataset.expanded === 'true';
-        section.dataset.expanded = String(!expanded);
+    search.addEventListener('input', apply);
+    search.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && search.value) {
+        search.value = '';
         apply();
-      });
+      }
     });
-
-    filterButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        activeFilter = button.dataset.filter || 'all';
-        filterButtons.forEach((candidate) => {
-          const selected = candidate === button;
-          candidate.classList.toggle('is-active', selected);
-          candidate.setAttribute('aria-pressed', String(selected));
-        });
-        apply();
-      });
-    });
-
     apply();
   };
 

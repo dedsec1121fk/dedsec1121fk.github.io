@@ -767,3 +767,68 @@ html body :is(button.starter-path-btn, button.assistance-report-btn, button.assi
 
 @media(max-width:700px){}
 
+
+/* Flat Assistance index: all guides shown together, search instead of categories. */
+html body .assistance-page .assistance-flat-grid{
+ display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;
+ gap:clamp(10px,2vw,18px)!important;align-items:stretch!important
+}
+html body .assistance-page #assistance-search{
+ display:block!important;width:100%!important;max-width:760px!important;min-height:46px!important;
+ margin:8px 0!important;padding:10px 13px!important;
+ border:1px solid var(--assist-border)!important;border-radius:0!important;
+ background:var(--assist-panel)!important;color:inherit!important;font:inherit!important;box-sizing:border-box!important
+}
+html body .assistance-page #assistance-search::placeholder{color:inherit;opacity:.7}
+html body .assistance-page #assistance-results-status{margin:6px 0!important}
+html body .assistance-page .assistance-flat-grid .assistance-card[hidden]{display:none!important}
+html body .assistance-page .assistance-flat-grid .assistance-card-meta:empty{display:none!important}
+@media(max-width:900px){html body .assistance-page .assistance-flat-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:570px){html body .assistance-page .assistance-flat-grid{grid-template-columns:minmax(0,1fr)!important}}
+
+/* October mobile consistency: Assistance uses the same plain title/subtitle
+   and compact, sharp-cornered result cards as the programming library. */
+html body .assistance-page .assistance-heading{
+ display:block!important;width:min(100%,1000px)!important;margin:0 auto 22px!important;
+ padding:10px 10px 0!important;text-align:center!important;
+ background:transparent!important;border:0!important;box-shadow:none!important
+}
+html body .assistance-page .assistance-heading h1{
+ margin:0 0 9px!important;font-size:clamp(27px,7vw,42px)!important;
+ line-height:1.2!important;text-align:center!important;color:var(--space-ink)!important
+}
+html body .assistance-page .assistance-heading p{
+ margin:0 auto!important;max-width:760px!important;
+ line-height:1.55!important;font-size:clamp(14px,3.2vw,17px)!important;
+ text-align:center!important;color:var(--space-ink)!important
+}
+html body .assistance-page .assistance-guide-sections{
+ display:block!important;background:transparent!important;border:0!important;
+ box-shadow:none!important;overflow:visible!important;margin:0!important;padding:0!important
+}
+html body .assistance-page .assistance-flat-grid{
+ display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;
+ gap:clamp(14px,2.4vw,22px)!important;align-items:start!important;width:100%!important
+}
+html body .assistance-page .assistance-flat-grid .assistance-card{
+ position:relative!important;display:flex!important;flex-direction:column!important;
+ align-items:center!important;justify-content:flex-start!important;
+ width:100%!important;max-width:none!important;min-width:0!important;
+ min-height:0!important;height:auto!important;max-height:none!important;
+ margin:0!important;padding:clamp(17px,3vw,26px)!important;gap:14px!important;
+ background:transparent!important;border:1px solid var(--space-line)!important;
+ border-radius:0!important;box-shadow:0 1px 12px #ad73fa1c!important;
+ color:var(--space-ink)!important;text-align:center!important;
+ text-decoration:none!important
+}
+html body .assistance-page .assistance-flat-grid .assistance-card h3{
+ margin:0!important;font-size:clamp(18px,3vw,24px)!important;
+ line-height:1.35!important;text-align:center!important;
+ overflow-wrap:anywhere!important
+}
+html body .assistance-page .assistance-flat-grid .assistance-card p{
+ margin:0!important;font-size:clamp(14px,2.8vw,17px)!important;line-height:1.55!important;
+ text-align:center!important;overflow-wrap:anywhere!important
+}
+html body .assistance-page .assistance-flat-grid .assistance-card-meta{display:none!important}
+@media(max-width:700px){html body .assistance-page .assistance-flat-grid{grid-template-columns:minmax(0,1fr)!important}}

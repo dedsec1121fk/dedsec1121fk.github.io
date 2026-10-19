@@ -1,0 +1,4 @@
+module Hello where
+open import Agda.Builtin.Nat
+answer : Nat
+answer = 42

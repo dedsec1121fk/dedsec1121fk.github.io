@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Integers floating point and precision — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-65.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Numeric precision — exact totals and explicit rounding Acceptance contract A local payment export accepts nonnegative decimal strings with one to three fractional digits. It displays a…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Integers floating point and precision — DedSec Project">
+<meta property="og:description" content="Numeric precision — exact totals and explicit rounding Acceptance contract A local payment export accepts nonnegative decimal strings with one to three fractional digits. It displays a…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-65.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Integers floating point and precision — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Integers floating point and precision — DedSec Project">
+<meta name="twitter:description" content="Numeric precision — exact totals and explicit rounding Acceptance contract A local payment export accepts nonnegative decimal strings with one to three fractional digits. It displays a…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Integers floating point and precision — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Integers floating point and precision — DedSec Project</h1><p>Numeric precision — exact totals and explicit rounding Acceptance contract A local payment export accepts nonnegative decimal strings with one to three fractional digits. It displays a…</p><section><h1>Numeric precision — exact totals and explicit rounding</h1>
+<h2>Acceptance contract</h2>
+<p>A local payment export accepts nonnegative decimal strings with one to three fractional digits. It displays a total with exactly two fractional digits, using ROUND_HALF_EVEN and rounding once after the sum, not once on every line. Values such as NaN, Infinity, negative amounts, exponent notation and empty tokens are invalid. The input schema and rounding step must be documented before calculating financial figures.</p>
+<h2>Executable Python 3 investigation</h2>
+<p>Save the following as precision_lab.py and run python3 precision_lab.py. The standard decimal library works on original decimal text rather than intermediate floating-point values. Assertions compare line-by-line rounding with rounding the entire total.</p>
+<pre><code class="language-python">from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN, ROUND_HALF_UP
+import re
+CENT = Decimal('0.01')
+def rounded_total(values):
+    total = Decimal(0)
+    for token in values:
+        if not isinstance(token, str) or not re.fullmatch(r'[0-9]+\.[0-9]{1,3}', token):
+            raise ValueError('unsupported monetary input')
+        total += Decimal(token)
+    try:
+        return total.quantize(CENT, rounding=ROUND_HALF_EVEN)
+    except InvalidOperation as error:
+        raise ValueError('amount outside active decimal precision') from error
+assert rounded_total(['0.10', '0.20']) == Decimal('0.30')
+assert rounded_total(['0.015'] * 3) == Decimal('0.04')
+assert sum((Decimal('0.015').quantize(CENT, rounding=ROUND_HALF_EVEN) for _ in range(3)), Decimal(0)) == Decimal('0.06')
+assert Decimal('1.005').quantize(CENT, rounding=ROUND_HALF_UP) == Decimal('1.01')
+for bad in ('NaN', 'Infinity', '-2.00', '2e3', ''):
+    try: rounded_total([bad])
+    except ValueError: pass
+    else: raise AssertionError('bad token accepted: ' + bad)
+print('PASS precision: exact sum, rounding order, bad values')
+</code></pre>
+<h2>Explain the disagreement</h2>
+<p>A binary float cannot represent every decimal fraction exactly: in Python, 0.1 + 0.2 is not exactly equal to 0.3. Decimal constructed from a string preserves the stated decimal value; Decimal constructed from a float inherits that float's approximation. Three values of 0.015 add to 0.045. Under ROUND_HALF_EVEN, rounding the sum gives 0.04, while rounding each input to 0.02 first produces 0.06. Which order is legally appropriate depends on the actual invoice or tax specification; no single policy fits every domain. ROUND_HALF_UP produces 1.01 for 1.005, whereas HALF_EVEN produces 1.00.</p>
+<h2>Bounded exercises and diagnostics</h2>
+<ol>
+<li>Compare Decimal('0.1') and Decimal(0.1). Explain why the latter imports an approximate binary representation.</li>
+<li>Test 0.00, 000.001, a missing token and a list with no amounts. State the explicit expected output or rejection for each.</li>
+<li>Change the rounding rule to HALF_UP and record examples where it changes the final number. Document the policy rather than silently choosing one.</li>
+<li>Pass a very long decimal number, catch precision-limit errors and record the active decimal context instead of truncating unnoticed.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS output, a line-rounding versus total-rounding table, all five invalid fixtures, and the exact input validation contract.</p>
+<h2>Further engineering detail</h2>
+<p>Reconciliation requires specifying where rounding happens. Summing rounded line items and rounding a sum of exact items can disagree without either arithmetic implementation being defective. Preserve original decimal inputs and the selected rule so a report can explain the difference rather than hiding it with display formatting.</p>
+<p><a href="../en/fieldnotes-en-42.html">Decimal rounding policies and reconciliation</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

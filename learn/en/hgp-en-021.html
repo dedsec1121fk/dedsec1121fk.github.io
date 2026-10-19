@@ -1,0 +1,186 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Identity, Zero Trust, and Access Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-021.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Identity, Zero Trust, and Access Security Purpose: Build an identity-centric security model that limits the effect of stolen credentials and over-privileged accounts. Learning objectives -…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Identity, Zero Trust, and Access Security — DedSec Project">
+<meta property="og:description" content="Identity, Zero Trust, and Access Security Purpose: Build an identity-centric security model that limits the effect of stolen credentials and over-privileged accounts. Learning objectives -…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-021.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Identity, Zero Trust, and Access Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Identity, Zero Trust, and Access Security — DedSec Project">
+<meta name="twitter:description" content="Identity, Zero Trust, and Access Security Purpose: Build an identity-centric security model that limits the effect of stolen credentials and over-privileged accounts. Learning objectives -…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Identity, Zero Trust, and Access Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Identity, Zero Trust, and Access Security — DedSec Project</h1><p>Identity, Zero Trust, and Access Security Purpose: Build an identity-centric security model that limits the effect of stolen credentials and over-privileged accounts. Learning objectives -…</p><section><blockquote>
+<p><strong>Purpose:</strong> Build an identity-centric security model that limits the effect of stolen credentials and over-privileged accounts.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Understand identity as a primary control plane.</li>
+<li>Apply least privilege, separation of duties, and lifecycle management.</li>
+<li>Distinguish authentication, authorization, session management, and privileged access.</li>
+<li>Understand Zero Trust as an architecture principle, not a product.</li>
+<li>Design telemetry for identity abuse and account compromise.</li>
+</ul>
+<h2>Identity lifecycle</h2>
+<p>A secure identity program covers <strong>joiner, mover, and leaver</strong> events. Accounts should be created from authoritative business records, assigned only necessary access, reviewed when roles change, and disabled promptly when access is no longer required. Service and workload identities need the same ownership discipline as human accounts.</p>
+<h3>Authentication</h3>
+<p>Prefer phishing-resistant MFA for high-risk access when available. Passwords should be long, unique, and protected by a password manager. Recovery workflows are part of authentication security; strong MFA can be undermined by a weak reset process.</p>
+<h3>Authorization</h3>
+<p>Authorization answers what an authenticated identity may do. Common models include RBAC, ABAC, policy-based access control, and resource ACLs. Deny by default where practical and test authorization server-side.</p>
+<h2>Privileged Access Management</h2>
+<ul>
+<li>Separate administrative and daily-use accounts.</li>
+<li>Use just-in-time or time-bounded elevation where possible.</li>
+<li>Require stronger authentication and device controls.</li>
+<li>Monitor especially sensitive actions.</li>
+<li>Maintain tightly controlled break-glass access.</li>
+</ul>
+<h2>Zero Trust</h2>
+<p>NIST describes Zero Trust as removing implicit trust based only on network location or ownership. Access decisions should consider the subject, device/workload, resource, policy, and current context. Zero Trust does not mean replacing every network control; it means that network location alone is not sufficient evidence of trust.</p>
+<h2>Identity telemetry</h2>
+<p>Monitor for unusual sign-ins, repeated MFA failures, new MFA methods, privilege changes, new API keys or service principals, unmanaged devices, logging/policy changes, and access inconsistent with role.</p>
+<h2>Safe lab</h2>
+<p>Create two local test accounts with different roles. Build a permissions matrix, verify allowed and denied actions, record the audit events, remove one privilege, and retest.</p>
+<h2>References</h2>
+<ul>
+<li>NIST SP 800-207 — https://csrc.nist.gov/pubs/sp/800/207/final</li>
+<li>NIST Cybersecurity Framework 2.0 — https://www.nist.gov/cyberframework</li>
+</ul>
+<h2>Identity architecture in practice</h2>
+<p>An identity system normally contains several layers that should be reviewed separately: the authoritative source of a person or workload, the identity provider, authenticators, directories, federation relationships, application sessions, authorization policies, privileged-access systems, and audit logs. A weakness in any one layer can undermine strong controls elsewhere. For example, phishing-resistant authentication is less valuable if account recovery accepts weak evidence, and carefully designed application roles are less valuable if a broad directory group can silently grant them.</p>
+<h3>Human identities</h3>
+<p>Human-account controls should answer four questions: <strong>who owns the account, why does it exist, what can it reach, and how is access removed?</strong> Use named accounts for normal activity, avoid shared administrative users, and maintain a reliable mapping from employment or contractual status to account lifecycle. Review dormant identities, stale group memberships, guest users, forgotten test accounts, and emergency accounts separately because their risk profiles differ.</p>
+<h3>Workload and machine identities</h3>
+<p>Applications, CI jobs, containers, scheduled tasks, service accounts, API clients, and automation also need identities. Prefer short-lived credentials or platform-issued workload identities over static secrets. Give each workload an owner and purpose, restrict where its identity can be used, and log token issuance and sensitive use. A service identity that survives for years without an owner is effectively unmanaged privileged infrastructure.</p>
+<h2>Authentication design</h2>
+<p>Authentication strength is determined by the complete flow rather than the login screen alone. Review enrollment, recovery, device replacement, lost-factor handling, support-desk procedures, session reauthentication, and step-up requirements for sensitive actions.</p>
+<p>Useful design principles include:</p>
+<ul>
+<li>Prefer phishing-resistant authentication for administrators and other high-impact roles.</li>
+<li>Avoid security questions based on discoverable biographical facts.</li>
+<li>Protect enrollment and recovery at least as strongly as normal authentication.</li>
+<li>Rate-limit and monitor failed attempts without creating easy denial-of-service conditions.</li>
+<li>Notify users of important authenticator and recovery changes.</li>
+<li>Reauthenticate for security-sensitive changes such as adding a new factor, exporting sensitive data, or changing payment details.</li>
+<li>Keep authentication errors useful to legitimate users without unnecessarily disclosing whether an account exists.</li>
+</ul>
+<h2>Authorization design</h2>
+<p>Authorization should be explicit, server-side, and testable. A useful review starts with a matrix of <strong>subjects × resources × actions × conditions</strong>. This exposes accidental privilege inheritance and helps turn policy into automated tests.</p>
+<h3>Common failure modes</h3>
+<ul>
+<li>A role grants more permissions than its name implies.</li>
+<li>Front-end controls hide an action while the backend still permits it.</li>
+<li>Object ownership is checked for reads but not updates or deletes.</li>
+<li>Administrative APIs trust a network location instead of an identity and policy decision.</li>
+<li>A service account can access every tenant because it was designed before multi-tenancy existed.</li>
+<li>Temporary access becomes permanent because there is no expiry or review process.</li>
+<li>Group nesting creates effective permissions nobody can easily explain.</li>
+</ul>
+<h3>Access review questions</h3>
+<p>For every sensitive permission, record the business justification, approver, owner, grant date, expiry or review date, and evidence of last meaningful use. Reviews should focus on whether access is still required, not merely whether a manager recognizes the account name.</p>
+<h2>Privilege boundaries and break-glass access</h2>
+<p>Privileged identities deserve a different operating model. Administrative sessions can be isolated from email and browsing, privileged elevation can be time-bounded, and particularly sensitive changes can require additional approval or step-up authentication. Break-glass accounts should be few, strongly protected, tested periodically, and monitored so that their use is immediately visible. A break-glass mechanism that has never been tested may fail exactly when the normal identity system is unavailable.</p>
+<h2>Zero Trust decision model</h2>
+<p>A Zero Trust design can be reasoned about as a sequence:</p>
+<ol>
+<li><strong>Identify the resource</strong> being requested.</li>
+<li><strong>Identify the subject</strong> and the strength of its authentication.</li>
+<li><strong>Evaluate device or workload posture</strong> if relevant.</li>
+<li><strong>Evaluate context</strong> such as risk, location, time, session state, and recent events.</li>
+<li><strong>Apply policy</strong> for the requested action.</li>
+<li><strong>Grant the minimum required access</strong> for the required duration.</li>
+<li><strong>Observe the session</strong> and be prepared to re-evaluate or terminate access.</li>
+</ol>
+<p>This model is useful even in small systems. It discourages assumptions such as “inside the VPN means trusted” or “the service account already authenticated once, therefore every future action is safe.”</p>
+<h2>Identity threat scenarios for defenders</h2>
+<p>Defenders should be able to recognize and investigate scenarios such as impossible or unusual sign-in patterns, token use from a new environment, repeated MFA failures, suspicious recovery events, newly created API credentials, privilege escalation through group changes, inactive accounts becoming active, consent to risky third-party applications, and service identities behaving differently from their normal workload.</p>
+<p>For each scenario, define the telemetry source, minimum useful fields, expected false positives, investigation steps, containment options, and the business owner who can confirm whether the activity is legitimate.</p>
+<h2>Identity security review worksheet</h2>
+<table>
+<thead>
+<tr>
+  <th>Area</th>
+  <th>Questions</th>
+  <th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Lifecycle</td>
+  <td>Are joiner/mover/leaver events automated and timely?</td>
+  <td>HR/IdP workflow, disable timestamps</td>
+</tr>
+<tr>
+  <td>MFA</td>
+  <td>Which roles lack strong MFA?</td>
+  <td>Authentication policy export</td>
+</tr>
+<tr>
+  <td>Recovery</td>
+  <td>Can recovery bypass normal assurance?</td>
+  <td>Recovery policy and test results</td>
+</tr>
+<tr>
+  <td>Authorization</td>
+  <td>Are object/action checks server-side?</td>
+  <td>Policy, unit/integration tests</td>
+</tr>
+<tr>
+  <td>Privilege</td>
+  <td>Is elevation temporary and attributable?</td>
+  <td>PAM/JIT logs</td>
+</tr>
+<tr>
+  <td>Workloads</td>
+  <td>Are long-lived secrets still required?</td>
+  <td>Secret inventory, token configuration</td>
+</tr>
+<tr>
+  <td>Guests</td>
+  <td>Are external users reviewed and expired?</td>
+  <td>Guest inventory</td>
+</tr>
+<tr>
+  <td>Logging</td>
+  <td>Can security changes be reconstructed?</td>
+  <td>Identity audit logs</td>
+</tr>
+<tr>
+  <td>Resilience</td>
+  <td>Is emergency access tested?</td>
+  <td>Break-glass test record</td>
+</tr>
+</tbody>
+</table>
+<h2>Practical defensive exercise</h2>
+<p>Create a small role matrix for a fictional company with Employee, Support, Billing, Developer, and Administrator roles. Add three resources—customer profile, billing record, and deployment pipeline—and define read/write/admin actions. Deliberately create one over-privileged role, then perform an access review and correct it. Finally, list the audit events that should be generated when the privilege is granted, used, and removed.</p>
+<h2>2026 identity update — NIST SP 800-63 Revision 4</h2>
+<p>NIST finalized SP 800-63 Revision 4 in 2025. When designing identity systems, distinguish identity proofing, authentication, authenticator management, and federation rather than reducing identity security to password complexity. Prioritize phishing-resistant authentication for higher-risk use cases, secure recovery, lifecycle management, and privacy-aware identity proofing.</p>
+<p>Primary reference: https://csrc.nist.gov/pubs/sp/800/63/4/final</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Modules 01 and authentication basics.</p>
+<h3>Practice task</h3>
+<p>Create a fictional access matrix for employees, admins, service accounts, and emergency access. Remove standing privileges that are unnecessary and define review/revocation evidence.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>32, 39, 42, 49</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

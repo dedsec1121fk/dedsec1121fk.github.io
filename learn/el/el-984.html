@@ -1,0 +1,76 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Διαγνωστικά compiler σε C++, Rust και Go — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-984.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Διαγνωστικά compiler σε C++, Rust και Go no matching function for call Σημασία Ο compiler δεν βρίσκει υπερφόρτωση που να δέχεται τα ορίσματα. Διάβασε τις υποψήφιες υπογραφές που…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Διαγνωστικά compiler σε C++, Rust και Go — DedSec Project">
+<meta property="og:description" content="Διαγνωστικά compiler σε C++, Rust και Go no matching function for call Σημασία Ο compiler δεν βρίσκει υπερφόρτωση που να δέχεται τα ορίσματα. Διάβασε τις υποψήφιες υπογραφές που…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-984.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Διαγνωστικά compiler σε C++, Rust και Go — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Διαγνωστικά compiler σε C++, Rust και Go — DedSec Project">
+<meta name="twitter:description" content="Διαγνωστικά compiler σε C++, Rust και Go no matching function for call Σημασία Ο compiler δεν βρίσκει υπερφόρτωση που να δέχεται τα ορίσματα. Διάβασε τις υποψήφιες υπογραφές που…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Διαγνωστικά compiler σε C++, Rust και Go — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Διαγνωστικά compiler σε C++, Rust και Go — DedSec Project</h1><p>Διαγνωστικά compiler σε C++, Rust και Go no matching function for call Σημασία Ο compiler δεν βρίσκει υπερφόρτωση που να δέχεται τα ορίσματα. Διάβασε τις υποψήφιες υπογραφές που…</p><section><h2>no matching function for call</h2>
+<h3>Σημασία</h3>
+<p>Ο compiler δεν βρίσκει υπερφόρτωση που να δέχεται τα ορίσματα. Διάβασε τις υποψήφιες υπογραφές που απορρίφθηκαν: πλήθος και σειρά ορισμάτων, namespace, const, αναφορές και περιορισμούς templates.</p>
+<h3>Ελάχιστο παράδειγμα</h3>
+<pre><code class="language-cpp">#include &lt;iostream&gt;
+#include &lt;string_view&gt;
+void repeat(std::string_view text, int count) {
+    for (int i=0; i&lt;count; ++i) std::cout &lt;&lt; text &lt;&lt; '\n';
+}
+int main() {
+    // repeat(2, &quot;hi&quot;); // λάθος σειρά
+    repeat(&quot;hi&quot;, 2);
+}
+</code></pre>
+<p>Εκτέλεσε <code>g++ -std=c++17 -Wall -Wextra -pedantic example.cpp -o example &amp;&amp; ./example</code>. Η διορθωμένη έκδοση τυπώνει δύο φορές hi. Ενεργοποίησε τη λανθασμένη κλήση για να διαβάσεις το diagnostic.</p>
+<h3>Διαδικασία εντοπισμού</h3>
+<p>Σύγκρινε πρώτα πλήθος και θέση κάθε ορίσματος με τη δήλωση. Έπειτα εξέτασε τις επιτρεπόμενες μετατροπές. Μια non-const αναφορά δεν δέχεται αυθαίρετο temporary, ενώ μια const αναφορά συχνά το δέχεται. Σε templates διάβασε τα notes για deduction και constraints. Αν η υπογραφή φαίνεται σωστή, έλεγξε ποιο header φορτώνεται και σε ποιο namespace βρίσκεται η συνάρτηση.</p>
+<h3>Εργαστήριο</h3>
+<p>Πρόσθεσε overload μόνο με <code>std::string_view</code> που καλεί <code>repeat(text, 1)</code>. Έλεγξε και τις δύο κλήσεις. Δοκίμασε <code>repeat(&quot;hi&quot;, 2.5)</code> με <code>-Wconversion -Werror</code> και παρατήρησε την προειδοποίηση απώλειας ακρίβειας. Κράτησε την αρχική λανθασμένη κλήση ως compile-fail regression test.</p>
+<h3>Τεκμηρίωση</h3>
+<p>Σημείωσε έκδοση compiler, flags, αναμενόμενη υπογραφή, λίστα υποψήφιων και τη μικρότερη αλλαγή που διορθώνει το σφάλμα. Μην προσθέτεις casts μόνο για να εξαφανιστεί το μήνυμα χωρίς έλεγχο του συμβολαίου API.</p>
+<h2>use of deleted function</h2>
+<p><strong>Γλώσσα / περιβάλλον:</strong> C++</p>
+<h3>Τι σημαίνει</h3>
+<p>Απαιτείται μέθοδος που έχει διαγραφεί ή δεν μπορεί να παραχθεί.</p>
+<h3>Πώς διορθώνεται</h3>
+<p>Έλεγξε ιδιοκτησία, αντιγραφή και μετακίνηση· μη αντιγράφεις unique_ptr.</p>
+<h2>cargo: failed to select a version</h2>
+<p><strong>Γλώσσα / περιβάλλον:</strong> Rust</p>
+<h3>Τι σημαίνει</h3>
+<p>Αποτυγχάνει η επίλυση εκδόσεων εξαρτήσεων.</p>
+<h3>Πώς διορθώνεται</h3>
+<p>Έλεγξε Cargo.toml/Cargo.lock και συμβατές εκδόσεις.</p>
+<h2>cannot use X as Y in argument</h2>
+<p><strong>Γλώσσα / περιβάλλον:</strong> Go</p>
+<h3>Τι σημαίνει</h3>
+<p>Μία τιμή δεν ταιριάζει στον αναμενόμενο τύπο ορίσματος Go.</p>
+<h3>Πώς διορθώνεται</h3>
+<p>Έλεγξε πραγματικό τύπο, διεπαφή και τυχόν μετατροπή.</p>
+<h2>imported and not used</h2>
+<p><strong>Γλώσσα / περιβάλλον:</strong> Go</p>
+<h3>Τι σημαίνει</h3>
+<p>Ο μεταγλωττιστής απορρίπτει εισαγωγές που δεν χρησιμοποιούνται.</p>
+<h3>Πώς διορθώνεται</h3>
+<p>Αφαίρεσε την εισαγωγή ή χρησιμοποίησέ την πραγματικά.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

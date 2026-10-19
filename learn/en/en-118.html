@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>segmentation fault — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-118.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Segmentation fault: reproduce the memory violation Recognize the actual failure A segmentation fault indicates an invalid memory access detected by the operating system. In C/C++ this can…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="segmentation fault — DedSec Project">
+<meta property="og:description" content="Segmentation fault: reproduce the memory violation Recognize the actual failure A segmentation fault indicates an invalid memory access detected by the operating system. In C/C++ this can…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-118.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="segmentation fault — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="segmentation fault — DedSec Project">
+<meta name="twitter:description" content="Segmentation fault: reproduce the memory violation Recognize the actual failure A segmentation fault indicates an invalid memory access detected by the operating system. In C/C++ this can…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="segmentation fault — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>segmentation fault — DedSec Project</h1><p>Segmentation fault: reproduce the memory violation Recognize the actual failure A segmentation fault indicates an invalid memory access detected by the operating system. In C/C++ this can…</p><section><h1>Segmentation fault: reproduce the memory violation</h1>
+<h2>Recognize the actual failure</h2>
+<p>A segmentation fault indicates an invalid memory access detected by the operating system. In C/C++ this can follow dereferencing an invalid pointer, indexing past a buffer, use-after-free or stack exhaustion. The printed crash location may be downstream of the original corruption.</p>
+<h2>Inspect safely before changing anything</h2>
+<pre><code class="language-sh">cc -g -O0 -Wall -Wextra -fsanitize=address,undefined demo.c -o demo
+./demo
+</code></pre>
+<h2>Repair the cause rather than suppressing the warning</h2>
+<p>Use sanitizers when supported, otherwise a debugger with symbols and a minimized reproducer. Reduce input size and test the last safe index before the failure. Avoid enabling sanitizers on a production executable without understanding overhead and toolchain support. Do not interpret a compiler warning-free build as evidence of memory safety.</p>
+<p><strong>Reference:</strong> https://clang.llvm.org/docs/AddressSanitizer.html</p>
+<h2>Tiny boundary experiment</h2>
+<p>A crash report is evidence of an invalid access, not necessarily the site of its origin. Use a <em>valid</em> baseline first:</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+int main(void) {
+    int values[3] = {10, 20, 30};
+    for (size_t i = 0; i &lt; sizeof values / sizeof values[0]; ++i)
+        printf(&quot;%d\n&quot;, values[i]);
+    return 0;
+}
+</code></pre>
+<p>Compile with <code>cc -std=c11 -g -O0 -Wall -Wextra -fsanitize=address,undefined demo.c -o demo</code> where supported. Expected output is three lines: 10, 20, 30. In a disposable lab, change the loop condition to <code>&lt;=</code>; a sanitizer can report a stack-buffer-overflow at index 3. Do not run intentionally invalid native samples against important data.</p>
+<h2>Trace the fault to ownership</h2>
+<p>For heap buffers, draw the allocation, every alias, the free operation and subsequent reads. If a pointer was freed but is still referenced, changing the crash location with a log statement does not repair the use-after-free. Validate with a sanitizer-enabled test build and then a normal release build. In a debugger, a stack trace, input fixture and compiler flags are necessary together; a stack trace alone may point after the corruption.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Endpoint, Browser and SaaS Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-044.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Endpoint, Browser and SaaS Security Purpose: Cover the everyday control plane where users, browsers, SaaS applications, extensions, endpoints, and cloud identity intersect. Endpoint…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Endpoint, Browser and SaaS Security — DedSec Project">
+<meta property="og:description" content="Endpoint, Browser and SaaS Security Purpose: Cover the everyday control plane where users, browsers, SaaS applications, extensions, endpoints, and cloud identity intersect. Endpoint…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-044.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Endpoint, Browser and SaaS Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Endpoint, Browser and SaaS Security — DedSec Project">
+<meta name="twitter:description" content="Endpoint, Browser and SaaS Security Purpose: Cover the everyday control plane where users, browsers, SaaS applications, extensions, endpoints, and cloud identity intersect. Endpoint…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Endpoint, Browser and SaaS Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Endpoint, Browser and SaaS Security — DedSec Project</h1><p>Endpoint, Browser and SaaS Security Purpose: Cover the everyday control plane where users, browsers, SaaS applications, extensions, endpoints, and cloud identity intersect. Endpoint…</p><section><blockquote>
+<p><strong>Purpose:</strong> Cover the everyday control plane where users, browsers, SaaS applications, extensions, endpoints, and cloud identity intersect.</p>
+</blockquote>
+<h2>Endpoint security</h2>
+<p>Modern endpoint protection combines platform hardening, patching, disk encryption, device identity, EDR, application controls, browser policy, and least privilege.</p>
+<p>A device should have a known owner, supported OS, update state, encryption status, management state, and recovery process.</p>
+<h2>Mobile endpoints</h2>
+<p>Phones hold authenticator apps, passkeys, email, cloud sessions, and recovery channels. Use screen lock, hardware-backed security where available, current updates, remote-lost-device controls, and careful app permissions.</p>
+<h2>Browser as an application platform</h2>
+<p>Browsers store sessions, passwords/passkeys, history, extensions, and enterprise identity. Keep browsers updated and reduce unnecessary extensions.</p>
+<p>Extensions can read or modify web content depending on permissions. Review publisher, permissions, update history, necessity, and enterprise allow/deny policy.</p>
+<h2>Session theft risk</h2>
+<p>Strong MFA does not make stolen authenticated sessions harmless. Protect endpoints, use short/appropriate session lifetime, re-authentication for sensitive operations, risk-based controls, and server-side revocation.</p>
+<h2>SaaS administration</h2>
+<p>For each SaaS product, identify:</p>
+<ul>
+<li>business owner;</li>
+<li>technical admin;</li>
+<li>SSO/MFA state;</li>
+<li>local accounts that bypass SSO;</li>
+<li>privileged roles;</li>
+<li>API tokens/integrations;</li>
+<li>audit-log availability;</li>
+<li>data classification;</li>
+<li>sharing defaults;</li>
+<li>guest/external users;</li>
+<li>offboarding procedure;</li>
+<li>backup/export capability.</li>
+</ul>
+<h2>OAuth application consent</h2>
+<p>Third-party integrations can gain long-lived API access even without user passwords. Govern app consent, scopes, publisher trust, review, revocation, and service-account ownership.</p>
+<h2>Shadow SaaS</h2>
+<p>Users often adopt tools before security teams know. Solve this with usable approved alternatives, discovery, procurement workflows, and risk-based review rather than only blocking domains.</p>
+<h2>DLP and sharing</h2>
+<p>Data-loss prevention can reduce accidental exposure but depends on classification and context. Review public links, external collaborators, default sharing, and sensitive exports.</p>
+<h2>Endpoint detection</h2>
+<p>EDR visibility is only valuable when alerts are monitored, exclusions are governed, agents are healthy, and responders can isolate/recover hosts.</p>
+<h2>Browser lab</h2>
+<p>On a test browser profile:</p>
+<ol>
+<li>list installed extensions;</li>
+<li>record permissions;</li>
+<li>remove one unnecessary extension;</li>
+<li>review saved site permissions;</li>
+<li>inspect active sessions for a test account;</li>
+<li>revoke one session and verify logout behavior.</li>
+</ol>
+<p><strong>Learning goal:</strong> understand the browser as part of the identity and endpoint attack surface.</p>
+<h2>SaaS inventory lab</h2>
+<p>Create a fictional ten-app SaaS inventory and classify each by identity integration, data sensitivity, administrator count, external sharing, audit logging, and offboarding maturity. Prioritize three improvements.</p>
+<h2>Endpoint, browser and SaaS operational depth</h2>
+<p>Endpoint security is an ecosystem: OS patching, disk encryption, endpoint protection, browser configuration, extensions, SaaS sessions, OAuth grants, identity recovery, device management, and user behavior interact.</p>
+<h3>Browser review</h3>
+<p>Inventory extensions, remove unused ones, restrict permissions where possible, keep the browser updated, review download/autofill/password behavior, and separate managed/work profiles where policy requires. Browser sync can replicate sensitive state across devices, so account security matters.</p>
+<h3>SaaS review</h3>
+<p>For critical SaaS applications document admins, MFA/passkey posture, external sharing, API tokens, OAuth integrations, dormant accounts, audit logs, retention, backup/export options, and recovery contacts.</p>
+<h3>Endpoint loss</h3>
+<p>A lost encrypted device can still require session/token revocation and account review. Define who can remotely lock/wipe devices, what evidence is available, and how users regain access without weakening recovery security.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Modules 17, 21, and 39.</p>
+<h3>Practice task</h3>
+<p>Audit your own endpoint/browser/SaaS settings: updates, extensions, account MFA/passkeys, session/device inventory, recovery methods, sharing permissions, and admin roles.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>47, 49, 55, 56</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

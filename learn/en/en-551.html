@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>ceylon — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-551.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="ceylon — consolidated language guide Ceylon Working model Ceylon explored a statically typed modular language for JVM and JavaScript targets. The ecosystem is historical and tooling may be…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="ceylon — consolidated language guide — DedSec Project">
+<meta property="og:description" content="ceylon — consolidated language guide Ceylon Working model Ceylon explored a statically typed modular language for JVM and JavaScript targets. The ecosystem is historical and tooling may be…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-551.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ceylon — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ceylon — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="ceylon — consolidated language guide Ceylon Working model Ceylon explored a statically typed modular language for JVM and JavaScript targets. The ecosystem is historical and tooling may be…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="ceylon — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>ceylon — consolidated language guide — DedSec Project</h1><p>ceylon — consolidated language guide Ceylon Working model Ceylon explored a statically typed modular language for JVM and JavaScript targets. The ecosystem is historical and tooling may be…</p><section><h2>Ceylon</h2>
+<h3>Working model</h3>
+<p>Ceylon explored a statically typed modular language for JVM and JavaScript targets. The ecosystem is historical and tooling may be archived.</p>
+<h3>Focused source example</h3>
+<pre><code class="language-text">shared void run() {
+    print(&quot;Hello, Ceylon!&quot;);
+}
+</code></pre>
+<p>Distinguish nullable and non-nullable values in its type system; reproduce a basic program only in a compatible archived toolchain.</p>
+<h3>Evidence to collect</h3>
+<p>Record the exact Ceylon compiler or runtime version, required dependencies, and output from harmless test data. Predict an observation before checking it, and keep both the initial and revised source to show which change caused the result. Do not claim that a displayed fragment was executed if the platform is unavailable.</p>
+<h3>Failure mode worth investigating</h3>
+<p>Avoid depending on abandoned package infrastructure for new projects; record version and archived sources.</p>
+<h2>Ceylon: applied exercises</h2>
+<p>Ceylon uses a typed syntax where the declaration shared void run() marks a program entry point. The project is discontinued, so do not assume a modern package manager installs a working compiler. Use an authorized, isolated historical toolchain if you want to execute these examples; otherwise treat them as source-reading labs.</p>
+<h3>Exercise 1: trace a sequence</h3>
+<pre><code class="language-ceylon">shared void run() {
+    value names = [&quot;Ada&quot;, &quot;Grace&quot;, &quot;Linus&quot;];
+    print(names.size);
+}
+</code></pre>
+<p>Predict the output 3 from the size of a three-element sequence. The program does not change the sequence, and the element order has no effect on its size. Reduce the list to one element, then an empty sequence, and distinguish a zero-sized collection from a missing optional value. The word value infers the declared variable's type; it does not mean the variable is dynamically typed.</p>
+<h3>Exercise 2: the distinction between optional and definite</h3>
+<p>Consider a String? name supplied from a nullable source. The correct operation before using it as a String is an existence/type refinement (for example, an if (exists name) condition in Ceylon). Contrast this with assigning an absent value straight to a non-optional String. State exactly what the type checker should reject rather than pretending the error occurs at runtime.</p>
+<h3>Exercise 3: make a meaningful comparison</h3>
+<p>Compare a sequence of names with a Set of names. Duplicates have different consequences for size and membership, so the acceptance criterion is not merely 'both can be iterated'. Discuss when preserving duplicates and order is required. Identify the source version and type aliases actually provided by the chosen historical Ceylon distribution before writing runnable tests.</p>
+<h3>Completion checklist</h3>
+<p>Supply predicted outputs for a 3-element sequence, singleton and empty sequence; explain why type inference is still static typing; state which null-related operation is rejected; and record the exact compiler version or label each claim unexecuted. Do not claim modern JVM compatibility without verifying the runtime required by that Ceylon release.</p>
+<h2>Ceylon — Focused mastery pathway</h2>
+<h3>Stage 1: understand the execution model</h3>
+<p>Read a minimal Ceylon hello module and identify module descriptor, package name and source directory. Explain how declarations, imports and package visibility differ from Java without assuming Maven layout.</p>
+<h3>Stage 2: prove the rule with controlled cases</h3>
+<p>Create a nullable String value and narrow it using an explicit existence test. Trace the resulting type in both branches and distinguish a union type from a runtime cast. Compile using an available historical Ceylon toolchain.</p>
+<h3>Stage 3: build a small, reviewable project</h3>
+<p>Model an immutable list transformation and a function with explicitly documented input constraints. Record compiler version and module dependencies; Ceylon is discontinued, so do not pretend that a recent JDK automatically supports its tooling.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

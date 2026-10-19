@@ -1,0 +1,122 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Φτιάξε και εξέτασε φανταστικό format — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/rev-el-18.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Εργαστήριο reverse engineering: ανάλυση ιδιόκτητου φανταστικού binary format Στόχος και όρια Δημιούργησε ένα μικρό φανταστικό αρχείο από κώδικα που ελέγχεις εσύ και βρες τη μορφή του με…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Φτιάξε και εξέτασε φανταστικό format — DedSec Project">
+<meta property="og:description" content="Εργαστήριο reverse engineering: ανάλυση ιδιόκτητου φανταστικού binary format Στόχος και όρια Δημιούργησε ένα μικρό φανταστικό αρχείο από κώδικα που ελέγχεις εσύ και βρες τη μορφή του με…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/rev-el-18.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Φτιάξε και εξέτασε φανταστικό format — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Φτιάξε και εξέτασε φανταστικό format — DedSec Project">
+<meta name="twitter:description" content="Εργαστήριο reverse engineering: ανάλυση ιδιόκτητου φανταστικού binary format Στόχος και όρια Δημιούργησε ένα μικρό φανταστικό αρχείο από κώδικα που ελέγχεις εσύ και βρες τη μορφή του με…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Φτιάξε και εξέτασε φανταστικό format — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Φτιάξε και εξέτασε φανταστικό format — DedSec Project</h1><p>Εργαστήριο reverse engineering: ανάλυση ιδιόκτητου φανταστικού binary format Στόχος και όρια Δημιούργησε ένα μικρό φανταστικό αρχείο από κώδικα που ελέγχεις εσύ και βρες τη μορφή του με…</p><section><h1>Εργαστήριο reverse engineering: ανάλυση ιδιόκτητου φανταστικού binary format</h1>
+<h2>Στόχος και όρια</h2>
+<p>Δημιούργησε ένα μικρό <strong>φανταστικό</strong> αρχείο από κώδικα που ελέγχεις εσύ και βρες τη μορφή του με παρατήρηση των bytes. Απαιτείται μόνο Python 3, χωρίς λήψεις ή πραγματικούς servers. Η παλιότερη περιγραφή ανέφερε checksum, UTF-8 records και scripts σε <code>site/labs/</code> που δεν υπάρχουν εδώ. <strong>Το DMR1 έκδοση 1 δεν περιλαμβάνει κανένα από αυτά.</strong></p>
+<h2>Ακριβής προδιαγραφή DMR1 v1</h2>
+<table>
+<thead>
+<tr>
+  <th>Θέση bytes</th>
+  <th>Μέγεθος</th>
+  <th>Περιγραφή</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>0–3</td>
+  <td>4 bytes</td>
+  <td>ASCII magic <code>DMR1</code> (hex <code>44 4d 52 31</code>)</td>
+</tr>
+<tr>
+  <td>4–5</td>
+  <td>2 bytes</td>
+  <td>Πλήθος samples, unsigned little-endian</td>
+</tr>
+<tr>
+  <td>Από 6</td>
+  <td>ακριβώς count bytes</td>
+  <td>Κάθε byte είναι μία τιμή 0–255</td>
+</tr>
+</tbody>
+</table>
+<p>Το εκπαιδευτικό όριο είναι <strong>64 samples</strong>, για να μάθεις έλεγχο μεγεθών. Επιτρέπεται κενό payload αλλά <strong>όχι</strong> επιπλέον bytes. Δεν υπάρχει checksum, text encoding, συμπίεση, δικτυακό πρωτόκολλο ή διαπραγμάτευση έκδοσης.</p>
+<h2>Πλήρες εργαστήριο χωρίς εξαρτήσεις</h2>
+<p>Δημιούργησε αρχείο <code>dmr1_lab.py</code> σε Linux, Windows ή Termux με τον παρακάτω κώδικα. Τρέξε <code>python3 dmr1_lab.py</code> ή <code>python dmr1_lab.py</code> ανάλογα με την εγκατάσταση Python 3:</p>
+<pre><code class="language-python">import struct
+
+MAGIC = b&quot;DMR1&quot;
+MAX_SAMPLES = 64
+
+def encode(values):
+    if len(values) &gt; MAX_SAMPLES or any(
+        type(n) is not int or not 0 &lt;= n &lt;= 255 for n in values
+    ):
+        raise ValueError(&quot;invalid samples&quot;)
+    return MAGIC + struct.pack(&quot;&lt;H&quot;, len(values)) + bytes(values)
+
+def decode(raw):
+    if len(raw) &lt; 6 or raw[:4] != MAGIC:
+        raise ValueError(&quot;bad DMR1 header&quot;)
+    count = struct.unpack_from(&quot;&lt;H&quot;, raw, 4)[0]
+    if count &gt; MAX_SAMPLES or len(raw) != 6 + count:
+        raise ValueError(&quot;bad DMR1 size&quot;)
+    return list(raw[6:])
+
+sample = encode([1, 2, 255])
+print(sample.hex(), decode(sample))
+assert sample.hex() == &quot;444d523103000102ff&quot;
+assert decode(encode([])) == []
+assert decode(encode([5] * 64)) == [5] * 64
+
+malformed = [
+    b&quot;&quot;, b&quot;DMR1&quot;, b&quot;XXXX&quot; + sample[4:],
+    sample[:-1], sample + b&quot;\x00&quot;,
+    sample[:4] + b&quot;\xff\xff&quot; + sample[6:],
+]
+for raw in malformed:
+    try:
+        decode(raw)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(&quot;accepted malformed input&quot;)
+print(&quot;malformed cases rejected:&quot;, len(malformed))
+</code></pre>
+<p><strong>Αναμενόμενη έξοδος:</strong></p>
+<pre><code class="language-text">444d523103000102ff [1, 2, 255]
+malformed cases rejected: 6
+</code></pre>
+<p>Τα τέσσερα αρχικά bytes είναι η υπογραφή. Τα <code>03 00</code> δηλώνουν τρεις τιμές με little-endian διάταξη. Τα <code>01 02 ff</code> αποτελούν το payload. Ο parser ελέγχει το συνολικό μέγεθος <strong>πριν</strong> διαβάσει samples.</p>
+<h2>Βρες τη δομή χωρίς να διαβάσεις τον parser</h2>
+<ol>
+<li>Παρήγαγε δύο fixtures, π.χ. <code>encode([7])</code> και <code>encode([7, 8])</code>. Σύγκρινε κοινό πρόθεμα, διαφορετικές θέσεις και μήκη.</li>
+<li>Κατέγραψε υπόθεση για κάθε πεδίο: offset, width, endianness και επιτρεπόμενα όρια. Προέβλεψε τι δίνει το <code>encode([])</code>.</li>
+<li>Επαλήθευσε κάθε πρόβλεψη στα bytes. Έπειτα διάβασε το <code>decode</code> και ξεχώρισε τεκμηριωμένη παρατήρηση από εικασία.</li>
+<li>Άλλαξε ένα byte τη φορά <strong>σε αντίγραφο</strong>. Ξεχώρισε λάθος magic, κομμένο header, count μεγαλύτερο του payload και περιττά bytes.</li>
+<li>Κράτησε πίνακα: μετάλλαξη, πρόβλεψη, πραγματικό exception και εναλλακτική εξήγηση.</li>
+<li>Υπολόγισε <code>hashlib.sha256(raw).hexdigest()</code> για ακριβή σύγκριση αρχείων. Το hash δείχνει ότι άλλαξαν, όχι τι σημαίνουν τα bytes.</li>
+</ol>
+<h2>Κριτήριο επιτυχίας</h2>
+<p>Εξήγησε γιατί το δείγμα <code>444d523103000102ff</code> έχει εννέα bytes, γιατί το count είναι τρία, γιατί απορρίπτονται και οι έξι κακές περιπτώσεις και γιατί 64 samples είναι έγκυρα ενώ 65 απορρίπτονται σκόπιμα. Δεν πρόκειται για parser παραγωγής· εκεί χρειάζονται ρητές εκδόσεις, όρια πόρων και fuzz testing. Μην εκτελείς άγνωστα binaries στο προσωπικό σου κινητό.</p>
+<h2>Προαιρετική χρήση AI</h2>
+<p>Ζήτησε counterexamples και επαλήθευσέ τα ο ίδιος. Αποδείξεις είναι ο κώδικας, τα bytes και τα tests, όχι οι υποθέσεις του AI.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

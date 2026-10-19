@@ -1,0 +1,94 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ασφάλεια Κινητών Συσκευών — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-017.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Ασφάλεια Κινητών Συσκευών Ελληνική έκδοση — Μάθημα 017. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια. Στόχος του…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Ασφάλεια Κινητών Συσκευών — DedSec Project">
+<meta property="og:description" content="Ασφάλεια Κινητών Συσκευών Ελληνική έκδοση — Μάθημα 017. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια. Στόχος του…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-017.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ασφάλεια Κινητών Συσκευών — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ασφάλεια Κινητών Συσκευών — DedSec Project">
+<meta name="twitter:description" content="Ασφάλεια Κινητών Συσκευών Ελληνική έκδοση — Μάθημα 017. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια. Στόχος του…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Ασφάλεια Κινητών Συσκευών — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Ασφάλεια Κινητών Συσκευών — DedSec Project</h1><p>Ασφάλεια Κινητών Συσκευών Ελληνική έκδοση — Μάθημα 017. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια. Στόχος του…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 017.</strong> Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια.</p>
+</blockquote>
+<h2>Στόχος του μαθήματος</h2>
+<p>Mobile, IoT και embedded συστήματα συνδυάζουν εφαρμογές, λειτουργικό, firmware, radios, hardware roots of trust και φυσική πρόσβαση. Το security model εξαρτάται από secure boot, app sandboxing, permissions, key storage, update trust και τις πραγματικές διεπαφές που εκτίθενται.</p>
+<p>Σε αυτό το μάθημα εστιάζεις ειδικά στο <strong>Ασφάλεια Κινητών Συσκευών</strong>. Στο τέλος πρέπει να μπορείς να περιγράψεις το security model με δικά σου λόγια, να αναγνωρίζεις τα βασικά failure modes, να σχεδιάζεις ασφαλή test cases και να εξηγείς ποιο evidence χρειάζεται για να στηριχθεί ένα συμπέρασμα.</p>
+<h2>Θέματα που καλύπτονται</h2>
+<ul>
+<li><strong>Mobile Platforms</strong>
+Στο <strong>Mobile Platforms</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Mobile Threat Model</strong>
+Στο <strong>Mobile Threat Model</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Improving Mobile Ασφάλεια</strong>
+Στο <strong>Improving Mobile Ασφάλεια</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Σύγχρονο mobile-security additions</strong>
+Στο <strong>Σύγχρονο mobile-security additions</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Verification standards</strong>
+Για το <strong>Verification standards</strong>, ξεχώρισε normative specification από tutorial ή vendor summary. Κατέγραψε έκδοση/ημερομηνία, ποιο requirement στηρίζει το συμπέρασμα και ποιο μέρος του <strong>Ασφάλεια Κινητών Συσκευών</strong> χρειάζεται επανέλεγχο όταν αλλάξει η πηγή.</li>
+<li><strong>Safe lab ideas</strong>
+Στο <strong>Safe lab ideas</strong>, μετέτρεψε τη θεωρία του <strong>Ασφάλεια Κινητών Συσκευών</strong> σε ελέγξιμα κριτήρια: τι πρέπει να μπορείς να εξηγήσεις, ποιο λάθος assumption εμφανίζεται συχνότερα, ποιο safe lab το αποκαλύπτει και ποιο retest αποδεικνύει ότι το διόρθωσες.</li>
+<li><strong>Mobile application architecture review</strong>
+Στο <strong>Mobile application architecture review</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Credential and secret handling</strong>
+Για το <strong>Credential and secret handling</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Authentication and authorization</strong>
+Για το <strong>Authentication and authorization</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Platform storage</strong>
+Για το <strong>Platform storage</strong>, κατέγραψε ποιος μπορεί να γράψει/διαβάσει το state, πού αποθηκεύεται, πώς προστατεύεται at rest, ποιο backup/sync behavior υπάρχει και πότε το data πρέπει να διαγράφεται ή να ανακαλείται.</li>
+<li><strong>Network security</strong>
+Στο <strong>Network security</strong>, ακολούθησε packet και protocol state από άκρο σε άκρο: ποιο endpoint δημιουργεί κάθε field, τι validation γίνεται, πού αλλάζει trust boundary και ποια telemetry επιβεβαιώνει την πραγματική ροή.</li>
+<li><strong>Deep links, intents, and URL schemes</strong>
+Για το <strong>Deep links, intents, and URL schemes</strong>, παρακολούθησε το input από client μέχρι parser/framework/backend και πίσω. Κατέγραψε normalization, origin/session context, server-side authorization και output handling ώστε να εντοπίζεις το ακριβές trust boundary.</li>
+<li><strong>WebViews and embedded browsers</strong>
+Στο <strong>WebViews and embedded browsers</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Permissions and privacy</strong>
+Για το <strong>Permissions and privacy</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Build and release security</strong>
+Για το <strong>Build and release security</strong>, χαρτογράφησε control plane, workload identity, permissions, artifact/data provenance και lifecycle. Έλεγξε πώς δημιουργείται authority, πού κληρονομείται, πώς ανακαλείται και τι audit trail παραμένει.</li>
+<li><strong>Device integrity and risk signals</strong>
+Στο <strong>Device integrity and risk signals</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Enterprise mobile controls</strong>
+Στο <strong>Enterprise mobile controls</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Mobile logging</strong>
+Στο <strong>Mobile logging</strong>, όρισε πρώτα την αναμενόμενη συμπεριφορά και τις telemetry sources που πρέπει να τη δείχνουν. Συσχέτισε identity, process, network και χρόνο, κατέγραψε blind spots και ξεχώρισε observation από inference.</li>
+<li><strong>Mobile security review checklist</strong>
+Στο <strong>Mobile security review checklist</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+</ul>
+<h2>Μέθοδος ανάλυσης</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a> για scope, evidence, note-taking και κριτήρια ολοκλήρωσης. Για το <strong>Ασφάλεια Κινητών Συσκευών</strong>, πριν κάνεις οποιοδήποτε test σχεδίασε τα components, σημείωσε πού αλλάζει η εμπιστοσύνη και γράψε μία πρόταση που περιγράφει το security invariant που θέλεις να ελέγξεις.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Χρησιμοποίησε δική σου συσκευή, emulator ή development board. Προτίμησε static analysis, documented debug interfaces και benign sample apps/firmware. Απόφυγε tests σε τρίτες συσκευές ή ασύρματα περιβάλλοντα.</p>
+<p>Ακολούθησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>: γράψε expected result πριν το test, άλλαξε μία μεταβλητή κάθε φορά, κράτησε sanitized evidence και κάνε retest μετά το hardening του <strong>Ασφάλεια Κινητών Συσκευών</strong>.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ul>
+<li>Μπορείς να εξηγήσεις το βασικό trust boundary του <strong>Ασφάλεια Κινητών Συσκευών</strong> χωρίς σημειώσεις;</li>
+<li>Μπορείς να δώσεις ένα failure mode και να πεις ποιο evidence θα το επιβεβαίωνε;</li>
+<li>Μπορείς να ξεχωρίσεις symptom, root cause και compensating control;</li>
+<li>Μπορείς να σχεδιάσεις ασφαλές retest που δεν επεκτείνει το scope;</li>
+</ul>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p>Για το αναλυτικό αγγλικό κείμενο, τις πηγές και τα επιπλέον τεχνικά παραδείγματα χρησιμοποίησε το αντίστοιχο αρχείο:</p>
+<p><a href="../en/hgp-en-017.html">English Module 017</a></p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

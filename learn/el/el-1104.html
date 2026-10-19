@@ -1,0 +1,58 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Πρακτικές ασκήσεις με εκτελέσιμα αρχεία — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1104.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Πρακτικές ασκήσεις με εκτελέσιμα αρχεία Τα παραδείγματα απαιτούν Python 3.10+ και χρησιμοποιούν μόνο την τυπική βιβλιοθήκη. Κάθε αρχείο είναι ανεξάρτητο, με δοκιμαστικούς ισχυρισμούς. Δεν…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Πρακτικές ασκήσεις με εκτελέσιμα αρχεία — DedSec Project">
+<meta property="og:description" content="Πρακτικές ασκήσεις με εκτελέσιμα αρχεία Τα παραδείγματα απαιτούν Python 3.10+ και χρησιμοποιούν μόνο την τυπική βιβλιοθήκη. Κάθε αρχείο είναι ανεξάρτητο, με δοκιμαστικούς ισχυρισμούς. Δεν…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1104.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Πρακτικές ασκήσεις με εκτελέσιμα αρχεία — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Πρακτικές ασκήσεις με εκτελέσιμα αρχεία — DedSec Project">
+<meta name="twitter:description" content="Πρακτικές ασκήσεις με εκτελέσιμα αρχεία Τα παραδείγματα απαιτούν Python 3.10+ και χρησιμοποιούν μόνο την τυπική βιβλιοθήκη. Κάθε αρχείο είναι ανεξάρτητο, με δοκιμαστικούς ισχυρισμούς. Δεν…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Πρακτικές ασκήσεις με εκτελέσιμα αρχεία — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Πρακτικές ασκήσεις με εκτελέσιμα αρχεία — DedSec Project</h1><p>Πρακτικές ασκήσεις με εκτελέσιμα αρχεία Τα παραδείγματα απαιτούν Python 3.10+ και χρησιμοποιούν μόνο την τυπική βιβλιοθήκη. Κάθε αρχείο είναι ανεξάρτητο, με δοκιμαστικούς ισχυρισμούς. Δεν…</p><section><p>Τα παραδείγματα απαιτούν Python 3.10+ και χρησιμοποιούν μόνο την τυπική βιβλιοθήκη. Κάθε αρχείο είναι ανεξάρτητο, με δοκιμαστικούς ισχυρισμούς. Δεν εκτελούν εντολές δικτύου ή εγκατάσταση.</p>
+<ul>
+<li><a href="el-1105.html">Κανονικοποίηση κειμένου αναζήτησης</a> — <code>01_normalize_search.py</code></li>
+<li><a href="el-1105.html">Έλεγχος ρυθμίσεων JSON</a> — <code>02_validate_config.py</code></li>
+<li><a href="el-1105.html">Σύνοψη CSV με άκυρες γραμμές</a> — <code>03_csv_statistics.py</code></li>
+<li><a href="el-1111.html">Φιλτράρισμα γραμμών JSON</a> — <code>04_jsonl_filter.py</code></li>
+<li><a href="el-1111.html">SHA-256 για ακεραιότητα</a> — <code>05_sha256_memory.py</code></li>
+<li><a href="el-1111.html">Έλεγχος διαδρομής στον χώρο εργασίας</a> — <code>06_path_containment.py</code></li>
+<li><a href="el-1117.html">Σύγκριση εκδόσεων κειμένου</a> — <code>07_diff_text.py</code></li>
+<li><a href="el-1119.html">Δημιουργία περιεχομένων Markdown</a> — <code>08_markdown_headings.py</code></li>
+<li><a href="el-1117.html">Ανάλυση δομημένων συμβάντων καταγραφής</a> — <code>09_log_events.py</code></li>
+<li><a href="el-1117.html">Εργασίες SQLite με συναλλαγές</a> — <code>10_sqlite_tasks.py</code></li>
+<li><a href="el-1124.html">Επανάληψη προσωρινής αποτυχίας</a> — <code>11_bounded_retry.py</code></li>
+<li><a href="el-1124.html">Προσωρινή αποθήκευση καθαρής συνάρτησης</a> — <code>12_memoization.py</code></li>
+<li><a href="el-1124.html">Διάσχιση γράφου με ουρά</a> — <code>13_queue_bfs.py</code></li>
+<li><a href="el-1130.html">Επεξεργασία δεδομένων σε παρτίδες</a> — <code>14_batched_generator.py</code></li>
+<li><a href="el-1130.html">Συγχώνευση ταξινομημένων ροών</a> — <code>15_merge_sorted.py</code></li>
+<li><a href="el-1130.html">Τοπικός κατάλογος ελέγχου αρχείων</a> — <code>16_backup_manifest.py</code></li>
+<li><a href="el-1130.html">Έλεγχος ZIP χωρίς αποσυμπίεση</a> — <code>17_zip_preview.py</code></li>
+<li><a href="el-1138.html">Προσομοίωση περιορισμού ρυθμού</a> — <code>18_token_bucket.py</code></li>
+<li><a href="el-1130.html">Σχεδίαση δομημένων σφαλμάτων API</a> — <code>19_api_errors.py</code></li>
+<li><a href="el-1142.html">Συγχώνευση εμφωλευμένων λεξικών</a> — <code>20_deep_merge.py</code></li>
+<li><a href="el-1130.html">Κωδικοποίηση και αποκωδικοποίηση UTF-8</a> — <code>21_utf8_roundtrip.py</code></li>
+<li><a href="el-1130.html">Κινούμενο παράθυρο με deque</a> — <code>22_sliding_window.py</code></li>
+<li><a href="el-1148.html">Τοπολογική ταξινόμηση με εντοπισμό κύκλων</a> — <code>23_topological_sort.py</code></li>
+<li><a href="el-1130.html">Ασφαλής ανάλυση γραμμής HTTP status</a> — <code>24_simple_http_parse.py</code></li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

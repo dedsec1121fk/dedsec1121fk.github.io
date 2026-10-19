@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "kind": "anonymous_working_method_not_identity",
+  "purpose": "Transferable engineering reasoning patterns; never identity reconstruction",
+  "sources": "Generalized recurring project requirements and sampled documentation; no raw messages",
+  "confidence": "observed_workflow_preferences_not_psychological_traits",
+  "intent": [
+    "Describe user-observable result",
+    "Keep prior constraints",
+    "Define witness and negative tests"
+  ],
+  "method": [
+    "Inspect source of truth",
+    "Decompose by behavior and platform",
+    "Make smallest justified changes",
+    "Test cheaply before expensive CI",
+    "Report evidence and gaps",
+    "Iterate on concrete failures"
+  ],
+  "constraints": [
+    "No personal identification or private code",
+    "No unauthorized security activity",
+    "No unverified completion claims",
+    "Bilingual parity",
+    "Offline-first where specified",
+    "Respect build minute limits"
+  ],
+  "evidence_levels": [
+    "inspected",
+    "static_validated",
+    "runtime_tested",
+    "target_device_tested",
+    "unverified"
+  ],
+  "ai_guidance": [
+    "Guide work; never impersonate",
+    "Do not invent biography or private facts",
+    "Prefer precise technical examples to filler",
+    "State conflicts rather than silently deleting requirements"
+  ],
+  "language_paths": {
+    "en": "Thinking/English",
+    "gr": "Thinking/Greek"
+  },
+  "publication_rules": [
+    "Privacy/English/01_PUBLICATION_RULES.md",
+    "Privacy/Greek/01_PUBLICATION_RULES.md"
+  ]
+}

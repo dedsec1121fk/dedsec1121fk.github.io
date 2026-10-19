@@ -1,0 +1,113 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Algorithm drills — linear/binary search and frequency maps — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-18.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Algorithm drills — linear/binary search and frequency maps Linear search Reference implementation (Python 3) Mechanism and invariant Scan the list from index zero and compare each element…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Algorithm drills — linear/binary search and frequency maps — DedSec Project">
+<meta property="og:description" content="Algorithm drills — linear/binary search and frequency maps Linear search Reference implementation (Python 3) Mechanism and invariant Scan the list from index zero and compare each element…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-18.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Algorithm drills — linear/binary search and frequency maps — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Algorithm drills — linear/binary search and frequency maps — DedSec Project">
+<meta name="twitter:description" content="Algorithm drills — linear/binary search and frequency maps Linear search Reference implementation (Python 3) Mechanism and invariant Scan the list from index zero and compare each element…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Algorithm drills — linear/binary search and frequency maps — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Algorithm drills — linear/binary search and frequency maps — DedSec Project</h1><p>Algorithm drills — linear/binary search and frequency maps Linear search Reference implementation (Python 3) Mechanism and invariant Scan the list from index zero and compare each element…</p><section><h2>Linear search</h2>
+<h3>Reference implementation (Python 3)</h3>
+<pre><code class="language-python">def find_index(items, target):
+    for i, item in enumerate(items):
+        if item == target:
+            return i
+    return -1
+assert find_index([4, 8, 2], 8) == 1
+assert find_index([], 8) == -1
+</code></pre>
+<h3>Mechanism and invariant</h3>
+<p>Scan the list from index zero and compare each element with the target. At the start of iteration i, no earlier index contains a matching value; returning immediately therefore finds the <strong>first</strong> match. A missing value returns -1 as a chosen interface contract, not a Python indexing operation. The worst-case number of equality comparisons is n, so time is O(n) and extra storage O(1).</p>
+<h3>Run the adjacent reference</h3>
+<p>The code below is also stored as 01_linear_search.py and contains executable assertions. The algorithm works on unsorted collections; sorting a list solely to make one lookup faster would add work and could change original indices.</p>
+<h3>Boundary laboratory</h3>
+<ol>
+<li>Input [] with target 8 returns -1; zero comparisons occur.</li>
+<li>Input [8,8,3] with target 8 returns 0, not 1. Duplicate matches must preserve first-index semantics.</li>
+<li>Input [4,8,2] with target 2 returns 2; this is the worst case for a present target.</li>
+<li>Instrument the loop to count equality operations for targets at the start, end and absent from lists of length 10, 100 and 1000. Explain the linear growth.</li>
+<li>Decide whether None, strings and integers may coexist. Python equality rules are part of the comparison contract and differ from a typed database lookup.</li>
+</ol>
+<h3>Transfer and completion</h3>
+<p>For many repeated queries, build an index mapping each key to its first position and account for O(n) preparation/storage; the index is only valid until the collection changes. Record actual comparison counts and duplicate handling before claiming an optimization. Run the Python assertions, then add the four negative and boundary tests.</p>
+<h2>Binary search</h2>
+<h3>Reference implementation (Python 3)</h3>
+<pre><code class="language-python">def binary_search(items, target):
+    lo, hi = 0, len(items)
+    while lo &lt; hi:
+        mid = (lo + hi) // 2
+        if items[mid] &lt; target: lo = mid + 1
+        else: hi = mid
+    return lo if lo &lt; len(items) and items[lo] == target else -1
+assert binary_search([1, 3, 5, 7], 5) == 2
+</code></pre>
+<h3>Invariant</h3>
+<p>The reference implementation searches a half-open interval [lo, hi). Every step retains the <strong>first index whose value is not less than target</strong>. When items[mid] is smaller, no index up to mid can work, so lo becomes mid+1; otherwise hi becomes mid. At termination lo equals hi. Only then do we test whether the value actually equals the target.</p>
+<h3>Correctness and complexity</h3>
+<p>Each iteration approximately halves the candidate range, giving O(log n) comparisons and O(1) extra memory. This assumes ascending sorted input and a comparison relation that behaves consistently. A valid list with duplicates returns their <strong>leftmost</strong> index because the high boundary moves left on equality.</p>
+<h3>Controlled test cases</h3>
+<ol>
+<li>[1,3,5,7] and target 5 return 2. Record lo, hi and mid at each iteration.</li>
+<li>[2,2,2] and target 2 return 0. Contrast this with a naive implementation that stops on its first arbitrary middle match.</li>
+<li>[] and target 1 return -1; [1,3] and target 9 also return -1.</li>
+<li>Test target smaller than the first element; the insertion position is zero but the search return remains -1.</li>
+<li>Deliberately provide [3,1,2]. The sorted-input precondition is violated; explain that no index can be trusted rather than reporting a successful algorithm test.</li>
+</ol>
+<h3>Extend responsibly</h3>
+<p>Expose a separate lower_bound API if callers need insertion positions. Test index boundaries with an even and odd number of elements, then compare lookup counts against linear search. For floating-point NaN values, ordering needs an explicit policy because ordinary comparisons do not provide the required total order.</p>
+<h2>Frequency map</h2>
+<h3>Reference implementation (Python 3)</h3>
+<pre><code class="language-python">from collections import Counter
+counts = Counter('banana')
+assert counts['a'] == 3
+print(counts)
+</code></pre>
+<h3>Problem</h3>
+<p>Given a stream of values, return how often each distinct key occurs. The reference uses collections.Counter over the string banana: a occurs 3 times, n twice and b once. A hash-based Counter usually builds counts in O(n) expected time with O(k) storage for k distinct keys; the worst case depends on hash behavior and input.</p>
+<h3>Interpret the example</h3>
+<p>A Python string iterates Unicode code points rather than grapheme clusters. Counting bytes of UTF-8, case-folded text or whole words answers different questions. Decide the unit of counting <strong>before</strong> choosing a key or normalization rule. Counter returns zero for a missing key without inserting the key, unlike plain dict indexing.</p>
+<h3>Experiments</h3>
+<ol>
+<li>Check counts['a']==3 and counts['z']==0; verify the number of distinct keys is 3.</li>
+<li>Compare Counter('Aa') with Counter('Aa'.casefold()). The second merges ASCII case, which may or may not match requirements.</li>
+<li>Count 10000 repeated a characters. Memory should grow with the number of unique keys, not total repetitions, apart from input storage.</li>
+<li>Count a list of normalized log statuses such as ['ok','fail','ok'] and describe how missing/unknown statuses should be reported.</li>
+<li>Write the same algorithm with an ordinary dict.get(key,0)+1 loop, then compare counts without assuming that the more compact API is always faster.</li>
+</ol>
+<h3>Reporting</h3>
+<p>For large logs process an iterable incrementally and record whether the system stores the entire input. Where data is untrusted, cap input size and consider cardinality limits. Preserve the raw value if downstream users need to audit what normalization changed.</p>
+<h2>01 linear search — boundary study</h2>
+<p>When duplicates are allowed, the loop returns the first matching index. Distinguish absence (-1) from an index of 0; never test the result with <code>if index:</code> because zero is falsey. Equality uses the type's <code>==</code> implementation, so compare compatible values.</p>
+<p>Test <code>[9,9]</code> looking for 9 (answer 0), an empty list (answer -1), and a missing value. No sorting is required.</p>
+<p>&lt;!-- [curated-algorithm-detail:01_linear_search.md] --&gt;</p>
+<h2>02 binary search — boundary study</h2>
+<p>The algorithm needs ascending sorted data. Its interval is half-open <code>[lo,hi)</code>, so the invariant is that every candidate position remains inside this interval. At termination <code>lo</code> is the lower-bound insertion point and may equal <code>len(items)</code>.</p>
+<p>Try <code>[1,2,2,2,4]</code> searching for 2: the first occurrence is index 1. Searching for 3 must return -1 rather than the insertion point.</p>
+<p>&lt;!-- [curated-algorithm-detail:02_binary_search.md] --&gt;</p>
+<h2>03 frequency map — boundary study</h2>
+<p>A frequency map counts all occurrences without repeatedly scanning the entire collection. Dictionary keys must be hashable. For human-entered text, decide whether <code>A</code> and <code>a</code>, accented characters or spaces should count separately before counting.</p>
+<p>Build <code>Counter('aabbc')</code>: counts are a=2, b=2, c=1. A missing key produces zero from Counter. Hash-table memory grows with the number of distinct values.</p>
+<p>&lt;!-- [curated-algorithm-detail:03_frequency_map.md] --&gt;</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

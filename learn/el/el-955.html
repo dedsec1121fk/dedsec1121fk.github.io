@@ -1,0 +1,72 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>ImportError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-955.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="ImportError: διαχώρισε module, σύμβολο και κυκλική εισαγωγή Τι συμβαίνει και πότε Το ImportError μπορεί να εμφανιστεί όταν βρίσκεται το module αλλά λείπει το ζητούμενο σύμβολο, όταν μια…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="ImportError — DedSec Project">
+<meta property="og:description" content="ImportError: διαχώρισε module, σύμβολο και κυκλική εισαγωγή Τι συμβαίνει και πότε Το ImportError μπορεί να εμφανιστεί όταν βρίσκεται το module αλλά λείπει το ζητούμενο σύμβολο, όταν μια…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-955.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ImportError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ImportError — DedSec Project">
+<meta name="twitter:description" content="ImportError: διαχώρισε module, σύμβολο και κυκλική εισαγωγή Τι συμβαίνει και πότε Το ImportError μπορεί να εμφανιστεί όταν βρίσκεται το module αλλά λείπει το ζητούμενο σύμβολο, όταν μια…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="ImportError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>ImportError — DedSec Project</h1><p>ImportError: διαχώρισε module, σύμβολο και κυκλική εισαγωγή Τι συμβαίνει και πότε Το ImportError μπορεί να εμφανιστεί όταν βρίσκεται το module αλλά λείπει το ζητούμενο σύμβολο, όταν μια…</p><section><h1>ImportError: διαχώρισε module, σύμβολο και κυκλική εισαγωγή</h1>
+<h2>Τι συμβαίνει και πότε</h2>
+<p>Το ImportError μπορεί να εμφανιστεί όταν βρίσκεται το module αλλά λείπει το ζητούμενο σύμβολο, όταν μια compiled extension είναι ασύμβατη ή όταν υπάρχει κυκλική εισαγωγή κατά την αρχικοποίηση. Το ModuleNotFoundError είναι ειδικότερη υποκλάση. Η επαναλαμβανόμενη εγκατάσταση πακέτων δεν διορθώνει λάθος όνομα ή κύκλο dependencies.</p>
+<h2>Αυτοτελές εκτελέσιμο παράδειγμα</h2>
+<p>Αποθήκευσε το παράδειγμα ως 012_ImportError.py και εκτέλεσε <code>python3 012_ImportError.py</code>. Ο έλεγχος καλύπτει τη λανθασμένη είσοδο και τη διορθωμένη περίπτωση.</p>
+<pre><code class="language-python">import importlib
+import math
+assert hasattr(math, &quot;sqrt&quot;)
+try:
+    exec(&quot;from math import sqrt_typo&quot;)
+except ImportError as exc:
+    assert &quot;sqrt_typo&quot; in str(exc)
+else:
+    raise AssertionError(&quot;missing name imported&quot;)
+assert importlib.import_module(&quot;math&quot;).sqrt(9) == 3.0
+</code></pre>
+<h2>Διαγνωστική διαδικασία και ασφαλής διόρθωση</h2>
+<p>Διάβασε ολόκληρο το traceback και τη διαδρομή φόρτωσης, όχι μόνο την τελευταία γραμμή. Έλεγξε python3 -c 'import module; print(module.<strong>file</strong>)' για modules με αρχείο, την έκδοση API και τα διαθέσιμα ονόματα. Αν εμφανίζεται partially initialized module, σχεδίασε το γράφημα imports και βάλε τις κοινές δηλώσεις σε τρίτο module. Μην ονομάζεις τοπικά αρχεία json.py ή typing.py.</p>
+<h2>Πρακτικό εργαστήριο / έλεγχος ορίων</h2>
+<p>Δημιούργησε a.py που εισάγει b και b.py που εισάγει a, με πρόωρη προσπέλαση ιδιότητας. Παρατήρησε τη διάγνωση κυκλικού import και μετέφερε κοινές σταθερές σε common.py. Σύγκρινε με απλό τυπογραφικό λάθος σε imported symbol.</p>
+<h2>Αναπαραγωγή συμβόλου που λείπει σε προσωρινό φάκελο</h2>
+<p>Το παράδειγμα ξεχωρίζει ένα module που υπάρχει από ένα όνομα που δεν εξάγει. Δημιουργεί δύο τοπικά αρχεία, τα εκτελεί σε νέα διεργασία Python και μετά προσθέτει το σύμβολο. Δεν χρειάζεται pip ούτε εξωτερικό πακέτο.</p>
+<pre><code class="language-python">import sys, subprocess, tempfile
+from pathlib import Path
+with tempfile.TemporaryDirectory() as temp:
+    folder = Path(temp)
+    helper = folder / 'helper.py'
+    main = folder / 'main.py'
+    helper.write_text('VALUE = 3\n', encoding='utf-8')
+    main.write_text('from helper import MISSING\nprint(MISSING)\n', encoding='utf-8')
+    def run():
+        return subprocess.run([sys.executable, str(main)],
+                              cwd=folder, capture_output=True, text=True)
+    broken = run()
+    assert broken.returncode != 0 and 'ImportError' in broken.stderr
+    helper.write_text('VALUE = 3\nMISSING = 5\n', encoding='utf-8')
+    fixed = run()
+    assert fixed.returncode == 0 and fixed.stdout.strip() == '5', fixed.stderr
+</code></pre>
+<h2>Διάκριση των αιτιών</h2>
+<p>Στην πρώτη εκτέλεση η Python βρίσκει το helper.py, αλλά δεν βρίσκει το MISSING. Το ModuleNotFoundError δηλώνει αποτυχία εύρεσης module, ενώ το μήνυμα partially initialized module συχνά δείχνει κυκλική εισαγωγή. Σε πραγματικό σφάλμα εξέτασε το <strong>file</strong> του module, τα ονόματα που εξάγει και το πρώτο σημείο εισαγωγής. Ως τελική δοκιμή δημιούργησε κύκλο δύο modules και μετέφερε τους κοινούς ορισμούς σε common.py. Εξήγησε γιατί η επανεγκατάσταση δεν λύνει έναν κύκλο.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Five learning paths — programming, web, systems, data and DedSec — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-272.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Five learning paths — programming, web, systems, data and DedSec 01 New Programmer Phase 1: interpret one program Read the Foundations lessons on input/output, types, functions and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Five learning paths — programming, web, systems, data and DedSec — DedSec Project">
+<meta property="og:description" content="Five learning paths — programming, web, systems, data and DedSec 01 New Programmer Phase 1: interpret one program Read the Foundations lessons on input/output, types, functions and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-272.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Five learning paths — programming, web, systems, data and DedSec — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Five learning paths — programming, web, systems, data and DedSec — DedSec Project">
+<meta name="twitter:description" content="Five learning paths — programming, web, systems, data and DedSec 01 New Programmer Phase 1: interpret one program Read the Foundations lessons on input/output, types, functions and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Five learning paths — programming, web, systems, data and DedSec — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Five learning paths — programming, web, systems, data and DedSec — DedSec Project</h1><p>Five learning paths — programming, web, systems, data and DedSec 01 New Programmer Phase 1: interpret one program Read the Foundations lessons on input/output, types, functions and…</p><section><h2>01 New Programmer</h2>
+<h3>Phase 1: interpret one program</h3>
+<p>Read the Foundations lessons on input/output, types, functions and conditions. Before running a five-line Python function, write down the value and type of each variable after every statement. Create three deliberate failures: wrong type, missing dictionary key and invalid numeric range. Explain the exception messages rather than deleting the checks.</p>
+<h3>Phase 2: build from scratch</h3>
+<p>Using the Python workbook and the practical JSON validation lab, write a small offline task tracker. It must load a JSON file, reject unknown keys, add and mark tasks complete, and save the result in a separate output file. Do not overwrite the input while testing. Use a temporary directory, a command-line argument for the filename and explicit UTF-8 encoding.</p>
+<h3>Phase 3: test the boundaries</h3>
+<p>Use unittest or simple assertions for an empty task list, missing file, malformed JSON, a duplicate task identifier and Greek Unicode titles. Add a reproducible failing test before repairing each defect. Run the tests without network access.</p>
+<h3>Phase 4: collaborate and maintain</h3>
+<p>Create a local Git repository, commit an initial state and a small update, then inspect git diff and git log. Separate source, tests and README instructions. Keep a short changelog recording the reason for each behavior change.</p>
+<h3>Final assessment</h3>
+<p>A reviewer should run the program using only the README, see correct output for normal data, get understandable nonzero exit codes on errors and reproduce the five tests. Explain the difference between parsing, validation and persistence without looking at a copied tutorial.</p>
+<h2>02 Web Developer</h2>
+<h3>Foundation: semantics before decoration</h3>
+<p>Study HTML landmarks, forms, labels, buttons and links. Build a two-page static site with a real navigation structure. Verify that every interactive element is reachable via keyboard, has visible focus and does not require pointer hover to function.</p>
+<h3>JavaScript behavior</h3>
+<p>Add an on-page search of ten local knowledge records. Treat the query as text; render results using textContent instead of interpreting user-provided HTML. Implement one record per card, keyboard-operable controls and an explicit empty-results message. Keep the dataset in a local JSON file so the page can run offline.</p>
+<h3>Asynchronous boundary</h3>
+<p>Introduce an artificial delayed search Promise and assign a monotonically increasing request ID. Resolve the older request last and prove that its result does not overwrite the newer query. Compare this with debounce, which reduces request volume but does not enforce completion order.</p>
+<h3>Browser and deployment tests</h3>
+<p>Use the Web encyclopedia modules for caching, CORS and browser security. With a local static server, test relative URLs under / and under a subdirectory such as /Test/. Verify light/dark theme contrast and Greek/English UI without duplicated identifiers. Test on a narrow mobile viewport.</p>
+<h3>Final assessment</h3>
+<p>Deliver index.html, one minimal JS module, CSS, local data and a README with offline launch steps. Use DevTools to confirm no missing assets, no uncaught exceptions and no network dependency. Document why CSP, output escaping and server-side authorization are different safeguards.</p>
+<h2>03 Systems Engineer</h2>
+<h3>Learn the operating environment</h3>
+<p>Compare a process, thread, file descriptor, environment variable and filesystem permission using the Systems chapters. Record observable differences among Linux, Windows and Android/Termux without assuming that every tool exists on each platform.</p>
+<h3>Build a read-only inspector</h3>
+<p>Create a Python CLI that traverses a user-selected directory, counts regular files by suffix, and reports their sizes and SHA-256 digests. Reject missing roots and print actionable errors. Use pathlib and chunked hashing to avoid reading multi-gigabyte files into memory.</p>
+<h3>State the security boundary</h3>
+<p>Distinguish path normalization from race-free containment. Define how the CLI treats symlinks, unreadable directories, enormous files and paths with Greek letters or spaces. Never follow symbolic links without an explicit policy; document how file changes during hashing affect results.</p>
+<h3>Investigate failure conditions</h3>
+<p>Exercise PermissionError, FileNotFoundError, interrupted reads and subprocess exit statuses in a disposable test tree. Use a safe temporary directory and tests that leave originals unchanged. Avoid chmod 777 and avoid treating a failed command as a reason to disable TLS or access controls.</p>
+<h3>Final assessment</h3>
+<p>Produce a deterministic report sorted by relative path, explicit UTF-8 output and bounded memory behavior. Verify the same functional contract on at least two available platforms, noting platform-specific differences. Supply instructions for Termux as well as desktop users.</p>
+<h2>04 DedSec Maintainer</h2>
+<h3>Understand the architecture first</h3>
+<p>Inventory the website, bilingual knowledge records, source archives, build/export utilities and documentation. Draw the flow from a Markdown lesson to the JavaScript data record and finally to the rendered page. Use the test repository as the only target for experiments; do not change production until a separate release decision.</p>
+<h3>Make one controlled knowledge change</h3>
+<p>Choose an existing lesson rather than adding a duplicate page. Improve a specific technical explanation, runnable example and boundary-case check. Update English and Greek as a pair while preserving their existing identity and source path. Check the website loader applies exactly one patch per locale and that the archive mirrors the rendered content.</p>
+<h3>Run quality gates</h3>
+<p>Check duplicate keys, duplicate substantive paragraphs, Markdown fences, missing links, incorrect relative asset paths and empty bilingual records. Verify that the user can search and navigate the changed article in light/dark themes on mobile and desktop. Compare source Markdown with the served page, not only with a generated report.</p>
+<h3>Keep deployments and costs controlled</h3>
+<p>Review the commit diff before pushing to main of Test. Prefer local tests and commits with workflows skipped where appropriate and permitted; never bypass a required quality gate. Document the Git SHA and which validations ran, and distinguish source changes from production deployment.</p>
+<h3>Final assessment</h3>
+<p>Prepare a release checklist with rollback instructions, before/after screenshots, source-to-website parity results and manual browser checks. The release is not ready until no broken links or layout regressions are found.</p>
+<h2>05 Data Analyst</h2>
+<h3>Establish an explicit data contract</h3>
+<p>Choose a synthetic transaction dataset with id, date, category and integer cents. State which fields are required, accepted date format, how duplicates are handled and whether negative amounts represent refunds. Do not load personal financial records for practice.</p>
+<h3>Clean and validate records</h3>
+<p>Use csv.DictReader with UTF-8 and newline-aware file opening. Reject extra columns, missing IDs, invalid dates and non-integer cents. Record rejected row numbers and reasons in a separate report, rather than silently dropping malformed records.</p>
+<h3>Persist and query</h3>
+<p>Use an in-memory or disposable SQLite database with NOT NULL, UNIQUE and CHECK constraints. Insert records using bound parameters inside a transaction. Create an aggregation by category and date, then use EXPLAIN QUERY PLAN to compare indexed and unindexed lookups on an adequately sized synthetic dataset.</p>
+<h3>Check statistical assumptions</h3>
+<p>Calculate count, totals, mean and median, explicitly handling an empty group. Demonstrate why a missing amount must not automatically become zero. Compare Decimal-based display formatting with integer cents and state when rounding occurs.</p>
+<h3>Final assessment</h3>
+<p>Provide repeatable commands, input fixtures, expected SQL query results and a rejected-rows report. Verify that duplicate identifiers are handled consistently, the original CSV is never overwritten and the whole report can be rebuilt from scratch.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

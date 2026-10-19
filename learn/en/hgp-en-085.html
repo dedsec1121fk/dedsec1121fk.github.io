@@ -1,0 +1,185 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advanced Authorized Capstones — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-085.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Advanced Authorized Capstones Purpose: Integrate the advanced modules into realistic, evidence-driven security projects that prove deep understanding without attacking third-party systems…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Advanced Authorized Capstones — DedSec Project">
+<meta property="og:description" content="Advanced Authorized Capstones Purpose: Integrate the advanced modules into realistic, evidence-driven security projects that prove deep understanding without attacking third-party systems…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-085.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Advanced Authorized Capstones — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advanced Authorized Capstones — DedSec Project">
+<meta name="twitter:description" content="Advanced Authorized Capstones Purpose: Integrate the advanced modules into realistic, evidence-driven security projects that prove deep understanding without attacking third-party systems…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Advanced Authorized Capstones — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Advanced Authorized Capstones — DedSec Project</h1><p>Advanced Authorized Capstones Purpose: Integrate the advanced modules into realistic, evidence-driven security projects that prove deep understanding without attacking third-party systems…</p><section><blockquote>
+<p><strong>Purpose:</strong> Integrate the advanced modules into realistic, evidence-driven security projects that prove deep understanding without attacking third-party systems.</p>
+</blockquote>
+<h2>Capstone rules</h2>
+<p>Every capstone must use one of these environments:</p>
+<ul>
+<li>software you wrote;</li>
+<li>infrastructure/accounts you own;</li>
+<li>intentionally vulnerable training systems;</li>
+<li>a CTF whose rules explicitly permit the tested technique;</li>
+<li>an environment covered by written authorization.</li>
+</ul>
+<p>Do not expand scope because a neighboring system looks interesting. Advanced skill includes restraint and evidence discipline.</p>
+<h2>Deliverables for every capstone</h2>
+<p>Produce:</p>
+<ol>
+<li>scope/authorization statement;</li>
+<li>architecture/trust-boundary diagram;</li>
+<li>threat model and invariants;</li>
+<li>test plan;</li>
+<li>environment versions/hashes;</li>
+<li>evidence;</li>
+<li>findings with confidence and impact;</li>
+<li>remediation;</li>
+<li>regression/detection tests;</li>
+<li>cleanup/recovery proof;</li>
+<li>lessons learned.</li>
+</ol>
+<h2>Capstone 1 — Binary assurance pipeline</h2>
+<p>Build a small native parser you own. Compile debug and hardened builds. Inspect ELF/PE metadata, disassemble key functions, run sanitizers, create a fuzz harness, triage one controlled failure, fix it, and add regression tests.</p>
+<p><strong>Skills:</strong> Modules 62–68, 84.</p>
+<p><strong>Success criterion:</strong> You can connect source invariant → assembly/binary representation → runtime evidence → fix without producing an exploit payload.</p>
+<h2>Capstone 2 — Local web trust-boundary review</h2>
+<p>Build a localhost application with two users, two tenants, reverse proxy, cache layer if available, and API endpoints. Define authorization matrix, origin policy, cache rules, forwarded-header trust, redirect policy, and server-side fetch restrictions.</p>
+<p>Test only benign representations and negative authorization cases. Fix one intentionally introduced logic/configuration error.</p>
+<p><strong>Skills:</strong> Modules 52, 61, 68–71, 78, 84.</p>
+<h2>Capstone 3 — Enterprise identity graph</h2>
+<p>Create a disposable Windows lab domain with synthetic users/groups/service accounts/GPOs. Map Kerberos roles, group nesting, directory ACLs, service identities, and GPO authority.</p>
+<p>Introduce one intentionally excessive test permission, prove the resulting graph path administratively, remove it, and verify the path is gone. Do not dump credentials or forge tickets.</p>
+<p><strong>Skills:</strong> Modules 21, 32, 72, 73, 80, 81.</p>
+<h2>Capstone 4 — Linux isolation report</h2>
+<p>On a disposable Linux VM, run a containerized service and inventory credentials, capabilities, namespaces, cgroups, seccomp/LSM, mounts, network reachability, and service user.</p>
+<p>Harden the workload by dropping unnecessary capabilities, making filesystem regions read-only where possible, applying resource limits, and restricting network access.</p>
+<p><strong>Skills:</strong> Modules 24, 33, 62, 74, 75, 80.</p>
+<h2>Capstone 5 — Kubernetes privilege graph</h2>
+<p>Use a local development cluster. Create namespaces, synthetic service accounts, RBAC roles, and a benign workload. Build an authority graph covering API permissions, secret access, pod creation, node boundary, and external/cloud identity if present.</p>
+<p>Remove one unnecessary edge and verify both denial and audit visibility.</p>
+<p><strong>Skills:</strong> Modules 19, 21, 24, 49, 75, 76, 80.</p>
+<h2>Capstone 6 — Cloud IAM sandbox</h2>
+<p>In a disposable cloud sandbox, model humans, workloads, roles, trust policies, secrets, and control-plane permissions. Use only low-cost/reversible resources.</p>
+<p>Demonstrate least-privilege with a reader role that can perform expected reads but cannot change policy or create privileged resources. Confirm control-plane logging.</p>
+<p><strong>Skills:</strong> Modules 19, 21, 49, 61, 76, 80, 81.</p>
+<h2>Capstone 7 — Protocol reverse engineering</h2>
+<p>Write a custom localhost protocol, capture it, then pretend you lost the source. Infer framing, endian, message types, request IDs, state, and errors. Implement a parser/dissector and fuzz it.</p>
+<p>Compare the final inferred specification with original source.</p>
+<p><strong>Skills:</strong> Modules 51, 61, 68, 77, 78.</p>
+<h2>Capstone 8 — Malware-analysis simulation</h2>
+<p>Use a harmless simulator that creates temporary files, starts a child process, touches a test configuration, and makes a localhost connection. Analyze it as if it were suspicious.</p>
+<p>Build a timeline, process tree, static triage, behavior report, and one detection rule/query concept. Reset the environment afterward.</p>
+<p><strong>Skills:</strong> Modules 07, 23, 37, 64, 67, 79–81.</p>
+<h2>Capstone 9 — Android application security review</h2>
+<p>Build or choose an open-source training Android app. Review manifest, exported components, deep links, storage, network security config, WebView, Keystore usage, native libraries, and signer identity.</p>
+<p>Trace one external input to a sensitive action and confirm server-side/IPC authorization.</p>
+<p><strong>Skills:</strong> Modules 17, 39, 53–56, 63–67, 78, 82.</p>
+<h2>Capstone 10 — Firmware trust chain</h2>
+<p>Use a development board or training firmware image. Identify image/container format, filesystem, boot components, update metadata, signing/trust design, rollback model, exposed interfaces, and network services.</p>
+<p>Do not disable boot/debug protections. The project is a <strong>trust review</strong>, not a bypass challenge.</p>
+<p><strong>Skills:</strong> Modules 18, 49, 54, 64, 67, 77, 78, 83.</p>
+<h2>Capstone 11 — Detection engineering lifecycle</h2>
+<p>Choose one benign lab behavior and implement the complete lifecycle: hypothesis, telemetry requirements, event generation, collection, normalization, rule, test fixture, false-positive analysis, ATT&amp;CK v19.2 mapping, and analyst procedure.</p>
+<p>Measure what happens when telemetry is unavailable.</p>
+<p><strong>Skills:</strong> Modules 12, 23, 47, 59, 80, 81.</p>
+<h2>Capstone 12 — Patch-to-prevention study</h2>
+<p>Select a bug in your own code or a fully disclosed public fix. Reconstruct the root cause, write the invariant, build a safe regression, search for variants, identify defense-in-depth controls, and create a short advisory.</p>
+<p><strong>Skills:</strong> Modules 40, 61, 65–68, 84.</p>
+<h2>Capstone 13 — Termux security research workstation</h2>
+<p>Use Termux as the organization/analysis layer for a safe project:</p>
+<ul>
+<li>Git repository for notes/scripts;</li>
+<li>Python virtual environment if needed;</li>
+<li>hashes of lab artifacts;</li>
+<li>offline search with <code>Hacking Guide Project.py</code>;</li>
+<li>local parser/fuzz harness;</li>
+<li>localhost HTTP service;</li>
+<li>structured reports exported to shared storage only when needed.</li>
+</ul>
+<p>Document Android/Termux limitations instead of trying to defeat them.</p>
+<p><strong>Skills:</strong> Modules 28–31, 36, 51, 61, 68, 77.</p>
+<h2>Capstone 14 — Incident reconstruction tabletop</h2>
+<p>Create synthetic endpoint, identity, DNS, cloud, and application logs for a fictional incident. Seed several benign distractors and three related suspicious events. Give the dataset to another learner without the answer.</p>
+<p>They must produce timeline, hypotheses, evidence, uncertainty, containment plan, and detection improvement. Compare with the scenario design.</p>
+<p><strong>Skills:</strong> Modules 23, 37, 47, 72, 76, 80, 81.</p>
+<h2>Capstone 15 — Security architecture review</h2>
+<p>Design a small SaaS system with browser/mobile clients, API gateway, application services, database, object storage, background queue, identity provider, CI/CD, cloud roles, observability, and backups.</p>
+<p>Create asset/identity/data/privilege/dependency/observation graphs. Define 25 security invariants and map each to preventive and detective controls.</p>
+<p><strong>Skills:</strong> Modules 21, 22, 39–41, 49, 61, 69–76, 80.</p>
+<h2>Scoring rubric</h2>
+<p>Score each capstone from 0–4 in these dimensions:</p>
+<ul>
+<li><strong>Scope discipline</strong> — authorization and boundaries explicit.</li>
+<li><strong>System model</strong> — accurate components/identities/trust edges.</li>
+<li><strong>Technical depth</strong> — explains internals, not only tools.</li>
+<li><strong>Evidence</strong> — minimal, reproducible, correctly interpreted.</li>
+<li><strong>Security reasoning</strong> — invariant/root cause/impact clear.</li>
+<li><strong>Remediation</strong> — addresses root cause and defense in depth.</li>
+<li><strong>Validation</strong> — regression/detection proves the fix.</li>
+<li><strong>Communication</strong> — report understandable to technical and non-technical readers.</li>
+<li><strong>Cleanup</strong> — lab restored and sensitive artifacts handled safely.</li>
+</ul>
+<p>A strong portfolio contains a few capstones scored deeply rather than dozens of shallow screenshots.</p>
+<h2>Advanced mastery checklist</h2>
+<p>Before calling yourself comfortable with the advanced track, you should be able to:</p>
+<ul>
+<li>read basic x86-64 and ARM64 control flow;</li>
+<li>explain executable loading and dynamic linking;</li>
+<li>triage a crash and identify root cause with sanitizers/debuggers;</li>
+<li>design a fuzz harness and minimize a failure;</li>
+<li>reverse a small binary you compiled;</li>
+<li>reason about HTTP intermediaries and parser boundaries;</li>
+<li>build an API authorization matrix/state machine;</li>
+<li>explain Kerberos and AD privilege graphs;</li>
+<li>distinguish Windows tokens/ACLs/privileges;</li>
+<li>distinguish Linux namespaces/cgroups/seccomp/LSM;</li>
+<li>explain Kubernetes RBAC plus runtime isolation;</li>
+<li>map cloud IAM/role/metadata trust;</li>
+<li>reverse a simple custom protocol;</li>
+<li>explain TLS identity/nonce/key lifecycle;</li>
+<li>analyze a benign suspicious binary safely;</li>
+<li>build and validate a detection;</li>
+<li>construct a forensic timeline;</li>
+<li>review an Android package and firmware trust chain;</li>
+<li>convert a security patch into an invariant/regression test.</li>
+</ul>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete the foundational path and the prerequisite modules for your chosen capstone. Read <code>ADVANCED-TRACK.md</code> and <code>LAB-GUIDE.md</code>.</p>
+<h3>Practice task</h3>
+<p>Complete one capstone end-to-end and have another person reproduce at least one result using only your documentation.</p>
+<h3>Evidence to keep</h3>
+<p>Keep the final report, diagrams, source/configuration, sanitized evidence, regression/detection tests, and cleanup record.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>maximizing tool count instead of depth;</li>
+<li>omitting the expected invariant;</li>
+<li>treating a screenshot as sufficient evidence;</li>
+<li>skipping remediation validation;</li>
+<li>leaving vulnerable lab services exposed;</li>
+<li>expanding scope beyond authorization.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>A capstone is complete when you can explain <strong>system → trust boundary → hypothesis → evidence → root cause → impact → fix → verification</strong> without depending on unexplained commands.</p>
+<h3>Continue with</h3>
+<p>From the main menu, open <strong>Learning paths</strong>, revisit weak areas with the Advanced path, then specialize in reverse engineering, exploit-research foundations, identity, protocols, or detection.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,121 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SOC, SIEM, SOAR and Detection Operations — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-047.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="SOC, SIEM, SOAR and Detection Operations Purpose: Understand how security operations turns telemetry into validated detections, investigations, response actions, and continuous improvement…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SOC, SIEM, SOAR and Detection Operations — DedSec Project">
+<meta property="og:description" content="SOC, SIEM, SOAR and Detection Operations Purpose: Understand how security operations turns telemetry into validated detections, investigations, response actions, and continuous improvement…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-047.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SOC, SIEM, SOAR and Detection Operations — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SOC, SIEM, SOAR and Detection Operations — DedSec Project">
+<meta name="twitter:description" content="SOC, SIEM, SOAR and Detection Operations Purpose: Understand how security operations turns telemetry into validated detections, investigations, response actions, and continuous improvement…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SOC, SIEM, SOAR and Detection Operations — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>SOC, SIEM, SOAR and Detection Operations — DedSec Project</h1><p>SOC, SIEM, SOAR and Detection Operations Purpose: Understand how security operations turns telemetry into validated detections, investigations, response actions, and continuous improvement…</p><section><blockquote>
+<p><strong>Purpose:</strong> Understand how security operations turns telemetry into validated detections, investigations, response actions, and continuous improvement.</p>
+</blockquote>
+<h2>SOC operating model</h2>
+<p>A Security Operations Center is a capability, not just a room or product. It combines people, processes, telemetry, detections, case management, threat context, response authority, and measurement.</p>
+<h2>Telemetry pipeline</h2>
+<p>Typical stages:</p>
+<ol>
+<li>source generates event;</li>
+<li>collector receives it;</li>
+<li>parser/normalizer extracts fields;</li>
+<li>storage/index retains it;</li>
+<li>detection logic evaluates it;</li>
+<li>alert/case is created;</li>
+<li>analyst investigates;</li>
+<li>response action is authorized;</li>
+<li>lessons feed back into controls.</li>
+</ol>
+<p>Failures at any stage can create blind spots.</p>
+<h2>SIEM</h2>
+<p>A SIEM centralizes and correlates security-relevant logs. More ingestion is not always better. Prioritize high-value sources and ensure fields are parsed consistently.</p>
+<p>For each log source record:</p>
+<ul>
+<li>owner;</li>
+<li>source system;</li>
+<li>event types;</li>
+<li>timestamp/timezone;</li>
+<li>retention;</li>
+<li>parser status;</li>
+<li>expected volume;</li>
+<li>security use cases;</li>
+<li>health monitoring.</li>
+</ul>
+<h2>Detection engineering</h2>
+<p>A detection should have:</p>
+<ul>
+<li>threat/use-case hypothesis;</li>
+<li>required data;</li>
+<li>query/rule;</li>
+<li>expected true positives;</li>
+<li>known false positives;</li>
+<li>severity rationale;</li>
+<li>response playbook;</li>
+<li>test method;</li>
+<li>owner;</li>
+<li>review date.</li>
+</ul>
+<p>Detection-as-code practices can add version control, peer review, tests, and rollback.</p>
+<h2>Alert quality</h2>
+<p>Track whether alerts are actionable, not merely numerous. A useful alert contains enough context for the next decision and does not require an analyst to reconstruct basic fields manually.</p>
+<h2>SOAR and automation</h2>
+<p>Automate deterministic, low-risk work first: enrichment, formatting, duplicate suppression, evidence collection, or ticket routing. Sensitive containment actions should have safeguards, scope checks, approvals, and rollback where possible.</p>
+<h2>Case management</h2>
+<p>Cases need chronology, evidence, ownership, decisions, and outcomes. Preserve source links/IDs so another responder can reproduce the investigation.</p>
+<h2>Detection coverage</h2>
+<p>Map detections to your own threat model and critical assets. ATT&amp;CK mapping helps communication but coverage counts can be misleading if rules are untested or data is missing.</p>
+<h2>Health monitoring</h2>
+<p>Detect failures of security controls themselves:</p>
+<ul>
+<li>agent stopped reporting;</li>
+<li>log volume unexpectedly zero;</li>
+<li>parser errors;</li>
+<li>time drift;</li>
+<li>rule disabled;</li>
+<li>retention failure;</li>
+<li>EDR exclusions changed;</li>
+<li>integration token expired.</li>
+</ul>
+<h2>Lab — Detection lifecycle</h2>
+<p>Create synthetic authentication logs with normal logins and one benign pattern of repeated failures followed by success. Write a detection, test it against positive and negative datasets, document false positives, and create a response checklist.</p>
+<p>Then remove a required field from the logs and document how detection quality degrades.</p>
+<p><strong>Learning goal:</strong> detection is a tested data product, not just a query.</p>
+<h2>SOC operating model in more depth</h2>
+<p>A SOC is a feedback system, not an alert queue. Telemetry, detections, triage, investigation, response, lessons learned, and engineering changes should form a loop.</p>
+<h3>Telemetry quality</h3>
+<p>Before writing a rule, verify that the required fields are reliably collected, timestamped, parsed, retained, and attributable to an asset/identity. A perfect query cannot compensate for missing or misleading telemetry.</p>
+<h3>Detection lifecycle</h3>
+<p>Document hypothesis, data sources, query/rule logic, expected benign test, false-positive conditions, severity, triage steps, response ownership, and regression tests. Version detections like code.</p>
+<h3>SOAR</h3>
+<p>Automate deterministic low-risk steps first: enrichment, ticket formatting, evidence collection, duplicate suppression. High-impact containment should have appropriate approvals and safeguards until the automation is proven reliable.</p>
+<h3>Triage</h3>
+<p>A good triage result states what is observed, confidence, affected entities, business context, next evidence needed, and whether containment is justified. Do not equate an alert with an incident.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Modules 12 and 23.</p>
+<h3>Practice task</h3>
+<p>Build a synthetic event pipeline: generate events, normalize fields, write one detection, route an alert, triage it with a playbook, measure false positives, and document telemetry gaps.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>37, 38, 59</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

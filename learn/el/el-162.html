@@ -1,0 +1,93 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-162.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests Transaction Πραγματική σημασία Ομάδα database αλλαγών που γίνονται commit ή rollback μαζί. Atomicity δεν λύνει κάθε race· isolation και…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests — DedSec Project">
+<meta property="og:description" content="Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests Transaction Πραγματική σημασία Ομάδα database αλλαγών που γίνονται commit ή rollback μαζί. Atomicity δεν λύνει κάθε race· isolation και…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-162.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests — DedSec Project">
+<meta name="twitter:description" content="Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests Transaction Πραγματική σημασία Ομάδα database αλλαγών που γίνονται commit ή rollback μαζί. Atomicity δεν λύνει κάθε race· isolation και…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests — DedSec Project</h1><p>Γλωσσάρι: συναλλαγές, συμπερασμό τύπων και unit tests Transaction Πραγματική σημασία Ομάδα database αλλαγών που γίνονται commit ή rollback μαζί. Atomicity δεν λύνει κάθε race· isolation και…</p><section><h2>Transaction</h2>
+<h3>Πραγματική σημασία</h3>
+<p>Ομάδα database αλλαγών που γίνονται commit ή rollback μαζί. Atomicity δεν λύνει κάθε race· isolation και concurrent writers εξακολουθούν να έχουν σημασία.</p>
+<h3>Συγκεκριμένη αφετηρία</h3>
+<pre><code class="language-text">BEGIN;
+INSERT INTO tasks(title) VALUES ('first');
+-- perform other work
+ROLLBACK;
+</code></pre>
+<h3>Εφαρμογή του κανόνα</h3>
+<p>Σε προσωρινή SQLite έλεγξε ότι insert σε rolled-back transaction δεν διατηρείται, σε αντίθεση με committed.</p>
+<h3>Αντιπαράδειγμα</h3>
+<p>Για Συναλλαγή, γράψε πρώτα αναμενόμενο αποτέλεσμα, άλλαξε σκόπιμα μία υπόθεση του παραδείγματος και όρισε τι πρέπει να ελέγχει το boundary πριν το επαναχρησιμοποιήσεις.</p>
+<h2>Type inference</h2>
+<h3>Πραγματική σημασία</h3>
+<p>Ο compiler συνάγει τύπο από τα συμφραζόμενα χωρίς explicit annotation. Σε statically typed γλώσσα εξακολουθεί να υπάρχει type checking, όχι implicit any.</p>
+<h3>Συγκεκριμένη αφετηρία</h3>
+<pre><code class="language-text">const scores: number[] = [2,4];
+const doubled = scores.map(n =&gt; n*2);
+// n inferred number
+</code></pre>
+<h3>Εφαρμογή του κανόνα</h3>
+<p>Άλλαξε array σε string[], δοκίμασε numeric multiplication και διάβασε TypeScript diagnostic. Σύγκρινε inference με λάθος annotation.</p>
+<h3>Αντιπαράδειγμα</h3>
+<p>Για Συναγωγή τύπων, γράψε πρώτα αναμενόμενο αποτέλεσμα, άλλαξε σκόπιμα μία υπόθεση του παραδείγματος και όρισε τι πρέπει να ελέγχει το boundary πριν το επαναχρησιμοποιήσεις.</p>
+<h2>Unit test</h2>
+<h3>Πραγματική σημασία</h3>
+<p>Μικρός επαναλήψιμος έλεγχος συγκεκριμένης συμπεριφοράς με ελεγχόμενη είσοδο. Διαφέρει από integration test με πραγματική βάση, browser ή network service.</p>
+<h3>Συγκεκριμένη αφετηρία</h3>
+<pre><code class="language-text">def clamp(x, lo, hi): return min(max(x,lo),hi)
+assert clamp(5,0,10)==5
+assert clamp(-1,0,10)==0
+</code></pre>
+<h3>Εφαρμογή του κανόνα</h3>
+<p>Πρόσθεσε boundary checks 0 και 10 και αποφάσισε αν lo&gt;hi πρέπει να κάνει raise.</p>
+<h3>Αντιπαράδειγμα</h3>
+<p>Για Δοκιμή μονάδας, γράψε πρώτα αναμενόμενο αποτέλεσμα, άλλαξε σκόπιμα μία υπόθεση του παραδείγματος και όρισε τι πρέπει να ελέγχει το boundary πριν το επαναχρησιμοποιήσεις.</p>
+<h2>WebSocket</h2>
+<h3>Πραγματική σημασία</h3>
+<p>Protocol μόνιμης bidirectional επικοινωνίας, συχνά μετά από HTTP Upgrade handshake. Σε αντίθεση με single HTTP requests απαιτεί connection lifecycle και reconnect policy.</p>
+<h3>Συγκεκριμένη αφετηρία</h3>
+<pre><code class="language-text">const ws = new WebSocket('wss://example.test/echo');
+ws.addEventListener('message', e =&gt; console.log(e.data));
+// Requires an authorized matching server.
+</code></pre>
+<h3>Εφαρμογή του κανόνα</h3>
+<p>Φτιάξε τοπικό test server και έλεγξε open/message/close states. Εξήγησε γιατί reconnect δεν πρέπει να επαναλαμβάνει τυφλά side effects.</p>
+<h3>Αντιπαράδειγμα</h3>
+<p>Για WebSocket, γράψε πρώτα αναμενόμενο αποτέλεσμα, άλλαξε σκόπιμα μία υπόθεση του παραδείγματος και όρισε τι πρέπει να ελέγχει το boundary πριν το επαναχρησιμοποιήσεις.</p>
+<h2>Yield</h2>
+<h3>Πραγματική σημασία</h3>
+<p>Έκφραση που αναστέλλει generator, παράγει τιμή και διατηρεί execution state. Διαφέρει από return που ολοκληρώνει την κλήση.</p>
+<h3>Συγκεκριμένη αφετηρία</h3>
+<pre><code class="language-text">def counter():
+    yield 1
+    yield 2
+assert list(counter())==[1,2]
+</code></pre>
+<h3>Εφαρμογή του κανόνα</h3>
+<p>Κάλεσε next επανειλημμένα και δες StopIteration μετά την τελευταία τιμή. Σύγκρινε generator με eager return [1,2].</p>
+<h3>Αντιπαράδειγμα</h3>
+<p>Για Παραγωγή τιμής, γράψε πρώτα αναμενόμενο αποτέλεσμα, άλλαξε σκόπιμα μία υπόθεση του παραδείγματος και όρισε τι πρέπει να ελέγχει το boundary πριν το επαναχρησιμοποιήσεις.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

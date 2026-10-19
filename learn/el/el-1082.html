@@ -1,0 +1,62 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Περιβάλλοντα και αναπαραγώγιμη δημιουργία — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1082.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Αναπαραγώγιμα περιβάλλοντα Python σε Linux, Windows και Termux Όταν ένα πρόγραμμα βρίσκει ένα πακέτο και άλλο εμφανίζει ModuleNotFoundError, δεν είναι σωστό να εγκαθιστούμε αμέσως την ίδια…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Περιβάλλοντα και αναπαραγώγιμη δημιουργία — DedSec Project">
+<meta property="og:description" content="Αναπαραγώγιμα περιβάλλοντα Python σε Linux, Windows και Termux Όταν ένα πρόγραμμα βρίσκει ένα πακέτο και άλλο εμφανίζει ModuleNotFoundError, δεν είναι σωστό να εγκαθιστούμε αμέσως την ίδια…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1082.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Περιβάλλοντα και αναπαραγώγιμη δημιουργία — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Περιβάλλοντα και αναπαραγώγιμη δημιουργία — DedSec Project">
+<meta name="twitter:description" content="Αναπαραγώγιμα περιβάλλοντα Python σε Linux, Windows και Termux Όταν ένα πρόγραμμα βρίσκει ένα πακέτο και άλλο εμφανίζει ModuleNotFoundError, δεν είναι σωστό να εγκαθιστούμε αμέσως την ίδια…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Περιβάλλοντα και αναπαραγώγιμη δημιουργία — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Περιβάλλοντα και αναπαραγώγιμη δημιουργία — DedSec Project</h1><p>Αναπαραγώγιμα περιβάλλοντα Python σε Linux, Windows και Termux Όταν ένα πρόγραμμα βρίσκει ένα πακέτο και άλλο εμφανίζει ModuleNotFoundError, δεν είναι σωστό να εγκαθιστούμε αμέσως την ίδια…</p><section><h1>Αναπαραγώγιμα περιβάλλοντα Python σε Linux, Windows και Termux</h1>
+<p>Όταν ένα πρόγραμμα βρίσκει ένα πακέτο και άλλο εμφανίζει ModuleNotFoundError, δεν είναι σωστό να εγκαθιστούμε αμέσως την ίδια βιβλιοθήκη ξανά. Πρέπει πρώτα να διαπιστώσουμε ποια Python χρησιμοποιεί κάθε διεργασία. Το virtual environment απομονώνει εξαρτήσεις, αλλά δεν εξασφαλίζει από μόνο του συμβατότητα με λειτουργικό, επεξεργαστή ή native libraries.</p>
+<h2>Δες την πραγματική Python</h2>
+<pre><code class="language-python">import sys
+import platform
+from pathlib import Path
+
+print(sys.executable)
+print(sys.version.split()[0])
+print(platform.system(), platform.machine())
+print(Path.cwd())
+</code></pre>
+<p>Αποθήκευσε το παράδειγμα σε inspect_env.py και εκτέλεσέ το με ακριβώς τον interpreter της προβληματικής εφαρμογής. Το sys.executable αποκαλύπτει το πραγματικό εκτελέσιμο, ενώ η ένδειξη του τερματικού δεν αρκεί για να αποδείξει ενεργοποιημένο venv. Το Path.cwd() δείχνει τον τρέχοντα φάκελο της διεργασίας, όχι υποχρεωτικά τον φάκελο του script.</p>
+<h2>Χώρισε τις εξαρτήσεις ανά project</h2>
+<p>Σε desktop Linux μπορείς να δημιουργήσεις .venv με python3 -m venv .venv και να χρησιμοποιήσεις το .venv/bin/python -m pip. Στα Windows το αντίστοιχο εκτελέσιμο βρίσκεται συνήθως στο .venv\Scripts\python.exe. Η σύνταξη -m pip είναι χρήσιμη επειδή εκκινεί το pip μέσω της επιλεγμένης Python. Ορισμένες διανομές χρειάζονται ξεχωριστό πακέτο venv. Στο Termux η Python παρέχεται από το δικό του pkg· επιβεβαίωσε πρώτα τι υποστηρίζει η πραγματική εγκατάσταση.</p>
+<h2>Διαφορετική αιτία, διαφορετική λύση</h2>
+<p>Το «pip λέει installed αλλά το import αποτυγχάνει» δείχνει συχνά διαφορετικό interpreter. Το «το import επιτυγχάνει αλλά λείπει native library» δείχνει διαφορετική εξάρτηση του runtime. Σε compiled πακέτα πρέπει επίσης να ταιριάζουν η έκδοση Python, το ABI και η πλατφόρμα: ένα Linux wheel δεν είναι αυτόματα κατάλληλο για Android/Termux.</p>
+<h2>Πρακτική απόδειξη</h2>
+<p>Δημιούργησε προσωρινό project και σύγκρινε τα αποτελέσματα του inspect_env.py από δύο interpreters. Στη συνέχεια κράτα λίστα εξαρτήσεων και προσπάθησε ανακατασκευή του περιβάλλοντος χωρίς αντιγραφή του παλιού site-packages. Κατάγραψε εκδόσεις, λειτουργικό, αρχιτεκτονική, προσδοκώμενες και πραγματικές τιμές. Μην συμπεραίνεις ότι ολόκληρη εφαρμογή λειτουργεί επειδή μία εγκατάσταση επέστρεψε επιτυχία.</p>
+<h2>Φορητότητα και προσβασιμότητα</h2>
+<p>Μην υποθέτεις ότι εργαλεία Android υπάρχουν σε Ubuntu ή διαδρομές Windows σε Termux. Δοκίμασε πραγματικό πληκτρολόγιο και συσκευές εισόδου. Στα μενού κονσόλας κράτησε σωστή πλοήγηση και έξοδο.</p>
+<h3>Λυμένο παράδειγμα</h3>
+<pre><code class="language-text">import sys
+from pathlib import Path
+print(sys.platform)
+print(Path.home())
+</code></pre>
+<h3>Άσκηση</h3>
+<p>Πες γιατί η σταθερή διαδρομή /storage/emulated/0 αποτυγχάνει σε Linux.</p>
+<h3>Λύση / υπόδειξη</h3>
+<p>Η διαδρομή Android δεν υπάρχει σε συνηθισμένο Linux.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

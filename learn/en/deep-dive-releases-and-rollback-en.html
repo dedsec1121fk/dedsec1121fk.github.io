@@ -1,0 +1,44 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Release rollback without deleting Git history — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/deep-dive-releases-and-rollback-en.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Release rollback without deleting Git history What is happening A release should identify the exact commit, verified tests, files changed and migration considerations. A GitHub Pages…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Release rollback without deleting Git history — DedSec Project">
+<meta property="og:description" content="Release rollback without deleting Git history What is happening A release should identify the exact commit, verified tests, files changed and migration considerations. A GitHub Pages…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/deep-dive-releases-and-rollback-en.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Release rollback without deleting Git history — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Release rollback without deleting Git history — DedSec Project">
+<meta name="twitter:description" content="Release rollback without deleting Git history What is happening A release should identify the exact commit, verified tests, files changed and migration considerations. A GitHub Pages…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Release rollback without deleting Git history — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Release rollback without deleting Git history — DedSec Project</h1><p>Release rollback without deleting Git history What is happening A release should identify the exact commit, verified tests, files changed and migration considerations. A GitHub Pages…</p><section><h2>What is happening</h2>
+<p>A release should identify the exact commit, verified tests, files changed and migration considerations. A GitHub Pages deployment can have a newer UI than the phone's cached assets.</p>
+<h2>Practical investigation</h2>
+<p>Prefer git revert to undo a problematic published commit because it preserves the audit trail. Avoid replacing the entire branch without reviewing changes.</p>
+<h2>Common traps</h2>
+<p>Document the rollback trigger before deployment, then retest links, language, accessibility and storage compatibility after reverting.</p>
+<h2>Adaptable demonstration</h2>
+<pre><code class="language-text">git log --oneline -5
+</code></pre>
+<h2>Revert code only after checking data compatibility</h2>
+<p>Suppose release B adds a new configuration field that release A cannot parse. Reverting the code from B to A may leave B's persisted configuration behind. A safe rollback plan states which data version remains readable, whether a migration backup exists and how the old application behaves if the new field is present. Test that state before release, not during an outage.</p>
+<p>A normal revert adds a new commit containing the inverse change. Reverting a merge requires an explicit mainline-parent choice, so do not copy a one-commit command into that case without inspecting ancestry. Check the final tree and tests; the presence of a revert message does not demonstrate restored behavior.</p>
+<p>Keep a release record containing source commit, generated-artifact hash, build configuration and deployment result. On a phone, distinguish the deployed version from a cached response using asset URLs/headers and an intentional reload. A successful workflow is evidence that the configured steps passed, not that every supported physical device was exercised.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

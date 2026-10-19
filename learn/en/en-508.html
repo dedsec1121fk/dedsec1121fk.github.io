@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>racket — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-508.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="racket — consolidated language guide Racket How the language behaves Racket supports functional programming and a language-oriented approach with macros, modules and contracts. Source…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="racket — consolidated language guide — DedSec Project">
+<meta property="og:description" content="racket — consolidated language guide Racket How the language behaves Racket supports functional programming and a language-oriented approach with macros, modules and contracts. Source…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-508.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="racket — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="racket — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="racket — consolidated language guide Racket How the language behaves Racket supports functional programming and a language-oriented approach with macros, modules and contracts. Source…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="racket — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>racket — consolidated language guide — DedSec Project</h1><p>racket — consolidated language guide Racket How the language behaves Racket supports functional programming and a language-oriented approach with macros, modules and contracts. Source…</p><section><h2>Racket</h2>
+<h3>How the language behaves</h3>
+<p>Racket supports functional programming and a language-oriented approach with macros, modules and contracts.</p>
+<h3>Source fragment to analyze</h3>
+<pre><code class="language-text">#lang racket
+(define (square x) (* x x))
+(displayln (square 5))
+</code></pre>
+<h3>Deliberate exercise</h3>
+<p>Predict the printed value and add a contract or predicate to reject nonnumeric inputs before multiplying.</p>
+<h3>Check a failure condition</h3>
+<p>A quoted list is data, not automatically an executed program; learn the difference before experimenting with macros.</p>
+<p>Record input, expected output and observed output with the actual Racket implementation and version. If no compatible runtime exists on your current platform, label the fragment unexecuted and reason from its semantics rather than claiming a successful run. Run a second isolated experiment that changes only the mechanism under investigation; preserve the exact diagnostic while removing private data.</p>
+<h2>Racket — Expanded practice workbook</h2>
+<h3>Use an executable module</h3>
+<p>Racket's <code>#lang</code> selects the language and affects available bindings. Write the following into <code>sum-list.rkt</code>, not into an unrelated Scheme dialect:</p>
+<pre><code class="language-racket">#lang racket
+(require rackunit)
+(define (sum-list xs)
+  (cond [(empty? xs) 0]
+        [else (+ (first xs) (sum-list (rest xs)))]))
+(check-equal? (sum-list '()) 0)
+(check-equal? (sum-list '(1 2 3)) 6)
+(check-equal? (sum-list '(-2 5)) 3)
+(displayln &quot;checks passed&quot;)
+</code></pre>
+<p>Run <code>racket sum-list.rkt</code>. With <code>rackunit</code> available, the expected message is <code>checks passed</code>; otherwise a failing check raises an exception. This uses structural recursion, where each recursive call consumes the rest of the list until the empty-list case. It has not been run using an installed Racket runtime here.</p>
+<h3>Prove termination and the base case</h3>
+<p>Explain why <code>(rest xs)</code> makes a strictly shorter finite list, and why <code>empty?</code> must be checked <strong>before</strong> calling <code>first</code>. Remove the base case only in a disposable copy: the failure demonstrates a broken domain/termination contract, not that recursion is inherently unsafe. A deeply nested list may encounter resource limits even when the mathematical procedure terminates.</p>
+<h3>Test invalid element types</h3>
+<p>Try <code>(sum-list '(1 &quot;two&quot;))</code> and record the actual contract error from <code>+</code>. Make a decision: accept only numeric lists, validate each item before summing, or return a structured error. Do not quietly replace arbitrary nonnumeric values with zero; that masks a malformed input record.</p>
+<h3>Comparative extension</h3>
+<p>Implement the same result with <code>(apply + xs)</code> or <code>for/sum</code> and compare the empty and negative-value cases. Explain evaluation and recursion cost rather than assuming a faster result from shorter syntax. Add <code>(check-exn exn:fail? (lambda () (sum-list '(1 &quot;two&quot;))))</code> to turn the expected failure into a test. Record language version and source file. Reference: https://docs.racket-lang.org/rackunit/</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

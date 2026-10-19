@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Search filenames without executing them — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1040.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Recipe: deterministic read-only Python file discovery Intended use and acceptance criteria For a local programming workspace, enumerate regular .py files below one explicitly chosen…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Search filenames without executing them — DedSec Project">
+<meta property="og:description" content="Recipe: deterministic read-only Python file discovery Intended use and acceptance criteria For a local programming workspace, enumerate regular .py files below one explicitly chosen…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1040.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Search filenames without executing them — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Search filenames without executing them — DedSec Project">
+<meta name="twitter:description" content="Recipe: deterministic read-only Python file discovery Intended use and acceptance criteria For a local programming workspace, enumerate regular .py files below one explicitly chosen…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Search filenames without executing them — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Search filenames without executing them — DedSec Project</h1><p>Recipe: deterministic read-only Python file discovery Intended use and acceptance criteria For a local programming workspace, enumerate regular .py files below one explicitly chosen…</p><section><h1>Recipe: deterministic read-only Python file discovery</h1>
+<h2>Intended use and acceptance criteria</h2>
+<p>For a local programming workspace, enumerate regular .py files below one explicitly chosen directory without modifying them. Return relative POSIX-style paths in sorted order so repeated scans are comparable. Reject missing roots and skip symbolic links found as matching files to reduce accidental traversal into unexpected locations.</p>
+<h2>Complete runnable example</h2>
+<p>Save this as <code>07_Search_files.py</code> and execute with Python 3. The fixture is disposable and has no network dependency.</p>
+<pre><code class="language-python">import tempfile
+from pathlib import Path
+def list_python(root):
+    base = Path(root)
+    if not base.is_dir():
+        raise ValueError(&quot;root must be a directory&quot;)
+    found = []
+    for path in base.rglob(&quot;*.py&quot;):
+        if path.is_file() and not path.is_symlink():
+            found.append(path.relative_to(base).as_posix())
+    return sorted(found)
+with tempfile.TemporaryDirectory() as folder:
+    root = Path(folder)
+    (root/&quot;inner&quot;).mkdir()
+    (root/&quot;main.py&quot;).write_text(&quot;pass\n&quot;)
+    (root/&quot;inner&quot;/&quot;α.py&quot;).write_text(&quot;pass\n&quot;)
+    (root/&quot;ignore.txt&quot;).write_text(&quot;other\n&quot;)
+    assert list_python(root) == [&quot;inner/α.py&quot;, &quot;main.py&quot;]
+    assert list_python(root/&quot;inner&quot;) == [&quot;α.py&quot;]
+    try: list_python(root/&quot;missing&quot;)
+    except ValueError: pass
+    else: raise AssertionError(&quot;missing root accepted&quot;)
+print(&quot;PASS read-only recursive Python search&quot;)
+</code></pre>
+<h2>Guarantees and limitations</h2>
+<p>Path.rglob is recursive and convenient, but filesystem traversal has race conditions: files may vanish between enumeration and use. <code>is_file</code> and <code>is_symlink</code> are checks on current state, not a security guarantee against malicious concurrent changes. Case-sensitive matching to *.py does not include *.PY; choose that policy deliberately. This helper is read-only and does not inspect Python source content or automatically execute discovered files.</p>
+<h2>Adaptation lab</h2>
+<p>Add a file with spaces, a Greek directory name, and a symbolic link to a Python file in a disposable fixture. Confirm what is included and what is skipped. Compare sorted relative paths on two runs. Add an explicit maximum file count and a user-visible message if the directory is too large. For hostile directories, a stronger descriptor-based traversal strategy is necessary.</p>
+<h2>Troubleshooting and release check</h2>
+<p>If a file is missing from results, inspect its extension, symlink status, parent path and permissions. If an inaccessible directory raises an error, report which subtree failed rather than presenting a partial list as complete. On Android, storage access permissions can differ from Termux home-directory access.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

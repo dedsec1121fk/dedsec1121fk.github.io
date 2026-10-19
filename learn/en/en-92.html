@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>ModuleNotFoundError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-92.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="ModuleNotFoundError: resolve the exact Python environment What fails and when A ModuleNotFoundError often means that the interpreter running the program cannot see an installed…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="ModuleNotFoundError — DedSec Project">
+<meta property="og:description" content="ModuleNotFoundError: resolve the exact Python environment What fails and when A ModuleNotFoundError often means that the interpreter running the program cannot see an installed…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-92.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ModuleNotFoundError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ModuleNotFoundError — DedSec Project">
+<meta name="twitter:description" content="ModuleNotFoundError: resolve the exact Python environment What fails and when A ModuleNotFoundError often means that the interpreter running the program cannot see an installed…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="ModuleNotFoundError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>ModuleNotFoundError — DedSec Project</h1><p>ModuleNotFoundError: resolve the exact Python environment What fails and when A ModuleNotFoundError often means that the interpreter running the program cannot see an installed…</p><section><h1>ModuleNotFoundError: resolve the exact Python environment</h1>
+<h2>What fails and when</h2>
+<p>A ModuleNotFoundError often means that the interpreter running the program cannot see an installed distribution; it does not prove the package is absent from every interpreter on the device. It can also mean the import name differs from the pip distribution name, a virtual environment is inactive, or project files shadow packages.</p>
+<h2>Self-contained executable example</h2>
+<p>Save this as 011_ModuleNotFoundError.py and run <code>python3 011_ModuleNotFoundError.py</code>. The example checks both the error and a valid case.</p>
+<pre><code class="language-python">import importlib.util
+import sys
+from pathlib import Path
+print(&quot;interpreter:&quot;, sys.executable)
+print(&quot;cwd:&quot;, Path.cwd())
+print(&quot;json location:&quot;, importlib.util.find_spec(&quot;json&quot;).origin)
+assert importlib.util.find_spec(&quot;json&quot;) is not None
+assert importlib.util.find_spec(&quot;_dedsec_missing_fixture_&quot;) is None
+</code></pre>
+<h2>Diagnostic sequence and safe repair</h2>
+<p>Run python3 -c 'import sys; print(sys.executable)' with the exact launcher used by the app. Then python3 -m pip --version and python3 -m pip show PACKAGE. Inspect sys.path and project filenames. In Termux use its Python and site-packages; do not mix Termux installations with system or unrelated Debian environments. Install only into the intended environment, ideally a project venv.</p>
+<h2>Practical lab and boundary test</h2>
+<p>Make an isolated venv, print its sys.executable and inspect find_spec for a standard-library module. Explain why invoking plain pip from another terminal could update a different interpreter. Test an intentional misspelling without installing anything.</p>
+<h2>Reproduce interpreter visibility without installing anything</h2>
+<p>Use the interpreter that is running this very script for both an intentionally absent module and a standard-library control. The -I switch isolates Python from user-site packages and most environment influences; it is useful for diagnosis, but it is not equivalent to the application's normal import path.</p>
+<pre><code class="language-python">import sys, subprocess
+missing_module = 'dedsec_missing_fixture_9f8a6d71'
+missing_run = subprocess.run(
+    [sys.executable, '-I', '-c', 'import '+missing_module],
+    capture_output=True, text=True)
+control_run = subprocess.run(
+    [sys.executable, '-I', '-c', 'import json; print(json.dumps([1, 2]))'],
+    capture_output=True, text=True)
+assert missing_run.returncode != 0 and 'ModuleNotFoundError' in missing_run.stderr
+assert control_run.returncode == 0 and control_run.stdout.strip() == '[1, 2]'
+</code></pre>
+<h2>Interpreter, distribution, and shadowing checklist</h2>
+<p>Record sys.executable from the failing process, then run that exact executable with -m pip show DISTRIBUTION. Import names can differ from distribution names. Check local filenames such as json.py and directories on sys.path before reinstalling. If a module works normally but not with -I, inspect user-site packages, PYTHONPATH and working-directory assumptions. Mastery means explaining why a successful pip installation in one virtual environment does not prove visibility in another.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

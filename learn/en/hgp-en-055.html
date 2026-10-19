@@ -1,0 +1,104 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bluetooth, NFC and Proximity Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-055.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Bluetooth, NFC and Proximity Security Purpose: Understand short-range radio and proximity security with emphasis on pairing, identity, privacy, configuration, and safe testing of devices…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Bluetooth, NFC and Proximity Security — DedSec Project">
+<meta property="og:description" content="Bluetooth, NFC and Proximity Security Purpose: Understand short-range radio and proximity security with emphasis on pairing, identity, privacy, configuration, and safe testing of devices…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-055.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bluetooth, NFC and Proximity Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bluetooth, NFC and Proximity Security — DedSec Project">
+<meta name="twitter:description" content="Bluetooth, NFC and Proximity Security Purpose: Understand short-range radio and proximity security with emphasis on pairing, identity, privacy, configuration, and safe testing of devices…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Bluetooth, NFC and Proximity Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Bluetooth, NFC and Proximity Security — DedSec Project</h1><p>Bluetooth, NFC and Proximity Security Purpose: Understand short-range radio and proximity security with emphasis on pairing, identity, privacy, configuration, and safe testing of devices…</p><section><blockquote>
+<p><strong>Purpose:</strong> Understand short-range radio and proximity security with emphasis on pairing, identity, privacy, configuration, and safe testing of devices you own.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Distinguish Bluetooth Classic and Bluetooth Low Energy at a practical level.</li>
+<li>Understand discovery, pairing/bonding, services/characteristics, and permissions conceptually.</li>
+<li>Explain NFC's proximity model and common use cases.</li>
+<li>Evaluate device privacy, update, and pairing hygiene.</li>
+</ul>
+<h2>Bluetooth security model</h2>
+<p>Bluetooth security depends on protocol version, pairing method, device capabilities, implementation quality, user confirmation, key storage, and application-layer design. “Short range” should never be treated as authentication.</p>
+<h2>Pairing guidance</h2>
+<p>When pairing devices you own:</p>
+<ul>
+<li>verify the intended device name/model and physical context;</li>
+<li>prefer pairing methods that provide meaningful user confirmation;</li>
+<li>remove stale pairings;</li>
+<li>keep firmware/OS updated;</li>
+<li>disable unnecessary discoverability;</li>
+<li>avoid pairing sensitive devices in crowded/untrusted environments when confirmation is weak.</li>
+</ul>
+<h2>BLE services and characteristics</h2>
+<p>Bluetooth Low Energy applications commonly expose GATT services and characteristics. Security can depend on whether operations require an encrypted/authenticated connection and whether the application performs its own authorization. A characteristic being discoverable does not imply every write/read should be public.</p>
+<h2>Privacy</h2>
+<p>Bluetooth identifiers and advertising behavior can create tracking concerns. Modern platforms use address randomization and permission controls, but applications should still minimize persistent identifiers and unnecessary background scanning.</p>
+<h2>NFC</h2>
+<p>NFC is commonly used for tags, payments, access, device setup, and data exchange. Proximity reduces some risks but does not prove user intent or authorization. Treat data read from tags as untrusted input and require confirmation for sensitive state changes.</p>
+<h2>UWB and proximity claims</h2>
+<p>Ultra-wideband and related ranging technologies can improve distance estimation, but secure proximity systems still need cryptographic identity, replay resistance, protocol hardening, and safe failure behavior. Distance alone is not authorization.</p>
+<h2>Device inventory exercise</h2>
+<p>For devices you own, document:</p>
+<ul>
+<li>radio types enabled;</li>
+<li>pairing/bonded devices;</li>
+<li>last update date;</li>
+<li>whether discoverability is normally enabled;</li>
+<li>app permissions related to nearby devices/location;</li>
+<li>how lost/stolen-device access is revoked;</li>
+<li>whether the device stores sensitive data.</li>
+</ul>
+<h2>Safe lab ideas</h2>
+<p>Use only your own devices. You can safely practice by:</p>
+<ul>
+<li>observing your phone's paired-device list;</li>
+<li>documenting permission prompts;</li>
+<li>testing what happens when a device is unpaired and re-paired;</li>
+<li>verifying whether a device reconnects automatically;</li>
+<li>reviewing vendor firmware update procedures;</li>
+<li>reading your own NFC tag that contains synthetic text/URL data.</li>
+</ul>
+<p>Do not attempt to intercept, impersonate, or interfere with nearby third-party devices.</p>
+<h2>Defensive checklist</h2>
+<ul>
+<li>Keep radio stacks and device firmware updated.</li>
+<li>Remove unused pairings.</li>
+<li>Disable discoverability when unnecessary.</li>
+<li>Use strong device unlock and encryption.</li>
+<li>Restrict app permissions.</li>
+<li>Require explicit authorization for sensitive actions.</li>
+<li>Log security-relevant pairing/account changes where the platform supports it.</li>
+<li>Have a revocation process for lost devices.</li>
+</ul>
+<h2>Checkpoint</h2>
+<p>You should be able to explain why radio range is not a trust boundary and why application-layer authorization remains important. Continue with Modules 16, 17, 18, and 44.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Modules 16 and 17 help.</p>
+<h3>Practice task</h3>
+<p>Audit pairings, permissions, update state, and proximity-security behavior only on devices/tags you own. Document what proves user intent versus mere physical proximity.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>44, 56, 60</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,126 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>gdscript — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-535.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="gdscript — consolidated language guide GDScript Mental model GDScript is used by the Godot engine; scripts attach to nodes and respond to lifecycle callbacks. Minimal source sample…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="gdscript — consolidated language guide — DedSec Project">
+<meta property="og:description" content="gdscript — consolidated language guide GDScript Mental model GDScript is used by the Godot engine; scripts attach to nodes and respond to lifecycle callbacks. Minimal source sample…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-535.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="gdscript — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="gdscript — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="gdscript — consolidated language guide GDScript Mental model GDScript is used by the Godot engine; scripts attach to nodes and respond to lifecycle callbacks. Minimal source sample…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="gdscript — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>gdscript — consolidated language guide — DedSec Project</h1><p>gdscript — consolidated language guide GDScript Mental model GDScript is used by the Godot engine; scripts attach to nodes and respond to lifecycle callbacks. Minimal source sample…</p><section><h2>GDScript</h2>
+<h3>Mental model</h3>
+<p>GDScript is used by the Godot engine; scripts attach to nodes and respond to lifecycle callbacks.</p>
+<h3>Minimal source sample</h3>
+<pre><code class="language-text">extends Node
+var score := 0
+func _ready() -&gt; void:
+    score += 1
+    print(score)
+</code></pre>
+<h3>Experiment to carry out</h3>
+<p>Attach a script to a node in an empty scene and compare _ready with _process callback frequency.</p>
+<h3>A specific failure to distinguish</h3>
+<p>Node ownership and scene-tree lifecycle matter; a method may never run if the node was not instantiated or entered the tree.</p>
+<p>To evaluate the exercise, record the initial input, predicted behavior and actual observation in a compatible GDScript environment. Add a second run changing only one variable or argument; this makes the comparison attributable to a concrete cause. If the required runtime is not installed, treat the example as unexecuted source analysis and never label an imagined output as a passing test.</p>
+<h2>GDScript — Expanded practice workbook</h2>
+<h3>Build the correct runtime context</h3>
+<p>GDScript depends on the Godot scene tree; a script copied into a random Python or Node command line will not run. Create a Godot 4 scene with a plain <code>Node</code> root and attach the following script:</p>
+<pre><code class="language-gdscript">extends Node
+signal score_changed(total: int)
+var score: int = 0
+
+func add_points(points: int) -&gt; void:
+    if points &lt; 0:
+        return
+    score += points
+    score_changed.emit(score)
+
+func _ready() -&gt; void:
+    score_changed.connect(_on_score_changed)
+    add_points(3)
+    add_points(0)
+    add_points(-2)
+    assert(score == 3)
+
+func _on_score_changed(total: int) -&gt; void:
+    print(total)
+</code></pre>
+<p>This exercise predicts the signal outputs <code>3</code> and <code>3</code>, and a final stored score of 3; a rejected negative update emits no signal. Verify in Godot's output panel, not in a web page. It was not executed under an installed Godot editor here.</p>
+<h3>Describe the invariant</h3>
+<p>The rule is <strong>score never decreases through <code>add_points</code></strong>. A method that accepts a negative input by adding it would violate this rule. Decide if rejection should return a boolean or send an explicit error signal rather than being silent; different game designs need different feedback. Signals notify listeners, but the authoritative state remains the <code>score</code> variable.</p>
+<h3>Compare ready and per-frame updates</h3>
+<p><code>_ready</code> runs after the node enters the scene tree. Do not move score mutation into <code>_process(delta)</code> without understanding that it executes on many frames and would repeatedly add points. Likewise, a connected signal handler should not write back to the same state without a guard that prevents a loop.</p>
+<h3>Independent extension</h3>
+<p>Attach a UI <code>Label</code>, connect <code>score_changed</code> and update text only when the value changes. Test a new scene instance, positive values, zero and invalid negative input; confirm that there are no duplicate signal connections after scene reload. Capture engine version, scene structure and output. Documentation: https://docs.godotengine.org/en/stable/tutorials/scripting/gdscript/</p>
+<h2>GDScript — Focused mastery pathway</h2>
+<h3>Scene contract</h3>
+<p>Create a Godot 4 scene with a CharacterBody2D called Player, a CollisionShape2D child and at least two StaticBody2D walls with collision shapes. Configure Input Map actions ui_left and ui_right for keyboard; add explicit touch buttons later. Godot 3 KinematicBody2D scripts are <em>not</em> API-compatible with this Godot 4 example.</p>
+<h3>Player.gd (attach to Player)</h3>
+<pre><code class="language-gdscript">extends CharacterBody2D
+
+@export var move_speed: float = 180.0
+@export var gravity: float = 980.0
+
+func _physics_process(delta: float) -&gt; void:
+    var axis: float = Input.get_axis(&quot;ui_left&quot;, &quot;ui_right&quot;)
+    velocity.x = axis * move_speed
+    if not is_on_floor():
+        velocity.y += gravity * delta
+    else:
+        velocity.y = 0.0
+    move_and_slide()
+</code></pre>
+<p>The physics tick updates velocity in pixels/second. Multiplying horizontal velocity by delta again would slow the movement incorrectly; move_and_slide performs its own time-aware step in Godot 4. Gravity uses delta because it changes velocity over time. Collisions depend on correctly sized shapes and layers, not just the script.</p>
+<h3>Test a real scene</h3>
+<ol>
+<li>Hold right for roughly one second and measure world-space displacement; repeat at different rendering frame rates with the same physics tick rate.</li>
+<li>Check that left gives negative X, right positive X, and pressing both cancels. Verify the Input Map rather than silently reversing signs to hide misconfiguration.</li>
+<li>Drop the player onto a wall/floor and check whether is_on_floor becomes true; record collision layers and mask.</li>
+<li>Pause using get_tree().paused=true. Decide which UI node processes while paused (Process Mode: When Paused), otherwise no input can resume the game.</li>
+<li>On Android, give touch controls actions matching the same Input Map; verify multiple simultaneous touches and that dragging outside controls still scrolls a web page where applicable.</li>
+</ol>
+<h3>Deliverable</h3>
+<p>Keep a small reproducible scene tree, project.godot, action bindings, platform versions and a before/after video or measured positions. A script without a scene is not a validated collision test.</p>
+<h2>GDScript — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>GDScript is associated with the Godot engine and its node/event model.</li>
+<li>Signals decouple producers from receivers but still need lifecycle-aware connections.</li>
+<li>A scene-local script may rely on engine APIs unavailable outside Godot.</li>
+</ol>
+<h2>GameMaker Language</h2>
+<h3>Mental model</h3>
+<p>GameMaker Language drives game objects through events such as Create and Step, with runtime-specific instance variables.</p>
+<h3>Minimal source sample</h3>
+<pre><code class="language-text">// Create event
+speed_x = 2;
+// Step event
+x += speed_x;
+</code></pre>
+<h3>Experiment to carry out</h3>
+<p>Trace horizontal movement for three frames, then clamp the coordinate to a visible room boundary.</p>
+<h3>A specific failure to distinguish</h3>
+<p>Variable names and built-in instance fields can collide with engine conventions; check the current engine's reference.</p>
+<p>To evaluate the exercise, record the initial input, predicted behavior and actual observation in a compatible GameMaker_Language environment. Add a second run changing only one variable or argument; this makes the comparison attributable to a concrete cause. If the required runtime is not installed, treat the example as unexecuted source analysis and never label an imagined output as a passing test.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

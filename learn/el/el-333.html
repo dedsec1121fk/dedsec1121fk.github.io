@@ -1,0 +1,97 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>wgsl — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-333.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="wgsl — συγκεντρωτικός οδηγός WGSL Συνήθης χρήση: Γλώσσες shaders. Προτεινόμενη επέκταση αρχείου: .wgsl . Εκτέλεση / περιβάλλον: Χρησιμοποίησέ το σε περιβάλλον WebGPU με render pipeline…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="wgsl — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="wgsl — συγκεντρωτικός οδηγός WGSL Συνήθης χρήση: Γλώσσες shaders. Προτεινόμενη επέκταση αρχείου: .wgsl . Εκτέλεση / περιβάλλον: Χρησιμοποίησέ το σε περιβάλλον WebGPU με render pipeline…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-333.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="wgsl — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="wgsl — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="wgsl — συγκεντρωτικός οδηγός WGSL Συνήθης χρήση: Γλώσσες shaders. Προτεινόμενη επέκταση αρχείου: .wgsl . Εκτέλεση / περιβάλλον: Χρησιμοποίησέ το σε περιβάλλον WebGPU με render pipeline…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="wgsl — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>wgsl — συγκεντρωτικός οδηγός — DedSec Project</h1><p>wgsl — συγκεντρωτικός οδηγός WGSL Συνήθης χρήση: Γλώσσες shaders. Προτεινόμενη επέκταση αρχείου: .wgsl . Εκτέλεση / περιβάλλον: Χρησιμοποίησέ το σε περιβάλλον WebGPU με render pipeline…</p><section><h2>WGSL</h2>
+<p><strong>Συνήθης χρήση:</strong> Γλώσσες shaders.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.wgsl</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> Χρησιμοποίησέ το σε περιβάλλον WebGPU με render pipeline.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>@fragment
+fn main() -&gt; @location(0) vec4f {
+  return vec4f(0.2, 0.5, 0.8, 1.0);
+}
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Οι shaders WebGPU χρειάζονται ρυθμίσεις σύνδεσης και pipeline.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Οι shaders WebGPU χρειάζονται ρυθμίσεις σύνδεσης και pipeline. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h2>WGSL — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Πραγματικό αρχικό δείγμα</h3>
+<pre><code class="language-text">@fragment
+fn main() -&gt; @location(0) vec4f {
+  return vec4f(0.2, 0.5, 0.8, 1.0);
+}
+</code></pre>
+<p><strong>Περιβάλλον:</strong> Use in a WebGPU host with a render pipeline.. Επιβεβαίωσε ότι έχεις το σωστό compiler, host ή simulator πριν θεωρήσεις την έξοδο αξιόπιστη. Για scripts με πρόσβαση σε προσωπικά αρχεία ή ρυθμίσεις, χρησιμοποίησε προσωρινά και read-only δεδομένα.</p>
+<h3>Συγκεκριμένος στόχος υλοποίησης</h3>
+<p>Φτιάξε @fragment function που επιστρέφει @location(0) vec4f από UV. Έλεγξε clamp και binding groups με WebGPU host.</p>
+<h3>Κρίσιμο λάθος που πρέπει να αναγνωρίζεις</h3>
+<p>Η WGSL έχει ρητά address spaces και validation· συσκευή/browser μπορεί να απορρίψει pipeline ακόμη και με σωστό κώδικα.</p>
+<h2>WGSL — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Σκοπός</h3>
+<p>Η WGSL περιγράφει ρητά τα shader stages μέσω attributes. Φτιάξε WebGPU pipeline με vertex stage που παρέχει clip position και UV, και fragment stage που παράγει gradient με κυκλική μάσκα. Χρειάζεται JavaScript WebGPU host για device, pipeline και render pass· μόνο του το WGSL αρχείο δεν εμφανίζει pixels.</p>
+<h3>Ζευγάρι shader stages (gradient.wgsl)</h3>
+<pre><code class="language-wgsl">struct VertexOut {
+    @builtin(position) clip_pos: vec4f,
+    @location(0) uv: vec2f,
+};
+
+@vertex
+fn vs_main(@builtin(vertex_index) index: u32) -&gt; VertexOut {
+    var positions = array&lt;vec2f, 3&gt;(
+        vec2f(-1.0, -1.0), vec2f(3.0, -1.0), vec2f(-1.0, 3.0)
+    );
+    var result: VertexOut;
+    let p = positions[index];
+    result.clip_pos = vec4f(p, 0.0, 1.0);
+    result.uv = (p + vec2f(1.0, 1.0)) * 0.5;
+    return result;
+}
+
+@fragment
+fn fs_main(input: VertexOut) -&gt; @location(0) vec4f {
+    let uv = clamp(input.uv, vec2f(0.0), vec2f(1.0));
+    let d = distance(uv, vec2f(0.5, 0.5));
+    let inside = 1.0 - smoothstep(0.23, 0.27, d);
+    return vec4f(mix(vec3f(uv, 0.2), vec3f(1.0, 0.8, 0.1), inside), 1.0);
+}
+</code></pre>
+<p>Το μεγάλο τρίγωνο καλύπτει το clip region όταν ο host καλεί draw(3). Το vertex_index πρέπει να μένει στο [0,2], αλλιώς γίνεται προσπέλαση εκτός array. Το format της εξόδου πρέπει να ταιριάζει με το render target του pipeline.</p>
+<h3>Συστηματικοί έλεγχοι</h3>
+<ol>
+<li>Δημιούργησε pipeline με vs_main και fs_main, κατάλληλο canvas format και draw(3). Έλεγξε πρώτα τα validation errors.</li>
+<li>Άλλαξε το fragment input @location(0) σε @location(1), αφήνοντας την έξοδο vertex αμετάβλητη. Κατάγραψε το πρόβλημα διεπαφής.</li>
+<li>Στο UV (0.5,0.5) το inside είναι 1, ενώ στο (0,0) είναι 0· η μετάβαση είναι μεταξύ αποστάσεων 0.23 και 0.27.</li>
+<li>Αν δεν υπάρχει WebGPU device, ξεχώρισε αυτή την αποτυχία από σφάλμα shader code.</li>
+<li>Ως επέκταση πρόσθεσε uniform με @group(0) @binding(0) και ταύτισε bind-group layout και πραγματικά resources.</li>
+</ol>
+<h3>Τεκμήρια</h3>
+<p>Αποθήκευσε shader και host, έκδοση browser, στοιχεία adapter/device, πλήρη diagnostics και screenshot. Η στατική ανάγνωση ή επιτυχής δημιουργία pipeline χωρίς draw pass δεν αποδεικνύει οπτικό αποτέλεσμα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

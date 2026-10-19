@@ -1,0 +1,125 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>go — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-915.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="go — consolidated language guide Go Typical use: Systems and low-level programming. Suggested file extension: .go . How to run / environment: go run main.go. Starter example How to read it…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="go — consolidated language guide — DedSec Project">
+<meta property="og:description" content="go — consolidated language guide Go Typical use: Systems and low-level programming. Suggested file extension: .go . How to run / environment: go run main.go. Starter example How to read it…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-915.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="go — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="go — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="go — consolidated language guide Go Typical use: Systems and low-level programming. Suggested file extension: .go . How to run / environment: go run main.go. Starter example How to read it…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="go — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>go — consolidated language guide — DedSec Project</h1><p>go — consolidated language guide Go Typical use: Systems and low-level programming. Suggested file extension: .go . How to run / environment: go run main.go. Starter example How to read it…</p><section><h2>Go</h2>
+<p><strong>Typical use:</strong> Systems and low-level programming.</p>
+<p><strong>Suggested file extension:</strong> <code>.go</code>.</p>
+<p><strong>How to run / environment:</strong> go run main.go.</p>
+<h3>Starter example</h3>
+<pre><code>package main
+import &quot;fmt&quot;
+func greet(name string) string { return &quot;Hello, &quot; + name + &quot;!&quot; }
+func main() { fmt.Println(greet(&quot;Ada&quot;)) }
+</code></pre>
+<h3>How to read it</h3>
+<p>Explicit error returns are customary in larger Go programs.</p>
+<h3>Common pitfall</h3>
+<p>Explicit error returns are customary in larger Go programs.</p>
+<h3>A Go module with explicit, testable errors</h3>
+<p>Go commonly represents recoverable failure as an error return value, not an exception. Create a folder with a Go module and this small parsing function:</p>
+<pre><code class="language-go">package demo
+import (
+    &quot;errors&quot;
+    &quot;strconv&quot;
+)
+func ParsePort(text string) (int, error) {
+    n, err := strconv.Atoi(text)
+    if err != nil { return 0, err }
+    if n &lt; 1 || n &gt; 65535 { return 0, errors.New(&quot;port out of range&quot;) }
+    return n, nil
+}
+</code></pre>
+<p>Initialize with go mod init example.com/demo and run go test after adding a file called port_test.go:</p>
+<pre><code class="language-go">package demo
+import &quot;testing&quot;
+func TestParsePort(t *testing.T) {
+    for _, tc := range []struct{ raw string; valid bool }{
+        {&quot;80&quot;, true}, {&quot;0&quot;, false}, {&quot;65536&quot;, false}, {&quot;abc&quot;, false},
+    } {
+        _, err := ParsePort(tc.raw)
+        if (err == nil) != tc.valid { t.Errorf(&quot;%s: err=%v&quot;, tc.raw, err) }
+    }
+}
+</code></pre>
+<p>Understand why strconv.Atoi failure must be checked before range validation. Contrast an error result with panic: malformed user input is expected failure, not a programmer invariant violation. A goroutine does not automatically make CPU-heavy code faster; introduce concurrency only after establishing cancellation and ownership.</p>
+<p><strong>Success:</strong> four tests pass, an invalid port never appears as a valid integer and the caller explicitly handles err. Sources: https://go.dev/doc/tutorial/handle-errors and https://go.dev/doc/tutorial/add-a-test.</p>
+<h2>Go — Expanded practice workbook</h2>
+<h3>Why it matters</h3>
+<p>A Go struct describes your intended fields, but json.Decoder normally tolerates unknown JSON keys. A typo in a configuration could be silently ignored. Reject unknown fields, enforce semantic bounds and verify no second JSON document follows the first.</p>
+<h3>Execute</h3>
+<p>Save as main.go and run go run main.go. No dependency outside the standard library. Expected output is offline 3. The three bad examples must not reach panic, because each readConfig invocation returns an error.</p>
+<pre><code class="language-go">package main
+import (&quot;encoding/json&quot;; &quot;errors&quot;; &quot;fmt&quot;; &quot;io&quot;; &quot;strings&quot;)
+type Config struct { Name string; Limit int }
+func readConfig(raw string) (Config, error) {
+    var c Config
+    decoder := json.NewDecoder(strings.NewReader(raw))
+    decoder.DisallowUnknownFields()
+    if err := decoder.Decode(&amp;c); err != nil { return c, err }
+    if c.Name == &quot;&quot; || c.Limit &lt; 1 || c.Limit &gt; 100 {
+        return c, errors.New(&quot;bad config values&quot;)
+    }
+    var extra interface{}
+    if err := decoder.Decode(&amp;extra); err != io.EOF {
+        return c, errors.New(&quot;trailing JSON or invalid tail&quot;)
+    }
+    return c, nil
+}
+func main() {
+    good, err := readConfig(&quot;{\&quot;Name\&quot;:\&quot;offline\&quot;,\&quot;Limit\&quot;:3}&quot;)
+    if err != nil { panic(err) }
+    fmt.Println(good.Name, good.Limit)
+    for _, raw := range []string{
+        &quot;{\&quot;Name\&quot;:\&quot;x\&quot;,\&quot;Limt\&quot;:3}&quot;,
+        &quot;{\&quot;Name\&quot;:\&quot;x\&quot;,\&quot;Limit\&quot;:0}&quot;,
+        &quot;{\&quot;Name\&quot;:\&quot;x\&quot;,\&quot;Limit\&quot;:2} true&quot;,
+    } {
+        if _, err := readConfig(raw); err == nil { panic(&quot;bad data accepted&quot;) }
+    }
+}
+</code></pre>
+<h3>Explain the decoder</h3>
+<p>DisallowUnknownFields catches Limt instead of Limit. After the first Decode, the second must return io.EOF. Otherwise there is trailing syntax or an additional value. Empty names and limits outside 1..100 are domain failures; decoding only knows the types.</p>
+<h3>Independent exercise</h3>
+<p>Write table-driven tests using testing.T for null, arrays, fractional numbers, extra JSON, and incorrect field names. Be aware that duplicate object keys can still be accepted by the decoder: detect them separately if your policy forbids duplicates. For network input, cap bytes on the reader before decoding; this string-based demonstration has already loaded its input.</p>
+<h3>Troubleshooting</h3>
+<p>Use go version and, for a proper project, go mod init example/config then go test. Wrap context with fmt.Errorf and %w instead of discarding the original error. Do not log secrets from failing configurations.
+Success: output offline 3 and three intentionally rejected inputs. https://pkg.go.dev/encoding/json</p>
+<h2>Go — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>go run {file}</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>Go — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>Goroutines are lightweight concurrent functions but still require cancellation and lifecycle management.</li>
+<li>Channels coordinate communication; closing a channel is not a general-purpose shared shutdown flag.</li>
+<li>Errors are usually returned as values and should be inspected explicitly.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

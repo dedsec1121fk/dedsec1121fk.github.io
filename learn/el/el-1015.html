@@ -1,0 +1,54 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>command not found — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1015.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="command not found: πού αναζητείται η εντολή Αναγνώριση της πραγματικής αποτυχίας Το shell ψάχνει εκτελέσιμα μέσω PATH εκτός αν δώσεις διαδρομή. Ίσως δεν υπάρχει πρόγραμμα, λείπει το…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="command not found — DedSec Project">
+<meta property="og:description" content="command not found: πού αναζητείται η εντολή Αναγνώριση της πραγματικής αποτυχίας Το shell ψάχνει εκτελέσιμα μέσω PATH εκτός αν δώσεις διαδρομή. Ίσως δεν υπάρχει πρόγραμμα, λείπει το…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1015.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="command not found — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="command not found — DedSec Project">
+<meta name="twitter:description" content="command not found: πού αναζητείται η εντολή Αναγνώριση της πραγματικής αποτυχίας Το shell ψάχνει εκτελέσιμα μέσω PATH εκτός αν δώσεις διαδρομή. Ίσως δεν υπάρχει πρόγραμμα, λείπει το…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="command not found — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>command not found — DedSec Project</h1><p>command not found: πού αναζητείται η εντολή Αναγνώριση της πραγματικής αποτυχίας Το shell ψάχνει εκτελέσιμα μέσω PATH εκτός αν δώσεις διαδρομή. Ίσως δεν υπάρχει πρόγραμμα, λείπει το…</p><section><h1>command not found: πού αναζητείται η εντολή</h1>
+<h2>Αναγνώριση της πραγματικής αποτυχίας</h2>
+<p>Το shell ψάχνει εκτελέσιμα μέσω PATH εκτός αν δώσεις διαδρομή. Ίσως δεν υπάρχει πρόγραμμα, λείπει το directory από PATH, έγινε typo ή το script χρησιμοποιεί εντολή άλλου OS. Η εγκατάσταση πακέτου δεν είναι πάντα η πρώτη λύση.</p>
+<h2>Ασφαλής αρχικός έλεγχος</h2>
+<pre><code class="language-sh">printf '%s\n' &quot;$PATH&quot;
+command -v python
+command -v python3
+uname -s
+</code></pre>
+<h2>Διόρθωση αιτίας χωρίς παράκαμψη προειδοποίησης</h2>
+<p>Σε Termux χρησιμοποίησε τα δικά του pkg repos και έλεγξε pkg search NAME / pkg show PACKAGE. Σε PowerShell χρησιμοποίησε Get-Command και $env:Path· σε cmd.exe where NAME. Μην βάζεις '.' ή world-writable directory στο PATH.</p>
+<p><strong>Τεκμηρίωση:</strong> https://www.gnu.org/software/bash/manual/html_node/Command-Search-and-Execution.html</p>
+<h2>Διάγνωση πριν από οποιαδήποτε εγκατάσταση</h2>
+<p>Το shell ψάχνει ονόματα προγραμμάτων στις διαδρομές του <code>PATH</code>, εκτός αν γράψεις συγκεκριμένο <code>./όνομα</code> ή απόλυτο μονοπάτι. Δοκίμασε:</p>
+<pre><code class="language-sh">printf 'PATH=%s\n' &quot;$PATH&quot;
+command -v python3 || printf 'Δεν βρέθηκε python3\n'
+type -a python3 2&gt;/dev/null || true
+</code></pre>
+<p>Αν το <code>command -v</code> δεν επιστρέψει διαδρομή, το πρόγραμμα λείπει από το συγκεκριμένο <code>PATH</code> ή δεν υπάρχει στο σύστημα. Αν λειτουργεί στο τερματικό αλλά όχι σε script ή GitHub Action, σύγκρινε το περιβάλλον εκτέλεσης: μη διαδραστικά shells συχνά φορτώνουν διαφορετικά αρχεία ρυθμίσεων.</p>
+<h2>Τρία διαφορετικά σενάρια</h2>
+<p><strong>Λανθασμένο όνομα:</strong> σε Linux μπορεί να υπάρχει <code>python3</code>, όχι <code>python</code>. <strong>Εκτελέσιμο σε άλλον φάκελο:</strong> εντόπισε το πραγματικό μονοπάτι και δες αν αυτός υπάρχει στο <code>PATH</code>. <strong>Πρόγραμμα που δεν εγκαταστάθηκε:</strong> βεβαιώσου ποιο πακέτο παρέχει τη συγκεκριμένη εντολή πριν εγκαταστήσεις οτιδήποτε. Το <code>./script.sh</code> δεν χρησιμοποιεί PATH για τον ίδιο τον φάκελο, αλλά απαιτεί έγκυρα δικαιώματα και interpreter.</p>
+<h2>Termux και Windows</h2>
+<p>Στο Termux χρησιμοποίησε αναζήτηση <code>pkg search ΟΝΟΜΑ</code> και πληροφορίες <code>pkg show ΠΑΚΕΤΟ</code> στο δικό του repository. Μην αντιγράφεις χωρίς έλεγχο οδηγίες για Debian ή Ubuntu. Σε PowerShell έλεγξε <code>Get-Command python -All</code> και <code>$env:Path</code>. Σε cmd.exe το αντίστοιχο είναι <code>where python</code>. Μην βάζεις τον τρέχοντα κατάλογο πρώτον στο PATH: μπορεί να εκτελεστεί άλλο αρχείο με το ίδιο όνομα αντί για το προβλεπόμενο πρόγραμμα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

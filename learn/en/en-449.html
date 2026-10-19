@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Clojure — functional programming guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-449.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Clojure — functional programming guide Clojure Operational idea Clojure emphasizes persistent data structures, pure transformations and controlled identity/state on the JVM. Source or…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Clojure — functional programming guide — DedSec Project">
+<meta property="og:description" content="Clojure — functional programming guide Clojure Operational idea Clojure emphasizes persistent data structures, pure transformations and controlled identity/state on the JVM. Source or…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-449.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Clojure — functional programming guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Clojure — functional programming guide — DedSec Project">
+<meta name="twitter:description" content="Clojure — functional programming guide Clojure Operational idea Clojure emphasizes persistent data structures, pure transformations and controlled identity/state on the JVM. Source or…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Clojure — functional programming guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Clojure — functional programming guide — DedSec Project</h1><p>Clojure — functional programming guide Clojure Operational idea Clojure emphasizes persistent data structures, pure transformations and controlled identity/state on the JVM. Source or…</p><section><h2>Clojure</h2>
+<h3>Operational idea</h3>
+<p>Clojure emphasizes persistent data structures, pure transformations and controlled identity/state on the JVM.</p>
+<h3>Source or deliberately marked concept</h3>
+<pre><code class="language-text">(reduce + [1 2 3 4])
+</code></pre>
+<h3>Apply it to one controlled task</h3>
+<p>Compare map and reduce, then verify that calling conj returns a new collection instead of mutating the old one.</p>
+<h3>Check the important boundary</h3>
+<p>Laziness can delay computation; never put required irreversible side effects into a sequence expecting eager execution.</p>
+<p>Work with disposable data in a genuine implementation of Clojure where available. Record the actual tool version and compare your prediction with observed output. If a compatible runtime is missing, clearly mark this as static analysis instead of claiming it passed execution. Split the normal case from at least one boundary value, and avoid using sensitive or production datasets merely to follow a tutorial.</p>
+<h2>Clojure — Expanded practice workbook</h2>
+<h3>Trace a sequence transformation</h3>
+<p>Clojure's collection operators return values without mutating the source persistent vector. In a scratch REPL or <code>.clj</code> file, evaluate:</p>
+<pre><code class="language-clojure">(require '[clojure.string :as str])
+(def names [&quot; Ada &quot; &quot;ada&quot; &quot;Lin&quot;])
+(def counts (frequencies (map (comp str/lower-case str/trim) names)))
+(println counts)
+(assert (= {&quot;ada&quot; 2, &quot;lin&quot; 1} counts))
+</code></pre>
+<p>The expected map holds Ada twice and Lin once. <code>comp</code> composes normalization functions, <code>map</code> transforms each element lazily and <code>frequencies</code> reduces those values into a map. A map's printing order is not guaranteed; compare key-value associations, not the apparent textual order of braces.</p>
+<h3>Probe invalid data deliberately</h3>
+<p>Add <code>nil</code> to <code>names</code> and examine whether <code>str/trim</code> accepts it. The pipeline does not enforce a string-only schema merely because the original fixture had strings. Decide whether an import must reject nil, omit it, or substitute an explicit marker; use a guard before the transformation rather than converting all unexpected values silently.</p>
+<h3>Distinguish reassignment from immutable updates</h3>
+<p>Evaluate <code>(assoc counts &quot;lin&quot; 3)</code> and confirm that it produces a new map while <code>counts</code> still associates <code>&quot;lin&quot;</code> with 1. If you redefine a top-level Var with <code>def</code>, that changes what the Var points to; it does not mutate the underlying persistent map. This distinction matters when designing concurrent workflows.</p>
+<h3>Follow-up lab</h3>
+<p>Introduce case-sensitive and case-insensitive comparison side by side, then use <code>(get counts &quot;missing&quot; 0)</code> to express an explicit default. Contrast that with a missing key returning nil. Test empty input and duplicate names. Explain why lazy transformations may defer exceptions until reduction. Capture the exact Clojure and JVM versions; the snippet has not been executed here. References: https://clojure.org/guides/learn/sequences and https://clojure.github.io/clojure/clojure.core-api.html</p>
+<h2>Clojure — Focused mastery pathway</h2>
+<h3>Applied exercises</h3>
+<ol>
+<li>Compose two pure functions and explain their types.</li>
+<li>Transform a list with map/filter/fold or corresponding primitives.</li>
+<li>Compare immutable state transformations with hidden mutation.</li>
+</ol>
+<ul>
+<li>How are side effects and mutability represented?</li>
+<li>Which exact runtime, compiler, host, and version does the reference need?</li>
+<li>What is the smallest working program and what side effects does it have?</li>
+<li>How do syntax, logic, and environment errors differ?</li>
+<li>How can invalid inputs be tested without modifying real user files?</li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

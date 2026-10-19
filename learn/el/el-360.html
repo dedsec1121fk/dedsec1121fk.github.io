@@ -1,0 +1,82 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>dart — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-360.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="dart — συγκεντρωτικός οδηγός Dart Βασική ιδέα Η Dart υποστηρίζει sound null safety και async προγραμματισμό για Flutter και command-line εφαρμογές. Μικρό εκπαιδευτικό απόσπασμα Άσκηση…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="dart — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="dart — συγκεντρωτικός οδηγός Dart Βασική ιδέα Η Dart υποστηρίζει sound null safety και async προγραμματισμό για Flutter και command-line εφαρμογές. Μικρό εκπαιδευτικό απόσπασμα Άσκηση…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-360.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="dart — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="dart — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="dart — συγκεντρωτικός οδηγός Dart Βασική ιδέα Η Dart υποστηρίζει sound null safety και async προγραμματισμό για Flutter και command-line εφαρμογές. Μικρό εκπαιδευτικό απόσπασμα Άσκηση…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="dart — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>dart — συγκεντρωτικός οδηγός — DedSec Project</h1><p>dart — συγκεντρωτικός οδηγός Dart Βασική ιδέα Η Dart υποστηρίζει sound null safety και async προγραμματισμό για Flutter και command-line εφαρμογές. Μικρό εκπαιδευτικό απόσπασμα Άσκηση…</p><section><h2>Dart</h2>
+<h3>Βασική ιδέα</h3>
+<p>Η Dart υποστηρίζει sound null safety και async προγραμματισμό για Flutter και command-line εφαρμογές.</p>
+<h3>Μικρό εκπαιδευτικό απόσπασμα</h3>
+<pre><code class="language-text">void main() {
+  final xs = [1, 2, 3];
+  print(xs.reduce((a,b) =&gt; a + b));
+}
+</code></pre>
+<h3>Άσκηση βασισμένη στη συγκεκριμένη συμπεριφορά</h3>
+<p>Υπολόγισε άθροισμα και σύγκρινε reduce με fold σε κενή λίστα· έλεγξε nullable τιμή.</p>
+<h3>Διάγνωση και όρια</h3>
+<p>Τα Flutter widgets απαιτούν Flutter runtime· η Dart CLI δεν παρέχει από μόνη της rendering engine.</p>
+<p>Κάνε την άσκηση με πραγματικά δοκιμαστικά δεδομένα και με έκδοση Dart που ταιριάζει στον κώδικα. Σημείωσε μία αρχική πρόβλεψη και την πραγματική έξοδο. Για περίπλοκο ή μη διαθέσιμο runtime, παρουσίασε τη στατική ανάλυση ως τέτοια, όχι ως επιτυχημένη εκτέλεση. Δοκίμασε ξεχωριστά την κανονική περίπτωση και μία οριακή τιμή, χωρίς πραγματικά προσωπικά ή παραγωγικά δεδομένα.</p>
+<h2>Dart — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Ρητή ανάλυση εισόδου</h3>
+<p>Με null safety η <code>int.tryParse</code> επιστρέφει <code>int?</code>. Δεν μετατρέπει σιωπηλά τα λάθη σε μηδέν. Σε προσωρινό <code>bin/parse_scores.dart</code> γράψε:</p>
+<pre><code class="language-dart">void main() {
+  final raw = &lt;String&gt;['12', 'bad', '0', '-3'];
+  final values = raw.map(int.tryParse).toList();
+  assert(values[0] == 12);
+  assert(values[1] == null);
+  assert(values[2] == 0);
+  assert(values[3] == -3);
+  print(values);
+}
+</code></pre>
+<p>Αναμένονται οι τιμές <code>12, null, 0, -3</code>. Εκτέλεσε με κατάλληλη εντολή <code>dart run</code> της εγκατεστημένης έκδοσης. Πρόσεξε ότι τα <code>assert</code> μπορεί να είναι απενεργοποιημένα σε παραγωγική διαμόρφωση. Δεν υπήρχε διαθέσιμη Dart runtime για εκτέλεση εδώ.</p>
+<h3>Συμβόλαιο τύπων</h3>
+<p>Μια <code>List&lt;int?&gt;</code> δεν γίνεται <code>List&lt;int&gt;</code> επειδή τα περισσότερα στοιχεία είναι αριθμοί. Πρέπει πρώτα να αποκλειστούν οι ελλείπουσες τιμές και να αποδειχθεί ο τύπος των υπολοίπων. Ο τελεστής <code>!</code> δεν ελέγχει αν το κείμενο είναι σωστό· απλώς απαιτεί μη-null αποτέλεσμα και μπορεί να πετάξει εξαίρεση αν η τιμή λείπει.</p>
+<h3>Πολιτική σφάλματος</h3>
+<p>Σύγκρινε την <code>int.tryParse</code> με την <code>int.parse</code>, η οποία δημιουργεί <code>FormatException</code> για αποτυχημένη ανάλυση. Έλεγξε <code>&quot;&quot;</code>, <code>&quot; 12 &quot;</code> και <code>&quot;12x&quot;</code> και αποφάσισε αν θα αφαιρείς κενά πριν από την ανάλυση. Άλλο ζήτημα είναι αν οι αρνητικοί αριθμοί επιτρέπονται από την εφαρμογή: το <code>-3</code> μπορεί να είναι αριθμητικά έγκυρο αλλά επιχειρησιακά απαγορευμένο.</p>
+<h3>Αυτοτελές εργαστήριο</h3>
+<p>Υλοποίησε <code>sumValidScores(Iterable&lt;String&gt;)</code> και τεκμηρίωσε αν παραλείπει ή απορρίπτει άκυρα στοιχεία. Πρόσθεσε αυστηρή εκδοχή που αναφέρει τη θέση του πρώτου λάθους. Κάνε τεστ για κενή είσοδο, μηδέν, διπλές τιμές και εξαιρετικά μεγάλο ακέραιο. Η συμπεριφορά μεγάλων αριθμών μπορεί να διαφέρει ανάμεσα σε native Dart και μεταγλώττιση για web. Πηγές: https://api.dart.dev/dart-core/int/tryParse.html και https://dart.dev/null-safety</p>
+<h2>Dart — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>dart run {file}</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Dart — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Στάδιο 1: κατανόηση εκτέλεσης</h3>
+<p>Γράψε pure parser για μη αρνητικό integer με int.tryParse που επιστρέφει null ή tagged result. Δοκίμασε null, spaces, μεγάλο αριθμό και διαφορετικό decimal separator.</p>
+<h3>Στάδιο 2: απόδειξη με ελεγχόμενες δοκιμές</h3>
+<p>Με Future.delayed προσομοίωσε δύο αναζητήσεις που ολοκληρώνονται ανάποδα. Πρόσθεσε αυξανόμενα request IDs ώστε η παλιά απάντηση να αγνοείται. Το debounce μόνο του δεν εγγυάται σωστή σειρά.</p>
+<h3>Στάδιο 3: μικρό ολοκληρωμένο έργο</h3>
+<p>Μοντελοποίησε Loading, Success, Failure με sealed states σε συμβατή Dart. Έλεγξε όλες τις περιπτώσεις εμφάνισης. Ξεχώρισε απλό Dart CLI από Flutter widgets.</p>
+<h2>Dart — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Το null safety αναπαριστά προαιρετικές τιμές στο σύστημα τύπων.</li>
+<li>Τα Future και Stream περιγράφουν ασύγχρονα αποτελέσματα και ακολουθίες.</li>
+<li>Το Flutter είναι πλαίσιο διεπαφής, όχι ταυτόσημο με τη βασική Dart.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

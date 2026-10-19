@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>C: bounded input and allocation checks — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-language-5-bounded-read.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Safe C starts by validating lengths before copying bytes Avoid implicit trust in array capacity A buffer has a fixed capacity unrelated to the number of bytes in an input string. Before…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="C: bounded input and allocation checks — DedSec Project">
+<meta property="og:description" content="Safe C starts by validating lengths before copying bytes Avoid implicit trust in array capacity A buffer has a fixed capacity unrelated to the number of bytes in an input string. Before…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-language-5-bounded-read.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="C: bounded input and allocation checks — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="C: bounded input and allocation checks — DedSec Project">
+<meta name="twitter:description" content="Safe C starts by validating lengths before copying bytes Avoid implicit trust in array capacity A buffer has a fixed capacity unrelated to the number of bytes in an input string. Before…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="C: bounded input and allocation checks — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>C: bounded input and allocation checks — DedSec Project</h1><p>Safe C starts by validating lengths before copying bytes Avoid implicit trust in array capacity A buffer has a fixed capacity unrelated to the number of bytes in an input string. Before…</p><section><h1>Safe C starts by validating lengths before copying bytes</h1>
+<h2>Avoid implicit trust in array capacity</h2>
+<p>A buffer has a fixed capacity unrelated to the number of bytes in an input string. Before copying, establish the actual input length, reserve room for the terminating NUL byte and reject data that cannot fit. Functions that do not know the destination capacity cannot enforce the right limit. A correct length check should not overflow when adding one.</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int copy_label(char dst[static 8], const char *src) {
+    size_t n = strlen(src);
+    if (n &gt;= 8) return -1;
+    memcpy(dst, src, n + 1);
+    return 0;
+}
+int main(void) {
+    char label[8];
+    if (copy_label(label, &quot;sample&quot;) != 0) return 1;
+    puts(label);
+    return 0;
+}
+</code></pre>
+<h2>Understand the assumption</h2>
+<p><code>strlen()</code> itself assumes <code>src</code> points to a valid NUL-terminated string; it must not receive arbitrary untrusted byte arrays with no terminator. When parsing a file or network frame, pass explicit lengths and use <code>memchr</code> or bounded parsers rather than relying on string termination. The 8-byte destination can hold at most seven non-NUL characters.</p>
+<h2>Observe errors with a compiler</h2>
+<p>Use diagnostic warnings and, where supported, AddressSanitizer or UndefinedBehaviorSanitizer on your <strong>own test program</strong>. An absence of sanitizer reports is not proof of memory safety for all inputs. Test exactly seven characters, eight characters and an empty string, checking the return code and output.</p>
+<h2>Design extension</h2>
+<p>Rewrite <code>copy_label</code> to accept an explicit destination capacity parameter rather than hard-coding 8. Document what happens if capacity is zero and how the caller should respond. Do not work around overflow by truncating silently unless truncation is an explicit product requirement.</p>
+<h2>Parse integer text without accepting a valid prefix</h2>
+<p>A numeric conversion can consume a valid prefix while leaving unrelated bytes behind. Treating 12junk as the integer 12 is incorrect for a field whose entire contents must be a number. Check whether any characters were consumed, inspect the end pointer, test range errors and enforce the application's smaller domain before converting to a narrower type.</p>
+<p>This example accepts unsigned decimal syntax only, rejects leading whitespace and signs by policy, and then checks an explicit 0–1000 range. The C library's conversion range and the application's allowed range are different contracts. A bounded input buffer prevents one class of overflow; it does not validate the meaning of its contents.</p>
+<pre><code class="language-c">#include &lt;assert.h&gt;
+#include &lt;errno.h&gt;
+#include &lt;stdlib.h&gt;
+static int parse(const char *s, long *out) {
+    if (!*s) return 0;
+    for (const char *p=s; *p; ++p) if (*p&lt;'0' || *p&gt;'9') return 0;
+    errno=0; char *end; long value=strtol(s,&amp;end,10);
+    if (errno==ERANGE || *end || value&gt;1000) return 0;
+    *out=value; return 1;
+}
+int main(void) { long x; assert(parse(&quot;12&quot;,&amp;x)&amp;&amp;x==12); assert(!parse(&quot;12junk&quot;,&amp;x)); assert(!parse(&quot;-1&quot;,&amp;x)); assert(!parse(&quot;1001&quot;,&amp;x)); }
+</code></pre>
+<p>Add an empty string, a long sequence of digits and a boundary value of 1000. Keep locale-dependent syntax out of a wire protocol unless the protocol explicitly permits it. Do not narrow a long to an int before checking the intended range.</p>
+<p><a href="https://www.open-std.org/jtc1/sc22/wg14/www/docs/n1570.pdf">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

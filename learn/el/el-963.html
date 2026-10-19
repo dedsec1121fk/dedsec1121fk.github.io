@@ -1,0 +1,59 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Uncaught TypeError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-963.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="JavaScript Uncaught TypeError — έλεγξε τη λειτουργία που απέτυχε Διάβασε το μήνυμα Το TypeError εμφανίζεται όταν μια τιμή χρησιμοποιείται ασύμβατα: καλείς κάτι που δεν είναι function…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Uncaught TypeError — DedSec Project">
+<meta property="og:description" content="JavaScript Uncaught TypeError — έλεγξε τη λειτουργία που απέτυχε Διάβασε το μήνυμα Το TypeError εμφανίζεται όταν μια τιμή χρησιμοποιείται ασύμβατα: καλείς κάτι που δεν είναι function…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-963.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Uncaught TypeError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Uncaught TypeError — DedSec Project">
+<meta name="twitter:description" content="JavaScript Uncaught TypeError — έλεγξε τη λειτουργία που απέτυχε Διάβασε το μήνυμα Το TypeError εμφανίζεται όταν μια τιμή χρησιμοποιείται ασύμβατα: καλείς κάτι που δεν είναι function…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Uncaught TypeError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Uncaught TypeError — DedSec Project</h1><p>JavaScript Uncaught TypeError — έλεγξε τη λειτουργία που απέτυχε Διάβασε το μήνυμα Το TypeError εμφανίζεται όταν μια τιμή χρησιμοποιείται ασύμβατα: καλείς κάτι που δεν είναι function…</p><section><h1>JavaScript Uncaught TypeError — έλεγξε τη λειτουργία που απέτυχε</h1>
+<h2>Διάβασε το μήνυμα</h2>
+<p>Το TypeError εμφανίζεται όταν μια τιμή χρησιμοποιείται ασύμβατα: καλείς κάτι που δεν είναι function, κάνεις destructure null ή εφαρμόζεις array method σε μη-array. Το Uncaught σημαίνει ότι δεν υπήρξε κατάλληλος handler.</p>
+<pre><code class="language-javascript">function average(values) {
+  if (!Array.isArray(values)) throw new TypeError(&quot;expected array&quot;);
+  if (!values.every(v =&gt; Number.isFinite(v))) throw new TypeError(&quot;non-finite number&quot;);
+  if (values.length === 0) return null;
+  return values.reduce((sum, v) =&gt; sum + v, 0) / values.length;
+}
+console.assert(average([2,4]) === 3);
+console.assert(average([]) === null);
+try { average({length:2}); throw Error(&quot;test failed&quot;); }
+catch (e) { if (!(e instanceof TypeError)) throw e; }
+</code></pre>
+<h2>Βρες ποιος παρήγαγε την τιμή</h2>
+<p>Δες το stack frame του δικού σου κώδικα. Χρησιμοποίησε typeof, Array.isArray και validation στο API boundary. Το optional chaining είναι σωστό όταν επιτρέπεται απουσία, όχι όταν ένα API υπόσχεται υποχρεωτικά array.</p>
+<h2>Browser debugging</h2>
+<p>Ενεργοποίησε pause on exceptions στα DevTools και έλεγξε το πραγματικό argument χωρίς να γράφεις secrets στο console. Αν πρόκειται για rejected Promise, χρειάζεται async error handler. Ένα try/catch γύρω από μη awaited κλήση δεν αρκεί.</p>
+<p><strong>Άσκηση:</strong> δώσε undefined, null και string στην average· πρέπει να απορριφθούν πριν εκτελεστεί reduce. Πηγή: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError</p>
+<h2>Έλεγχος τιμής στο σημείο εισόδου</h2>
+<pre><code class="language-js">function upperName(user) {
+  if (!user || typeof user.name !== &quot;string&quot;)
+    throw new TypeError(&quot;user.name must be a string&quot;);
+  return user.name.toUpperCase();
+}
+console.assert(upperName({name:&quot;Ada&quot;}) === &quot;ADA&quot;);
+</code></pre>
+<p>Δοκίμασε ανεξάρτητα <code>null</code>, <code>{}</code> και <code>{name:42}</code>. Κάθε ένα παραβιάζει τη σύμβαση εισόδου για διαφορετικό λόγο. Μην βάζεις ένα τεράστιο <code>try/catch</code> γύρω από ολόκληρη την εφαρμογή: έλεγξε τα εξωτερικά δεδομένα στο συγκεκριμένο όριο όπου μπαίνουν. Αν το TypeError συμβαίνει μέσα σε Promise, πρέπει να αντιμετωπιστεί επιπλέον το rejected Promise και όχι απλώς μια synchronous εξαίρεση.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

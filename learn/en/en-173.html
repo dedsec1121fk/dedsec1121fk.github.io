@@ -1,0 +1,85 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Network diagnostics: connection refused, HTTP 404 and HTTP 403 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-173.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Network diagnostics: connection refused, HTTP 404 and HTTP 403 connection refused Meaning and differential diagnosis ECONNREFUSED normally means an address was reached but the connection…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Network diagnostics: connection refused, HTTP 404 and HTTP 403 — DedSec Project">
+<meta property="og:description" content="Network diagnostics: connection refused, HTTP 404 and HTTP 403 connection refused Meaning and differential diagnosis ECONNREFUSED normally means an address was reached but the connection…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-173.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Network diagnostics: connection refused, HTTP 404 and HTTP 403 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Network diagnostics: connection refused, HTTP 404 and HTTP 403 — DedSec Project">
+<meta name="twitter:description" content="Network diagnostics: connection refused, HTTP 404 and HTTP 403 connection refused Meaning and differential diagnosis ECONNREFUSED normally means an address was reached but the connection…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Network diagnostics: connection refused, HTTP 404 and HTTP 403 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Network diagnostics: connection refused, HTTP 404 and HTTP 403 — DedSec Project</h1><p>Network diagnostics: connection refused, HTTP 404 and HTTP 403 connection refused Meaning and differential diagnosis ECONNREFUSED normally means an address was reached but the connection…</p><section><h2>connection refused</h2>
+<h3>Meaning and differential diagnosis</h3>
+<p>ECONNREFUSED normally means an address was reached but the connection was actively rejected, often because no process listens on the target port. It differs from a timeout (no timely response), name-resolution failure (host cannot be resolved) and HTTP 403/404 (a server responded at the application layer).</p>
+<h3>Reproduction / nondestructive inspection</h3>
+<pre><code class="language-python">import socket
+listener = socket.socket()
+listener.bind((&quot;127.0.0.1&quot;, 0))
+port = listener.getsockname()[1]
+listener.listen(1)
+with socket.create_connection((&quot;127.0.0.1&quot;, port), timeout=1):
+    pass  # Success: listener exists.
+listener.close()
+# Connecting now normally raises ConnectionRefusedError.
+try:
+    with socket.create_connection((&quot;127.0.0.1&quot;, port), timeout=1):
+        pass
+except ConnectionRefusedError:
+    print(&quot;connection refused as expected&quot;)
+</code></pre>
+<h3>Interpret evidence and fix the cause</h3>
+<p>Check the exact host, port and protocol. If using localhost, verify IPv4 versus IPv6 resolution; a process bound to 127.0.0.1 need not listen on ::1 or on a LAN address. Test locally on the server before checking firewall and network routes. Use ss -ltn for listener state. An HTTP URL in a browser requires an HTTP server, not just any open TCP socket.</p>
+<h3>Practical lab</h3>
+<p>Compare three fixtures: local port with a live listener, local port after closing it, and an intentionally invalid host name. Record which layer produces the failure and why retrying an unchanged refused port rarely helps.</p>
+<h2>HTTP 404</h2>
+<h3>Meaning and differential diagnosis</h3>
+<p>HTTP 404 means an HTTP server or intermediary did respond but could not (or chose not to) expose a representation for the target resource. It is distinct from DNS failure, refused TCP connection and TLS verification errors. A 404 on a static site can be caused by filename case, bad relative URLs, a missing build artifact or an incorrect publishing root.</p>
+<h3>Reproduction / nondestructive inspection</h3>
+<pre><code class="language-sh"># From a directory of harmless sample files:
+mkdir -p /tmp/dedsec-404-lab
+printf 'ok\n' &gt; /tmp/dedsec-404-lab/index.html
+# Terminal A:
+# python3 -m http.server 8765 --bind 127.0.0.1 --directory /tmp/dedsec-404-lab
+# Terminal B:
+# curl -i http://127.0.0.1:8765/index.html   # 200
+# curl -i http://127.0.0.1:8765/missing.txt  # 404
+</code></pre>
+<h3>Interpret evidence and fix the cause</h3>
+<p>Capture requested URL, method, response status and headers without leaking cookies or credentials. For GitHub Pages, check path case and the deployed branch/folder; for Cloudflare Pages, inspect generated output and rewrite rules. Check that relative paths work from nested pages, not only from /. Do not blindly redirect every missing page to the homepage: this can create misleading soft 404s.</p>
+<h3>Practical lab</h3>
+<p>Move index.html into a nested subdirectory, request both paths, and explain the results. Write a link checker that walks local HTML href values, resolves relative paths and distinguishes anchors, remote URLs and missing local targets.</p>
+<h2>HTTP 403</h2>
+<h3>Meaning and differential diagnosis</h3>
+<p>HTTP 403 indicates that a server understood the request but refuses to authorize it. A valid login does not necessarily grant access to a particular path, organization resource or object. Some services use 404 instead to avoid disclosing object existence. A 403 may originate from an application policy, reverse proxy, CDN or WAF.</p>
+<h3>Reproduction / nondestructive inspection</h3>
+<pre><code class="language-sh"># Inspect response metadata for a resource you are allowed to test:
+curl -i --max-time 5 https://example.com/
+# For a LOCAL application in development:
+# curl -i http://127.0.0.1:8000/admin
+# Review status and server logs; do not paste bearer tokens.
+</code></pre>
+<h3>Interpret evidence and fix the cause</h3>
+<p>Compare a permitted account and a deliberately unauthorized test account, using synthetic fixtures. Inspect server-side authorization for the exact resource and HTTP method; check middleware order, allowlists, cookies, CSRF requirements and file/server permissions separately. A temporary chmod 777 or disabling the WAF is not a safe diagnosis. Distinguish 401 (authentication required) from 403 (access refused).</p>
+<h3>Practical lab</h3>
+<p>Create a local route that returns 200 to a test role and 403 to a guest, then assert both HTTP statuses and response bodies without connecting to real protected systems. Test direct object access so an unauthorized user cannot bypass the UI check.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

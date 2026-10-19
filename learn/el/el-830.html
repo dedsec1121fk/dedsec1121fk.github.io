@@ -1,0 +1,74 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>scala — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-830.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="scala — συγκεντρωτικός οδηγός Scala Συνήθης χρήση: Συναρτησιακός προγραμματισμός. Προτεινόμενη επέκταση αρχείου: .scala . Εκτέλεση / περιβάλλον: Εκτέλεση με εγκατεστημένα εργαλεία Scala 3…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="scala — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="scala — συγκεντρωτικός οδηγός Scala Συνήθης χρήση: Συναρτησιακός προγραμματισμός. Προτεινόμενη επέκταση αρχείου: .scala . Εκτέλεση / περιβάλλον: Εκτέλεση με εγκατεστημένα εργαλεία Scala 3…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-830.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="scala — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="scala — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="scala — συγκεντρωτικός οδηγός Scala Συνήθης χρήση: Συναρτησιακός προγραμματισμός. Προτεινόμενη επέκταση αρχείου: .scala . Εκτέλεση / περιβάλλον: Εκτέλεση με εγκατεστημένα εργαλεία Scala 3…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="scala — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>scala — συγκεντρωτικός οδηγός — DedSec Project</h1><p>scala — συγκεντρωτικός οδηγός Scala Συνήθης χρήση: Συναρτησιακός προγραμματισμός. Προτεινόμενη επέκταση αρχείου: .scala . Εκτέλεση / περιβάλλον: Εκτέλεση με εγκατεστημένα εργαλεία Scala 3…</p><section><h2>Scala</h2>
+<p><strong>Συνήθης χρήση:</strong> Συναρτησιακός προγραμματισμός.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.scala</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> Εκτέλεση με εγκατεστημένα εργαλεία Scala 3.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>@main def hello(): Unit =
+  def greet(name: String) = s&quot;Hello, $name!&quot;
+  println(greet(&quot;Ada&quot;))
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Το εκφραστικό ύφος συνδυάζεται με βιβλιοθήκες της JVM.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Το εκφραστικό ύφος συνδυάζεται με βιβλιοθήκες της JVM. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h2>Scala — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Άλλο λάθος κείμενο και άλλο πραγματικό μηδέν</h3>
+<p>Δημιούργησε πηγαίο αρχείο Scala 3 με απλό parser:</p>
+<pre><code class="language-scala">def parse(raw: String): Option[Int] =
+  raw.toIntOption
+
+@main def scoreDemo(): Unit =
+  assert(parse(&quot;12&quot;) == Some(12))
+  assert(parse(&quot;0&quot;) == Some(0))
+  assert(parse(&quot;bad&quot;) == None)
+  val values = List(&quot;3&quot;, &quot;bad&quot;, &quot;5&quot;)
+  println(values.flatMap(parse).sum)
+</code></pre>
+<p>Με συμβατό εργαλείο Scala 3 αναμένεται άθροισμα <code>8</code>. Η <code>Option</code> διακρίνει την επιτυχία από την απουσία τιμής. Η <code>flatMap(parse)</code> απορρίπτει <code>None</code>, κάτι χρήσιμο για πειραματισμό αλλά δυνητικά επικίνδυνο όταν η εφαρμογή πρέπει να αναφέρει άκυρα δεδομένα. Κατάγραψε έκδοση και εντολή εκτέλεσης επειδή Scala 2 και Scala 3 διαφέρουν στα entry points.</p>
+<h3>Διατήρησε χρήσιμη περιγραφή αποτυχίας</h3>
+<p>Φτιάξε δεύτερη συνάρτηση που επιστρέφει <code>Either[String,Int]</code>. Σε έγκυρο ακέραιο παράγει <code>Right</code>, ενώ σε λανθασμένο κείμενο <code>Left</code> με περιγραφή. Όρισε αν η επεξεργασία συλλογής σταματά στο πρώτο σφάλμα ή συγκεντρώνει όλα τα λάθη. Μην μετατρέπεις αυτόματα το <code>&quot;bad&quot;</code> σε μηδέν.</p>
+<h3>Αμετάβλητες συλλογές</h3>
+<p>Δοκίμασε <code>val original = List(1,2,3)</code> και <code>val updated = original.map(_ * 2)</code>. Η αρχική λίστα δεν πρέπει να μεταβληθεί. Σε αντίθεση με mutable buffer, το <code>List.map</code> δημιουργεί νέο αποτέλεσμα. Αυτό μειώνει τις τυχαίες μεταβολές κοινού state, αλλά δεν εξαλείφει κάθε bug παραλληλισμού.</p>
+<h3>Αυτοτελής άσκηση</h3>
+<p>Υποστήριξε κενά γύρω από αριθμητικό κείμενο με ρητό <code>trim</code>. Έλεγξε <code>&quot; 12 &quot;</code>, άδειο string, αρνητικό αριθμό και αριθμό εκτός εύρους <code>Int</code>. Ξεχώρισε το συντακτικό parsing από επιχειρησιακό κανόνα μη αρνητικών τιμών. Πρόσθεσε assertions και κατέγραψε πραγματικές εξόδους. Πηγή: https://docs.scala-lang.org/scala3/</p>
+<h2>Scala — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>scala {file}</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Scala — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Η Scala συνδυάζει αντικειμενοστραφείς και συναρτησιακές αφαιρέσεις.</li>
+<li>Οι αμετάβλητες συλλογές απλοποιούν τη σκέψη για ταυτόχρονες αλλαγές.</li>
+<li>Ένα Future πρέπει να συνδυαστεί ή να αναμείνεις το αποτέλεσμά του· η εκκίνηση δεν σημαίνει επιτυχία.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

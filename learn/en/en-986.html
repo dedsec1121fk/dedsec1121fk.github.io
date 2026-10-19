@@ -1,0 +1,175 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>elm — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-986.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="elm — consolidated language guide Elm The functional boundary Elm is a functional language for browser interfaces. A function transforms values without modifying a shared variable; browser…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="elm — consolidated language guide — DedSec Project">
+<meta property="og:description" content="elm — consolidated language guide Elm The functional boundary Elm is a functional language for browser interfaces. A function transforms values without modifying a shared variable; browser…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-986.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="elm — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="elm — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="elm — consolidated language guide Elm The functional boundary Elm is a functional language for browser interfaces. A function transforms values without modifying a shared variable; browser…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="elm — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>elm — consolidated language guide — DedSec Project</h1><p>elm — consolidated language guide Elm The functional boundary Elm is a functional language for browser interfaces. A function transforms values without modifying a shared variable; browser…</p><section><h2>Elm</h2>
+<h3>The functional boundary</h3>
+<p>Elm is a functional language for browser interfaces. A function transforms values without modifying a shared variable; browser effects are represented separately by the Elm runtime. Before building a Model/Msg/update application, learn what a small transformation actually discards.</p>
+<p>Save the following as src/Main.elm in a scratch project initialized with elm init:</p>
+<pre><code class="language-elm">module Main exposing (main)
+
+import Html exposing (text)
+
+main =
+    let
+        raw =
+            [ &quot;3&quot;, &quot;oops&quot;, &quot;4&quot; ]
+
+        valid =
+            List.filterMap String.toInt raw
+    in
+    text (String.fromInt (List.sum valid))
+</code></pre>
+<p>Build with elm make src/Main.elm --output=main.js, then load the generated script from a small HTML page and initialize Elm.Main.init on a real DOM node. The displayed value should be 7. Elm dependencies may require a network connection or a populated package cache for the first build.</p>
+<h3>A subtle correctness failure</h3>
+<p>String.toInt returns Maybe Int: Just n for a parsed integer and Nothing for an invalid string. List.filterMap keeps Just values and silently discards Nothing. Therefore [&quot;oops&quot;] displays 0 even though no valid number was supplied. That is not a trustworthy validation strategy when every input must be accounted for.</p>
+<p>Compare three cases: [&quot;3&quot;, &quot;4&quot;] → 7; [&quot;3&quot;, &quot;oops&quot;, &quot;4&quot;] → 7 but with lost data; [&quot;oops&quot;] → 0. Explain why the same sum does not imply the same input quality. A production importer should return an explicit error, for example Result String (List Int), instead of dropping malformed records.</p>
+<h3>Troubleshooting and next step</h3>
+<p>If elm make reports missing elm.json, run elm init in a clean directory. If dependencies cannot be downloaded, record an environment failure rather than claiming a syntax error. If the page is blank, check browser console, generated file path and Elm.Main.init. If a type mismatch occurs, distinguish Maybe Int from Int and avoid unchecked conversion.</p>
+<p>Exercise: implement parseAll : List String -&gt; Result String (List Int) so the second and third test inputs fail with a useful message. Then add a Model, Msg and update to display the error in the browser. Record the Elm compiler version, build result and actual browser output. The example's outcomes are statically predicted; compiler/browser execution was not performed for this text.</p>
+<h2>Elm — Expanded practice workbook</h2>
+<h3>A concrete UI boundary</h3>
+<p>Browser.sandbox can model input without a server. Store the user's raw text as String, convert only when validating, and render feedback with Html.text so the input is displayed as text rather than interpreted as markup. This is client-side feedback, not a substitute for server-side validation when data eventually crosses a network boundary.</p>
+<p>In an elm init scratch project, save as src/Main.elm:</p>
+<pre><code class="language-elm">module Main exposing (main)
+
+import Browser
+import Html exposing (Html, div, input, label, text)
+import Html.Attributes exposing (for, id, value)
+import Html.Events exposing (onInput)
+
+type alias Model =
+    { raw : String }
+
+type Msg
+    = Changed String
+
+init : Model
+init =
+    { raw = &quot;&quot; }
+
+update : Msg -&gt; Model -&gt; Model
+update msg model =
+    case msg of
+        Changed next -&gt;
+            { model | raw = next }
+
+describe : String -&gt; String
+describe raw =
+    case String.toInt raw of
+        Just age -&gt;
+            if age &gt;= 0 &amp;&amp; age &lt;= 120 then
+                &quot;Accepted: &quot; ++ String.fromInt age
+            else
+                &quot;Out of range&quot;
+
+        Nothing -&gt;
+            &quot;Enter a whole number&quot;
+
+view : Model -&gt; Html Msg
+view model =
+    div []
+        [ label [ for &quot;age&quot; ] [ text &quot;Age (0–120)&quot; ]
+        , input [ id &quot;age&quot;, value model.raw, onInput Changed ] []
+        , div [] [ text (describe model.raw) ]
+        ]
+
+main : Program () Model Msg
+main =
+    Browser.sandbox { init = init, update = update, view = view }
+</code></pre>
+<p>Build with elm make src/Main.elm --output=main.js and initialize Elm.Main.init with a real DOM node. An Elm compiler and dependencies are required; this workbook does not claim the build was run here.</p>
+<h3>Test matrix and rationale</h3>
+<p>Expected observations: empty text → Enter a whole number; 0 → Accepted: 0; 120 → Accepted: 120; -1 and 121 → Out of range; 12.5 and abc → Enter a whole number. String.toInt returns Maybe Int, so Nothing is handled explicitly. The boundary check is inclusive. For text such as &lt;img src=x&gt;, Html.text does not create an image element.</p>
+<p>Check the visible label and its matching for/id relationship with keyboard and screen-reader inspection. Consider adding an aria-live status region and an explicit error association for a production form; merely displaying a message is not sufficient evidence of accessible error announcement.</p>
+<h3>Diagnostics, exercises and completion</h3>
+<ul>
+<li>If compilation reports a type mismatch, inspect the Msg constructor argument and onInput callback: onInput supplies String, not Int.</li>
+<li>If the label does not focus the input, compare for=&quot;age&quot; and id=&quot;age&quot;.</li>
+<li>If typing does nothing, verify the app was initialized once and the script actually loaded.</li>
+<li>Exercise A: extract validateAge : String -&gt; Result String Int and distinguish malformed input from out-of-range input.</li>
+<li>Exercise B: add a Submit message and explain why server-side checks remain mandatory before persisting data.</li>
+<li>Exercise C: test whitespace such as &quot; 12 &quot; and document whether String.toInt accepts it; do not silently assume trimming.</li>
+</ul>
+<p>A complete submission includes Elm version, code, build/browser evidence, the seven expected input cases, an accessibility observation and a deliberate failure. No browser or Elm compiler execution is asserted for this written example.</p>
+<h2>Elm — Focused mastery pathway</h2>
+<h3>What the Elm Architecture separates</h3>
+<p>Elm represents state with a Model, events with a Msg union type, transitions with update and rendering with view. Browser.sandbox is suitable for this entirely local example: there are no HTTP commands or subscriptions. Unlike direct DOM mutation, the runtime renders the view from the model after each message.</p>
+<p>In a scratch Elm project created with elm init, save the following as src/Main.elm. A working package cache or access to Elm's package registry may be needed for the first build.</p>
+<pre><code class="language-elm">module Main exposing (main)
+
+import Browser
+import Html exposing (Html, button, div, text)
+import Html.Events exposing (onClick)
+
+type alias Model =
+    { count : Int }
+
+type Msg
+    = Increment
+    | Reset
+
+init : Model
+init =
+    { count = 0 }
+
+update : Msg -&gt; Model -&gt; Model
+update msg model =
+    case msg of
+        Increment -&gt;
+            { model | count = model.count + 1 }
+
+        Reset -&gt;
+            { model | count = 0 }
+
+view : Model -&gt; Html Msg
+view model =
+    div []
+        [ button [ onClick Increment ] [ text &quot;Add one&quot; ]
+        , button [ onClick Reset ] [ text &quot;Reset&quot; ]
+        , text (String.fromInt model.count)
+        ]
+
+main : Program () Model Msg
+main =
+    Browser.sandbox { init = init, update = update, view = view }
+</code></pre>
+<p>Compile with elm make src/Main.elm --output=main.js. Open a disposable HTML file that loads main.js and initializes Elm.Main.init({ node: document.getElementById(&quot;app&quot;) }) on an empty div with id app. Do not inject new HTML into the same node after Elm owns it.</p>
+<h3>Predict and test</h3>
+<p>Starting from 0, clicking Add one twice must display 2; Reset returns 0. Clicking Reset immediately also yields 0. update does not modify its input record; it returns a new model. The Elm runtime handles event dispatch and DOM updates, not the update function itself.</p>
+<p>A deliberately invalid edit, { model | count = &quot;one&quot; }, should be rejected because count is Int. This is a compile-time type mismatch, not a browser exception. Browser.sandbox cannot issue Cmd Msg; asynchronous HTTP requires a suitable program such as Browser.element and an explicit update result containing commands.</p>
+<h3>Troubleshooting and next level</h3>
+<ul>
+<li>If elm make reports a missing elm.json or dependencies, run elm init in a clean project and verify network/cache access; distinguish setup failure from source failure.</li>
+<li>If Elm.Main is undefined, inspect the generated file path, script load order and browser console. Compilation alone does not prove browser initialization.</li>
+<li>If the counter appears twice, check for duplicate initialization or multiple app containers, not a second update call.</li>
+<li>Extend Msg with Decrement and prevent negative counts using max 0 (model.count - 1). Explain why the invariant count &gt;= 0 holds after every message.</li>
+</ul>
+<p>Completion requires the compiler version, build command, browser observation for two increments and reset, a captured type-error diagnostic, and an invariant argument. The sample and outcomes are statically reasoned; no Elm runtime execution is claimed here.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

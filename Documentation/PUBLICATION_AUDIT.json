@@ -1,0 +1,92 @@
+{
+  "scope": "Offline publication audit; browser acceptance is enforced separately by CI before Test deployment.",
+  "profiles": [
+    {
+      "profile": "test",
+      "base_url": "https://dedsec1121fk.github.io/Test/",
+      "html_pages": 2135,
+      "sitemap_urls": 1955,
+      "unique_canonical_urls": 1956,
+      "llm_full_records": 1956,
+      "css_resource_references": 168,
+      "fingerprinted_resource_references": 8884,
+      "startup_resources": 50,
+      "startup_bytes": 4091229,
+      "javascript_files_checked": 23,
+      "unique_inline_scripts_checked": 4,
+      "issues": [],
+      "limits": [
+        "External website/API availability is not an offline guarantee.",
+        "Static checks do not certify every technical claim or all hardware/toolchains.",
+        "Test is noindex staging; production and backup repositories are not modified."
+      ]
+    },
+    {
+      "profile": "main",
+      "base_url": "https://ded-sec.space/",
+      "html_pages": 2135,
+      "sitemap_urls": 1955,
+      "unique_canonical_urls": 1956,
+      "llm_full_records": 1956,
+      "css_resource_references": 168,
+      "fingerprinted_resource_references": 8884,
+      "startup_resources": 50,
+      "startup_bytes": 4086365,
+      "javascript_files_checked": 23,
+      "unique_inline_scripts_checked": 4,
+      "issues": [],
+      "limits": [
+        "External website/API availability is not an offline guarantee.",
+        "Static checks do not certify every technical claim or all hardware/toolchains.",
+        "Test is noindex staging; production and backup repositories are not modified."
+      ]
+    },
+    {
+      "profile": "backup",
+      "base_url": "https://ded-sec.online/",
+      "html_pages": 2135,
+      "sitemap_urls": 1955,
+      "unique_canonical_urls": 1956,
+      "llm_full_records": 1956,
+      "css_resource_references": 168,
+      "fingerprinted_resource_references": 8884,
+      "startup_resources": 50,
+      "startup_bytes": 4086402,
+      "javascript_files_checked": 23,
+      "unique_inline_scripts_checked": 4,
+      "issues": [],
+      "limits": [
+        "External website/API availability is not an offline guarantee.",
+        "Static checks do not certify every technical claim or all hardware/toolchains.",
+        "Test is noindex staging; production and backup repositories are not modified."
+      ]
+    }
+  ],
+  "knowledge": {
+    "effective_records": 1776,
+    "records_per_language": 888,
+    "guides_deepened_this_batch": 48,
+    "paired_topics_deepened": 24,
+    "new_examples_executed": 22,
+    "unit_tests_passed": 35,
+    "fenced_lesson_records_checked": 942,
+    "duplicate_full_bodies": 0,
+    "near_duplicate_pairs_at_0_72": 0
+  },
+  "remote_scope": "Only dedsec1121fk/Test main may be changed. Production and backup profiles were built locally only.",
+  "limitations": [
+    "Rust and TypeScript additions were source-reviewed, not executed with unavailable toolchains.",
+    "External services and every real device/technical claim are outside this static execution guarantee."
+  ],
+  "llm_references": "Prose cross-references are absolute and checked against the build; inline and fenced code retain their literal examples.",
+  "startup_cache": {
+    "coverage": "Only basic DedSec pages and their local presentation dependencies, SHA-256 checked. Knowledge databases, lesson previews, sources and crawlers excluded.",
+    "completion": "Basic bundle, current-page images/fonts and first paint. Knowledge and full-site search initialize on demand.",
+    "browser": "Homepage request isolation, delayed basic page, offline basic page and on-demand lessons/search checked in CI."
+  },
+  "search_passages": {
+    "results": "Complete matching paragraphs/sentences",
+    "destinations": "Public excerpt deep links, accent/whitespace-aware DOM highlights, accordion reveal and navbar-aware scroll",
+    "tests": "Node passage contracts passed; destination browser checks required in CI"
+  }
+}

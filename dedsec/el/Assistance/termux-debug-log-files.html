@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html data-deployment="main" data-repository="dedsec1121fk/dedsec1121fk.github.io" lang="el">
+<head><script src="../../../assets/boot.js?v=ddc8a5999f0f"></script>
+<link href="../../Favicons/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Εντοπισμός σφαλμάτων με αρχεία καταγραφής | DedSec Assistance</title>
+<meta content="#07060d" name="theme-color"/>
+<meta content="dark light" name="color-scheme"/>
+
+<meta content="Debug Logs, Termux, Android Termux, no root Android, DedSec Project, Termux guide, Termux help" name="keywords"/>
+<link href="../../Favicons/favicon.ico" rel="icon" sizes="any"/>
+<link href="../../Favicons/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../../Favicons/favicon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="../../Favicons/favicon-16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="../../Favicons/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="../../site.webmanifest" rel="manifest"/>
+<link href="../../Assets/vendor/fontawesome/css/all.min.css?v=74005d7c17d4" rel="stylesheet"/>
+<link href="../../style.css?v=0f1fd6376938" rel="stylesheet"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta content="DedSec Project" name="author"/>
+
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
+
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ded-sec.space/#organization",
+      "name": "DedSec Project",
+      "url": "https://ded-sec.space/",
+      "logo": "https://ded-sec.space/Assets/Images/Logos/Black%20Purple%20Butterfly%20Logo.jpeg",
+      "sameAs": [
+        "https://github.com/dedsec1121fk/DedSec",
+        "https://github.com/dedsec1121fk",
+        "https://t.me/dedsecproject"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ded-sec.space/#website",
+      "name": "DedSec Project",
+      "url": "https://ded-sec.space/",
+      "publisher": {
+        "@id": "https://ded-sec.space/#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ded-sec.space/el/Assistance/termux-debug-log-files.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DedSec Project",
+          "item": "https://ded-sec.space/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Βοήθεια",
+          "item": "https://ded-sec.space/el/Pages/assistance.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Εντοπισμός σφαλμάτων με αρχεία καταγραφής",
+          "item": "https://ded-sec.space/el/Assistance/termux-debug-log-files.html"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://ded-sec.space/el/Assistance/termux-debug-log-files.html#article",
+      "url": "https://ded-sec.space/el/Assistance/termux-debug-log-files.html",
+      "headline": "Εντοπισμός σφαλμάτων με αρχεία καταγραφής",
+      "description": "Αποθήκευσε τα σφάλματα του τερματικού σε log ώστε να τα συγκρίνεις, να ζητήσεις βοήθεια ή να διορθώσεις ένα script χωρίς να χαθεί το output.",
+      "inLanguage": "el",
+      "dateModified": "2026-07-24",
+      "author": {
+        "@id": "https://ded-sec.space/#organization"
+      },
+      "publisher": {
+        "@id": "https://ded-sec.space/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://ded-sec.space/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ded-sec.space/el/Assistance/termux-debug-log-files.html#breadcrumb"
+      },
+      "articleSection": "Ροές εργασίας και συντήρηση",
+      "keywords": "Debug, Logs, Termux, Android, DedSec Project",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Debug"
+        },
+        {
+          "@type": "Thing",
+          "name": "Logs"
+        }
+      ]
+    }
+  ]
+}</script>
+<link href="../../Assets/assistance.css?v=3f385ebaab55" rel="stylesheet"/><link href="../../Assets/premium-theme.css?v=b3af24f65055" rel="stylesheet"/><link rel="stylesheet" href="../../Assets/vendor/fontawesome/css/all.min.css?v=74005d7c17d4"><link rel="stylesheet" href="../../Assets/merged-retro.css?v=c8d5320d6d67"><script defer src="../../Assets/merged-retro.js?v=f3fae97262c2"></script>
+<link rel="stylesheet" href="../../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/el/Assistance/termux-debug-log-files.html">
+<meta name="description" content="Αποθήκευσε τα σφάλματα του τερματικού σε log ώστε να τα συγκρίνεις, να ζητήσεις βοήθεια ή να διορθώσεις ένα script χωρίς να χαθεί το output.">
+<meta name="robots" content="noindex,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Εντοπισμός σφαλμάτων με αρχεία καταγραφής | DedSec Assistance">
+<meta property="og:description" content="Αποθήκευσε τα σφάλματα του τερματικού σε log ώστε να τα συγκρίνεις, να ζητήσεις βοήθεια ή να διορθώσεις ένα script χωρίς να χαθεί το output.">
+<meta property="og:url" content="https://ded-sec.space/el/Assistance/termux-debug-log-files.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Εντοπισμός σφαλμάτων με αρχεία καταγραφής | DedSec Assistance — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Εντοπισμός σφαλμάτων με αρχεία καταγραφής | DedSec Assistance">
+<meta name="twitter:description" content="Αποθήκευσε τα σφάλματα του τερματικού σε log ώστε να τα συγκρίνεις, να ζητήσεις βοήθεια ή να διορθώσεις ένα script χωρίς να χαθεί το output.">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Εντοπισμός σφαλμάτων με αρχεία καταγραφής | DedSec Assistance — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head>
+<body class="dark-theme"><header class="merged-topbar"><a class="merged-brand" href="../../../index.html"><img src="../../Assets/Images/Logos/White%20Purple%20Butterfly%20Logo.jpeg" alt=""><span>DedSec Project</span></a><div class="merged-actions"><a id="merged-search" class="merged-search" href="../../../index.html#library" aria-label="Search the knowledge archive" title="Search the knowledge archive"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"><circle cx="10.4" cy="10.4" r="6.4"/><path d="m15.3 15.3 6 6"/></svg></a><button type="button" id="merged-theme" class="merged-action" aria-label="Change theme"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.7 16.1A8.9 8.9 0 0 1 7.9 3.3a9.2 9.2 0 1 0 12.8 12.8Z"/></svg></button><button type="button" id="merged-lang" class="merged-action" aria-label="Change language">ΕΛ</button><a id="merged-home" class="merged-home" href="../../../index.html" aria-label="Home" title="Home"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 10.2 9.5-7.6 9.5 7.6V21h-6.6v-7H9.1v7H2.5z"/></svg></a></div></header><a class="assist-skip-link" data-en="Skip to Assistance content" data-gr="Μετάβαση στο περιεχόμενο βοήθειας" href="#main-content">Μετάβαση στο περιεχόμενο βοήθειας</a>
+
+<main class="page-content assistance-page assistance-article-page" id="main-content" tabindex="-1">
+<div class="page-header">
+<h1 data-en="Debug Logs" data-gr="Εντοπισμός Σφαλμάτων Με Αρχεία Καταγραφής">Εντοπισμός Σφαλμάτων Με Αρχεία Καταγραφής</h1>
+<p data-en="Save terminal errors into a log file so you can compare problems, ask for help, or fix scripts without losing the output." data-gr="Αποθήκευσε τα σφάλματα του τερματικού σε log ώστε να τα συγκρίνεις, να ζητήσεις βοήθεια ή να διορθώσεις ένα script χωρίς να χαθεί το output.">Αποθήκευσε τα σφάλματα του τερματικού σε log ώστε να τα συγκρίνεις, να ζητήσεις βοήθεια ή να διορθώσεις ένα script χωρίς να χαθεί το output.</p>
+</div>
+<article class="content-section assistance-article assistance-article-v3" data-category="workflow" data-guide="termux-debug-log-files"><nav aria-label="Διαδρομή πλοήγησης" class="assistance-breadcrumb"><a data-en="Assistance" data-gr="Βοήθεια" href="../../el/Pages/assistance.html">Βοήθεια</a><span aria-hidden="true">›</span><span aria-current="page">Εντοπισμός σφαλμάτων με αρχεία καταγραφής</span></nav><section class="assistance-guide-section assistance-guide-summary" id="quick-answer"><h2 data-en="Quick Answer" data-gr="Σύντομη Απάντηση">Σύντομη Απάντηση</h2><p data-en="Save terminal errors into a log file so you can compare problems, ask for help, or fix scripts without losing the output." data-gr="Αποθήκευσε τα σφάλματα του τερματικού σε log ώστε να τα συγκρίνεις, να ζητήσεις βοήθεια ή να διορθώσεις ένα script χωρίς να χαθεί το output.">Αποθήκευσε τα σφάλματα του τερματικού σε log ώστε να τα συγκρίνεις, να ζητήσεις βοήθεια ή να διορθώσεις ένα script χωρίς να χαθεί το output.</p><p data-en="Use this guide only when your symptom or goal matches the indicators below. If a diagnostic command reveals a different problem, follow that evidence instead of forcing every remaining step." data-gr="Χρησιμοποίησε αυτόν τον οδηγό μόνο όταν το σύμπτωμα ή ο στόχος ταιριάζει με τις ενδείξεις παρακάτω. Αν μια διαγνωστική εντολή δείξει διαφορετικό πρόβλημα, ακολούθησε αυτή την ένδειξη αντί να εκτελέσεις μηχανικά όλα τα βήματα.">Χρησιμοποίησε αυτόν τον οδηγό μόνο όταν το σύμπτωμα ή ο στόχος ταιριάζει με τις ενδείξεις παρακάτω. Αν μια διαγνωστική εντολή δείξει διαφορετικό πρόβλημα, ακολούθησε αυτή την ένδειξη αντί να εκτελέσεις μηχανικά όλα τα βήματα.</p><p class="assistance-review-date"><span data-en="Last reviewed: " data-gr="Τελευταίος έλεγχος: ">Τελευταίος έλεγχος: </span><time datetime="2026-07-24">24 Ιουλίου 2026</time>.</p></section><nav aria-label="Ενότητες οδηγού" class="assistance-toc"><h2 data-en="On This Page" data-gr="Σε Αυτή Τη Σελίδα">Σε Αυτή Τη Σελίδα</h2><ol><li><a data-en="When to use it" data-gr="Πότε να τον χρησιμοποιήσεις" href="#use-this-guide">Πότε να τον χρησιμοποιήσεις</a>.</li><li><a data-en="Before running commands" data-gr="Πριν από τις εντολές" href="#before-running">Πριν από τις εντολές</a>.</li><li><a data-en="Commands" data-gr="Εντολές" href="#commands">Εντολές</a></li><li><a data-en="Understand the result" data-gr="Κατανόηση αποτελέσματος" href="#command-results">Κατανόηση αποτελέσματος</a></li><li><a data-en="What success looks like" data-gr="Πώς φαίνεται η επιτυχία" href="#success">Πώς φαίνεται η επιτυχία</a>.</li><li><a data-en="Safe next steps" data-gr="Ασφαλή επόμενα βήματα" href="#next-steps">Ασφαλή επόμενα βήματα</a>.</li><li><a data-en="Common mistakes" data-gr="Συνηθισμένα λάθη" href="#mistakes">Συνηθισμένα λάθη</a></li><li><a data-en="Support report" data-gr="Αναφορά υποστήριξης" href="#support">Αναφορά υποστήριξης</a></li><li><a data-en="Related guides" data-gr="Σχετικοί οδηγοί" href="#related">Σχετικοί οδηγοί</a></li></ol></nav><section class="assistance-guide-section" id="use-this-guide"><h2 data-en="Use This Guide When" data-gr="Χρησιμοποίησε Τον Οδηγό Όταν Βλέπεις">Χρησιμοποίησε Τον Οδηγό Όταν Βλέπεις</h2><div class="assistance-signature-tags"><span class="assistance-signature-tag">Debug</span><span class="assistance-signature-tag">Logs</span></div></section><section class="assistance-guide-section" id="before-running"><h2 data-en="Before You Run Anything" data-gr="Πριν Εκτελέσεις Οτιδήποτε">Πριν Εκτελέσεις Οτιδήποτε</h2><ul class="assistance-check-list"><li data-en="Create a dated backup and verify that it contains the files required for recovery." data-gr="Δημιούργησε χρονολογημένο backup και επιβεβαίωσε ότι περιέχει τα αρχεία που χρειάζονται για επαναφορά.">Δημιούργησε χρονολογημένο backup και επιβεβαίωσε ότι περιέχει τα αρχεία που χρειάζονται για επαναφορά.</li><li data-en="Preview the current state with listing, status, size, or dry-run commands before changing it." data-gr="Δες πρώτα την τρέχουσα κατάσταση με listing, status, μέγεθος ή dry run πριν την αλλάξεις.">Δες πρώτα την τρέχουσα κατάσταση με listing, status, μέγεθος ή dry run πριν την αλλάξεις.</li><li data-en="Keep generated output, cache, secrets, and source files separated." data-gr="Κράτησε ξεχωριστά generated output, cache, μυστικά και source files.">Κράτησε ξεχωριστά generated output, cache, μυστικά και source files.</li></ul></section><section class="assistance-guide-section" id="commands"><h2 data-en="Diagnostic Or Setup Commands" data-gr="Εντολές Ελέγχου Ή Ρύθμισης">Εντολές Ελέγχου Ή Ρύθμισης</h2><p class="assistance-warning-note" data-en="Preview paths, sizes, status, or archive contents before the command changes anything. Keep a verified backup outside the working folder." data-gr="Έλεγξε πρώτα paths, μεγέθη, status ή περιεχόμενο archive πριν η εντολή αλλάξει οτιδήποτε. Κράτησε επαληθευμένο backup έξω από τον φάκελο εργασίας.">Έλεγξε πρώτα paths, μεγέθη, status ή περιεχόμενο archive πριν η εντολή αλλάξει οτιδήποτε. Κράτησε επαληθευμένο backup έξω από τον φάκελο εργασίας.</p><div class="code-container assistance-code"><button aria-label="Αντιγραφή block εντολών" class="copy-btn assistance-code-copy" data-en="Copy commands" data-gr="Αντιγραφή εντολών" type="button">Αντιγραφή εντολών</button><pre tabindex="0"><code>python script.py 2&gt;&amp;1 | tee debug.log
+tail -n 80 debug.log
+grep -i "error" debug.log</code></pre></div></section><section class="assistance-guide-section" id="command-results"><h2 data-en="What The Commands Tell You" data-gr="Τι Δείχνουν Οι Εντολές">Τι Δείχνουν Οι Εντολές</h2><ul class="assistance-command-explanations"><li data-en="Run the example one line or logical block at a time and compare each result with the stated goal." data-gr="Εκτέλεσε το παράδειγμα ανά γραμμή ή λογικό block και σύγκρινε κάθε αποτέλεσμα με τον στόχο του οδηγού.">Εκτέλεσε το παράδειγμα ανά γραμμή ή λογικό block και σύγκρινε κάθε αποτέλεσμα με τον στόχο του οδηγού.</li></ul></section><section class="assistance-guide-section" id="success"><h2 data-en="What Success Looks Like" data-gr="Πώς Φαίνεται Ότι Λύθηκε">Πώς Φαίνεται Ότι Λύθηκε</h2><ul class="assistance-success-list"><li data-en="The workflow can be repeated without overwriting the previous backup or losing current work." data-gr="Η ροή μπορεί να επαναληφθεί χωρίς να αντικαταστήσει το προηγούμενο backup ή να χαθεί τρέχουσα εργασία.">Η ροή μπορεί να επαναληφθεί χωρίς να αντικαταστήσει το προηγούμενο backup ή να χαθεί τρέχουσα εργασία.</li><li data-en="The result can be verified with a simple list, diff, status, checksum, or test command." data-gr="Το αποτέλεσμα επαληθεύεται με απλό list, diff, status, checksum ή test command.">Το αποτέλεσμα επαληθεύεται με απλό list, diff, status, checksum ή test command.</li><li data-en="A documented rollback restores the previous state when the new result is wrong." data-gr="Τεκμηριωμένη διαδικασία rollback επαναφέρει την προηγούμενη κατάσταση όταν το νέο αποτέλεσμα είναι λάθος.">Τεκμηριωμένη διαδικασία rollback επαναφέρει την προηγούμενη κατάσταση όταν το νέο αποτέλεσμα είναι λάθος.</li></ul></section><section class="assistance-guide-section" id="next-steps"><h2 data-en="Safe Next Steps" data-gr="Ασφαλή Επόμενα Βήματα">Ασφαλή Επόμενα Βήματα</h2><ol class="assistance-steps"><li data-en="Record the current state and create a recoverable backup." data-gr="Κατέγραψε την τρέχουσα κατάσταση και δημιούργησε backup που μπορεί να επανέλθει.">Κατέγραψε την τρέχουσα κατάσταση και δημιούργησε backup που μπορεί να επανέλθει.</li><li data-en="Apply one controlled change or maintenance action." data-gr="Εφάρμοσε μία ελεγχόμενη αλλαγή ή ενέργεια συντήρησης.">Εφάρμοσε μία ελεγχόμενη αλλαγή ή ενέργεια συντήρησης.</li><li data-en="Verify the result with a small command before continuing." data-gr="Επαλήθευσε το αποτέλεσμα με μικρή εντολή πριν συνεχίσεις.">Επαλήθευσε το αποτέλεσμα με μικρή εντολή πριν συνεχίσεις.</li><li data-en="Document what changed, where the backup is, and how to restore it." data-gr="Κατέγραψε τι άλλαξε, πού βρίσκεται το backup και πώς γίνεται η επαναφορά.">Κατέγραψε τι άλλαξε, πού βρίσκεται το backup και πώς γίνεται η επαναφορά.</li></ol></section><section class="assistance-guide-section" id="mistakes"><h2 data-en="Common Mistakes" data-gr="Συνηθισμένα Λάθη">Συνηθισμένα Λάθη</h2><ul class="assistance-check-list"><li data-en="Using a cleanup or update command without previewing what it will change." data-gr="Χρήση εντολής καθαρισμού ή ενημέρωσης χωρίς προεπισκόπηση των αλλαγών.">Χρήση εντολής καθαρισμού ή ενημέρωσης χωρίς προεπισκόπηση των αλλαγών.</li><li data-en="Keeping the only backup inside the same folder that is being replaced or deleted." data-gr="Αποθήκευση του μοναδικού backup μέσα στον ίδιο φάκελο που αντικαθίσταται ή διαγράφεται.">Αποθήκευση του μοναδικού backup μέσα στον ίδιο φάκελο που αντικαθίσταται ή διαγράφεται.</li><li data-en="Mixing secrets, cache, generated output, and source files in the same committed directory." data-gr="Ανάμειξη μυστικών, cache, generated output και source files στον ίδιο committed φάκελο.">Ανάμειξη μυστικών, cache, generated output και source files στον ίδιο committed φάκελο.</li></ul></section><section class="assistance-support-panel" id="support"><h2 data-en="Still Stuck?" data-gr="Χρειάζεσαι Ακόμη Βοήθεια;">Χρειάζεσαι Ακόμη Βοήθεια;</h2><p data-en="Copy the support report, fill in the missing values, and include the complete terminal output. Remove passwords, tokens, private keys, exact home paths, and personal information." data-gr="Αντέγραψε την αναφορά υποστήριξης, συμπλήρωσε τα στοιχεία και πρόσθεσε ολόκληρο το output του τερματικού. Αφαίρεσε κωδικούς, tokens, ιδιωτικά κλειδιά, ακριβείς προσωπικές διαδρομές και προσωπικά στοιχεία.">Αντέγραψε την αναφορά υποστήριξης, συμπλήρωσε τα στοιχεία και πρόσθεσε ολόκληρο το output του τερματικού. Αφαίρεσε κωδικούς, tokens, ιδιωτικά κλειδιά, ακριβείς προσωπικές διαδρομές και προσωπικά στοιχεία.</p><div class="assistance-contextual-recommendation"><h3 data-en="Fixed This Error But Want A Repeatable Way To Diagnose The Next One?" data-gr="Διόρθωσες Αυτό Το Σφάλμα Αλλά Θέλεις Επαναχρησιμοποιήσιμο Τρόπο Για Το Επόμενο;">Διόρθωσες Αυτό Το Σφάλμα Αλλά Θέλεις Επαναχρησιμοποιήσιμο Τρόπο Για Το Επόμενο;</h3><p data-en="The Complete Termux Troubleshooting Handbook gives you a structured diagnostic process for Termux, Python, Git, storage, packages, networking and recovery instead of relying on disconnected fixes." data-gr="Το Complete Termux Troubleshooting Handbook δίνει μια οργανωμένη διαγνωστική διαδικασία για Termux, Python, Git, αποθήκευση, πακέτα, δίκτυα και recovery αντί για ασύνδετες διορθώσεις.">Το Complete Termux Troubleshooting Handbook δίνει μια οργανωμένη διαγνωστική διαδικασία για Termux, Python, Git, αποθήκευση, πακέτα, δίκτυα και recovery αντί για ασύνδετες διορθώσεις.</p></div><div class="assistance-support-actions"><button class="starter-path-btn assistance-report-btn" data-en="Copy Support Report" data-gr="Αντιγραφή αναφοράς" data-guide-title-en="Debug Logs" data-guide-title-gr="Εντοπισμός σφαλμάτων με αρχεία καταγραφής" type="button">Αντιγραφή αναφοράς</button><a class="starter-path-btn starter-path-btn--exclusive assistance-contextual-cta" data-en="Preview the Handbook" data-gr="Δες Preview του Handbook" href="../../el/Pages/learn-about-the-tools.html#ebook-termux">Δες Preview του Handbook</a></div></section><section class="assistance-guide-section assistance-related-section" id="related"><h2 data-en="Related Assistance Guides" data-gr="Σχετικοί Οδηγοί Βοήθειας">Σχετικοί Οδηγοί Βοήθειας</h2><div class="assistance-related-grid"><a class="starter-path-btn" data-en="Beginner Guide" data-gr="Οδηγός Termux για αρχάριους στο Android" href="../../el/Assistance/termux-beginner-guide-android.html">Οδηγός Termux για αρχάριους στο Android</a><a class="starter-path-btn" data-en="Command Cheat Sheet" data-gr="Βασικές εντολές Termux" href="../../el/Assistance/termux-command-cheat-sheet.html">Βασικές εντολές Termux</a><a class="starter-path-btn" data-en="Troubleshooting Checklist" data-gr="Λίστα ελέγχου για προβλήματα στο Termux" href="../../el/Assistance/termux-troubleshooting-checklist.html">Λίστα ελέγχου για προβλήματα στο Termux</a><a class="starter-path-btn" data-en="Update GitHub Pages From Termux Without Breaking The Site" data-gr="Ενημέρωση GitHub Pages από το Termux χωρίς προβλήματα" href="../../el/Assistance/termux-github-pages-update-workflow.html">Ενημέρωση GitHub Pages από το Termux χωρίς προβλήματα</a></div><a class="assistance-back-link" data-en="Back To All Assistance Guides" data-gr="Επιστροφή σε όλους τους οδηγούς βοήθειας" href="../../el/Pages/assistance.html">Επιστροφή σε όλους τους οδηγούς βοήθειας</a></section></article>
+
+</main>
+
+<footer class="merged-footer"><div class="footer-buttons"><a href="https://github.com/dedsec1121fk/DedSec" data-en="Main DedSec Project Repository" data-gr="Κύριο Repository DedSec Project">Main DedSec Project Repository</a></div><div class="footer-buttons"><a href="https://www.google.com/preferences/source?q=ded-sec.space" data-en="Set DedSec Project as Preferred Google Source" data-gr="Επιλογή DedSec Project ως προτιμώμενης πηγής Google">Set DedSec Project as Preferred Google Source</a></div><p data-en="If the main website is unavailable, use our backups." data-gr="Αν η κύρια ιστοσελίδα δεν λειτουργεί, χρησιμοποίησε τις εφεδρικές.">Αν η κύρια ιστοσελίδα δεν λειτουργεί, χρησιμοποίησε τις εφεδρικές.</p><div class="footer-buttons"><a href="https://ded-sec.online" data-en="Backup Website" data-gr="Εφεδρική Ιστοσελίδα">Backup Website</a><a href="https://github.com/sal-scar/DedSec" data-en="Backup Repository" data-gr="Εφεδρικό Repository">Backup Repository</a></div><p>© 2024–2026 DedSec Project. All Rights Reserved.</p><p>Made by dedsec1121fk.</p></footer><script src="../../../assets/page-controls.js?v=3294bd926d29"></script></body>
+</html>

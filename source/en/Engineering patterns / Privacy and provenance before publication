@@ -1,0 +1,7 @@
+# Privacy and provenance before publication
+
+A private codebase can inform general design patterns, but those patterns should not expose usernames, contact details, secrets, financial arrangements, internal endpoints, or raw conversations. Publish transferable mechanisms and fictional worked examples, never a biographical dossier.
+
+## Verification scenario
+
+Take a private error report and rewrite it using fictional data. Retain the error class, minimal reproduction, repair, and verification. Remove real names, account references, private URLs, emails, tokens and identifying timelines. Automated scans are useful for finding probable secrets, but contextual human review is necessary because renaming one person does not automatically make a story anonymous.

@@ -1,0 +1,85 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>API Authorization, State Machines και Distributed Abuse Cases — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-071.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="API Authorization, State Machines και Distributed Abuse Cases Ελληνική έκδοση — Μάθημα 071. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="API Authorization, State Machines και Distributed Abuse Cases — DedSec Project">
+<meta property="og:description" content="API Authorization, State Machines και Distributed Abuse Cases Ελληνική έκδοση — Μάθημα 071. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-071.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="API Authorization, State Machines και Distributed Abuse Cases — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="API Authorization, State Machines και Distributed Abuse Cases — DedSec Project">
+<meta name="twitter:description" content="API Authorization, State Machines και Distributed Abuse Cases Ελληνική έκδοση — Μάθημα 071. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="API Authorization, State Machines και Distributed Abuse Cases — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>API Authorization, State Machines και Distributed Abuse Cases — DedSec Project</h1><p>API Authorization, State Machines και Distributed Abuse Cases Ελληνική έκδοση — Μάθημα 071. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 071.</strong> Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια.</p>
+</blockquote>
+<h2>Στόχος του μαθήματος</h2>
+<p>Σε αυτό το μάθημα εστιάζεις ειδικά στο <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>. Στο τέλος πρέπει να μπορείς να περιγράψεις το security model με δικά σου λόγια, να αναγνωρίζεις τα βασικά failure modes, να σχεδιάζεις ασφαλή test cases και να εξηγείς ποιο evidence χρειάζεται για να στηριχθεί ένα συμπέρασμα.</p>
+<h2>Θέματα που καλύπτονται</h2>
+<ul>
+<li><strong>Authentication is only the first gate</strong>
+Για το <strong>Authentication is only the first gate</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Object-level authorization</strong>
+Για το <strong>Object-level authorization</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Function-level authorization</strong>
+Για το <strong>Function-level authorization</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Property-level authorization</strong>
+Για το <strong>Property-level authorization</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Authorization matrix</strong>
+Για το <strong>Authorization matrix</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Multi-tenancy</strong>
+Για το <strong>Multi-tenancy</strong>, στο πλαίσιο του <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>State-machine authorization</strong>
+Για το <strong>State-machine authorization</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Replay and idempotency</strong>
+Για το <strong>Replay and idempotency</strong>, στο πλαίσιο του <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Race conditions and TOCTOU</strong>
+Στο <strong>Race conditions and TOCTOU</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+<li><strong>Event-driven systems</strong>
+Για το <strong>Event-driven systems</strong>, στο πλαίσιο του <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Delegation</strong>
+Για το <strong>Delegation</strong>, στο πλαίσιο του <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Confused deputy in APIs</strong>
+Για το <strong>Confused deputy in APIs</strong>, στο πλαίσιο του <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Pagination, filters, and exports</strong>
+Στο <strong>Pagination, filters, and exports</strong>, σύνδεσε ABI/OS abstraction με το πραγματικό machine/runtime state: registers, addresses, object handles, loader metadata και privilege transition. Χρησιμοποίησε μικρό δικό σου binary, disassembler/debugger και annotated trace ώστε κάθε inference να έχει observable βάση.</li>
+<li><strong>GraphQL considerations</strong>
+Για το <strong>GraphQL considerations</strong>, παρακολούθησε το input από client μέχρι parser/framework/backend και πίσω. Κατέγραψε normalization, origin/session context, server-side authorization και output handling ώστε να εντοπίζεις το ακριβές trust boundary.</li>
+<li><strong>Rate controls and abuse economics</strong>
+Για το <strong>Rate controls and abuse economics</strong>, στο πλαίσιο του <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Safe local authorization lab</strong>
+Για το <strong>Safe local authorization lab</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+</ul>
+<h2>Μέθοδος ανάλυσης</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a> για scope, evidence, note-taking και κριτήρια ολοκλήρωσης. Για το <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>, πριν κάνεις οποιοδήποτε test σχεδίασε τα components, σημείωσε πού αλλάζει η εμπιστοσύνη και γράψε μία πρόταση που περιγράφει το security invariant που θέλεις να ελέγξεις.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Ακολούθησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>: γράψε expected result πριν το test, άλλαξε μία μεταβλητή κάθε φορά, κράτησε sanitized evidence και κάνε retest μετά το hardening του <strong>API Authorization, State Machines και Distributed Abuse Cases</strong>.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ul>
+<li>Μπορείς να εξηγήσεις το βασικό trust boundary του <strong>API Authorization, State Machines και Distributed Abuse Cases</strong> χωρίς σημειώσεις;</li>
+<li>Μπορείς να δώσεις ένα failure mode και να πεις ποιο evidence θα το επιβεβαίωνε;</li>
+<li>Μπορείς να ξεχωρίσεις symptom, root cause και compensating control;</li>
+<li>Μπορείς να σχεδιάσεις ασφαλές retest που δεν επεκτείνει το scope;</li>
+</ul>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p><a href="../en/hgp-en-071.html">English Module 071</a></p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

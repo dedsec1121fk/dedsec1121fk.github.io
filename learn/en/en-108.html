@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>require is not defined in ES module scope — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-108.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="require is not defined in ES module scope Identify the module system Node supports CommonJS and ECMAScript modules (ESM). A .mjs file, or a .js file under a package with &quot;type&quot;: &quot;module&quot;…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="require is not defined in ES module scope — DedSec Project">
+<meta property="og:description" content="require is not defined in ES module scope Identify the module system Node supports CommonJS and ECMAScript modules (ESM). A .mjs file, or a .js file under a package with &quot;type&quot;: &quot;module&quot;…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-108.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="require is not defined in ES module scope — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="require is not defined in ES module scope — DedSec Project">
+<meta name="twitter:description" content="require is not defined in ES module scope Identify the module system Node supports CommonJS and ECMAScript modules (ESM). A .mjs file, or a .js file under a package with &quot;type&quot;: &quot;module&quot;…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="require is not defined in ES module scope — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>require is not defined in ES module scope — DedSec Project</h1><p>require is not defined in ES module scope Identify the module system Node supports CommonJS and ECMAScript modules (ESM). A .mjs file, or a .js file under a package with &quot;type&quot;: &quot;module&quot;…</p><section><h2>Identify the module system</h2>
+<p>Node supports CommonJS and ECMAScript modules (ESM). A .mjs file, or a .js file under a package with &quot;type&quot;: &quot;module&quot;, uses ESM. The CommonJS require function is not available there by default.</p>
+<pre><code class="language-javascript">// config.mjs
+import { readFileSync } from &quot;node:fs&quot;;
+import { fileURLToPath } from &quot;node:url&quot;;
+
+const path = fileURLToPath(new URL(&quot;./settings.json&quot;, import.meta.url));
+const text = readFileSync(path, &quot;utf8&quot;);
+const settings = JSON.parse(text);
+console.log(settings.name);
+</code></pre>
+<h2>Reproduce with a safe fixture</h2>
+<p>Create settings.json beside config.mjs with {&quot;name&quot;:&quot;offline&quot;} and run node config.mjs. The expected output is offline. Resolving relative to import.meta.url avoids depending on the current working directory.</p>
+<h2>When CommonJS is appropriate</h2>
+<p>If the project intentionally uses CommonJS, use a .cjs file and its require syntax consistently rather than randomly renaming package.json. A dependency may offer only one module flavor; inspect its documented exports field before choosing import syntax.</p>
+<h2>Follow-up tests</h2>
+<p>Run the script from a different directory and verify that it still finds its sibling file. Delete settings.json in a scratch copy and make the CLI catch ENOENT distinctly from malformed JSON. Mixing file-relative and working-directory-relative paths is a frequent cause of confusion.</p>
+<p>Reference: https://nodejs.org/api/esm.html</p>
+<h2>Keep module systems separate</h2>
+<p>When <code>package.json</code> declares <code>&quot;type&quot;: &quot;module&quot;</code>, a <code>.js</code> file uses ESM syntax. Replace CommonJS <code>const fs = require(&quot;node:fs&quot;)</code> with <code>import * as fs from &quot;node:fs&quot;</code> if the whole file is ESM. Alternatively a dedicated <code>.cjs</code> file remains CommonJS. Test both modes in a disposable project, including JSON imports that may have version-dependent ESM syntax. Do not mechanically replace require calls in third-party files or assume importing ESM with require is equivalent across Node versions.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

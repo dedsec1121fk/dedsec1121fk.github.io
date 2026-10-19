@@ -1,0 +1,257 @@
+{
+  "topics": 18,
+  "records": [
+    {
+      "id": "fieldnotes-en-34",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/34_SQLite_Live_Backup.md",
+      "sha256": "8c4aa22aebec8e4649adf36ee0eb0ca101499b81b6f4de1bd22dc0ba01809413",
+      "characters": 2080
+    },
+    {
+      "id": "fieldnotes-en-35",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/35_Crash_Safe_Checkpoints.md",
+      "sha256": "86a65213eb2620e8110dbe1b51acc56a6de6929302542aa075641db8f08b15dd",
+      "characters": 1996
+    },
+    {
+      "id": "fieldnotes-en-36",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/36_Monotonic_Deadlines.md",
+      "sha256": "736e7c9e049daf8d3cbeb19ea2c7bfee6098662fd9288da73c5aa355de814d93",
+      "characters": 1774
+    },
+    {
+      "id": "fieldnotes-en-37",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/37_Bounded_Work_Queues.md",
+      "sha256": "a9854698f78a99b0fa5751058c36761db38c513508ae10a8fdc046df0e7145a7",
+      "characters": 1674
+    },
+    {
+      "id": "fieldnotes-en-38",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/38_Keyset_Pagination.md",
+      "sha256": "96d885774f5f074681053410a20ec81ec478379cde8f280914c0d25ff0310773",
+      "characters": 1935
+    },
+    {
+      "id": "fieldnotes-en-39",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/39_Optimistic_Concurrency.md",
+      "sha256": "2312c949b6b4d8026bdb4a6a7715288d14dc8cde54eeba2b410eb1e62d642fe6",
+      "characters": 1940
+    },
+    {
+      "id": "fieldnotes-en-40",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/40_CSV_Import_Contracts.md",
+      "sha256": "177aa9a8783db9484b007905f68a7e0cdbd263d650b2625e48423c88cb4841aa",
+      "characters": 1767
+    },
+    {
+      "id": "fieldnotes-en-41",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/41_Incremental_UTF8.md",
+      "sha256": "020544f4dd743573183101865cedd4a9201fdc905cf6b1da3d4d11bd0a9bea62",
+      "characters": 1853
+    },
+    {
+      "id": "fieldnotes-en-42",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/42_Decimal_Rounding.md",
+      "sha256": "dd2f04704affc4b4701429b54eec4690b9d7703df4fd1a9a7aeecec73ef8d047",
+      "characters": 1752
+    },
+    {
+      "id": "fieldnotes-en-43",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/43_DST_Ambiguity.md",
+      "sha256": "51da1affce1188fd88ec9a211fd3f08b7c5c016b907172ab78f679527458fe56",
+      "characters": 1706
+    },
+    {
+      "id": "fieldnotes-en-44",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/44_Structured_Log_Redaction.md",
+      "sha256": "9b3c4ec395dc921f7bd3dccfd5dd3844a88820326a97c4f5f55b36ee182cd271",
+      "characters": 1894
+    },
+    {
+      "id": "fieldnotes-en-45",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/45_Content_Security_Policy.md",
+      "sha256": "b7fdfc91786f025a63faca0d35ef9ab985304bb276d99e8d1f4386af2bcd877d",
+      "characters": 1792
+    },
+    {
+      "id": "fieldnotes-en-46",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/46_Subresource_Integrity.md",
+      "sha256": "36ca940c9e48120e370630986282a0f4b9b4df606a6671e9b5d37589996838c7",
+      "characters": 1835
+    },
+    {
+      "id": "fieldnotes-en-47",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/47_Transactional_Outbox.md",
+      "sha256": "920eeae977e4637d7574d33efcb232f0c260259e0ca8cb380f576f69a6b1d6a6",
+      "characters": 2042
+    },
+    {
+      "id": "fieldnotes-en-48",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/48_Resource_Ownership.md",
+      "sha256": "466948b5fbf809ef1caa5f1035dbef0aa32bdbd8dad42d77a70a0569b3481558",
+      "characters": 1851
+    },
+    {
+      "id": "fieldnotes-en-49",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/49_Configuration_Precedence.md",
+      "sha256": "118755d39c3a20cda5043bd6813a8063edf285497dbb5a2e9a3076391e7549d7",
+      "characters": 1895
+    },
+    {
+      "id": "fieldnotes-en-50",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/50_Deterministic_Failure_Tests.md",
+      "sha256": "95402f505a568e2eed6b022cd628f95acbc81ddf14c8c038db2c02250fa7d0bb",
+      "characters": 1942
+    },
+    {
+      "id": "fieldnotes-en-51",
+      "locale": "en",
+      "path": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/51_Binary_Record_Framing.md",
+      "sha256": "42d6465fb807c15251c84951f874ff500d4b181b0c15716370815c4c524953ee",
+      "characters": 1955
+    },
+    {
+      "id": "fieldnotes-el-34",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/34_SQLite_Live_Backup.md",
+      "sha256": "0e50c24cc4895c7a9fa1ddaa89e2a3b9cf5c04e26c1b26402e61218b39c1d407",
+      "characters": 2041
+    },
+    {
+      "id": "fieldnotes-el-35",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/35_Crash_Safe_Checkpoints.md",
+      "sha256": "590be6b09225088f1adbfb713306f3b654ab8445d70143538921dacbce0141aa",
+      "characters": 1959
+    },
+    {
+      "id": "fieldnotes-el-36",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/36_Monotonic_Deadlines.md",
+      "sha256": "8172a4d66e7885089ac6bd2062703e7d680fd6b1cdbcad7b3eb9d06133d38e63",
+      "characters": 1697
+    },
+    {
+      "id": "fieldnotes-el-37",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/37_Bounded_Work_Queues.md",
+      "sha256": "3cd10e5180d2359a9fcfc8d5189d341ab553754617f1e89232a48f60f3e9e6d2",
+      "characters": 1667
+    },
+    {
+      "id": "fieldnotes-el-38",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/38_Keyset_Pagination.md",
+      "sha256": "fab2187f527f2c2fc0eeb14fa15341339074a534f74ae240f3cfbc2f30ba1757",
+      "characters": 1870
+    },
+    {
+      "id": "fieldnotes-el-39",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/39_Optimistic_Concurrency.md",
+      "sha256": "f5c131f603f52d5628588f4f8c76bdd0768ecff9163b220902318d93a78817b9",
+      "characters": 1912
+    },
+    {
+      "id": "fieldnotes-el-40",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/40_CSV_Import_Contracts.md",
+      "sha256": "f2d0ed16a629aafadecb246b6e68f449fd28f52bb0a2fbfe6fe9dcc02bb4f19f",
+      "characters": 1714
+    },
+    {
+      "id": "fieldnotes-el-41",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/41_Incremental_UTF8.md",
+      "sha256": "a8fdf56393cad90d75caa12a893b4c12cf95de9cbd2047d608e12a4e266c423e",
+      "characters": 1805
+    },
+    {
+      "id": "fieldnotes-el-42",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/42_Decimal_Rounding.md",
+      "sha256": "d51e1ba40eee671c6a157e084323d545a78910cd93f233267ddf02821a8a31fe",
+      "characters": 1666
+    },
+    {
+      "id": "fieldnotes-el-43",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/43_DST_Ambiguity.md",
+      "sha256": "b320ce67d2bedd133ba961747c97a0dd30272c5d18caa238cb88ba6d679230dc",
+      "characters": 1620
+    },
+    {
+      "id": "fieldnotes-el-44",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/44_Structured_Log_Redaction.md",
+      "sha256": "c134cf1682f8ad4c46ca014a68f7e1abcd80f69340c1fa081fb50a24ad6d3c1b",
+      "characters": 1849
+    },
+    {
+      "id": "fieldnotes-el-45",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/45_Content_Security_Policy.md",
+      "sha256": "7fb229de425d5fbcf42db1da039ab328f6401e004a55afbcaeb6a962b1153c0a",
+      "characters": 1706
+    },
+    {
+      "id": "fieldnotes-el-46",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/46_Subresource_Integrity.md",
+      "sha256": "38c566dd68d276c7e5932196a18626e449495745eb764e746af5cdb611af2121",
+      "characters": 1676
+    },
+    {
+      "id": "fieldnotes-el-47",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/47_Transactional_Outbox.md",
+      "sha256": "921c30e59d5018f016621f82a75522c27c4e798ca239c12e8d2da193a7735833",
+      "characters": 1992
+    },
+    {
+      "id": "fieldnotes-el-48",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/48_Resource_Ownership.md",
+      "sha256": "a6568a7621e2b7ccbb826105f65de0b5916b7527501f8cf53c1f95d5f723035c",
+      "characters": 1755
+    },
+    {
+      "id": "fieldnotes-el-49",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/49_Configuration_Precedence.md",
+      "sha256": "3d0121454cdd1419a5d4a3f800f7e100d535b8b22ed15a270099ff8d5e78921c",
+      "characters": 1808
+    },
+    {
+      "id": "fieldnotes-el-50",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/50_Deterministic_Failure_Tests.md",
+      "sha256": "57d1069c3f42ec91deac62b507879596d411f5061910cf3f0bf599f16ae67a85",
+      "characters": 1850
+    },
+    {
+      "id": "fieldnotes-el-51",
+      "locale": "el",
+      "path": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/51_Binary_Record_Framing.md",
+      "sha256": "79dfe5cf9a58a3e825da6dad23565390083754c45939ab2b84429418f8b32637",
+      "characters": 1866
+    }
+  ]
+}

@@ -1,0 +1,129 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-38.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων Bash: απουσία ελέγχου αποτυχίας Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ Διορθωμένο παράδειγμα Αιτία σφάλματος και εξήγηση διόρθωσης…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων — DedSec Project">
+<meta property="og:description" content="Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων Bash: απουσία ελέγχου αποτυχίας Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ Διορθωμένο παράδειγμα Αιτία σφάλματος και εξήγηση διόρθωσης…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-38.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων — DedSec Project">
+<meta name="twitter:description" content="Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων Bash: απουσία ελέγχου αποτυχίας Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ Διορθωμένο παράδειγμα Αιτία σφάλματος και εξήγηση διόρθωσης…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων — DedSec Project</h1><p>Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων Bash: απουσία ελέγχου αποτυχίας Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ Διορθωμένο παράδειγμα Αιτία σφάλματος και εξήγηση διόρθωσης…</p><section><h2>Bash: απουσία ελέγχου αποτυχίας</h2>
+<h3>Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ</h3>
+<pre><code class="language-text">cp &quot;$src&quot; &quot;$dst&quot;
+echo &quot;Backup complete&quot;
+</code></pre>
+<h3>Διορθωμένο παράδειγμα</h3>
+<pre><code class="language-text">if cp -- &quot;$src&quot; &quot;$dst&quot;; then
+  echo &quot;Backup complete&quot;
+else
+  echo &quot;Backup failed&quot; &gt;&amp;2
+  exit 1
+fi
+</code></pre>
+<h3>Αιτία σφάλματος και εξήγηση διόρθωσης</h3>
+<p>Ανακοίνωσε επιτυχία μόνο όταν η ενέργεια ολοκληρώθηκε.</p>
+<h3>Άσκηση: σκόπιμη αποτυχία εισόδου/εξόδου</h3>
+<p>Χωρίς χειρισμό σφαλμάτων, η τελευταία εντολή καθορίζει συχνά το exit status του script. Ένα ανεπιφύλακτο μήνυμα επιτυχίας μπορεί να κρύψει αποτυχημένο αντίγραφο. Έλεγξε την ίδια την εργασία και επέστρεψε μη μηδενικό status όταν αποτυγχάνει.</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+tmp=$(mktemp -d)
+src=&quot;$tmp/source.txt&quot;
+dst=&quot;$tmp/backup.txt&quot;
+trap 'rm -f -- &quot;$src&quot; &quot;$dst&quot;; rmdir -- &quot;$tmp&quot;' EXIT
+printf 'verified content\n' &gt; &quot;$src&quot;
+backup() {
+  if cp -- &quot;$1&quot; &quot;$2&quot;; then
+    printf 'Backup complete\n'
+  else
+    printf 'Backup failed\n' &gt;&amp;2
+    return 1
+  fi
+}
+backup &quot;$src&quot; &quot;$dst&quot;
+cmp -- &quot;$src&quot; &quot;$dst&quot;
+if backup &quot;$tmp/missing.txt&quot; &quot;$dst&quot;; then
+  exit 1
+fi
+cmp -- &quot;$src&quot; &quot;$dst&quot;
+printf 'Expected failure detected; valid backup preserved\n'
+</code></pre>
+<p>Τρέξε <code>bash backup_lab.sh</code>. Η ανύπαρκτη πηγή πρέπει να προκαλεί αποτυχία και το προηγούμενο έγκυρο backup να παραμένει ίδιο. Το <code>set -e</code> έχει εξαιρέσεις σε συνθήκες και pipelines, επομένως χρειάζονται ρητοί έλεγχοι. Σε pipelines πρόσθεσε <code>pipefail</code>. Για κρίσιμα backups γράψε προσωρινό αρχείο, επαλήθευσέ το και μετονόμασέ το στον ίδιο δίσκο μόνο μετά την επιτυχία.</p>
+<h2>C: ανεξέλεγκτη είσοδος buffer</h2>
+<h3>Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ</h3>
+<pre><code class="language-text">char name[16];
+scanf(&quot;%s&quot;, name);
+</code></pre>
+<h3>Διορθωμένο παράδειγμα</h3>
+<pre><code class="language-text">char name[16];
+if (fgets(name, sizeof name, stdin) == NULL) return 1;
+</code></pre>
+<h3>Αιτία σφάλματος και εξήγηση διόρθωσης</h3>
+<p>Χρησιμοποίησε ανάγνωση με όριο και έλεγχο αποτελέσματος.</p>
+<h3>Πλήρης άσκηση ορίων εισόδου C11</h3>
+<p>Το <code>scanf(&quot;%s&quot;, name)</code> χωρίς περιορισμό μπορεί να γράψει έξω από τον πίνακα. Το <code>fgets</code> περιορίζει την ανάγνωση και τερματίζει επιτυχημένο string με NUL, αλλά μια μεγάλη γραμμή μπορεί να αφήσει δεδομένα για το επόμενο prompt. Απέρριψε ρητά την υπερβολικά μεγάλη είσοδο.</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+int main(void) {
+    char name[16];
+    if (!fgets(name, sizeof name, stdin)) return 1;
+    size_t n = strcspn(name, &quot;\n&quot;);
+    if (name[n] == '\n') {
+        name[n] = '\0';
+    } else if (n == sizeof name - 1) {
+        fputs(&quot;Input too long\n&quot;, stderr);
+        return 2;
+    }
+    printf(&quot;Hello, %s\n&quot;, name);
+    return 0;
+}
+</code></pre>
+<p>Μεταγλώττισε: <code>cc -std=c11 -Wall -Wextra -pedantic input.c -o input</code>. Το <code>printf 'Ada\n' | ./input</code> πρέπει να πετύχει, ενώ το <code>printf 'abcdefghijklmnop\n' | ./input</code> να επιστρέψει 2. Κενό stdin επιστρέφει 1. Το παράδειγμα δέχεται έως 14 χαρακτήρες μαζί με newline, επειδή κρατά ένα byte για NUL. Συντηρητικά απορρίπτει γραμμή 15 χαρακτήρων χωρίς newline· προσαρμόζεις την πολιτική EOF στο πρωτόκολλό σου. Τα sanitizers δεν αντικαθιστούν ελέγχους ορίων.</p>
+<h2>C++: ιδιοκτησία πόρων</h2>
+<h3>Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ</h3>
+<pre><code class="language-text">int* p = new int(7);
+// forgotten delete
+</code></pre>
+<h3>Διορθωμένο παράδειγμα</h3>
+<pre><code class="language-text">auto p = std::make_unique&lt;int&gt;(7);
+// include &lt;memory&gt;
+</code></pre>
+<h3>Αιτία σφάλματος και εξήγηση διόρθωσης</h3>
+<p>Το RAII απελευθερώνει τη μνήμη όταν λήγει η εμβέλεια.</p>
+<h3>Πλήρες εργαστήριο ιδιοκτησίας (C++17)</h3>
+<p>Το κρίσιμο ερώτημα είναι ποιος αποδεσμεύει τον πόρο σε κάθε διαδρομή εκτέλεσης, ακόμη και μετά από εξαίρεση. Το unique_ptr εκφράζει αποκλειστική ιδιοκτησία· το move μεταφέρει την ιδιοκτησία χωρίς να τη διπλασιάζει.</p>
+<pre><code class="language-cpp">#include &lt;cassert&gt;
+#include &lt;memory&gt;
+#include &lt;utility&gt;
+int main() {
+    auto first = std::make_unique&lt;int&gt;(7);
+    assert(*first == 7);
+    auto second = std::move(first);
+    assert(!first);
+    assert(second &amp;&amp; *second == 7);
+    second.reset();
+    assert(!second);
+}
+</code></pre>
+<p>Μεταγλώττισε: <code>c++ -std=c++17 -Wall -Wextra -pedantic ownership.cpp -o ownership &amp;&amp; ./ownership</code>. Για αρνητικό τεστ προσπάθησε να αντιγράψεις το second σε άλλο unique_ptr: ο compiler πρέπει να απορρίψει την αντιγραφή. Προτίμησε απλές τιμές ή vector όπου δεν χρειάζεται δυναμική ιδιοκτησία· shared_ptr μόνο όταν πολλοί ιδιοκτήτες μοιράζονται πραγματικά το lifetime.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

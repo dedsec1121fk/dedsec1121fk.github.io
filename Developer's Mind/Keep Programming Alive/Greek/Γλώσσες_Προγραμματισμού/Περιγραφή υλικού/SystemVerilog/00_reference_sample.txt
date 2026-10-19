@@ -1,0 +1,7 @@
+module hello;
+  initial begin
+    string name = "Ada";
+    $display("Hello, %s!", name);
+    $finish;
+  end
+endmodule

@@ -1,0 +1,92 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>glsl — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-872.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="glsl — consolidated language guide GLSL Typical use: Graphics shader languages. Suggested file extension: .glsl . How to run / environment: Compile as a fragment shader in a supported…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="glsl — consolidated language guide — DedSec Project">
+<meta property="og:description" content="glsl — consolidated language guide GLSL Typical use: Graphics shader languages. Suggested file extension: .glsl . How to run / environment: Compile as a fragment shader in a supported…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-872.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="glsl — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="glsl — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="glsl — consolidated language guide GLSL Typical use: Graphics shader languages. Suggested file extension: .glsl . How to run / environment: Compile as a fragment shader in a supported…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="glsl — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>glsl — consolidated language guide — DedSec Project</h1><p>glsl — consolidated language guide GLSL Typical use: Graphics shader languages. Suggested file extension: .glsl . How to run / environment: Compile as a fragment shader in a supported…</p><section><h2>GLSL</h2>
+<p><strong>Typical use:</strong> Graphics shader languages.</p>
+<p><strong>Suggested file extension:</strong> <code>.glsl</code>.</p>
+<p><strong>How to run / environment:</strong> Compile as a fragment shader in a supported graphics host.</p>
+<h3>Starter example</h3>
+<pre><code>#version 330 core
+out vec4 FragColor;
+void main() { FragColor = vec4(0.2, 0.5, 0.8, 1.0); }
+</code></pre>
+<h3>How to read it</h3>
+<p>Shaders compute pixels, so no console print is available.</p>
+<h3>Common pitfall</h3>
+<p>Shaders compute pixels, so no console print is available.</p>
+<h2>GLSL — Expanded practice workbook</h2>
+<h3>Read the baseline source</h3>
+<pre><code class="language-text">#version 330 core
+out vec4 FragColor;
+void main() { FragColor = vec4(0.2, 0.5, 0.8, 1.0); }
+</code></pre>
+<p><strong>Relevant environment:</strong> Compile as a fragment shader in a supported graphics host.. Verify that the matching compiler, host or simulator is available before treating output as authoritative. For scripts that can interact with personal files or systems, use a scratch workspace and read-only fixtures by default.</p>
+<h3>Detailed working objective</h3>
+<p>Implement a fragment color gradient from normalized UV coordinates and clamp the output. Compare linear color values with sRGB display and test coordinate extremes.</p>
+<h3>The failure that must be understood</h3>
+<p>GLSL versions and OpenGL ES precision qualifiers differ; a shader that compiles on desktop may fail on mobile GPUs.</p>
+<h2>GLSL — Focused mastery pathway</h2>
+<h3>Objective and environment</h3>
+<p>Create one desktop OpenGL 3.3 fragment shader that draws a soft-edged circle on a UV gradient. This is GLSL 330 core, <strong>not</strong> a drop-in OpenGL ES shader: ES needs its own version declaration and platform-appropriate precision handling. The host must supply interpolated UV coordinates named v_uv and link a matching vertex stage.</p>
+<h3>Fragment shader (circle.frag)</h3>
+<pre><code class="language-glsl">#version 330 core
+in vec2 v_uv;
+out vec4 fragColor;
+uniform float u_radius;
+
+void main() {
+    vec2 uv = clamp(v_uv, vec2(0.0), vec2(1.0));
+    float distanceFromCenter = length(uv - vec2(0.5));
+    float circle = 1.0 - smoothstep(
+        u_radius - 0.01, u_radius + 0.01, distanceFromCenter
+    );
+    vec3 background = vec3(uv.x, uv.y, 0.2);
+    fragColor = vec4(mix(background, vec3(1.0, 0.9, 0.2), circle), 1.0);
+}
+</code></pre>
+<p>The fragment input is an interpolated varying, not a pixel position. The shader clamps UV deliberately: outside-range UVs collapse to an edge color instead of repeating. The smoothstep transition is 0.02 UV units wide; the apparent width in pixels varies with the rendered surface. This shader does not perform sRGB conversion; that belongs to the selected render target and host configuration.</p>
+<h3>Test matrix and diagnostics</h3>
+<ol>
+<li>Set u_radius=0.25. At UV (0.5,0.5) the circle blend should be 1; at (0,0) it should be 0; at (1,1) it should be 0.</li>
+<li>At UV (0.75,0.5) the boundary midpoint should blend near 0.5 because the distance equals the radius.</li>
+<li>Render a non-square viewport and check whether the circle looks elliptical. If so, account for aspect ratio in the distance calculation.</li>
+<li>Deliberately change v_uv to a mismatched vertex output name: inspect the link diagnostic, not only the fragment compilation.</li>
+<li>Check an OpenGL ES build separately. Copying #version 330 core into an ES-only context is an environment mismatch, not an algorithm bug.</li>
+</ol>
+<h3>Completion evidence</h3>
+<p>Keep the complete vertex/fragment pair, exact OpenGL context version, compile <strong>and link</strong> logs, screenshots for the four UV cases, and any host-side color-space settings. Without an actual GL host, this is a static shader exercise, not a confirmed GPU rendering test.</p>
+<h2>GLSL — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>Shader stages have different input and output contracts and execution constraints.</li>
+<li>Coordinate spaces and precision choices affect numerical correctness.</li>
+<li>Test inside a matching graphics pipeline rather than treating shaders as ordinary command-line scripts.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

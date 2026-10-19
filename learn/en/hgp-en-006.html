@@ -1,0 +1,141 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Host Security Assessment and System Hardening — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-006.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Host Security Assessment and System Hardening Host security assessment examines how an operating system protects identities, privileges, processes, services, files, secrets, persistence…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Host Security Assessment and System Hardening — DedSec Project">
+<meta property="og:description" content="Host Security Assessment and System Hardening Host security assessment examines how an operating system protects identities, privileges, processes, services, files, secrets, persistence…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-006.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Host Security Assessment and System Hardening — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Host Security Assessment and System Hardening — DedSec Project">
+<meta name="twitter:description" content="Host Security Assessment and System Hardening Host security assessment examines how an operating system protects identities, privileges, processes, services, files, secrets, persistence…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Host Security Assessment and System Hardening — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Host Security Assessment and System Hardening — DedSec Project</h1><p>Host Security Assessment and System Hardening Host security assessment examines how an operating system protects identities, privileges, processes, services, files, secrets, persistence…</p><section><p>Host security assessment examines how an operating system protects identities, privileges, processes, services, files, secrets, persistence mechanisms, and telemetry. The goal is to find weak trust boundaries and harden them—not to hide activity or disable evidence.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> Perform host testing only on systems you administer or are explicitly authorized to assess. Do not deploy persistence, credential stealers, keyloggers, hidden backdoors, or anti-forensics techniques. Use harmless test accounts and disposable VMs for exercises.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>assess local accounts, authentication, and privilege boundaries;</li>
+<li>reason about least privilege and privilege escalation risk;</li>
+<li>review services, scheduled tasks, startup mechanisms, and software inventory;</li>
+<li>protect secrets and credentials;</li>
+<li>understand persistence as a defensive detection category;</li>
+<li>preserve and centralize logs so tampering is detectable;</li>
+<li>design a repeatable hardening baseline.</li>
+</ul>
+<h2>Identity and local accounts</h2>
+<p>Start with an inventory of human users, service accounts, groups, administrative roles, and authentication methods. Ask whether every identity has a current owner and a valid business purpose.</p>
+<p>High-value checks include:</p>
+<ul>
+<li>unused or stale accounts;</li>
+<li>shared administrator credentials;</li>
+<li>direct root/administrator use instead of delegated elevation;</li>
+<li>weak password or MFA policy where applicable;</li>
+<li>service accounts with interactive login unnecessarily enabled;</li>
+<li>accounts whose privileges no longer match their role.</li>
+</ul>
+<p>Authentication proves identity; group membership, sudoers policy, access tokens, ACLs, capabilities, and service configuration determine authorization.</p>
+<h2>Privilege boundaries</h2>
+<p>Privilege escalation risk appears when a less-trusted identity can influence something executed by a more-trusted identity. Common classes include:</p>
+<ul>
+<li>writable service binaries or startup scripts;</li>
+<li>unsafe search paths or environment variables;</li>
+<li>over-permissive scheduled jobs;</li>
+<li>dangerous delegated administration rights;</li>
+<li>weak file or registry ACLs;</li>
+<li>unnecessary Linux capabilities or set-user-ID programs;</li>
+<li>services running with more authority than required.</li>
+</ul>
+<p>In an assessment, prefer permission and configuration review over exploitation. If a proof is needed, use a harmless marker file or synthetic action in a disposable lab.</p>
+<h2>Services and exposed software</h2>
+<p>Inventory listening services and installed software. For each service, record owner, purpose, network exposure, execution identity, configuration location, update source, and relevant logs. Disable or remove services that have no operational purpose rather than merely blocking them at one network layer.</p>
+<h2>Secrets and credential material</h2>
+<p>Credentials can exist in configuration files, environment variables, shell history, browser storage, CI files, source repositories, password managers, OS credential stores, and process memory. Security review should minimize secret lifetime and access, not attempt to dump real credentials.</p>
+<p>Use synthetic secrets for labs. If a real secret is accidentally exposed during an authorized assessment, stop unnecessary handling, notify the owner, and rotate/revoke it according to the incident process.</p>
+<h2>Persistence as a defensive concept</h2>
+<p>Attackers may attempt to survive restarts or credential changes through services, scheduled tasks, startup items, browser extensions, login hooks, management tools, or modified configuration. Defenders should establish a known-good baseline and monitor unexpected changes.</p>
+<p>A safe lab can create a clearly named benign scheduled task that writes a timestamp to a temporary file, verify the expected telemetry, then remove it. The learning objective is to understand how legitimate persistence appears in logs—not to create stealthy persistence.</p>
+<h2>Logging and anti-forensics detection</h2>
+<p>Security logs are evidence. Do not clear, truncate, falsify, or disable them to conceal testing. Instead:</p>
+<ul>
+<li>forward important logs to a separate system when possible;</li>
+<li>restrict who can change audit configuration;</li>
+<li>alert on audit-service changes, log truncation, deletion, or retention-policy changes;</li>
+<li>synchronize time;</li>
+<li>protect log integrity and retention;</li>
+<li>document planned maintenance that legitimately affects telemetry.</li>
+</ul>
+<p>During a lab, you can safely test detection by creating a benign event and confirming it appears in the expected local and centralized logs.</p>
+<h2>File and permission review</h2>
+<p>On Linux, inspect ownership and mode bits; on Windows, inspect ACLs and inherited permissions. Focus on security-relevant paths such as service configuration, executable directories, scheduled-task definitions, sensitive data, key material, and administrative tooling.</p>
+<p>Avoid “fixing” permission problems by applying broad recursive write access. Correct the specific owner/group/ACL that should have authority.</p>
+<h2>Patch and configuration baselines</h2>
+<p>A host baseline should include:</p>
+<ul>
+<li>supported OS version and patch state;</li>
+<li>disk encryption where appropriate;</li>
+<li>host firewall policy;</li>
+<li>endpoint protection and logging;</li>
+<li>secure boot/platform protections where supported;</li>
+<li>account and privilege policy;</li>
+<li>exposed services;</li>
+<li>application allowlisting or execution control where appropriate;</li>
+<li>backup and recovery status;</li>
+<li>time synchronization;</li>
+<li>configuration-management source of truth.</li>
+</ul>
+<h2>Evidence-driven assessment workflow</h2>
+<ol>
+<li>Record system/version and assessment scope.</li>
+<li>Collect read-only inventory first.</li>
+<li>Map privileged identities and execution boundaries.</li>
+<li>Identify writable or user-influenced inputs to privileged components.</li>
+<li>Validate one hypothesis at a time with a harmless test.</li>
+<li>Correlate host logs, endpoint telemetry, and configuration.</li>
+<li>Restore the baseline and verify remediation.</li>
+</ol>
+<h2>Common mistakes</h2>
+<ul>
+<li>Treating “administrator access obtained” as the only goal of host security.</li>
+<li>Running credential-dumping tools where configuration evidence is enough.</li>
+<li>Installing backdoors or stealth mechanisms in a learning environment.</li>
+<li>Deleting logs during cleanup.</li>
+<li>Ignoring service accounts and scheduled automation.</li>
+<li>Hardening a host without documenting rollback and recovery.</li>
+<li>Applying broad permissions to make an application work.</li>
+</ul>
+<h2>Safe lab</h2>
+<p>Create two local users in a disposable VM: a standard user and an administrator. Create one directory writable only by the administrator and another intended for both. Verify permissions from each account, create a benign scheduled task or service under the intended identity, generate a normal event, and confirm the event is logged. Remove the test object and record the before/after state.</p>
+<h2>Knowledge check</h2>
+<ol>
+<li>What makes a writable file a privilege-escalation concern?</li>
+<li>Why should logging be centralized?</li>
+<li>How can persistence be studied without deploying a backdoor?</li>
+<li>What is the difference between an authentication weakness and an authorization weakness on a host?</li>
+<li>Why should a hardening change include a rollback plan?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. The mastery goal is to identify one real privilege boundary in a lab host, collect evidence, harden it, and prove the control changed the result.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>12, 32, 33, 73, 74</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

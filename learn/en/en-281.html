@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Five beginner projects: CLI, SQLite, inventories and files — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-281.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Five beginner projects: CLI, SQLite, inventories and files Use Python 3.10 or later and an empty practice directory. Each script is independent: it is not a DedSec installer. Paths below…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Five beginner projects: CLI, SQLite, inventories and files — DedSec Project">
+<meta property="og:description" content="Five beginner projects: CLI, SQLite, inventories and files Use Python 3.10 or later and an empty practice directory. Each script is independent: it is not a DedSec installer. Paths below…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-281.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Five beginner projects: CLI, SQLite, inventories and files — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Five beginner projects: CLI, SQLite, inventories and files — DedSec Project">
+<meta name="twitter:description" content="Five beginner projects: CLI, SQLite, inventories and files Use Python 3.10 or later and an empty practice directory. Each script is independent: it is not a DedSec installer. Paths below…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Five beginner projects: CLI, SQLite, inventories and files — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Five beginner projects: CLI, SQLite, inventories and files — DedSec Project</h1><p>Five beginner projects: CLI, SQLite, inventories and files Use Python 3.10 or later and an empty practice directory. Each script is independent: it is not a DedSec installer. Paths below…</p><section><p>Use Python 3.10 or later and an empty practice directory. Each script is independent: it is not a DedSec installer. Paths below are relative to this guide. The supplied programs demonstrate a starting behavior; suggested extensions are not claims that those features already exist. Keep outputs in a disposable directory and inspect the source before choosing a destination.</p>
+<h2>JSON to-do list: stable IDs and persistence</h2>
+<p>Open <a href="en-278.html">todo.py</a>. From the script's directory, try:</p>
+<pre><code class="language-sh">python todo.py --db practice.json add &quot;Study Python&quot;
+python todo.py --db practice.json add &quot;Read about queues&quot;
+python todo.py --db practice.json done 1
+python todo.py --db practice.json list
+</code></pre>
+<p>Expected: IDs 1 and 2 remain distinct; only task 1 displays <code>[x]</code>. Running list again after closing the shell should read the same JSON file. Using a relative <code>--db</code> path from a different working directory selects a different file, so resolve the destination deliberately.</p>
+<p>The program writes a temporary sibling and replaces the destination. This reduces the chance of leaving partially written JSON at the final path, but its fixed temporary name is not a concurrency lock and it does not provide a power-loss durability guarantee. Two simultaneous writers can overwrite each other's changes. Keep this exercise single-process. A later multiwriter design needs coordination or a transactional store.</p>
+<p>Test <code>done 999</code> and an empty title: both should fail without changing a valid database. Then put invalid JSON in a separate fixture. The reader should report an error rather than silently replace that file with an empty list. Extension: validate every loaded record's id, title and done field, then add tests for duplicate IDs and wrong types. Do not implement recovery by destroying an unreadable original.</p>
+<h2>SQLite notes: parameters, ordering and a real reopen</h2>
+<p>Open <a href="en-282.html">notes.py</a>. Its actual schema uses a column named <code>text</code>, not <code>body</code>. It creates the table if needed and prints rows ordered by ID.</p>
+<pre><code class="language-sh">python notes.py --db practice.sqlite3 add &quot;It's a note&quot;
+python notes.py --db practice.sqlite3 add &quot;Δοκιμή&quot;
+python notes.py --db practice.sqlite3 list
+</code></pre>
+<p>Expected: the quote is stored as data, Greek text survives, and two rows appear in insertion-ID order. Run list in a fresh process to verify persistence. The question-mark placeholder binds a value; string interpolation into SQL would instead mix user data with SQL syntax.</p>
+<p>The current NOT NULL constraint rejects null but permits an empty string. Proposed extension: reject whitespace-only text before insertion and add a database CHECK if that is the intended invariant for all writers. Test a quote-containing string, Unicode, empty input and a second connection after commit. A small read-only count query is <code>SELECT COUNT(*) FROM notes</code>; it counts rows rather than relying on a cursor's rowcount for SELECT. Back up a real database before any schema exercise.</p>
+<h2>SHA-256 inventory: one changed byte, one changed digest</h2>
+<p>Open <a href="en-284.html">hashes.py</a>. Create a practice directory containing <code>alpha.txt</code> with <code>abc</code> and <code>beta.txt</code> with <code>xyz</code>, then inspect only that directory:</p>
+<pre><code class="language-sh">python hashes.py ./practice-files
+</code></pre>
+<p>Record both digests outside the directory being inventoried. Change only alpha.txt by appending <code>!</code> and rerun. Exactly one content digest should change. If the output manifest is saved inside the scanned folder, it becomes another input and can contaminate comparisons; keep reports separate.</p>
+<p>Read the implementation to find its chunk size and traversal policy. Hashing incrementally bounds the data buffer, although building a huge path list can still consume memory. An unreadable file, a symlink and a file changing during the read require explicit policy. Extension: return a failure status for incomplete inventories instead of presenting a partial report as complete. A hash can show equality with an expected digest; it does not establish who supplied that expectation.</p>
+<h2>ZIP inspection: names and declared sizes before extraction</h2>
+<p>Open <a href="en-288.html">inspect_zip.py</a>. First create a small ZIP with readme.txt and sub/data.txt. Inspect it without extracting:</p>
+<pre><code class="language-sh">python inspect_zip.py practice.zip
+</code></pre>
+<p>The scanner should list members and their declared sizes. Make a second synthetic archive containing <code>../outside.txt</code> and inspect the report. No file should appear outside the practice directory because inspection does not require extraction. If the supplied version only reports a suspicious entry, extending it to reject that entry is additional work, not a property to assume.</p>
+<p>Design tests for a forward-slash absolute path, backslash traversal intended for Windows, duplicate member names, excessive entry counts and an unusually high expanded size. A path that looks safe on Linux may be interpreted differently on another platform. Size metadata is useful for preflight limits, but it is not proof that reading all decompressed bytes will fit a resource budget. Keep both declared and actual limits if implementing extraction.</p>
+<h2>Text flashcards: deterministic shuffling is not answer grading</h2>
+<p>Open <a href="en-290.html">flashcards.py</a>. Write a UTF-8 TSV with two columns: term, then definition. Use a tab separator, not the literal characters backslash and t.</p>
+<pre><code class="language-sh">python flashcards.py sample.tsv --seed 4
+</code></pre>
+<p>Press Enter to reveal each definition. This starter script shuffles with a seeded local random generator and reveals answers; it does not grade typed answers, store progress or schedule spaced repetition. With the same deck and runtime, rerunning with the same seed should preserve the order. Different source row order changes the starting input even when the seed is unchanged.</p>
+<p>Try an empty deck, one card, a malformed one-column row and a Greek definition. Inspect how rows with fewer than two columns are skipped. Extension: report skipped row numbers so missing material is visible. If adding saved progress later, introduce stable card IDs and keep progress separate from deck text. Verify that editing a question does not transfer another card's statistics to it. These are state-management requirements rather than a call to <code>len</code> repeated across unrelated projects.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

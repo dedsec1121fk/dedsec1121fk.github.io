@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Threads processes async and races — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-71.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Async concurrency — reproduce a lost update and protect it Scenario and acceptance criteria Fifty asynchronous jobs each increment a shared counter once. The correct result is 50, but an…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Threads processes async and races — DedSec Project">
+<meta property="og:description" content="Async concurrency — reproduce a lost update and protect it Scenario and acceptance criteria Fifty asynchronous jobs each increment a shared counter once. The correct result is 50, but an…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-71.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Threads processes async and races — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Threads processes async and races — DedSec Project">
+<meta name="twitter:description" content="Async concurrency — reproduce a lost update and protect it Scenario and acceptance criteria Fifty asynchronous jobs each increment a shared counter once. The correct result is 50, but an…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Threads processes async and races — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Threads processes async and races — DedSec Project</h1><p>Async concurrency — reproduce a lost update and protect it Scenario and acceptance criteria Fifty asynchronous jobs each increment a shared counter once. The correct result is 50, but an…</p><section><h1>Async concurrency — reproduce a lost update and protect it</h1>
+<h2>Scenario and acceptance criteria</h2>
+<p>Fifty asynchronous jobs each increment a shared counter once. The correct result is 50, but an interleaving read/yield/write sequence loses updates when several jobs observe the same old value. The example deliberately reproduces this failure before protecting the read-modify-write operation with asyncio.Lock. It uses one event loop, not multiple OS threads.</p>
+<h2>Executable lab — Python 3 standard library</h2>
+<p>Save the example as <code>09_concurrency.py</code> and run it with Python 3. It uses synthetic data only and prints PASS when the assertions succeed. The same code appears in both translations.</p>
+<pre><code class="language-python">import asyncio
+async def unsafe():
+    state = {&quot;value&quot;: 0}
+    async def job():
+        before = state[&quot;value&quot;]
+        await asyncio.sleep(0)
+        state[&quot;value&quot;] = before + 1
+    await asyncio.gather(*(job() for _ in range(50)))
+    return state[&quot;value&quot;]
+async def safe():
+    state, lock = {&quot;value&quot;: 0}, asyncio.Lock()
+    async def job():
+        async with lock:
+            before = state[&quot;value&quot;]
+            await asyncio.sleep(0)
+            state[&quot;value&quot;] = before + 1
+    await asyncio.gather(*(job() for _ in range(50)))
+    return state[&quot;value&quot;]
+assert asyncio.run(unsafe()) == 1
+assert asyncio.run(safe()) == 50
+print(&quot;PASS async lock and deterministic lost update&quot;)
+</code></pre>
+<h2>Technical explanation</h2>
+<p>Concurrency means tasks can interleave; it does not imply parallel CPU execution. Await is a suspension point: a task that reads state and then awaits allows other tasks to read the same old value. Locking only the final write is insufficient because the stale read already occurred. Place the full invariant-preserving read-modify-write section inside a lock. A lock protects only code paths that use that same lock; it does not automatically protect external processes or persistent storage.</p>
+<h2>Bounded practice</h2>
+<p>Move the lock to protect only the assignment and verify that the bug returns. Increase jobs to 1000 and measure correctness, not just throughput. Add cancellation while a task waits for the lock and verify no lock leaks using async with. If the operation moves to SQLite, use database transactions rather than relying on an in-process Python lock.</p>
+<h2>Diagnostics and completion evidence</h2>
+<p>If an async task appears frozen, inspect awaited operations and whether a task holds a lock while waiting on an unrelated resource. Avoid time.sleep inside the event loop. Do not infer a thread race solely from this coroutine example: asyncio scheduling and thread synchronization are different mechanisms.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

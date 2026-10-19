@@ -1,0 +1,58 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1117.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite 07. Σύγκριση εκδόσεων κειμένου Τρόπος λειτουργίας Η changed(old,new,context=3) στο 07_diff_text.py χρησιμοποιεί difflib.unified_diff…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite — DedSec Project">
+<meta property="og:description" content="Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite 07. Σύγκριση εκδόσεων κειμένου Τρόπος λειτουργίας Η changed(old,new,context=3) στο 07_diff_text.py χρησιμοποιεί difflib.unified_diff…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1117.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite — DedSec Project">
+<meta name="twitter:description" content="Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite 07. Σύγκριση εκδόσεων κειμένου Τρόπος λειτουργίας Η changed(old,new,context=3) στο 07_diff_text.py χρησιμοποιεί difflib.unified_diff…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite — DedSec Project</h1><p>Πρακτικά scripts: διαφορές εκδόσεων, logs και SQLite 07. Σύγκριση εκδόσεων κειμένου Τρόπος λειτουργίας Η changed(old,new,context=3) στο 07_diff_text.py χρησιμοποιεί difflib.unified_diff…</p><section><h2>07. Σύγκριση εκδόσεων κειμένου</h2>
+<h3>Τρόπος λειτουργίας</h3>
+<p>Η changed(old,new,context=3) στο 07_diff_text.py χρησιμοποιεί difflib.unified_diff. Παίρνει δύο strings και με splitlines(keepends=True) διατηρεί τα line terminators. Το unified diff εμφανίζει αφαιρεμένες γραμμές με μείον και νέες με συν, διατηρώντας context πριν/μετά.</p>
+<h3>Έλεγχος</h3>
+<p>Τρέξε python 07_diff_text.py. Ελέγχει αντικατάσταση two σε three, ίδιο κείμενο χωρίς diff, προσθήκη ελληνικής γραμμής και μηδενικό context. Το boolean context απορρίπτεται παρότι στην Python το bool είναι subclass του int. Αναμενόμενο: unified diff checks passed.</p>
+<h3>Εργαστήριο σημασιολογίας</h3>
+<p>Δημιούργησε δύο εκδόσεις αρχείου ρυθμίσεων. Άλλαξε μόνο κενά, έπειτα όνομα variable και τέλος αριθμητικό threshold. Το line diff δείχνει γραμμές αλλά δεν αποδεικνύει αν άλλαξε η συμπεριφορά. Για κώδικα χρειάζονται και tests. Έλεγξε αρχεία χωρίς τελικό newline και πώς εμφανίζονται οι αλλαγές.</p>
+<h3>Περιορισμοί</h3>
+<p>Η συνάρτηση δεν εφαρμόζει patches, δεν συγκρίνει binary files και δεν είναι three-way merge. Δεν εγγυάται απόλυτη συμβατότητα Git patches σε κάθε ασυνήθιστη περίπτωση. Μετέτρεψε bytes με κατάλληλο encoding πριν συγκρίνεις. Κώδικας: 07_diff_text.py. Πηγή: https://docs.python.org/3/library/difflib.html</p>
+<h2>09. Ανάλυση δομημένων συμβάντων καταγραφής</h2>
+<h3>Σαφές schema</h3>
+<p>Το 09_log_events.py διαβάζει JSON μία φυσική γραμμή κάθε φορά. Κάθε έγκυρο event απαιτεί severity INFO/WARN/ERROR, ISO 8601 timestamp με timezone και string message. Επιστρέφει αριθμό γραμμής, normalized timestamp, severity και message κομμένο στους 120 χαρακτήρες. Άλλα πεδία όπως token δεν προωθούνται.</p>
+<h3>Τρέξε τα tests</h3>
+<p>Εκτέλεσε python 09_log_events.py. Το fixture περιέχει έγκυρο UTC event, event χωρίς timezone και μη έγκυρο JSON. Οι δύο τελευταίες γραμμές γίνονται generic invalid log line. Το test ελέγχει ότι το επιπλέον πεδίο token απουσιάζει. Αναμενόμενο: log event validation checks passed.</p>
+<h3>Προειδοποίηση ιδιωτικότητας</h3>
+<p>Ο parser δεν αναγνωρίζει αυτόματα passwords ή προσωπικά δεδομένα μέσα στο message. Το truncation δεν είναι redaction. Χρησιμοποίησε μη ευαίσθητα messages ή καθάρισε τα δεδομένα στον producer. Σε production χρειάζονται access controls, retention policy, bounded buffers και monitoring parsing failures.</p>
+<h3>Εργαστήριο χρονικής σειράς</h3>
+<p>Δώσε δύο έγκυρα events εκτός χρονικής σειράς και σύγκρινε line numbers με timestamps: arrival order και event-time order διαφέρουν. Πρόσθεσε δοκιμή με +03:00 και με αδύνατη ημερομηνία. Τα error messages δεν πρέπει να διαρρέουν το αρχικό περιεχόμενο. Κώδικας: 09_log_events.py. Πηγή: https://docs.python.org/3/library/datetime.html</p>
+<h2>10. Εργασίες SQLite με συναλλαγές</h2>
+<h3>Τι εκτελεί το εργαστήριο</h3>
+<p>Το 10_sqlite_tasks.py φτιάχνει προσωρινή SQLite database σε δίσκο, με NOT NULL, UNIQUE και CHECK. Εισάγει τίτλο με απόστροφο μέσω SQL bound parameter και ενημερώνει την εγγραφή σε transaction. Έπειτα αρχίζει άλλη συναλλαγή όπου ο κανόνας CHECK(done IN (0,1)) αποτυγχάνει. Το rollback πρέπει να ακυρώνει τόσο το άκυρο row όσο και το προηγούμενο Temporary insert της ίδιας συναλλαγής.</p>
+<h3>Επανέλεγχος μετά το κλείσιμο</h3>
+<p>Τρέξε python 10_sqlite_tasks.py. Περιμένουμε ακριβώς ένα αποθηκευμένο task, Learner's task με done=1. Το script κλείνει και ανοίγει ξανά τη βάση και επιβεβαιώνει ότι το committed row παραμένει και το Temporary απουσιάζει. Χρησιμοποιεί TemporaryDirectory, όχι πραγματικές βάσεις χρήστη. Αναμενόμενο μήνυμα: SQLite transaction and rollback checks passed.</p>
+<h3>Κρίσιμα σημεία</h3>
+<p>Το connection context manager κάνει commit ή rollback αλλά δεν κλείνει αναγκαστικά τη σύνδεση· γι' αυτό χρησιμοποιείται closing. Οι SQL parameters αναπαριστούν τιμές και όχι SQL syntax. Δεν μπορούν να αντικαταστήσουν table names. Το CHECK προστατεύει δεδομένα στο DB layer αλλά δεν καταργεί την ανάγκη UI validation.</p>
+<h3>Επέκταση</h3>
+<p>Πρόσθεσε δεύτερο task και delete, προκάλεσε failure πριν commit και έλεγξε ότι ακυρώθηκαν όλα. Δημιούργησε migration για due_date σε χωριστή δοκιμαστική βάση. Μελέτησε SQLITE_BUSY χωρίς απενεργοποίηση constraints. Κώδικας: 10_sqlite_tasks.py. Πηγή: https://docs.python.org/3/library/sqlite3.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,83 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>t_sql — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-316.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="t_sql — συγκεντρωτικός οδηγός Transact-SQL Τι προσφέρει η γλώσσα Η T-SQL επεκτείνει τη SQL στον Microsoft SQL Server με μεταβλητές, διαδικαστική ροή και ειδικές συναρτήσεις. Μικρό…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="t_sql — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="t_sql — συγκεντρωτικός οδηγός Transact-SQL Τι προσφέρει η γλώσσα Η T-SQL επεκτείνει τη SQL στον Microsoft SQL Server με μεταβλητές, διαδικαστική ροή και ειδικές συναρτήσεις. Μικρό…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-316.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="t_sql — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="t_sql — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="t_sql — συγκεντρωτικός οδηγός Transact-SQL Τι προσφέρει η γλώσσα Η T-SQL επεκτείνει τη SQL στον Microsoft SQL Server με μεταβλητές, διαδικαστική ροή και ειδικές συναρτήσεις. Μικρό…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="t_sql — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>t_sql — συγκεντρωτικός οδηγός — DedSec Project</h1><p>t_sql — συγκεντρωτικός οδηγός Transact-SQL Τι προσφέρει η γλώσσα Η T-SQL επεκτείνει τη SQL στον Microsoft SQL Server με μεταβλητές, διαδικαστική ροή και ειδικές συναρτήσεις. Μικρό…</p><section><h2>Transact-SQL</h2>
+<h3>Τι προσφέρει η γλώσσα</h3>
+<p>Η T-SQL επεκτείνει τη SQL στον Microsoft SQL Server με μεταβλητές, διαδικαστική ροή και ειδικές συναρτήσεις.</p>
+<h3>Μικρό παράδειγμα προς μελέτη</h3>
+<pre><code class="language-text">DECLARE @n int = 3;
+SELECT @n * @n AS squared;
+</code></pre>
+<p>Σε δοκιμαστική βάση σύγκρινε SELECT με συναλλαγή που κάνει ρητό ROLLBACK σε δοκιμαστική αλλαγή.</p>
+<h3>Τι να επαληθεύσεις</h3>
+<p>Κατάγραψε την πραγματική έκδοση εργαλείου, τις απαιτούμενες εξαρτήσεις και την έξοδο σε δοκιμαστικά δεδομένα για τη T_SQL. Πρόβλεψε το αποτέλεσμα πριν το ελέγξεις και διατήρησε την αρχική και τη διορθωμένη εκδοχή ώστε να φαίνεται η αιτιώδης διαφορά. Μην αποκαλείς ένα απόσπασμα εκτελεσμένο αν δεν έχεις το κατάλληλο περιβάλλον.</p>
+<h3>Παγίδα ειδική για το θέμα</h3>
+<p>Μη μεταφέρεις σύνταξη TOP, identity ή ημερομηνιών αυτούσια σε SQLite/PostgreSQL· έλεγξε τη διάλεκτο.</p>
+<h2>Εργαστήριο εξάσκησης: T SQL</h2>
+<h3>Αντικατάστησε τα δεδομένα του συστήματος</h3>
+<p>Το <code>sys.databases</code> του αρχικού δείγματος εξαρτάται από τον SQL Server και τα δικαιώματα του χρήστη. Για προβλέψιμο αποτέλεσμα δημιούργησε προσωρινό πίνακα σε δοκιμαστική συνεδρία Microsoft SQL Server:</p>
+<pre><code class="language-sql">CREATE TABLE #scores (name varchar(20) NOT NULL, score int NULL);
+INSERT INTO #scores (name, score)
+VALUES ('Ada', 2), ('Lin', 5), ('Ava', 5), ('Noah', NULL);
+SELECT TOP (2) name, score
+FROM #scores
+ORDER BY score DESC, name ASC;
+DROP TABLE #scores;
+</code></pre>
+<p>Οι αναμενόμενες γραμμές είναι <code>Ava, 5</code> και <code>Lin, 5</code>. Η ταξινόμηση πρώτα κατά βαθμολογία και έπειτα κατά όνομα καθορίζει τη σειρά ισοβαθμίας. Χωρίς δεύτερο κριτήριο δεν υπάρχει εγγυημένη σειρά ανάμεσα σε ισόβαθμες εγγραφές. Κράτησε την πραγματική έξοδο και έκδοση server· το παράδειγμα δεν έχει εκτελεστεί εδώ.</p>
+<h3>Ανάλυσε το NULL</h3>
+<p>Επανάλαβε το ερώτημα με <code>WHERE score &gt;= 2</code>. Η εγγραφή με <code>NULL</code> αποκλείεται, αλλά αυτό <strong>δεν</strong> σημαίνει ότι <code>NULL = 0</code>. Οι συνήθεις συγκρίσεις με NULL παράγουν UNKNOWN στη λογική τριών τιμών. Για να εντοπίσεις την απουσία χρησιμοποίησε <code>WHERE score IS NULL</code>. Η χαμένη τιμή και η ανύπαρκτη γραμμή είναι διαφορετικές περιπτώσεις.</p>
+<h3>Δοκίμασε πραγματική αποτυχία</h3>
+<p>Τρέξε χωριστά <code>SELECT TRY_CONVERT(int, 'oops') AS parsed</code> και <code>SELECT CONVERT(int, 'oops') AS parsed</code>. Το πρώτο αναμένεται να παράγει NULL για τη συγκεκριμένη είσοδο· το δεύτερο σφάλμα μετατροπής. Φύλαξε τον πραγματικό αριθμό σφάλματος. Το NULL που επιστρέφει η ασφαλής απόπειρα χρειάζεται ρητή απόφαση: δεν πρέπει να γίνεται αυθαίρετα μηδέν.</p>
+<h3>Ανεξάρτητη επέκταση</h3>
+<p>Πρόσθεσε τρίτο άτομο με βαθμολογία 5. Πάρε τις δύο πρώτες εγγραφές με σταθερό <code>ORDER BY score DESC, name ASC</code>. Έπειτα σύγκρινε <code>TOP (1) WITH TIES</code> με ταξινόμηση <strong>μόνο</strong> κατά βαθμολογία, ώστε να φανεί πώς οι ισοβαθμίες αλλάζουν το πλήθος αποτελεσμάτων. Τεκμηρίωσε γιατί το <code>TOP</code> είναι σύνταξη T-SQL και δεν αντικαθίσταται παντού από <code>LIMIT</code>. Καθάρισε τον προσωρινό πίνακα. Οδηγός: https://learn.microsoft.com/sql/t-sql/</p>
+<h2>T_SQL — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Συναλλαγή με σαφή κανόνα αποτυχίας</h3>
+<p>Στον Microsoft SQL Server η T-SQL παρέχει TRY...CATCH και THROW για χειρισμό SQL errors. Η παρακάτω δομή είναι skeleton για μία μεταφορά: χρειάζεται επιπλέον έλεγχο για ύπαρξη εγγραφών και business rules πριν θεωρηθεί production-ready.</p>
+<pre><code class="language-sql">SET XACT_ABORT ON;
+BEGIN TRY
+  BEGIN TRANSACTION;
+  UPDATE dbo.Accounts SET Balance = Balance - 10 WHERE Id = 1;
+  UPDATE dbo.Accounts SET Balance = Balance + 10 WHERE Id = 2;
+  COMMIT TRANSACTION;
+END TRY
+BEGIN CATCH
+  IF XACT_STATE() &lt;&gt; 0 ROLLBACK TRANSACTION;
+  THROW;
+END CATCH;
+</code></pre>
+<p>Με XACT_ABORT ON πολλά runtime errors προκαλούν transaction abort. Το XACT_STATE() σε CATCH διακρίνει αν υπάρχει ενεργή transaction που χρειάζεται rollback. Μην προσπαθείς να κάνεις COMMIT μετά από uncommittable transaction.</p>
+<h3>Σημαντικό κενό στο παράδειγμα</h3>
+<p>Το UPDATE που επηρεάζει μηδέν γραμμές δεν παράγει αυτομάτως error. Αν Id=2 δεν υπάρχει, το δεύτερο update μπορεί να «πετύχει» χωρίς αλλαγή. Πρόσθεσε έλεγχο @@ROWCOUNT αμέσως μετά την κατάλληλη εντολή και THROW δικού σου validation error ώστε να ακυρωθεί η μεταφορά.</p>
+<h3>Isolation και ανταγωνισμός</h3>
+<p>Δύο sessions μπορεί να προσπαθήσουν παράλληλη ενημέρωση. Έλεγξε isolation level, κλειδώματα και τυχόν deadlocks σε sandbox. Η ύπαρξη transaction δεν αρκεί μόνη της για την πολιτική «μη αρνητικό balance». Για λήψη αποφάσεων με έλεγχο υπάρχοντος balance, σχεδίασε atomic predicate ή locking scheme και τεκμηρίωσε την ανάγκη.</p>
+<h3>Αξιολόγηση</h3>
+<p>Πριν το test δημιούργησε προσωρινό dbo.Accounts σε εκπαιδευτική βάση και κατέγραψε αρχικά υπόλοιπα. Επαλήθευσε επιτυχή μεταφορά, ανύπαρκτο destination, ανεπαρκές υπόλοιπο και rollback σε error. Κατάγραψε SQL Server version και ακριβή error number. Μην εκτελείς το εργαστήριο σε πραγματικές τραπεζικές εγγραφές.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

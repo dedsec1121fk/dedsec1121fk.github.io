@@ -1,0 +1,56 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>TS7006 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-975.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="TS7006 — παράμετρος με αδήλωτο any Αρχική αιτία Το TS7006 εμφανίζεται όταν μία παράμετρος αποκτά σιωπηρά τύπο any ενώ είναι ενεργό το noImplicitAny, όπως όταν χρησιμοποιείται --strict . Η…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="TS7006 — DedSec Project">
+<meta property="og:description" content="TS7006 — παράμετρος με αδήλωτο any Αρχική αιτία Το TS7006 εμφανίζεται όταν μία παράμετρος αποκτά σιωπηρά τύπο any ενώ είναι ενεργό το noImplicitAny, όπως όταν χρησιμοποιείται --strict . Η…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-975.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TS7006 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TS7006 — DedSec Project">
+<meta name="twitter:description" content="TS7006 — παράμετρος με αδήλωτο any Αρχική αιτία Το TS7006 εμφανίζεται όταν μία παράμετρος αποκτά σιωπηρά τύπο any ενώ είναι ενεργό το noImplicitAny, όπως όταν χρησιμοποιείται --strict . Η…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="TS7006 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>TS7006 — DedSec Project</h1><p>TS7006 — παράμετρος με αδήλωτο any Αρχική αιτία Το TS7006 εμφανίζεται όταν μία παράμετρος αποκτά σιωπηρά τύπο any ενώ είναι ενεργό το noImplicitAny, όπως όταν χρησιμοποιείται --strict . Η…</p><section><h1>TS7006 — παράμετρος με αδήλωτο any</h1>
+<h2>Αρχική αιτία</h2>
+<p>Το TS7006 εμφανίζεται όταν μία παράμετρος αποκτά σιωπηρά τύπο any ενώ είναι ενεργό το noImplicitAny, όπως όταν χρησιμοποιείται <code>--strict</code>. Η έκφραση <code>const convert = (value) =&gt; value + 1</code> δεν ξεκαθαρίζει αν περιμένει αριθμό ή κείμενο· η πράξη μπορεί να γίνει πρόσθεση ή συνένωση. Η απενεργοποίηση του strict κρύβει την προειδοποίηση αλλά δεν αποδεικνύει ορθότητα.</p>
+<h2>Πρακτική διόρθωση</h2>
+<p>Δήλωσε τύπο συνάρτησης <code>(raw: string) =&gt; number</code> και ανάθεσε σε αυτόν το callback. Η contextual typing επιτρέπει στην TypeScript να συμπεράνει ότι το raw είναι string χωρίς δεύτερη επανάληψη τύπου. Το πρόγραμμα επαληθεύει ακέραια θύρα από 1 έως 65535 με αυστηρό έλεγχο ψηφίων.</p>
+<h2>Επαληθευμένο παράδειγμα TypeScript</h2>
+<pre><code class="language-typescript">type Parser = (raw: string) =&gt; number;
+const parsePort: Parser = (raw) =&gt; {
+  const port = Number(raw);
+  if (!/^[0-9]+$/.test(raw) || !Number.isInteger(port) || port &lt; 1 || port &gt; 65535)
+    throw new RangeError('port out of range');
+  return port;
+};
+if (parsePort('3000') !== 3000) throw Error();
+try { parsePort('0'); throw Error('accepted invalid port'); }
+catch (err) { if (!(err instanceof RangeError)) throw err; }
+console.log('PASS TS7006');
+</code></pre>
+<h2>Γιατί λειτουργεί</h2>
+<p>Ο στατικός τύπος δεν επικυρώνει δεδομένα όταν τρέχει η JavaScript. Ελέγχουμε το αρχικό κείμενο και όχι μόνο τη μετατροπή Number(raw), επειδή το Number('') γίνεται μηδέν. Για μη έμπιστα δεδομένα από JSON ξεκίνησε από unknown και έλεγξε τον τύπο πριν την επεξεργασία· το any παρακάμπτει τον έλεγχο.</p>
+<h2>Εντολές ελέγχου</h2>
+<p>Αποθήκευσε ως main.ts και εκτέλεσε <code>tsc --strict --target es2022 --module commonjs --outDir dist main.ts &amp;&amp; node dist/main.js</code>. Σε χωριστό bad.ts γράψε <code>const convert = (value) =&gt; value + 1;</code> και τρέξε <code>tsc --strict --noEmit bad.ts</code>. Αναμένεται TS7006.</p>
+<h2>Ασκήσεις διάγνωσης</h2>
+<p>Σύγκρινε μία παράμετρο input: unknown με την παράμετρο string της parsePort και πρόσθεσε σωστό narrowing. Δοκίμασε <code>map((x) =&gt; x * 2)</code> σε πίνακα number, όπου η TypeScript συμπεραίνει τον τύπο, και μία ανεξάρτητη συνάρτηση χωρίς πλαίσιο τύπου.</p>
+<p><strong>Τεκμηρίωση:</strong> https://www.typescriptlang.org/tsconfig/noImplicitAny.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

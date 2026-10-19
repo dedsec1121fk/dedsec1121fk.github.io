@@ -1,0 +1,86 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Glossary: determinism, dictionaries and dynamic types — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1096.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Glossary: determinism, dictionaries and dynamic types Determinism Concept in practice A deterministic computation produces the same observable result for the same inputs and relevant…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Glossary: determinism, dictionaries and dynamic types — DedSec Project">
+<meta property="og:description" content="Glossary: determinism, dictionaries and dynamic types Determinism Concept in practice A deterministic computation produces the same observable result for the same inputs and relevant…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1096.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glossary: determinism, dictionaries and dynamic types — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Glossary: determinism, dictionaries and dynamic types — DedSec Project">
+<meta name="twitter:description" content="Glossary: determinism, dictionaries and dynamic types Determinism Concept in practice A deterministic computation produces the same observable result for the same inputs and relevant…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Glossary: determinism, dictionaries and dynamic types — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Glossary: determinism, dictionaries and dynamic types — DedSec Project</h1><p>Glossary: determinism, dictionaries and dynamic types Determinism Concept in practice A deterministic computation produces the same observable result for the same inputs and relevant…</p><section><h2>Determinism</h2>
+<h3>Concept in practice</h3>
+<p>A deterministic computation produces the same observable result for the same inputs and relevant environment. Random seeds can help reproduce pseudo-random sequences, but do not control clocks, thread scheduling, filesystem ordering or changing external services.</p>
+<h3>Focused example</h3>
+<pre><code class="language-python">import random
+first = random.Random(17).sample(range(100), 5)
+second = random.Random(17).sample(range(100), 5)
+assert first == second
+</code></pre>
+<h3>Exercise and common pitfall</h3>
+<p>Remove the explicit seed and observe possible variation, then sort an unordered collection before comparing output. For tests with dates, inject a fixed clock instead of depending on the current time. Explain which dependencies still prevent complete reproducibility.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/random.html</p>
+<h2>Dictionary</h2>
+<h3>Concept in practice</h3>
+<p>A dictionary associates unique keys with values and typically supports efficient lookup by key. In Python, keys must be hashable, and assigning to an existing key replaces its value. Lookup performance is usually good on average but not a contractual constant-time guarantee in all circumstances.</p>
+<h3>Focused example</h3>
+<pre><code class="language-python">totals = {}
+for name in ['Ada', 'Grace', 'Ada']:
+    totals[name] = totals.get(name, 0) + 1
+assert totals == {'Ada': 2, 'Grace': 1}
+</code></pre>
+<h3>Exercise and common pitfall</h3>
+<p>Try using a list as a dictionary key and record the resulting TypeError. Compare <code>d.get(k)</code> with <code>d[k]</code> when a key is absent; distinguish legitimate missing data from a default zero.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/tutorial/datastructures.html#dictionaries</p>
+<h2>Dynamic typing</h2>
+<h3>Concept in practice</h3>
+<p>In dynamically typed languages such as Python, values carry types and names may refer to different types over time. This is not the same as having no type rules; incorrect operations still raise errors at runtime. Optional static annotations can help tooling without converting Python into a statically enforced runtime.</p>
+<h3>Focused example</h3>
+<pre><code class="language-python">value = 3
+value = 'three'
+assert isinstance(value, str)
+try:
+    _ = value + 1
+except TypeError: pass
+else: raise AssertionError('expected a type error')
+</code></pre>
+<h3>Exercise and common pitfall</h3>
+<p>Design a function accepting unknown JSON and validate with isinstance before arithmetic. Compare its runtime behavior with a type-checker warning on <code>value + 1</code>; avoid treating type hints as automatic input validation.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/typing.html</p>
+<h2>Encapsulation</h2>
+<h3>Meaning and constraints</h3>
+<p>Encapsulation places state and the operations that preserve its rules behind a deliberate interface. Python's leading underscore is a convention, not hard access control. Clients should call methods that preserve an invariant rather than mutating internal fields directly.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">class Balance:
+    def __init__(self): self._cents = 0
+    def add(self, cents):
+        if type(cents) is not int or cents &lt; 0: raise ValueError('invalid amount')
+        self._cents += cents
+    @property
+    def cents(self): return self._cents
+b = Balance(); b.add(25); assert b.cents == 25
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Try add(-1) and add(True). Explain why direct assignment to <code>_cents</code> is still technically possible, so an API boundary must also enforce caller privileges where relevant.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/tutorial/classes.html#private-variables</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

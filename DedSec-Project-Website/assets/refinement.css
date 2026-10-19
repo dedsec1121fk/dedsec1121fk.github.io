@@ -1,0 +1,414 @@
+/* DedSec test visual contract — final and shared by every imported page.
+   Transparent reading surfaces, colorful pixels, centered typography,
+   functional toggles and accessible slow-motion cosmic atmosphere. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e){
+ --action-blue:var(--space-ink)!important;--action-line:var(--space-ink)!important;
+ --dedsec-refinement-ready:1;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ :is(.dedsec-text-link,.dedsec-text-link span,.dedsec-text-link strong,
+ #site-footer a,.merged-footer a,.app-icon-btn .app-label,.result-card strong,.folder-card strong){
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+ text-decoration-color:currentColor!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ :is(.dedsec-text-link.dedsec-append-arrow,.app-icon-btn .app-label,.result-card strong,.folder-card strong)::after{
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+/* The fixed bar and consent dialog are the only purposefully opaque controls.
+   All ordinary content (including legal/PDF cards and old tool categories)
+   should reveal the galaxy rather than sit on colored slabs. */
+html body:is(.theme-dark,.theme-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e) #app
+ :is(.panel,.archive-panel,.result-card,.folder-card,.home-trust,.home-trust-card,.app-icon-btn,.app-icon,.cookie-pixel-icon,.lesson,.lesson-head),
+html body:is(.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ .page-content :is(.feature-card,.modal-disclaimer,.note,.tip,.content-section,.tool-item,.category,
+ .tools-list,.tool-header,.tool-description,.category-header,.sponsor-tier-summary,.sponsor-tier-summary-header,
+ .faq-card,.faq-item,.code-container,.code-example,.assistance-guide-section,.platform-install-card,
+ .guide-card,.academy-card,.info-card,details,summary,.btn,.copy-btn){
+ border:0!important;border-radius:0!important;background:transparent!important;
+ background-color:transparent!important;background-image:none!important;box-shadow:none!important;
+}
+/* Remove title-side decorative icons added by the previous batch. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ :is(.merged-topic-icon,.launcher-group-glyph){display:none!important}
+html body:is(.theme-dark,.theme-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ #app .launcher-group-heading{display:block!important;text-align:center!important}
+html body:is(.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ .page-content :is(h1,h2,h3,.category-header,.tool-header){text-align:center!important}
+/* Colorful, pixelated launcher art without frames or filled containers. */
+html body:is(.theme-dark,.theme-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ #app .app-icon svg.pixel-glyph{
+ width:clamp(46px,7vw,60px)!important;height:clamp(46px,7vw,60px)!important;
+ fill:initial!important;stroke:none!important;shape-rendering:crispEdges!important;
+ image-rendering:pixelated!important;filter:saturate(1.25) brightness(1.09)!important;
+}
+html body.theme-light:not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ #app .app-icon svg.pixel-glyph{filter:saturate(1.10) contrast(1.12)!important}
+/* One search UI only, attached to the four-icon top navbar. */
+#topbar #top-search{
+ display:none;position:absolute;top:100%;left:clamp(10px,4vw,70px);right:clamp(10px,4vw,70px);
+ z-index:101;padding:10px 12px 13px;background:var(--space-header)!important;
+ border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+html body.search-mode #topbar #top-search{display:flex!important;flex-direction:column;gap:5px}
+#topbar #top-search label{font:700 12px Tahoma,Arial,sans-serif;color:var(--space-ink)}
+#topbar #top-search input{
+ width:100%;height:42px;background:transparent!important;border:0!important;
+ border-bottom:1px solid var(--space-ink)!important;border-radius:0!important;
+ box-shadow:none!important;color:var(--space-ink)!important;
+ padding:8px 5px!important;font:16px Tahoma,Arial,sans-serif!important;
+}
+html body.search-mode #app{padding-top:clamp(165px,19vw,205px)!important}
+/* A learning item is a single link, with a title and smaller description below,
+   never two pieces arranged in parallel. Same for the categories grid. */
+html body:is(.theme-dark,.theme-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ #app :is(.result-grid,.folders-grid){
+ display:grid!important;grid-template-columns:minmax(0,1fr)!important;
+ max-width:800px!important;gap:16px!important;margin:18px auto!important;
+}
+html body:is(.theme-dark,.theme-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ #app :is(.result-card,.folder-card){
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ gap:8px!important;width:100%!important;padding:13px 8px!important;
+ text-align:center!important;transform:none!important;
+}
+html body:is(.theme-dark,.theme-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ #app :is(.result-card,.folder-card) strong{
+ display:block!important;font-size:clamp(16px,2.2vw,20px)!important;
+ line-height:1.3!important;text-align:center!important;
+}
+html body:is(.theme-dark,.theme-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ #app :is(.result-card,.folder-card) p{
+ display:block!important;margin:0 auto!important;max-width:700px!important;
+ font-size:13px!important;line-height:1.5!important;text-align:center!important;
+ color:var(--space-ink)!important;white-space:normal!important;opacity:.85;
+}
+html body:is(.theme-dark,.theme-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ #app .folder-card small{display:none!important}
+/* Restored class-based collapse logic for imported tools and FAQ pages.
+   The original click script was removed during import, but the markup remains. */
+html body:is(.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ .page-content .category:not(.active) > .tools-list{
+ max-height:0!important;height:0!important;overflow:hidden!important;opacity:0!important;
+}
+html body:is(.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ .page-content .category.active > .tools-list{
+ max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important;
+}
+html body:is(.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ .page-content .tool-item:not(.active) > .tool-description{
+ max-height:0!important;height:0!important;overflow:hidden!important;opacity:0!important;padding-top:0!important;
+}
+html body:is(.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ .page-content .tool-item.active > .tool-description{
+ max-height:none!important;height:auto!important;overflow:visible!important;opacity:1!important;
+ padding-top:12px!important;
+}
+html body:is(.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ .page-content :is(.tool-header,.category-header){cursor:pointer!important}
+html body:is(.merged-dark,.merged-light):not(#polish-a):not(#polish-b):not(#polish-c):not(#polish-d):not(#polish-e)
+ .page-content details:not([open]) > :not(summary){display:none!important}
+/* Extra stars slowly drift over the existing detailed SVG galaxy.
+   Static wallpaper remains visible even with reduced-motion enabled. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)::after{
+ content:""!important;position:fixed!important;inset:-4%!important;z-index:0!important;
+ background-image:url("starfield-dark.svg")!important;background-size:1050px 780px!important;
+ background-repeat:repeat!important;pointer-events:none!important;opacity:.16!important;
+ animation:dedsec-stars-drift 94s ease-in-out infinite alternate;
+}
+html body:is(.theme-light,.merged-light)::after{
+ background-image:url("starfield-light.svg")!important;opacity:.14!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(#app,.page-content,.main-content,.merged-footer,#site-footer){position:relative!important;z-index:1!important;}
+@keyframes dedsec-stars-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(2.2%,-1.6%,0)}}
+/* Intro now overlays the actual theme transparently for ten seconds.
+   Motion is confined to small lightweight star elements and an orbit. */
+html body #boot-screen{
+ background:transparent!important;background-image:none!important;
+ backdrop-filter:none!important;color:var(--space-ink)!important;
+ transition:opacity .45s ease!important;opacity:1;
+}
+html body #boot-screen .boot-panel{
+ position:relative;background:transparent!important;background-image:none!important;
+ border:0!important;border-radius:0!important;box-shadow:none!important;
+ color:var(--space-ink)!important;
+}
+html body #boot-screen .boot-mark{border:0!important;border-radius:0!important;box-shadow:none!important}
+html body #boot-screen :is(.boot-panel h2,.boot-panel p,.boot-hint,.boot-constellation){color:var(--space-ink)!important}
+html body #boot-screen .boot-meter{height:5px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+html body #boot-screen .boot-meter-fill{
+ background:linear-gradient(90deg,#56d9ed,#b486ff,#ffc97b)!important;
+ animation:boot-fill 10s linear forwards!important;
+}
+html body #boot-screen .boot-constellation{
+ display:flex;justify-content:space-around;gap:20px;min-height:33px;font-size:23px;
+}
+html body #boot-screen .boot-constellation span{display:inline-block;animation:dedsec-twinkle 2.5s ease-in-out infinite alternate}
+html body #boot-screen .boot-constellation span:nth-child(2){animation-delay:-.8s}
+html body #boot-screen .boot-constellation span:nth-child(3){animation-delay:-1.7s}
+html body #boot-screen .boot-panel::before{
+ content:"";position:absolute;top:40px;left:50%;width:130px;height:130px;
+ transform:translateX(-50%);border:2px dashed rgba(173,139,235,.50)!important;
+ border-radius:50%!important;background:transparent!important;pointer-events:none;
+ animation:dedsec-boot-orbit 10s linear infinite;
+}
+html body #boot-screen.boot-away{opacity:0!important;pointer-events:none!important}
+@keyframes dedsec-twinkle{from{opacity:.2;transform:scale(.75)}to{opacity:1;transform:scale(1.2)}}
+@keyframes dedsec-boot-orbit{to{transform:translateX(-50%) rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){
+ html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)::after,
+ html body #boot-screen .boot-constellation span,html body #boot-screen .boot-panel::before{animation:none!important}
+}
+
+
+/* Boot: transparent galaxy scene, never a painted homepage beneath the intro.
+   Body starts with .booting before first paint and releases it after 10s. */
+html body.booting :is(#topbar,#app,#site-footer,.site-footer,#collapseOverlay,#top-search){
+ visibility:hidden!important;pointer-events:none!important;
+}
+html body.booting{overflow:hidden!important}
+html body.booting #boot-screen{visibility:visible!important;pointer-events:auto!important}
+html body.booting #boot-screen .boot-panel{max-width:min(400px,calc(100vw - 32px))}
+
+/* Pointy neon outlines: readable galaxy remains visible through every card. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light){--glow-line:rgba(153,122,245,.72);--glow-halo:rgba(130,89,229,.28)}
+html body:is(.theme-light,.merged-light){--glow-line:rgba(67,65,164,.72);--glow-halo:rgba(86,81,197,.2)}
+html body:is(.theme-dark,.theme-light):not(#glw-a):not(#glw-b):not(#glw-c):not(#glw-d):not(#glw-e):not(#glw-f)
+ #app :is(.result-card,.folder-card,.app-icon-btn,.panel,.home-trust-card,.lesson,.launcher-group),
+html body:is(.merged-dark,.merged-light):not(#glw-a):not(#glw-b):not(#glw-c):not(#glw-d):not(#glw-e):not(#glw-f)
+ .page-content :is(.content-section,.feature-card,.note,.tip,.warning,.platform-install-card,.tool-item,.category,.faq-card,.code-container,.assistance-guide-section,details,.guide-card){
+ border:1px solid var(--glow-line)!important;border-radius:0!important;
+ background:transparent!important;background-image:none!important;
+ box-shadow:0 0 9px var(--glow-halo),inset 0 0 8px rgba(145,99,238,.07)!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(.tool-header,.category-header,.copy-btn){border:0!important;background:transparent!important}
+html body:is(.theme-dark,.theme-light) .launcher-group{padding:16px 8px!important;margin:25px auto!important}
+html body:is(.theme-dark,.theme-light) #app .app-icon-btn{padding:12px 5px!important}
+html body:is(.theme-dark,.theme-light) #app :is(.home-intro,.app-icon){border:0!important}
+html body.booting #dedsec-cookie-overlay{display:none!important}
+
+
+/* Final compatibility rules: disable inherited legacy CSS transitions so
+   guide copy controls and 404 actions don't briefly repaint on navigation. */
+html body:is(.merged-dark,.merged-light) .page-content :is(a.btn,a.button,button.copy-btn,button.assistance-code-copy){
+ background:transparent!important;background-color:transparent!important;
+ background-image:none!important;border-radius:0!important;
+ transition:none!important;animation:none!important;
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(a.btn,a.button) :is(span,i,strong){
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+ transition:none!important;animation:none!important;
+}
+html body #boot-screen .boot-meter-fill{
+ animation-name:boot-fill!important;animation-duration:10s!important;
+ animation-timing-function:linear!important;animation-fill-mode:forwards!important;
+}
+html body #boot-screen .boot-meter{border-radius:0!important}
+@media(prefers-reduced-motion:reduce){
+ html body #boot-screen .boot-meter-fill{animation:none!important;width:100%!important}
+}
+
+
+/* Angular neon controls stay transparent even under legacy assistance/404 CSS. */
+html body:is(.merged-dark,.merged-light):not(#glow-1):not(#glow-2):not(#glow-3):not(#glow-4):not(#glow-5):not(#glow-6):not(#glow-7)
+ .page-content :is(a.btn,.btn-primary,.btn-ghost,button.copy-btn.assistance-code-copy,.copy-btn,.assistance-code-copy,.not-found-actions a){
+ background:transparent!important;background-color:transparent!important;background-image:none!important;
+ border:1px solid var(--glow-line)!important;border-radius:0!important;
+ box-shadow:0 0 9px var(--glow-halo)!important;
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+ transition:color .15s ease,box-shadow .15s ease!important;
+}
+html body:is(.merged-dark,.merged-light):not(#glow-1):not(#glow-2):not(#glow-3):not(#glow-4):not(#glow-5):not(#glow-6):not(#glow-7)
+ .page-content :is(a.btn,.btn-primary,.btn-ghost,button.copy-btn.assistance-code-copy,.copy-btn,.assistance-code-copy,.not-found-actions a) :is(span,i){
+ color:inherit!important;-webkit-text-fill-color:inherit!important;
+}
+html body:is(.theme-dark,.theme-light) #boot-screen .boot-meter-fill{
+ animation:boot-fill 10s linear forwards!important;
+}
+@media(prefers-reduced-motion:reduce){
+ html body #boot-screen .boot-meter-fill{animation:boot-fill 10s linear forwards!important}
+}
+
+/* 2026-10-16: the loader has only the logo/name and live progress.
+   Hide ALL descendants of the navigation during boot; some legacy icons
+   explicitly set visibility:visible and bypass inherited visibility. */
+html body.booting #topbar,html body.booting #topbar *,
+html body.booting .topbar,html body.booting .topbar *,
+html body.booting .nav-actions,html body.booting .nav-actions *,
+html body.booting #site-footer,html body.booting #site-footer *,
+html body.booting #app,html body.booting #app *,
+html body.booting #dedsec-cookie-overlay,
+html body.booting #dedsec-cookie-manage{
+ visibility:hidden!important;opacity:0!important;pointer-events:none!important;
+}
+html body.booting #topbar,html body.booting .topbar,html body.booting .nav-actions{
+ display:none!important;
+}
+html body.booting #boot-screen,html body.booting #boot-screen *{
+ visibility:visible!important;opacity:1;
+}
+html body #boot-screen .boot-constellation{display:none!important}
+html body #boot-screen .boot-meter-fill{
+ width:0;animation:none!important;transition:none!important;
+ background:linear-gradient(90deg,#54d7e9,#ac78ff,#ffb65f)!important;
+}
+html body #boot-screen .boot-meter{border:1px solid var(--glow-line)!important;overflow:hidden!important;}
+/* Large outer grouping frames suppressed; small actionable inner cards retain neon.
+   The banner, readable sections and nested source links are not framed twice. */
+html body:is(.theme-dark,.theme-light):not(#outer-a):not(#outer-b):not(#outer-c):not(#outer-d):not(#outer-e):not(#outer-f):not(#outer-g)
+ #app :is(.launcher-group,.panel,.archive-panel,.lesson,.home-intro,.desktop-home),
+html body:is(.merged-dark,.merged-light):not(#outer-a):not(#outer-b):not(#outer-c):not(#outer-d):not(#outer-e):not(#outer-f):not(#outer-g)
+ .page-content :is(.content-section:has(.feature-card,.tool-item,.category,.faq-card,.guide-card,.code-container),
+ .assistance-guide-section:has(.code-container,.assistance-code,.faq-card),.page-header,.content-container){
+ border:0!important;outline:0!important;box-shadow:none!important;
+ background:transparent!important;background-image:none!important;
+}
+/* Preserve borders around actual small cards/controls, never rounded. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(.app-icon-btn,.result-card,.folder-card,.feature-card,.tool-item,.category,.faq-card,.code-container,.copy-btn,.btn){
+ border-radius:0!important;
+}
+
+/* DedSec loading: logo directly above the heading, no giant orbital
+   outline or surrounding square from the former animation styles. */
+html body #boot-screen .boot-panel{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:10px!important;padding:10px 14px!important;max-width:100%!important}
+html body #boot-screen .boot-panel::before,html body #boot-screen .boot-panel::after{display:none!important;content:none!important;border:0!important;box-shadow:none!important;animation:none!important}
+html body #boot-screen .boot-mark{display:block!important;width:86px!important;height:86px!important;object-fit:contain!important;position:static!important;margin:0 auto 4px!important;transform:none!important;animation:none!important;mix-blend-mode:screen!important}
+html body #boot-screen .boot-panel h2{position:static!important;margin:0!important;font-size:clamp(28px,5vw,37px)!important;line-height:1.18!important;text-align:center!important}
+html body #boot-screen .boot-meter{width:min(90vw,390px)!important;margin:12px auto 0!important;height:6px!important}
+
+
+/* Loading logo directly above the project name. Keep the progress bar below. */
+html body #boot-screen .boot-panel{
+ display:flex!important;flex-direction:column!important;align-items:center!important;
+ justify-content:center!important;gap:12px!important;
+ padding:20px 10px!important;width:min(440px,calc(100vw - 30px))!important;
+}
+html body #boot-screen .boot-panel::before,
+html body #boot-screen .boot-panel::after{content:none!important;display:none!important}
+html body #boot-screen .boot-mark{
+ display:block!important;position:static!important;width:84px!important;height:84px!important;
+ margin:0 auto!important;transform:none!important;outline:0!important;
+ box-shadow:none!important;border:0!important;
+}
+html body #boot-screen .boot-panel h2{
+ display:block!important;font-family:Tahoma,"MS Sans Serif",Arial,sans-serif!important;
+ font-weight:750!important;line-height:1.2!important;text-align:center!important;
+ margin:2px auto 8px!important;padding:0!important;
+}
+html body #boot-screen .boot-meter{align-self:stretch!important;width:100%!important;margin:8px 0 0!important}
+
+
+/* 2026-10-16: story subdivisions are readable plain subsections inside the
+   seven major disclosures. Avoid nested click targets and duplicated borders. */
+.founder-related-subsection{padding:10px 0 18px!important;margin:12px 0!important;
+ border:0!important;background:transparent!important;box-shadow:none!important}
+.founder-related-subsection+.founder-related-subsection{border-top:1px solid var(--glow-line)!important}
+.founder-subtopic-heading{font-weight:700;font-size:clamp(16px,2.7vw,21px);
+ text-align:center!important;line-height:1.4;margin:8px auto 14px;color:var(--space-ink)}
+.founder-related-subsection :is(p,li){line-height:1.65}
+#app .home-context-summary{max-width:720px;margin:12px auto 22px;padding:0 12px;
+ text-align:center;font-size:clamp(14px,2.3vw,17px);line-height:1.65;color:var(--space-ink)}
+
+/* Consistent first-paint navigation and enlarged DedSec Project statistics. */
+html body:is(.theme-dark,.theme-light) #topbar .nav-actions{display:flex!important;align-items:center!important;gap:clamp(2px,1vw,8px)!important}
+html body:is(.theme-dark,.theme-light) #topbar .nav-actions > .nav-action-btn{display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 40px!important;width:40px!important;min-width:40px!important;max-width:40px!important;height:44px!important;min-height:44px!important;max-height:44px!important;padding:0!important;line-height:1!important;border:0!important;border-radius:0!important}
+html body:is(.theme-dark,.theme-light) #topbar .nav-actions .ds-nav-glyph{display:block!important;width:25px!important;height:25px!important;flex:none!important;color:var(--space-ink)!important}
+html body:is(.theme-dark,.theme-light) #topbar .nav-actions .nav-action-label{display:flex!important;align-items:center!important;justify-content:center!important;width:100%!important;height:100%!important}
+html body:is(.theme-dark,.theme-light) #topbar .nav-actions #nav-lang-switcher .nav-lang-label{font-size:20px!important;font-weight:800!important;letter-spacing:-.045em!important}
+@media(max-width:365px){html body:is(.theme-dark,.theme-light) #topbar .nav-actions > .nav-action-btn{flex-basis:34px!important;width:34px!important;min-width:34px!important;max-width:34px!important;height:40px!important;min-height:40px!important;max-height:40px!important}html body:is(.theme-dark,.theme-light) #topbar .nav-actions .ds-nav-glyph{width:23px!important;height:23px!important}html body:is(.theme-dark,.theme-light) #topbar .nav-actions #nav-lang-switcher .nav-lang-label{font-size:17px!important}}
+html body:is(.theme-dark,.theme-light) #app .desktop-home .home-trust{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:clamp(6px,1.5vw,16px)!important;width:min(96%,900px)!important;max-width:900px!important;margin:20px auto 14px!important;padding:0!important;border:0!important;box-sizing:border-box!important}
+html body:is(.theme-dark,.theme-light) #app .desktop-home .home-trust-card{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:9px!important;min-height:clamp(116px,13vw,156px)!important;height:auto!important;min-width:0!important;padding:13px 7px!important;border:1px solid var(--glow-line)!important;border-radius:0!important;box-shadow:0 0 13px rgba(155,106,241,.15)!important;background:transparent!important;text-align:center!important;box-sizing:border-box!important}
+html body:is(.theme-dark,.theme-light) #app .desktop-home .home-trust-card :is(.trust-stat-number,.home-rank){font-size:clamp(28px,5.4vw,43px)!important;line-height:1.12!important;font-weight:850!important;margin:0!important}
+html body:is(.theme-dark,.theme-light) #app .desktop-home .home-trust-card span{font-size:clamp(11px,1.6vw,17px)!important;line-height:1.35!important;font-weight:750!important}
+html body:is(.theme-dark,.theme-light) #app .desktop-home .home-about-summary{max-width:790px!important;width:min(93%,790px)!important;margin:19px auto 18px!important;font-size:clamp(15px,2vw,19px)!important;line-height:1.6!important}
+@media(max-width:370px){html body:is(.theme-dark,.theme-light) #app .desktop-home .home-trust{width:98%!important;gap:5px!important}html body:is(.theme-dark,.theme-light) #app .desktop-home .home-trust-card{min-height:114px!important;padding:10px 3px!important}html body:is(.theme-dark,.theme-light) #app .desktop-home .home-trust-card span{font-size:10.5px!important}}
+
+/* Slightly fuller crescent only: retain existing Search/Language/Home shapes. */
+html body:is(.theme-dark,.theme-light) #topbar #nav-theme-switcher svg path[fill="currentColor"]{stroke:currentColor!important;stroke-width:1.25px!important;stroke-linejoin:round!important}
+
+/* Layered glass-fracture Easter egg. Reversible, reduced-motion aware. */
+#collapseOverlay[hidden]{display:none!important}
+#collapseOverlay.collapse-overlay{
+ isolation:isolate!important;
+ background:radial-gradient(ellipse at 50% 46%,rgba(36,5,67,.2),rgba(2,0,7,.82))!important;
+ backdrop-filter:contrast(1.26) saturate(.6)!important;
+}
+#collapseOverlay .collapse-crack{
+ position:absolute!important;inset:0!important;z-index:1!important;pointer-events:none!important;
+ background:
+  repeating-conic-gradient(from 17deg at 52% 43%,transparent 0 15deg,#efe4ffbf 15.1deg 15.25deg,transparent 15.5deg 30deg),
+  repeating-linear-gradient(117deg,transparent 0 43px,#e1c1ff42 44px 45px,transparent 46px 83px)!important;
+ mix-blend-mode:screen!important;opacity:.95!important;
+ animation:dedsec-impact .5s cubic-bezier(.08,.8,.19,1) both!important;
+}
+#collapseOverlay .glass-shards{position:absolute;inset:0;overflow:hidden;z-index:2;pointer-events:none}
+#collapseOverlay .glass-shard{
+ position:absolute;left:var(--sx);top:var(--sy);width:var(--sw);height:var(--sh);
+ display:block;box-sizing:border-box;pointer-events:none;
+ background:linear-gradient(133deg,#ffffff7a 0,#c99eff26 41%,#080015a1 92%);
+ border:1px solid #f0dfff80;
+ clip-path:polygon(8% 2%,99% 17%,76% 91%,4% 99%,18% 45%);
+ transform-origin:47% 44%;
+ animation:dedsec-glassfall 1.8s cubic-bezier(.2,.68,.3,1) var(--delay) both;
+}
+#collapseOverlay .restore-button{
+ z-index:5!important;position:relative!important;padding:16px 28px!important;
+ background:rgba(33,13,61,.9)!important;border:1px solid #d1a6ff!important;
+ box-shadow:0 0 0 2px #05010a,0 0 35px #af6dffa1!important;
+ animation:dedsec-restore-appear .9s ease-out .4s both;
+}
+body.broken #app{animation:dedsec-window-break .8s cubic-bezier(.3,.1,.3,1) both}
+@keyframes dedsec-impact{0%{opacity:0;transform:scale(.7)}35%{opacity:1;transform:scale(1.06)}100%{opacity:.88;transform:scale(1)}}
+@keyframes dedsec-glassfall{0%{opacity:0;transform:translate3d(0,0,0) rotate(0)}
+ 15%{opacity:.95}100%{opacity:0;transform:translate3d(var(--dx),var(--dy),0) rotate(var(--spin))}}
+@keyframes dedsec-window-break{0%{filter:none}35%{filter:brightness(2) contrast(1.4);transform:translateY(2px) skewX(1deg)}
+ 100%{filter:grayscale(.65) brightness(.6);transform:translateY(18px) rotate(-2deg)}}
+@keyframes dedsec-restore-appear{from{opacity:0;transform:translateY(25px) scale(.9)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){
+ #collapseOverlay .glass-shard,#collapseOverlay .collapse-crack,#collapseOverlay .restore-button,
+ body.broken #app{animation-duration:.01ms!important;animation-delay:0ms!important}
+}
+
+/* Keep long code and technical tables inside the reading area in either theme. */
+.lesson-content { min-width: 0; }
+.lesson-content pre { max-width: 100%; overflow-x: auto; white-space: pre; text-align: left; }
+.lesson-table { max-width: 100%; overflow-x: auto; }
+.lesson-table table { border-collapse: collapse; margin: 1rem auto; }
+.lesson-table th, .lesson-table td { padding: .5rem .75rem; vertical-align: top; }
+.lesson-table th { font-weight: bold; }
+
+/* Stationary galaxy and shared controls across source pages. */
+html body::after{animation:none!important;transform:none!important}
+.page-back-row{display:flex!important;justify-content:flex-end!important;width:100%;margin:0 0 1rem;position:relative;z-index:2}
+.page-back{font:inherit;color:inherit;background:transparent;border:1px solid currentColor;border-radius:0;padding:.5rem .75rem;cursor:pointer}
+.lesson-copy{display:block!important;margin:.6rem 0 .25rem auto!important;padding:.35rem .6rem!important;font:inherit!important;color:inherit!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;cursor:pointer!important;pointer-events:auto!important}
+.lesson-copy:focus-visible,.page-back:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.search-help{text-align:left;max-width:58rem;margin:.5rem auto;font-size:.85rem}.search-help p{margin:.5rem 0}.search-help summary{cursor:pointer}
+html body #app.is-home .desktop-home .app-grid{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:12px!important}
+html body #app.is-home .desktop-home .app-grid>.app-icon-btn{flex:0 0 calc((100% - 60px)/6)!important;min-width:0!important;box-sizing:border-box!important}
+@media(max-width:760px){html body #app.is-home .desktop-home .app-grid>.app-icon-btn{flex-basis:calc((100% - 24px)/3)!important}}
+
+/* Owner's trust-card reference: a shared frame, three panels and GitHub badges.
+   Layered important rules scope the exception to trust cards, above legacy resets. */
+@layer trust-reference {
+ .home-trust{--trust-border:#49305f!important;--trust-panel:transparent!important;display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;width:min(96%,900px)!important;max-width:900px!important;gap:clamp(7px,2.1vw,23px)!important;padding:clamp(9px,2.1vw,22px)!important;margin:20px auto 14px!important;border:1px solid var(--trust-border)!important;border-radius:0!important;background:var(--trust-panel)!important;box-shadow:none!important;box-sizing:border-box!important}
+ .theme-light .home-trust{--trust-border:#9a7cb4!important;--trust-panel:transparent!important}
+ .home-trust::after{content:""!important;display:block!important;grid-column:1/-1!important;height:3px!important;margin-top:clamp(5px,1.2vw,10px)!important;background:var(--trust-border)!important;border:0!important;position:static!important;transform:none!important;box-shadow:none!important}
+ .home-trust .home-trust-card{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:clamp(8px,1.4vw,13px)!important;min-height:clamp(115px,14vw,154px)!important;min-width:0!important;padding:clamp(6px,1.2vw,12px) clamp(4px,1vw,10px)!important;border:1px solid var(--trust-border)!important;border-radius:0!important;background:var(--trust-panel)!important;box-shadow:none!important;text-align:center!important;text-decoration:none!important;box-sizing:border-box!important}
+ .home-trust .home-rank{font-size:clamp(29px,4.2vw,43px)!important;line-height:1.05!important;font-weight:800!important;margin:0!important}
+ .home-trust .trust-caption{font-size:clamp(10px,1.9vw,22px)!important;line-height:1.22!important;font-weight:750!important;margin:0!important;overflow-wrap:normal!important}
+ .home-trust .trust-github-badge{display:inline-flex!important;align-items:stretch!important;justify-content:center!important;gap:clamp(6px,1.1vw,12px)!important;max-width:100%!important;background:none!important;box-shadow:none!important;white-space:nowrap!important}
+ .home-trust .trust-badge-label,.home-trust .trust-stat-number{display:inline-flex!important;align-items:center!important;justify-content:center!important;position:relative!important;gap:clamp(3px,.6vw,7px)!important;background:linear-gradient(#fff,#eee)!important;color:#303030!important;-webkit-text-fill-color:#303030!important;border:2px solid #c8c8c8!important;border-radius:5px!important;box-shadow:inset 0 1px 0 #fff!important;font-family:Tahoma,Arial,sans-serif!important;font-size:clamp(11px,2.6vw,25px)!important;font-weight:750!important;line-height:1!important;padding:clamp(4px,.6vw,7px) clamp(4px,.75vw,9px)!important;margin:0!important;min-width:0!important}
+ .home-trust .trust-badge-label span{font-size:inherit!important;font-weight:inherit!important;line-height:1!important;color:#303030!important;-webkit-text-fill-color:#303030!important}
+ .home-trust .trust-badge-label svg{display:block!important;width:clamp(13px,2.8vw,29px)!important;height:clamp(13px,2.8vw,29px)!important;flex:none!important;fill:#1b1b1b!important;color:#1b1b1b!important}
+ .home-trust .trust-stat-number::before{content:""!important;position:absolute!important;left:-6px!important;top:50%!important;width:7px!important;height:7px!important;background:#f7f7f7!important;border:0!important;border-left:2px solid #c8c8c8!important;border-bottom:2px solid #c8c8c8!important;border-radius:0!important;transform:translateY(-50%) rotate(45deg)!important;box-shadow:none!important}
+ .home-trust a.home-trust-card:focus-visible{outline:2px solid var(--space-ink)!important;outline-offset:3px!important}
+ @media(max-width:600px){
+  .home-trust .trust-badge-label,.home-trust .trust-stat-number{font-size:clamp(8px,2.2vw,12px)!important;padding:4px 3px!important;gap:3px!important;border-width:1px!important;border-radius:3px!important}
+  .home-trust .trust-badge-label svg{width:12px!important;height:12px!important}
+  .home-trust .trust-stat-number::before{width:5px!important;height:5px!important;left:-4px!important;border-width:0 0 1px 1px!important}
+ }
+}

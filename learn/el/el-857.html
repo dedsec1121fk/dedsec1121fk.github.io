@@ -1,0 +1,80 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>isabelle — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-857.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="isabelle — συγκεντρωτικός οδηγός Isabelle/HOL Τι προσφέρει η γλώσσα Η Isabelle είναι proof assistant. Οι προτάσεις ελέγχονται σε λογικό πλαίσιο, όχι μόνο με παραδείγματα εισόδων. Μικρό…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="isabelle — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="isabelle — συγκεντρωτικός οδηγός Isabelle/HOL Τι προσφέρει η γλώσσα Η Isabelle είναι proof assistant. Οι προτάσεις ελέγχονται σε λογικό πλαίσιο, όχι μόνο με παραδείγματα εισόδων. Μικρό…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-857.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="isabelle — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="isabelle — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="isabelle — συγκεντρωτικός οδηγός Isabelle/HOL Τι προσφέρει η γλώσσα Η Isabelle είναι proof assistant. Οι προτάσεις ελέγχονται σε λογικό πλαίσιο, όχι μόνο με παραδείγματα εισόδων. Μικρό…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="isabelle — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>isabelle — συγκεντρωτικός οδηγός — DedSec Project</h1><p>isabelle — συγκεντρωτικός οδηγός Isabelle/HOL Τι προσφέρει η γλώσσα Η Isabelle είναι proof assistant. Οι προτάσεις ελέγχονται σε λογικό πλαίσιο, όχι μόνο με παραδείγματα εισόδων. Μικρό…</p><section><h2>Isabelle/HOL</h2>
+<h3>Τι προσφέρει η γλώσσα</h3>
+<p>Η Isabelle είναι proof assistant. Οι προτάσεις ελέγχονται σε λογικό πλαίσιο, όχι μόνο με παραδείγματα εισόδων.</p>
+<h3>Μικρό παράδειγμα προς μελέτη</h3>
+<pre><code class="language-text">lemma add_zero: &quot;n + (0::nat) = n&quot;
+  by simp
+</code></pre>
+<p>Εξήγησε τη δήλωση τύπου nat, άλλαξε μια προϋπόθεση και έλεγξε αν το simp εξακολουθεί να αποδεικνύει την πρόταση.</p>
+<h3>Τι να επαληθεύσεις</h3>
+<p>Κατάγραψε την πραγματική έκδοση εργαλείου, τις απαιτούμενες εξαρτήσεις και την έξοδο σε δοκιμαστικά δεδομένα για τη Isabelle. Πρόβλεψε το αποτέλεσμα πριν το ελέγξεις και διατήρησε την αρχική και τη διορθωμένη εκδοχή ώστε να φαίνεται η αιτιώδης διαφορά. Μην αποκαλείς ένα απόσπασμα εκτελεσμένο αν δεν έχεις το κατάλληλο περιβάλλον.</p>
+<h3>Παγίδα ειδική για το θέμα</h3>
+<p>Αδυναμία απόδειξης δεν σημαίνει ότι η πρόταση είναι ψευδής· ξεχώρισε μη εύρεση απόδειξης από αντιπαράδειγμα.</p>
+<h2>Εργαστήριο εξάσκησης: Isabelle</h2>
+<p>Διάβασε το <a href="el-857.html">μάθημα Isabelle</a>. Η Isabelle επαληθεύει μαθηματικές προτάσεις σύμφωνα με τις δηλωμένες λογικές υποθέσεις. Η επιτυχία μερικών δοκιμαστικών αριθμών δεν αποδεικνύει έναν ισχυρισμό για όλους τους φυσικούς. Θα δημιουργήσεις κανονική θεωρία, θα μελετήσεις την απόδειξη και θα εξετάσεις ένα ψευδές λήμμα.</p>
+<h3>Πλήρες αρχείο θεωρίας</h3>
+<p>Δημιούργησε <code>Numbers.thy</code> μέσα σε Isabelle session:</p>
+<pre><code class="language-isabelle">theory Numbers
+  imports Main
+begin
+
+lemma right_zero: &quot;n + (0::nat) = n&quot;
+  by simp
+
+lemma left_zero: &quot;(0::nat) + n = n&quot;
+  by simp
+
+end
+</code></pre>
+<p>Άνοιξέ το με Isabelle/jEdit ή χρησιμοποίησε το σύστημα build της εγκατάστασης. Εξήγησε γιατί οι δύο ισότητες ισχύουν για <strong>κάθε</strong> φυσικό αριθμό. Η σημείωση <code>(0::nat)</code> καθορίζει τον τύπο και η τακτική <code>simp</code> αξιοποιεί γνωστά λήμματα απλοποίησης. Δεν είναι απλή εκτέλεση test.</p>
+<h3>Αντιπαράδειγμα και ανοιχτή υποχρέωση</h3>
+<p>Σε προσωρινό αντίγραφο, άλλαξε τον πρώτο στόχο σε <code>n + (0::nat) = n + 1</code>. Για n=0, η αριστερή πλευρά είναι 0 και η δεξιά 1, οπότε η πρόταση είναι ψευδής. Η <code>by simp</code> δεν πρέπει να ολοκληρώνει μία σωστή απόδειξη. Μην εισάγεις <code>sorry</code> ή αυθαίρετο αξίωμα για να κρύψεις την αποτυχία. Γενικά, η αποτυχία ενός αυτοματοποιημένου αποδεικτή <strong>δεν σημαίνει</strong> ότι μία πρόταση είναι ψευδής· στη συγκεκριμένη περίπτωση υπάρχει σαφές αντιπαράδειγμα.</p>
+<h3>Ξεχώρισε διαφορετικές αστοχίες</h3>
+<p>Αφαίρεσε <code>by simp</code> από έγκυρο αντίγραφο και παρακολούθησε την υποχρέωση που μένει ανοιχτή. Επανέφερε την απόδειξη. Έπειτα γράψε λάθος όνομα στο <code>imports Main</code> και διαχώρισε το σφάλμα φόρτωσης θεωρίας από το ατελές λήμμα. Τέλος, απόδειξε την αντιμεταθετικότητα <code>(n::nat) + m = m + n</code> με κατάλληλο λήμμα της βιβλιοθήκης.</p>
+<p><strong>Παραδοτέα:</strong> έκδοση Isabelle, αποδεκτό αρχείο θεωρίας, δύο αποδείξεις, ένα αντιπαράδειγμα και πραγματική κατάσταση απόδειξης ή σφάλμα. Χωρίς Isabelle δήλωσε <strong>μαθηματική ανάλυση, όχι μηχανική επαλήθευση</strong>.</p>
+<h2>Isabelle — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Πρακτικές εργασίες</h3>
+<ol>
+<li>Όρισε μικρή πρόταση και τις παραδοχές της.</li>
+<li>Κατασκεύασε σύντομη απόδειξη με έμπιστους κανόνες συμπερασμού.</li>
+<li>Αφαίρεσε μία παραδοχή και έλεγξε αν η απόδειξη ισχύει.</li>
+</ol>
+<h3>Ερωτήσεις ουσίας</h3>
+<ul>
+<li>Ο στόχος είναι εκτελέσιμη τιμή ή ελεγμένη πρόταση;</li>
+<li>Ποια εργαλεία εκτελούν ή ελέγχουν το παράδειγμα και σε ποια έκδοση;</li>
+<li>Ποιο είναι το μικρότερο ελεγμένο πρόγραμμα; Ποιες είναι οι παρενέργειες;</li>
+<li>Πώς γίνεται διάκριση μεταξύ σφάλματος σύνταξης, λογικής και περιβάλλοντος;</li>
+<li>Πώς δοκιμάζονται άκυρα δεδομένα χωρίς βλάβη σε αρχεία ή σύστημα;</li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

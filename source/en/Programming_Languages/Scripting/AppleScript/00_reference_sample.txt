@@ -1,0 +1,2 @@
+set nameText to "Ada"
+return "Hello, " & nameText & "!"

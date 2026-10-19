@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Web Server and Reverse-Proxy Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-013.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Web Server and Reverse-Proxy Security Web-server security covers the software and infrastructure that accepts HTTP(S) traffic before or alongside the application: TLS termination, virtual…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Web Server and Reverse-Proxy Security — DedSec Project">
+<meta property="og:description" content="Web Server and Reverse-Proxy Security Web-server security covers the software and infrastructure that accepts HTTP(S) traffic before or alongside the application: TLS termination, virtual…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-013.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Web Server and Reverse-Proxy Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Web Server and Reverse-Proxy Security — DedSec Project">
+<meta name="twitter:description" content="Web Server and Reverse-Proxy Security Web-server security covers the software and infrastructure that accepts HTTP(S) traffic before or alongside the application: TLS termination, virtual…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Web Server and Reverse-Proxy Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Web Server and Reverse-Proxy Security — DedSec Project</h1><p>Web Server and Reverse-Proxy Security Web-server security covers the software and infrastructure that accepts HTTP(S) traffic before or alongside the application: TLS termination, virtual…</p><section><p>Web-server security covers the software and infrastructure that accepts HTTP(S) traffic before or alongside the application: TLS termination, virtual hosts, reverse proxies, static files, process identity, modules, file permissions, logging, and administrative interfaces.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> Test web servers only in scope. Use localhost or an intentionally vulnerable training environment for configuration experiments. Do not brute-force directories or stress public servers.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>map client, CDN/proxy, web server, application, and backend boundaries;</li>
+<li>review TLS, virtual hosts, methods, headers, and file exposure;</li>
+<li>understand process privilege and filesystem permissions;</li>
+<li>identify dangerous default/demo/admin content;</li>
+<li>review reverse-proxy trust headers;</li>
+<li>collect server-side evidence for findings.</li>
+</ul>
+<h2>Architecture first</h2>
+<p>A request may pass through CDN, load balancer, WAF, reverse proxy, web server, application framework, and backend services. Record where TLS terminates, which component authenticates the client, which component decides the original client IP/scheme/host, and which logs contain the request.</p>
+<h2>TLS and transport</h2>
+<p>Use HTTPS for sensitive applications and manage certificates, protocol versions, redirect behavior, HSTS policy where appropriate, and private-key access. A valid certificate proves control of a name/key relationship under the certificate ecosystem; it does not prove the application is secure.</p>
+<h2>Virtual hosts and Host handling</h2>
+<p>One server can host several applications. Validate which hostnames are expected and what happens to unknown <code>Host</code> values. Reverse proxies and applications should agree on the trusted host/origin context so generated links, redirects, cache keys, and security decisions are not based on untrusted values.</p>
+<h2>HTTP methods</h2>
+<p>Enable only methods required by the application. The presence of a method is not automatically a vulnerability; evaluate what action it permits, authentication requirements, and authorization checks.</p>
+<h2>Static files and document roots</h2>
+<p>Review document-root boundaries, symlink behavior, directory listings, backup files, editor artifacts, source maps, environment files, and configuration files. Sensitive files should live outside publicly served directories and be protected by OS permissions as well as web configuration.</p>
+<h2>Process identity</h2>
+<p>The web server and application should run with only the privileges they require. Writable directories should be narrowly scoped. Avoid running a normal web application as root/administrator.</p>
+<h2>Reverse-proxy headers</h2>
+<p>Headers such as <code>X-Forwarded-For</code>, <code>Forwarded</code>, and scheme/host forwarding can be useful only when the application knows which proxy is trusted to set or overwrite them. Never trust client-supplied forwarding headers by default for security decisions.</p>
+<h2>Administrative interfaces</h2>
+<p>Management consoles, status pages, metrics, debug endpoints, and health endpoints need explicit exposure decisions. Prefer dedicated management networks or authenticated access rather than relying on obscure paths.</p>
+<h2>Logging</h2>
+<p>Record request time, normalized host, method, path, response status, latency, correlation ID, and authenticated identity where appropriate. Avoid logging passwords, authorization headers, session cookies, or sensitive request bodies.</p>
+<h2>Safe configuration review</h2>
+<p>For a local Nginx/Apache/Caddy test instance, verify:</p>
+<ul>
+<li>bind addresses;</li>
+<li>document root;</li>
+<li>process identity;</li>
+<li>enabled modules/features;</li>
+<li>TLS configuration if used;</li>
+<li>default virtual host behavior;</li>
+<li>directory listing;</li>
+<li>admin/status endpoints;</li>
+<li>access/error logging;</li>
+<li>reverse-proxy trust settings.</li>
+</ul>
+<h2>Common mistakes</h2>
+<ul>
+<li>Assuming the application sees the original client connection directly.</li>
+<li>Trusting forwarding headers from arbitrary clients.</li>
+<li>Leaving sample or backup files under the document root.</li>
+<li>Running the web process with excessive privilege.</li>
+<li>Logging secrets.</li>
+<li>Treating a server banner as proof of patch state.</li>
+</ul>
+<h2>Safe lab</h2>
+<p>Run a local web server bound to <code>127.0.0.1</code>. Create one public file and one file that should remain outside the document root. Verify only the public file is reachable. Then change one harmless configuration value, reload, and correlate access/error logs with the request.</p>
+<h2>Knowledge check</h2>
+<ol>
+<li>Why can proxy headers become a trust-boundary issue?</li>
+<li>Why is server version disclosure not enough to confirm a vulnerability?</li>
+<li>Which files should never depend only on web-server deny rules?</li>
+<li>Why should management endpoints be separated from public traffic?</li>
+<li>What request data should generally not be logged?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. Draw the full request path before evaluating any server setting.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>14, 19, 40, 52, 69</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

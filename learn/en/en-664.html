@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>harbour — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-664.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="harbour — consolidated language guide Harbour Working model Harbour continues the xBase/Clipper-style business application tradition with records, databases and procedures oriented toward…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="harbour — consolidated language guide — DedSec Project">
+<meta property="og:description" content="harbour — consolidated language guide Harbour Working model Harbour continues the xBase/Clipper-style business application tradition with records, databases and procedures oriented toward…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-664.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="harbour — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="harbour — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="harbour — consolidated language guide Harbour Working model Harbour continues the xBase/Clipper-style business application tradition with records, databases and procedures oriented toward…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="harbour — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>harbour — consolidated language guide — DedSec Project</h1><p>harbour — consolidated language guide Harbour Working model Harbour continues the xBase/Clipper-style business application tradition with records, databases and procedures oriented toward…</p><section><h2>Harbour</h2>
+<h3>Working model</h3>
+<p>Harbour continues the xBase/Clipper-style business application tradition with records, databases and procedures oriented toward compiled desktop applications.</p>
+<h3>Focused source example</h3>
+<pre><code class="language-text">PROCEDURE Main()
+   ? &quot;Hello from Harbour&quot;
+RETURN
+</code></pre>
+<p>Make a tiny console program, then explore the difference between opening a DBF table and creating an in-memory array.</p>
+<h3>Evidence to collect</h3>
+<p>Record the exact Harbour compiler or runtime version, required dependencies, and output from harmless test data. Predict an observation before checking it, and keep both the initial and revised source to show which change caused the result. Do not claim that a displayed fragment was executed if the platform is unavailable.</p>
+<h3>Failure mode worth investigating</h3>
+<p>DBF encoding, codepages and record locking deserve explicit tests when maintaining legacy data.</p>
+<h2>Harbour: applied exercises</h2>
+<p>Harbour is a modern open-source descendant in the xBase family; its procedural entry points, LOCAL variables and question-mark output syntax should not be mistaken for SQL or an ordinary Python interpreter. The initial task needs only console output. Database work should come later, in disposable sample files.</p>
+<h3>Exercise 1: follow a local integer</h3>
+<pre><code class="language-harbour">PROCEDURE Main()
+   LOCAL n := 2
+   ? n * 3
+RETURN
+</code></pre>
+<p>The expected numeric output is 6. Change n to -2 and explain why multiplication produces -6, while the procedure still reaches RETURN. Distinguish the LOCAL declaration's scope from a global variable. Name the routine Main rather than copying an entry point from C or Java.</p>
+<h3>Exercise 2: avoid silent assumptions about text</h3>
+<p>Harbour values can be inspected with ValType(). Consider an input representing a quantity as the text &quot;12&quot; rather than a numeric 12. State why a type-sensitive design must validate or convert it before arithmetic. A string containing spaces is not automatically equivalent to an absent or NIL value. Sketch two input checks: one rejecting nonnumeric text, the other accepting a tested numeric conversion.</p>
+<h3>Exercise 3: isolated table records</h3>
+<p>In an approved exercise directory, design a tiny DBF-backed inventory with a code and quantity. Show how the key would be used to locate a record and why updates to a table require a separate explicit action. Do not suggest experiments against an existing business DBF file. Explain how record locking, character encodings and file sharing can affect a database-backed program even when a console arithmetic routine works perfectly.</p>
+<h3>Verification and environment</h3>
+<p>Document Harbour compiler version, host OS, compile command (taken from that version's documentation), actual output and the value type of each input. If you cannot run a compatible toolchain, mark all outputs as predicted. To pass, demonstrate understanding of LOCAL scope, an xBase-compatible routine, a type mismatch and a safe distinction between display and persistent data mutation.</p>
+<h2>Harbour — Focused mastery pathway</h2>
+<h3>Learn the memory and execution model</h3>
+<p>Write a Harbour program using a DBF-style test table and display a count without modifying the user's real data files.</p>
+<h3>Deliberate failure and corrective experiment</h3>
+<p>Navigate a work area with selected records, test deleted versus active rows and identify the effect of SET DELETED within the installed runtime.</p>
+<h3>Independent engineering assignment</h3>
+<p>Create a reversible offline inventory report using a copy of a DBF file, with backups and schema assumptions documented. Compare Harbour dialect extensions with xBase code originally written for Clipper.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

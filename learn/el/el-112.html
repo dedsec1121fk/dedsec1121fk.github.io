@@ -1,0 +1,97 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Γλωσσάρι: heaps, HTTP και idempotence — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-112.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Γλωσσάρι: heaps, HTTP και idempotence Heap Σημασία και περιορισμοί Το heap σημαίνει δύο διαφορετικά πράγματα: δυναμική μνήμη allocation ή δομή priority queue. Ένα binary min-heap διατηρεί…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Γλωσσάρι: heaps, HTTP και idempotence — DedSec Project">
+<meta property="og:description" content="Γλωσσάρι: heaps, HTTP και idempotence Heap Σημασία και περιορισμοί Το heap σημαίνει δύο διαφορετικά πράγματα: δυναμική μνήμη allocation ή δομή priority queue. Ένα binary min-heap διατηρεί…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-112.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γλωσσάρι: heaps, HTTP και idempotence — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Γλωσσάρι: heaps, HTTP και idempotence — DedSec Project">
+<meta name="twitter:description" content="Γλωσσάρι: heaps, HTTP και idempotence Heap Σημασία και περιορισμοί Το heap σημαίνει δύο διαφορετικά πράγματα: δυναμική μνήμη allocation ή δομή priority queue. Ένα binary min-heap διατηρεί…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Γλωσσάρι: heaps, HTTP και idempotence — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Γλωσσάρι: heaps, HTTP και idempotence — DedSec Project</h1><p>Γλωσσάρι: heaps, HTTP και idempotence Heap Σημασία και περιορισμοί Το heap σημαίνει δύο διαφορετικά πράγματα: δυναμική μνήμη allocation ή δομή priority queue. Ένα binary min-heap διατηρεί…</p><section><h2>Heap</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Το heap σημαίνει δύο διαφορετικά πράγματα: δυναμική μνήμη allocation ή δομή priority queue. Ένα binary min-heap διατηρεί μερική διάταξη για γρήγορη πρόσβαση στο ελάχιστο· δεν είναι πλήρως ταξινομημένη λίστα.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">import heapq
+items = [9, 2, 5, 1]
+heapq.heapify(items)
+assert heapq.heappop(items) == 1
+assert heapq.heappop(items) == 2
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Εμφάνισε την εσωτερική λίστα μετά το heapify και εξήγησε γιατί δεν είναι απαραίτητα sorted. Ξεχώρισε τα O(log n) push/pop από το memory allocation heap του process.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/library/heapq.html</p>
+<h2>HTTP</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>HTTP ορίζει ανταλλαγή methods, URLs, headers, status codes και ενδεχομένως bodies ανάμεσα σε client και server. Το πρωτόκολλο είναι stateless· οι εφαρμογές χρησιμοποιούν cookies, tokens και sessions. Το status 200 δεν αποδεικνύει έγκυρο JSON schema.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-http">GET /status HTTP/1.1
+Host: example.test
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{&quot;ok&quot;:true}
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Σχεδίασε αποκρίσεις 200, 404, 429 και 503. Ξεχώρισε πότε δικαιολογείται retry, τι κάνει το Retry-After και γιατί η CORS είναι browser policy, όχι authentication.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview</p>
+<h2>Idempotence</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Μια πράξη είναι idempotent όταν η επανάληψη έχει το ίδιο προβλεπόμενο effect με μία εφαρμογή. Η ανάθεση flag=true είναι idempotent, ενώ counter++ συνήθως όχι. Στο HTTP αναφέρεται στα επιδιωκόμενα server effects, όχι σε ίδια response bytes.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">state = {'enabled': False, 'counter': 0}
+def enable(): state['enabled'] = True
+def increment(): state['counter'] += 1
+enable(); enable(); assert state['enabled'] is True
+increment(); increment(); assert state['counter'] == 2
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Σχεδίασε δοκιμαστικό endpoint με idempotency key για write. Προσομοίωσε ίδιο request μετά από timeout και απέτρεψε δεύτερη εγγραφή, χωρίς πραγματικές πληρωμές.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Idempotent</p>
+<h2>Immutable</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Immutable τιμή δεν τροποποιείται in-place μέσω του interface της. Python tuples είναι immutable containers αλλά μπορεί να περιέχουν mutable αντικείμενα· η αμεταβλητότητα δεν μεταφέρεται αυτόματα σε όλα τα nested στοιχεία.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">items = ([1,2],)
+items[0].append(3)
+assert items == ([1,2,3],)
+# items[0] = [4]  # TypeError: tuple assignment is forbidden
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Σύγκρινε frozen dataclass με απλό, και μετά δοκίμασε frozen πεδίο που κρατά list. Εξήγησε πότε χρειάζεται πραγματικά deep immutability σε caches ή μεταξύ threads.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/library/stdtypes.html#tuples</p>
+<h2>Index</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Index μπορεί να είναι θέση σε ordered collection ή ειδική δομή για γρηγορότερα database lookups. Στην Python οι θέσεις αρχίζουν από μηδέν και τα αρνητικά indexes μετρούν από το τέλος. Στην DB ο index αποθηκεύει κλειδιά αναζήτησης.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">words = ['first', 'second', 'third']
+assert words[0] == 'first'
+assert words[-1] == 'third'
+assert words[1:3] == ['second', 'third']
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Δοκίμασε words[3] και δες IndexError. Έπειτα δημιούργησε SQLite index και σύγκρινε EXPLAIN QUERY PLAN· σε μικρό πίνακα ο optimizer ίσως δεν τον επιλέξει.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/library/stdtypes.html#common-sequence-operations</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

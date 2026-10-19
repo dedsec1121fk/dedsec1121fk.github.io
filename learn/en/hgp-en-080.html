@@ -1,0 +1,152 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advanced Detection Engineering and MITRE ATT&amp;CK v19 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-080.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Advanced Detection Engineering and MITRE ATT&amp;CK v19 Purpose: Build detections from observable behavior, data-source reality, and testable hypotheses rather than from tool names or copied…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Advanced Detection Engineering and MITRE ATT&amp;CK v19 — DedSec Project">
+<meta property="og:description" content="Advanced Detection Engineering and MITRE ATT&amp;CK v19 Purpose: Build detections from observable behavior, data-source reality, and testable hypotheses rather than from tool names or copied…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-080.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Advanced Detection Engineering and MITRE ATT&amp;CK v19 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advanced Detection Engineering and MITRE ATT&amp;CK v19 — DedSec Project">
+<meta name="twitter:description" content="Advanced Detection Engineering and MITRE ATT&amp;CK v19 Purpose: Build detections from observable behavior, data-source reality, and testable hypotheses rather than from tool names or copied…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Advanced Detection Engineering and MITRE ATT&amp;CK v19 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Advanced Detection Engineering and MITRE ATT&amp;CK v19 — DedSec Project</h1><p>Advanced Detection Engineering and MITRE ATT&amp;CK v19 Purpose: Build detections from observable behavior, data-source reality, and testable hypotheses rather than from tool names or copied…</p><section><blockquote>
+<p><strong>Purpose:</strong> Build detections from observable behavior, data-source reality, and testable hypotheses rather than from tool names or copied signatures.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Convert threat behavior into data requirements and detection logic.</li>
+<li>Understand ATT&amp;CK as a behavioral knowledge base, not a checklist of alerts.</li>
+<li>Design correlation, sequence, rarity, and stateful detections.</li>
+<li>Test false-positive assumptions with benign emulation.</li>
+<li>Track coverage and telemetry gaps explicitly.</li>
+</ul>
+<h2>ATT&amp;CK in 2026</h2>
+<p>MITRE ATT&amp;CK <strong>v19.2</strong> is the current data release as of August 6, 2026. The major v19 release introduced on April 28, 2026 split the former Enterprise Defense Evasion tactic into <strong>Stealth</strong> and <strong>Defense Impairment</strong>. The v19.2 Agile update primarily refreshed Groups and Software rather than changing that tactic model.</p>
+<p>Use the current ATT&amp;CK website/data as the source of truth for technique IDs and relationships. Do not hard-code old tactic assumptions into long-lived analytics without version tracking.</p>
+<h2>Start with behavior</h2>
+<p>A useful detection statement has this shape:</p>
+<p><strong>When subject/process/workload X performs observable behavior Y under context Z, the combination is unusual or policy-violating because reason R.</strong></p>
+<p>Then ask which telemetry can prove each part. If no data records the behavior, writing a query first is premature.</p>
+<h2>Detection pipeline</h2>
+<ol>
+<li>Threat/behavior hypothesis.</li>
+<li>Required data source and fields.</li>
+<li>Collection validation.</li>
+<li>Normalization.</li>
+<li>Candidate logic.</li>
+<li>Benign test data/emulation.</li>
+<li>False-positive review.</li>
+<li>Severity/context enrichment.</li>
+<li>Alert routing and analyst procedure.</li>
+<li>Versioning/tuning/retirement.</li>
+</ol>
+<p>A detection is a maintained software artifact.</p>
+<h2>Atomic versus correlated analytics</h2>
+<p>An <strong>atomic</strong> detection triggers on one event. A <strong>correlated</strong> detection combines events over time, identity, host, process tree, session, workload, or resource.</p>
+<p>Examples of safe correlation concepts:</p>
+<ul>
+<li>privileged group change followed by privileged sign-in;</li>
+<li>new service configuration followed by service start;</li>
+<li>cloud role grant followed by sensitive API use;</li>
+<li>unusual child process followed by outbound connection;</li>
+<li>security control configuration change followed by telemetry loss.</li>
+</ul>
+<p>Correlation often improves context but introduces state, timing, and data-quality complexity.</p>
+<h2>Sequence detections</h2>
+<p>Some behaviors are suspicious because of order. Define expected time window, entity key, allowed interruptions, and reset conditions. Sequence logic can be brittle if clocks are skewed or event ingestion is delayed.</p>
+<p>Always distinguish event time from ingest time.</p>
+<h2>Rarity and baseline</h2>
+<p>Rarity can surface unusual process paths, parents, cloud APIs, geolocations, authentication methods, or service-account activity. But “rare” is not “malicious.” Baselines change with software releases and business cycles.</p>
+<p>Use rarity to prioritize evidence, not as sole conviction.</p>
+<h2>Entity context</h2>
+<p>Enrichment turns raw events into security meaning. Useful context includes asset criticality, user role, device management state, signer reputation, known automation, vulnerability exposure, network zone, tenant, and change-ticket context.</p>
+<p>Enrichment should be versioned and explainable so analysts know why severity changed.</p>
+<h2>Detection of defense impairment</h2>
+<p>Defense impairment covers actions that degrade logging, endpoint protection, firewall policy, cloud audit, authentication controls, or other security mechanisms. Build high-confidence alerts for unauthorized state changes to critical controls.</p>
+<p>Avoid relying only on “absence of logs,” which can also result from pipeline failure. Pair telemetry health monitoring with configuration/audit events.</p>
+<h2>Stealth-related behavior</h2>
+<p>Stealth behavior attempts to reduce observable signals or blend into expected activity. Defensive analytics should emphasize invariant violations and cross-source correlation rather than trying to guess every evasion trick.</p>
+<p>Do not publish step-by-step evasion recipes in a training guide. Study the ATT&amp;CK behavior descriptions and map them to telemetry/mitigations.</p>
+<h2>Data quality</h2>
+<p>For every source document:</p>
+<ul>
+<li>who/what emits it;</li>
+<li>field semantics;</li>
+<li>timestamp source/timezone;</li>
+<li>retention;</li>
+<li>delay/drop behavior;</li>
+<li>identity/hostname stability;</li>
+<li>parsing/normalization transformations;</li>
+<li>known blind spots;</li>
+<li>sampling/filtering.</li>
+</ul>
+<p>A perfect query over unreliable data is an unreliable detection.</p>
+<h2>Sigma and portable logic</h2>
+<p>Sigma provides a portable rule representation for many log detections. Treat portable rules as source code requiring adaptation to your schema and environment. Field names, event IDs, command-line availability, and audit policy vary.</p>
+<p>Test translated rules against real benign data before deployment.</p>
+<h2>Network detections</h2>
+<p>Network analytics can use DNS, flow, TLS metadata, HTTP proxy logs, firewall events, and protocol-specific telemetry. Encrypted traffic reduces payload visibility but still leaves useful metadata depending on environment/privacy policy.</p>
+<p>Focus on policy violations and unusual relationships rather than trying to decrypt traffic you are not authorized to inspect.</p>
+<h2>Identity detections</h2>
+<p>High-value identity analytics include changes to privileged groups/roles, new credentials, impossible policy transitions, unusual service-account use, risky delegation changes, repeated authentication anomalies, and abnormal role-assumption chains.</p>
+<p>Identity events need context from directory/cloud role state to avoid stale interpretations.</p>
+<h2>Detection testing</h2>
+<p>Use benign simulations that create the intended telemetry without harmful payloads. Examples: create/delete a test local user, start a harmless test service, perform a denied cloud sandbox API action, or modify a lab logging setting and immediately restore it.</p>
+<p>Record expected events before running the test. If the detection fails, determine whether the behavior did not emit data, collection dropped it, normalization lost fields, or logic is wrong.</p>
+<h2>False positives and tuning</h2>
+<p>Do not simply exclude entire directories/users to quiet a rule. Understand legitimate behaviors and narrow with stable context: signer, managed software inventory, service account, approved automation, parent process, destination class, or change window.</p>
+<p>Every suppression is a blind spot that should be documented and reviewed.</p>
+<h2>Detection-as-code</h2>
+<p>Store rules, tests, sample sanitized events, metadata, owner, ATT&amp;CK mapping, severity, data dependencies, and change history in version control. CI can lint rules and run test fixtures.</p>
+<p>A rule without an owner and validation history decays quickly.</p>
+<h2>Coverage metrics</h2>
+<p>ATT&amp;CK technique counts are not sufficient. Better measures include:</p>
+<ul>
+<li>percentage of prioritized behaviors with validated telemetry;</li>
+<li>percentage with tested detections;</li>
+<li>false-positive burden;</li>
+<li>time from telemetry failure to detection;</li>
+<li>alert-to-investigation conversion;</li>
+<li>time since last validation;</li>
+<li>critical assets lacking expected data.</li>
+</ul>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete Modules 12, 23, 26, 47, 59, 72–76, and 79.</p>
+<h3>Practice task</h3>
+<p>Choose one benign behavior in a lab. Write the threat hypothesis, required fields, sample event, detection logic, expected false positives, and test procedure. Validate end-to-end collection.</p>
+<h3>Evidence to keep</h3>
+<p>Rule/query, fixture event, ATT&amp;CK version/mapping, test output, tuning notes, and telemetry dependency list.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>copying ATT&amp;CK technique names directly into alerts;</li>
+<li>writing logic before verifying data exists;</li>
+<li>treating rarity as maliciousness;</li>
+<li>suppressing broad categories to reduce noise;</li>
+<li>testing evasion instead of validating observability.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>Explain the difference between technique coverage, telemetry coverage, and validated detection coverage, and demonstrate one end-to-end test.</p>
+<h3>Continue with</h3>
+<p>Modules <strong>81, 84, and 85</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-088.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security Modern wireless security is primarily an identity, configuration, RF exposure, and endpoint-trust problem. This module goes…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security — DedSec Project">
+<meta property="og:description" content="Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security Modern wireless security is primarily an identity, configuration, RF exposure, and endpoint-trust problem. This module goes…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-088.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security — DedSec Project">
+<meta name="twitter:description" content="Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security Modern wireless security is primarily an identity, configuration, RF exposure, and endpoint-trust problem. This module goes…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security — DedSec Project</h1><p>Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security Modern wireless security is primarily an identity, configuration, RF exposure, and endpoint-trust problem. This module goes…</p><section><p>Modern wireless security is primarily an identity, configuration, RF exposure, and endpoint-trust problem. This module goes beyond password-centric Wi-Fi discussions and focuses on enterprise authentication, management-frame protection, segmentation, roaming, and observability.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>WPA3 modes</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>802.1X architecture</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Protected management frames</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Roaming and key hierarchy</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>6 GHz and newer bands</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Guest and IoT segmentation</strong> and connect it to a concrete trust boundary or security invariant.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. WPA3 modes</h3>
+<p>WPA3-Personal uses SAE while enterprise deployments can use stronger enterprise profiles. Security depends on client support, transition-mode choices, credential lifecycle, and whether legacy compatibility silently lowers guarantees.</p>
+<h3>2. 802.1X architecture</h3>
+<p>Supplicant, authenticator, and authentication server are distinct roles. EAP method selection, server-certificate validation, identity privacy, and RADIUS security determine whether enterprise authentication actually resists impersonation.</p>
+<h3>3. Protected management frames</h3>
+<p>802.11w/PMF protects selected management frames from forgery. Requiring PMF where the device population supports it reduces a class of local disruption and downgrade opportunities, but does not replace good RF and identity design.</p>
+<h3>4. Roaming and key hierarchy</h3>
+<p>Fast roaming improves mobility but expands the importance of key hierarchy, controller trust, AP configuration consistency, and client behavior. Security reviews should understand where authentication state is cached and which components can authorize movement between APs.</p>
+<h3>5. 6 GHz and newer bands</h3>
+<p>Wi-Fi 6E/7 introduce new channel/band behavior and often stronger baseline security requirements. Inventory tools and monitoring must support those bands or the organization can create blind spots by upgrading the WLAN faster than its sensors.</p>
+<h3>6. Guest and IoT segmentation</h3>
+<p>Guest, BYOD, managed endpoints, and embedded devices should not receive the same trust merely because they share wireless infrastructure. Use role/identity-based policy and explicit east-west restrictions.</p>
+<h3>7. Rogue and misconfigured infrastructure</h3>
+<p>A rogue AP, accidental hotspot, duplicate SSID, weak transition network, or incorrectly trusted EAP certificate can undermine an otherwise strong design. Detection should emphasize configuration drift and identity validation, not just SSID names.</p>
+<h3>8. Wireless evidence</h3>
+<p>Preserve controller logs, RADIUS outcomes, AP associations, client identity, channel/BSSID information, DHCP/DNS data, and timestamps. RF observations alone rarely establish who the user was or what authorization decision occurred.</p>
+<h2>Authorized exercises</h2>
+<h3>Exercise 1 — Design three WLAN roles—managed, guest, IoT—and write the exact trust assumptions and allowed flows between them</h3>
+<p>Design three WLAN roles—managed, guest, IoT—and write the exact trust assumptions and allowed flows between them.</p>
+<h3>Exercise 2 — On equipment you own, inspect whether client devices validate the expected enterprise authentication certificate and document the trust path</h3>
+<p>On equipment you own, inspect whether client devices validate the expected enterprise authentication certificate and document the trust path.</p>
+<h3>Exercise 3 — Create an upgrade checklist for moving from a mixed WPA2/WPA3 deployment to a stricter policy without stranding unsupported devices</h3>
+<p>Create an upgrade checklist for moving from a mixed WPA2/WPA3 deployment to a stricter policy without stranding unsupported devices.</p>
+<h2>Knowledge checks</h2>
+<ol>
+<li>Explain the most important trust boundary in <strong>Enterprise Wireless, WPA3, 802.1X and Wi-Fi 6/6E/7 Security</strong> without naming a security tool.</li>
+<li>Give one example where cryptographic or authentication success still does <strong>not</strong> imply authorization success.</li>
+<li>Describe one stale-state or replay condition relevant to this module.</li>
+<li>Identify one telemetry source that can support a strong conclusion and one blind spot it still leaves.</li>
+<li>Explain how you would turn a discovered weakness into a regression test rather than a one-time finding.</li>
+</ol>
+<h2>Guided study workflow</h2>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

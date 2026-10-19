@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';import vm from 'node:vm';
+const context={window:{},Intl};vm.createContext(context);
+const code=fs.readFileSync(new URL('../DedSec-Project-Website/assets/page-controls.js',import.meta.url),'utf8').split('/* Shared accessible lesson controls')[0];vm.runInContext(code,context);
+const api=context.window.DedSecPassages;
+const row={id:'a',l:'en',p:'guide.md',t:'A guide',b:'# A guide\n\nUnrelated opening.\n\nCheck DNS before retrying. A certificate error needs a separate check.\n\nAnother paragraph.'};
+assert.equal(api.select(row,['DNS']).text,'Check DNS before retrying. A certificate error needs a separate check.');
+assert.equal(api.select(row,['DNS']).anchor,api.select(row,['DNS']).text);
+assert.equal(api.normalize('ΑΣΦΆΛΕΙΑ   δικτύου'),'ασφαλεια δικτυου');
+assert.equal(api.select({kind:'page',p:'faq.html',t:'FAQ',b:'FAQ\n\nWhat is DNS?\n\nDNS translates hostnames into addresses. Verify the resolver before retrying.'},['DNS']).text,'DNS translates hostnames into addresses. Verify the resolver before retrying.');
+assert.ok(api.passages({p:'a.md',t:'Code',b:'```python\nfirst_value = 1\n\nprint(first_value)\n```'}).includes('first_value = 1\n\nprint(first_value)'));
+assert.equal(api.plain('Use `first_value` and **verify** it.'),'Use first_value and verify it.');
+assert.ok(!api.select(row,['DNS']).text.includes('…'));
+console.log('PASS: complete paragraphs, inline code, Greek normalization and relevant context');

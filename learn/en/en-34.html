@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Algorithm drills — sorting, dynamic programming and prefix sums — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-34.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Algorithm drills — sorting, dynamic programming and prefix sums Stable sorting Python 3 reference program Core property Python sorted returns a new list and is stable: records that compare…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Algorithm drills — sorting, dynamic programming and prefix sums — DedSec Project">
+<meta property="og:description" content="Algorithm drills — sorting, dynamic programming and prefix sums Stable sorting Python 3 reference program Core property Python sorted returns a new list and is stable: records that compare…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-34.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Algorithm drills — sorting, dynamic programming and prefix sums — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Algorithm drills — sorting, dynamic programming and prefix sums — DedSec Project">
+<meta name="twitter:description" content="Algorithm drills — sorting, dynamic programming and prefix sums Stable sorting Python 3 reference program Core property Python sorted returns a new list and is stable: records that compare…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Algorithm drills — sorting, dynamic programming and prefix sums — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Algorithm drills — sorting, dynamic programming and prefix sums — DedSec Project</h1><p>Algorithm drills — sorting, dynamic programming and prefix sums Stable sorting Python 3 reference program Core property Python sorted returns a new list and is stable: records that compare…</p><section><h2>Stable sorting</h2>
+<h3>Python 3 reference program</h3>
+<pre><code class="language-python">items = [('Ada', 2),('Grace', 1),('Linus', 2)]
+items_sorted = sorted(items, key=lambda item: item[1])
+assert items_sorted == [('Grace',1),('Ada',2),('Linus',2)]
+</code></pre>
+<h3>Core property</h3>
+<p>Python sorted returns a new list and is stable: records that compare equal under the chosen key keep their <strong>original relative order</strong>. In the reference data, Ada and Linus share priority 2, so both remain in that order after Grace with priority 1.</p>
+<h3>Why the key matters</h3>
+<p>The key function lambda item: item[1] selects the second element of each pair. It does not compare names unless names are explicitly included in a compound key. Adding a secondary key (item[1], item[0]) changes the definition of ties and may deliberately reorder records. Sorting the same list in place with list.sort mutates the original; sorted does not.</p>
+<h3>Counterexamples</h3>
+<ol>
+<li>Verify sorted order Grace, Ada, Linus, and confirm items still matches the original sequence.</li>
+<li>Add a second record with priority 1 and check that these two tie records preserve their insertion order.</li>
+<li>Sort by name instead and state the different result. The algorithm was not 'wrong'—the comparison contract changed.</li>
+<li>Add a missing priority value and design an explicit policy for missing keys instead of allowing an IndexError.</li>
+<li>Mixed incomparable key types (for example, integer and string priorities) may produce TypeError in Python 3; validate or normalize before sorting.</li>
+</ol>
+<h3>Complexity and verification</h3>
+<p>General comparison sorting needs O(n log n) comparisons in the worst case; Python's actual Timsort can exploit existing order. For a leaderboard, decide explicitly how ties must be broken and whether a stable sort is required. Test an empty list, one record, duplicates and original-input preservation.</p>
+<h2>Dynamic programming</h2>
+<h3>Python 3 reference source</h3>
+<pre><code class="language-python">def fibonacci(n):
+    if n &lt; 0: raise ValueError('n must be &gt;= 0')
+    a, b = 0, 1
+    for _ in range(n): a, b = b, a + b
+    return a
+assert [fibonacci(n) for n in range(7)] == [0,1,1,2,3,5,8]
+</code></pre>
+<h3>Recurrence and invariant</h3>
+<p>F(0)=0 and F(1)=1; for n≥2, F(n)=F(n-1)+F(n-2). An exponential naive recursive implementation recalculates the same subproblems. The reference instead stores a=F(i), b=F(i+1) at the beginning of each loop iteration and advances both using parallel assignment. After n iterations, a equals F(n).</p>
+<h3>Complexity and numeric cost</h3>
+<p>The loop makes n additions and keeps only two integer variables, so it is O(n) iterations and O(1) <strong>integer slots</strong>. That is not literally O(1) bits: Fibonacci values increase in size and arbitrary-precision integer arithmetic gets more expensive for very large n. The contract rejects negative n explicitly.</p>
+<h3>Experiments</h3>
+<ol>
+<li>For n=0..6, the outputs are [0,1,1,2,3,5,8]; the original assertions cover this sequence.</li>
+<li>Pass n=-1 and expect ValueError; never silently return the value of F(0) for an invalid request.</li>
+<li>Compare fibonacci(10) against a memoized recursive version and record function-call counts rather than only elapsed times.</li>
+<li>Implement a version with a full DP table. It can be useful for reconstructing intermediate states but consumes O(n) slots.</li>
+<li>For very large n, profile integer size in bits and discuss why the simplified constant-space claim has a computational caveat.</li>
+</ol>
+<h3>When this pattern transfers</h3>
+<p>The deeper pattern is identifying overlapping subproblems, defining a recurrence, selecting a base case and proving transitions. Not every dynamic program can be reduced to two variables; many require tables or reconstruction links. Document the invariant that justifies a memory optimization.</p>
+<h2>Prefix sums</h2>
+<h3>Python 3 reference source</h3>
+<pre><code class="language-python">values = [4, 6, 2, 5]
+prefix = [0]
+for number in values: prefix.append(prefix[-1] + number)
+def range_sum(left, right):
+    if not (0 &lt;= left &lt;= right &lt;= len(values)): raise ValueError('range')
+    return prefix[right] - prefix[left]
+assert range_sum(1, 3) == 8
+</code></pre>
+<h3>Representation</h3>
+<p>Given values [4,6,2,5], construct prefix [0,4,10,12,17]. By definition prefix[i] is the sum of elements strictly before index i. The zero at the beginning is essential: it lets the same formula handle ranges that start at index zero.</p>
+<h3>Query invariant and cost</h3>
+<p>The sum of the half-open slice values[left:right] equals prefix[right]-prefix[left]. For left=1,right=3 that is 12-4=8, representing 6+2. Building the prefix table takes O(n) time and O(n) extra memory. Each validated range query then costs O(1) time, which is useful when many queries target an unchanged array.</p>
+<h3>Boundary experiments</h3>
+<ol>
+<li>range_sum(0,0) returns 0 because an empty interval sums to the additive identity.</li>
+<li>range_sum(0,len(values)) returns 17, the total.</li>
+<li>range_sum(1,3) returns 8, and range_sum(3,4) returns 5.</li>
+<li>Reject left&gt;right, negative left or right beyond the list with ValueError. Do not depend on Python negative indexing accidentally changing semantics.</li>
+<li>Change values[1] after building prefix. The old table becomes stale; recompute or choose another data structure.</li>
+</ol>
+<h3>Beyond static arrays</h3>
+<p>For frequent updates mixed with queries, consider a Fenwick tree or segment tree and explain the O(log n) trade-off. For overflow-limited languages choose a sum type wide enough for the largest possible accumulated value. Verify boundaries before subtracting prefix indices.</p>
+<h2>Text normalization</h2>
+<h3>Python 3 reference source</h3>
+<pre><code class="language-python">import unicodedata
+composed = &quot;é&quot;
+decomposed = &quot;e\u0301&quot;
+assert composed != decomposed
+assert len(composed) == 1 and len(decomposed) == 2
+assert unicodedata.normalize(&quot;NFC&quot;, composed) == unicodedata.normalize(&quot;NFC&quot;, decomposed)
+</code></pre>
+<h3>Mechanism</h3>
+<p>A visible é can be represented by the single code point U+00E9 or by U+0065 (e) followed by U+0301 (combining acute accent). These strings differ byte-for-byte and have different Python lengths, yet Unicode considers them canonically equivalent. unicodedata.normalize('NFC', text) composes eligible sequences into a common representation.</p>
+<h3>Why this does not replace validation</h3>
+<p>Normalization is an explicit policy decision for comparison and storage. It does not detect homoglyph phishing, perform locale-aware sorting or automatically make every string safe for an identifier. Case folding is a separate operation. Some data must preserve its exact original bytes for signatures or forensic logs.</p>
+<h3>Test cases</h3>
+<ol>
+<li>Check that the original composed/decomposed strings differ, then become equal after NFC normalization.</li>
+<li>Compare their code point counts (1 versus 2) and UTF-8 bytes before and after transformation.</li>
+<li>Use NFD instead of NFC and observe decomposed output; the canonical equivalence relation should still hold.</li>
+<li>Normalize a plain ASCII identifier and assert it does not change.</li>
+<li>Choose a policy for repository filenames and searchable titles; store both the normalized index key and the original display text if exact spelling matters.</li>
+</ol>
+<h3>Real use</h3>
+<p>Apply normalization at a single documented boundary and avoid repeatedly transforming already recorded source material. Test Greek accents and combining marks with synthetic samples. Record Unicode/Python version and the chosen normalization form when reproducibility matters.</p>
+<h2>09 sorting — boundary study</h2>
+<p>Stable sorting preserves the original order among records whose key compares equal. This allows multi-stage sorting: sort by secondary key first, then by primary key, retaining secondary order within ties.</p>
+<p><code>sorted()</code> returns a new list, while <code>.sort()</code> mutates the input. Key values need a consistent comparison; mixing incomparable <code>None</code> and integers raises a TypeError.</p>
+<p>&lt;!-- [curated-algorithm-detail:09_sorting.md] --&gt;</p>
+<h2>12 fibonacci dp — boundary study</h2>
+<p>Dynamic programming replaces repeated recomputation with remembered results. For Fibonacci, storing only the two most recent values is enough to calculate the next number, reducing auxiliary memory to constant space.</p>
+<p>Agree on the indexing convention first: F(0)=0 and F(1)=1. Validate n=0, n=1, n=2 and large n, noting that integer values become very large even when memory remains O(1).</p>
+<p>&lt;!-- [curated-algorithm-detail:12_fibonacci_dp.md] --&gt;</p>
+<h2>13 prefix sums — boundary study</h2>
+<p>With <code>prefix[0]=0</code> and <code>prefix[i+1]=prefix[i]+values[i]</code>, the sum of half-open range <code>[left,right)</code> is exactly <code>prefix[right]-prefix[left]</code>. The extra initial zero removes special handling for a range starting at index zero.</p>
+<p>A preprocessing pass is O(n) and each range query is O(1). Validate <code>left&lt;=right&lt;=n</code>, including an empty range where both indices are equal.</p>
+<p>&lt;!-- [curated-algorithm-detail:13_prefix_sums.md] --&gt;</p>
+<h2>14 safe text normalization — boundary study</h2>
+<p>Normalization is a deliberate data rule, not an automatic security cure. Unicode NFC can unify equivalent compositions, and <code>.casefold()</code> helps case-insensitive comparisons; neither automatically makes look-alike characters identical.</p>
+<p>Before normalizing usernames, decide whether accent distinctions matter. Preserve original input for audit, reject unwanted control characters and test visually similar non-identical strings.</p>
+<p>&lt;!-- [curated-algorithm-detail:14_safe_text_normalization.md] --&gt;</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,2 @@
+(defun greet (name) (concat "Hello, " name "!"))
+(princ (concat (greet "Ada") "\n"))

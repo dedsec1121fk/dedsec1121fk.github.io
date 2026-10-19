@@ -1,0 +1,95 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>pascal — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-672.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="pascal — consolidated language guide Pascal Mental model Pascal uses declared types and structured procedure syntax; dialect features vary between Free Pascal, Delphi and older compilers…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="pascal — consolidated language guide — DedSec Project">
+<meta property="og:description" content="pascal — consolidated language guide Pascal Mental model Pascal uses declared types and structured procedure syntax; dialect features vary between Free Pascal, Delphi and older compilers…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-672.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="pascal — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="pascal — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="pascal — consolidated language guide Pascal Mental model Pascal uses declared types and structured procedure syntax; dialect features vary between Free Pascal, Delphi and older compilers…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="pascal — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>pascal — consolidated language guide — DedSec Project</h1><p>pascal — consolidated language guide Pascal Mental model Pascal uses declared types and structured procedure syntax; dialect features vary between Free Pascal, Delphi and older compilers…</p><section><h2>Pascal</h2>
+<h3>Mental model</h3>
+<p>Pascal uses declared types and structured procedure syntax; dialect features vary between Free Pascal, Delphi and older compilers.</p>
+<h3>Minimal source sample</h3>
+<pre><code class="language-text">program Add;
+var n: integer;
+begin
+  n := 2 + 3;
+  writeln(n);
+end.
+</code></pre>
+<h3>Experiment to carry out</h3>
+<p>Trace the assignment operator := and distinguish variable declarations from the executable begin/end block.</p>
+<h3>A specific failure to distinguish</h3>
+<p>String encoding, units and available libraries differ by dialect; compile using the dialect selected by the real project.</p>
+<p>To evaluate the exercise, record the initial input, predicted behavior and actual observation in a compatible Pascal environment. Add a second run changing only one variable or argument; this makes the comparison attributable to a concrete cause. If the required runtime is not installed, treat the example as unexecuted source analysis and never label an imagined output as a passing test.</p>
+<h2>Pascal — Expanded practice workbook</h2>
+<h3>Inspect the smallest source</h3>
+<pre><code class="language-text">program Hello;
+begin
+  WriteLn('Hello, Ada!');
+end.
+</code></pre>
+<p><strong>Run or compilation context:</strong> fpc hello.pas &amp;&amp; ./hello.. Treat this as a baseline: save a copy, confirm the toolchain version and note whether the example merely evaluates a value, prints text, or creates external effects. Production accounts, datasets and hardware must not be used for first attempts.</p>
+<h3>Work through the actual mechanism</h3>
+<p>Read bounded integer input using Val with an error-position code, then implement a typed record array and a function returning the maximum safely.</p>
+<h3>Diagnose the sharp edge</h3>
+<p>A program's array index bounds and default numeric types depend on compiler dialect. Enable range checking for the test build.</p>
+<h2>Pascal — Focused mastery pathway</h2>
+<h3>Target toolchain</h3>
+<p>Use Free Pascal in objfpc mode; do not assume this program behaves identically under Turbo Pascal or Delphi. Model an inventory with fixed-capacity typed records, then reject malformed numerical input <em>before</em> it changes state.</p>
+<h3>Minimal executable program</h3>
+<p>Save as ledger.pas and compile with a Free Pascal compiler.</p>
+<pre><code class="language-pascal">program Ledger;
+{$mode objfpc}
+{$R+}
+type
+  TItem = record
+    Name: string;
+    Qty: Integer;
+  end;
+var
+  Items: array[1..2] of TItem;
+  Parsed, Code: Integer;
+begin
+  Items[1].Name := 'bolt';
+  Val('7', Parsed, Code);
+  if Code &lt;&gt; 0 then Halt(1);
+  Items[1].Qty := Parsed;
+  Items[2].Name := 'nut';
+  Items[2].Qty := 2;
+  WriteLn(Items[1].Qty + Items[2].Qty);
+end.
+</code></pre>
+<p>The expected output is 9. Val writes a nonzero error position into Code for invalid characters. Quantity is stored only after parsing succeeds. The array has <strong>two</strong> valid indices, 1 and 2. {$R+} enables runtime range checks in Free Pascal; a deliberate read of Items[3] in a scratch copy should raise a range-check error instead of silently corrupting memory.</p>
+<h3>Practice and counterexamples</h3>
+<ol>
+<li>Replace '7' with '7x': check Code and ensure the program rejects the input.</li>
+<li>Introduce Qty &lt; 0 as an invalid business state and reject it independently of Val.</li>
+<li>Add a third row: update the declared array bounds <em>before</em> writing index 3.</li>
+<li>Replace the fixed array with a dynamic array and document allocation and resizing behavior. Measure whether lookup by name remains linear.</li>
+</ol>
+<h3>Evidence and portability</h3>
+<p>Record the Free Pascal version, compiler flags, source, output for valid and invalid input and observed range-check diagnostic. Bounds checking and integer-overflow checking are different features; do not infer one from the other. Reference: https://www.freepascal.org/docs-html/current/prog/progsu65.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

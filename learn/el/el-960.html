@@ -1,0 +1,64 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>RecursionError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-960.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Python RecursionError — πρώτα έλεγξε τον τερματισμό Τι συμβαίνει Κάθε αναδρομική κλήση προσθέτει frame. Χωρίς base case ή χωρίς πρόοδο προκύπτει RecursionError. Η αύξηση του…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="RecursionError — DedSec Project">
+<meta property="og:description" content="Python RecursionError — πρώτα έλεγξε τον τερματισμό Τι συμβαίνει Κάθε αναδρομική κλήση προσθέτει frame. Χωρίς base case ή χωρίς πρόοδο προκύπτει RecursionError. Η αύξηση του…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-960.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="RecursionError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RecursionError — DedSec Project">
+<meta name="twitter:description" content="Python RecursionError — πρώτα έλεγξε τον τερματισμό Τι συμβαίνει Κάθε αναδρομική κλήση προσθέτει frame. Χωρίς base case ή χωρίς πρόοδο προκύπτει RecursionError. Η αύξηση του…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="RecursionError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>RecursionError — DedSec Project</h1><p>Python RecursionError — πρώτα έλεγξε τον τερματισμό Τι συμβαίνει Κάθε αναδρομική κλήση προσθέτει frame. Χωρίς base case ή χωρίς πρόοδο προκύπτει RecursionError. Η αύξηση του…</p><section><h1>Python RecursionError — πρώτα έλεγξε τον τερματισμό</h1>
+<h2>Τι συμβαίνει</h2>
+<p>Κάθε αναδρομική κλήση προσθέτει frame. Χωρίς base case ή χωρίς πρόοδο προκύπτει RecursionError. Η αύξηση του sys.setrecursionlimit σε τεράστια τιμή μπορεί να καταρρεύσει τον interpreter· δεν διορθώνει τον αλγόριθμο.</p>
+<pre><code class="language-python">def bad_count(n):
+    return 1 + bad_count(n)  # το n δεν μειώνεται· μην το τρέξεις ως test
+</code></pre>
+<h2>Κατασκεύασε μέτρο που μειώνεται</h2>
+<p>Χρειάζεται τερματική περίπτωση και τιμή που μειώνεται αυστηρά σε κάθε βήμα.</p>
+<pre><code class="language-python">def count_down(n: int) -&gt; int:
+    if n &lt; 0:
+        raise ValueError(&quot;nonnegative input required&quot;)
+    if n == 0:
+        return 0
+    return 1 + count_down(n-1)
+
+assert count_down(4) == 4
+assert count_down(0) == 0
+</code></pre>
+<h2>Μεγάλο βάθος: προτίμησε iteration</h2>
+<p>Όταν ο αριθμός βημάτων μπορεί να είναι μεγάλος, χρησιμοποίησε loop αντί για αλλαγή interpreter limit:</p>
+<pre><code class="language-python">def iterative_count(n: int) -&gt; int:
+    if n &lt; 0: raise ValueError(&quot;negative&quot;)
+    result = 0
+    while n:
+        result += 1
+        n -= 1
+    return result
+
+assert iterative_count(20000) == 20000
+</code></pre>
+<p><strong>Άσκηση:</strong> σχεδίασε τα frames για count_down(3), βρες invariant και έλεγξε αρνητική είσοδο. Πηγή: https://docs.python.org/3/library/exceptions.html#RecursionError</p>
+<h2>Βάθος, κύκλοι και εναλλακτικός αλγόριθμος</h2>
+<p>Το <code>RecursionError</code> δεν σημαίνει πάντοτε «λάθος όριο της Python». Μπορεί να υπάρχει κυκλική αναφορά στο γράφημα: <code>A → B → A</code> αναγκάζει έναν αφελή recursive walker να επισκέπτεται τα ίδια στοιχεία για πάντα. Δοκίμασε χωριστά μια αλυσίδα 20.000 κόμβων, ένα γράφημα με κύκλο και πολλά αδέλφια σε μικρό βάθος. Μια iterative λύση με δική της <code>stack</code> αντιμετωπίζει το μεγάλο βάθος, αλλά στον κύκλο χρειάζεται επιπλέον <code>visited</code> set. Το υπερβολικό <code>sys.setrecursionlimit</code> δεν διορθώνει τον κύκλο και μπορεί να καταλήξει σε native stack overflow.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

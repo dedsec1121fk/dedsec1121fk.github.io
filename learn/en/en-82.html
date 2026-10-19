@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python syntax, indentation and mixed-tabs diagnostics — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-82.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Python syntax, indentation and mixed-tabs diagnostics SyntaxError What fails and when A SyntaxError means Python could not parse source into a program. The indicated line is where parsing…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Python syntax, indentation and mixed-tabs diagnostics — DedSec Project">
+<meta property="og:description" content="Python syntax, indentation and mixed-tabs diagnostics SyntaxError What fails and when A SyntaxError means Python could not parse source into a program. The indicated line is where parsing…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-82.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Python syntax, indentation and mixed-tabs diagnostics — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Python syntax, indentation and mixed-tabs diagnostics — DedSec Project">
+<meta name="twitter:description" content="Python syntax, indentation and mixed-tabs diagnostics SyntaxError What fails and when A SyntaxError means Python could not parse source into a program. The indicated line is where parsing…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Python syntax, indentation and mixed-tabs diagnostics — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Python syntax, indentation and mixed-tabs diagnostics — DedSec Project</h1><p>Python syntax, indentation and mixed-tabs diagnostics SyntaxError What fails and when A SyntaxError means Python could not parse source into a program. The indicated line is where parsing…</p><section><h2>SyntaxError</h2>
+<h3>What fails and when</h3>
+<p>A SyntaxError means Python could not parse source into a program. The indicated line is where parsing failed, not always where the mistake began. Missing closing delimiters, colons, malformed f-strings and invalid assignment targets can shift the reported location. Separate parser errors from NameError or TypeError: the latter happen only after the file parses.</p>
+<h3>Self-contained executable example</h3>
+<p>Save this as 001_SyntaxError.py and run <code>python3 001_SyntaxError.py</code>. The example checks both the error and a valid case.</p>
+<pre><code class="language-python">bad = &quot;total = (10 +\n 20\nprint(total)&quot;
+try:
+    compile(bad, &quot;&lt;lesson&gt;&quot;, &quot;exec&quot;)
+except SyntaxError as exc:
+    print(type(exc).__name__, exc.lineno)
+    assert exc.lineno is not None
+else:
+    raise AssertionError(&quot;invalid source parsed&quot;)
+good = &quot;total = (10 + 20)\nprint(total)&quot;
+exec(compile(good, &quot;&lt;lesson&gt;&quot;, &quot;exec&quot;))  # 30
+</code></pre>
+<h3>Diagnostic sequence and safe repair</h3>
+<p>Use python3 -m py_compile file.py for a syntax-only check before running side effects. Examine the offending line and preceding delimiter stack. On generated code, print repr(source) to reveal hidden newlines; do not fix by blindly deleting punctuation. The deliberately invalid sample is contained in a string, so the surrounding test remains executable.</p>
+<h3>Practical lab and boundary test</h3>
+<p>Change the invalid source to omit a colon after an if statement. Record exc.msg, exc.lineno and exc.offset; then repair it. A regression test should assert compilation succeeds, not only that the text contains a colon.</p>
+<h2>IndentationError</h2>
+<h3>What fails and when</h3>
+<p>Indentation is part of Python's grammar. An unexpected indent adds a block where none is permitted; an expected-indented-block error means a compound statement has no suite. The fix depends on the logical structure, not on automatically adding four spaces to every line.</p>
+<h3>Self-contained executable example</h3>
+<p>Save this as 002_IndentationError.py and run <code>python3 002_IndentationError.py</code>. The example checks both the error and a valid case.</p>
+<pre><code class="language-python">broken = &quot;def total(values):\nreturn sum(values)&quot;
+try:
+    compile(broken, &quot;&lt;indent-case&gt;&quot;, &quot;exec&quot;)
+except IndentationError as exc:
+    print(type(exc).__name__, exc.lineno)
+else:
+    raise AssertionError(&quot;bad indentation accepted&quot;)
+def total(values):
+    if not values:
+        return 0
+    return sum(values)
+assert total([2, 3]) == 5
+assert total([]) == 0
+</code></pre>
+<h3>Diagnostic sequence and safe repair</h3>
+<p>In the editor, display whitespace characters and inspect the whole surrounding if/else, try/except or def suite. A visually aligned line can still carry tabs. Run python3 -m tabnanny path/to/package to detect ambiguous indentation, then format a small reviewed scope. Avoid replacing all whitespace in generated code without diff review.</p>
+<h3>Practical lab and boundary test</h3>
+<p>Add an else branch that returns -1 for negative-only input. Intentionally unindent its body, capture the compile failure, then assert all three cases. Explain why a pass statement is syntactically valid but not a substitute for intended behavior.</p>
+<h2>TabError</h2>
+<h3>Why this error is different</h3>
+<p>A file can appear aligned while its indentation uses different characters. Python expands tabs using tab stops, and a mixture can make the block structure depend on interpretation. TabError is a subclass of IndentationError, but it specifically flags inconsistent use of tabs and spaces.</p>
+<h3>Reproduce safely</h3>
+<p>Create broken.py with the following shell commands; the second line of the function begins with a literal tab:</p>
+<pre><code class="language-sh">printf 'def greet():\n\tprint(&quot;hello&quot;)\n    print(&quot;again&quot;)\ngreet()\n' &gt; broken.py
+python -m py_compile broken.py
+</code></pre>
+<p>Expect TabError: inconsistent use of tabs and spaces in indentation. Use sed -n 'l' broken.py on systems with sed to expose the tab as \t; alternatively inspect repr(open(&quot;broken.py&quot;).read()) in Python.</p>
+<h3>Repair and verification</h3>
+<pre><code class="language-python">def greet():
+    print(&quot;hello&quot;)
+    print(&quot;again&quot;)
+
+greet()
+</code></pre>
+<p>Run python -m py_compile fixed.py and python fixed.py. The output is two lines. Change indentation only in the affected block, keeping intended nesting. An editor's &quot;convert indentation to spaces&quot; command is useful after you inspect the diff, but blind replacement can alter nested control flow.</p>
+<h3>Lab</h3>
+<p>Insert a tab before one nested statement and spaces before another. Compare editor display at tab widths 4 and 8. Add a pre-commit check with python -m tabnanny for source directories, and configure the editor to insert spaces when Tab is pressed. Note that a tab in a string literal is data, not indentation: do not globally delete every tab from all files.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

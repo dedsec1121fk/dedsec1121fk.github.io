@@ -1,0 +1,69 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQL, παράμετροι και συναλλαγές — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-52.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="SQLite — δεσμευμένες παράμετροι, αναίρεση και σχέδιο αναζήτησης Σενάριο και κριτήρια επιτυχίας Μία τοπική βάση σημειώσεων έχει εγγραφές και ετικέτες που αναφέρονται σε υπαρκτές σημειώσεις…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SQL, παράμετροι και συναλλαγές — DedSec Project">
+<meta property="og:description" content="SQLite — δεσμευμένες παράμετροι, αναίρεση και σχέδιο αναζήτησης Σενάριο και κριτήρια επιτυχίας Μία τοπική βάση σημειώσεων έχει εγγραφές και ετικέτες που αναφέρονται σε υπαρκτές σημειώσεις…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-52.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SQL, παράμετροι και συναλλαγές — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL, παράμετροι και συναλλαγές — DedSec Project">
+<meta name="twitter:description" content="SQLite — δεσμευμένες παράμετροι, αναίρεση και σχέδιο αναζήτησης Σενάριο και κριτήρια επιτυχίας Μία τοπική βάση σημειώσεων έχει εγγραφές και ετικέτες που αναφέρονται σε υπαρκτές σημειώσεις…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SQL, παράμετροι και συναλλαγές — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>SQL, παράμετροι και συναλλαγές — DedSec Project</h1><p>SQLite — δεσμευμένες παράμετροι, αναίρεση και σχέδιο αναζήτησης Σενάριο και κριτήρια επιτυχίας Μία τοπική βάση σημειώσεων έχει εγγραφές και ετικέτες που αναφέρονται σε υπαρκτές σημειώσεις…</p><section><h1>SQLite — δεσμευμένες παράμετροι, αναίρεση και σχέδιο αναζήτησης</h1>
+<h2>Σενάριο και κριτήρια επιτυχίας</h2>
+<p>Μία τοπική βάση σημειώσεων έχει εγγραφές και ετικέτες που αναφέρονται σε υπαρκτές σημειώσεις. Όταν μία συναλλαγή προσθέτει σημείωση και μετά επιχειρεί ετικέτα με ανύπαρκτο αναγνωριστικό, δεν πρέπει να παραμένει η πρώτη προσθήκη. Οι τίτλοι περνούν ως δεσμευμένες τιμές, όχι ως κείμενο εντολής SQL. Ακόμη και κείμενο που μοιάζει με επίθεση πρέπει να αντιμετωπίζεται ως απλή τιμή.</p>
+<h2>Εκτελέσιμο εργαστήριο — ενσωματωμένη βιβλιοθήκη Python 3</h2>
+<p>Αποθήκευσε τον κώδικα ως <code>07_sql.py</code> και εκτέλεσέ τον με Python 3. Χρησιμοποιεί μόνο τεχνητά δεδομένα και εμφανίζει PASS αν περάσουν οι έλεγχοι. Ο κώδικας είναι ίδιος και στις δύο γλωσσικές εκδόσεις.</p>
+<pre><code class="language-python">import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;PRAGMA foreign_keys=ON&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE note(id INTEGER PRIMARY KEY, title TEXT NOT NULL);
+CREATE TABLE label(id INTEGER PRIMARY KEY, note_id INTEGER NOT NULL
+  REFERENCES note(id), name TEXT NOT NULL);
+&quot;&quot;&quot;)
+with db:
+    db.execute(&quot;INSERT INTO note VALUES (?, ?)&quot;, (1, &quot;first&quot;))
+before = db.execute(&quot;SELECT count(*) FROM note&quot;).fetchone()[0]
+try:
+    with db:
+        db.execute(&quot;INSERT INTO note VALUES (?, ?)&quot;, (2, &quot;temporary&quot;))
+        db.execute(&quot;INSERT INTO label VALUES (?, ?, ?)&quot;, (8, 99, &quot;bad&quot;))
+except sqlite3.IntegrityError:
+    pass
+assert db.execute(&quot;SELECT count(*) FROM note&quot;).fetchone()[0] == before
+attack = &quot;' OR 1=1 --&quot;
+assert db.execute(&quot;SELECT count(*) FROM note WHERE title=?&quot;, (attack,)).fetchone()[0] == 0
+db.execute(&quot;CREATE INDEX note_title_idx ON note(title)&quot;)
+plan = db.execute(&quot;EXPLAIN QUERY PLAN SELECT * FROM note WHERE title=?&quot;, (&quot;first&quot;,)).fetchall()
+assert any(&quot;note_title_idx&quot; in row[3] for row in plan)
+assert db.execute(&quot;PRAGMA foreign_keys&quot;).fetchone()[0] == 1
+db.close()
+print(&quot;PASS sqlite transaction and bindings&quot;)
+</code></pre>
+<h2>Τεχνική εξήγηση</h2>
+<p>Τα ερωτηματικά των παραμέτρων διαχωρίζουν τη σύνταξη SQL από τις τιμές χρήστη. Στην SQLite ενεργοποιούμε τους περιορισμούς ξένων κλειδιών σε κάθε σύνδεση και τους εξετάζουμε με PRAGMA foreign_keys. Η συναλλαγή διατηρεί τις σχετικές αλλαγές ως σύνολο: αν η δεύτερη εγγραφή αποτύχει με IntegrityError, αναιρείται και η πρώτη. Ένα ευρετήριο μπορεί να επιταχύνει την ισότητα τίτλων, αλλά αυξάνει το κόστος ενημέρωσης· το EXPLAIN QUERY PLAN δείχνει την επιλεγμένη διαδρομή.</p>
+<h2>Περιορισμένες ασκήσεις</h2>
+<p>Δοκίμασε προσωρινά βάση με ενεργά και ανενεργά foreign keys και σύγκρινε τον αριθμό εγγραφών. Πρόσθεσε έγκυρη ετικέτα και μετά μία με άγνωστο note_id. Σύγκρινε νοητικά τη δέσμευση <code>?</code> με επικίνδυνη σύνθεση συμβολοσειρών, χωρίς να εκτελέσεις μη ασφαλές ερώτημα. Με δύο συνδέσεις παρατήρησε πότε γίνονται ορατές οι αλλαγές.</p>
+<h2>Διάγνωση και τεκμήρια επιτυχίας</h2>
+<p>Αν περάσει άκυρη αναφορά, έλεγξε την τιμή PRAGMA foreign_keys στην ίδια σύνδεση. Αν η αναζήτηση αργεί, εξέτασε το σχέδιο και το πλήθος γραμμών, όχι μόνο μία μέτρηση. Σε σύγκρουση εγγραφής χειρίσου ρητά SQLITE_BUSY με περιορισμένη αναμονή.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

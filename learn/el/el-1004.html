@@ -1,0 +1,59 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS0029 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1004.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="CS0029 — Δεν επιτρέπεται αυτόματη μετατροπή τύπων Περιβάλλον: στατικός έλεγχος τύπων στη C . Κατανόηση του σφάλματος Το CS0029 εμφανίζεται όταν ο τύπος μιας έκφρασης δεν μπορεί να ανατεθεί…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="CS0029 — DedSec Project">
+<meta property="og:description" content="CS0029 — Δεν επιτρέπεται αυτόματη μετατροπή τύπων Περιβάλλον: στατικός έλεγχος τύπων στη C . Κατανόηση του σφάλματος Το CS0029 εμφανίζεται όταν ο τύπος μιας έκφρασης δεν μπορεί να ανατεθεί…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1004.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CS0029 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CS0029 — DedSec Project">
+<meta name="twitter:description" content="CS0029 — Δεν επιτρέπεται αυτόματη μετατροπή τύπων Περιβάλλον: στατικός έλεγχος τύπων στη C . Κατανόηση του σφάλματος Το CS0029 εμφανίζεται όταν ο τύπος μιας έκφρασης δεν μπορεί να ανατεθεί…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="CS0029 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>CS0029 — DedSec Project</h1><p>CS0029 — Δεν επιτρέπεται αυτόματη μετατροπή τύπων Περιβάλλον: στατικός έλεγχος τύπων στη C . Κατανόηση του σφάλματος Το CS0029 εμφανίζεται όταν ο τύπος μιας έκφρασης δεν μπορεί να ανατεθεί…</p><section><h1>CS0029 — Δεν επιτρέπεται αυτόματη μετατροπή τύπων</h1>
+<p><strong>Περιβάλλον:</strong> στατικός έλεγχος τύπων στη C#.</p>
+<h2>Κατανόηση του σφάλματος</h2>
+<p>Το CS0029 εμφανίζεται όταν ο τύπος μιας έκφρασης δεν μπορεί να ανατεθεί αυτόματα στον τύπο προορισμού. Η C# δεν μετατρέπει μια συμβολοσειρά σε <code>int</code> επειδή περιέχει ψηφία. Άλλες μετατροπές απαγορεύονται επειδή ενδέχεται να χαθεί εύρος ή ακρίβεια. Η λύση εξαρτάται από το τι σημαίνουν τα δεδομένα.</p>
+<h2>Αναπαραγωγή και σωστή αντιμετώπιση</h2>
+<pre><code class="language-csharp">// int quantity = &quot;42&quot;; // CS0029: string προς int
+</code></pre>
+<p>Χειρίσου την είσοδο ως κείμενο και κάνε ασφαλή μετατροπή:</p>
+<pre><code class="language-csharp">using System;
+string input = &quot;42&quot;;
+if (!int.TryParse(input, out int quantity)) {
+    Console.Error.WriteLine(&quot;Not a valid whole number&quot;);
+    return;
+}
+Console.WriteLine(quantity + 1);
+</code></pre>
+<p><strong>Αναμενόμενη έξοδος:</strong> <code>43</code>, σε σύγχρονο project με top-level statements. Με <code>&quot;42x&quot;</code> πρέπει να εκτελεστεί ο κλάδος ελέγχου αντί να προκύψει ανεξέλεγκτο exception.</p>
+<h2>Άλλο θέμα: αριθμητικοί τύποι</h2>
+<p>Η εντολή <code>int small = 3000000000L;</code> δεν μεταγλωττίζεται, επειδή ο αριθμός δεν χωρά σε <code>int</code>. Ένα explicit cast μπορεί να χάσει πληροφορία ή να αποτύχει σε <code>checked</code> context. Αν το πραγματικό πεδίο δεδομένων απαιτεί μεγάλες τιμές, διατήρησε <code>long</code>. Για nullable τιμές, καθόρισε τι σημαίνει <code>null</code> πριν κάνεις unwrap.</p>
+<h2>Οδηγός διόρθωσης</h2>
+<ol>
+<li>Εντόπισε τον πραγματικό τύπο της έκφρασης και του προορισμού.</li>
+<li>Αποφάσισε αν απαιτείται parsing, ελεγμένο cast, αλλαγή τύπου ή αντιστοίχιση δεδομένων.</li>
+<li>Δοκίμασε έγκυρες, κενές, μη αριθμητικές και εκτός εύρους τιμές.</li>
+<li>Μην αποκρύπτεις κάθε αποτυχία εισόδου αντικαθιστώντας τη με μηδέν.</li>
+<li>Επανέλαβε το build και πρόσθεσε δοκιμή για το αρχικό περιστατικό.</li>
+</ol>
+<p>Το <code>(int)&quot;42&quot;</code> <strong>δεν</strong> είναι επιτρεπτό cast από string σε int. Η σωστή λειτουργία για κείμενο είναι το parsing.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

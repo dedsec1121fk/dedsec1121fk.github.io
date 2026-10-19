@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Build a simple manifest — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1042.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Recipe: bounded ZIP manifest without extracting to disk Intended use and acceptance criteria Before extracting an offline learning pack, inspect its members and produce a stable manifest of…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Build a simple manifest — DedSec Project">
+<meta property="og:description" content="Recipe: bounded ZIP manifest without extracting to disk Intended use and acceptance criteria Before extracting an offline learning pack, inspect its members and produce a stable manifest of…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1042.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Build a simple manifest — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Build a simple manifest — DedSec Project">
+<meta name="twitter:description" content="Recipe: bounded ZIP manifest without extracting to disk Intended use and acceptance criteria Before extracting an offline learning pack, inspect its members and produce a stable manifest of…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Build a simple manifest — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Build a simple manifest — DedSec Project</h1><p>Recipe: bounded ZIP manifest without extracting to disk Intended use and acceptance criteria Before extracting an offline learning pack, inspect its members and produce a stable manifest of…</p><section><h1>Recipe: bounded ZIP manifest without extracting to disk</h1>
+<h2>Intended use and acceptance criteria</h2>
+<p>Before extracting an offline learning pack, inspect its members and produce a stable manifest of name, uncompressed byte count and SHA-256. Reject duplicate member names, absolute or parent paths and archive content above a small predefined total. The fixture is created entirely in memory and no untrusted file is written onto disk.</p>
+<h2>Complete runnable example</h2>
+<p>Save this as <code>09_Archive_manifest.py</code> and execute with Python 3. The fixture is disposable and has no network dependency.</p>
+<pre><code class="language-python">import hashlib, io, zipfile
+def manifest(zip_bytes, total_limit=2048):
+    entries, seen, total = [], set(), 0
+    with zipfile.ZipFile(io.BytesIO(zip_bytes)) as archive:
+        for entry in archive.infolist():
+            name = entry.filename
+            if (name in seen or name.startswith(&quot;/&quot;) or &quot;\\&quot; in name or
+                    any(x in (&quot;&quot;, &quot;.&quot;, &quot;..&quot;) for x in name.split(&quot;/&quot;))):
+                raise ValueError(&quot;unsafe or duplicate member&quot;)
+            seen.add(name)
+            total += entry.file_size
+            if total &gt; total_limit or entry.file_size &gt; total_limit:
+                raise ValueError(&quot;archive content over limit&quot;)
+            data = archive.read(entry)
+            entries.append((name,len(data),hashlib.sha256(data).hexdigest()))
+    return sorted(entries)
+buffer = io.BytesIO()
+with zipfile.ZipFile(buffer,&quot;w&quot;,zipfile.ZIP_STORED) as out:
+    out.writestr(&quot;docs/a.txt&quot;,b&quot;alpha&quot;)
+    out.writestr(&quot;assets/icon.txt&quot;,b&quot;icon&quot;)
+items = manifest(buffer.getvalue())
+assert [x[0] for x in items] == [&quot;assets/icon.txt&quot;,&quot;docs/a.txt&quot;]
+assert items[1][1] == 5
+try: manifest(buffer.getvalue(),3)
+except ValueError: pass
+else: raise AssertionError(&quot;archive limit ignored&quot;)
+print(&quot;PASS bounded ZIP manifest&quot;)
+</code></pre>
+<h2>Guarantees and limitations</h2>
+<p>ZipInfo.file_size provides declared uncompressed size. The example also checks actual bytes read and hashes each file, but it deliberately remains limited to tiny archives. A malicious ZIP may include symlinks encoded in metadata, unsupported compression, deceptive encoding or extreme compression ratios; safe extraction needs additional checks and strict streaming decompression caps. Member names should be validated before creating any output file.</p>
+<h2>Adaptation lab</h2>
+<p>Add a third valid member and check deterministic manifest ordering. Insert a <code>../outside.txt</code> member and prove the tool rejects it. Test repeated member names, a directory entry, an archive above the total limit and an invalid ZIP. Distinguish inspecting ZIP metadata from proving extracted files are safe to open or execute.</p>
+<h2>Troubleshooting and release check</h2>
+<p>If a member is rejected, display its escaped name, not a normalized guess at its intended path. A ZIP that looks small on disk may expand dramatically; cap total uncompressed bytes and member counts. Do not call extractall on untrusted input without a separate extraction security review.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

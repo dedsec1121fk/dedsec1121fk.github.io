@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>E0382 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-124.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Rust E0382 — trying to use a value after a move See the owner change An owned String is generally moved when passed by value. The previous binding no longer owns a valid String and must not…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="E0382 — DedSec Project">
+<meta property="og:description" content="Rust E0382 — trying to use a value after a move See the owner change An owned String is generally moved when passed by value. The previous binding no longer owns a valid String and must not…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-124.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="E0382 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="E0382 — DedSec Project">
+<meta name="twitter:description" content="Rust E0382 — trying to use a value after a move See the owner change An owned String is generally moved when passed by value. The previous binding no longer owns a valid String and must not…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="E0382 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>E0382 — DedSec Project</h1><p>Rust E0382 — trying to use a value after a move See the owner change An owned String is generally moved when passed by value. The previous binding no longer owns a valid String and must not…</p><section><h1>Rust E0382 — trying to use a value after a move</h1>
+<h2>See the owner change</h2>
+<p>An owned String is generally moved when passed by value. The previous binding no longer owns a valid String and must not be used. This compile-time check prevents use-after-move.</p>
+<pre><code class="language-rust">fn consume(text: String) -&gt; usize { text.len() }
+
+fn main() {
+    let message = String::from(&quot;hello&quot;);
+    // let size = consume(message); println!(&quot;{}&quot;, message); // E0382
+    let size = consume(message.clone());
+    assert_eq!(size, 5);
+    assert_eq!(message, &quot;hello&quot;);
+}
+</code></pre>
+<h2>Decide whether copying is actually necessary</h2>
+<p>Clone allocates another String. When the function only reads text, borrow a slice instead:</p>
+<pre><code class="language-rust">fn measure(text: &amp;str) -&gt; usize { text.len() }
+
+fn check() {
+    let original = String::from(&quot;hello&quot;);
+    assert_eq!(measure(&amp;original), 5);
+    assert_eq!(original, &quot;hello&quot;);
+}
+</code></pre>
+<h2>Lab and counterexample</h2>
+<p>Deliberately uncomment the moved-value sequence and run cargo check to observe E0382. Compare a String with an integer i32, which implements Copy. Draw a small ownership map after each statement. If the callee must own the data, redesign how the result or the data flows back; cloning everything can hide unnecessary memory costs.</p>
+<p>Reference: https://doc.rust-lang.org/error_codes/E0382.html</p>
+<h2>Check bytes versus ownership, not just compilation</h2>
+<p>Make the borrowed version accept <code>&amp;str</code> and call it twice with the same <code>String</code>; neither call consumes the owner. Use a string such as <code>&quot;é&quot;</code> and compare <code>.len()</code> (UTF-8 bytes) with <code>.chars().count()</code> (Unicode scalar values). This catches a separate semantic bug that the borrow checker cannot catch. A <code>String</code> is not <code>Copy</code>, while <code>i32</code> is; don't infer ownership moves from the appearance of assignments alone. For a queue that must <em>retain</em> ownership of a submitted message, moving may be the desired API contract. Show the compiler error with a failing fixture, then test borrowing and deliberate cloning as distinct fixes.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

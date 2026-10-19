@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-317.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP Process a Stream in Batches A generator groups input lazily into bounded batches. It improves memory use when you do not need the…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP — DedSec Project">
+<meta property="og:description" content="Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP Process a Stream in Batches A generator groups input lazily into bounded batches. It improves memory use when you do not need the…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-317.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP — DedSec Project">
+<meta name="twitter:description" content="Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP Process a Stream in Batches A generator groups input lazily into bounded batches. It improves memory use when you do not need the…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP — DedSec Project</h1><p>Practical script labs: streams, ZIP, APIs, UTF-8 and HTTP Process a Stream in Batches A generator groups input lazily into bounded batches. It improves memory use when you do not need the…</p><section><h2>Process a Stream in Batches</h2>
+<p>A generator groups input lazily into bounded batches. It improves memory use when you do not need the full dataset at once, but partial final batches still need explicit handling.</p>
+<p>Test empty input, fewer items than the batch limit, exactly one full batch and a trailing partial batch. Invalid zero or negative batch sizes should fail promptly.</p>
+<p><strong>Working source:</strong> <code>14_batched_generator.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+<h2>Merge Two Sorted Streams</h2>
+<p>Merge already ordered sequences by comparing their current items; this produces a sorted result without re-sorting the combined dataset. Assumes both sources obey the same ordering rule.</p>
+<p>Test duplicate values, one empty stream and differently sized inputs. If an input is unsorted, validate it or document that the output is undefined.</p>
+<p><strong>Working source:</strong> <code>15_merge_sorted.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+<h2>Create a Reproducible Backup Manifest</h2>
+<p>A manifest should record normalized relative paths, sizes and hashes; it must never silently follow links outside the backup root. Keep metadata separate from the copied files.</p>
+<p>Test two files with the same basename in different folders, a filename containing spaces, unchanged reruns and a file that changes during hashing.</p>
+<p><strong>Working source:</strong> <code>16_backup_manifest.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+<h2>Inspect ZIP Contents Before Extraction</h2>
+<p>List archive members without extracting untrusted content. Normalize member names and flag absolute paths and parent traversal that could escape a destination during extraction.</p>
+<p>Test ../ payloads, Windows-style separators, nested folders and duplicate member names. A safe preview does not by itself guarantee that later extraction is safe.</p>
+<p><strong>Working source:</strong> <code>17_zip_preview.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+<h2>Classify HTTP/API Failures</h2>
+<p>Differentiate authentication, validation, rate limiting, server failures and network timeouts. Let callers react appropriately instead of treating every non-200 response as retryable.</p>
+<p>Test 400 and 401 as non-transient, 429 with a retry hint and 503 as possibly transient. Avoid logging tokens, raw credentials or sensitive response bodies.</p>
+<p><strong>Working source:</strong> <code>19_api_errors.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+<h2>Round-Trip UTF-8 Correctly</h2>
+<p>Encode Unicode text into bytes and decode it using the same character encoding. UTF-8 preserves text when the byte sequence is valid, but it does not preserve the original Unicode normalization form automatically.</p>
+<p>Test Greek accents, emoji, combining marks, invalid byte sequences and newline translations. Specify whether errors are strict, replaced or ignored.</p>
+<p><strong>Working source:</strong> <code>21_utf8_roundtrip.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+<h2>Use a Sliding Window for Sequences</h2>
+<p>Maintain an invariant while advancing a bounded window over an ordered sequence. Sliding-window methods often reduce repeated work but apply only when the chosen invariant supports incremental updates.</p>
+<p>Test empty input, a window larger than the sequence, duplicate elements and boundary lengths. State whether indices are inclusive or exclusive.</p>
+<p><strong>Working source:</strong> <code>22_sliding_window.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+<h2>Parse a Minimal HTTP Request Safely</h2>
+<p>A teaching parser can split a request line and headers under strict size limits, but real HTTP parsing has many edge cases; do not deploy a toy parser as an Internet-facing security boundary.</p>
+<p>Test malformed request lines, duplicate headers, CRLF handling, overly long fields and header/body separator ambiguity. Reject invalid input rather than guessing the sender's intent.</p>
+<p><strong>Working source:</strong> <code>24_simple_http_parse.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

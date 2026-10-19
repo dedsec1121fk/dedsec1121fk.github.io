@@ -1,0 +1,64 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Νήματα, διεργασίες και ασύγχρονη εκτέλεση — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-54.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Ασύγχρονη εκτέλεση — χαμένες ενημερώσεις και σωστό κλείδωμα Σενάριο και κριτήρια επιτυχίας Πενήντα ασύγχρονες εργασίες αυξάνουν έναν κοινό μετρητή κατά ένα. Το σωστό αποτέλεσμα είναι 50…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Νήματα, διεργασίες και ασύγχρονη εκτέλεση — DedSec Project">
+<meta property="og:description" content="Ασύγχρονη εκτέλεση — χαμένες ενημερώσεις και σωστό κλείδωμα Σενάριο και κριτήρια επιτυχίας Πενήντα ασύγχρονες εργασίες αυξάνουν έναν κοινό μετρητή κατά ένα. Το σωστό αποτέλεσμα είναι 50…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-54.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Νήματα, διεργασίες και ασύγχρονη εκτέλεση — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Νήματα, διεργασίες και ασύγχρονη εκτέλεση — DedSec Project">
+<meta name="twitter:description" content="Ασύγχρονη εκτέλεση — χαμένες ενημερώσεις και σωστό κλείδωμα Σενάριο και κριτήρια επιτυχίας Πενήντα ασύγχρονες εργασίες αυξάνουν έναν κοινό μετρητή κατά ένα. Το σωστό αποτέλεσμα είναι 50…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Νήματα, διεργασίες και ασύγχρονη εκτέλεση — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Νήματα, διεργασίες και ασύγχρονη εκτέλεση — DedSec Project</h1><p>Ασύγχρονη εκτέλεση — χαμένες ενημερώσεις και σωστό κλείδωμα Σενάριο και κριτήρια επιτυχίας Πενήντα ασύγχρονες εργασίες αυξάνουν έναν κοινό μετρητή κατά ένα. Το σωστό αποτέλεσμα είναι 50…</p><section><h1>Ασύγχρονη εκτέλεση — χαμένες ενημερώσεις και σωστό κλείδωμα</h1>
+<h2>Σενάριο και κριτήρια επιτυχίας</h2>
+<p>Πενήντα ασύγχρονες εργασίες αυξάνουν έναν κοινό μετρητή κατά ένα. Το σωστό αποτέλεσμα είναι 50, αλλά όταν η διαδικασία ανάγνωσης, αναμονής και εγγραφής διακόπτεται στη μέση, πολλές εργασίες χρησιμοποιούν την ίδια παλιά τιμή. Το πρόγραμμα αναπαράγει σκόπιμα το σφάλμα και στη συνέχεια προστατεύει ολόκληρη τη μεταβολή με asyncio.Lock. Χρησιμοποιεί έναν βρόχο συμβάντων, όχι ξεχωριστά νήματα λειτουργικού συστήματος.</p>
+<h2>Εκτελέσιμο εργαστήριο — ενσωματωμένη βιβλιοθήκη Python 3</h2>
+<p>Αποθήκευσε τον κώδικα ως <code>09_concurrency.py</code> και εκτέλεσέ τον με Python 3. Χρησιμοποιεί μόνο τεχνητά δεδομένα και εμφανίζει PASS αν περάσουν οι έλεγχοι. Ο κώδικας είναι ίδιος και στις δύο γλωσσικές εκδόσεις.</p>
+<pre><code class="language-python">import asyncio
+async def unsafe():
+    state = {&quot;value&quot;: 0}
+    async def job():
+        before = state[&quot;value&quot;]
+        await asyncio.sleep(0)
+        state[&quot;value&quot;] = before + 1
+    await asyncio.gather(*(job() for _ in range(50)))
+    return state[&quot;value&quot;]
+async def safe():
+    state, lock = {&quot;value&quot;: 0}, asyncio.Lock()
+    async def job():
+        async with lock:
+            before = state[&quot;value&quot;]
+            await asyncio.sleep(0)
+            state[&quot;value&quot;] = before + 1
+    await asyncio.gather(*(job() for _ in range(50)))
+    return state[&quot;value&quot;]
+assert asyncio.run(unsafe()) == 1
+assert asyncio.run(safe()) == 50
+print(&quot;PASS async lock and deterministic lost update&quot;)
+</code></pre>
+<h2>Τεχνική εξήγηση</h2>
+<p>Οι ταυτόχρονες εργασίες μπορούν να εναλλάσσονται χωρίς να εκτελούνται παράλληλα σε διαφορετικούς πυρήνες. Η await επιτρέπει σε άλλες εργασίες να προχωρήσουν. Αν πολλές διαβάσουν την ίδια παλιά τιμή, το κλείδωμα μόνο της τελικής ανάθεσης είναι πολύ αργά. Το κλείδωμα πρέπει να καλύπτει ανάγνωση, υπολογισμό και εγγραφή. Προστατεύει μόνο τις εργασίες που χρησιμοποιούν το ίδιο αντικείμενο κλειδώματος· δεν συγχρονίζει αυτόματα άλλες διεργασίες ή εγγραφές σε δίσκο.</p>
+<h2>Περιορισμένες ασκήσεις</h2>
+<p>Μετέφερε το κλείδωμα ώστε να καλύπτει μόνο την ανάθεση και έλεγξε αν ξαναεμφανίζεται η απώλεια. Αύξησε τις εργασίες σε 1000 και μέτρησε την ορθότητα. Ακύρωσε μία εργασία ενώ περιμένει κλείδωμα και έλεγξε ότι το async with δεν το αφήνει δεσμευμένο. Όταν τα δεδομένα αποθηκεύονται σε SQLite, χρησιμοποίησε συναλλαγές βάσης αντί για σκέτο κλείδωμα Python.</p>
+<h2>Διάγνωση και τεκμήρια επιτυχίας</h2>
+<p>Αν μία εργασία φαίνεται κολλημένη, βρες πού περιμένει και αν κρατά κλείδωμα ενώ εκτελεί άσχετη αναμονή. Μην χρησιμοποιείς time.sleep μέσα στον βρόχο συμβάντων. Το παράδειγμα αφορά αναμονές asyncio, όχι αυτόματα τον ίδιο μηχανισμό για νήματα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

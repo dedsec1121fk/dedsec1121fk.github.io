@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Binary record framing and truncated input — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/fieldnotes-en-51.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Binary record framing and truncated input Mechanism and contract A byte stream has no inherent application records. A length-prefixed format can identify each payload, but the parser must…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Binary record framing and truncated input — DedSec Project">
+<meta property="og:description" content="Binary record framing and truncated input Mechanism and contract A byte stream has no inherent application records. A length-prefixed format can identify each payload, but the parser must…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/fieldnotes-en-51.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Binary record framing and truncated input — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Binary record framing and truncated input — DedSec Project">
+<meta name="twitter:description" content="Binary record framing and truncated input Mechanism and contract A byte stream has no inherent application records. A length-prefixed format can identify each payload, but the parser must…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Binary record framing and truncated input — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Binary record framing and truncated input — DedSec Project</h1><p>Binary record framing and truncated input Mechanism and contract A byte stream has no inherent application records. A length-prefixed format can identify each payload, but the parser must…</p><section><h2>Mechanism and contract</h2>
+<p>A byte stream has no inherent application records. A length-prefixed format can identify each payload, but the parser must validate the prefix before allocating or reading the body. Specify prefix width, byte order, maximum payload length and behavior at end of input. A four-byte unsigned length can describe a body much larger than a small device can safely retain.</p>
+<p>Keep “need more bytes” distinct from “invalid frame” and “clean end of stream.” A partial header at final input is truncated data, not an empty successful record. A partial payload must not advance the public record cursor as if processing finished. The fixture uses a deliberately tiny maximum so oversize rejection is observable without allocating large memory.</p>
+<h2>Worked local example</h2>
+<pre><code class="language-python">import struct
+
+def parse_one(raw, limit=16):
+    if len(raw) &lt; 4:
+        raise ValueError(&quot;truncated header&quot;)
+    size = struct.unpack(&quot;!I&quot;, raw[:4])[0]
+    if size &gt; limit:
+        raise ValueError(&quot;oversized frame&quot;)
+    if len(raw) != 4 + size:
+        raise ValueError(&quot;truncated body or trailing bytes&quot;)
+    return raw[4:]
+assert parse_one(struct.pack(&quot;!I&quot;, 3) + b&quot;abc&quot;) == b&quot;abc&quot;
+for bad in (b&quot;\x00&quot;, struct.pack(&quot;!I&quot;, 17), struct.pack(&quot;!I&quot;, 3)+b&quot;ab&quot;):
+    try:
+        parse_one(bad)
+    except ValueError:
+        continue
+    raise AssertionError(&quot;bad frame accepted&quot;)
+print(&quot;frame limits enforced&quot;)
+</code></pre>
+<h2>Failure checks and limits</h2>
+<p>This function parses exactly one complete frame. A streaming protocol needs a buffer and explicit incremental states instead of treating every short read as final failure. Test zero-length payloads, multiple frames, all split points and invalid sizes. Apply decompression limits separately when a valid small frame contains compressed content that could expand dramatically.</p>
+<h2>Primary reference</h2>
+<p><a href="https://docs.python.org/3/library/struct.html">Official documentation</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-110.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security This lab module integrates the advanced lessons into bounded projects. Every exercise uses owned systems…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security — DedSec Project">
+<meta property="og:description" content="Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security This lab module integrates the advanced lessons into bounded projects. Every exercise uses owned systems…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-110.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security — DedSec Project">
+<meta name="twitter:description" content="Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security This lab module integrates the advanced lessons into bounded projects. Every exercise uses owned systems…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security — DedSec Project</h1><p>Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security This lab module integrates the advanced lessons into bounded projects. Every exercise uses owned systems…</p><section><p>This lab module integrates the advanced lessons into bounded projects. Every exercise uses owned systems, disposable VMs/containers, localhost services, synthetic identities, or static/public artifacts. The goal is evidence and defensive understanding rather than gaining access.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>Lab architecture</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Evidence package</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Identity lab</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Web/API lab</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Linux isolation lab</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Supply-chain lab</strong> and connect it to a concrete trust boundary or security invariant.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. Lab architecture</h3>
+<p>Use snapshots, isolated networks, synthetic data, dedicated test identities, clear IP/domain allowlists, and a written objective before execution.</p>
+<h3>2. Evidence package</h3>
+<p>For each lab keep environment metadata, hypothesis, commands/configuration used, hashes, screenshots/log excerpts where useful, interpretation, cleanup, and regression result.</p>
+<h3>3. Identity lab</h3>
+<p>Build a toy identity graph with users, groups, roles, workload identities, and resource policies; detect an unintended privilege path and repair the policy.</p>
+<h3>4. Web/API lab</h3>
+<p>Create a localhost API with object-level authorization and deliberately add then fix one broken authorization test. Verify the fix with negative regression cases.</p>
+<h3>5. Linux isolation lab</h3>
+<p>Run a disposable service with reduced capabilities, filesystem permissions, and network exposure; compare before/after effective privilege.</p>
+<h3>6. Supply-chain lab</h3>
+<p>Create a source commit, local build artifact, SBOM-like dependency list, provenance record, and verification script that rejects an altered artifact digest.</p>
+<h3>7. Detection lab</h3>
+<p>Generate benign process/file/network events, verify telemetry, write a detection, tune one false positive, and retain a replay fixture.</p>
+<h3>8. Forensics lab</h3>
+<p>Build a synthetic incident timeline from prepared logs/files and produce a short evidence-based narrative with uncertainty explicitly marked.</p>
+<h2>Authorized exercises</h2>
+<h3>Exercise 1 — Complete any four integrated labs and produce one consistent report template across all of them</h3>
+<p>Complete any four integrated labs and produce one consistent report template across all of them.</p>
+<h3>Exercise 2 — For one lab, intentionally remove a telemetry source and explain what conclusions are no longer supportable</h3>
+<p>For one lab, intentionally remove a telemetry source and explain what conclusions are no longer supportable.</p>
+<h3>Exercise 3 — For one lab, change the environment version/configuration and verify whether the regression test still proves the same invariant</h3>
+<p>For one lab, change the environment version/configuration and verify whether the regression test still proves the same invariant.</p>
+<h2>Knowledge checks</h2>
+<ol>
+<li>Explain the most important trust boundary in <strong>Advanced Authorized Labs II: Systems, Identity, Cloud and Application Security</strong> without naming a security tool.</li>
+<li>Give one example where cryptographic or authentication success still does <strong>not</strong> imply authorization success.</li>
+<li>Describe one stale-state or replay condition relevant to this module.</li>
+<li>Identify one telemetry source that can support a strong conclusion and one blind spot it still leaves.</li>
+<li>Explain how you would turn a discovered weakness into a regression test rather than a one-time finding.</li>
+</ol>
+<h2>Guided study workflow</h2>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

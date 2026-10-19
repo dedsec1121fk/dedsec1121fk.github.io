@@ -1,0 +1,77 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Git repository recovery and history diagnostics — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-166.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Git repository recovery and history diagnostics fatal: refusing to merge unrelated histories Meaning and differential diagnosis Git reports unrelated histories when no commit is a common…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Git repository recovery and history diagnostics — DedSec Project">
+<meta property="og:description" content="Git repository recovery and history diagnostics fatal: refusing to merge unrelated histories Meaning and differential diagnosis Git reports unrelated histories when no commit is a common…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-166.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Git repository recovery and history diagnostics — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Git repository recovery and history diagnostics — DedSec Project">
+<meta name="twitter:description" content="Git repository recovery and history diagnostics fatal: refusing to merge unrelated histories Meaning and differential diagnosis Git reports unrelated histories when no commit is a common…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Git repository recovery and history diagnostics — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Git repository recovery and history diagnostics — DedSec Project</h1><p>Git repository recovery and history diagnostics fatal: refusing to merge unrelated histories Meaning and differential diagnosis Git reports unrelated histories when no commit is a common…</p><section><h2>fatal: refusing to merge unrelated histories</h2>
+<h3>Meaning and differential diagnosis</h3>
+<p>Git reports unrelated histories when no commit is a common ancestor of the two tips. This happens when a local repository was initialized separately from a web-created remote, or when history was rewritten. Combining them can be valid, but only after checking whether the two projects really belong together.</p>
+<h3>Reproduction / nondestructive inspection</h3>
+<p>Use an isolated test directory or an authorized service. Do not modify real remotes or production systems while diagnosing.</p>
+<pre><code class="language-sh">git remote -v
+git fetch --prune origin
+git log --graph --oneline --decorate --all -n 25
+git merge-base HEAD origin/main || echo &quot;No common ancestor&quot;
+# No mutation above except fetching remote objects.
+# Only with verified intent and a backup:
+# git merge --allow-unrelated-histories origin/main
+</code></pre>
+<h3>Interpret evidence and fix the cause</h3>
+<p>Inspect the root commits using git rev-list --max-parents=0 HEAD and the remote equivalent. Check remotes carefully to rule out a URL pointing at another project. Compare trees or README contents and choose one intended canonical history. If the repositories are unrelated by mistake, fix the remote rather than using --allow-unrelated-histories.</p>
+<h3>Practical lab</h3>
+<p>Create two independent temporary repositories, each with one different commit. Verify merge-base fails, then try an intentional merge in a disposable copy and inspect the graph. Explain why a forced push would hide rather than reconcile the second line of history.</p>
+<h2>detached HEAD</h2>
+<h3>Meaning and differential diagnosis</h3>
+<p>Detached HEAD means HEAD points to a specific commit rather than a branch reference. It is normal while examining an old commit or CI checkout, but new commits may become hard to discover after switching away if no branch points to them. Detached does not mean the repository is corrupted.</p>
+<h3>Reproduction / nondestructive inspection</h3>
+<pre><code class="language-sh">git status -sb
+git symbolic-ref -q --short HEAD || echo &quot;Detached HEAD&quot;
+git log -1 --oneline
+# If you created a valuable commit while detached:
+# git switch -c preserve-experiment
+# Alternatively find it via git reflog before cleanup.
+</code></pre>
+<h3>Interpret evidence and fix the cause</h3>
+<p>Find what commit you are on with git rev-parse HEAD. Before switching, create a branch at the desired commit; do not confuse git switch -c (creates a branch) with git switch (moves to an existing branch). Reflog can locate recent otherwise-unreferenced tips, but garbage collection may eventually prune unreachable commits.</p>
+<h3>Practical lab</h3>
+<p>In a disposable repository commit two changes, switch --detach HEAD~1, commit a third experimental change, create a named branch, and verify git branch --contains includes it. Demonstrate recovering the old tip with reflog without any force push.</p>
+<h2>repository not found</h2>
+<h3>Meaning and differential diagnosis</h3>
+<p>A remote host may return repository not found for an incorrect owner/name, a deleted or renamed repository, or private content to which the current credentials have no access. Some providers deliberately avoid revealing a private repository's existence. The error alone does not identify which case applies.</p>
+<h3>Reproduction / nondestructive inspection</h3>
+<pre><code class="language-sh">git remote -v
+git config --get remote.origin.url
+git ls-remote origin HEAD
+# For HTTPS test the exact known URL, not a guessed variant:
+# git ls-remote https://github.com/OWNER/REPO.git HEAD
+</code></pre>
+<h3>Interpret evidence and fix the cause</h3>
+<p>Confirm the repository URL from an authorized browser session and check owner/name case and renames. Verify your credential helper or SSH key identity without printing tokens. Check installation/organization access for the connected account. Never paste access tokens into command-line URLs or logs. Retry only after distinguishing URL mismatch from permissions.</p>
+<h3>Practical lab</h3>
+<p>Point a disposable local repo at a deliberately nonexistent repository name and observe the exit status. Then test a known accessible repository. Document why the failure does not prove that a private repository is absent.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

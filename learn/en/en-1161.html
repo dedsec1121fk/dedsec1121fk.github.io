@@ -1,0 +1,91 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Glossary: transactions, inferred types and unit tests — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1161.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Glossary: transactions, inferred types and unit tests Transaction Actual meaning A unit of database work committed together or rolled back together. Atomicity does not mean every race is…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Glossary: transactions, inferred types and unit tests — DedSec Project">
+<meta property="og:description" content="Glossary: transactions, inferred types and unit tests Transaction Actual meaning A unit of database work committed together or rolled back together. Atomicity does not mean every race is…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1161.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glossary: transactions, inferred types and unit tests — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Glossary: transactions, inferred types and unit tests — DedSec Project">
+<meta name="twitter:description" content="Glossary: transactions, inferred types and unit tests Transaction Actual meaning A unit of database work committed together or rolled back together. Atomicity does not mean every race is…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Glossary: transactions, inferred types and unit tests — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Glossary: transactions, inferred types and unit tests — DedSec Project</h1><p>Glossary: transactions, inferred types and unit tests Transaction Actual meaning A unit of database work committed together or rolled back together. Atomicity does not mean every race is…</p><section><h2>Transaction</h2>
+<h3>Actual meaning</h3>
+<p>A unit of database work committed together or rolled back together. Atomicity does not mean every race is solved; isolation level and concurrent writers remain relevant.</p>
+<h3>Concrete starting point</h3>
+<pre><code class="language-text">BEGIN;
+INSERT INTO tasks(title) VALUES ('first');
+-- perform other work
+ROLLBACK;
+</code></pre>
+<h3>Apply the rule</h3>
+<p>In disposable SQLite, prove a row inserted inside a rolled-back transaction does not persist, then compare with a committed insert.</p>
+<h3>Diagnose a counterexample</h3>
+<p>For Transaction, write down the expected outcome, deliberately break an assumption from this specific example, and determine what must be checked at the boundary before this behavior could be reused safely.</p>
+<h2>Type inference</h2>
+<h3>Actual meaning</h3>
+<p>Compiler derives a type from context without explicit annotation. This is still static typing where the language enforces it; inference does not mean treating all values as any.</p>
+<h3>Concrete starting point</h3>
+<pre><code class="language-text">const scores: number[] = [2,4];
+const doubled = scores.map(n =&gt; n*2);
+// n inferred number
+</code></pre>
+<h3>Apply the rule</h3>
+<p>Make the array string[], attempt numeric multiplication and inspect the TypeScript diagnostic. Compare inference with an explicit wrong annotation.</p>
+<h3>Diagnose a counterexample</h3>
+<p>For Type inference, write down the expected outcome, deliberately break an assumption from this specific example, and determine what must be checked at the boundary before this behavior could be reused safely.</p>
+<h2>Unit test</h2>
+<h3>Actual meaning</h3>
+<p>Small repeatable check of a focused behavior with controlled inputs. Unit tests differ from integration tests involving real databases, browsers or network services.</p>
+<h3>Concrete starting point</h3>
+<pre><code class="language-text">def clamp(x, lo, hi): return min(max(x,lo),hi)
+assert clamp(5,0,10)==5
+assert clamp(-1,0,10)==0
+</code></pre>
+<h3>Apply the rule</h3>
+<p>Add exact boundary checks 0 and 10, then decide whether lo&gt;hi should raise rather than return an accidental value.</p>
+<h3>Diagnose a counterexample</h3>
+<p>For Unit test, write down the expected outcome, deliberately break an assumption from this specific example, and determine what must be checked at the boundary before this behavior could be reused safely.</p>
+<h2>WebSocket</h2>
+<h3>Actual meaning</h3>
+<p>Protocol for ongoing bidirectional communication over a connection, commonly initiated by an HTTP Upgrade handshake. Unlike one-shot HTTP requests, clients need connection lifecycle and reconnect policy.</p>
+<h3>Concrete starting point</h3>
+<pre><code class="language-text">const ws = new WebSocket('wss://example.test/echo');
+ws.addEventListener('message', e =&gt; console.log(e.data));
+// Requires an authorized matching server.
+</code></pre>
+<h3>Apply the rule</h3>
+<p>Build a local test server and verify open/message/close states. Explain why reconnecting should not repeat side-effecting messages blindly.</p>
+<h2>Yield</h2>
+<h3>Actual meaning</h3>
+<p>A construct suspending a generator and producing a value while preserving its execution state. It differs from return, which finishes the function invocation.</p>
+<h3>Concrete starting point</h3>
+<pre><code class="language-text">def counter():
+    yield 1
+    yield 2
+assert list(counter())==[1,2]
+</code></pre>
+<h3>Apply the rule</h3>
+<p>Call next repeatedly, then confirm StopIteration after the last value. Compare generator with a function returning [1,2] eagerly.</p>
+<h3>Diagnose a counterexample</h3>
+<p>For Yield, write down the expected outcome, deliberately break an assumption from this specific example, and determine what must be checked at the boundary before this behavior could be reused safely.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

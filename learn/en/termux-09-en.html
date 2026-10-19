@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Git pull and merge conflicts — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/termux-09-en.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Termux Git pull: preserve local edits before reconciling remote history What causes the failure git pull combines fetch with merge or rebase according to configuration. It can stop because…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Git pull and merge conflicts — DedSec Project">
+<meta property="og:description" content="Termux Git pull: preserve local edits before reconciling remote history What causes the failure git pull combines fetch with merge or rebase according to configuration. It can stop because…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/termux-09-en.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Git pull and merge conflicts — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Git pull and merge conflicts — DedSec Project">
+<meta name="twitter:description" content="Termux Git pull: preserve local edits before reconciling remote history What causes the failure git pull combines fetch with merge or rebase according to configuration. It can stop because…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Git pull and merge conflicts — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Git pull and merge conflicts — DedSec Project</h1><p>Termux Git pull: preserve local edits before reconciling remote history What causes the failure git pull combines fetch with merge or rebase according to configuration. It can stop because…</p><section><h1>Termux Git pull: preserve local edits before reconciling remote history</h1>
+<h2>What causes the failure</h2>
+<p>git pull combines fetch with merge or rebase according to configuration. It can stop because tracked files are locally edited, because the branches diverged, or because a textual conflict needs a decision. A non-fast-forward push is related to branch ancestry, not fixed by deleting the .git directory. The goal is to preserve both local work and newly fetched commits.</p>
+<h2>Controlled diagnostic commands</h2>
+<p>Commands are diagnostics or labeled examples. Verify paths and preserve data before making changes.</p>
+<pre><code class="language-sh">git status --short --branch
+git branch --show-current
+git fetch origin
+git log --oneline --graph --decorate --all -n 20
+git diff --check
+# After reviewing, choose merge or rebase deliberately:
+# git merge origin/main
+# Inspect conflicts, resolve each, git add, git commit.
+</code></pre>
+<h2>Repair in evidence-based order</h2>
+<p>Before merging, make a backup branch and commit or stash deliberate local work. Determine if the remote changed the same lines. Use git diff --ours and --theirs only after understanding their context (especially during rebase); never overwrite everything with one side by habit. If a merge is in progress, git merge --abort returns to the pre-merge state when possible. Reflog is a recovery aid, not a substitute for backups.</p>
+<h2>Hands-on exercise</h2>
+<p>Create two disposable clones from a local bare repository, edit the same line independently and attempt pull. Resolve the conflict preserving the intended combined meaning. Verify git log --graph and run a project test before pushing; never force-push a shared main branch for this exercise.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

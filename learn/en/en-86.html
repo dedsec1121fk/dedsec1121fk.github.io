@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>UnboundLocalError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-86.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Python UnboundLocalError: a local is read before assignment Reproduce Python decides at compile time that counter is local to broken because it is assigned in that function. The earlier…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="UnboundLocalError — DedSec Project">
+<meta property="og:description" content="Python UnboundLocalError: a local is read before assignment Reproduce Python decides at compile time that counter is local to broken because it is assigned in that function. The earlier…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-86.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="UnboundLocalError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UnboundLocalError — DedSec Project">
+<meta name="twitter:description" content="Python UnboundLocalError: a local is read before assignment Reproduce Python decides at compile time that counter is local to broken because it is assigned in that function. The earlier…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="UnboundLocalError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>UnboundLocalError — DedSec Project</h1><p>Python UnboundLocalError: a local is read before assignment Reproduce Python decides at compile time that counter is local to broken because it is assigned in that function. The earlier…</p><section><h1>Python UnboundLocalError: a local is read before assignment</h1>
+<h2>Reproduce</h2>
+<pre><code class="language-python">counter = 10
+def broken():
+    print(counter)
+    counter = counter + 1
+
+broken()
+</code></pre>
+<p>Python decides at compile time that counter is local to broken because it is assigned in that function. The earlier read therefore raises UnboundLocalError even though a global counter exists. The exception is a subclass of NameError, but the name is known to be local and uninitialized.</p>
+<h2>Prefer explicit state</h2>
+<pre><code class="language-python">def increment(counter):
+    return counter + 1
+
+assert increment(10) == 11
+assert increment(0) == 1
+</code></pre>
+<p>This pure function has no global mutation and can be reused safely. For closures that intentionally mutate enclosing state, nonlocal can be appropriate; global modifies a module binding and should be a deliberate design choice, not a quick error suppression.</p>
+<h2>Diagnose branches and exception paths</h2>
+<p>An assignment inside an if does not guarantee initialization:</p>
+<pre><code class="language-python">def label(flag):
+    if flag:
+        result = &quot;ready&quot;
+    return result
+</code></pre>
+<p>label(False) raises UnboundLocalError. Initialize result before the branch, return from every branch, or make the missing case explicit. Also check try/except blocks: an assignment in try may be skipped when an exception occurs. Inspect the full function for any assignment, including augmented assignment such as +=, which reads and writes the local.</p>
+<h2>Lab</h2>
+<p>Call label(True) and label(False), then rewrite the function so both cases return a string. Create a closure with nonlocal and compare it to increment. Document whether state should be returned, shared within a closure, or stored in an object. Add tests for every branch rather than relying on a single successful input.</p>
+<h2>Minimal branch contract</h2>
+<p>A function must initialize a variable on <em>every</em> path before reading it. In a deliberately failing test, make the assignment conditional on <code>flag</code> and call the function with <code>False</code>. Compare three valid redesigns: return immediately in each branch, give the variable an explicit default, or raise a descriptive exception on unsupported input. A default is not always correct: for a missing mandatory result, raising is better than silently returning stale state.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

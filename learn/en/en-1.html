@@ -1,0 +1,94 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Runtime lifetimes and data-structure selection — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Runtime lifetimes and data-structure selection Advanced engineering laboratories Runtime, call stack, heap and lifetimes A program is not only source text. After parsing and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Runtime lifetimes and data-structure selection — DedSec Project">
+<meta property="og:description" content="Runtime lifetimes and data-structure selection Advanced engineering laboratories Runtime, call stack, heap and lifetimes A program is not only source text. After parsing and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Runtime lifetimes and data-structure selection — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Runtime lifetimes and data-structure selection — DedSec Project">
+<meta name="twitter:description" content="Runtime lifetimes and data-structure selection Advanced engineering laboratories Runtime, call stack, heap and lifetimes A program is not only source text. After parsing and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Runtime lifetimes and data-structure selection — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Runtime lifetimes and data-structure selection — DedSec Project</h1><p>Runtime lifetimes and data-structure selection Advanced engineering laboratories Runtime, call stack, heap and lifetimes A program is not only source text. After parsing and…</p><section><h2>Advanced engineering laboratories</h2>
+<h2>Runtime, call stack, heap and lifetimes</h2>
+<p>A program is not only source text. After parsing and compilation/interpreting, execution requires memory, I/O, a scheduler and a runtime. A function call ordinarily creates a <em>stack frame</em> containing return information, arguments and local bindings. Dynamically allocated objects often live in a heap, managed by allocation/free, reference counting or garbage collection depending on the language and runtime.</p>
+<h3>Worked example (Python)</h3>
+<pre><code class="language-python">def factorial(n: int) -&gt; int:
+    if n &lt; 0: raise ValueError('n must be nonnegative')
+    result = 1
+    for value in range(2, n + 1):
+        result *= value
+    return result
+
+assert factorial(5) == 120
+</code></pre>
+<p>This iterative solution uses O(1) auxiliary memory, whereas a recursive implementation would use O(n) call frames before tail-call optimization (which CPython does not provide as a general guarantee).</p>
+<h3>Debugging and tradeoffs</h3>
+<p>A <code>MemoryError</code> can occur even without a recursion error. A stack overflow and heap exhaustion are different conditions. In C/C++, ownership and lifetime errors may create dangling pointers or double frees; in managed languages, holding references forever can leak <em>reachable</em> memory.</p>
+<h3>Practice</h3>
+<ol>
+<li>Write recursive and iterative Fibonacci for n = 30; explain call-count difference.</li>
+<li>Profile a growing list and identify when its lifetime ends.</li>
+<li>Explain why returning a pointer to an automatic local variable is unsafe in C.</li>
+</ol>
+<h2>Choosing data structures by operation costs</h2>
+<h3>Define the workload before choosing a type</h3>
+<p>For a queue with first-in-first-out behavior, a Python list can append efficiently but removing from index zero shifts the remaining elements. collections.deque supports efficient popleft, so choose it when repeatedly consuming from the front.</p>
+<pre><code class="language-python">from collections import deque
+
+jobs = deque([&quot;compile&quot;, &quot;test&quot;])
+jobs.append(&quot;deploy&quot;)
+assert [jobs.popleft(), jobs.popleft(), jobs.popleft()] == [
+    &quot;compile&quot;, &quot;test&quot;, &quot;deploy&quot;
+]
+</code></pre>
+<p>A deque is not automatically the best choice for random indexed access: a list generally supports efficient O(1) indexing, while accessing interior deque elements can be O(n). State which operations dominate before optimizing.</p>
+<h3>Membership checks and memory</h3>
+<p>If an application repeatedly asks whether 1 million IDs belong to a collection, consider a set. Python set membership is expected average O(1), versus linear list membership O(n). But sets have memory overhead, do not preserve duplicates, and are not an API for deterministic sorted output. If order matters, sort results when presenting them, or preserve a separate ordered structure. A dict maps keys to values and maintains insertion order in modern Python, but a dict is not a priority queue.</p>
+<h3>When a heap wins</h3>
+<p>For a scheduler ordered by next deadline, use heapq and store pairs (deadline, tie_breaker, task). Including a monotonically increasing tie_breaker avoids trying to compare incomparable task objects when deadlines match. A heap maintains a partial order: heap[0] is smallest, but iterating the heap does not produce sorted order.</p>
+<h3>Counterexample to a shallow complexity claim</h3>
+<p>O(1) expected lookup does not prove a set is fastest for every small input. Hashing, allocations, cache effects and key comparison costs matter. Benchmark tiny and large datasets separately and ensure both solutions produce the same semantics before comparing speed.</p>
+<h3>Acceptance criteria</h3>
+<p>Provide a decision table for queue, membership index, priority queue and ordered display. Measure operations at several input sizes with timeit outside the first-run warmup. Test empty pop, duplicate keys and identical deadlines, and document Python version and observed results. The examples are reasoned expectations, not claimed runtime execution in this audit.</p>
+<h2>Engineering field notes</h2>
+<ul>
+<li><a href="../en/fieldnotes-en-34.html">SQLite live backup and restoration drills</a></li>
+<li><a href="../en/fieldnotes-en-35.html">Crash-safe checkpoints and file replacement</a></li>
+<li><a href="../en/fieldnotes-en-36.html">Monotonic deadlines across a retry budget</a></li>
+<li><a href="../en/fieldnotes-en-37.html">Bounded work queues and overload decisions</a></li>
+<li><a href="../en/fieldnotes-en-38.html">Keyset pagination with stable ordering</a></li>
+<li><a href="../en/fieldnotes-en-39.html">Optimistic concurrency and lost-update prevention</a></li>
+<li><a href="../en/fieldnotes-en-40.html">CSV import contracts and spreadsheet formula boundaries</a></li>
+<li><a href="../en/fieldnotes-en-41.html">Incremental UTF-8 decoding across chunk boundaries</a></li>
+<li><a href="../en/fieldnotes-en-42.html">Decimal rounding policies and reconciliation</a></li>
+<li><a href="../en/fieldnotes-en-43.html">Daylight-saving ambiguity and scheduling contracts</a></li>
+<li><a href="../en/fieldnotes-en-44.html">Structured log redaction before serialization</a></li>
+<li><a href="../en/fieldnotes-en-45.html">Content Security Policy rollout with report-only evidence</a></li>
+<li><a href="../en/fieldnotes-en-46.html">Subresource integrity and release pinning</a></li>
+<li><a href="../en/fieldnotes-en-47.html">Transactional outbox and duplicate delivery</a></li>
+<li><a href="../en/fieldnotes-en-48.html">Resource ownership and exception-safe cleanup</a></li>
+<li><a href="../en/fieldnotes-en-49.html">Configuration precedence and provenance</a></li>
+<li><a href="../en/fieldnotes-en-50.html">Deterministic failure injection and recovery assertions</a></li>
+<li><a href="../en/fieldnotes-en-51.html">Binary record framing and truncated input</a></li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

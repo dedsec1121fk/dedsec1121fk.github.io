@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Termux Security Lab Operations and Troubleshooting — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-031.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Termux Security Lab Operations and Troubleshooting Purpose: Build safe cybersecurity labs on Android and diagnose common Termux failures without turning the phone into an uncontrolled tool…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Termux Security Lab Operations and Troubleshooting — DedSec Project">
+<meta property="og:description" content="Termux Security Lab Operations and Troubleshooting Purpose: Build safe cybersecurity labs on Android and diagnose common Termux failures without turning the phone into an uncontrolled tool…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-031.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Termux Security Lab Operations and Troubleshooting — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Termux Security Lab Operations and Troubleshooting — DedSec Project">
+<meta name="twitter:description" content="Termux Security Lab Operations and Troubleshooting Purpose: Build safe cybersecurity labs on Android and diagnose common Termux failures without turning the phone into an uncontrolled tool…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Termux Security Lab Operations and Troubleshooting — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Termux Security Lab Operations and Troubleshooting — DedSec Project</h1><p>Termux Security Lab Operations and Troubleshooting Purpose: Build safe cybersecurity labs on Android and diagnose common Termux failures without turning the phone into an uncontrolled tool…</p><section><blockquote>
+<p><strong>Purpose:</strong> Build safe cybersecurity labs on Android and diagnose common Termux failures without turning the phone into an uncontrolled tool dump.</p>
+</blockquote>
+<h2>Lab design principles</h2>
+<p>A good mobile lab has five properties:</p>
+<ol>
+<li><strong>Authorized</strong> — every target is yours or explicitly provided for training.</li>
+<li><strong>Isolated</strong> — localhost, private test networks, emulators, or disposable cloud labs with explicit permission.</li>
+<li><strong>Resettable</strong> — data and configuration can be recreated.</li>
+<li><strong>Observable</strong> — logs and expected behavior are available.</li>
+<li><strong>Documented</strong> — scope, objective, steps, result, and cleanup are recorded.</li>
+</ol>
+<h2>What Termux is excellent for</h2>
+<ul>
+<li>Python and shell programming.</li>
+<li>Git-based coursework.</li>
+<li>HTTP/API client experiments against local labs.</li>
+<li>Cryptography demonstrations.</li>
+<li>Log parsing and text processing.</li>
+<li>Hashing and integrity checks.</li>
+<li>Static inspection of files you own.</li>
+<li>SSH administration of systems you control.</li>
+<li>Local documentation and note search.</li>
+<li>Lightweight web development.</li>
+</ul>
+<h2>What often needs a different environment</h2>
+<p>Some exercises depend on kernel features, drivers, virtualization, packet-capture privileges, or desktop tooling that an ordinary Android sandbox does not provide. Use a VM, dedicated lab machine, emulator, or authorized cloud environment when the learning objective requires those capabilities.</p>
+<p>Do not force a tool to work on Termux by weakening the phone's security when a safer lab platform is available.</p>
+<h2>Proot distributions</h2>
+<p>User-space distribution environments can provide familiar Linux package layouts, but they do not turn Android into a native virtual machine and do not remove kernel or hardware limitations. Treat them as compatibility environments, not privilege boundaries.</p>
+<h2>Dependency troubleshooting</h2>
+<p>When installation fails, capture:</p>
+<pre><code class="language-bash">python --version
+pkg list-installed
+uname -a
+</code></pre>
+<p>Then identify whether the failure is caused by:</p>
+<ul>
+<li>missing compiler or headers;</li>
+<li>package not available for Android architecture;</li>
+<li>Python wheel unavailable for the platform;</li>
+<li>native dependency expecting glibc rather than Android's C library;</li>
+<li>outdated installation instructions;</li>
+<li>storage path or permission problems.</li>
+</ul>
+<p>Prefer maintained packages from the Termux repositories when they satisfy the requirement.</p>
+<h2>Repository troubleshooting</h2>
+<p>If package metadata fails to refresh, consult the current Termux package-management guidance rather than copying a random mirror command. Repository infrastructure changes over time.</p>
+<h2>Python troubleshooting</h2>
+<p>Useful checks:</p>
+<pre><code class="language-bash">python -m pip --version
+python -c &quot;import sys; print(sys.executable); print(sys.path)&quot;
+</code></pre>
+<p>When a package fails to build, read the first meaningful compiler/error line rather than only the final <code>pip</code> summary.</p>
+<h2>Storage troubleshooting</h2>
+<p>If a script works in <code>$HOME</code> but fails in Downloads, investigate Android storage semantics and permissions. Do not paper over the problem with broad recursive permission changes.</p>
+<h2>Long-running processes</h2>
+<p>Android battery optimization can stop background activity. For legitimate long-running administration, understand Android power-management constraints and design around resumable state. A security learning script should save progress rather than assume it will run forever.</p>
+<h2>Safe local vulnerable applications</h2>
+<p>Deliberately vulnerable applications are useful when they are isolated and their license permits local training. Keep them bound to localhost or a private lab network and remove them after the exercise.</p>
+<p>Never expose an intentionally vulnerable service directly to the internet.</p>
+<h2>Note-taking workflow</h2>
+<p>For each lesson, save:</p>
+<pre><code class="language-text">Objective:
+Scope:
+Environment:
+Expected result:
+Observed result:
+Evidence:
+What failed:
+Why it failed:
+Fix:
+Security lesson:
+</code></pre>
+<p>This turns troubleshooting into reusable knowledge.</p>
+<h2>The Hacking Guide Project browser and search menu</h2>
+<p>This edition includes <code>Hacking Guide Project.py</code>, a local browser and full-text search interface designed for Termux and desktop Python. It uses the Python standard library and searches only the local guide files.</p>
+<p>For normal use, start the launcher once and use the numbered menus. <strong>Search lessons</strong> accepts ordinary words, <strong>Popular topics</strong> provides shortcuts, <strong>Categories</strong> groups related modules, <strong>Learning paths</strong> gives an ordered route, and <strong>Continue</strong> returns to the last lesson. No search flags or module commands are required.</p>
+<p>The browser does not scan networks, enumerate targets, or perform exploitation. It only reads and indexes the local Markdown knowledge base.</p>
+<h2>Termux capstone — Portable defensive notebook</h2>
+<p>Build a small repository containing:</p>
+<ul>
+<li>Markdown study notes;</li>
+<li>a file integrity checker;</li>
+<li>a log parser for synthetic logs;</li>
+<li>a local HTTP service inventory;</li>
+<li>JSON output;</li>
+<li>tests;</li>
+<li>a README explaining safe scope.</li>
+</ul>
+<p>Use Git history to show how the project evolves. The capstone demonstrates the core skill of turning commands into controlled, auditable workflows.</p>
+<h2>Troubleshooting decision tree</h2>
+<ol>
+<li><strong>Does the command exist?</strong> Use <code>command -v</code>.</li>
+<li><strong>Is the path correct?</strong> Use <code>pwd</code>, <code>ls</code>, and quoted paths.</li>
+<li><strong>Is permission denied?</strong> Identify which Android/Unix permission is involved.</li>
+<li><strong>Is a port unavailable?</strong> Inspect local listeners.</li>
+<li><strong>Is Python importing the wrong environment?</strong> Check <code>sys.executable</code> and active venv.</li>
+<li><strong>Is a package outdated or renamed?</strong> Check current official package metadata.</li>
+<li><strong>Is the tutorial assuming desktop Linux?</strong> Identify unsupported assumptions.</li>
+<li><strong>Can the task be reproduced in a minimal directory?</strong> Reduce variables.</li>
+</ol>
+<h2>Safety rule</h2>
+<p>If solving a Termux problem would require bypassing device security, disabling protections globally, or testing an unknown third-party system, change the lab design instead.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Modules 28–30.</p>
+<h3>Practice task</h3>
+<p>Practice recovery: verify paths, permissions, package availability, Python version, storage links, and a backup of your notes. Write a troubleshooting decision tree for your device.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>36, 45, 56</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

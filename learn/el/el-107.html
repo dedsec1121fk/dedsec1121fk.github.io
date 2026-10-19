@@ -1,0 +1,95 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Γλωσσάρι: συναρτήσεις, garbage collection και generics — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-107.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Γλωσσάρι: συναρτήσεις, garbage collection και generics Function Σημασία και περιορισμοί Function είναι επαναχρησιμοποιήσιμος υπολογισμός με παραμέτρους και αποτέλεσμα. Το συμβόλαιο…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Γλωσσάρι: συναρτήσεις, garbage collection και generics — DedSec Project">
+<meta property="og:description" content="Γλωσσάρι: συναρτήσεις, garbage collection και generics Function Σημασία και περιορισμοί Function είναι επαναχρησιμοποιήσιμος υπολογισμός με παραμέτρους και αποτέλεσμα. Το συμβόλαιο…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-107.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γλωσσάρι: συναρτήσεις, garbage collection και generics — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Γλωσσάρι: συναρτήσεις, garbage collection και generics — DedSec Project">
+<meta name="twitter:description" content="Γλωσσάρι: συναρτήσεις, garbage collection και generics Function Σημασία και περιορισμοί Function είναι επαναχρησιμοποιήσιμος υπολογισμός με παραμέτρους και αποτέλεσμα. Το συμβόλαιο…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Γλωσσάρι: συναρτήσεις, garbage collection και generics — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Γλωσσάρι: συναρτήσεις, garbage collection και generics — DedSec Project</h1><p>Γλωσσάρι: συναρτήσεις, garbage collection και generics Function Σημασία και περιορισμοί Function είναι επαναχρησιμοποιήσιμος υπολογισμός με παραμέτρους και αποτέλεσμα. Το συμβόλαιο…</p><section><h2>Function</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Function είναι επαναχρησιμοποιήσιμος υπολογισμός με παραμέτρους και αποτέλεσμα. Το συμβόλαιο περιγράφει types, άκυρες εισόδους, side effects και εγγυήσεις. Η ύπαρξη συνάρτησης δεν σημαίνει purity: μπορεί να αλλάζει files ή state.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">def area(width: float, height: float) -&gt; float:
+    if width &lt; 0 or height &lt; 0: raise ValueError('negative dimension')
+    return width * height
+assert area(3, 4) == 12
+assert area(0, 5) == 0
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Πρόσθεσε tests με αρνητικές διαστάσεις και μη αριθμητική είσοδο. Αποφάσισε αν float annotations αρκούν σε εξωτερικό API: από μόνες τους δεν κάνουν runtime validation.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/tutorial/controlflow.html#defining-functions</p>
+<h2>Garbage collection</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Garbage collection ελευθερώνει μνήμη αντικειμένων που δεν είναι πλέον προσβάσιμα σύμφωνα με runtime rules. Η CPython κυρίως χρησιμοποιεί reference counting μαζί με cyclic collector, ενώ άλλα runtimes έχουν tracing GC. Το GC δεν εγγυάται άμεσο κλείσιμο files ή locks.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">from contextlib import closing
+from io import StringIO
+with closing(StringIO('test')) as stream:
+    assert stream.read() == 'test'
+assert stream.closed
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Εξήγησε γιατί context managers είναι καλύτερα για file handles. Σχεδίασε κύκλο δύο αντικειμένων και σημείωσε ότι ο χρόνος GC δεν είναι portable συμβόλαιο.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/library/gc.html</p>
+<h2>Generic type</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Generic type παραμετροποιείται με άλλο τύπο ώστε μία δομή να διατηρεί τις ιδιότητες διαφορετικών δεδομένων. Στην Python το <code>list[int]</code> καθοδηγεί static tooling αλλά δεν απορρίπτει λάθος στοιχεία αυτόματα στο runtime.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">from typing import TypeVar
+T = TypeVar('T')
+def first(items: list[T]) -&gt; T | None:
+    return items[0] if items else None
+assert first([3,4]) == 3
+assert first([]) is None
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Ζήτησε από type checker να συμπεράνει τύπο εξόδου για list[str] και list[int]. Σύγκρινε static checking με runtime validator για άγνωστα JSON elements.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/library/typing.html</p>
+<h2>Git</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Το Git είναι κατανεμημένο version control: ένα τοπικό clone έχει ιστορικό, branches και metadata ανεξάρτητα από server. Το <code>fetch</code> ενημερώνει remote refs, το <code>merge</code>/<code>rebase</code> συνδυάζει αλλαγές και το <code>push</code> δημοσιεύει commits.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-sh">git status --short --branch
+git log --oneline -5
+git remote -v
+git fetch origin
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Σε δοκιμαστικό clone σύγκρινε <code>git status</code> πριν/μετά <code>fetch</code>. Επιβεβαίωσε ότι μόνο το fetch δεν αλλάζει τα tracked working files. Μην κάνεις force-push ή reset σε production.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://git-scm.com/book/en/v2/Getting-Started-What-is-Git%3F</p>
+<h2>Hash function</h2>
+<h3>Σημασία και περιορισμοί</h3>
+<p>Μια hash function μετατρέπει bytes σε σταθερού μεγέθους digest. Το cryptographic SHA-256 σχεδιάστηκε ώστε συγκρούσεις να είναι εξαιρετικά δύσκολες, αλλά το digest αποδεικνύει ταύτιση μόνο ως προς έμπιστη αναφορά. Τα dictionary hashes εξυπηρετούν άλλους στόχους.</p>
+<h3>Πρακτικό παράδειγμα</h3>
+<pre><code class="language-python">import hashlib
+h = lambda b: hashlib.sha256(b).hexdigest()
+assert h(b'abc') == 'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad'
+assert h(b'abc') != h(b'abd')
+</code></pre>
+<h3>Άσκηση και παγίδα</h3>
+<p>Υπολόγισε hash αρχείου πριν και μετά από αλλαγή ενός byte. Εξήγησε γιατί hash από την ίδια compromised ιστοσελίδα με κακόβουλο binary δεν αποδεικνύει γνησιότητα.</p>
+<p><strong>Επιπλέον πηγή:</strong> https://docs.python.org/3/library/hashlib.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

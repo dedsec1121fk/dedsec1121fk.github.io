@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cannot read properties of null — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-105.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Cannot read properties of null — distinguish an explicit state from omitted data Meaning and root cause JSON has a null literal, while an object key omitted from a parsed JSON object…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Cannot read properties of null — DedSec Project">
+<meta property="og:description" content="Cannot read properties of null — distinguish an explicit state from omitted data Meaning and root cause JSON has a null literal, while an object key omitted from a parsed JSON object…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-105.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cannot read properties of null — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cannot read properties of null — DedSec Project">
+<meta name="twitter:description" content="Cannot read properties of null — distinguish an explicit state from omitted data Meaning and root cause JSON has a null literal, while an object key omitted from a parsed JSON object…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Cannot read properties of null — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Cannot read properties of null — DedSec Project</h1><p>Cannot read properties of null — distinguish an explicit state from omitted data Meaning and root cause JSON has a null literal, while an object key omitted from a parsed JSON object…</p><section><h1>Cannot read properties of null — distinguish an explicit state from omitted data</h1>
+<h2>Meaning and root cause</h2>
+<p>JSON has a null literal, while an object key omitted from a parsed JSON object evaluates to undefined in JavaScript. Both values reject property access but they often mean different things: null can intentionally represent a guest account, while an absent required <code>user</code> field may indicate a broken response schema. Treating both as a blank profile silently hides data errors.</p>
+<h2>Corrective approach</h2>
+<p>The profileName boundary explicitly permits JSON user:null as the guest state and accepts a user object only when it has a nonblank string name. It rejects a missing property, a present property with undefined, a null top-level payload and a malformed user object. The tests demonstrate why the policy belongs at the input boundary.</p>
+<h2>Executable example</h2>
+<p>Save as null_lab.cjs.</p>
+<pre><code class="language-javascript">function profileName(payload) {
+  if (!payload || typeof payload !== 'object' || Array.isArray(payload))
+    throw new TypeError('profile payload must be an object');
+  if (!Object.hasOwn(payload, 'user')) throw new TypeError('user field missing');
+  if (payload.user === null) return 'Guest'; // explicitly allowed state
+  if (!payload.user || typeof payload.user.name !== 'string' || !payload.user.name.trim())
+    throw new TypeError('user object is invalid');
+  return payload.user.name;
+}
+if (profileName(JSON.parse('{&quot;user&quot;:null}')) !== 'Guest') throw Error('null state wrong');
+if (profileName({user: {name: 'Ada'}}) !== 'Ada') throw Error('profile wrong');
+for (const invalid of [{}, {user: undefined}, {user: {}}, null]) {
+  try { profileName(invalid); throw Error('invalid profile accepted'); }
+  catch (error) { if (!(error instanceof TypeError)) throw error; }
+}
+console.log('PASS: explicit null state, absent key, malformed object');
+</code></pre>
+<h2>Why this is different</h2>
+<p><code>Object.hasOwn</code> distinguishes an omitted key from an inherited property. Optional chaining is appropriate if the UI specification truly allows a null state, but <code>payload.user?.name || 'Guest'</code> would also conceal a missing or invalid profile. <code>typeof null</code> is 'object' in JavaScript for historical reasons, so checking only typeof without an explicit null test is insufficient.</p>
+<h2>Exact validation</h2>
+<p>Save as null_lab.cjs and run node null_lab.cjs. Expected output PASS. The fixture uses JSON.parse and plain in-memory objects; no browser is required. The helper uses Object.hasOwn available in current Node versions.</p>
+<h2>Guided experiments</h2>
+<p>Compare the values of <code>JSON.parse('{}').user</code> and <code>JSON.parse('{&quot;user&quot;:null}').user</code>. Then write tests for an empty name, a zero-valued user, and an inherited user property. Decide which states are legal in your app instead of adding a default everywhere.</p>
+<p><strong>Reference:</strong> https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

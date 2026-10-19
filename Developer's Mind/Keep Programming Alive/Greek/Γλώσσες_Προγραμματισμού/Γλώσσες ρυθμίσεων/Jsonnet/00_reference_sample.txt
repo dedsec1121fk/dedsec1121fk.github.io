@@ -1,0 +1,2 @@
+local name = 'Ada';
+{ greeting: 'Hello, ' + name + '!' }

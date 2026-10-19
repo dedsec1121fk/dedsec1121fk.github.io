@@ -1,0 +1,67 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>JavaScript: fetch timeouts, abort and HTTP error handling — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-language-5-async-fetch-timeout.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="A resolved fetch promise is not always an HTTP success Model transport and application failures separately fetch() rejects for certain network or abort failures, but a 404 or 500 HTTP…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="JavaScript: fetch timeouts, abort and HTTP error handling — DedSec Project">
+<meta property="og:description" content="A resolved fetch promise is not always an HTTP success Model transport and application failures separately fetch() rejects for certain network or abort failures, but a 404 or 500 HTTP…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-language-5-async-fetch-timeout.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="JavaScript: fetch timeouts, abort and HTTP error handling — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="JavaScript: fetch timeouts, abort and HTTP error handling — DedSec Project">
+<meta name="twitter:description" content="A resolved fetch promise is not always an HTTP success Model transport and application failures separately fetch() rejects for certain network or abort failures, but a 404 or 500 HTTP…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="JavaScript: fetch timeouts, abort and HTTP error handling — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>JavaScript: fetch timeouts, abort and HTTP error handling — DedSec Project</h1><p>A resolved fetch promise is not always an HTTP success Model transport and application failures separately fetch() rejects for certain network or abort failures, but a 404 or 500 HTTP…</p><section><h1>A resolved fetch promise is not always an HTTP success</h1>
+<h2>Model transport and application failures separately</h2>
+<p><code>fetch()</code> rejects for certain network or abort failures, but a 404 or 500 HTTP response usually fulfills the promise with <code>ok === false</code>. Always check status before assuming valid application data. A timeout should abort the request and its resources; adding a timer without an AbortController can leave unwanted work running.</p>
+<pre><code class="language-javascript">async function getJSON(url, ms = 3000) {
+  const controller = new AbortController();
+  const timer = setTimeout(() =&gt; controller.abort(), ms);
+  try {
+    const response = await fetch(url, {signal: controller.signal});
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+  } finally {
+    clearTimeout(timer);
+  }
+}
+</code></pre>
+<h2>Classify a failure correctly</h2>
+<p>A JSON parse error means the response bytes were not accepted as JSON; it is different from an HTTP 503. Aborts, offline status and DNS failures may present different exceptions across browsers. Do not catch every exception and return an empty object, because that turns a temporary outage into misleading “no results.” Handle a cancellation initiated by the user differently from a retryable server error.</p>
+<h2>Create a local deterministic server fixture</h2>
+<p>Provide <code>/ok</code> returning JSON, <code>/missing</code> returning 404 and <code>/slow</code> delaying beyond the timeout in a test server you control. Record three outcomes: object result, explicit HTTP error, and aborted fetch. Compare what the browser Network panel shows with the application's error message. Never use a public service as a repeated delay test without permission.</p>
+<h2>Retry boundaries</h2>
+<p>GET requests are commonly repeatable, but requests with side effects need idempotency and deduplication by the server before automatic retries. Use bounded retry counts and backoff; an unlimited retry loop can amplify an outage. Add telemetry only if it avoids exposing URL query secrets or user-provided private data.</p>
+<h2>Cancellation ownership and response-body completion</h2>
+<p>A fetch promise can resolve after response headers arrive while the body is still streaming. If a timeout is cleared immediately after fetch resolves, a later body read can remain unbounded. Keep the cancellation owner alive until the required body operation finishes. Also distinguish a rejected transport promise from an HTTP error response: a 404 is still an HTTP response that needs an explicit status decision.</p>
+<p>Cancellation should propagate from the feature that owns the request. Replacing a search query should cancel the obsolete request, but an old rejection must not erase the newer result. The local fixture demonstrates ownership state without contacting a server.</p>
+<pre><code class="language-javascript">let current = 0;
+function begin() { const version = ++current; return value =&gt; version === current ? value : null; }
+const oldResult = begin();
+const newResult = begin();
+if (oldResult(&quot;old&quot;) !== null || newResult(&quot;new&quot;) !== &quot;new&quot;) throw Error(&quot;stale result accepted&quot;);
+const controller = new AbortController();
+controller.abort();
+if (!controller.signal.aborted) throw Error(&quot;cancellation not observable&quot;);
+console.log(&quot;stale response ignored&quot;);
+</code></pre>
+<p>For the real client, test cancellation during headers and during body consumption separately. Bound decoded response size as well as elapsed time. A timeout does not undo a server-side write; retrying a cancelled write requires the same idempotency analysis as any uncertain response.</p>
+<p><a href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>coq_gallina — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-701.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="coq_gallina — consolidated language guide Coq / Gallina Mental model Gallina is the term and function language used by Coq/Rocq proof development, where definitions must satisfy guardedness…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="coq_gallina — consolidated language guide — DedSec Project">
+<meta property="og:description" content="coq_gallina — consolidated language guide Coq / Gallina Mental model Gallina is the term and function language used by Coq/Rocq proof development, where definitions must satisfy guardedness…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-701.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="coq_gallina — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="coq_gallina — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="coq_gallina — consolidated language guide Coq / Gallina Mental model Gallina is the term and function language used by Coq/Rocq proof development, where definitions must satisfy guardedness…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="coq_gallina — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>coq_gallina — consolidated language guide — DedSec Project</h1><p>coq_gallina — consolidated language guide Coq / Gallina Mental model Gallina is the term and function language used by Coq/Rocq proof development, where definitions must satisfy guardedness…</p><section><h2>Coq / Gallina</h2>
+<h3>Mental model</h3>
+<p>Gallina is the term and function language used by Coq/Rocq proof development, where definitions must satisfy guardedness and typing constraints.</p>
+<h3>Minimal source sample</h3>
+<pre><code class="language-text">Definition inc (n : nat) : nat := S n.
+Compute (inc 3).
+</code></pre>
+<h3>Experiment to carry out</h3>
+<p>Evaluate the successor and explain why the number is represented by an inductive natural-number type.</p>
+<h3>A specific failure to distinguish</h3>
+<p>A failed proof obligation is not repaired by assuming the desired theorem; inspect its hypotheses and reduction steps.</p>
+<p>To evaluate the exercise, record the initial input, predicted behavior and actual observation in a compatible Coq_Gallina environment. Add a second run changing only one variable or argument; this makes the comparison attributable to a concrete cause. If the required runtime is not installed, treat the example as unexecuted source analysis and never label an imagined output as a passing test.</p>
+<h2>Coq_Gallina — Expanded practice workbook</h2>
+<h3>Inspect the smallest source</h3>
+<pre><code class="language-text">Definition answer : nat := 42.
+Compute answer.
+</code></pre>
+<p><strong>Run or compilation context:</strong> coqc Hello.v.. Treat this as a baseline: save a copy, confirm the toolchain version and note whether the example merely evaluates a value, prints text, or creates external effects. Production accounts, datasets and hardware must not be used for first attempts.</p>
+<h3>Work through the actual mechanism</h3>
+<p>State and prove forall n : nat, n + 0 = n using induction. Inspect the proof state before and after induction and reject Admitted as completion.</p>
+<h3>Diagnose the sharp edge</h3>
+<p>Tactic scripts are version-sensitive and lemma names may differ. A successful computation is not the same as a closed theorem proof.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

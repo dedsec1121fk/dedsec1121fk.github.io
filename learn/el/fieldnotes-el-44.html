@@ -1,0 +1,51 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/fieldnotes-el-44.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση Μηχανισμός και συμβόλαιο Η απόκρυψη μετά τη μορφοποίηση είναι εύθραυστη: ένα token μπορεί να εμφανιστεί με άλλο κλειδί, σε εξαίρεση ή…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση — DedSec Project">
+<meta property="og:description" content="Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση Μηχανισμός και συμβόλαιο Η απόκρυψη μετά τη μορφοποίηση είναι εύθραυστη: ένα token μπορεί να εμφανιστεί με άλλο κλειδί, σε εξαίρεση ή…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/fieldnotes-el-44.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση — DedSec Project">
+<meta name="twitter:description" content="Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση Μηχανισμός και συμβόλαιο Η απόκρυψη μετά τη μορφοποίηση είναι εύθραυστη: ένα token μπορεί να εμφανιστεί με άλλο κλειδί, σε εξαίρεση ή…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση — DedSec Project</h1><p>Απόκρυψη πεδίων καταγραφής πριν τη σειριοποίηση Μηχανισμός και συμβόλαιο Η απόκρυψη μετά τη μορφοποίηση είναι εύθραυστη: ένα token μπορεί να εμφανιστεί με άλλο κλειδί, σε εξαίρεση ή…</p><section><h2>Μηχανισμός και συμβόλαιο</h2>
+<p>Η απόκρυψη μετά τη μορφοποίηση είναι εύθραυστη: ένα token μπορεί να εμφανιστεί με άλλο κλειδί, σε εξαίρεση ή εμφωλευμένο αντικείμενο. Προτίμησε επιτρεπόμενα πεδία ανά τύπο συμβάντος και φιλτράρισμα πριν τη σειριοποίηση και την αποστολή σε πολλούς προορισμούς. Η καταγραφή αποσφαλμάτωσης δεν πρέπει να παρακάμπτει κρυφά την πολιτική παραγωγής.</p>
+<p>Η λίστα πεδίων δεν αρκεί αν ένα επιτρεπόμενο μήνυμα περιέχει αυθαίρετο σώμα αιτήματος. Προτίμησε σταθερούς κωδικούς συμβάντων και περιορισμένα πεδία τύπου κατάστασης, διάρκειας και ID αιτήματος. Το ID συσχέτισης πρέπει να συνδέει λειτουργίες χωρίς να αποτελεί διαπιστευτήριο ή προσωπικό αναγνωριστικό. Το δείγμα απορρίπτει επιπλέον πεδία αντί να μαντεύει αν το περιεχόμενό τους είναι ευαίσθητο.</p>
+<h2>Τοπικό παράδειγμα</h2>
+<pre><code class="language-python">import json
+ALLOWED = {&quot;event&quot;, &quot;status&quot;, &quot;duration_ms&quot;, &quot;request_id&quot;}
+def serialize_event(event):
+    safe = {k: event[k] for k in ALLOWED if k in event}
+    return json.dumps(safe, ensure_ascii=False, sort_keys=True)
+raw = {&quot;event&quot;:&quot;request_done&quot;, &quot;status&quot;:200, &quot;request_id&quot;:&quot;fixture-1&quot;,
+       &quot;password&quot;:&quot;FAKE_SECRET_FOR_TEST&quot;, &quot;headers&quot;:{&quot;cookie&quot;:&quot;FAKE_COOKIE&quot;}}
+line = serialize_event(raw)
+assert &quot;FAKE_SECRET_FOR_TEST&quot; not in line and &quot;FAKE_COOKIE&quot; not in line
+assert json.loads(line)[&quot;status&quot;] == 200
+print(line)
+</code></pre>
+<h2>Έλεγχοι αποτυχίας και όρια</h2>
+<p>Το εκπαιδευτικό φίλτρο υποθέτει ότι τα διατηρούμενα πεδία έχουν σωστούς τύπους και μεγέθη. Η πραγματική εφαρμογή πρέπει να τα επικυρώνει και να περιορίζει εμφώλευση. Δοκίμασε εξαιρέσεις και κάθε προορισμό με ευδιάκριτα ψεύτικα μυστικά. Έλεγξε επίσης ότι παραμένει χρήσιμο λειτουργικό πλαίσιο· μια καταγραφή μόνο με «σφάλμα» σπάνια βοηθά διάγνωση.</p>
+<h2>Πρωτογενής αναφορά</h2>
+<p><a href="https://docs.python.org/3/library/logging.html">Επίσημη τεκμηρίωση</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

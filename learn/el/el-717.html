@@ -1,0 +1,71 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>pony — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-717.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="pony — συγκεντρωτικός οδηγός Pony Βασική ιδέα Η Pony στηρίζεται σε actors και reference capabilities για έλεγχο shared mutable state. Μικρό εκπαιδευτικό απόσπασμα Άσκηση βασισμένη στη…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="pony — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="pony — συγκεντρωτικός οδηγός Pony Βασική ιδέα Η Pony στηρίζεται σε actors και reference capabilities για έλεγχο shared mutable state. Μικρό εκπαιδευτικό απόσπασμα Άσκηση βασισμένη στη…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-717.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="pony — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="pony — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="pony — συγκεντρωτικός οδηγός Pony Βασική ιδέα Η Pony στηρίζεται σε actors και reference capabilities για έλεγχο shared mutable state. Μικρό εκπαιδευτικό απόσπασμα Άσκηση βασισμένη στη…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="pony — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>pony — συγκεντρωτικός οδηγός — DedSec Project</h1><p>pony — συγκεντρωτικός οδηγός Pony Βασική ιδέα Η Pony στηρίζεται σε actors και reference capabilities για έλεγχο shared mutable state. Μικρό εκπαιδευτικό απόσπασμα Άσκηση βασισμένη στη…</p><section><h2>Pony</h2>
+<h3>Βασική ιδέα</h3>
+<p>Η Pony στηρίζεται σε actors και reference capabilities για έλεγχο shared mutable state.</p>
+<h3>Μικρό εκπαιδευτικό απόσπασμα</h3>
+<pre><code class="language-text">actor Main
+  new create(env: Env) =&gt;
+    env.out.print(&quot;Hello Pony&quot;)
+</code></pre>
+<h3>Άσκηση βασισμένη στη συγκεκριμένη συμπεριφορά</h3>
+<p>Εντόπισε τον actor constructor και εξήγησε γιατί shared references απαιτούν capability rules.</p>
+<h3>Διάγνωση και όρια</h3>
+<p>Μια τυπική διόρθωση thread race δεν αντικαθιστά τους κανόνες reference capabilities της Pony.</p>
+<p>Κάνε την άσκηση με πραγματικά δοκιμαστικά δεδομένα και με έκδοση Pony που ταιριάζει στον κώδικα. Σημείωσε μία αρχική πρόβλεψη και την πραγματική έξοδο. Για περίπλοκο ή μη διαθέσιμο runtime, παρουσίασε τη στατική ανάλυση ως τέτοια, όχι ως επιτυχημένη εκτέλεση. Δοκίμασε ξεχωριστά την κανονική περίπτωση και μία οριακή τιμή, χωρίς πραγματικά προσωπικά ή παραγωγικά δεδομένα.</p>
+<h2>Pony — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Πραγματικό αρχικό δείγμα</h3>
+<pre><code class="language-text">actor Main
+  new create(env: Env) =&gt;
+    env.out.print(&quot;Hello, Ada!&quot;)
+</code></pre>
+<p><strong>Περιβάλλον:</strong> ponyc in a Pony package directory.. Επιβεβαίωσε ότι έχεις το σωστό compiler, host ή simulator πριν θεωρήσεις την έξοδο αξιόπιστη. Για scripts με πρόσβαση σε προσωπικά αρχεία ή ρυθμίσεις, χρησιμοποίησε προσωρινά και read-only δεδομένα.</p>
+<h3>Συγκεκριμένος στόχος υλοποίησης</h3>
+<p>Φτιάξε actor με messages και private state και εξήγησε πώς reference capabilities περιορίζουν shared mutation.</p>
+<h3>Κρίσιμο λάθος που πρέπει να αναγνωρίζεις</h3>
+<p>Οι capabilities iso/ref/val έχουν αυστηρούς κανόνες· μη θεωρείς κανονικά shared mutable objects.</p>
+<h2>Pony — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Η εκκίνηση ενός actor</h3>
+<p>Η Pony σχεδιάστηκε γύρω από actors που επικοινωνούν με μηνύματα. Η παρακάτω απλή είσοδος δημιουργεί Main actor και χρησιμοποιεί το περιβάλλον για εκτύπωση. Το new create είναι constructor, ενώ οι συμπεριφορές που αποστέλλονται ασύγχρονα δηλώνονται με be.</p>
+<pre><code class="language-pony">actor Main
+  new create(env: Env) =&gt;
+    env.out.print(&quot;hello&quot;)
+</code></pre>
+<p>Το πρόγραμμα αναμένεται να εκτυπώσει hello σε συμβατή έκδοση ponyc. Μη θεωρείς ότι η σειρά μηνυμάτων από πολλούς ανεξάρτητους actors έχει μία καθολική σειρά, επειδή ο scheduler εκτελεί τους actors ανταγωνιστικά.</p>
+<h3>Γιατί έχει σημασία η δυνατότητα αναφοράς</h3>
+<p>Η Pony δεν αρκείται μόνο σε static types. Τα reference capabilities περιγράφουν ποιος μπορεί να διαβάσει, να μεταβάλει ή να μοιραστεί μια αναφορά. Ένα val μπορεί να μοιραστεί με ασφάλεια ως immutable view, ενώ ένα ref μπορεί να επιτρέπει mutation σε κατάλληλο ownership scope. Ένα iso δηλώνει απομονωμένη αναφορά με ιδιαίτερους κανόνες μεταφοράς. Μη μεταφέρεις απλώς τα ονόματα από το borrow checker της Rust: τα μοντέλα έχουν διαφορετικούς κανόνες.</p>
+<h3>Αποστολή αντί κοινής μνήμης</h3>
+<p>Φτιάξε δεύτερο actor Counter με behavior add που δέχεται U64, ενημερώνει εσωτερικό state και στέλνει απάντηση σε actor-recipient. Ο caller δεν δικαιούται να υποθέτει ότι το state άλλαξε ήδη αμέσως μετά την αποστολή του μηνύματος. Για την αξιολόγηση χτίσε πρωτόκολλο απάντησης και όχι time.Sleep.</p>
+<h3>Πειράματα compiler</h3>
+<p>Προσπάθησε να μεταφέρεις mutable reference χωρίς τις κατάλληλες capabilities ανάμεσα στους actors. Ο type checker πρέπει να απορρίψει την ανεπίτρεπτη κοινή mutable πρόσβαση. Κατάγραψε το diagnostic και εξήγησε ποια πρόσβαση παραβιάζει το ασφαλές μοντέλο.</p>
+<h3>Κριτήρια ολοκλήρωσης</h3>
+<p>Παράδωσε μία εκδοχή με val και μία με iso όπου η μεταφορά αποδεικνύεται νόμιμη από τον compiler. Τεκμηρίωσε Pony compiler version, ακριβή μηνύματα και ποια παραδείγματα πράγματι δοκιμάστηκαν. Αν δεν διαθέτεις ponyc, πες ότι πρόκειται για στατική ανάλυση αντί για περασμένο test.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

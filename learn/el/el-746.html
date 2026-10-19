@@ -1,0 +1,89 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>zig — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-746.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="zig — συγκεντρωτικός οδηγός Zig Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .zig . Εκτέλεση / περιβάλλον: zig run hello.zig (η τυπική βιβλιοθήκη αλλάζει ανά…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="zig — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="zig — συγκεντρωτικός οδηγός Zig Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .zig . Εκτέλεση / περιβάλλον: zig run hello.zig (η τυπική βιβλιοθήκη αλλάζει ανά…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-746.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="zig — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="zig — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="zig — συγκεντρωτικός οδηγός Zig Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .zig . Εκτέλεση / περιβάλλον: zig run hello.zig (η τυπική βιβλιοθήκη αλλάζει ανά…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="zig — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>zig — συγκεντρωτικός οδηγός — DedSec Project</h1><p>zig — συγκεντρωτικός οδηγός Zig Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .zig . Εκτέλεση / περιβάλλον: zig run hello.zig (η τυπική βιβλιοθήκη αλλάζει ανά…</p><section><h2>Zig</h2>
+<p><strong>Συνήθης χρήση:</strong> Προγραμματισμός συστημάτων.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.zig</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> zig run hello.zig (η τυπική βιβλιοθήκη αλλάζει ανά έκδοση).</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>const std = @import(&quot;std&quot;);
+pub fn main() void {
+    std.debug.print(&quot;Hello, Ada!\n&quot;, .{});
+}
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Έλεγξε την έκδοση Zig· η τυπική βιβλιοθήκη αλλάζει συχνά.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Έλεγξε την έκδοση Zig· η τυπική βιβλιοθήκη αλλάζει συχνά. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h2>Zig — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Πραγματικό αρχικό δείγμα</h3>
+<pre><code class="language-text">const std = @import(&quot;std&quot;);
+pub fn main() void {
+    std.debug.print(&quot;Hello, Ada!\n&quot;, .{});
+}
+</code></pre>
+<p><strong>Περιβάλλον:</strong> zig run hello.zig (API can change by version).. Επιβεβαίωσε ότι έχεις το σωστό compiler, host ή simulator πριν θεωρήσεις την έξοδο αξιόπιστη. Για scripts με πρόσβαση σε προσωπικά αρχεία ή ρυθμίσεις, χρησιμοποίησε προσωρινά και read-only δεδομένα.</p>
+<h3>Συγκεκριμένος στόχος υλοποίησης</h3>
+<p>Χρησιμοποίησε std.testing.expect για slice index και allocator-owned buffer με defer. Σύγκρινε optional ?T με error union !T.</p>
+<h3>Κρίσιμο λάθος που πρέπει να αναγνωρίζεις</h3>
+<p>Η Zig standard library αλλάζει συχνά· σταθεροποίησε compiler και μην ανακατεύεις allocator APIs διαφορετικών releases.</p>
+<h2>Zig — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>zig run {file}</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Zig — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Ασφαλές άθροισμα υπολογισμένων στοιχείων</h3>
+<p>Η Zig απαιτεί ρητή διαχείριση πολλών αποτυχιών μέσω error unions και επιστροφής error. Η παρακάτω συνάρτηση δείχνει check πρώτα του μήκους και μετά ασφαλή πρόσβαση. Η ακριβής έκδοση της Zig έχει σημασία επειδή standard library APIs αλλάζουν συχνά.</p>
+<pre><code class="language-zig">const std = @import(&quot;std&quot;);
+
+fn firstTwo(items: []const u8) error{TooShort}!u16 {
+    if (items.len &lt; 2) return error.TooShort;
+    return @as(u16, items[0]) + @as(u16, items[1]);
+}
+
+test &quot;bounded input&quot; {
+    try std.testing.expectEqual(@as(u16, 5), try firstTwo(&amp;.{2, 3}));
+    try std.testing.expectError(error.TooShort, firstTwo(&amp;.{}));
+}
+</code></pre>
+<p>Το firstTwo(&amp;.{2,3}) αναμένεται να παράγει 5. Εδώ μετατρέπεις u8 σε u16 πριν την πρόσθεση ώστε το μεγαλύτερο άθροισμα 255+255 να χωρά στον τύπο. Εξήγησε γιατί ο ίδιος κώδικας με αποτέλεσμα u8 θα χρειαζόταν ξεχωριστή πολιτική overflow.</p>
+<h3>Ο allocator δεν είναι κρυφή λεπτομέρεια</h3>
+<p>Όταν μια συνάρτηση δημιουργεί owned dynamic memory στη Zig, είναι συνήθες να παίρνει std.mem.Allocator και να δηλώνει ρητά ποιος καλεί free. Για μικρό εργαστήριο κατασκεύασε array με allocator.alloc και ανέβαλε την αποδέσμευση με defer allocator.free(data). Αν επιστρέψεις slice προς ήδη freed storage, έχεις σχεδιάσει invalid lifetime.</p>
+<h3>Error propagation και κατανόηση</h3>
+<p>Το try μεταφέρει το error στον caller που επιτρέπει την ίδια κατηγορία σφάλματος. Το catch σου επιτρέπει να χειριστείς ένα σφάλμα σε συγκεκριμένο σημείο. Μην χρησιμοποιείς catch unreachable για μη έμπιστη είσοδο μόνο επειδή ο κώδικας γίνεται πιο σύντομος.</p>
+<h3>Έλεγχοι αποδοχής</h3>
+<p>Πρόσθεσε test για input με ένα στοιχείο, δύο στοιχεία και μέγιστες τιμές byte. Τεκμηρίωσε τη Zig compiler version που χρησιμοποιείς, επειδή syntax και allocator API μπορεί να διαφέρουν ανάμεσα στις εκδόσεις. Κατάγραψε την πραγματική έξοδο zig test και διαχώρισε τα compiler errors από το runtime error union.</p>
+<h2>Zig — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Οι ρητοί allocators εκθέτουν την πολιτική μνήμης σε API.</li>
+<li>Τα error unions και optionals δηλώνουν αποτυχία και απουσία.</li>
+<li>Η συμβατότητα εκδόσεων είναι σημαντική· σύγκρινε παραδείγματα με τον εγκατεστημένο compiler.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

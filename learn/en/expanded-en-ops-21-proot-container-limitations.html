@@ -1,0 +1,52 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Termux proot: environment isolation and limits — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-ops-21-proot-container-limitations.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="proot is a user-space compatibility layer, not a virtual machine Set correct expectations A Linux distribution running through proot inside Termux can offer familiar directories, shells and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Termux proot: environment isolation and limits — DedSec Project">
+<meta property="og:description" content="proot is a user-space compatibility layer, not a virtual machine Set correct expectations A Linux distribution running through proot inside Termux can offer familiar directories, shells and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-ops-21-proot-container-limitations.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Termux proot: environment isolation and limits — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Termux proot: environment isolation and limits — DedSec Project">
+<meta name="twitter:description" content="proot is a user-space compatibility layer, not a virtual machine Set correct expectations A Linux distribution running through proot inside Termux can offer familiar directories, shells and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Termux proot: environment isolation and limits — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Termux proot: environment isolation and limits — DedSec Project</h1><p>proot is a user-space compatibility layer, not a virtual machine Set correct expectations A Linux distribution running through proot inside Termux can offer familiar directories, shells and…</p><section><h1>proot is a user-space compatibility layer, not a virtual machine</h1>
+<h2>Set correct expectations</h2>
+<p>A Linux distribution running through proot inside Termux can offer familiar directories, shells and package commands without Android root. It does not grant privileged kernel features, real container isolation, arbitrary mounts or systemd PID 1 semantics. A command that works on Ubuntu installed natively might fail under proot because access to devices and kernel interfaces remains governed by Android and the host application.</p>
+<pre><code class="language-sh">uname -a
+id
+pwd
+cat /proc/1/comm 2&gt;/dev/null || true
+command -v systemctl || true
+</code></pre>
+<h2>Diagnose across both layers</h2>
+<p>When an executable is missing, check whether you are in native Termux or inside the guest distribution. Compare <code>command -v python</code>, <code>uname -m</code>, the package manager, and environment variables before installation. Errors opening <code>/dev</code> resources may be structural, not a reason to run the guest as root. A command like <code>systemctl</code> may exist but fail because a full service manager is not actually running as init.</p>
+<h2>Keep work reproducible</h2>
+<p>Maintain sources in version control and a small file listing guest distribution, architecture and installed dependencies. Keep backups outside ephemeral guest directories. For development tools, prefer running only the build components that need the guest; accessing Android storage directly from the guest may require an explicitly supported bind or path mapping.</p>
+<h2>Verification standard</h2>
+<p>Demonstrate a basic user-space command, a package lookup and a file read in the guest. Record any unsupported service/namespace operation as a platform limitation with the exact error rather than “missing permissions.” Do not suggest bypassing Android sandboxing to emulate unsupported kernel features.</p>
+<h2>Three identities to record separately</h2>
+<p>A guest's displayed UID, the Android application's host UID and the device's kernel privileges are not interchangeable. A guest prompt saying root describes the environment presented to user-space programs; it does not grant Android root. Likewise, a guest package manager installs guest packages, while <code>pkg</code> in native Termux targets a different prefix and ABI environment.</p>
+<h2>Trace an executable mismatch</h2>
+<p>Write down <code>command -v python</code>, the active shell and <code>uname -m</code> in both environments. A missing loader, an architecture mismatch and an absent command are distinct failures. Keep guest-created virtual environments with the guest interpreter that created them. Do not repair missing libraries by copying arbitrary <code>.so</code> files from the native Termux prefix into the guest.</p>
+<h2>Boundary test for background work</h2>
+<p>Start a harmless short-lived command, observe its exit code, then compare a longer test when the Android app is backgrounded. The guest cannot guarantee survival against host process termination. Save progress incrementally and make a resumed operation idempotent, so restarting does not duplicate output. A guest service launcher can help a user-space daemon but does not establish a real booted systemd system.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

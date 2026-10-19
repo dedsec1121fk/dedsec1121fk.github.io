@@ -1,0 +1,109 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Business Continuity, Disaster Recovery and Backup Engineering — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-048.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Business Continuity, Disaster Recovery and Backup Engineering Purpose: Design recovery capabilities that remain usable when systems, identities, facilities, providers, or data are…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Business Continuity, Disaster Recovery and Backup Engineering — DedSec Project">
+<meta property="og:description" content="Business Continuity, Disaster Recovery and Backup Engineering Purpose: Design recovery capabilities that remain usable when systems, identities, facilities, providers, or data are…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-048.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Business Continuity, Disaster Recovery and Backup Engineering — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Business Continuity, Disaster Recovery and Backup Engineering — DedSec Project">
+<meta name="twitter:description" content="Business Continuity, Disaster Recovery and Backup Engineering Purpose: Design recovery capabilities that remain usable when systems, identities, facilities, providers, or data are…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Business Continuity, Disaster Recovery and Backup Engineering — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Business Continuity, Disaster Recovery and Backup Engineering — DedSec Project</h1><p>Business Continuity, Disaster Recovery and Backup Engineering Purpose: Design recovery capabilities that remain usable when systems, identities, facilities, providers, or data are…</p><section><blockquote>
+<p><strong>Purpose:</strong> Design recovery capabilities that remain usable when systems, identities, facilities, providers, or data are unavailable.</p>
+</blockquote>
+<h2>Three related disciplines</h2>
+<p><strong>Business continuity</strong> keeps critical business processes operating.
+<strong>Disaster recovery</strong> restores technology capabilities.
+<strong>Backup engineering</strong> preserves recoverable copies of data/configuration.</p>
+<p>They overlap but are not interchangeable.</p>
+<h2>Business impact analysis</h2>
+<p>Identify critical processes and their dependencies:</p>
+<ul>
+<li>people;</li>
+<li>identity;</li>
+<li>applications;</li>
+<li>databases;</li>
+<li>networks;</li>
+<li>DNS;</li>
+<li>SaaS/cloud providers;</li>
+<li>facilities;</li>
+<li>suppliers;</li>
+<li>communication channels.</li>
+</ul>
+<h2>Recovery objectives</h2>
+<p><strong>RTO:</strong> target time to restore a service.
+<strong>RPO:</strong> maximum tolerable data-loss window.</p>
+<p>These should be business decisions informed by technical feasibility and cost.</p>
+<h2>Backup design</h2>
+<p>Consider independent copies, geographic/provider separation where needed, immutable/offline options, encryption, key recovery, privileged-access separation, retention, and monitoring.</p>
+<p>Backups should include more than user data when recovery depends on configuration, certificates, infrastructure code, application packages, or identity systems.</p>
+<h2>Restore testing</h2>
+<p>A successful backup job is not a successful recovery. Test:</p>
+<ul>
+<li>file restore;</li>
+<li>database restore;</li>
+<li>application restore;</li>
+<li>identity dependency;</li>
+<li>key/certificate availability;</li>
+<li>clean-room recovery;</li>
+<li>time required;</li>
+<li>integrity checks.</li>
+</ul>
+<h2>Dependency maps</h2>
+<p>Recovery plans fail when teams restore components in the wrong order. Document upstream dependencies and minimum viable service chains.</p>
+<h2>Crisis communications</h2>
+<p>Maintain out-of-band contacts and communication channels that do not depend on the affected identity or collaboration platform.</p>
+<h2>Provider failure</h2>
+<p>Cloud and SaaS improve resilience in many scenarios but create provider and account dependencies. Define export/backup capability, alternative communication, and administrator recovery.</p>
+<h2>Exercises</h2>
+<p>Use increasing realism:</p>
+<ol>
+<li>checklist review;</li>
+<li>tabletop;</li>
+<li>component restore;</li>
+<li>partial service recovery;</li>
+<li>full disaster-recovery exercise.</li>
+</ol>
+<p>Record lessons and assign remediation owners.</p>
+<h2>Lab — Recovery proof</h2>
+<p>Create a small local service with configuration and sample data. Back up both. Delete the working copy, restore from backup, verify hashes/data, and record actual recovery time. Repeat after changing one undocumented dependency and observe the failure.</p>
+<p><strong>Learning goal:</strong> recovery capability must be demonstrated, not assumed.</p>
+<h2>Recovery engineering in more depth</h2>
+<p>Business continuity keeps critical work functioning; disaster recovery restores technology; backup engineering preserves recoverable copies. They overlap but answer different questions.</p>
+<h3>RTO and RPO</h3>
+<p>RTO describes how quickly a service should be restored. RPO describes how much data loss in time is acceptable. These targets must be tied to real business processes and tested against observed recovery performance.</p>
+<h3>Dependency mapping</h3>
+<p>A recovery plan for an application is incomplete if it ignores identity, DNS, certificates/keys, network configuration, storage, secrets, external providers, build artifacts, licenses, and administrators' access paths.</p>
+<h3>Clean recovery</h3>
+<p>After a security incident, restore from a known-good point, rotate compromised identities/secrets, patch the entry condition, validate configurations, and monitor before declaring recovery complete. Reconnecting a restored but still vulnerable system can recreate the incident.</p>
+<h3>Exercises</h3>
+<p>Use tabletop, partial restore, and full technical recovery exercises at appropriate intervals. Record gaps, owners, deadlines, and actual recovery times. A runbook that has never been exercised is an assumption.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Modules 23 and basic backup concepts.</p>
+<h3>Practice task</h3>
+<p>Back up disposable lab data, record RPO/RTO targets, delete/alter the disposable copy, restore it, verify integrity, measure actual recovery time, and update the runbook.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>38, 49, 59</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

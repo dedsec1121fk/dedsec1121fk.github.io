@@ -1,0 +1,65 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>crystal — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-352.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="crystal — συγκεντρωτικός οδηγός Crystal Έννοια Η Crystal μεταγλωττίζει γλώσσα με σύνταξη τύπου Ruby σε native κώδικα, με type inference και έλεγχο nilable values. Παράδειγμα πηγαίου κώδικα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="crystal — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="crystal — συγκεντρωτικός οδηγός Crystal Έννοια Η Crystal μεταγλωττίζει γλώσσα με σύνταξη τύπου Ruby σε native κώδικα, με type inference και έλεγχο nilable values. Παράδειγμα πηγαίου κώδικα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-352.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="crystal — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="crystal — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="crystal — συγκεντρωτικός οδηγός Crystal Έννοια Η Crystal μεταγλωττίζει γλώσσα με σύνταξη τύπου Ruby σε native κώδικα, με type inference και έλεγχο nilable values. Παράδειγμα πηγαίου κώδικα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="crystal — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>crystal — συγκεντρωτικός οδηγός — DedSec Project</h1><p>crystal — συγκεντρωτικός οδηγός Crystal Έννοια Η Crystal μεταγλωττίζει γλώσσα με σύνταξη τύπου Ruby σε native κώδικα, με type inference και έλεγχο nilable values. Παράδειγμα πηγαίου κώδικα…</p><section><h2>Crystal</h2>
+<h3>Έννοια</h3>
+<p>Η Crystal μεταγλωττίζει γλώσσα με σύνταξη τύπου Ruby σε native κώδικα, με type inference και έλεγχο nilable values.</p>
+<h3>Παράδειγμα πηγαίου κώδικα ή χρήσης</h3>
+<pre><code class="language-text">numbers = [1, 2, 3]
+puts numbers.sum
+</code></pre>
+<h3>Άσκηση με συγκεκριμένο στόχο</h3>
+<p>Υπολόγισε το άθροισμα και δοκίμασε lookup που μπορεί να επιστρέψει nil· έλεγξε το πριν από χρήση.</p>
+<h3>Έλεγχος και διάγνωση</h3>
+<p>Τα Ruby gems και Crystal shards δεν είναι εναλλάξιμα· η ομοιότητα σύνταξης δεν σημαίνει ABI συμβατότητα.</p>
+<p>Σημείωσε την είσοδο, το αναμενόμενο αποτέλεσμα και το πραγματικό αποτέλεσμα στην εγκατεστημένη έκδοση της Crystal. Αν ο κώδικας δεν είναι προσβάσιμος από το κινητό, κράτησε το παράδειγμα ως μη δοκιμασμένο και εξήγησε τη σημασιολογία αντί να ισχυριστείς επιτυχία. Κάνε μια δεύτερη δοκιμή που απομονώνει μόνο τον μηχανισμό της άσκησης και κράτησε ακριβές σφάλμα με τρόπο που να μην εκθέτει προσωπικά δεδομένα.</p>
+<h2>Crystal — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Μετασχηματισμός τυποποιημένων τιμών</h3>
+<p>Η Crystal μοιάζει συντακτικά με Ruby, αλλά μεταγλωττίζεται και ελέγχει τύπους πριν την εκτέλεση. Αποθήκευσε ως <code>scores.cr</code>:</p>
+<pre><code class="language-crystal">scores = [1, nil, 3] of Int32?
+doubled = scores.compact_map { |n| n.try { |value| value * 2 } }
+raise &quot;wrong result&quot; unless doubled == [2, 6]
+puts doubled.join(&quot;,&quot;)
+</code></pre>
+<p>Αναμένεται <code>2,6</code>. Ο τύπος <code>Int32?</code> επιτρέπει ακέραιο ή <code>Nil</code>. Η <code>try</code> εκτελεί το block μόνο για μη-nil τιμή και η <code>compact_map</code> αφαιρεί τα nil αποτελέσματα. Δοκίμασε <code>crystal run scores.cr</code> και σημείωσε την έκδοση compiler. Η συμπεριφορά δεν ταυτίζεται αυτομάτως με αυτή της Ruby, επειδή η Crystal έχει διαφορετική στατική ανάλυση.</p>
+<h3>Σκόπιμο σφάλμα μεταγλώττισης</h3>
+<p>Άλλαξε <code>value * 2</code> σε <code>value + &quot;two&quot;</code>. Η ανάμειξη αριθμού και string χωρίς κατάλληλη πράξη πρέπει να απορριφθεί. Κατέγραψε το πραγματικό μήνυμα, τη γραμμή και τον τύπο κάθε τελεστέου. Επανέφερε τον έγκυρο υπολογισμό και μεταγλώττισε ξανά. Μην κρύβεις το πρόβλημα με αυθαίρετη μετατροπή όλων των δεδομένων σε κείμενο.</p>
+<h3>Κενό δεδομένο ή νόμιμο μηδέν;</h3>
+<p>Αν αντικαταστήσεις το nil με <code>0</code>, λαμβάνεις <code>[2, 0, 6]</code> αντί για <code>[2, 6]</code>. Η πολιτική διατήρησης, απόρριψης ή παράλειψης μιας άγνωστης τιμής αλλάζει τη σημασία και το μήκος της συλλογής. Δοκίμασε ξεχωριστά κενή λίστα και λίστα μόνο με nil. Μην θεωρείς ότι η απουσία βαθμολογίας αντιστοιχεί σε πραγματική βαθμολογία μηδέν.</p>
+<h3>Αυτοτελές εργαστήριο</h3>
+<p>Σχεδίασε <code>average(scores : Array(Int32?))</code> και όρισε σαφώς τι επιστρέφει για όλες τις τιμές nil. Έλεγξε θετικούς, αρνητικούς, άγνωστες τιμές και μεγάλο άθροισμα κοντά στα όρια <code>Int32</code>. Δήλωσε τύπο επιστροφής και δικαιολόγησε την αριθμητική αναπαράσταση. Δεν ισχυριζόμαστε μετρήσεις επιδόσεων χωρίς δοκιμή. Πηγή: https://crystal-lang.org/reference/</p>
+<h2>Crystal — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Στάδιο 1: κατανόηση εκτέλεσης</h3>
+<p>Υλοποίησε parser που επιστρέφει Int32? και χειρίσου nil με if αντί not_nil!. Δοκίμασε κενά, μη έγκυρα και out-of-range strings· σύγκρινε compile-time checks με Ruby.</p>
+<h3>Στάδιο 2: απόδειξη με ελεγχόμενες δοκιμές</h3>
+<p>Επεξεργάσου Array από named records μέσω each και compact_map. Μέτρησε allocations όπου επιτρέπεται και ξεχώρισε value records από reference objects και mutable state.</p>
+<h3>Στάδιο 3: μικρό ολοκληρωμένο έργο</h3>
+<p>Χτίσε CLI ανάγνωσης UTF-8 με error handling. Μην υποθέτεις ότι Ruby gem δουλεύει σε Crystal. Πρόσθεσε specs και δήλωσε έκδοση compiler.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

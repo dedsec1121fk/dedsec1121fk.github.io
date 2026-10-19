@@ -1,0 +1,58 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Factor — Αναλυτικός οδηγός εξάσκησης — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-793.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Factor — εξήγησε τη στοίβα βήμα προς βήμα Μία είσοδος και μία έξοδος Το ( n -- n ) δηλώνει μία τιμή εισόδου και μία εξόδου. Η dup διπλασιάζει το 5, ο πολλαπλασιασμός καταναλώνει δύο…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Factor — Αναλυτικός οδηγός εξάσκησης — DedSec Project">
+<meta property="og:description" content="Factor — εξήγησε τη στοίβα βήμα προς βήμα Μία είσοδος και μία έξοδος Το ( n -- n ) δηλώνει μία τιμή εισόδου και μία εξόδου. Η dup διπλασιάζει το 5, ο πολλαπλασιασμός καταναλώνει δύο…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-793.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Factor — Αναλυτικός οδηγός εξάσκησης — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Factor — Αναλυτικός οδηγός εξάσκησης — DedSec Project">
+<meta name="twitter:description" content="Factor — εξήγησε τη στοίβα βήμα προς βήμα Μία είσοδος και μία έξοδος Το ( n -- n ) δηλώνει μία τιμή εισόδου και μία εξόδου. Η dup διπλασιάζει το 5, ο πολλαπλασιασμός καταναλώνει δύο…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Factor — Αναλυτικός οδηγός εξάσκησης — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Factor — Αναλυτικός οδηγός εξάσκησης — DedSec Project</h1><p>Factor — εξήγησε τη στοίβα βήμα προς βήμα Μία είσοδος και μία έξοδος Το ( n -- n ) δηλώνει μία τιμή εισόδου και μία εξόδου. Η dup διπλασιάζει το 5, ο πολλαπλασιασμός καταναλώνει δύο…</p><section><h1>Factor — εξήγησε τη στοίβα βήμα προς βήμα</h1>
+<h2>Μία είσοδος και μία έξοδος</h2>
+<pre><code class="language-factor">USING: kernel math prettyprint ;
+IN: square-lab
+: square ( n -- n ) dup * ;
+5 square .
+</code></pre>
+<p>Το ( n -- n ) δηλώνει μία τιμή εισόδου και μία εξόδου. Η dup διπλασιάζει το 5, ο πολλαπλασιασμός καταναλώνει δύο πεντάρια και αφήνει 25. Η εντολή εκτύπωσης χρησιμοποιεί το στοιχείο της στοίβας. Κατάγραψε πώς φορτώνεται το vocabulary στη δική σου έκδοση.</p>
+<h2>Εντοπισμός underflow</h2>
+<p>Άλλαξε τον ορισμό σε σκέτο *. Απαιτούνται πλέον δύο τιμές ενώ ο καλών προσφέρει μία. Εξήγησε τη σύγκρουση του stack effect. Μετά δοκίμασε dup dup * και παρατήρησε ότι μένει επιπλέον στοιχείο, ακόμη και αν το αποτέλεσμα που τυπώνεται φαίνεται σωστό.</p>
+<h2>Αυτόνομη άσκηση</h2>
+<p>Όρισε word για έλεγχο άρτιου ακεραίου και εξέτασε 0, -2 και 7. Για κάθε εντολή γράψε κατάσταση στοίβας πριν και μετά. Σημείωσε έκδοση interpreter και πραγματικές παρατηρήσεις: δεν έχει γίνει δοκιμή Factor εδώ.</p>
+<h2>Εντόπισε την επιπλέον τιμή στη στοίβα</h2>
+<p>Ξεκίνα από κενή στοίβα και ακολούθησε την ακολουθία 5 dup dup *. Μετά τις δύο dup έχεις 5 5 5 και ο πολλαπλασιασμός καταναλώνει δύο κορυφαία στοιχεία, αφήνοντας 5 25. Άρα δεν υπάρχει μόνο ένα αποτέλεσμα. Αν επόμενη λέξη υποθέσει ακριβώς μία τιμή, το υπόλοιπο 5 θα επηρεάσει άλλη πράξη. Το σχόλιο stack effect περιγράφει συμβόλαιο αλλά δεν επαληθεύει την υλοποίηση. Δημιούργησε δεύτερο word που δέχεται δύο αριθμούς και υπολογίζει μέσο όρο. Διερεύνησε ποια αριθμητική πράξη επιστρέφει ακέραιο ή κινητής υποδιαστολής στη δική σου έκδοση και κατέγραψε τη στοίβα μετά από κάθε στάδιο.</p>
+<h2>Factor</h2>
+<p><strong>Συνήθης χρήση:</strong> Συναρτησιακός προγραμματισμός.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.factor</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> Φόρτωσέ το στο περιβάλλον της γλώσσας Factor.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>USING: io ;
+IN: scratchpad
+&quot;Hello, Ada!&quot; print
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Η Factor βασίζεται σε συνένωση· μην τη μπερδεύεις με την εντολή Unix factor.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Η Factor βασίζεται σε συνένωση· μην τη μπερδεύεις με την εντολή Unix factor. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

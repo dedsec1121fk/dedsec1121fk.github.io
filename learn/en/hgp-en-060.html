@@ -1,0 +1,119 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Physical Security and Human Resilience — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-060.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Physical Security and Human Resilience Purpose: Cover physical access, device loss, workspace controls, visitor processes, and human-centered resilience without relying on deceptive…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Physical Security and Human Resilience — DedSec Project">
+<meta property="og:description" content="Physical Security and Human Resilience Purpose: Cover physical access, device loss, workspace controls, visitor processes, and human-centered resilience without relying on deceptive…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-060.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Physical Security and Human Resilience — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Physical Security and Human Resilience — DedSec Project">
+<meta name="twitter:description" content="Physical Security and Human Resilience Purpose: Cover physical access, device loss, workspace controls, visitor processes, and human-centered resilience without relying on deceptive…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Physical Security and Human Resilience — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Physical Security and Human Resilience — DedSec Project</h1><p>Physical Security and Human Resilience Purpose: Cover physical access, device loss, workspace controls, visitor processes, and human-centered resilience without relying on deceptive…</p><section><blockquote>
+<p><strong>Purpose:</strong> Cover physical access, device loss, workspace controls, visitor processes, and human-centered resilience without relying on deceptive offensive exercises.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Explain how physical access changes technical risk.</li>
+<li>Design basic controls for devices, rooms, visitors, media, and disposal.</li>
+<li>Use awareness exercises that teach safe decisions rather than tricking people.</li>
+<li>Integrate physical incidents into response and recovery planning.</li>
+</ul>
+<h2>Physical access changes the threat model</h2>
+<p>A person with direct access may be able to remove storage, connect peripherals, observe screens, reset equipment, steal tokens, photograph information, or interrupt power/network links. Technical controls should assume that some devices may eventually be lost or stolen.</p>
+<h2>Device controls</h2>
+<p>For laptops/phones/workstations:</p>
+<ul>
+<li>strong screen lock;</li>
+<li>full-disk/device encryption;</li>
+<li>current OS/firmware;</li>
+<li>secure boot where supported;</li>
+<li>controlled removable media;</li>
+<li>asset identification;</li>
+<li>remote revocation/wipe capabilities where appropriate;</li>
+<li>recovery keys protected separately;</li>
+<li>documented lost-device process.</li>
+</ul>
+<h2>Workspace controls</h2>
+<p>Protect sensitive conversations and screens based on environment. Use clean-desk practices where justified, secure printed material, avoid leaving unlocked devices unattended, and separate public/visitor space from restricted infrastructure.</p>
+<h2>Visitor and contractor process</h2>
+<p>A simple process should define:</p>
+<ul>
+<li>who approves visitors;</li>
+<li>identification/badge method;</li>
+<li>escort requirements;</li>
+<li>areas allowed;</li>
+<li>equipment/media rules;</li>
+<li>badge return/expiration;</li>
+<li>reporting of anomalies.</li>
+</ul>
+<p>Do not rely on employees confronting suspicious people without a safe escalation procedure.</p>
+<h2>Removable media</h2>
+<p>USB drives and external storage can introduce malware or cause data leakage. Organizations may restrict them, use managed encrypted media, scan content, or disable ports depending on risk. Disposal should account for whether data can be recovered from the media.</p>
+<h2>Secure disposal</h2>
+<p>Deleting a file is not always equivalent to securely disposing of data. Use organization/vendor-supported sanitization methods appropriate to the media type and sensitivity. For encrypted devices, key destruction can be part of a disposal strategy when correctly designed.</p>
+<h2>Awareness without harmful deception</h2>
+<p>Security awareness should teach repeatable behaviors:</p>
+<ul>
+<li>verify unusual requests through a trusted channel;</li>
+<li>do not share MFA codes/passwords;</li>
+<li>report suspicious messages promptly;</li>
+<li>avoid plugging in unknown media;</li>
+<li>lock devices;</li>
+<li>challenge/escalate visitors according to policy;</li>
+<li>report lost devices immediately.</li>
+</ul>
+<p>Exercises should be approved, proportionate, and designed to improve behavior rather than embarrass participants.</p>
+<h2>Lost-device tabletop</h2>
+<p>Use a fictional scenario:</p>
+<ol>
+<li>employee reports a lost phone/laptop;</li>
+<li>identify device, owner, data classification, and last known state;</li>
+<li>revoke sessions/tokens where appropriate;</li>
+<li>assess encryption and lock state;</li>
+<li>decide whether remote wipe is justified/available;</li>
+<li>preserve relevant account/device logs;</li>
+<li>replace/recover access;</li>
+<li>document notification/escalation requirements;</li>
+<li>review whether any control failed.</li>
+</ol>
+<h2>Facility outage tabletop</h2>
+<p>Simulate loss of power, cooling, office access, or network connectivity. Ask:</p>
+<ul>
+<li>which systems/services are critical?</li>
+<li>can staff work remotely?</li>
+<li>what alternate communication channel exists?</li>
+<li>how are backups and recovery systems accessed?</li>
+<li>which dependencies are outside the facility?</li>
+<li>who has authority to declare/close the incident?</li>
+</ul>
+<h2>Checkpoint</h2>
+<p>You should be able to integrate physical events into identity, incident-response, and recovery plans rather than treating physical security as a separate discipline. Continue with Modules 09, 37, 42, 48, and 54.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Modules 09 and 54 help.</p>
+<h3>Practice task</h3>
+<p>Run a fictional lost-device or facility-outage tabletop. Document escalation, identity revocation, evidence, recovery, communications, and lessons learned.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>37, 42, 48, 54</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

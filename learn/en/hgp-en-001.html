@@ -1,0 +1,132 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cybersecurity Foundations and Ethical Hacking Methodology — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-001.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Cybersecurity Foundations and Ethical Hacking Methodology Cybersecurity is the discipline of protecting systems, identities, software, networks, and data while preserving the ability of…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Cybersecurity Foundations and Ethical Hacking Methodology — DedSec Project">
+<meta property="og:description" content="Cybersecurity Foundations and Ethical Hacking Methodology Cybersecurity is the discipline of protecting systems, identities, software, networks, and data while preserving the ability of…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-001.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cybersecurity Foundations and Ethical Hacking Methodology — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cybersecurity Foundations and Ethical Hacking Methodology — DedSec Project">
+<meta name="twitter:description" content="Cybersecurity Foundations and Ethical Hacking Methodology Cybersecurity is the discipline of protecting systems, identities, software, networks, and data while preserving the ability of…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Cybersecurity Foundations and Ethical Hacking Methodology — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Cybersecurity Foundations and Ethical Hacking Methodology — DedSec Project</h1><p>Cybersecurity Foundations and Ethical Hacking Methodology Cybersecurity is the discipline of protecting systems, identities, software, networks, and data while preserving the ability of…</p><section><p>Cybersecurity is the discipline of protecting systems, identities, software, networks, and data while preserving the ability of legitimate users to work. Ethical hacking is one part of that discipline: an authorized attempt to test security assumptions and produce evidence that helps an owner reduce risk.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> Perform practical testing only on systems, accounts, applications, networks, or devices you own or are explicitly authorized to assess. When learning, prefer localhost, disposable virtual machines, containers, emulators, synthetic accounts, and intentionally vulnerable training applications.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>distinguish assets, threats, vulnerabilities, exposures, controls, and risk;</li>
+<li>explain confidentiality, integrity, availability, authenticity, accountability, and resilience;</li>
+<li>distinguish authentication from authorization;</li>
+<li>describe a modern security-assessment lifecycle;</li>
+<li>define scope and evidence requirements before testing;</li>
+<li>explain why remediation and retesting are part of ethical hacking.</li>
+</ul>
+<h2>Security properties</h2>
+<h3>Confidentiality</h3>
+<p>Confidentiality limits information to authorized subjects. Encryption can protect confidentiality in transit or at rest, but confidentiality also depends on authorization, secret handling, logging practices, backups, screenshots, exports, and operational procedures.</p>
+<h3>Integrity</h3>
+<p>Integrity means data and system state remain correct and unauthorized modification is prevented or detectable. Hashes, digital signatures, access control, transaction validation, version control, immutable logging, and change-management processes can all contribute to integrity.</p>
+<h3>Availability</h3>
+<p>Availability means an authorized user can obtain a required service or resource when needed. Capacity, redundancy, backups, dependency management, rate limits, monitoring, recovery procedures, and protection against resource exhaustion all affect availability.</p>
+<h3>Authenticity and accountability</h3>
+<p>Authenticity concerns whether an identity, artifact, or message is what it claims to be. Accountability concerns whether actions can be associated with the correct actor and investigated later. Strong authentication is useful only when authorization decisions and audit evidence are also correct.</p>
+<h3>Resilience</h3>
+<p>A secure system should not depend on the assumption that prevention always succeeds. Resilience includes detection, containment, recovery, restoration, lessons learned, and the ability to operate safely during partial failure.</p>
+<h2>Core security vocabulary</h2>
+<ul>
+<li><strong>Asset:</strong> something that has value and requires protection.</li>
+<li><strong>Threat:</strong> a circumstance or actor capable of causing harm.</li>
+<li><strong>Vulnerability:</strong> a weakness that can violate a security property.</li>
+<li><strong>Exposure:</strong> a condition that makes a weakness reachable or relevant.</li>
+<li><strong>Exploit:</strong> a method that takes advantage of a vulnerability. In this guide, exploit research is limited to controlled labs and defensive understanding.</li>
+<li><strong>Control:</strong> a safeguard that prevents, detects, limits, or helps recover from an unwanted event.</li>
+<li><strong>Risk:</strong> the combination of likelihood, impact, exposure, business context, and uncertainty.</li>
+<li><strong>Attack surface:</strong> the set of reachable interfaces, identities, inputs, services, dependencies, and trust boundaries that could be abused.</li>
+<li><strong>Trust boundary:</strong> a point where data, identity, authority, or execution crosses between components with different trust assumptions.</li>
+</ul>
+<h2>Authentication and authorization</h2>
+<p>Authentication answers, “Who or what is presenting this credential?” Authorization answers, “May this identity perform this action on this resource in this context?” A system can authenticate a user correctly and still be vulnerable if authorization checks are missing, performed on the wrong object, or based on stale state.</p>
+<h2>Threat actors and motivations</h2>
+<p>Security analysis should focus on capabilities and goals rather than stereotypes. Relevant actors can include financially motivated criminals, insiders, state-linked groups, opportunistic attackers, hacktivists, fraud groups, competitors, and automated abuse. Defenders should ask what access the actor begins with, what they are trying to achieve, what constraints they face, and what evidence their activity would leave.</p>
+<h2>Vulnerability management basics</h2>
+<p>CVE identifiers provide common names for publicly disclosed vulnerabilities. NVD and vendor advisories enrich vulnerability information. CVSS provides a standardized severity framework, but a score is not a complete risk decision: exploitability, exposure, asset importance, compensating controls, and business impact still matter.</p>
+<p>A useful vulnerability workflow is:</p>
+<ol>
+<li>identify the affected asset and exact version;</li>
+<li>verify whether the issue is applicable;</li>
+<li>determine exposure and required privileges;</li>
+<li>collect evidence without causing unnecessary impact;</li>
+<li>prioritize using technical and business context;</li>
+<li>remediate or mitigate;</li>
+<li>retest and record the result.</li>
+</ol>
+<h2>A modern ethical-assessment lifecycle</h2>
+<h3>1. Authorization and scope</h3>
+<p>Write down the owner, systems, accounts, time window, allowed techniques, prohibited actions, data-handling rules, contacts, and stop conditions. “It is public on the Internet” is not authorization.</p>
+<h3>2. Discovery and modeling</h3>
+<p>Build an inventory of assets, identities, interfaces, dependencies, and trust boundaries. Start with passive or read-only evidence where possible.</p>
+<h3>3. Validation</h3>
+<p>Test security assumptions using the least invasive method that answers the question. Prefer a proof that demonstrates the weakness over a technique that maximizes access or impact.</p>
+<h3>4. Evidence and analysis</h3>
+<p>Record timestamps, versions, configuration, requests/responses, logs, screenshots only when necessary, and the exact condition that made the result possible. Separate observation from inference.</p>
+<h3>5. Remediation and retest</h3>
+<p>Explain the root cause, recommended control, expected residual risk, and a repeatable regression test. A finding is not complete until the owner can verify that the control changed the result.</p>
+<h3>6. Cleanup and reporting</h3>
+<p>Remove test accounts, temporary files, lab data, or configuration changes that were created as part of the authorized assessment. Preserve legitimate audit evidence; do <strong>not</strong> delete or tamper with security logs to conceal activity.</p>
+<h2>Defensive thinking</h2>
+<p>A useful habit is to analyze every system with five questions:</p>
+<ol>
+<li>What asset or security property matters?</li>
+<li>Which identity or process has authority?</li>
+<li>Where does untrusted input enter?</li>
+<li>What state can become stale, confused, or inconsistent?</li>
+<li>What evidence would prove the control is working?</li>
+</ol>
+<h2>Safe lab</h2>
+<p>Create a one-page threat model for a local application or device you own. Draw the user, application, data store, network boundary, and one external dependency. Mark where authentication occurs, where authorization occurs, what data is sensitive, and what logs would be useful during an incident.</p>
+<p><strong>Evidence to keep:</strong> the diagram, three security assumptions, three possible failure modes, and one defensive test for each failure mode.</p>
+<h2>Common mistakes</h2>
+<ul>
+<li>Starting with tools before defining a security question.</li>
+<li>Treating a scanner finding as proof without verification.</li>
+<li>Confusing severity with business risk.</li>
+<li>Confusing encryption with authorization.</li>
+<li>Testing outside the written scope because a target is technically reachable.</li>
+<li>Keeping secrets, tokens, or unnecessary personal data in lab notes.</li>
+<li>Treating cleanup as permission to erase evidence.</li>
+</ul>
+<h2>Knowledge check</h2>
+<ol>
+<li>Give an example of authentication succeeding while authorization fails.</li>
+<li>Explain the difference between a vulnerability and risk.</li>
+<li>Name three items that belong in assessment scope.</li>
+<li>Why is retesting part of an ethical assessment?</li>
+<li>What evidence would you collect before changing a security control?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. For this module, finish the safe lab and be able to explain the assessment lifecycle without referring to tool names.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>02, 05, 28, 51</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

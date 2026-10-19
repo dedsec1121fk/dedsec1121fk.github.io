@@ -1,0 +1,60 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Συμβολοσειρές και Unicode — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1073.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Συμβολοσειρές και Unicode Στο DedSec υπάρχουν ελληνικά ονόματα αρχείων και έγγραφα UTF-8. Η κωδικοποίηση πρέπει να δηλώνεται ρητά· ένα byte δεν ισούται πάντα με έναν χαρακτήρα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Συμβολοσειρές και Unicode — DedSec Project">
+<meta property="og:description" content="Συμβολοσειρές και Unicode Στο DedSec υπάρχουν ελληνικά ονόματα αρχείων και έγγραφα UTF-8. Η κωδικοποίηση πρέπει να δηλώνεται ρητά· ένα byte δεν ισούται πάντα με έναν χαρακτήρα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1073.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Συμβολοσειρές και Unicode — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Συμβολοσειρές και Unicode — DedSec Project">
+<meta name="twitter:description" content="Συμβολοσειρές και Unicode Στο DedSec υπάρχουν ελληνικά ονόματα αρχείων και έγγραφα UTF-8. Η κωδικοποίηση πρέπει να δηλώνεται ρητά· ένα byte δεν ισούται πάντα με έναν χαρακτήρα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Συμβολοσειρές και Unicode — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Συμβολοσειρές και Unicode — DedSec Project</h1><p>Συμβολοσειρές και Unicode Στο DedSec υπάρχουν ελληνικά ονόματα αρχείων και έγγραφα UTF-8. Η κωδικοποίηση πρέπει να δηλώνεται ρητά· ένα byte δεν ισούται πάντα με έναν χαρακτήρα…</p><section><p>Στο DedSec υπάρχουν ελληνικά ονόματα αρχείων και έγγραφα UTF-8. Η κωδικοποίηση πρέπει να δηλώνεται ρητά· ένα byte δεν ισούται πάντα με έναν χαρακτήρα. Χρησιμοποίησε pathlib και encoding=&quot;utf-8&quot;.</p>
+<h2>Λυμένο παράδειγμα</h2>
+<pre><code class="language-text">from pathlib import Path
+p = Path(&quot;greek_demo.txt&quot;)
+p.write_text(&quot;Καλημέρα&quot;, encoding=&quot;utf-8&quot;)
+print(p.read_text(encoding=&quot;utf-8&quot;))
+</code></pre>
+<h2>Άσκηση</h2>
+<p>Εξήγησε γιατί τα Unicode ονόματα είναι σημαντικά για τους ελληνικούς φακέλους.</p>
+<h2>Λύση / υπόδειξη</h2>
+<p>Η UTF-8 διατηρεί τους ελληνικούς χαρακτήρες στα υποστηριζόμενα συστήματα.</p>
+<h2>Το Unicode έχει διαφορετικούς ορισμούς μήκους</h2>
+<p>Το <code>len(&quot;é&quot;)</code> είναι 1 για ενιαίο code point, ενώ το <code>len(&quot;e\u0301&quot;)</code> είναι 2, παρότι φαίνονται ίδια. Το UTF-8 αποθηκεύει μεταβλητό αριθμό bytes. Ξεχώρισε πλήθος bytes, code points και ορατών grapheme clusters.</p>
+<pre><code class="language-python">import unicodedata
+a=&quot;é&quot;; b=&quot;e\u0301&quot;
+assert a!=b
+assert unicodedata.normalize(&quot;NFC&quot;,a)==unicodedata.normalize(&quot;NFC&quot;,b)
+assert len(a.encode(&quot;utf-8&quot;))==2
+</code></pre>
+<p>Κάνε normalization για αναζήτηση όπου το απαιτεί το προϊόν, όχι για σιωπηρή μετονομασία αρχείων. Στα ελληνικά έλεγξε τις μορφές <code>ς</code> και <code>σ</code>.</p>
+<p><strong>Άσκηση:</strong> φτιάξε ευρετήριο ελληνικών/αγγλικών τίτλων με και χωρίς τόνους και μέτρησε λανθασμένα matches.</p>
+<h2>Εργαστήριο Unicode: ίδια εμφάνιση, διαφορετικά bytes</h2>
+<pre><code class="language-python">import unicodedata
+a, b = &quot;é&quot;, &quot;e\u0301&quot;
+assert a != b
+assert unicodedata.normalize(&quot;NFC&quot;, a) == unicodedata.normalize(&quot;NFC&quot;, b)
+assert a.encode(&quot;utf-8&quot;) != b.encode(&quot;utf-8&quot;)
+</code></pre>
+<p>Οι δύο συμβολοσειρές ενδέχεται να φαίνονται ίδιες, αλλά τα code points και τα UTF-8 bytes τους διαφέρουν. Το <code>len(text)</code> δεν μετρά απαραίτητα τους ορατούς χαρακτήρες. Δοκίμασε <code>b&quot;\xff&quot;.decode(&quot;utf-8&quot;)</code> και παρατήρησε <code>UnicodeDecodeError</code>. Η σιωπηλή αγνόηση ή αντικατάσταση bytes μπορεί να καταστρέψει πληροφορία. Ως ανεξάρτητη άσκηση δημιούργησε δύο οπτικά ίδια ονόματα αρχείων με διαφορετική Unicode σύνθεση (αν το filesystem το επιτρέπει) και σχεδίασε ρητό κανόνα NFC για ελληνική και πολυγλωσσική αναζήτηση. Πηγή: https://docs.python.org/3/library/unicodedata.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

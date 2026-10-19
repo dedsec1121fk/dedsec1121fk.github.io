@@ -1,0 +1,173 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Networking Deep Dive — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-051.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Networking Deep Dive Purpose: Build the networking knowledge required to understand traffic, segmentation, services, logs, and security controls without treating network tools as black…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Networking Deep Dive — DedSec Project">
+<meta property="og:description" content="Networking Deep Dive Purpose: Build the networking knowledge required to understand traffic, segmentation, services, logs, and security controls without treating network tools as black…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-051.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Networking Deep Dive — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Networking Deep Dive — DedSec Project">
+<meta name="twitter:description" content="Networking Deep Dive Purpose: Build the networking knowledge required to understand traffic, segmentation, services, logs, and security controls without treating network tools as black…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Networking Deep Dive — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Networking Deep Dive — DedSec Project</h1><p>Networking Deep Dive Purpose: Build the networking knowledge required to understand traffic, segmentation, services, logs, and security controls without treating network tools as black…</p><section><blockquote>
+<p><strong>Purpose:</strong> Build the networking knowledge required to understand traffic, segmentation, services, logs, and security controls without treating network tools as black boxes.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Explain Ethernet/Wi-Fi links, IP addressing, routing, transport protocols, DNS, DHCP, NAT, TLS, and proxies.</li>
+<li>Read a basic packet or flow record and identify the important fields.</li>
+<li>Distinguish local-link problems from routing, name-resolution, transport, and application problems.</li>
+<li>Understand IPv6 well enough to avoid designing IPv4-only security assumptions.</li>
+<li>Build a small authorized lab and document how traffic is expected to flow.</li>
+</ul>
+<h2>Start with a mental model</h2>
+<p>A useful practical model is:</p>
+<ol>
+<li><strong>Application:</strong> HTTP, DNS, SSH, SMTP, APIs, custom protocols.</li>
+<li><strong>Transport:</strong> TCP or UDP identifies endpoints with ports and provides different delivery properties.</li>
+<li><strong>Internet/network:</strong> IPv4 or IPv6 addresses packets and routes them between networks.</li>
+<li><strong>Link:</strong> Ethernet, Wi-Fi, or another local medium moves frames between directly connected neighbors.</li>
+</ol>
+<p>The OSI model is useful vocabulary, but do not let memorizing seven layers replace understanding real data flow.</p>
+<h2>Addresses are contextual</h2>
+<p>A device can have multiple addresses at the same time: loopback, Wi-Fi, cellular, VPN, container, IPv4, and IPv6. Security rules should therefore be based on intended trust boundaries and interfaces rather than the assumption that one device equals one IP address.</p>
+<p>Loopback (<code>127.0.0.1</code> for IPv4 and <code>::1</code> for IPv6) is especially useful for local labs because a service bound only to loopback is not intended to accept connections from other devices.</p>
+<h2>Subnets and routing</h2>
+<p>A subnet prefix identifies which address bits describe the network. For IPv4, CIDR notation such as <code>/24</code> is common. For IPv6, <code>/64</code> is common on local segments. You should be able to answer:</p>
+<ul>
+<li>Is the destination local or remote?</li>
+<li>Which route will be selected?</li>
+<li>Which gateway is used?</li>
+<li>Which interface sends the traffic?</li>
+<li>Which security control sits on that path?</li>
+</ul>
+<p>A routing table is evidence of intended forwarding behavior, not proof that the destination is reachable. Firewalls, policy routing, VPNs, broken gateways, or application binding can still prevent communication.</p>
+<h2>TCP and UDP</h2>
+<p>TCP provides a connection-oriented byte stream with sequencing, retransmission, and congestion control. UDP provides datagrams without TCP's connection state and delivery guarantees. Neither tells you whether the application itself is secure.</p>
+<p>When reading network logs, distinguish:</p>
+<ul>
+<li>source/destination address;</li>
+<li>source/destination port;</li>
+<li>transport protocol;</li>
+<li>connection direction;</li>
+<li>bytes/packets;</li>
+<li>start/end timestamps;</li>
+<li>TCP state where available.</li>
+</ul>
+<h2>DNS is more than name-to-address lookup</h2>
+<p>DNS stores multiple record types and is part of many security workflows. Common records include A/AAAA, CNAME, MX, TXT, NS, SOA, PTR, CAA, and service-related records. Security teams should understand:</p>
+<ul>
+<li>recursive versus authoritative resolution;</li>
+<li>caching and TTLs;</li>
+<li>split-horizon/internal DNS;</li>
+<li>DNSSEC's authenticity/integrity role;</li>
+<li>why DNS logs are useful telemetry;</li>
+<li>why a DNS name does not guarantee the identity of the application behind it.</li>
+</ul>
+<h2>DHCP and local configuration</h2>
+<p>DHCP commonly provides clients with addresses, default gateways, DNS servers, and lease information. A network can be operational while still using unsafe configuration. Validate expected DNS, gateway, and address ranges instead of assuming automatically supplied values are trustworthy.</p>
+<h2>ARP and IPv6 Neighbor Discovery</h2>
+<p>IPv4 networks commonly use ARP to resolve local IPv4 neighbors to link-layer addresses. IPv6 uses Neighbor Discovery. Security monitoring should account for both. Networks that deploy IPv6 but only monitor or filter IPv4 can create blind spots.</p>
+<h2>NAT is not a security policy</h2>
+<p>NAT changes address/port information. It is not a substitute for a stateful firewall, authentication, authorization, segmentation, or endpoint hardening. A design should explicitly state which traffic is allowed and why.</p>
+<h2>TLS and trust</h2>
+<p>TLS can provide confidentiality and integrity in transit and authenticate endpoints when certificate validation is correct. Important concepts include:</p>
+<ul>
+<li>certificate chains;</li>
+<li>trust anchors;</li>
+<li>host-name validation;</li>
+<li>protocol/cipher negotiation;</li>
+<li>certificate expiration/rotation;</li>
+<li>application-layer authentication on top of TLS.</li>
+</ul>
+<p>Encrypting a malicious or unauthorized request does not make it safe. Transport security and application authorization solve different problems.</p>
+<h2>Proxies, gateways, and load balancers</h2>
+<p>Modern traffic often passes through reverse proxies, API gateways, WAFs, load balancers, service meshes, VPN gateways, and cloud edges. This affects:</p>
+<ul>
+<li>source-address visibility;</li>
+<li>TLS termination;</li>
+<li>logging locations;</li>
+<li>rate limiting;</li>
+<li>authentication context;</li>
+<li>header trust;</li>
+<li>incident investigation.</li>
+</ul>
+<p>Document which component is authoritative for client identity and which forwarded headers are trusted.</p>
+<h2>IPv6 security guidance</h2>
+<p>Do not disable or ignore IPv6 merely because the team is more familiar with IPv4. Instead:</p>
+<ul>
+<li>inventory IPv6 interfaces and addresses;</li>
+<li>define equivalent firewall policy;</li>
+<li>monitor IPv6 DNS and traffic;</li>
+<li>understand link-local addresses;</li>
+<li>test applications on both address families where supported;</li>
+<li>document transition mechanisms if present.</li>
+</ul>
+<h2>Safe local practice</h2>
+<p>On your own system, inspect local addressing and listening services using the operating system's standard tools. In Termux, availability varies by Android/version, so use <code>ip</code>, <code>ss</code>, or documented alternatives when installed.</p>
+<p>A safe exercise is to start a loopback-only HTTP server:</p>
+<pre><code class="language-bash">mkdir -p ~/security-lab/network-demo
+cd ~/security-lab/network-demo
+printf 'network lab\n' &gt; index.txt
+python -m http.server --bind 127.0.0.1 8000
+</code></pre>
+<p>Then, from another local terminal session, retrieve it:</p>
+<pre><code class="language-bash">curl http://127.0.0.1:8000/index.txt
+</code></pre>
+<p>Record the server log, local socket state, and request/response. Stop the service with <code>Ctrl+C</code>.</p>
+<h2>Troubleshooting ladder</h2>
+<p>When communication fails, troubleshoot from the simplest dependency outward:</p>
+<ol>
+<li>Is the process running?</li>
+<li>Is it bound to the expected address and port?</li>
+<li>Does loopback access work?</li>
+<li>Does name resolution produce the expected address?</li>
+<li>Is a route available?</li>
+<li>Does a firewall/policy allow the traffic?</li>
+<li>Does TLS validation succeed?</li>
+<li>Does the application accept the request and authorization context?</li>
+<li>Are proxies/gateways changing the request?</li>
+<li>What do logs on both sides say?</li>
+</ol>
+<h2>Security design questions</h2>
+<p>For every networked service ask:</p>
+<ul>
+<li>Which interfaces should it bind to?</li>
+<li>Who needs to reach it?</li>
+<li>Is network access enough, or is strong application authentication also required?</li>
+<li>What protects traffic in transit?</li>
+<li>Where is access logged?</li>
+<li>What happens if DNS fails or an upstream service is unavailable?</li>
+<li>Can one compromised segment reach another unnecessarily?</li>
+<li>How is IPv6 handled?</li>
+</ul>
+<h2>Checkpoint</h2>
+<p>You are ready to continue when you can draw a request from client to service and label DNS, IPs, ports, routing, TLS termination, identity, and major logs. Next: Module 52 for HTTP/browser depth, Modules 03/04 for authorized discovery concepts, and Module 12 for controls/detection.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Module 01.</p>
+<h3>Practice task</h3>
+<p>Use the localhost exercise in this module, draw the request path, and explain address, route, port, transport, application, and log evidence.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>03, 08, 12, 52</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>agda — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-697.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="agda — consolidated language guide Agda Typical use: Proof assistants and dependent types. Suggested file extension: .agda . How to run / environment: Typecheck with agda (not a standalone…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="agda — consolidated language guide — DedSec Project">
+<meta property="og:description" content="agda — consolidated language guide Agda Typical use: Proof assistants and dependent types. Suggested file extension: .agda . How to run / environment: Typecheck with agda (not a standalone…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-697.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="agda — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="agda — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="agda — consolidated language guide Agda Typical use: Proof assistants and dependent types. Suggested file extension: .agda . How to run / environment: Typecheck with agda (not a standalone…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="agda — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>agda — consolidated language guide — DedSec Project</h1><p>agda — consolidated language guide Agda Typical use: Proof assistants and dependent types. Suggested file extension: .agda . How to run / environment: Typecheck with agda (not a standalone…</p><section><h2>Agda</h2>
+<p><strong>Typical use:</strong> Proof assistants and dependent types.</p>
+<p><strong>Suggested file extension:</strong> <code>.agda</code>.</p>
+<p><strong>How to run / environment:</strong> Typecheck with agda (not a standalone executable example).</p>
+<h3>Starter example</h3>
+<pre><code>module Hello where
+open import Agda.Builtin.Nat
+answer : Nat
+answer = 42
+</code></pre>
+<h3>How to read it</h3>
+<p>This is a minimal typechecking example rather than console I/O.</p>
+<h3>Common pitfall</h3>
+<p>This is a minimal typechecking example rather than console I/O.</p>
+<h2>Agda — Expanded practice workbook</h2>
+<h3>Inspect the smallest source</h3>
+<pre><code class="language-text">module Hello where
+open import Agda.Builtin.Nat
+answer : Nat
+answer = 42
+</code></pre>
+<p><strong>Run or compilation context:</strong> Typecheck with agda (not a standalone executable example).. Treat this as a baseline: save a copy, confirm the toolchain version and note whether the example merely evaluates a value, prints text, or creates external effects. Production accounts, datasets and hardware must not be used for first attempts.</p>
+<h3>Work through the actual mechanism</h3>
+<p>Define a length-indexed vector function and write a type that forbids an out-of-bounds index. Check a proof by removing one constructor case.</p>
+<h3>Diagnose the sharp edge</h3>
+<p>A type hole is an unfinished proof, not evidence. Universe levels and termination checking require a specific Agda version.</p>
+<h2>Agda — Focused mastery pathway</h2>
+<h3>Applied exercises</h3>
+<ol>
+<li>State a small proposition and list its assumptions.</li>
+<li>Reconstruct a short proof using only trusted inference rules.</li>
+<li>Try removing one assumption and determine whether the proof still works.</li>
+</ol>
+<ul>
+<li>Is the goal an executable value or a checked proposition?</li>
+<li>Which exact runtime, compiler, host, and version does the reference need?</li>
+<li>What is the smallest working program and what side effects does it have?</li>
+<li>How do syntax, logic, and environment errors differ?</li>
+<li>How can invalid inputs be tested without modifying real user files?</li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

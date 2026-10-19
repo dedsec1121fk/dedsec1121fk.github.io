@@ -1,0 +1,137 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-882.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι Ιχνηλάτηση κλήσεων Πρακτική εξήγηση Το stack trace δείχνει call frames κατά την αποτυχία. Ξεκίνα από το exception και βρες το πιο…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι — DedSec Project">
+<meta property="og:description" content="Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι Ιχνηλάτηση κλήσεων Πρακτική εξήγηση Το stack trace δείχνει call frames κατά την αποτυχία. Ξεκίνα από το exception και βρες το πιο…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-882.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι — DedSec Project">
+<meta name="twitter:description" content="Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι Ιχνηλάτηση κλήσεων Πρακτική εξήγηση Το stack trace δείχνει call frames κατά την αποτυχία. Ξεκίνα από το exception και βρες το πιο…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι — DedSec Project</h1><p>Διάγνωση λογισμικού: stack traces, καταγραφές και έλεγχοι Ιχνηλάτηση κλήσεων Πρακτική εξήγηση Το stack trace δείχνει call frames κατά την αποτυχία. Ξεκίνα από το exception και βρες το πιο…</p><section><h2>Ιχνηλάτηση κλήσεων</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Το stack trace δείχνει call frames κατά την αποτυχία. Ξεκίνα από το exception και βρες το πιο σχετικό frame του δικού σου κώδικα, ξεχωρίζοντας αιτία από propagation.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-python">def read_score(data): return int(data['score'])
+def handle(data): return read_score(data)
+try: handle({'score':'oops'})
+except ValueError as exc: assert 'invalid' in str(exc)
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Κατέγραψε traceback με δοκιμαστική είσοδο. Σύγκρινε με broad except που κρύβει την αιτία και δείξε σωστό exception chaining.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για Stack traces εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+<h2>Καταγραφή και παρατηρησιμότητα</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Logs καταγράφουν events, metrics συνοψίζουν αριθμητικά signals και traces συνδέουν operations μεταξύ components. Μαζί βοηθούν στη διάγνωση αλλά έχουν διαφορετικό ρόλο και απαιτούν privacy controls.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-python">import logging
+logging.basicConfig(level=logging.INFO)
+logging.info('batch completed count=%d',3)
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Πρόσθεσε correlation ID και timing metric για συνθετικό batch. Μην αποθηκεύεις tokens και πραγματικά προσωπικά δεδομένα στα logs.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για Logging and observability εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+<h2>Μονάδες, ενσωμάτωση και πλήρεις δοκιμές</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Unit test απομονώνει function, integration ελέγχει boundaries όπως database και end-to-end ελέγχει ολόκληρη user flow. Βρίσκουν διαφορετικά bugs και έχουν διαφορετικό κόστος.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-python">def normalize(text):return text.strip().casefold()
+assert normalize(' Ada ')=='ada'
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Μετέτρεψε assertion σε unittest. Πρόσθεσε SQLite integration test σε προσωρινή βάση χωρίς να το ονομάζεις unit test.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για Unit integration and end to end tests εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+<h2>Προστασία από παλινδρομήσεις</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Regression test κρατά την ελάχιστη περίπτωση παλιού διορθωμένου defect. Αν δεν ελέγξεις ότι αποτύγχανε πριν τη διόρθωση, ίσως δεν προστατεύει από το ίδιο bug.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-python">def safe_ratio(a,b):
+    if b==0:raise ZeroDivisionError('denominator')
+    return a/b
+assert safe_ratio(4,2)==2
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Γράψε test που απαιτεί exception για zero denominator και σύγκρινε με παλιά έκδοση που επέστρεφε παραπλανητικό default.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για Regression protection εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+<h2>Ανάλυση επιδόσεων</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Profiling εντοπίζει CPU time, allocations ή IO waits. Η βελτιστοποίηση της πιο περίπλοκης οπτικά function ίσως δεν αλλάξει πραγματικό latency.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-python">import cProfile
+cProfile.run('sum(i*i for i in range(10000))')
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Κάνε profile nested-loop duplicate finder και set-based εκδοχής. Κάνε πολλαπλές δοκιμές, ξεχωρίζοντας startup από steady state.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για Performance profiling εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+<h2>Έλεγχοι μονάδας, ολοκλήρωσης, παλινδρόμησης και ιδιοτήτων</h2>
+<p>Η δοκιμή μονάδας ελέγχει μικρή σύμβαση, η δοκιμή ολοκλήρωσης συνεργασία υποσυστημάτων και η τελική δοκιμή την πραγματική διαδρομή χρήστη. Οι έλεγχοι παλινδρόμησης αποτρέπουν την επανεμφάνιση παλιών σφαλμάτων. Οι δοκιμές ιδιοτήτων παράγουν δεδομένα, αλλά χρειάζονται επίσης συγκεκριμένες ακραίες περιπτώσεις.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-python">def reverse_twice(items):
+    return list(reversed(list(reversed(items))))
+for items in [[], [1], [1, 2], ['α', 'β']]:
+    assert reverse_twice(items) == items
+</code></pre>
+<p>Μη γράφεις δοκιμές που απλώς διαπιστώνουν ότι «βρέθηκε αποτέλεσμα», ούτε να αντιγράφεις την υλοποίηση για την αναμενόμενη τιμή. Έλεγξε οριακές τιμές, σφάλματα και αποκατάσταση. Χρησιμοποίησε προσωρινό HOME για δοκιμές που γράφουν αρχεία.</p>
+<h3>Ασκήσεις</h3>
+<ol>
+<li>Γράψε πρώτα αποτυχημένο test και μετά διόρθωσε το σφάλμα.</li>
+<li>Δοκίμασε κενό αρχείο, λάθος UTF-8 και άρνηση δικαιωμάτων.</li>
+<li>Εξήγησε γιατί ο έλεγχος σύνταξης δεν αποδεικνύει καλή λειτουργία παιχνιδιού.</li>
+</ol>
+<h2>Καταγραφές συμβάντων, μετρικές και διαγνωστικά</h2>
+<p>Οι καταγραφές αποτυπώνουν συμβάντα, οι μετρικές συνοψίζουν μετρήσεις και τα ίχνη ακολουθούν μια εργασία σε διαφορετικά μέρη συστήματος. Χρησιμοποίησε ονόματα συμβάντων, ώρα με ζώνη, επίπεδο σοβαρότητας και αναγνωριστικά συσχέτισης. Μια αποτυχία πρέπει να εξηγεί <em>τι</em>, <em>πού</em> και <em>ποια επόμενη ενέργεια</em>, χωρίς μυστικά.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-python">import json
+from datetime import datetime, timezone
+record = {'event': 'backup.finished',
+          'time': datetime.now(timezone.utc).isoformat(),
+          'files': 12}
+assert json.loads(json.dumps(record))['files'] == 12
+</code></pre>
+<h3>Ασκήσεις</h3>
+<ol>
+<li>Σχεδίασε logs εγκατάστασης ευανάγνωστα σε κινητό.</li>
+<li>Κατάγραψε αποτυχία ενημέρωσης χωρίς μυστικές μεταβλητές.</li>
+<li>Πρόσθεσε αναγνωριστικό συσχέτισης σε πολλά στάδια.</li>
+<li>Ανίχνευσε ελλείπουσες εξαρτήσεις χωρίς αυτόματη εγκατάσταση.</li>
+</ol>
+<h2>Αναπαραγωγή σφάλματος</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Αναπαραγώγιμο bug report περιλαμβάνει περιβάλλον, είσοδο, βήματα, αναμενόμενη και πραγματική συμπεριφορά. Αφαίρεσε άσχετο setup μέχρι να μείνει το μικρότερο αποτυχημένο παράδειγμα.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-python">def broken(items=[]):
+    items.append(1)
+    return len(items)
+assert broken()==1
+assert broken()==2
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Άλλαξε default σε None με νέα list ανά κλήση. Γράψε regression assertion που αποτυγχάνει στην παλιά έκδοση και περνά στη διορθωμένη.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για Reproducing a bug εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

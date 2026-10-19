@@ -1,0 +1,143 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>kotlin — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-378.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="kotlin — συγκεντρωτικός οδηγός Kotlin Συνήθης χρήση: Γλώσσες γενικής χρήσης. Προτεινόμενη επέκταση αρχείου: .kt . Εκτέλεση / περιβάλλον: Μεταγλώττιση kotlinc και εκτέλεση του JAR. Αρχικό…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="kotlin — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="kotlin — συγκεντρωτικός οδηγός Kotlin Συνήθης χρήση: Γλώσσες γενικής χρήσης. Προτεινόμενη επέκταση αρχείου: .kt . Εκτέλεση / περιβάλλον: Μεταγλώττιση kotlinc και εκτέλεση του JAR. Αρχικό…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-378.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="kotlin — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="kotlin — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="kotlin — συγκεντρωτικός οδηγός Kotlin Συνήθης χρήση: Γλώσσες γενικής χρήσης. Προτεινόμενη επέκταση αρχείου: .kt . Εκτέλεση / περιβάλλον: Μεταγλώττιση kotlinc και εκτέλεση του JAR. Αρχικό…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="kotlin — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>kotlin — συγκεντρωτικός οδηγός — DedSec Project</h1><p>kotlin — συγκεντρωτικός οδηγός Kotlin Συνήθης χρήση: Γλώσσες γενικής χρήσης. Προτεινόμενη επέκταση αρχείου: .kt . Εκτέλεση / περιβάλλον: Μεταγλώττιση kotlinc και εκτέλεση του JAR. Αρχικό…</p><section><h2>Kotlin</h2>
+<p><strong>Συνήθης χρήση:</strong> Γλώσσες γενικής χρήσης.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.kt</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> Μεταγλώττιση kotlinc και εκτέλεση του JAR.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>fun greet(name: String) = &quot;Hello, $name!&quot;
+fun main() { println(greet(&quot;Ada&quot;)) }
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Οι συναρτήσεις μπορούν να έχουν σύντομο σώμα και ρητούς nullable τύπους.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Οι συναρτήσεις μπορούν να έχουν σύντομο σώμα και ρητούς nullable τύπους. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h3>Καταστάσεις Android με σαφή τύπο</h3>
+<p>Το Kotlin null-safety εκφράζει την απουσία, αλλά Java/Android platform types χρειάζονται προσοχή. Προτίμησε immutable <code>val</code>, data classes και sealed types για loading/success/error.</p>
+<pre><code class="language-kotlin">sealed interface ResultState {
+  data object Loading : ResultState
+  data class Ready(val count: Int) : ResultState
+  data class Failed(val message: String) : ResultState
+}
+fun label(state: ResultState): String = when (state) {
+  ResultState.Loading -&gt; &quot;Loading&quot;
+  is ResultState.Ready -&gt; &quot;${state.count} results&quot;
+  is ResultState.Failed -&gt; state.message
+}
+</code></pre>
+<p>Μια Activity μπορεί να αναδημιουργηθεί· μην βασίζεσαι σε πεδία object για μόνιμα δεδομένα. Διαχώρισε UI state, storage και network. Μην μπλοκάρεις το main thread: coroutines με lifecycle-aware scope, cancellation και χειρισμό σφάλματος.</p>
+<p><strong>Άσκηση:</strong> οθόνη αναζήτησης με τρεις καταστάσεις, διατήρηση query μετά από περιστροφή και προσομοιωμένο network failure. Πηγή: https://kotlinlang.org/docs/home.html.</p>
+<h2>Kotlin — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Nullable δεν σημαίνει έγκυρο</h3>
+<p>Η Kotlin μπορεί να περιγράψει απουσία τιμής, αλλά και ένα μη-null String μπορεί να περιέχει άκυρο αριθμό. Χρησιμοποίησε toIntOrNull και ρητό έλεγχο εύρους· απέφυγε τον τελεστή !! σε μη έμπιστη είσοδο.</p>
+<h3>Εκτέλεση JVM</h3>
+<p>Αποθήκευσε Main.kt και τρέξε kotlinc Main.kt -include-runtime -d demo.jar &amp;&amp; java -jar demo.jar με Kotlin CLI και συμβατή Java. Περιμένεις Kotlin parser OK. Το συγκεκριμένο παράδειγμα δεν είναι build Android APK.</p>
+<pre><code class="language-kotlin">fun parsePort(raw: String?): Int? {
+    val number = raw?.trim()?.toIntOrNull() ?: return null
+    return if (number in 1..65535) number else null
+}
+fun main() {
+    check(parsePort(&quot; 443 &quot;) == 443)
+    check(parsePort(null) == null)
+    check(parsePort(&quot;abc&quot;) == null)
+    check(parsePort(&quot;70000&quot;) == null)
+    println(&quot;Kotlin parser OK&quot;)
+}
+</code></pre>
+<h3>Ανάλυση τύπων</h3>
+<p>Η ακολουθία safe calls επιστρέφει null για ανύπαρκτη είσοδο ή αποτυχημένη μετατροπή. Ο Elvis επιστρέφει άμεσα null από τη συνάρτηση χωρίς exception. Το if εφαρμόζει τον κανόνα 1..65535. Μετά την απομάκρυνση του nullable branch, το number είναι Int.</p>
+<h3>Ασκήσεις</h3>
+<p>Δοκίμασε &quot;+3&quot;, &quot;-1&quot;, άδειο κείμενο, Unicode ψηφία, τελικά κενά και τεράστιο ακέραιο. Σκέψου αν η απουσία και η λανθασμένη τιμή πρέπει να επιστρέφουν το ίδιο null. Αν χρειάζεσαι αιτία αποτυχίας, σχεδίασε sealed hierarchy με Missing, InvalidText, OutOfRange, Valid.</p>
+<h3>Διάγνωση</h3>
+<p>Το kotlinc χρειάζεται συμβατό JDK. Στο Android το Gradle και τα εργαλεία διαφέρουν από το CLI. Σύγκρινε εκδόσεις Kotlin/JDK πριν υποθέσεις ότι η null safety είναι το πρόβλημα. Μην κρύβεις unsafe casts με suppression.
+Επιτυχία: τέσσερις έλεγχοι χωρίς NumberFormatException. https://kotlinlang.org/docs/null-safety.html</p>
+<h2>Kotlin — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>kotlinc {file} -include-runtime -d demo.jar &amp;&amp; java -jar demo.jar</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Kotlin — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Συμβόλαιο δεδομένων</h3>
+<p>Κάθε κίνηση είναι αμετάβλητη εγγραφή. Ο αναλυτής επιστρέφει μία από τις δύο σαφείς εκβάσεις: αποδοχή ή απόρριψη με αιτία. Δέχεται κωδικούς από A01 έως Z99, μη κενή κατηγορία και μη αρνητικό ποσό με ακριβώς δύο δεκαδικά ψηφία. Τα ποσά γίνονται ακέραια λεπτά χωρίς ανακρίβειες κινητής υποδιαστολής. Διπλός κωδικός συναλλαγής ή αριθμητική υπερχείλιση οδηγεί σε σφάλμα, όχι σε λανθασμένο σύνολο.</p>
+<h3>Εκτελέσιμο παράδειγμα για JVM</h3>
+<p>Αποθήκευσε ως LedgerLab.kt. Εκτέλεσε kotlinc LedgerLab.kt -include-runtime -d ledger.jar και κατόπιν java -jar ledger.jar. Χρειάζονται JDK και μεταγλωττιστής Kotlin· δεν δημιουργούνται αρχεία δεδομένων ούτε απαιτείται σύνδεση δικτύου.</p>
+<pre><code class="language-kotlin">import java.math.BigDecimal
+
+data class Entry(val id: String, val category: String, val cents: Long)
+sealed interface Result {
+    data class Accepted(val entry: Entry) : Result
+    data class Rejected(val reason: String) : Result
+}
+
+fun parse(id: String, category: String, amount: String): Result {
+    if (!id.matches(Regex(&quot;[A-Z][0-9]{2}&quot;))) return Result.Rejected(&quot;id&quot;)
+    if (category.isBlank()) return Result.Rejected(&quot;category&quot;)
+    if (!amount.matches(Regex(&quot;[0-9]+\\.[0-9]{2}&quot;))) return Result.Rejected(&quot;format&quot;)
+    val cents = try {
+        BigDecimal(amount).movePointRight(2).longValueExact()
+    } catch (_: ArithmeticException) { return Result.Rejected(&quot;overflow&quot;) }
+    return Result.Accepted(Entry(id, category, cents))
+}
+
+fun totals(input: List&lt;Entry&gt;): Map&lt;String, Long&gt; {
+    require(input.map { it.id }.distinct().size == input.size) { &quot;duplicate transaction&quot; }
+    return input.groupBy { it.category }
+        .mapValues { (_, entries) -&gt; entries.fold(0L) { sum, entry -&gt; Math.addExact(sum, entry.cents) } }
+}
+
+fun main() {
+    check(parse(&quot;A01&quot;, &quot;food&quot;, &quot;12.50&quot;) == Result.Accepted(Entry(&quot;A01&quot;, &quot;food&quot;, 1250)))
+    check(parse(&quot;A02&quot;, &quot;food&quot;, &quot;12.5&quot;) is Result.Rejected)
+    check(parse(&quot;A03&quot;, &quot;food&quot;, &quot;99999999999999999999.00&quot;) is Result.Rejected)
+    val a = (parse(&quot;A01&quot;, &quot;food&quot;, &quot;12.50&quot;) as Result.Accepted).entry
+    val b = (parse(&quot;A04&quot;, &quot;food&quot;, &quot;0.10&quot;) as Result.Accepted).entry
+    check(totals(listOf(a, b))[&quot;food&quot;] == 1260L)
+    check(totals(emptyList()).isEmpty())
+    check(runCatching { totals(listOf(a, a)) }.isFailure)
+    println(&quot;PASS: currency parsing, overflow and unique transaction IDs&quot;)
+}
+</code></pre>
+<h3>Εξήγηση σχεδιασμού</h3>
+<p>Η data class επιτρέπει έλεγχο ισότητας βάσει τιμών. Με τις σφραγισμένες εκβάσεις Accepted και Rejected γνωρίζεις αν απέτυχε η ανάλυση χωρίς επικίνδυνες προσπελάσεις null. Η BigDecimal διατηρεί ακριβώς τα δεκαδικά ψηφία της εισόδου και η longValueExact εντοπίζει ποσά εκτός των ορίων της Long. Η Math.addExact προστατεύει και το άθροισμα: ακόμη και δύο έγκυρα ποσά μπορεί να έχουν μη αναπαραστάσιμο σύνολο.</p>
+<h3>Περιορισμένες ασκήσεις και διαγνωστικά</h3>
+<ol>
+<li>Δοκίμασε 0.00, 00.01, -1.00, 1e3, NaN, 1.005 και κενή κατηγορία. Ξεχώρισε απόρριψη μορφής από υπερχείλιση.</li>
+<li>Δημιούργησε δύο κατηγορίες. Βεβαίωσε ότι τα σύνολα υπολογίζονται ξεχωριστά. Πρόσθεσε διπλό κωδικό σε διαφορετικές κατηγορίες: πρέπει επίσης να απορριφθεί.</li>
+<li>Με τεχνητές, πολύ μεγάλες εγγραφές, προκάλεσε υπερχείλιση στο Math.addExact και εξήγησε γιατί η χρήση Double δεν θα την έλυνε σωστά.</li>
+<li>Δοκίμασε προσωρινά να αντικαταστήσεις την αποτυχία με null και σημείωσε ποια διαγνωστική πληροφορία χάνεται. Μετά επανάφερε τις σφραγισμένες εκβάσεις.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> μήνυμα PASS, πέντε αρνητικές δοκιμές, έλεγχος διπλού κωδικού και σύντομη διάκριση μεταξύ επικύρωσης εισόδου, ακριβούς μετατροπής και άθροισης. Μελλοντική εγγραφή σε αρχείο χρειάζεται δικό της ασφαλές πρωτόκολλο· η ακύρωση ασύγχρονης εργασίας δεν εγγυάται από μόνη της ατομικότητα.</p>
+<h2>Kotlin — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Η δυνατότητα null παρακολουθείται από τύπους, αλλά τα platform types της Java θέλουν προσοχή.</li>
+<li>Τα data classes παράγουν χρήσιμες λειτουργίες για τις ιδιότητες του κύριου constructor.</li>
+<li>Οι coroutines κάνουν συνεργατική αναστολή· επίλεξε κατάλληλο dispatcher για blocking εργασίες.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

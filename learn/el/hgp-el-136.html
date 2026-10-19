@@ -1,0 +1,76 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Service Mesh, mTLS, Network Policy και East-West Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-136.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Service Mesh, mTLS, Network Policy και East-West Security Ελληνική έκδοση — Μάθημα 136. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Service Mesh, mTLS, Network Policy και East-West Security — DedSec Project">
+<meta property="og:description" content="Service Mesh, mTLS, Network Policy και East-West Security Ελληνική έκδοση — Μάθημα 136. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-136.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Service Mesh, mTLS, Network Policy και East-West Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Service Mesh, mTLS, Network Policy και East-West Security — DedSec Project">
+<meta name="twitter:description" content="Service Mesh, mTLS, Network Policy και East-West Security Ελληνική έκδοση — Μάθημα 136. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Service Mesh, mTLS, Network Policy και East-West Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Service Mesh, mTLS, Network Policy και East-West Security — DedSec Project</h1><p>Service Mesh, mTLS, Network Policy και East-West Security Ελληνική έκδοση — Μάθημα 136. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 136.</strong> Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό αυξάνει την ακρίβεια.</p>
+</blockquote>
+<p>Σύνδεσε service mesh, mTLS, workload identity, NetworkPolicy και authorization ώστε να ξεχωρίζεις encryption, reachability και permission.</p>
+<h2>Μαθησιακοί στόχοι</h2>
+<p>Στο τέλος πρέπει να μπορείς να:</p>
+<ul>
+<li>εξηγήσεις το <strong>east-west versus north-south traffic</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>service mesh data/control planes</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>mTLS identity establishment</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>service authorization policy</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>Kubernetes NetworkPolicy concepts</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>sidecar versus ambient interception</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+</ul>
+<h2>Βαθιές τεχνικές έννοιες</h2>
+<h3>1. east-west έναντι north-south traffic</h3>
+<p>North-south αφορά entry/exit ενώ east-west service-to-service. Workloads μέσα στο ίδιο cluster/private network δεν πρέπει να αποκτούν automatic mutual trust.</p>
+<h3>2. data plane και control plane</h3>
+<p>Mesh data plane επεξεργάζεται traffic και control plane διανέμει identity, routes, certs και policy. Προστάτευσε control-plane authority γιατί μία αλλαγή επηρεάζει πολλά workloads.</p>
+<h3>3. mTLS workload identity</h3>
+<p>mTLS αυθεντικοποιεί workloads και κρυπτογραφεί traffic αλλά δεν αποφασίζει authorization. Έλεγξε trust-domain/certificate mapping και service policy ξεχωριστά.</p>
+<h3>4. service authorization policy</h3>
+<p>Policy πρέπει να δένει source workload identity με destination/action και environment/tenant context. Default deny με explicit grants είναι πιο ελέγξιμο από trust λόγω network location.</p>
+<h3>5. Kubernetes NetworkPolicy</h3>
+<p>NetworkPolicy περιορίζει network reachability και συμπληρώνει identity-aware mesh policy. Επιβεβαίωσε CNI behavior, selectors, egress/DNS και defaults με safe connectivity tests.</p>
+<h3>6. sidecar έναντι ambient models</h3>
+<p>Sidecar και ambient τοποθετούν enforcement/telemetry σε διαφορετικό σημείο. Threat model πρέπει να δείχνει ποια process/node component μπορεί να δει ή να επηρεάσει traffic και failure mode.</p>
+<h3>7. certificate rotation και trust bundles</h3>
+<p>Short-lived workload certs μειώνουν exposure αλλά απαιτούν reliable issuance, clocks, overlap και trust-bundle rollout. Δοκίμασε rotation χωρίς broad trust window ή outage.</p>
+<h3>8. telemetry και failure behavior</h3>
+<p>Mesh logs πρέπει να συνδέουν source/destination identity, policy, protocol και result. Όρισε αν control-plane/policy failure κάνει fail closed ή degrade και κάνε αυτή τη συμπεριφορά observable.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<ul>
+<li><p><strong>Εργαστήριο 1 — Σχεδίασε αρχιτεκτονική τριών υπηρεσιών και πίνακες δικτυακής προσβασιμότητας και εξουσιοδότησης ταυτότητας.</strong></p>
+</li>
+<li><p><strong>Εργαστήριο 2 — Μοντελοποίησε ανανέωση πιστοποιητικών με επικαλυπτόμενα σύνολα εμπιστοσύνης και όρισε ανάκαμψη παρωχημένων φόρτων.</strong></p>
+</li>
+<li><p><strong>Εργαστήριο 3 — Σύγκρινε απευθείας κλήση, κλήση μέσω sidecar και κλήση μέσω ambient mesh ως προς όρια εμπιστοσύνης και τηλεμετρία.</strong></p>
+</li>
+</ul>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p><a href="../en/hgp-en-136.html">English Module 136</a></p>
+<h2>Επόμενα μαθήματα</h2>
+<p>Σχετικά modules: <strong>021, 024, 075, 093, 113, 135</strong>. Από το κύριο menu επίλεξε <strong>Αναζήτηση μαθημάτων</strong> για να βρεις σχετικά θέματα σε όλο το project.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

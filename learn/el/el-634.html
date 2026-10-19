@@ -1,0 +1,78 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>q_sharp — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-634.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="q_sharp — συγκεντρωτικός οδηγός Q Συνήθης χρήση: Κβαντικός προγραμματισμός. Προτεινόμενη επέκταση αρχείου: .qs . Εκτέλεση / περιβάλλον: Χρησιμοποίησε έργο Q και προσομοιωτή. Αρχικό…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="q_sharp — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="q_sharp — συγκεντρωτικός οδηγός Q Συνήθης χρήση: Κβαντικός προγραμματισμός. Προτεινόμενη επέκταση αρχείου: .qs . Εκτέλεση / περιβάλλον: Χρησιμοποίησε έργο Q και προσομοιωτή. Αρχικό…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-634.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="q_sharp — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="q_sharp — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="q_sharp — συγκεντρωτικός οδηγός Q Συνήθης χρήση: Κβαντικός προγραμματισμός. Προτεινόμενη επέκταση αρχείου: .qs . Εκτέλεση / περιβάλλον: Χρησιμοποίησε έργο Q και προσομοιωτή. Αρχικό…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="q_sharp — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>q_sharp — συγκεντρωτικός οδηγός — DedSec Project</h1><p>q_sharp — συγκεντρωτικός οδηγός Q Συνήθης χρήση: Κβαντικός προγραμματισμός. Προτεινόμενη επέκταση αρχείου: .qs . Εκτέλεση / περιβάλλον: Χρησιμοποίησε έργο Q και προσομοιωτή. Αρχικό…</p><section><h2>Q#</h2>
+<p><strong>Συνήθης χρήση:</strong> Κβαντικός προγραμματισμός.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.qs</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> Χρησιμοποίησε έργο Q# και προσομοιωτή.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>namespace Hello {
+    open Microsoft.Quantum.Diagnostics;
+    @EntryPoint()
+    operation Main() : Unit {
+        Message(&quot;Hello, Ada!&quot;);
+    }
+}
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Οι κβαντικές γλώσσες απαιτούν εξειδικευμένους προσομοιωτές.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Οι κβαντικές γλώσσες απαιτούν εξειδικευμένους προσομοιωτές. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h2>Q_Sharp — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Μικρή αφετηρία πηγαίου κώδικα</h3>
+<pre><code class="language-text">namespace Hello {
+    open Microsoft.Quantum.Diagnostics;
+    @EntryPoint()
+    operation Main() : Unit {
+        Message(&quot;Hello, Ada!&quot;);
+    }
+}
+</code></pre>
+<p><strong>Περιβάλλον:</strong> Use a Q#-enabled project and simulator.. Κράτησε αντίγραφο του αρχικού κώδικα και σημείωσε έκδοση εργαλείου. Ξεχώρισε αν η εκτέλεση επιστρέφει τιμή, εμφανίζει κείμενο ή αλλάζει state. Για τις πρώτες δοκιμές χρησιμοποίησε απομονωμένο περιβάλλον, όχι πραγματικούς λογαριασμούς ή δεδομένα.</p>
+<h3>Ανάλυση του ιδιαίτερου μηχανισμού</h3>
+<p>Δέσμευσε qubit, εφάρμοσε H, μέτρησε, κάνε reset και επανάλαβε με συγκεκριμένο πλήθος shots. Σύγκρινε με την θεωρητική πιθανότητα 50/50.</p>
+<h3>Διάγνωση κρίσιμου ορίου</h3>
+<p>Μία μέτρηση δεν αποδεικνύει κατανομή. Simulator και hardware target έχουν διαφορετικά gates/diagnostics.</p>
+<h2>Q_Sharp — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Πρακτικές εργασίες</h3>
+<ol>
+<li>Φτιάξε κύκλωμα δύο καταστάσεων με δοκιμή μέτρησης σε προσομοιωτή.</li>
+<li>Εξήγησε πώς διαφέρει η μέτρηση υπέρθεσης από ανάγνωση κλασικής μεταβλητής.</li>
+<li>Τεκμηρίωσε πύλες, qubits και εξαρτήσεις προσομοιωτή.</li>
+</ol>
+<h3>Ερωτήσεις ουσίας</h3>
+<ul>
+<li>Ποιες πράξεις είναι κλασικές και ποιες κβαντικές;</li>
+<li>Ποια εργαλεία εκτελούν ή ελέγχουν το παράδειγμα και σε ποια έκδοση;</li>
+<li>Ποιο είναι το μικρότερο ελεγμένο πρόγραμμα; Ποιες είναι οι παρενέργειες;</li>
+<li>Πώς γίνεται διάκριση μεταξύ σφάλματος σύνταξης, λογικής και περιβάλλοντος;</li>
+<li>Πώς δοκιμάζονται άκυρα δεδομένα χωρίς βλάβη σε αρχεία ή σύστημα;</li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

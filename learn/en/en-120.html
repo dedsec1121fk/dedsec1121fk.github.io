@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>heap buffer overflow — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-120.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Heap buffer overflow — exact allocation and checked copy What the failure actually means A heap-buffer-overflow occurs when code reads or writes outside an allocated dynamic buffer. It…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="heap buffer overflow — DedSec Project">
+<meta property="og:description" content="Heap buffer overflow — exact allocation and checked copy What the failure actually means A heap-buffer-overflow occurs when code reads or writes outside an allocated dynamic buffer. It…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-120.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="heap buffer overflow — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="heap buffer overflow — DedSec Project">
+<meta name="twitter:description" content="Heap buffer overflow — exact allocation and checked copy What the failure actually means A heap-buffer-overflow occurs when code reads or writes outside an allocated dynamic buffer. It…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="heap buffer overflow — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>heap buffer overflow — DedSec Project</h1><p>Heap buffer overflow — exact allocation and checked copy What the failure actually means A heap-buffer-overflow occurs when code reads or writes outside an allocated dynamic buffer. It…</p><section><h1>Heap buffer overflow — exact allocation and checked copy</h1>
+<h2>What the failure actually means</h2>
+<p>A heap-buffer-overflow occurs when code reads or writes outside an allocated dynamic buffer. It often comes from allocating strlen(source) bytes and then copying the trailing NUL as well, trusting an unbounded length or making size_t arithmetic overflow. A heap corruption may manifest later than the offending operation; use a source-level size contract, not the absence of a crash, as evidence of safety.</p>
+<h2>Controlled solution</h2>
+<p>Implement a copy function with one owner and a strict application policy of at most 32 content bytes. The allocation is n+1 for the terminator. The function rejects an overlong string before allocation and leaves the output NULL on failure. All test strings are synthetic and NUL-terminated, so no external data or unsafe overflow is executed.</p>
+<h2>Source example</h2>
+<p>Save this as heap_buffer_lab.c.</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+static int copy_text(const char *source, char **out) {
+    if (!source || !out) return -1;
+    *out = NULL;
+    size_t n = strlen(source);
+    if (n &gt; 32) return -2;  /* policy cap also prevents n+1 overflow */
+    char *buffer = malloc(n + 1);
+    if (!buffer) return -3;
+    memcpy(buffer, source, n + 1);
+    *out = buffer;
+    return 0;
+}
+int main(void) {
+    char *result = NULL;
+    if (copy_text(&quot;hello&quot;, &amp;result) != 0) return 1;
+    if (strcmp(result, &quot;hello&quot;) != 0) return 2;
+    free(result);
+    result = NULL;
+    if (copy_text(&quot;012345678901234567890123456789012&quot;, &amp;result) != -2 || result != NULL) return 3;
+    if (copy_text(&quot;&quot;, &amp;result) != 0 || strcmp(result, &quot;&quot;) != 0) return 4;
+    free(result);
+    puts(&quot;PASS: exact allocation, upper bound, empty string&quot;);
+}
+</code></pre>
+<h2>Why this design works</h2>
+<p>The policy cap prevents overflow of n+1 and bounds the allocation. The test verifies a normal copy, rejected input with 33 bytes and an empty string, which still allocates one terminator byte. strlen itself assumes a valid terminated source. For arbitrary incoming data use a length-delimited input and verify the claimed accessible size before scanning memory. calloc is not a substitute for capacity checks and memcpy does not check destination size.</p>
+<h2>Reproduce the diagnosis safely</h2>
+<p>Compile with gcc -std=c11 -Wall -Wextra -Werror -fsanitize=address,undefined -fno-omit-frame-pointer -g heap_buffer_lab.c -o heap_buffer_lab &amp;&amp; ./heap_buffer_lab. A sanitizer can report invalid memory access along paths it runs, but does not establish universal safety.</p>
+<h2>Practice and expected evidence</h2>
+<p>Change the policy to 16 and verify that a 17-byte value is rejected. Explain why an allocation of n rather than n+1 would be wrong. Consider the behavior when out aliases source storage and document a non-aliasing precondition; the helper is intended for distinct caller-owned output pointers. Capture expected and observed results for each boundary.</p>
+<p><strong>Authoritative reference:</strong> https://clang.llvm.org/docs/AddressSanitizer.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

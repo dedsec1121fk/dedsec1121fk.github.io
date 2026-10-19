@@ -1,0 +1,73 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Μοντέλα απειλών, permissions και εξουσιοδότηση — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1088.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Μοντέλα απειλών, permissions και εξουσιοδότηση 01. Μοντέλο απειλών για μικρή offline εφαρμογή Στόχος: Μοντέλο απειλών για μικρή offline εφαρμογή. Ακόμη και μια offline εφαρμογή έχει όρια…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Μοντέλα απειλών, permissions και εξουσιοδότηση — DedSec Project">
+<meta property="og:description" content="Μοντέλα απειλών, permissions και εξουσιοδότηση 01. Μοντέλο απειλών για μικρή offline εφαρμογή Στόχος: Μοντέλο απειλών για μικρή offline εφαρμογή. Ακόμη και μια offline εφαρμογή έχει όρια…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1088.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Μοντέλα απειλών, permissions και εξουσιοδότηση — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Μοντέλα απειλών, permissions και εξουσιοδότηση — DedSec Project">
+<meta name="twitter:description" content="Μοντέλα απειλών, permissions και εξουσιοδότηση 01. Μοντέλο απειλών για μικρή offline εφαρμογή Στόχος: Μοντέλο απειλών για μικρή offline εφαρμογή. Ακόμη και μια offline εφαρμογή έχει όρια…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Μοντέλα απειλών, permissions και εξουσιοδότηση — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Μοντέλα απειλών, permissions και εξουσιοδότηση — DedSec Project</h1><p>Μοντέλα απειλών, permissions και εξουσιοδότηση 01. Μοντέλο απειλών για μικρή offline εφαρμογή Στόχος: Μοντέλο απειλών για μικρή offline εφαρμογή. Ακόμη και μια offline εφαρμογή έχει όρια…</p><section><h2>01. Μοντέλο απειλών για μικρή offline εφαρμογή</h2>
+<p><strong>Στόχος:</strong> Μοντέλο απειλών για μικρή offline εφαρμογή.</p>
+<p>Ακόμη και μια offline εφαρμογή έχει όρια εμπιστοσύνης. Σχεδίασε πέντε κουτιά: πηγαία μαθήματα, γεννήτρια ευρετηρίου, έτοιμο HTML, browser και προαιρετική τοπική κατάσταση. Σημείωσε με βέλη πώς περνούν τα δεδομένα.</p>
+<p>Ο βασικός κίνδυνος δεν είναι η απουσία Internet, αλλά να εμφανιστεί κείμενο μαθήματος ως εκτελέσιμο HTML. Το περιεχόμενο πρέπει να αποθηκεύεται ως δεδομένα, να γίνεται ασφαλές serialization και να εμφανίζεται με textContent, όχι με ανεξέλεγκτο innerHTML. Ο generator οφείλει να αγνοεί μη αναμενόμενα ή ευαίσθητα αρχεία.</p>
+<p><strong>Άσκηση:</strong> γράψε σε δοκιμαστικό μάθημα έναν αβλαβή χαρακτήρα που θυμίζει HTML tag. Αναδημιούργησε το index και αναζήτησέ τον. Πρέπει να εμφανιστεί ως απλό κείμενο, όχι να ερμηνευτεί.</p>
+<p><strong>Καταγραφή:</strong> αγαθό (μαθήματα), είσοδος (Markdown), όριο εμπιστοσύνης (δεδομένα προς DOM), προστασία (σωστή κωδικοποίηση) και αρνητικό τεστ (κακοσχηματισμένη είσοδος).</p>
+<hr />
+<p><strong>Ασφαλής εξάσκηση:</strong> μόνο συνθετικά δεδομένα, δικά σου συστήματα ή ρητή εξουσιοδότηση. Έλεγξε τις πληροφορίες και σε επίσημη τεκμηρίωση.</p>
+<p>Συμπληρωματική ύλη: <a href="../el/hgp-el-041.html">Hacking Guide Project — ενότητα 41</a>.</p>
+<h2>02. Δικαιώματα Linux και Termux</h2>
+<p><strong>Στόχος:</strong> Δικαιώματα Linux και Termux.</p>
+<p>Στο Unix ελέγχεις ιδιοκτήτη, ομάδα και δικαιώματα ανάγνωσης, εγγραφής και εκτέλεσης. Ένας φάκελος χρειάζεται δικαίωμα διέλευσης ακόμη κι αν ξέρεις το όνομα του αρχείου. Το ότι ένα script εκτελείται δεν σημαίνει ότι είναι ασφαλές.</p>
+<p>Το Termux λειτουργεί μέσα στο sandbox της εφαρμογής Android. Οι εντολές Linux δεν αποκτούν αυτόματα όλα τα δικαιώματα του κινητού. Η πρόσβαση σε εξωτερικό χώρο αποθήκευσης εξαρτάται από το Android. Διαδρομές υπολογιστή μπορεί να μην υπάρχουν στο κινητό.</p>
+<p><strong>Παράδειγμα βλάβης:</strong> script backup διαβάζει έναν φάκελο αλλά όχι άλλον. Έλεγξε πρώτα ύπαρξη αρχείου, δικαιώματα στους γονικούς φακέλους και μετά την άδεια Android. Το «τρέξ' τα όλα ως root» δεν εξηγεί το πρόβλημα.</p>
+<p><strong>Άσκηση:</strong> σε προσωρινό φάκελο δώσε διαφορετικά δικαιώματα σε δύο δοκιμαστικά αρχεία. Παρατήρησε τι αλλάζει. Πρότεινε το ελάχιστο δικαίωμα αντί για γενικό write σε όλους.</p>
+<p>Ξεχώριζε δικαιώματα διεργασίας, άδειες Android και Unix file modes.</p>
+<hr />
+<p>Συμπληρωματική ύλη: <a href="../el/hgp-el-033.html">Hacking Guide Project — ενότητα 33</a>.</p>
+<h2>03. Η ταυτοποίηση δεν είναι εξουσιοδότηση</h2>
+<p><strong>Στόχος:</strong> Η ταυτοποίηση δεν είναι εξουσιοδότηση.</p>
+<p>Authentication απαντά «ποιος κάνει την κλήση;». Authorization απαντά «δικαιούται να κάνει αυτή την πράξη στο συγκεκριμένο αντικείμενο και σε αυτή την κατάσταση;». Ένα έγκυρο login δεν επιτρέπει ανάγνωση αρχείου άλλου χρήστη.</p>
+<p>Σκέψου τον κανόνα ως allow(χρήστης, ενέργεια, αντικείμενο, συνθήκες). Οι συνθήκες μπορεί να περιλαμβάνουν ιδιοκτησία, ομάδα, έγκριση και λήξη άδειας.</p>
+<p><strong>Μικρός πίνακας:</strong> ιδιοκτήτης/ανάγνωση/δικό του → ναι· ιδιοκτήτης/αλλαγή/δικό του → ναι εφόσον επιτρέπεται· επισκέπτης/ανάγνωση/ξένο → όχι· διαχειριστής/διαγραφή/ξένο → μόνο με ρητή πολιτική.</p>
+<p><strong>Κρυφή βλάβη:</strong> ο αρχικός έλεγχος δικαιωμάτων δουλεύει, αλλά μια εργασία εξαγωγής στον server ξεχνά την ιδιοκτησία. Χρειάζεται η ίδια πολιτική σε αναζήτηση, download και batch exports.</p>
+<p><strong>Άσκηση:</strong> φτιάξε στα χαρτιά δύο χρήστες και δύο σημειώσεις. Γράψε έξι τεστ «επιτρέπεται/απαγορεύεται» προτού γράψεις το API.</p>
+<hr />
+<p>Συμπληρωματική ύλη: <a href="../el/hgp-el-071.html">Hacking Guide Project — ενότητα 71</a>.</p>
+<h2>Εξουσιοδότηση αντικειμένου στο όριο δεδομένων</h2>
+<p>Η αυθεντικοποίηση δείχνει ποιος κάνει αίτημα, όχι αν επιτρέπεται συγκεκριμένο αντικείμενο. Κάθε αναζήτηση εξωτερικού ID χρειάζεται κανόνα ιδιοκτησίας, πελάτη ή ρόλου. Η απόκρυψη ενέργειας στο UI δεν επιβάλλει κανόνα στον διακομιστή.</p>
+<p>Προτίμησε πρόσβαση δεδομένων που ενσωματώνει την εξουσιοδότηση στο ίδιο ερώτημα ή συναλλαγή. Διατήρησε απουσία και άρνηση σύμφωνα με την πολιτική αποκάλυψης. Το συνθετικό μοντέλο ελέγχει ιδιοκτησία σε ανάγνωση και αλλαγή χωρίς πραγματικούς λογαριασμούς.</p>
+<pre><code class="language-python">objects={&quot;note-a&quot;:{&quot;owner&quot;:&quot;alice&quot;,&quot;body&quot;:&quot;fixture&quot;}}
+def allowed(actor, object_id, action):
+    item=objects.get(object_id)
+    return bool(item and item[&quot;owner&quot;]==actor and action in {&quot;read&quot;,&quot;update&quot;})
+assert allowed(&quot;alice&quot;,&quot;note-a&quot;,&quot;read&quot;)
+assert not allowed(&quot;bob&quot;,&quot;note-a&quot;,&quot;read&quot;)
+assert not allowed(&quot;alice&quot;,&quot;missing&quot;,&quot;read&quot;)
+assert not allowed(&quot;alice&quot;,&quot;note-a&quot;,&quot;delete&quot;)
+print(&quot;object and action both checked&quot;)
+</code></pre>
+<p>Πρόσθεσε ID άλλου πελάτη, ανακλημένο ρόλο και ταυτόχρονη αλλαγή ιδιοκτήτη. Οι αρνητικές δοκιμές καλούν την ίδια προστατευμένη πράξη, όχι μόνο κρυμμένο κουμπί. Η προεπιλεγμένη άρνηση καλύπτει άγνωστες ενέργειες.</p>
+<p><a href="https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html">Τεχνική αναφορά</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

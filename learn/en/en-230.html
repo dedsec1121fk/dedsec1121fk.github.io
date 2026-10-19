@@ -1,0 +1,84 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mocks and test doubles — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-230.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Test doubles — injected clocks and transports with observable calls Scenario and independent contract A local client fetches a document by slug but must not contact its transport after the…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Mocks and test doubles — DedSec Project">
+<meta property="og:description" content="Test doubles — injected clocks and transports with observable calls Scenario and independent contract A local client fetches a document by slug but must not contact its transport after the…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-230.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mocks and test doubles — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mocks and test doubles — DedSec Project">
+<meta name="twitter:description" content="Test doubles — injected clocks and transports with observable calls Scenario and independent contract A local client fetches a document by slug but must not contact its transport after the…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Mocks and test doubles — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Mocks and test doubles — DedSec Project</h1><p>Test doubles — injected clocks and transports with observable calls Scenario and independent contract A local client fetches a document by slug but must not contact its transport after the…</p><section><h1>Test doubles — injected clocks and transports with observable calls</h1>
+<h2>Scenario and independent contract</h2>
+<p>A local client fetches a document by slug but must not contact its transport after the deadline. Invalid slugs are rejected, responses must contain a title, and a timeout leaves the transport untouched. Unit tests should not make real network requests or depend on wall-clock sleeps. Inject a clock and transport interface so fixtures can advance time deterministically and inspect the exact requested slug.</p>
+<h2>Executable Python 3 lab</h2>
+<p>Save as mock_lab.py and run python3 mock_lab.py. The fake transport records calls instead of sending packets. The fake clock starts at zero and can be moved without waiting.</p>
+<pre><code class="language-python">class FakeClock:
+    def __init__(self):
+        self.tick = 0
+    def now(self):
+        return self.tick
+
+class FakeTransport:
+    def __init__(self, answer):
+        self.answer = answer
+        self.calls = []
+    def request(self, slug):
+        self.calls.append(slug)
+        return self.answer
+
+def fetch(slug, transport, clock, deadline):
+    if clock.now() &gt; deadline:
+        raise TimeoutError(&quot;deadline exceeded&quot;)
+    if not isinstance(slug,str) or not slug.isascii() or not slug.isalnum():
+        raise ValueError(&quot;invalid slug&quot;)
+    value = transport.request(slug)
+    if not isinstance(value,dict) or &quot;title&quot; not in value:
+        raise ValueError(&quot;invalid response&quot;)
+    return value[&quot;title&quot;]
+
+clock = FakeClock()
+stub = FakeTransport({&quot;title&quot;:&quot;local&quot;})
+assert fetch(&quot;abc2&quot;,stub,clock,10) == &quot;local&quot;
+assert stub.calls == [&quot;abc2&quot;]
+clock.tick = 11
+try:
+    fetch(&quot;abc2&quot;,stub,clock,10)
+except TimeoutError:
+    pass
+else:
+    raise AssertionError(&quot;deadline bypassed&quot;)
+assert stub.calls == [&quot;abc2&quot;]
+print(&quot;PASS: injected clock, transport and call history&quot;)
+</code></pre>
+<h2>What is a mock, stub or fake?</h2>
+<p>A stub supplies canned responses. A fake provides a small working implementation of a collaborator. A mock primarily verifies interactions, such as whether request was called exactly once. Our FakeTransport combines canned responses with a call history; labels are less important than the test's explicit expectations. Tests that merely duplicate the implementation's own branching logic are weak: write the deadline and input contracts separately before coding. Contract tests against a real transport implementation are still needed because injected fakes cannot discover protocol incompatibilities.</p>
+<h2>Failure-oriented exercises</h2>
+<ol>
+<li>Change the fake response to an empty dictionary and ensure validation raises rather than returning success.</li>
+<li>Try a slug containing a slash, space or Unicode character. Decide whether your application wants a different explicit slug policy.</li>
+<li>Move the clock to exactly the deadline, then one tick later. Document whether the rule uses greater-than or greater-than-or-equal.</li>
+<li>Create a faulty implementation that sends before checking the clock. The existing call-history assertion should fail; restore correct ordering afterwards.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, an unchanged call count on timeout, invalid-response test, and one boundary convention for the deadline.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

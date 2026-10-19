@@ -1,0 +1,66 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>UnicodeDecodeError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-958.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="UnicodeDecodeError: αποκωδικοποίηση byte με σαφή πολιτική Τι συμβαίνει και πότε Το UnicodeDecodeError σημαίνει ότι τα ακατέργαστα bytes δεν αποτελούν έγκυρο κείμενο με την επιλεγμένη…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="UnicodeDecodeError — DedSec Project">
+<meta property="og:description" content="UnicodeDecodeError: αποκωδικοποίηση byte με σαφή πολιτική Τι συμβαίνει και πότε Το UnicodeDecodeError σημαίνει ότι τα ακατέργαστα bytes δεν αποτελούν έγκυρο κείμενο με την επιλεγμένη…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-958.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="UnicodeDecodeError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="UnicodeDecodeError — DedSec Project">
+<meta name="twitter:description" content="UnicodeDecodeError: αποκωδικοποίηση byte με σαφή πολιτική Τι συμβαίνει και πότε Το UnicodeDecodeError σημαίνει ότι τα ακατέργαστα bytes δεν αποτελούν έγκυρο κείμενο με την επιλεγμένη…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="UnicodeDecodeError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>UnicodeDecodeError — DedSec Project</h1><p>UnicodeDecodeError: αποκωδικοποίηση byte με σαφή πολιτική Τι συμβαίνει και πότε Το UnicodeDecodeError σημαίνει ότι τα ακατέργαστα bytes δεν αποτελούν έγκυρο κείμενο με την επιλεγμένη…</p><section><h1>UnicodeDecodeError: αποκωδικοποίηση byte με σαφή πολιτική</h1>
+<h2>Τι συμβαίνει και πότε</h2>
+<p>Το UnicodeDecodeError σημαίνει ότι τα ακατέργαστα bytes δεν αποτελούν έγκυρο κείμενο με την επιλεγμένη κωδικοποίηση. Η επέκταση αρχείου και οι υποθέσεις locale δεν αποτελούν συμβόλαιο. Μη χρησιμοποιείς errors='ignore' μόνο για να εξαφανιστεί το σφάλμα: μπορεί να αλλοιώσει σιωπηρά αναγνωριστικά, CSV πεδία και σημαντικά δεδομένα.</p>
+<h2>Αυτοτελές εκτελέσιμο παράδειγμα</h2>
+<p>Αποθήκευσε το παράδειγμα ως 015_UnicodeDecodeError.py και εκτέλεσε <code>python3 015_UnicodeDecodeError.py</code>. Ο έλεγχος καλύπτει τη λανθασμένη είσοδο και τη διορθωμένη περίπτωση.</p>
+<pre><code class="language-python">from pathlib import Path
+from tempfile import TemporaryDirectory
+with TemporaryDirectory() as tmp:
+    path = Path(tmp) / &quot;sample.txt&quot;
+    path.write_bytes(&quot;café&quot;.encode(&quot;cp1252&quot;))
+    try:
+        path.read_text(encoding=&quot;utf-8&quot;)
+    except UnicodeDecodeError as exc:
+        print(&quot;bad byte offset:&quot;, exc.start)
+    else:
+        raise AssertionError(&quot;wrong encoding accepted&quot;)
+    assert path.read_text(encoding=&quot;cp1252&quot;) == &quot;café&quot;
+</code></pre>
+<h2>Διαγνωστική διαδικασία και ασφαλής διόρθωση</h2>
+<p>Εξέτασε μικρό δείγμα bytes σε hex, την προδιαγραφή του δημιουργού και τυχόν BOM. Αποκωδικοποίησε με την πραγματική κωδικοποίηση. Αν τα αρχεία ποικίλλουν, χρησιμοποίησε αξιόπιστα metadata ή απόρριψε τα αμφίσημα. Το errors='replace' ταιριάζει μόνο σε προβολή με σαφή προειδοποίηση απώλειας δεδομένων.</p>
+<h2>Πρακτικό εργαστήριο / έλεγχος ορίων</h2>
+<p>Κωδικοποίησε την ίδια λέξη σε UTF-8 και cp1252, σύγκρινε τα hex bytes και αποκωδικοποίησε σωστά και τις δύο. Πρόσθεσε δείγμα με κομμένη πολυ-byte ακολουθία UTF-8 και έλεγξε ότι ο strict decoder αποτυγχάνει στην αναμενόμενη θέση.</p>
+<h2>Ακριβής ανάκτηση bytes ή ρητά μη αναστρέψιμη προβολή</h2>
+<p>Αν δεν γνωρίζεις την κωδικοποίηση του δημιουργού, μην επιλέγεις αυθαίρετα Latin-1 μόνο επειδή δεν εμφανίζει σφάλμα. Η επιλογή surrogateescape επιτρέπει ελεγχόμενη επανακωδικοποίηση των μη αναγνώσιμων bytes χωρίς απώλεια. Το ενδιάμεσο κείμενο όμως δεν είναι κατάλληλο για ανεξέλεγκτη εμφάνιση ή ανταλλαγή.</p>
+<pre><code class="language-python">raw = b'\xffA'
+try: raw.decode('utf-8')
+except UnicodeDecodeError as exc:
+    assert exc.start == 0 and exc.end == 1
+else: raise AssertionError('expected invalid UTF-8')
+recovered = raw.decode('utf-8', errors='surrogateescape')
+assert recovered.encode('utf-8', errors='surrogateescape') == raw
+assert '\ufffd' in raw.decode('utf-8', errors='replace')
+</code></pre>
+<h2>Διάγνωση και τελική δοκιμή</h2>
+<p>Διατήρησε τα αρχικά bytes, σημείωσε τη θέση αποτυχίας και αναζήτησε την τεκμηριωμένη κωδικοποίηση του δημιουργού. Αν επιβεβαιωθεί, χρησιμοποίησέ την· διαφορετικά απομόνωσε το αρχείο ή εμφάνισε σαφώς επισημασμένη προβολή με απώλειες. Σύγκρινε τα bytes της λέξης café σε UTF-8 και cp1252 και πρόσθεσε μια κομμένη ακολουθία UTF-8. Απόδειξε ότι το errors='replace' αλλάζει τα δεδομένα, ενώ το surrogateescape επιτρέπει ακριβή επιστροφή στα αρχικά bytes.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

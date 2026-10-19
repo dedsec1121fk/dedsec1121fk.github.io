@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Queues, stacks and indexes — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-190.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Choosing data structures from the operations you actually need A stack processes the most recently added item first (LIFO). A queue processes the oldest item first (FIFO). A hash-based set…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Queues, stacks and indexes — DedSec Project">
+<meta property="og:description" content="Choosing data structures from the operations you actually need A stack processes the most recently added item first (LIFO). A queue processes the oldest item first (FIFO). A hash-based set…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-190.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Queues, stacks and indexes — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Queues, stacks and indexes — DedSec Project">
+<meta name="twitter:description" content="Choosing data structures from the operations you actually need A stack processes the most recently added item first (LIFO). A queue processes the oldest item first (FIFO). A hash-based set…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Queues, stacks and indexes — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Queues, stacks and indexes — DedSec Project</h1><p>Choosing data structures from the operations you actually need A stack processes the most recently added item first (LIFO). A queue processes the oldest item first (FIFO). A hash-based set…</p><section><h1>Choosing data structures from the operations you actually need</h1>
+<p>A stack processes the most recently added item first (LIFO). A queue processes the oldest item first (FIFO). A hash-based set is useful for membership tests, but doesn't preserve all duplicate occurrences. These aren't just names: the desired operations determine both correctness and cost.</p>
+<h2>A runnable FIFO example in Python</h2>
+<pre><code class="language-python">from collections import deque
+
+pending = deque([&quot;first&quot;, &quot;second&quot;])
+pending.append(&quot;third&quot;)
+assert pending.popleft() == &quot;first&quot;
+assert pending.popleft() == &quot;second&quot;
+assert list(pending) == [&quot;third&quot;]
+</code></pre>
+<p>A deque is appropriate because removing from its left end is efficient. Repeatedly removing index zero from a Python list shifts the remaining elements, giving linear-time work for each removal. A list is still a good stack with append and pop at the right end. Be explicit about which end your application reads from before choosing a container.</p>
+<h2>Test an invariant rather than just printing</h2>
+<p>A queue should return enqueued items in enqueue order. For an empty queue, popleft raises IndexError, so an application needs a deliberate policy: check before removing or catch the exception. An undo history instead uses a stack so the most recent edit is reverted first. Model the difference with the sequence A, B, C: the queue returns A; the stack returns C.</p>
+<h2>Sets, dictionaries, and misleading performance claims</h2>
+<p>For repeated membership checks on many distinct identifiers, a set usually offers average constant-time lookup, whereas searching a list is linear in its length. Hash collisions and adversarial inputs mean this average is not a universal worst-case bound. If you need to map product codes to counts, choose a dictionary, not a set. If you need every repeated event in its original order, don't replace the event log with a set.</p>
+<h2>Independent exercise and expected evidence</h2>
+<p>Implement a simple task processor with four events, including a duplicate identifier. Predict the output order before execution. Add a cancellation operation by identifier and explain why removal by arbitrary value is different from popleft. Note the chosen Python version and compare time costs qualitatively as data grows; do not claim a benchmark that wasn't run.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Binary files and serialization — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-207.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Binary formats — bounded parsing, versions and integrity checks Define a wire format before writing bytes Design a small record containing UTF-8 text. Its header is eleven bytes: magic DSK1…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Binary files and serialization — DedSec Project">
+<meta property="og:description" content="Binary formats — bounded parsing, versions and integrity checks Define a wire format before writing bytes Design a small record containing UTF-8 text. Its header is eleven bytes: magic DSK1…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-207.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Binary files and serialization — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Binary files and serialization — DedSec Project">
+<meta name="twitter:description" content="Binary formats — bounded parsing, versions and integrity checks Define a wire format before writing bytes Design a small record containing UTF-8 text. Its header is eleven bytes: magic DSK1…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Binary files and serialization — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Binary files and serialization — DedSec Project</h1><p>Binary formats — bounded parsing, versions and integrity checks Define a wire format before writing bytes Design a small record containing UTF-8 text. Its header is eleven bytes: magic DSK1…</p><section><h1>Binary formats — bounded parsing, versions and integrity checks</h1>
+<h2>Define a wire format before writing bytes</h2>
+<p>Design a small record containing UTF-8 text. Its header is eleven bytes: magic DSK1 (four bytes), version (one unsigned byte), payload length (two-byte unsigned big-endian integer) and CRC32 (four-byte unsigned big-endian integer). The payload follows immediately. This explicit layout is portable across little-endian and big-endian machines. The application limits payloads to 64 bytes and rejects unknown versions, extra trailers, truncated messages and corrupt checksums.</p>
+<h2>Run the parser in isolation</h2>
+<p>Save as binary_lab.py and run python3 binary_lab.py. There are no external packages, network calls or writes. Every failure is deliberately triggered on synthetic bytes.</p>
+<pre><code class="language-python">import struct
+import zlib
+
+MAGIC, LIMIT = b&quot;DSK1&quot;, 64
+
+def encode(content):
+    raw = content.encode(&quot;utf-8&quot;)
+    if len(raw) &gt; LIMIT:
+        raise ValueError(&quot;payload too large&quot;)
+    return struct.pack(&quot;&gt;4sBHI&quot;, MAGIC, 1, len(raw), zlib.crc32(raw)) + raw
+
+def decode(frame):
+    if len(frame) &lt; 11:
+        raise ValueError(&quot;short header&quot;)
+    magic, version, size, checksum = struct.unpack(&quot;&gt;4sBHI&quot;, frame[:11])
+    if magic != MAGIC or version != 1 or size &gt; LIMIT or len(frame) != 11 + size:
+        raise ValueError(&quot;invalid header or length&quot;)
+    raw = frame[11:]
+    if zlib.crc32(raw) != checksum:
+        raise ValueError(&quot;corrupted bytes&quot;)
+    return raw.decode(&quot;utf-8&quot;)
+
+good = encode(&quot;γειά&quot;)
+assert decode(good) == &quot;γειά&quot;
+for bad in (good[:10], good[:-1], good[:5] + b&quot;\xff&quot; + good[6:],
+            good[:11] + b&quot;x&quot; + good[12:], good + b&quot;x&quot;):
+    try:
+        decode(bad)
+    except (ValueError, UnicodeError):
+        pass
+    else:
+        raise AssertionError(&quot;corruption accepted&quot;)
+print(&quot;PASS: length/version/checksum and UTF-8 checks&quot;)
+</code></pre>
+<h2>Why validation precedes allocation and decode</h2>
+<p>The header length must be checked before struct.unpack, and the claimed payload size must be bounded before consuming it. The real received length must match the header exactly; otherwise a valid prefix could hide unwanted trailing data. CRC32 detects accidental corruption but is not authentication or a cryptographic signature: an attacker can recompute it. UTF-8 decoding can fail even when the checksum is valid if the payload was deliberately constructed with invalid bytes. Do not use pickle with untrusted input because it may invoke arbitrary code during deserialization.</p>
+<h2>Bounded investigative tasks</h2>
+<ol>
+<li>Flip one version byte and one character byte, then observe which check fails first. Restore the original bytes after each test.</li>
+<li>Replace the text with Greek and an emoji. Compare len(text) with len(text.encode('utf-8')); the length field must count bytes.</li>
+<li>Claim an impossible size of 65535 in the header. The parser must reject before allocating a matching buffer.</li>
+<li>Define version 2 as a separate format; do not interpret old payloads under an unannounced new layout. Explain how you would test backward compatibility.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, a byte-layout diagram, five malformed frames, and a written distinction between integrity and authenticity.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

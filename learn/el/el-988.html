@@ -1,0 +1,60 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>E0597 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-988.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Rust E0597 — δανεισμένη τιμή που δεν ζει αρκετά Μη έγκυρη διάρκεια ζωής Ένα reference δεν μπορεί να ζει περισσότερο από τον owner. Αν μια συνάρτηση επιστρέψει pointer προς δικό της…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="E0597 — DedSec Project">
+<meta property="og:description" content="Rust E0597 — δανεισμένη τιμή που δεν ζει αρκετά Μη έγκυρη διάρκεια ζωής Ένα reference δεν μπορεί να ζει περισσότερο από τον owner. Αν μια συνάρτηση επιστρέψει pointer προς δικό της…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-988.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="E0597 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="E0597 — DedSec Project">
+<meta name="twitter:description" content="Rust E0597 — δανεισμένη τιμή που δεν ζει αρκετά Μη έγκυρη διάρκεια ζωής Ένα reference δεν μπορεί να ζει περισσότερο από τον owner. Αν μια συνάρτηση επιστρέψει pointer προς δικό της…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="E0597 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>E0597 — DedSec Project</h1><p>Rust E0597 — δανεισμένη τιμή που δεν ζει αρκετά Μη έγκυρη διάρκεια ζωής Ένα reference δεν μπορεί να ζει περισσότερο από τον owner. Αν μια συνάρτηση επιστρέψει pointer προς δικό της…</p><section><h1>Rust E0597 — δανεισμένη τιμή που δεν ζει αρκετά</h1>
+<h2>Μη έγκυρη διάρκεια ζωής</h2>
+<p>Ένα reference δεν μπορεί να ζει περισσότερο από τον owner. Αν μια συνάρτηση επιστρέψει pointer προς δικό της προσωρινό String, η μνήμη δεν παραμένει έγκυρη μετά την επιστροφή. Τα lifetime annotations δεν παρατείνουν τη ζωή των δεδομένων.</p>
+<pre><code class="language-rust">// fn broken&lt;'a&gt;() -&gt; &amp;'a str {
+//     let local = String::from(&quot;temporary&quot;);
+//     &amp;local // αναφορά προς κατεστραμμένη τιμή
+// }
+
+fn owned() -&gt; String {
+    String::from(&quot;persistent&quot;)
+}
+fn main() {
+    let text = owned();
+    let view: &amp;str = &amp;text;
+    assert_eq!(view, &quot;persistent&quot;);
+}
+</code></pre>
+<h2>Δανείσου από τον caller</h2>
+<p>Αν η έξοδος πρέπει να παραπέμπει σε υπάρχον argument, δήλωσε αυτή τη σχέση:</p>
+<pre><code class="language-rust">fn first_word(input: &amp;str) -&gt; &amp;str {
+    input.split_whitespace().next().unwrap_or(&quot;&quot;)
+}
+</code></pre>
+<p>Το &amp;str ισχύει μόνο όσο υπάρχει το αρχικό input. Αν ο caller χρειάζεται την τιμή μετά το τέλος του input, πρέπει να πάρει owned String.</p>
+<h2>Πείραμα</h2>
+<p>Κάλεσε first_word από long-lived String και προσπάθησε να κρατήσεις borrow έξω από το scope. Δες diagnostic και άλλαξε API, όχι την παράμετρο σε πλαστό static lifetime. Δοκίμασε και struct που αποθηκεύει borrowed view ή owned String.</p>
+<p>Πηγή: https://doc.rust-lang.org/error_codes/E0597.html</p>
+<h2>Lifetime ως σχέση ανάμεσα στα δεδομένα</h2>
+<p>Δοκίμασε με τη συνάρτηση <code>first_word</code> τα <code>&quot;&quot;</code>, <code>&quot;Ada Lovelace&quot;</code> και <code>&quot;  Alan&quot;</code>· οι αναμενόμενες τιμές είναι <code>&quot;&quot;</code>, <code>&quot;Ada&quot;</code> και <code>&quot;Alan&quot;</code>. Ο επιστρεφόμενος <code>&amp;str</code> δεν αποθηκεύει νέο κείμενο: δείχνει σε κομμάτι της εισόδου. Αν θες να βάλεις την πρώτη λέξη σε cache η οποία ζει <strong>μετά</strong> τη διαγραφή του input, μετέτρεψε το αποτέλεσμα σε <code>String</code> μέσω <code>.to_owned()</code>. Ένα string literal μπορεί να έχει <code>'static</code> lifetime, αλλά η αναφορά σε δυναμικό <code>String</code> όχι. Μη χρησιμοποιείς πλασματικό <code>'static</code> annotation για να σβήσεις το diagnostic: δεν δεσμεύει νέα μνήμη και δεν μεταβάλλει τον πραγματικό owner.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

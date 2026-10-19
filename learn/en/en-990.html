@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>hack — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-990.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="hack — consolidated language guide Hack What is different from PHP Hack is a typed language in the HHVM ecosystem. A file starting with &lt;?hh is not a PHP CLI program; executing it with php…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="hack — consolidated language guide — DedSec Project">
+<meta property="og:description" content="hack — consolidated language guide Hack What is different from PHP Hack is a typed language in the HHVM ecosystem. A file starting with &lt;?hh is not a PHP CLI program; executing it with php…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-990.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="hack — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="hack — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="hack — consolidated language guide Hack What is different from PHP Hack is a typed language in the HHVM ecosystem. A file starting with &lt;?hh is not a PHP CLI program; executing it with php…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="hack — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>hack — consolidated language guide — DedSec Project</h1><p>hack — consolidated language guide Hack What is different from PHP Hack is a typed language in the HHVM ecosystem. A file starting with &lt;?hh is not a PHP CLI program; executing it with php…</p><section><h2>Hack</h2>
+<h3>What is different from PHP</h3>
+<p>Hack is a typed language in the HHVM ecosystem. A file starting with <code>&lt;?hh</code> is not a PHP CLI program; executing it with <code>php</code> does not validate Hack semantics. The type checker can reject incompatible parameter types, while business constraints such as positivity still require explicit validation.</p>
+<h3>Small executable lab for a configured HHVM project</h3>
+<p>Save as <code>lesson.hack</code>. The <code>&lt;&lt;__EntryPoint&gt;&gt;</code> attribute marks the entry function. Check your installed HHVM release and project configuration before choosing a launch command.</p>
+<pre><code class="language-hack">&lt;?hh
+function double_positive(int $n): int {
+  if ($n &lt; 0) {
+    throw new \InvalidArgumentException('negative');
+  }
+  return $n * 2;
+}
+&lt;&lt;__EntryPoint&gt;&gt;
+function main(): void {
+  echo double_positive(4), &quot;\n&quot;;
+  try {
+    double_positive(-1);
+  } catch (\InvalidArgumentException $_) {
+    echo &quot;rejected\n&quot;;
+  }
+}
+</code></pre>
+<p><strong>Expected output, not executed here:</strong> <code>8</code> followed by <code>rejected</code>. The <code>int</code> type alone does not guarantee non-negative values; the explicit check establishes that contract.</p>
+<h3>Diagnosis</h3>
+<ul>
+<li><strong>PHP parse error:</strong> the wrong runtime is being used. Confirm that HHVM executes the Hack file.</li>
+<li><strong>Type error for a string:</strong> an arbitrary string cannot satisfy an <code>int</code> argument. Parse and validate at the input boundary instead of hiding the mismatch with a cast.</li>
+<li><strong>Unhandled InvalidArgumentException:</strong> decide whether callers should catch, translate or propagate the error. Avoid broad catches that conceal unrelated failures.</li>
+<li><strong>Entry point or project failure:</strong> check <code>.hhconfig</code>, installed HHVM version and launch command. Available tooling varies by release.</li>
+<li><strong>Dependency failure:</strong> Hack/HHVM is not automatically compatible with every current PHP package.</li>
+</ul>
+<h3>Mastery pathway</h3>
+<ol>
+<li>With actual Hack tooling, record HHVM and type-checker versions, run the example and save both output lines.</li>
+<li>Change the first call to <code>double_positive(&quot;4&quot;)</code>, predict the type error, then restore the integer.</li>
+<li>Add tests for zero, one and a negative number. Explain why positivity is a runtime contract rather than a property of <code>int</code>.</li>
+<li>Compare exceptions with an explicit result representation for a caller-facing API, and justify how the caller recovers.</li>
+</ol>
+<p><strong>Verification:</strong> static review only in this environment; HHVM is not installed. Do not report runtime success without executing the code. <strong>Reference:</strong> https://docs.hhvm.com/hack/</p>
+<h2>Hack — Expanded practice workbook</h2>
+<h3>Read the baseline source</h3>
+<pre><code class="language-text">&lt;?hh
+&lt;&lt;__EntryPoint&gt;&gt;
+function main(): void {
+  echo &quot;Hello, Ada!\n&quot;;
+}
+</code></pre>
+<p><strong>Relevant environment:</strong> Run with HHVM in a configured Hack project.. Verify that the matching compiler, host or simulator is available before treating output as authoritative. For scripts that can interact with personal files or systems, use a scratch workspace and read-only fixtures by default.</p>
+<h3>Detailed working objective</h3>
+<p>Use Hack's typed collections and a shape for validated JSON-like input, then compare nullable types and runtime enforcement in HHVM.</p>
+<h3>The failure that must be understood</h3>
+<p>Hack syntax and HHVM runtime are not interchangeable with PHP 8; check typed mode and installed HHVM support.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

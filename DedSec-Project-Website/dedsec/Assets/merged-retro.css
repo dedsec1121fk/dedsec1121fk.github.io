@@ -1,0 +1,801 @@
+@import url("../../assets/galaxy.css");
+@import url("../../assets/clean-skin.css");
+/* One coherent DedSec theme for the imported full site. Applied after original site styles. */
+html{scroll-behavior:auto!important;scroll-padding-top:85px}
+body{box-sizing:border-box!important;min-height:100dvh!important;overflow-x:hidden!important;overflow-y:auto!important;margin:0!important;padding:80px 0 36px!important;color:var(--merge-ink)!important;background:#040309!important;font:15px/1.7 "Segoe UI",Tahoma,Arial,sans-serif!important;--merge-ink:#f4eaff;--merge-muted:#d4bee9;--merge-border:#735196;--merge-surface:#171023ee;--merge-panel:#21182e;--merge-link:#cbaaff;--merge-nav:#07050ef2}
+*,*::before,*::after{box-sizing:border-box}
+body::before{content:"";position:fixed!important;inset:0!important;z-index:-2!important;pointer-events:none!important;transform:none!important;background:radial-gradient(ellipse at 64% 18%,#45205b99,transparent 37%),radial-gradient(ellipse at 8% 80%,#311749a6,transparent 39%),linear-gradient(130deg,#000,#07030c 60%,#020207)!important}
+body::after{content:"";position:fixed!important;inset:0!important;z-index:-1!important;pointer-events:none!important;transform:none!important;opacity:.8!important;background:radial-gradient(1px 1px at 16px 33px,#fff,transparent),radial-gradient(2px 2px at 110px 172px,#bd9ffc,transparent),radial-gradient(1px 1px at 270px 70px,#fff,transparent),radial-gradient(1px 1px at 355px 190px,#d4b9ff,transparent)!important;background-size:310px 270px,410px 330px,530px 300px,640px 280px!important}
+body.merged-light{color-scheme:light!important;--merge-ink:#342146;--merge-muted:#5b4670;--merge-border:#b797d9;--merge-surface:#fffafff2;--merge-panel:#f6ecfff0;--merge-link:#5e3598;--merge-nav:#eee0faee;background:#eee0fa!important}
+body.merged-light::before{background:radial-gradient(ellipse at 69% 15%,#bd90ddba,transparent 44%),radial-gradient(ellipse at 17% 85%,#bfb1f9b8,transparent 41%),linear-gradient(120deg,#eee0ff,#d7bdf1 60%,#f6eaff)!important}
+body.merged-light::after{opacity:.34!important;filter:invert(.5)}
+body.dark-theme,body.light-theme{color:var(--merge-ink)!important;background:transparent!important}
+.merged-topbar{position:fixed;top:0;left:0;right:0;z-index:10000;min-height:64px;padding:8px clamp(10px,2.8vw,40px);display:flex;align-items:center;gap:13px;background:var(--merge-nav);border-bottom:1px solid var(--merge-border);box-shadow:0 6px 22px #0005;backdrop-filter:none}
+.merged-brand{display:flex;align-items:center;gap:9px;flex-shrink:0;text-decoration:none!important;color:var(--merge-ink)!important;font:850 17px "Segoe UI",Tahoma,sans-serif!important}
+.merged-brand img{width:36px;height:36px;object-fit:cover;border-radius:8px;border:1px solid var(--merge-border)}
+.merged-nav{display:flex;flex:1;align-items:center;justify-content:center;min-width:0;gap:4px}
+.merged-nav a{display:inline-flex;align-items:center;justify-content:center;min-height:36px;min-width:41px;color:var(--merge-ink)!important;border-radius:7px;text-decoration:none!important;font-size:17px;background:transparent!important;border:0!important;box-shadow:none!important}
+.merged-nav a:hover{background:#a57bcd33!important}
+.merged-actions{display:flex;gap:6px;flex:none}
+.merged-action{height:37px;min-width:37px;border:1px solid var(--merge-border)!important;border-radius:8px;background:var(--merge-surface)!important;color:var(--merge-ink)!important;font-weight:800;cursor:pointer}
+.merged-action:hover{filter:brightness(1.12)}
+body .page-content,body main.page-content,body .main-content,body .page-main,body .content-container,body .container{max-width:min(1140px,calc(100vw - 28px))!important;width:100%!important;min-width:0!important;margin-left:auto!important;margin-right:auto!important;padding-left:clamp(12px,2vw,28px)!important;padding-right:clamp(12px,2vw,28px)!important;overflow:visible!important;float:none!important}
+body .page-content{padding-top:10px!important;background:none!important;box-shadow:none!important}
+body .content-section,body .assistance-category-section,body .assistance-path-section,body .post-install-value-block,body .tool-card,body .faq-card,body .sponsor-tier-card,body .sponsor-ebook-card,body .sponsor-inline-tier-card,body .feature-card,body .info-card,body .code-example,body details,body .card{background:var(--merge-surface)!important;border:1px solid var(--merge-border)!important;border-radius:11px!important;color:var(--merge-ink)!important;box-shadow:0 10px 20px #0002!important;max-width:100%!important}
+body main,body section,body article,body header:not(.merged-topbar),body h1,body h2,body h3,body h4,body p,body li,body summary,body span{color:inherit}
+body h1,body h2,body h3,body h4{color:var(--merge-ink)!important;text-shadow:none!important;max-width:100%;overflow-wrap:anywhere}
+body p,body li,body td,body th,body label{color:var(--merge-ink)!important;overflow-wrap:anywhere}
+body a:not(.merged-brand):not(.merged-nav a){color:var(--merge-link)!important}
+body code:not(pre code),body kbd{background:var(--merge-panel)!important;color:var(--merge-link)!important;border-radius:4px}
+body pre{background:#100c19!important;color:#f2ebff!important;border:1px solid var(--merge-border)!important;overflow-x:auto!important;max-width:100%!important}
+body pre code{color:#f2ebff!important;background:transparent!important}
+body input,body select,body textarea{background:var(--merge-panel)!important;color:var(--merge-ink)!important;border:1px solid var(--merge-border)!important;max-width:100%!important}
+body button:not(.merged-action){max-width:100%}
+body table{display:block;max-width:100%;overflow-x:auto;border-collapse:collapse}
+body img,body video,body iframe{max-width:100%;height:auto}
+body .main-nav,body .burger-menu,body .nav-menu,body .main-footer,body footer:not(.merged-footer),body .bottom-bar,body .bottom-nav,body .mobile-bottom-nav,body .sticky-cta,body .cookie-banner,body .cookie-consent,body #language-selection-modal{display:none!important}
+body .floating-actions,body .back-to-top,body .fixed-footer,body .sticky-bottom{display:none!important}
+body .page-content::before,body .page-content::after{box-shadow:none!important}
+@media(max-width:710px){body{padding-top:72px!important}.merged-topbar{min-height:58px;padding:6px 9px;gap:5px}.merged-brand img{width:31px;height:31px}.merged-brand span{display:inline!important;white-space:nowrap;font-size:clamp(12px,3.4vw,16px)}.merged-nav{gap:0;justify-content:space-evenly}.merged-nav a{min-width:33px;min-height:34px;font-size:16px}.merged-actions{gap:3px}.merged-action{min-width:31px;height:32px}body .page-content{max-width:calc(100vw - 12px)!important}}
+@media(max-width:430px){.merged-nav a:nth-child(4),.merged-nav a:nth-child(7){display:none}.merged-nav a{min-width:30px;font-size:15px}}
+
+/* Shared original DedSec footer under every imported HTML page. */
+.merged-footer{max-width:1330px;margin:26px auto 0;padding:27px 15px 35px;text-align:center;border-top:1px solid var(--merge-border);color:var(--merge-muted);font:12px/1.7 "Segoe UI",sans-serif}
+.merged-footer .footer-buttons{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:10px;margin:11px auto}
+.merged-footer a{display:inline-block;background:var(--merge-surface)!important;color:var(--merge-ink)!important;border:1px solid var(--merge-border)!important;padding:8px 13px;border-radius:8px;text-decoration:none!important}
+.merged-footer a:hover{border-color:var(--merge-link)!important}
+.merged-topbar{justify-content:space-between!important}
+.merged-actions{margin-left:auto!important}
+.merged-nav{display:none!important}
+body .page-content,body main.page-content,body .main-content,body .container{overflow-x:visible!important;overflow-y:visible!important;max-height:none!important;height:auto!important}
+body .page-content img,body article img,body .content-section img{max-width:100%!important;height:auto}
+body table{max-width:100%;display:block;overflow-x:auto}
+
+/* Galaxy V3 all-page theme correction: strong selectors intentionally override legacy DedSec skins. */
+html{overflow-x:hidden!important;overflow-y:auto!important}
+body{overflow-x:hidden!important;overflow-y:visible!important;height:auto!important;min-height:100dvh!important;color:var(--merge-ink)!important;background:#000!important}
+body.merged-light{background:#f3e7ff!important}
+body::before{background:
+ radial-gradient(ellipse 34% 26% at 78% 16%,#8735b17b,transparent 98%),
+ radial-gradient(ellipse 43% 32% at 13% 69%,#482190bd,transparent 98%),
+ radial-gradient(ellipse 23% 35% at 68% 85%,#40276787,transparent 98%),
+ linear-gradient(135deg,#000,#060008 50%,#000)!important}
+body.merged-light::before{background:
+ radial-gradient(ellipse 37% 26% at 78% 16%,#b787dbac,transparent 98%),
+ radial-gradient(ellipse 36% 35% at 12% 72%,#b0a8f5c7,transparent 98%),
+ linear-gradient(140deg,#f7edff,#e0c9f6,#f6e9ff)!important}
+body::after{background-image:
+ radial-gradient(1px 1px at 13px 35px,#fff,transparent),
+ radial-gradient(1px 1px at 148px 92px,#ebd2ff,transparent),
+ radial-gradient(2px 2px at 260px 194px,#d5a5ff,transparent),
+ radial-gradient(1px 1px at 417px 17px,#fff,transparent),
+ radial-gradient(1px 1px at 83px 301px,#f5deff,transparent)!important;
+ background-size:340px 210px,430px 300px,520px 270px,630px 410px,470px 460px!important;opacity:.85!important}
+body.merged-light::after{opacity:.35!important}
+.merged-topbar{min-height:64px!important}
+.merged-brand span{display:inline!important;font-size:clamp(12px,3vw,17px)!important;color:var(--merge-ink)!important}
+.merged-nav{display:none!important}
+body .main-nav,body .burger-menu,body .nav-menu,body .bottom-bar,body .mobile-bottom-nav,body #language-selection-modal{display:none!important}
+body .merged-footer{display:block!important;position:relative!important;clear:both!important;color:var(--merge-ink)!important;background:transparent!important;max-width:1170px!important;overflow:visible!important}
+body .merged-footer p{color:var(--merge-muted)!important}
+body .merged-footer .footer-buttons{display:flex!important;justify-content:center;flex-wrap:wrap}
+body .page-content,body main,body article,body .container{min-width:0!important;max-height:none!important;scrollbar-width:auto!important}
+body .content-section,body .tool-card,body .card,body .faq-card,body details,body .feature-card{color:var(--merge-ink)!important}
+body .content-section *,body .tool-card *,body .card *,body .faq-card *,body details *{color:inherit}
+body .content-section a,body .tool-card a,body .card a,body .faq-card a,body details a{color:var(--merge-link)!important}
+body table{display:block;max-width:100%;overflow-x:auto!important}
+body pre,body code{max-width:100%;overflow-wrap:normal}
+@media(max-width:710px){.merged-topbar{min-height:58px!important;padding:7px 10px!important}.merged-brand img{width:33px;height:33px}.merged-brand span{display:inline!important;font-size:clamp(12px,3.6vw,16px)!important}body{padding-top:72px!important}.merged-actions{gap:4px!important}}
+
+body.merged-broken .merged-topbar,body.merged-broken main,body.merged-broken .page-content{transform:rotate(-2deg) translateY(19px)!important;transition:transform .6s ease!important;filter:drop-shadow(9px 18px 3px #0009)}
+.merged-collapse{position:fixed;inset:0;z-index:25000;display:grid;place-items:center;background:#05020dd1}
+.merged-collapse-crack{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(117deg,transparent 0 45px,#050009a8 45px 48px,transparent 49px 89px)}
+.merged-restore{position:relative;padding:13px 18px;background:#28113b;border:2px solid #d5b2f8;color:#fff;font-weight:800;border-radius:8px}
+@media(prefers-reduced-motion:reduce){.merged-collapse *,body.merged-broken *{animation:none!important;transition:none!important}}
+
+/* Final imported-page skin: keep original content layout, not original theme colors. */
+html body.merged-dark,html body.merged-light{overflow-y:visible!important}
+html{overflow-y:auto!important;overflow-x:clip!important;scroll-padding-top:77px}
+body.merged-dark,body.merged-light{--nav-h:65px}
+body.merged-dark .merged-topbar,body.merged-light .merged-topbar{height:64px!important;min-height:64px!important;display:flex!important;padding:8px clamp(12px,2.6vw,40px)!important;background:var(--merge-nav)!important;border-bottom:1px solid var(--merge-border)!important}
+.merged-brand{gap:10px!important;font-size:clamp(14px,1.4vw,18px)!important}
+.merged-brand img{width:38px!important;height:38px!important;object-fit:contain!important;border:0!important;border-radius:4px!important}
+.merged-brand span{font-size:inherit!important}
+.merged-actions{gap:7px!important}
+.merged-action{height:39px!important;width:39px!important;min-width:39px!important;font-size:19px!important;border-radius:8px!important;background:var(--merge-surface)!important}
+body.merged-dark,body.merged-light{padding:78px 0 32px!important}
+body .page-content,body main.page-content,body .main-content,body .page-main,body .content-container{background:transparent!important;max-height:none!important;height:auto!important;overflow:visible!important;min-width:0!important}
+body .phone-container,body .screen,body .home-screen,body .content-wrapper{max-height:none!important;height:auto!important;overflow:visible!important;background:transparent!important}
+body .content-section,body .tool-card,body .faq-card,body .feature-card,body .info-card,body .callout,body .assistance-category-section,body .assistance-path-section,body .post-install-value-block,body .sponsor-tier-card,body .sponsor-ebook-card,body .sponsor-inline-tier-card{
+ background:var(--merge-surface)!important;
+ background-image:none!important;
+ color:var(--merge-ink)!important;
+ border-color:var(--merge-border)!important;
+ box-shadow:0 7px 20px #0002!important
+}
+body .content-section p,body .content-section li,body .tool-card p,body .tool-card li,body .faq-card p,body .faq-card li,body .feature-card p,body .feature-card li{color:var(--merge-ink)!important}
+body .content-section a,body .tool-card a,body .faq-card a,body .feature-card a,body .merged-footer a{color:var(--merge-link)!important}
+body .content-section h1,body .content-section h2,body .content-section h3,body .tool-card h2,body .tool-card h3,body .faq-card h2,body .faq-card h3{color:var(--merge-ink)!important}
+body .content-section button,body .tool-card button,body .faq-card button{max-width:100%}
+body .content-section pre,body .tool-card pre,body .faq-card pre,body .code-example pre{background:#110b1d!important;color:#f6eaff!important;overflow-x:auto!important}
+body .content-section pre *,body .code-example pre *{color:#f6eaff!important}
+body .content-section code:not(pre code),body .tool-card code:not(pre code){background:var(--merge-panel)!important;color:var(--merge-link)!important}
+body .content-section table,body .tool-card table,body .faq-card table{display:block!important;max-width:100%!important;overflow-x:auto!important}
+body.merged-dark .merged-footer,body.merged-light .merged-footer{background:transparent!important}
+body.merged-light .merged-footer a{background:#fffaffee!important;color:#3b245c!important}
+@media(max-width:760px){
+ body.merged-dark,body.merged-light{padding-top:77px!important}
+ body.merged-dark .merged-topbar,body.merged-light .merged-topbar{height:62px!important;min-height:62px!important;padding:7px 11px!important}
+ .merged-brand{gap:7px!important}
+ .merged-brand img{width:36px!important;height:36px!important}
+ .merged-brand span{font-size:clamp(13px,3.6vw,17px)!important}
+ .merged-actions{gap:4px!important}
+ .merged-action{width:36px!important;min-width:36px!important;height:36px!important;padding:4px!important}
+ body .page-content,body main.page-content,body .main-content,body .page-main{width:100%!important;max-width:100%!important;padding-left:11px!important;padding-right:11px!important}
+ body .content-section,body .tool-card,body .faq-card,body .feature-card{padding:clamp(11px,3vw,19px)!important}
+}
+@media(max-width:375px){.merged-brand img{width:32px!important;height:32px!important}.merged-brand span{font-size:12.5px!important}.merged-action{height:32px!important;width:32px!important;min-width:32px!important}}
+
+
+/* Final imported-page normalization: ONE root scroll and shared space variables.
+   Keeps the original accordions and articles functional without their outdated skin. */
+html{overflow-x:clip!important;overflow-y:auto!important}
+html body.merged-dark,html body.merged-light{
+ background-color:var(--space-start)!important;
+ /* Use the ONE canonical galaxy image declared in assets/galaxy.css. */
+ color:var(--space-ink)!important;
+ overflow-x:clip!important;overflow-y:visible!important;
+ --merge-ink:var(--space-ink);--merge-muted:var(--space-muted);
+ --merge-border:var(--space-line);--merge-surface:var(--space-surface);
+ --merge-panel:var(--space-surface-soft);--merge-link:var(--space-link);
+ --merge-nav:var(--space-header);
+}
+html body.merged-dark::before,html body.merged-dark::after,
+html body.merged-light::before,html body.merged-light::after{content:none!important}
+html body .merged-topbar{background:var(--space-header)!important;border-color:var(--space-line)!important;min-height:64px!important}
+html body .merged-action{background:var(--space-surface)!important;color:var(--space-ink)!important;border-color:var(--space-line)!important}
+html body .merged-action i{font-size:20px!important}
+html body .merged-brand{color:var(--space-ink)!important}
+html body :is(.page-content,.main-content,.page-main,.content-container,article,main){background-color:transparent!important;max-height:none!important;overflow-y:visible!important}
+html body :is(.content-section,.tool-card,.feature-card,.faq-card,.assistance-category-section,.assistance-path-section,.info-card,.sponsor-tier-card,.sponsor-ebook-card,.post-install-value-block,.card,details){
+ background:var(--space-surface)!important;color:var(--space-ink)!important;border-color:var(--space-line)!important;
+ box-shadow:0 8px 24px #0003!important;
+}
+html body :is(h1,h2,h3,h4,summary,p,li,td,th,label){color:var(--space-ink)!important}
+html body :is(a:not(.merged-brand),.content-section a){color:var(--space-link)!important}
+html body :is(pre,code,kbd){max-width:100%!important}
+html body pre{background:#100b1b!important;color:#f5ecff!important;overflow-x:auto!important}
+html body pre code{background:transparent!important;color:#f5ecff!important}
+html body :is(table,.category,.categories-container,.tools-list,.tool-description){max-width:100%!important}
+html body table{display:block!important;overflow-x:auto!important}
+html body :is(input,select,textarea){background:var(--space-surface-soft)!important;color:var(--space-ink)!important;border-color:var(--space-line)!important}
+html body .merged-footer{display:block!important;clear:both!important;position:relative!important;color:var(--space-ink)!important}
+html body .merged-footer a{color:var(--space-link)!important;background:var(--space-surface)!important}
+html body :is(.main-nav,.burger-menu,.nav-menu,.bottom-bar,.bottom-nav,.mobile-bottom-nav,.sticky-cta,.cookie-banner,#language-selection-modal){display:none!important}
+@media(max-width:760px){
+ html body .merged-topbar{min-height:62px!important;height:62px!important;padding:7px 10px!important}
+ html body .merged-brand img{width:35px!important;height:35px!important}
+ html body .merged-brand span{font-size:clamp(12px,3.5vw,16px)!important}
+ html body .merged-action{width:35px!important;height:35px!important;min-width:35px!important}
+ html body.merged-dark,html body.merged-light{padding-top:78px!important}
+}
+
+/* Final opacity normalization after old CSS: preserve content and allow stars behind it. */
+html body:is(.merged-dark,.merged-light) :is(.page-content,.main-content,.content-container,.page-main,.container,.home-screen,.screen,.phone-container,.home-intro-panel,.project-facts-box,main,header:not(.merged-topbar),section,article,aside,.tab-content,.tab-pane,.accordion-content){
+ background-color:transparent!important;background-image:none!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.content-section,.tool-card,.feature-card,.faq-card,.card,details,.assistance-category-section,.assistance-path-section,.info-card,.sponsor-tier-card,.sponsor-ebook-card,.sponsor-inline-tier-card,.post-install-value-block,.code-example,.home-decision-card,.home-decision-section,.tool-details,.faq-item,.info-box,.home-proof-row,.trust-item,.hero-card,.search-card,.install-card){
+ background:var(--space-surface)!important;background-image:none!important;
+ border-color:var(--space-line)!important;color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) :is(input,select,textarea,.input-group){background:var(--space-input)!important;color:var(--space-ink)!important;border-color:var(--space-line)!important}
+html body:is(.merged-dark,.merged-light) :is(pre,pre code){background:var(--space-code)!important;color:var(--space-ink)!important}
+html body:is(.merged-dark,.merged-light) :is(code:not(pre code),kbd){background:var(--space-surface-soft)!important;color:var(--space-link)!important}
+html body:is(.merged-dark,.merged-light) .merged-action,
+html body:is(.merged-dark,.merged-light) .merged-search{
+ display:grid!important;place-items:center!important;width:44px!important;height:44px!important;min-width:44px!important;
+ background:var(--space-surface-soft)!important;color:var(--space-ink)!important;
+ border:1px solid var(--space-line)!important;border-radius:8px!important;text-decoration:none!important;font-size:22px!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-action:hover,
+html body:is(.merged-dark,.merged-light) .merged-search:hover{background:var(--space-surface)!important}
+html body:is(.merged-dark,.merged-light) .merged-topbar{background:var(--space-header)!important;min-height:70px!important;height:70px!important}
+html body:is(.merged-dark,.merged-light) .merged-brand img{border:0!important;object-fit:cover!important}
+@media(max-width:390px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar{padding:6px!important;gap:4px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand{gap:5px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:clamp(11px,3vw,13px)!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{width:34px!important;height:34px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:3px!important}
+ html body:is(.merged-dark,.merged-light) .merged-action,
+ html body:is(.merged-dark,.merged-light) .merged-search{width:39px!important;min-width:39px!important;height:41px!important;font-size:19px!important}
+}
+
+
+/* Larger header, readable colors and visible crack effects across original guides. */
+html body:is(.merged-dark,.merged-light) .merged-topbar{height:78px!important;min-height:78px!important;padding:8px clamp(9px,2.5vw,36px)!important;gap:7px!important;backdrop-filter:none!important}
+html body:is(.merged-dark,.merged-light) .merged-brand{display:flex!important;align-items:center!important;flex:1 1 auto!important;min-width:0!important;gap:9px!important;line-height:1.08!important}
+html body:is(.merged-dark,.merged-light) .merged-brand img{flex:0 0 auto!important;width:51px!important;height:51px!important;border-radius:9px!important}
+html body:is(.merged-dark,.merged-light) .merged-brand span{display:block!important;white-space:normal!important;line-height:1.08!important;font-size:clamp(19px,2.1vw,25px)!important;color:var(--space-ink)!important}
+html body:is(.merged-dark,.merged-light) .merged-actions{display:flex!important;flex:0 0 auto!important;gap:11px!important;margin-left:auto!important}
+html body:is(.merged-dark,.merged-light) :is(.merged-action,.merged-search){width:46px!important;min-width:46px!important;height:46px!important;font-size:23px!important}
+html body:is(.merged-dark,.merged-light){padding-top:92px!important}
+html body:is(.merged-dark,.merged-light) :is(p,li,td,th,label,summary){color:var(--space-ink)!important}
+html body:is(.merged-dark,.merged-light) :is(.page-header p,.section-intro,.sales-section-intro){color:var(--space-muted)!important}
+@media(max-width:760px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar{height:75px!important;min-height:75px!important;padding:8px!important;gap:5px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand{gap:7px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{width:45px!important;height:45px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:clamp(16px,4.1vw,19px)!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:8px!important}
+ html body:is(.merged-dark,.merged-light) :is(.merged-action,.merged-search){width:42px!important;min-width:42px!important;height:43px!important;font-size:21px!important}
+ html body:is(.merged-dark,.merged-light){padding-top:89px!important}
+}
+@media(max-width:390px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar{padding:6px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand{gap:5px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{width:42px!important;height:42px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:clamp(15px,4.1vw,17px)!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:5px!important}
+ html body:is(.merged-dark,.merged-light) :is(.merged-action,.merged-search){width:38px!important;min-width:38px!important;height:40px!important;font-size:19px!important}
+}
+@media(max-width:335px){html body:is(.merged-dark,.merged-light) .merged-brand img{width:39px!important;height:39px!important}html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:14px!important}html body:is(.merged-dark,.merged-light) .merged-actions{gap:4px!important}html body:is(.merged-dark,.merged-light) :is(.merged-action,.merged-search){width:36px!important;min-width:36px!important;height:39px!important}}
+body.merged-broken .merged-topbar{transform:rotate(-5deg) translate(-12px,22px)!important}
+body.merged-broken :is(.page-content,.main-content,.home-screen){transform:rotate(2deg) translateY(22px)!important}
+body.merged-broken :is(.tool-card,.content-section,.faq-card,.feature-card,.faq-item,.panel,.trust-item,.result-card):nth-child(4n+1){transform:rotate(11deg) translate(18px,27px)!important}
+body.merged-broken :is(.tool-card,.content-section,.faq-card,.feature-card,.faq-item,.panel,.trust-item,.result-card):nth-child(4n+2){transform:rotate(-13deg) translate(-16px,36px)!important}
+body.merged-broken :is(.tool-card,.content-section,.faq-card,.feature-card,.faq-item,.panel,.trust-item,.result-card):nth-child(4n+3){transform:rotate(19deg) translate(15px,-11px)!important}
+body.merged-broken :is(.tool-card,.content-section,.faq-card,.feature-card,.faq-item,.panel,.trust-item,.result-card):nth-child(4n){transform:rotate(-16deg) translate(-12px,20px)!important}
+body.merged-broken :is(.tool-card,.content-section,.faq-card,.feature-card,.faq-item,.panel,.trust-item,.result-card){clip-path:polygon(0 0,61% 0,66% 27%,100% 18%,100% 100%,40% 100%,28% 68%,0 66%);filter:drop-shadow(9px 12px 2px #09000d9a)!important;transition:transform .7s cubic-bezier(.15,.7,.2,1)!important}
+.merged-collapse{background:rgba(2,0,8,.26)!important;isolation:isolate}
+.merged-collapse-crack{background:repeating-linear-gradient(118deg,transparent 0 84px,#08000e8a 85px 88px,transparent 89px 136px)!important;opacity:.64}
+.merged-collapse::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(31deg,transparent 0 55%,#06000cb8 55.3% 55.8%,transparent 56%),linear-gradient(143deg,transparent 0 44%,#070012d0 44.3% 44.8%,transparent 45%)}
+.merged-restore{position:relative;z-index:3;box-shadow:0 0 0 7px #07020ba8,0 0 40px #da88ff77!important}
+@media(prefers-reduced-motion:reduce){body.merged-broken *{transition:none!important}}
+
+
+/* Final compatibility skin: remove opaque legacy paint, show nebulae through all
+   content surfaces. This comes AFTER the original website's numerous theme CSS files. */
+html body:is(.merged-dark,.merged-light) :is(.merged-actions .merged-home){
+ display:grid!important;place-items:center!important;
+ width:46px!important;min-width:46px!important;height:46px!important;
+ padding:4px!important;font-size:23px!important;line-height:1!important;
+ border:1px solid var(--space-line)!important;border-radius:8px!important;
+ background:var(--space-surface-soft)!important;color:var(--space-ink)!important;
+ text-decoration:none!important;box-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-home:hover{background:var(--space-surface)!important}
+html body:is(.merged-dark,.merged-light) .merged-home:focus-visible{outline:2px solid var(--space-link)!important;outline-offset:2px}
+html body.merged-dark{--space-clear-card:rgba(12,7,29,.15);--space-clear-note:rgba(12,7,29,.10);--space-clear-border:rgba(178,132,223,.33)}
+html body.merged-light{--space-clear-card:rgba(255,252,255,.20);--space-clear-note:rgba(255,252,255,.12);--space-clear-border:rgba(91,50,146,.32)}
+/* Page wrappers and heroes have NO solid fill, so nebulae remain visible. */
+html body:is(.merged-dark,.merged-light) :is(.page-header,.hero,.hero-section,.hero-content,.page-hero,.guide-hero,.intro-section,.intro-box,.section-header,.requirements-header,.installation-header,.content-header,.page-title,.main-content,.page-content,.page-main,.content-container,.guide-container,.assistance-header,.platform-selector-intro,.platform-install-body,.tab-pane,.tab-content,.features-grid,.guide-pdf-grid,.note::before){
+ background:transparent!important;background-image:none!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.page-header,.hero,.hero-section,.guide-hero,.intro-section,.section-header,.assistance-header){
+ box-shadow:none!important;
+ border-color:var(--space-clear-border)!important;
+}
+/* Section and note cards become gently tinted GLASS, not flat old theme panels. */
+html body:is(.merged-dark,.merged-light) :is(.content-section,.tool-card,.feature-card,.faq-card,.faq-item,.card,.info-card,.info-box,.hero-card,.search-card,.install-card,.install-section,.install-step,.installation-step,.step,.step-card,.requirements,.requirement-card,.guide-card,.download-card,.platform-install-card,.sponsor-tier-card,.sponsor-ebook-card,.sponsor-inline-tier-card,.ebook-download-card,.guide-pdf-download-card,.post-install-value-block,.note,.tip,.warning,.alert,.note-warning,.note-info,.github-discovery-block,.code-container,.guide-pdf-card,.home-decision-card,.home-decision-section,.home-proof-row,.trust-item,details){
+ background:var(--space-clear-card)!important;background-image:none!important;
+ border-color:var(--space-clear-border)!important;
+ box-shadow:0 5px 18px rgba(0,0,0,.08)!important;
+ color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.note,.tip,.warning,.alert,.note-warning,.note-info,.github-discovery-block,.code-container,.platform-install-selector,.installation-next-step){
+ background:var(--space-clear-note)!important;background-image:none!important;
+ border-color:var(--space-clear-border)!important;
+ box-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.content-section,.tool-card,.note,.tip,.warning,.alert,.page-header,.hero,.guide-hero,.platform-install-card) :is(h1,h2,h3,h4,p,li,strong,em){
+ color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.page-header,.hero,.guide-hero) :is(h1,h2){text-shadow:none!important;overflow-wrap:anywhere!important}
+html body:is(.merged-dark,.merged-light) :is(.page-header,.hero,.guide-hero) p{color:var(--space-muted)!important}
+html body:is(.merged-dark,.merged-light) :is(pre,pre code){background:var(--space-code)!important;color:var(--space-ink)!important}
+html body:is(.merged-dark,.merged-light) :is(.page-header,.content-section,.tool-card,.note,.tip,.warning,.alert,.code-container){backdrop-filter:none!important}
+@media(max-width:760px){
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:5px!important}
+ html body:is(.merged-dark,.merged-light) :is(.merged-action,.merged-search,.merged-home){width:40px!important;min-width:40px!important;height:43px!important;font-size:20px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand{gap:6px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{width:44px!important;height:44px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:clamp(15px,3.7vw,18px)!important}
+}
+@media(max-width:390px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar{padding:6px!important;gap:4px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:4px!important}
+ html body:is(.merged-dark,.merged-light) :is(.merged-action,.merged-search,.merged-home){width:36px!important;min-width:36px!important;height:40px!important;font-size:19px!important;padding:3px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{width:40px!important;height:40px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:clamp(14px,3.8vw,17px)!important}
+}
+@media(max-width:345px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar{padding:5px!important;gap:3px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:3px!important}
+ html body:is(.merged-dark,.merged-light) :is(.merged-action,.merged-search,.merged-home){width:34px!important;min-width:34px!important;height:39px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{width:37px!important;height:37px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand{gap:4px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:13.5px!important}
+}
+
+
+/* Last word on legacy opaque guide panels.
+   100% transparent for content sections & notes, but keep inputs, code and
+   explicit button backgrounds to protect contrast/accessibility. */
+html body:is(.merged-dark,.merged-light) :is(.page-content,.page-header,.main-content,.main,.content-container,.page-main,.page-hero,.guide-hero,.hero,.hero-section,.hero-content,.guide-container,.platform-selector-intro,.platform-install-body,.features-grid,.guide-pdf-grid,.section-header,.section-intro,.project-facts-box,.home-intro-panel){
+ background:transparent!important;background-image:none!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.content-section,.note,.tip,.warning,.alert,.note-warning,.note-info,.info-box,.info-card,.tool-card,.feature-card,.faq-card,.faq-item,.card,details,.platform-install-card,.platform-install-selector,.post-install-value-block,.download-card,.guide-card,.code-container,.install-step,.installation-step,.step-card,.requirements,.requirement-card,.home-decision-card,.home-decision-section,.home-proof-row,.trust-item,.github-discovery-block,.ebook-download-card,.guide-pdf-download-card){
+ background:transparent!important;background-color:transparent!important;background-image:none!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+ color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.content-section,.note,.tip,.warning,.alert,.info-box,.tool-card,.platform-install-card,.faq-card,.feature-card,.guide-card){
+ border-color:color-mix(in srgb,var(--space-line) 42%,transparent)!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.content-section,.note,.tip,.warning,.alert,.info-box,.tool-card,.platform-install-card,.faq-card,.feature-card) :is(h1,h2,h3,h4,p,li,span,strong){
+ color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.page-header,.guide-hero,.hero,.content-section,.note,.tip,.warning,.alert) :is(h1,h2,h3,h4){
+ text-shadow:0 1px 12px rgba(4,1,10,.32)!important;
+}
+html body.merged-light :is(.page-header,.guide-hero,.hero,.content-section,.note,.tip,.warning,.alert) :is(h1,h2,h3,h4){
+ text-shadow:none!important;
+}
+/* Kill pseudo-element panels carried over from old branding, not badges/icons. */
+html body:is(.merged-dark,.merged-light) :is(.page-header,.content-section,.note,.tip,.warning,.alert,.platform-install-card)::before,
+html body:is(.merged-dark,.merged-light) :is(.page-header,.content-section,.note,.tip,.warning,.alert,.platform-install-card)::after{
+ background:transparent!important;background-image:none!important;box-shadow:none!important;
+}
+/* Exact same square for all four imported controls; prevent legacy anchor padding
+   from enlarging the Home link. */
+html body:is(.merged-dark,.merged-light) .merged-actions :is(.merged-search,.merged-action,.merged-home){
+ box-sizing:border-box!important;flex:0 0 41px!important;display:grid!important;
+ inline-size:41px!important;min-inline-size:41px!important;max-inline-size:41px!important;
+ block-size:41px!important;min-block-size:41px!important;max-block-size:41px!important;
+ padding:0!important;margin:0!important;aspect-ratio:1!important;
+ border-radius:9px!important;justify-self:stretch!important;align-self:center!important;
+ line-height:1!important;text-decoration:none!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-actions :is(.merged-search,.merged-action,.merged-home) i{
+ font-size:20px!important;line-height:1!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-brand{flex:1 1 auto!important;min-width:0!important}
+html body:is(.merged-dark,.merged-light) .merged-brand span{
+ font-weight:900!important;font-size:clamp(24px,2.6vw,31px)!important;
+ line-height:1.03!important;letter-spacing:-.025em!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-brand img{flex:0 0 49px!important;width:49px!important;height:49px!important}
+@media(max-width:760px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar{padding:8px 7px!important;gap:5px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand{gap:6px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{flex:0 0 45px!important;width:45px!important;height:45px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{
+  font-size:clamp(20px,5.5vw,24px)!important;max-width:122px!important;white-space:normal!important;overflow-wrap:normal!important;
+ }
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:4px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions :is(.merged-search,.merged-action,.merged-home){
+  flex:0 0 37px!important;inline-size:37px!important;min-inline-size:37px!important;max-inline-size:37px!important;
+  block-size:41px!important;min-block-size:41px!important;max-block-size:41px!important;
+ }
+}
+@media(max-width:375px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar{padding:7px 5px!important;gap:3px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand{gap:4px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{flex:0 0 42px!important;width:42px!important;height:42px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:21px!important;max-width:98px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:3px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions :is(.merged-search,.merged-action,.merged-home){
+  flex:0 0 35px!important;inline-size:35px!important;min-inline-size:35px!important;max-inline-size:35px!important;
+  block-size:39px!important;min-block-size:39px!important;max-block-size:39px!important;
+ }
+}
+
+/* Final imported-page contract: readable centered intros; no opaque legacy panels. */
+html body:is(.merged-dark,.merged-light) :is(
+ .page-header,.guide-header,.hero,.hero-section,.guide-hero,.intro-section,.intro-box,
+ .content-section,.main-content,.page-content,.page-main,.content-container,
+ .note,.tip,.warning,.alert,.info-card,.info-box,.tool-card,.feature-card,
+ .faq-card,.faq-item,.card,.requirement-card,.requirements,.platform-install-card,
+ .install-section,.installation-step,.step-card,.guide-card,.home-proof-row,.trust-item
+){
+ background:transparent!important;background-image:none!important;background-color:transparent!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.page-header,.guide-header,.hero,.guide-hero,.intro-section){
+ text-align:center!important;margin-inline:auto!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.page-header,.guide-header,.hero,.guide-hero,.intro-section) :is(h1,h2,p,.subtitle,.hero-subtitle){
+ text-align:center!important;margin-inline:auto!important;max-width:920px!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.content-section,.note,.tip,.warning,.alert,.info-card,.faq-card,.platform-install-card){
+ border-color:var(--space-line)!important;
+}
+html body:is(.merged-dark,.merged-light) :is(.content-section,.note,.tip,.warning,.alert,.info-card,.faq-card,.platform-install-card)::before,
+html body:is(.merged-dark,.merged-light) :is(.content-section,.note,.tip,.warning,.alert,.info-card,.faq-card,.platform-install-card)::after{
+ background:transparent!important;background-image:none!important;
+ box-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) :is(p,li,blockquote,td,th){
+ color:var(--space-ink)!important;
+}
+/* Navbar MUST include four actions. Never let legacy fixed sizes crop the Home icon. */
+html body:is(.merged-dark,.merged-light) .merged-topbar{
+ display:grid!important;grid-template-columns:minmax(0,1fr) max-content!important;
+ align-items:center!important;column-gap:6px!important;width:100%!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-brand{
+ flex:none!important;min-width:0!important;width:100%!important;
+ max-width:100%!important;overflow:hidden!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-brand span{
+ min-width:0!important;white-space:normal!important;overflow-wrap:normal!important;
+ font-weight:900!important;line-height:1.05!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-actions{
+ display:grid!important;grid-template-columns:repeat(4,max-content)!important;
+ align-items:center!important;gap:5px!important;min-width:0!important;width:auto!important;margin:0!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-actions > :is(.merged-search,.merged-action,.merged-home){
+ display:grid!important;place-items:center!important;visibility:visible!important;
+ box-sizing:border-box!important;flex:none!important;overflow:hidden!important;
+ width:42px!important;min-width:42px!important;max-width:42px!important;
+ height:43px!important;min-height:43px!important;max-height:43px!important;
+ aspect-ratio:auto!important;margin:0!important;padding:0!important;
+}
+@media(max-width:760px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar{padding:8px 6px!important;column-gap:4px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand{gap:5px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand img{flex:0 0 42px!important;width:42px!important;height:42px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:clamp(18px,4.8vw,23px)!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:4px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions > :is(.merged-search,.merged-action,.merged-home){
+  width:36px!important;min-width:36px!important;max-width:36px!important;
+  height:41px!important;min-height:41px!important;max-height:41px!important;
+ }
+}
+@media(max-width:370px){
+ html body:is(.merged-dark,.merged-light) .merged-brand img{flex:0 0 39px!important;width:39px!important;height:39px!important}
+ html body:is(.merged-dark,.merged-light) .merged-brand span{font-size:19px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions{gap:3px!important}
+ html body:is(.merged-dark,.merged-light) .merged-actions > :is(.merged-search,.merged-action,.merged-home){
+  width:33px!important;min-width:33px!important;max-width:33px!important;
+  height:39px!important;min-height:39px!important;max-height:39px!important;
+ }
+ html body:is(.merged-dark,.merged-light) .merged-actions i{font-size:18px!important}
+}
+
+/* Fallback titles for guides whose original HTML omitted a clear page intro. */
+html body:is(.merged-dark,.merged-light) .merged-generated-intro{
+ text-align:center!important;margin:18px auto 30px!important;
+ padding:6px clamp(8px,3vw,24px)!important;max-width:1000px!important;
+ background:transparent!important;border:0!important;box-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-generated-intro h1{
+ color:var(--space-ink)!important;line-height:1.2!important;
+ font-size:clamp(28px,5.5vw,46px)!important;margin:0 0 12px!important;
+ text-align:center!important;overflow-wrap:anywhere!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-generated-subtitle{
+ max-width:820px!important;margin:12px auto 20px!important;
+ color:var(--space-muted)!important;text-align:center!important;
+ font-size:clamp(14px,2.4vw,18px)!important;line-height:1.58!important;
+ background:transparent!important;
+}
+html body:is(.merged-dark,.merged-light) main > h1{
+ text-align:center!important;overflow-wrap:anywhere!important;
+}
+
+
+/* Final imported DedSec skin: remove the solid legacy paint behind prose.
+   Higher-specificity scoped rules intentionally beat historical !important rules.
+   Input controls, pre/code blocks, and dialogs are excluded for legibility. */
+html body:is(.merged-dark,.merged-light) .page-content > :is(.page-header,.content-section,.intro-box,.intro-section,.hero,.hero-section,.guide-hero,.guide-header,.feature-card,.faq-card,.guide-card),
+html body:is(.merged-dark,.merged-light) :is(.main-content,.content-section,.page-content,.page-main,.guide-container,.content-container,.faq-card,.tool-card,.feature-card,.info-card,.info-box,.contact-grid,.download-card,.home-proof-row,.requirements,.post-install-value-block,.guide-pdf-grid,.features-grid,.installation-next-step,.platform-install-card,.platform-selector-intro,.platform-install-body,.note,.note-warning,.tip,.warning,.alert,.code-container,.faq-item,.card,.install-step,.step-card,.requirement-card,.ebook-download-card,.guide-pdf-download-card,.github-discovery-block){
+ background:transparent!important;background-color:transparent!important;background-image:none!important;
+ box-shadow:none!important;backdrop-filter:none!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(.page-header,.content-section,.note,.note-warning,.warning,.tip,.platform-install-card,.post-install-value-block,.faq-card,.tool-card,.feature-card) :is(p,ul,ol,li,h1,h2,h3,h4){
+ background:transparent!important;background-image:none!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(.page-header,.content-section,.note,.note-warning,.warning,.tip,.platform-install-card,.faq-card,.feature-card)::before,
+html body:is(.merged-dark,.merged-light) .page-content :is(.page-header,.content-section,.note,.note-warning,.warning,.tip,.platform-install-card,.faq-card,.feature-card)::after{
+ background:transparent!important;background-image:none!important;
+ box-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(.page-header,.content-section,.note,.note-warning,.warning,.tip,.platform-install-card,.faq-card,.feature-card){
+ border-color:var(--space-line)!important;color:var(--space-ink)!important;
+}
+/* Accordion summaries were an additional source of full opaque rectangles. */
+html body:is(.merged-dark,.merged-light) .page-content :is(details,.platform-install-card,.faq-item,.guide-card) > summary,
+html body:is(.merged-dark,.merged-light) .page-content :is(details,.platform-install-card,.faq-item,.guide-card) > summary::before{
+ background:transparent!important;background-color:transparent!important;background-image:none!important;
+ box-shadow:none!important;
+}
+/* Keep code blocks and interactive form controls legible over stars. */
+html body:is(.merged-dark,.merged-light) .page-content pre{
+ background:var(--space-code)!important;color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(input,select,textarea){
+ background:var(--space-input)!important;color:var(--space-ink)!important;
+}
+/* A unified header palette matches the launcher and spaces every button evenly. */
+html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions{
+ display:grid!important;grid-template-columns:repeat(4,max-content)!important;
+ gap:10px!important;align-items:center!important;justify-content:end!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home){
+ width:43px!important;min-width:43px!important;max-width:43px!important;
+ height:44px!important;min-height:44px!important;max-height:44px!important;
+ display:grid!important;place-items:center!important;padding:0!important;margin:0!important;
+ color:var(--space-link)!important;background:rgba(54,29,83,.34)!important;
+ border:1px solid var(--space-line)!important;border-radius:11px!important;
+ box-shadow:inset 0 1px rgba(233,206,255,.10)!important;
+ font-weight:800!important;text-decoration:none!important;box-sizing:border-box!important;
+}
+html body.merged-light .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home){background:rgba(239,222,250,.41)!important}
+html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home) i{
+ font-size:22px!important;line-height:1!important;color:var(--space-link)!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home):hover{background:rgba(150,89,203,.18)!important}
+@media(max-width:760px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions{gap:7px!important}
+ html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home){
+  width:36px!important;min-width:36px!important;max-width:36px!important;
+  height:41px!important;min-height:41px!important;max-height:41px!important;
+ }
+ html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home) i{font-size:20px!important}
+}
+@media(max-width:350px){
+ html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions{gap:5px!important}
+ html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home){
+  width:32px!important;min-width:32px!important;max-width:32px!important;
+  height:39px!important;min-height:39px!important;max-height:39px!important;
+ }
+ html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home) i{font-size:18px!important}
+}
+
+/* High-specificity repair: historical premium-theme.css uses
+   :not(#dedsec-theme-specificity) (an ID selector) to force flat backgrounds.
+   Match that selector to win the cascade while keeping code, dialogs and inputs legible. */
+html body:is(.merged-dark,.merged-light) .page-content :is(
+ .page-header,.content-section,.note,.note-warning,.warning,.tip,.danger,details,
+ .platform-install-card,.platform-install-body,.guide-card,.feature-card,
+ .faq-card,.faq-item,.academy-main-header,.academy-lesson-header,
+ .academy-meta-row span,.academy-brief-card,.academy-platform-card,
+ .academy-evidence-box,.academy-callout,.academy-quality-item,
+ .post-install-value-block,.info-card,.info-box,.tool-card,
+ .download-card,.installation-next-step,.platform-selector-intro,.requirements
+):not(#dedsec-theme-specificity),
+html body:is(.merged-dark,.merged-light) .page-content :is(
+ .page-header,.content-section,.note,.note-warning,.warning,.tip,.danger,details,
+ .platform-install-card,.guide-card,.feature-card,.faq-card,.faq-item,
+ .academy-main-header,.academy-lesson-header,.academy-brief-card,
+ .academy-platform-card,.academy-evidence-box,.academy-callout,.academy-quality-item
+):not(#dedsec-theme-specificity)::before,
+html body:is(.merged-dark,.merged-light) .page-content :is(
+ .page-header,.content-section,.note,.note-warning,.warning,.tip,.danger,details,
+ .platform-install-card,.guide-card,.feature-card,.faq-card,.faq-item,
+ .academy-main-header,.academy-lesson-header,.academy-brief-card,
+ .academy-platform-card,.academy-evidence-box,.academy-callout,.academy-quality-item
+):not(#dedsec-theme-specificity)::after{
+ background:transparent!important;background-color:transparent!important;
+ background-image:none!important;box-shadow:none!important;backdrop-filter:none!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(.platform-install-card,.faq-item,details):not(#dedsec-theme-specificity) > summary{
+ background:transparent!important;background-image:none!important;
+}
+/* Override only page content: no changes to modal privacy backgrounds,
+   cookie dialogue, inputs, buttons, code blocks or top bar. */
+html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home):not(#dedsec-theme-specificity){
+ color:var(--space-link)!important;
+ background:rgba(55,27,82,.26)!important;
+ border:1px solid var(--space-line)!important;
+ box-shadow:none!important;
+}
+html body.merged-light .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home):not(#dedsec-theme-specificity){
+ background:rgba(239,222,250,.35)!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home):not(#dedsec-theme-specificity) :is(i,span){
+ color:var(--space-link)!important;-webkit-text-fill-color:var(--space-link)!important;
+}
+html body:is(.merged-dark,.merged-light) .merged-topbar .merged-actions > :is(.merged-search,.merged-action,.merged-home):not(#dedsec-theme-specificity) i::before{
+ color:var(--space-link)!important;
+}
+
+/* Opaque ONLY the fixed navigation strip: text must never ghost through it
+   as content scrolls beneath. All reading/content panels stay transparent. */
+html body:is(.merged-dark,.merged-light) > .merged-topbar{
+ background:var(--space-start)!important;background-color:var(--space-start)!important;
+ background-image:none!important;opacity:1!important;backdrop-filter:none!important;
+ color:var(--space-ink)!important;
+ border-bottom:1px solid var(--space-line)!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button){
+ color:var(--space-link)!important;-webkit-text-fill-color:var(--space-link)!important;
+ border-color:var(--space-line)!important;background:rgba(94,52,131,.16)!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button) :is(span,i),
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button) i::before{
+ color:var(--space-link)!important;-webkit-text-fill-color:var(--space-link)!important;
+}
+
+/* Final 1995 desktop compatibility for historically styled DedSec pages. */
+html body:is(.merged-dark,.merged-light) :is(.page-content,.main-content,.merged-footer){
+ font-family:Tahoma,"MS Sans Serif","Microsoft Sans Serif",Arial,sans-serif!important;
+}
+html body:is(.merged-dark,.merged-light) *:not(#dedsec-theme-specificity),
+html body:is(.merged-dark,.merged-light) *:not(#dedsec-theme-specificity)::before,
+html body:is(.merged-dark,.merged-light) *:not(#dedsec-theme-specificity)::after{
+ border-radius:0!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar{
+ background:var(--space-start)!important;
+ color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity){
+ border-radius:0!important;
+ color:var(--space-ink)!important;
+ -webkit-text-fill-color:var(--space-ink)!important;
+ background:rgba(120,105,138,.10)!important;
+ border-color:var(--space-line)!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity) :is(span,i),
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity) i::before{
+ color:var(--space-ink)!important;
+ -webkit-text-fill-color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar #merged-lang:not(#dedsec-theme-specificity){
+ color:var(--space-ink)!important;
+ -webkit-text-fill-color:var(--space-ink)!important;
+ text-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(h1,h2,h3,h4,p,li,summary,strong,em,label,small):not(#dedsec-theme-specificity){
+ color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(.page-header,.guide-header,.intro-section,.guide-hero):not(#dedsec-theme-specificity){
+ text-align:center!important;
+ background:transparent!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(.page-header,.guide-header,.intro-section,.guide-hero):not(#dedsec-theme-specificity) :is(h1,h2,p){
+ text-align:center!important;margin-inline:auto!important;
+}
+/* Only deliberate data/control surfaces retain a light background for contrast. */
+html body:is(.merged-dark,.merged-light) .page-content :is(.note,.tip,.warning,.content-section,.requirements,.faq-card,.platform-install-card):not(#dedsec-theme-specificity){
+ background:transparent!important;box-shadow:none!important;
+}
+
+/* The Font Awesome glyph is drawn in ::before; style it explicitly. */
+html body:is(.merged-dark,.merged-light) #merged-search i::before,
+html body:is(.merged-dark,.merged-light) #merged-theme i::before,
+html body:is(.merged-dark,.merged-light) #merged-home i::before{
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+
+/* Final Win95 guide typography and square content controls; no rounded surfaces. */
+html body:is(.merged-dark,.merged-light) :is(
+ .page-content,.main-content,.page-main,.content-container,.merged-footer,.merged-topbar),
+html body:is(.merged-dark,.merged-light) .page-content
+ :is(h1,h2,h3,h4,h5,h6,p,li,span,strong,em,label,small,summary,blockquote,td,th){
+ font-family:"MS Sans Serif",Tahoma,"Microsoft Sans Serif",Arial,sans-serif!important;
+}
+html body:is(.merged-dark,.merged-light) *:not(#dedsec-theme-specificity),
+html body:is(.merged-dark,.merged-light) *:not(#dedsec-theme-specificity)::before,
+html body:is(.merged-dark,.merged-light) *:not(#dedsec-theme-specificity)::after{
+ border-radius:0!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content
+ :is(h1,h2,h3,h4,h5,h6,p,li,span,strong,em,summary,blockquote,td,th):not(#dedsec-theme-specificity){
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+ background-color:transparent!important;background-image:none!important;
+ text-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar{
+ background:var(--space-header)!important;border-color:var(--space-line)!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity),
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity) :is(span,i),
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity) i::before{
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+ border-radius:0!important;text-shadow:none!important;
+}
+/* Keep structural wrappers fully translucent while protecting input and code contrast. */
+html body:is(.merged-dark,.merged-light) .page-content
+ :is(.content-section,.note,.tip,.warning,.faq-card,.feature-card,.platform-install-card,.page-header,.guide-header):not(#dedsec-theme-specificity){
+ background:transparent!important;background-image:none!important;box-shadow:none!important;
+}
+
+/* Exact white/black copy in imported guides, including old high-specificity prose. */
+html body:is(.merged-dark,.merged-light) .page-content :is(
+ h1,h2,h3,h4,h5,h6,p,li,span,strong,em,summary,blockquote,td,th,small,label):not(#dedsec-theme-specificity){
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+ text-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar :is(.merged-brand,.merged-actions a,.merged-actions button):not(#dedsec-theme-specificity),
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions :is(span,i):not(#dedsec-theme-specificity),
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions i::before{
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+
+/* Final imported-page surface contract: no decorative frames, classic sharp
+   Windows controls, pure theme foreground. Matching premium's ID specificity. */
+html body:is(.merged-dark,.merged-light) .page-content :is(
+ .page-header,.content-section,.note,.tip,.warning,.alert,.faq-card,.faq-item,
+ .guide-card,.tool-card,.platform-install-card,.info-card,.info-box,.academy-brief-card,
+ .academy-platform-card,.academy-evidence-box,.academy-callout,.post-install-value-block,
+ .requirements,.platform-install-body
+ ):not(#dedsec-theme-specificity){
+ border:0!important;border-radius:0!important;box-shadow:none!important;
+ background-color:transparent!important;background-image:none!important;
+}
+html body:is(.merged-dark,.merged-light) :is(
+ .merged-topbar,.merged-actions a,.merged-actions button,.merged-brand img,
+ .merged-footer a,.merged-restore
+ ):not(#dedsec-theme-specificity){
+ border:0!important;border-radius:0!important;box-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity),
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity) :is(span,i),
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button):not(#dedsec-theme-specificity) i::before{
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+ border:0!important;border-radius:0!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content :is(input,select,textarea){
+ border:0!important;border-bottom:1px solid currentColor!important;
+ border-radius:0!important;
+}
+html body:is(.merged-dark,.merged-light) :is(a,button,input,select,textarea):focus-visible{
+ outline:2px dotted var(--space-ink)!important;outline-offset:3px!important;
+}
+
+/* Final specificity-proof repair from Chromium audit: old premium rules have
+   ID specificity; the navbar icons must be truly borderless on both themes. */
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(
+ .merged-search,.merged-action,.merged-home
+):not(#dedsec-theme-specificity):not(#dedsec-borders-win){
+ border:0!important;border-width:0!important;border-style:none!important;
+ border-radius:0!important;box-shadow:none!important;
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(
+ .merged-search,.merged-action,.merged-home
+):not(#dedsec-theme-specificity):not(#dedsec-borders-win) :is(i,span){
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+
+
+/* LAST-CASCADE ASSISTANCE REPAIR — 16 Oct 2026 */
+/* Three long assistance guides retain unusually specific legacy button
+   styles. Keep this at the END of the imported stylesheet, not before them. */
+html body:is(.merged-dark,.merged-light):not(#assist-fix-a):not(#assist-fix-b):not(#assist-fix-c):not(#assist-fix-d):not(#assist-fix-e)
+ .page-content :is(button.copy-btn.assistance-code-copy,.assistance-code-copy,
+ .assistance-code,.assistance-code pre,.assistance-guide-section,.assistance-related-grid){
+ background:transparent!important;background-color:transparent!important;
+ background-image:none!important;border:0!important;border-width:0!important;
+ border-style:none!important;border-color:transparent!important;box-shadow:none!important;
+}
+html body.merged-dark:not(#assist-fix-a):not(#assist-fix-b):not(#assist-fix-c):not(#assist-fix-d):not(#assist-fix-e)
+ :is(.page-content,.main-content,.merged-footer) a.dedsec-text-link,
+html body.merged-dark:not(#assist-fix-a):not(#assist-fix-b):not(#assist-fix-c):not(#assist-fix-d):not(#assist-fix-e)
+ :is(.page-content,.main-content,.merged-footer) a.dedsec-text-link :is(span,strong,i){
+ color:#75bcff!important;-webkit-text-fill-color:#75bcff!important;
+ text-decoration-color:#75bcff!important;
+}
+html body.merged-light:not(#assist-fix-a):not(#assist-fix-b):not(#assist-fix-c):not(#assist-fix-d):not(#assist-fix-e)
+ :is(.page-content,.main-content,.merged-footer) a.dedsec-text-link,
+html body.merged-light:not(#assist-fix-a):not(#assist-fix-b):not(#assist-fix-c):not(#assist-fix-d):not(#assist-fix-e)
+ :is(.page-content,.main-content,.merged-footer) a.dedsec-text-link :is(span,strong,i){
+ color:#075bbd!important;-webkit-text-fill-color:#075bbd!important;
+ text-decoration-color:#075bbd!important;
+}
+
+/* Common four-control geometry shared with index and TikDev. */
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions{display:flex!important;align-items:center!important;justify-content:flex-end!important;gap:clamp(2px,1vw,8px)!important}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button){display:flex!important;align-items:center!important;justify-content:center!important;flex:0 0 40px!important;width:40px!important;min-width:40px!important;max-width:40px!important;height:44px!important;min-height:44px!important;max-height:44px!important;margin:0!important;padding:0!important;line-height:1!important}
+html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions .ds-nav-glyph{display:block!important;flex:none!important;width:25px!important;height:25px!important;color:var(--space-ink)!important}
+html body:is(.merged-dark,.merged-light) > .merged-topbar #merged-lang{font-size:20px!important;font-weight:800!important;letter-spacing:-.045em!important}
+@media(max-width:365px){html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions > :is(a,button){flex-basis:34px!important;width:34px!important;min-width:34px!important;max-width:34px!important;height:40px!important;min-height:40px!important;max-height:40px!important}html body:is(.merged-dark,.merged-light) > .merged-topbar .merged-actions .ds-nav-glyph{width:23px!important;height:23px!important}html body:is(.merged-dark,.merged-light) > .merged-topbar #merged-lang{font-size:17px!important}}
+
+/* Slightly fuller crescent, same four icon sizes. */
+html body:is(.merged-dark,.merged-light) > .merged-topbar #merged-theme svg path[fill="currentColor"]{stroke:currentColor!important;stroke-width:1.25px!important;stroke-linejoin:round!important}

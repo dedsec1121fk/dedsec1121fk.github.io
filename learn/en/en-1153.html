@@ -1,0 +1,82 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Side effect — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1153.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Side effect — separate decisions from observable changes Precise meaning A side effect is a change observable outside a function&#x27;s returned value: a file write, network request, log line…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Side effect — DedSec Project">
+<meta property="og:description" content="Side effect — separate decisions from observable changes Precise meaning A side effect is a change observable outside a function&#x27;s returned value: a file write, network request, log line…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1153.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Side effect — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Side effect — DedSec Project">
+<meta name="twitter:description" content="Side effect — separate decisions from observable changes Precise meaning A side effect is a change observable outside a function&#x27;s returned value: a file write, network request, log line…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Side effect — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Side effect — DedSec Project</h1><p>Side effect — separate decisions from observable changes Precise meaning A side effect is a change observable outside a function&#x27;s returned value: a file write, network request, log line…</p><section><h1>Side effect — separate decisions from observable changes</h1>
+<h2>Precise meaning</h2>
+<p>A side effect is a change observable outside a function's returned value: a file write, network request, log line, mutation of a shared object or system clock dependency. Pure calculations are easier to reproduce because their result depends only on their explicit arguments. Separating calculation from a side-effectful boundary lets tests inject a writer and verify failure without writing real files or relying on personal data.</p>
+<h2>Runnable Python 3 lab</h2>
+<p>Save as side_lab.py and run python3 side_lab.py. A pure compute function produces integer-cent totals; render produces a deterministic JSON string. The publish function invokes a caller-supplied writer only after validation and rendering succeed. The test simulates both a bad input and a write failure.</p>
+<pre><code class="language-python">import json
+
+def compute(entries):
+    totals = {}
+    for category, cents in entries:
+        if not isinstance(category, str) or not category or type(cents) is not int or cents &lt; 0:
+            raise ValueError('invalid entry')
+        totals[category] = totals.get(category, 0) + cents
+    return totals
+
+def render(entries):
+    return json.dumps(compute(entries), ensure_ascii=False, sort_keys=True) + '\n'
+
+def publish(entries, writer):
+    payload = render(entries)  # Validate before invoking any side-effectful function.
+    writer(payload)
+
+out = []
+publish([('βιβλία', 120), ('books', 30)], out.append)
+assert out == ['{&quot;books&quot;: 30, &quot;βιβλία&quot;: 120}\n']
+try:
+    publish([('valid', 10), ('invalid', -1)], out.append)
+except ValueError:
+    pass
+else:
+    raise AssertionError('invalid input published')
+assert len(out) == 1
+try:
+    publish([('books', 1)], lambda x: (_ for _ in ()).throw(OSError('disk unavailable')))
+except OSError:
+    pass
+else:
+    raise AssertionError('write failure hidden')
+assert render([('βιβλία', 120), ('books', 30)]) == out[0]
+print('PASS side effects: pure core, injected writer, errors')
+</code></pre>
+<h2>What the test does and does not guarantee</h2>
+<p>The first call appends one string to a test list, with Unicode category names preserved and keys sorted. Invalid input fails before the writer is invoked, leaving the list unchanged. A writer can still fail after partially writing bytes; this simple abstraction cannot guarantee atomic filesystem updates. For an actual report, use a temporary file, write and close it successfully, then replace the destination where atomic rename is supported. The pure compute function avoids modifying its input and uses integer cents rather than floating-point money.</p>
+<h2>Targeted exercises</h2>
+<ol>
+<li>Add a shared global counter to compute and run the same test twice. Explain which purity guarantee was violated.</li>
+<li>Inject a writer that records only the first three bytes before raising OSError. Decide which layer must implement atomic replacement.</li>
+<li>Add a category containing a comma or Greek text; verify UTF-8 rendering and deterministic sorting without real I/O.</li>
+<li>Test a negative count and a boolean masquerading as an integer. Show that the writer receives no content after a validation failure.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS output, one stable JSON record, a failed-input test that leaves state intact and a documented limitation of partial writer failures.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

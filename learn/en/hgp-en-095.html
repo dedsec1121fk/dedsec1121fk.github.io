@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kernel Security Primitives, Attack Surface and Runtime Trust — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-095.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Kernel Security Primitives, Attack Surface and Runtime Trust The kernel is the mediator for memory, processes, files, devices, networking, and privilege. This module deepens the earlier OS…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Kernel Security Primitives, Attack Surface and Runtime Trust — DedSec Project">
+<meta property="og:description" content="Kernel Security Primitives, Attack Surface and Runtime Trust The kernel is the mediator for memory, processes, files, devices, networking, and privilege. This module deepens the earlier OS…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-095.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kernel Security Primitives, Attack Surface and Runtime Trust — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kernel Security Primitives, Attack Surface and Runtime Trust — DedSec Project">
+<meta name="twitter:description" content="Kernel Security Primitives, Attack Surface and Runtime Trust The kernel is the mediator for memory, processes, files, devices, networking, and privilege. This module deepens the earlier OS…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Kernel Security Primitives, Attack Surface and Runtime Trust — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Kernel Security Primitives, Attack Surface and Runtime Trust — DedSec Project</h1><p>Kernel Security Primitives, Attack Surface and Runtime Trust The kernel is the mediator for memory, processes, files, devices, networking, and privilege. This module deepens the earlier OS…</p><section><p>The kernel is the mediator for memory, processes, files, devices, networking, and privilege. This module deepens the earlier OS lessons by teaching how to map kernel attack surface and hardening primitives without turning kernel exploitation into an operational recipe.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>System-call boundary</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Drivers and device interfaces</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Kernel memory safety</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Privilege model</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Module and boot trust</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Race conditions</strong> and connect it to a concrete trust boundary or security invariant.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. System-call boundary</h3>
+<p>System calls expose kernel services to user processes. The reachable syscall set depends on architecture, kernel configuration, namespaces, seccomp, capabilities, and the process execution model.</p>
+<h3>2. Drivers and device interfaces</h3>
+<p>Device drivers, filesystems, network protocols, ioctls, USB, Bluetooth, graphics, and virtual devices add complex parsers and state machines inside privileged code. Reducing unused functionality reduces risk.</p>
+<h3>3. Kernel memory safety</h3>
+<p>Kernel bugs include out-of-bounds access, use-after-free, races, integer issues, and reference-lifetime mistakes. Modern kernels deploy hardening such as KASLR, stack protections, hardened allocators, CFI-related defenses, and memory-safety improvements, but none replaces correct code.</p>
+<h3>4. Privilege model</h3>
+<p>UIDs, capabilities, namespaces, LSMs, keyrings, credentials, and file permissions interact. “root inside a namespace” is not automatically equivalent to unrestricted host privilege.</p>
+<h3>5. Module and boot trust</h3>
+<p>Secure Boot, module signing, measured boot, lockdown modes, and update provenance constrain which privileged code is accepted. Operational key management determines whether those features remain meaningful.</p>
+<h3>6. Race conditions</h3>
+<p>Kernel concurrency means an object can change between validation and use. Security analysis must consider locking, reference counting, RCU-style lifetimes, interrupt contexts, and multi-core scheduling.</p>
+<h3>7. Attack-surface reduction</h3>
+<p>Disable unused filesystems/protocols/modules, minimize device access, constrain containers, keep kernels updated, and select hardened configurations appropriate to the workload rather than relying on one mitigation.</p>
+<h3>8. Telemetry</h3>
+<p>Audit, LSM logs, eBPF-based observability, kernel warnings, crash reports, module events, and integrity measurements can reveal abnormal kernel-adjacent activity. Capture enough context to distinguish faults from malicious behavior.</p>
+<h2>Authorized exercises</h2>
+<h3>Exercise 1 — Inventory the enabled kernel-facing interfaces in an owned Linux VM: devices, filesystems, modules, namespaces, and exposed sockets; classify them by necessity</h3>
+<p>Inventory the enabled kernel-facing interfaces in an owned Linux VM: devices, filesystems, modules, namespaces, and exposed sockets; classify them by necessity.</p>
+<h3>Exercise 2 — Compare process capabilities before and after applying a least-privilege service configuration in a disposable lab</h3>
+<p>Compare process capabilities before and after applying a least-privilege service configuration in a disposable lab.</p>
+<h3>Exercise 3 — Read a harmless kernel crash report or public bug description and identify object lifetime, privilege context, and mitigation layers without reproducing exploitation</h3>
+<p>Read a harmless kernel crash report or public bug description and identify object lifetime, privilege context, and mitigation layers without reproducing exploitation.</p>
+<h2>Knowledge checks</h2>
+<ol>
+<li>Explain the most important trust boundary in <strong>Kernel Security Primitives, Attack Surface and Runtime Trust</strong> without naming a security tool.</li>
+<li>Give one example where cryptographic or authentication success still does <strong>not</strong> imply authorization success.</li>
+<li>Describe one stale-state or replay condition relevant to this module.</li>
+<li>Identify one telemetry source that can support a strong conclusion and one blind spot it still leaves.</li>
+<li>Explain how you would turn a discovered weakness into a regression test rather than a one-time finding.</li>
+</ol>
+<h2>Guided study workflow</h2>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

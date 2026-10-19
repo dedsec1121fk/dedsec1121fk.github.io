@@ -1,0 +1,79 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ασφάλεια Web Servers και Reverse Proxies — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-013.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Ασφάλεια Web Servers και Reverse Proxies Ένας web server δεν είναι μόνο η εφαρμογή που επιστρέφει HTML. Η πραγματική επιφάνεια περιλαμβάνει TLS termination, reverse proxies, virtual hosts…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Ασφάλεια Web Servers και Reverse Proxies — DedSec Project">
+<meta property="og:description" content="Ασφάλεια Web Servers και Reverse Proxies Ένας web server δεν είναι μόνο η εφαρμογή που επιστρέφει HTML. Η πραγματική επιφάνεια περιλαμβάνει TLS termination, reverse proxies, virtual hosts…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-013.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ασφάλεια Web Servers και Reverse Proxies — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ασφάλεια Web Servers και Reverse Proxies — DedSec Project">
+<meta name="twitter:description" content="Ασφάλεια Web Servers και Reverse Proxies Ένας web server δεν είναι μόνο η εφαρμογή που επιστρέφει HTML. Η πραγματική επιφάνεια περιλαμβάνει TLS termination, reverse proxies, virtual hosts…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Ασφάλεια Web Servers και Reverse Proxies — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Ασφάλεια Web Servers και Reverse Proxies — DedSec Project</h1><p>Ασφάλεια Web Servers και Reverse Proxies Ένας web server δεν είναι μόνο η εφαρμογή που επιστρέφει HTML. Η πραγματική επιφάνεια περιλαμβάνει TLS termination, reverse proxies, virtual hosts…</p><section><p>Ένας web server δεν είναι μόνο η εφαρμογή που επιστρέφει HTML. Η πραγματική επιφάνεια περιλαμβάνει TLS termination, reverse proxies, virtual hosts, static files, upload paths, modules/plugins, management endpoints, filesystem permissions, logs και upstream εφαρμογές. Η αξιολόγηση πρέπει να εξετάζει ολόκληρη αυτή την αλυσίδα.</p>
+<blockquote>
+<p><strong>Όριο εξουσιοδότησης:</strong> Έλεγχε μόνο hosts που ανήκουν στο scope. Μην εκτελείς active probing ή vulnerability validation σε δημόσιους servers τρίτων χωρίς άδεια.</p>
+</blockquote>
+<h2>Μαθησιακοί στόχοι</h2>
+<ul>
+<li>Να χαρτογραφείς web server/reverse-proxy αρχιτεκτονική.</li>
+<li>Να αξιολογείς TLS, headers, virtual hosts και management exposure.</li>
+<li>Να εντοπίζεις unsafe default content, directory exposure και permission issues.</li>
+<li>Να κατανοείς proxy trust και forwarded headers.</li>
+<li>Να συνδέεις configuration findings με logs και remediation.</li>
+</ul>
+<h2>Αρχιτεκτονική και trust boundaries</h2>
+<p>Σχεδίασε τη διαδρομή <code>client → CDN/WAF → reverse proxy → application → data service</code>. Σημείωσε πού τερματίζει το TLS, πού γίνεται authentication, ποιος γράφει <code>X-Forwarded-*</code>/<code>Forwarded</code>, ποιο component θεωρείται trusted και ποια network path επιτρέπεται προς management interfaces.</p>
+<h2>TLS και HTTP configuration</h2>
+<p>Έλεγξε certificate lifecycle, hostname coverage, redirect από HTTP σε HTTPS, σύγχρονα protocol/cipher settings και HSTS όπου ταιριάζει. Security headers όπως CSP, frame protections και content-type controls πρέπει να σχεδιάζονται ανά εφαρμογή και όχι να αντιγράφονται τυφλά.</p>
+<h2>Virtual hosts και default sites</h2>
+<p>Default pages, test applications, παλιά virtual hosts και προσωρινά admin endpoints συχνά μένουν ξεχασμένα. Κάθε hostname πρέπει να έχει owner, business purpose και expected backend. Unknown <code>Host</code> values δεν πρέπει να δρομολογούνται αυθαίρετα σε ευαίσθητο site.</p>
+<h2>Filesystem και static content</h2>
+<p>Εξέτασε document roots, directory listing, backups, temporary files, source maps, configuration artifacts και upload directories. Η web process πρέπει να έχει μόνο τις permissions που απαιτούνται. Secrets δεν πρέπει να βρίσκονται σε static paths ή repository artifacts.</p>
+<h2>Reverse-proxy trust</h2>
+<p>Headers που υποτίθεται ότι δείχνουν πραγματικό client IP, scheme ή host είναι ασφαλή μόνο όταν ο proxy αφαιρεί μη έμπιστα values και η εφαρμογή εμπιστεύεται αποκλειστικά γνωστούς proxies. Διαφορετική canonicalization ανά layer μπορεί να δημιουργήσει routing ή access-control προβλήματα.</p>
+<h2>Management και observability</h2>
+<p>Admin panels, status pages, metrics και debugging endpoints πρέπει να είναι περιορισμένα. Τα logs πρέπει να καταγράφουν αρκετό context για troubleshooting/incident response χωρίς passwords, session tokens ή άλλα secrets.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Στήσε έναν local web server ή reverse proxy. Κατέγραψε listening ports, document root, enabled modules, TLS state, default site, headers και logs. Δημιούργησε ένα harmless test file και επιβεβαίωσε ποιος μπορεί να το διαβάσει. Έλεγξε ότι management endpoint δεν είναι διαθέσιμο από μη έμπιστο test network.</p>
+<h2>Συνηθισμένα λάθη</h2>
+<ul>
+<li>Ξεχασμένα default/test sites.</li>
+<li>Admin interfaces στο ίδιο trust zone με public clients.</li>
+<li>Blind trust σε forwarded headers.</li>
+<li>Secrets ή backups μέσα στο document root.</li>
+<li>Υπερβολικές filesystem permissions.</li>
+<li>Logs που αποθηκεύουν credentials/tokens.</li>
+</ul>
+<h2>Έλεγχος γνώσεων</h2>
+<ol>
+<li>Γιατί το reverse proxy είναι trust boundary;</li>
+<li>Ποιος πρέπει να γράφει trusted forwarded headers;</li>
+<li>Γιατί default virtual hosts αυξάνουν attack surface;</li>
+<li>Ποια δεδομένα δεν πρέπει να γράφονται σε access logs;</li>
+<li>Τι σημαίνει least privilege για τη web process;</li>
+</ol>
+<h2>Καθοδηγούμενη μελέτη</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>. Ξεκίνα από αρχιτεκτονικό διάγραμμα και απόδειξε κάθε finding με το ελάχιστο μη καταστροφικό evidence.</p>
+<h3>Συνέχισε με</h3>
+<p>Προτεινόμενα επόμενα modules: <strong>14, 22, 40, 52, 69, 126</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

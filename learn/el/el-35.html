@@ -1,0 +1,95 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-35.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell JavaScript: χαμένος χειριστής συμβάντος Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ Διορθωμένο παράδειγμα Αιτία σφάλματος και εξήγηση…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell — DedSec Project">
+<meta property="og:description" content="Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell JavaScript: χαμένος χειριστής συμβάντος Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ Διορθωμένο παράδειγμα Αιτία σφάλματος και εξήγηση…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-35.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell — DedSec Project">
+<meta name="twitter:description" content="Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell JavaScript: χαμένος χειριστής συμβάντος Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ Διορθωμένο παράδειγμα Αιτία σφάλματος και εξήγηση…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell — DedSec Project</h1><p>Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell JavaScript: χαμένος χειριστής συμβάντος Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ Διορθωμένο παράδειγμα Αιτία σφάλματος και εξήγηση…</p><section><h2>JavaScript: χαμένος χειριστής συμβάντος</h2>
+<h3>Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ</h3>
+<pre><code class="language-text">container.innerHTML = `&lt;button id=&quot;save&quot;&gt;Save&lt;/button&gt;`;
+// old save button listener was attached before innerHTML changed
+</code></pre>
+<h3>Διορθωμένο παράδειγμα</h3>
+<pre><code class="language-text">container.innerHTML = `&lt;button id=&quot;save&quot;&gt;Save&lt;/button&gt;`;
+container.querySelector(&quot;#save&quot;).addEventListener(&quot;click&quot;, save);
+</code></pre>
+<h3>Αιτία σφάλματος και εξήγηση διόρθωσης</h3>
+<p>Η αντικατάσταση HTML αφαιρεί listeners από παλιούς κόμβους.</p>
+<h3>Πραγματική αιτία</h3>
+<p>Event listener συνδέεται σε συγκεκριμένο DOM node. Η αντικατάσταση parent μέσω innerHTML φτιάχνει νέα nodes που μοιάζουν ίδια αλλά δεν έχουν παλιούς listeners.</p>
+<h3>Επαναλήψιμο regression πείραμα</h3>
+<p>Πρόσθεσε listener σε button προσωρινής σελίδας, άλλαξε parent markup και έλεγξε click. Διόρθωσε με delegation σε stable ancestor ή reattach μετά το render.</p>
+<h2>SQL: μη ασφαλής σύνθεση ερωτήματος</h2>
+<h3>Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ</h3>
+<pre><code class="language-text">query = &quot;SELECT * FROM users WHERE name = '&quot; + user + &quot;'&quot;
+</code></pre>
+<h3>Διορθωμένο παράδειγμα</h3>
+<pre><code class="language-text">cursor.execute(&quot;SELECT * FROM users WHERE name = ?&quot;, (user,))
+</code></pre>
+<h3>Αιτία σφάλματος και εξήγηση διόρθωσης</h3>
+<p>Οι δεσμευμένες παράμετροι εμποδίζουν την ερμηνεία δεδομένων ως εντολών SQL.</p>
+<h3>Εκτελέσιμη άσκηση SQLite</h3>
+<p>Η SQL που συντίθεται από μη έμπιστο κείμενο μπορεί να αλλάξει νόημα. Οι δεσμευμένες παράμετροι κρατούν τις τιμές χωριστά από τη σύνταξη SQL. Η βάση βρίσκεται στη μνήμη ώστε η άσκηση να μην αγγίζει πραγματικά δεδομένα.</p>
+<pre><code class="language-python">import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;CREATE TABLE people (name TEXT PRIMARY KEY)&quot;)
+db.executemany(&quot;INSERT INTO people VALUES (?)&quot;, [(&quot;Ada&quot;,), (&quot;Grace&quot;,)])
+def find(name):
+    return db.execute(&quot;SELECT name FROM people WHERE name = ?&quot;, (name,)).fetchall()
+assert find(&quot;Ada&quot;) == [(&quot;Ada&quot;,)]
+assert find(&quot;Ada'&quot;) == []
+assert db.execute(&quot;SELECT COUNT(*) FROM people&quot;).fetchone() == (2,)
+db.close()
+</code></pre>
+<p>Αποθήκευσε ως <code>query_lab.py</code> και τρέξε <code>python3 query_lab.py</code>. Το εισαγωγικό της δεύτερης αναζήτησης πρέπει να αντιμετωπίζεται ως δεδομένο και όχι ως σύνταξη. Το κόμμα στο <code>(name,)</code> φτιάχνει tuple ενός στοιχείου. Η SQLite χρησιμοποιεί <code>?</code> placeholders· άλλοι οδηγοί διαφέρουν. Δεν μπορείς να δεσμεύσεις ονόματα πινάκων ή κατεύθυνση ταξινόμησης: χρησιμοποίησε ρητή allowlist.</p>
+<h2>Bash: διαδρομή χωρίς εισαγωγικά</h2>
+<h3>Λανθασμένο παράδειγμα — ΜΗ ΧΡΗΣΙΜΟΠΟΙΕΙΤΑΙ</h3>
+<pre><code class="language-text">cd $PROJECT_ROOT
+</code></pre>
+<h3>Διορθωμένο παράδειγμα</h3>
+<pre><code class="language-text">cd -- &quot;$PROJECT_ROOT&quot;
+</code></pre>
+<h3>Αιτία σφάλματος και εξήγηση διόρθωσης</h3>
+<p>Τα εισαγωγικά προστατεύουν διαδρομές με κενά ή ειδικούς χαρακτήρες.</p>
+<h3>Αναπαραγώγιμο τεστ διαδρομών Bash</h3>
+<p>Χωρίς εισαγωγικά, η επέκταση μεταβλητής μπορεί να προκαλέσει διαχωρισμό λέξεων και ανάπτυξη wildcard. Ένας φάκελος με κενά μετατρέπεται σε πολλά ορίσματα. Τα εισαγωγικά κρατούν ένα όρισμα και το <code>--</code> σταματά την ερμηνεία options όπου υποστηρίζεται.</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+tmp=$(mktemp -d)
+PROJECT_ROOT=&quot;$tmp/project alpha&quot;
+mkdir -- &quot;$PROJECT_ROOT&quot;
+trap 'rmdir -- &quot;$PROJECT_ROOT&quot;; rmdir -- &quot;$tmp&quot;' EXIT
+set -- $PROJECT_ROOT
+[[ $# -gt 1 ]]  # Η λανθασμένη επέκταση χωρίζει τις λέξεις.
+set -- &quot;$PROJECT_ROOT&quot;
+[[ $# -eq 1 ]]  # Σωστά: ένα όρισμα.
+cd -- &quot;$PROJECT_ROOT&quot;
+[[ $PWD == &quot;$PROJECT_ROOT&quot; ]]
+printf 'Quoted path works: %s\n' &quot;$PWD&quot;
+</code></pre>
+<p>Εκτέλεσε <code>bash path_lab.sh</code>. Μόνο η επίδειξη των ορισμάτων είναι σκόπιμα χωρίς εισαγωγικά· οι εντολές αρχείων είναι σωστά προστατευμένες. Για προώθηση όλων των ορισμάτων χρησιμοποίησε <code>&quot;$@&quot;</code>, όχι <code>&quot;$*&quot;</code>. Τα εισαγωγικά δεν επικυρώνουν από μόνα τους μια διαδρομή ούτε κάνουν ασφαλείς τις καταστροφικές εντολές.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

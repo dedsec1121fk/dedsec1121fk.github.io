@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Erlang — Expanded practice workbook — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-466.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Erlang — pattern matching and guarded recursion Save an actual Erlang module Save as sums.erl and run c(sums). in an Erlang shell, followed by sums:sum( 2,3,4 ). Predicted return value: 9…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Erlang — Expanded practice workbook — DedSec Project">
+<meta property="og:description" content="Erlang — pattern matching and guarded recursion Save an actual Erlang module Save as sums.erl and run c(sums). in an Erlang shell, followed by sums:sum( 2,3,4 ). Predicted return value: 9…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-466.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Erlang — Expanded practice workbook — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Erlang — Expanded practice workbook — DedSec Project">
+<meta name="twitter:description" content="Erlang — pattern matching and guarded recursion Save an actual Erlang module Save as sums.erl and run c(sums). in an Erlang shell, followed by sums:sum( 2,3,4 ). Predicted return value: 9…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Erlang — Expanded practice workbook — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Erlang — Expanded practice workbook — DedSec Project</h1><p>Erlang — pattern matching and guarded recursion Save an actual Erlang module Save as sums.erl and run c(sums). in an Erlang shell, followed by sums:sum( 2,3,4 ). Predicted return value: 9…</p><section><h1>Erlang — pattern matching and guarded recursion</h1>
+<h2>Save an actual Erlang module</h2>
+<pre><code class="language-erlang">-module(sums).
+-export([sum/1]).
+sum([]) -&gt; 0;
+sum([Head | Tail]) when is_integer(Head) -&gt;
+    Head + sum(Tail).
+</code></pre>
+<p>Save as sums.erl and run c(sums). in an Erlang shell, followed by sums:sum([2,3,4]). Predicted return value: 9. Each recursive call removes one list head; the empty list clause supplies the base case. The guard requires integer values instead of silently treating text as numbers.</p>
+<h2>Reproduce a meaningful error</h2>
+<p>Try sums:sum([2,apple]). When recursion reaches the atom, no clause matches. Capture the actual exception. Decide whether this API should reject the input or return a tagged error tuple. Avoid skipping invalid elements, which would falsify the total.</p>
+<h2>Process isolation lab</h2>
+<p>Bind Receiver = self() in the shell, then spawn(fun() -&gt; Receiver ! sums:sum([1,2,3]) end). Use a receive expression to get the result. Explain why messages cross process boundaries while variables do not become shared mutable state. Record Erlang/OTP version and observed outcomes; the fixture has not been run here.</p>
+<h2>Extend the contract without losing error information</h2>
+<p>A production API might return {ok, Total} for a valid list and {error, bad_item} when a head fails the guard. Design a wrapper that calls the recursive worker only after validating the entire list, or implement a second clause that reports the first invalid item. Compare these strategies on [1,2], [], [1,apple] and [1,2.5]. Erlang distinguishes floats from integers, so the guard rejects 2.5 despite it being numeric. Explain how the spawned worker could send tagged success or failure to its requester, and how a receive ... after timeout prevents a caller from waiting indefinitely for a crashed worker.</p>
+<h2>Erlang</h2>
+<p><strong>Typical use:</strong> Functional programming.</p>
+<p><strong>Suggested file extension:</strong> <code>.erl</code>.</p>
+<p><strong>How to run / environment:</strong> Compile module with erlc; call hello:greet(&quot;Ada&quot;). in erl.</p>
+<h3>Starter example</h3>
+<pre><code>-module(hello).
+-export([greet/1]).
+greet(Name) -&gt; io:format(&quot;Hello, ~s!~n&quot;, [Name]).
+</code></pre>
+<h3>How to read it</h3>
+<p>The module and file names match; the VM emphasizes processes.</p>
+<h3>Common pitfall</h3>
+<p>The module and file names match; the VM emphasizes processes.</p>
+<h2>Erlang — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>escript {file}</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>Erlang — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>Processes communicate by message passing and do not share mutable heap objects like threads.</li>
+<li>Pattern matching is used for function clauses and message handling.</li>
+<li>OTP behavior and supervision patterns support fault-tolerant services.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

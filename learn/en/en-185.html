@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Strings and Unicode — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-185.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Strings and Unicode Files in DedSec include Greek names and UTF-8 documents. Treat text encodings explicitly; do not assume a byte is the same as a character. Use pathlib and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Strings and Unicode — DedSec Project">
+<meta property="og:description" content="Strings and Unicode Files in DedSec include Greek names and UTF-8 documents. Treat text encodings explicitly; do not assume a byte is the same as a character. Use pathlib and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-185.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Strings and Unicode — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Strings and Unicode — DedSec Project">
+<meta name="twitter:description" content="Strings and Unicode Files in DedSec include Greek names and UTF-8 documents. Treat text encodings explicitly; do not assume a byte is the same as a character. Use pathlib and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Strings and Unicode — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Strings and Unicode — DedSec Project</h1><p>Strings and Unicode Files in DedSec include Greek names and UTF-8 documents. Treat text encodings explicitly; do not assume a byte is the same as a character. Use pathlib and…</p><section><p>Files in DedSec include Greek names and UTF-8 documents. Treat text encodings explicitly; do not assume a byte is the same as a character. Use pathlib and encoding=&quot;utf-8&quot; for portable files.</p>
+<h2>Worked example</h2>
+<pre><code class="language-text">from pathlib import Path
+p = Path(&quot;greek_demo.txt&quot;)
+p.write_text(&quot;Καλημέρα&quot;, encoding=&quot;utf-8&quot;)
+print(p.read_text(encoding=&quot;utf-8&quot;))
+</code></pre>
+<h2>Practice</h2>
+<p>Explain why using Unicode filenames matters to Greek project paths.</p>
+<h2>Corrected result / hint</h2>
+<p>UTF-8 preserves Greek characters across supported systems.</p>
+<h2>Unicode has more than one notion of length</h2>
+<p><code>len(&quot;é&quot;)</code> is 1 for the precomposed form; <code>len(&quot;e\u0301&quot;)</code> is 2 code points although both can look identical. UTF-8 stores variable numbers of bytes. Distinguish byte length, code-point count and grapheme clusters; none is automatically a display width.</p>
+<pre><code class="language-python">import unicodedata
+a=&quot;é&quot;; b=&quot;e\u0301&quot;
+assert a!=b
+assert unicodedata.normalize(&quot;NFC&quot;,a)==unicodedata.normalize(&quot;NFC&quot;,b)
+assert len(a.encode(&quot;utf-8&quot;))==2
+</code></pre>
+<p>Normalize for comparison only when your product's requirements allow it. Accent-insensitive search may help readers but must not silently rewrite filenames or tokens. For Greek, case folding changes sigma variants; test <code>ς</code> and <code>σ</code>.</p>
+<p><strong>Exercise:</strong> build a small search index of Greek and English titles with and without accents; measure false matches instead of declaring all diacritics irrelevant.</p>
+<h2>Unicode laboratory: same glyph, different bytes</h2>
+<pre><code class="language-python">import unicodedata
+a, b = &quot;é&quot;, &quot;e\u0301&quot;
+assert a != b
+assert unicodedata.normalize(&quot;NFC&quot;, a) == unicodedata.normalize(&quot;NFC&quot;, b)
+assert a.encode(&quot;utf-8&quot;) != b.encode(&quot;utf-8&quot;)
+</code></pre>
+<p>The two strings can look identical in a UI but differ as sequences of code points and UTF-8 bytes. Do not assume that <code>len(text)</code> counts human-perceived characters. To deliberately reproduce a decoding error, call <code>b&quot;\xff&quot;.decode(&quot;utf-8&quot;)</code> and inspect <code>UnicodeDecodeError</code>. Replacing or ignoring invalid bytes loses information, so only apply that policy intentionally. As an independent exercise, create two visually identical filenames with distinct normalization forms (if the filesystem permits), inspect their bytes, and define an explicit NFC policy for searching Greek and accented names. Reference: https://docs.python.org/3/library/unicodedata.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

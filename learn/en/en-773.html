@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>awk — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-773.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="awk — consolidated language guide AWK How the language behaves AWK scans records and fields in a stream; $0 is the entire record and $1 is the first field under the current separator…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="awk — consolidated language guide — DedSec Project">
+<meta property="og:description" content="awk — consolidated language guide AWK How the language behaves AWK scans records and fields in a stream; $0 is the entire record and $1 is the first field under the current separator…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-773.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="awk — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="awk — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="awk — consolidated language guide AWK How the language behaves AWK scans records and fields in a stream; $0 is the entire record and $1 is the first field under the current separator…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="awk — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>awk — consolidated language guide — DedSec Project</h1><p>awk — consolidated language guide AWK How the language behaves AWK scans records and fields in a stream; $0 is the entire record and $1 is the first field under the current separator…</p><section><h2>AWK</h2>
+<h3>How the language behaves</h3>
+<p>AWK scans records and fields in a stream; $0 is the entire record and $1 is the first field under the current separator.</p>
+<h3>Source fragment to analyze</h3>
+<pre><code class="language-text">printf 'A 3\nB 4\n' | awk '{sum += $2} END {print sum}'
+</code></pre>
+<h3>Deliberate exercise</h3>
+<p>Confirm the sum of seven, then switch to comma-separated data with an explicit -F ',' and compare field parsing.</p>
+<h3>Check a failure condition</h3>
+<p>Whitespace splitting is not a CSV parser; quoted commas and embedded newlines need a proper CSV-aware tool.</p>
+<p>Record input, expected output and observed output with the actual AWK implementation and version. If no compatible runtime exists on your current platform, label the fragment unexecuted and reason from its semantics rather than claiming a successful run. Run a second isolated experiment that changes only the mechanism under investigation; preserve the exact diagnostic while removing private data.</p>
+<h2>AWK — Expanded practice workbook</h2>
+<h3>The right use case</h3>
+<p>AWK reads records and fields without a Python dependency. Use it for simple local text streams where the input delimiter and schema are known. Do not call a TSV parser a CSV parser: quoted commas and multiline values require different rules.</p>
+<h3>Lab setup</h3>
+<p>Save the program as report.awk. Create sample.tsv with an actual tab between columns: header team TAB points; then red TAB 6, blue TAB 5, red TAB 4. Run awk -f report.awk sample.tsv | sort. Expected sorted lines: blue TAB 5 and red TAB 10.</p>
+<pre><code class="language-awk">BEGIN { FS = &quot;\t&quot;; bad = 0 }
+NR == 1 {
+    if ($1 != &quot;team&quot; || $2 != &quot;points&quot;) bad = 1
+    next
+}
+NF != 2 || $1 == &quot;&quot; || $2 !~ /^[0-9]+$/ { bad = 1; next }
+{ totals[$1] += $2; seen[$1]++ }
+END {
+    if (bad) { print &quot;invalid TSV&quot; &gt; &quot;/dev/stderr&quot;; exit 2 }
+    for (team in totals) print team &quot;\t&quot; totals[team]
+}
+</code></pre>
+<h3>Understand the order</h3>
+<p>BEGIN runs before records, NR==1 checks the header, and END prints totals. Associative-array order is unspecified, so sort the output for deterministic comparison; avoid claiming AWK will print insertion order. NF counts fields, and a nonnegative integer regex stops accidental numeric coercion from text like 4x.</p>
+<h3>Test boundary conditions</h3>
+<p>Introduce a row with a missing field, a negative score, a second header, a blank team and an extra tab. The command should produce invalid TSV and exit with status 2; when piped into sort, a shell without pipefail may conceal that exit status. For safe automation use a temporary file for the result or an environment that propagates pipe failure.</p>
+<h3>Portability notes</h3>
+<p>Most POSIX awk implementations support the constructs here. The /dev/stderr pseudo-path is common on Linux/Termux but not guaranteed everywhere; for strict portability replace it with a stdout diagnostic or route through a configured file descriptor. GNU gawk-specific extensions should be documented separately.
+Success: two totals, malformed input rejected. https://www.gnu.org/software/gawk/manual/</p>
+<h2>AWK — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>awk -f {file} demo.csv</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>AWK — Focused mastery pathway</h2>
+<h3>Understand the mechanism</h3>
+<p>AWK processes input one record at a time. FS defines the field separator and NR counts records, including the header. Associative arrays accumulate totals by team, but their iteration order is undefined. Before doing arithmetic, reject malformed records; automatic number coercion can disguise a bad value as zero. Sorting belongs after aggregation, at the output boundary.</p>
+<h3>Executable fixture</h3>
+<pre><code class="language-awk">BEGIN { FS=&quot;\t&quot;; OFS=&quot;\t&quot; }
+NR == 1 { if ($1 != &quot;team&quot; || $2 != &quot;points&quot;) { bad=1; exit 2 } next }
+NF != 2 || $1 == &quot;&quot; || $2 !~ /^[0-9]+$/ { bad=1; next }
+{ total[$1]+=$2 }
+END {
+  if (NR == 0 || bad) exit 3
+  for (team in total) print team,total[team]
+}
+</code></pre>
+<h3>Run and interpret</h3>
+<p>Create <code>scores.tsv</code> containing the TSV rows <code>team,points</code>, <code>red,4</code>, <code>blue,2</code>, <code>red,3</code> (commas here represent actual TABs). Run <code>awk -f sum.awk scores.tsv | sort</code>. Expect <code>blue&lt;TAB&gt;2</code> and <code>red&lt;TAB&gt;7</code>. Test a nonnumeric score and check AWK's own exit code; piping into <code>sort</code> can hide errors unless <code>pipefail</code> is enabled.</p>
+<h3>Independent laboratory</h3>
+<p>Add rejection of negative scores and empty team names. Permute the input order: totals should remain the same. Test an empty file, an incorrect header, and a last record without newline. Explain why sorting the input is not the same as sorting associative-array keys.</p>
+<h2>AWK — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>AWK processes records and fields, commonly one input line at a time.</li>
+<li>BEGIN and END describe setup and completion actions; field separators determine parsing.</li>
+<li>Output field order and numeric coercion need explicit tests on malformed input.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

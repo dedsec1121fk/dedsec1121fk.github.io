@@ -1,0 +1,49 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Investigate CSS contrast with computed styles — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/method-contrast-en.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Investigate CSS contrast with computed styles A screenshot shows a bright navigation label even after its icon becomes dark. The screenshot is evidence of a mismatch, not evidence of which…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Investigate CSS contrast with computed styles — DedSec Project">
+<meta property="og:description" content="Investigate CSS contrast with computed styles A screenshot shows a bright navigation label even after its icon becomes dark. The screenshot is evidence of a mismatch, not evidence of which…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/method-contrast-en.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Investigate CSS contrast with computed styles — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Investigate CSS contrast with computed styles — DedSec Project">
+<meta name="twitter:description" content="Investigate CSS contrast with computed styles A screenshot shows a bright navigation label even after its icon becomes dark. The screenshot is evidence of a mismatch, not evidence of which…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Investigate CSS contrast with computed styles — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Investigate CSS contrast with computed styles — DedSec Project</h1><p>Investigate CSS contrast with computed styles A screenshot shows a bright navigation label even after its icon becomes dark. The screenshot is evidence of a mismatch, not evidence of which…</p><section><p>A screenshot shows a bright navigation label even after its icon becomes dark. The screenshot is evidence of a mismatch, not evidence of which CSS rule caused it.</p>
+<h2>Find the actual winner</h2>
+<ol>
+<li>Select the exact language button in browser DevTools.</li>
+<li>Check computed <code>color</code>, <code>-webkit-text-fill-color</code>, <code>background-color</code>, <code>opacity</code> and the icon pseudo-element's color separately.</li>
+<li>Inspect the Styles pane for <code>!important</code> rules and specificity; a selector containing <code>:not(#some-id)</code> still gains an ID's specificity.</li>
+<li>Compare the same control in dark and light modes, not two screenshots taken with the same stored theme.</li>
+<li>Change one shared selector, then test every consumer of that shared stylesheet.</li>
+</ol>
+<h2>Minimal regression check</h2>
+<pre><code class="language-js">const button = document.querySelector('#merged-lang');
+const css = getComputedStyle(button);
+console.log({ color: css.color, textFill: css.webkitTextFillColor,
+              background: css.backgroundColor });
+</code></pre>
+<p>If the button is only partly styled, inspect its descendant icon/text nodes. The ancestor's computed color does not prove the child inherited it.</p>
+<h2>Completion evidence</h2>
+<p>Record the element, matched rule, computed values for both themes, and a screenshot. Keep fixed navigation opaque when content scrolls beneath it; make article panels transparent only if legible. Never remove text to hide a contrast problem.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

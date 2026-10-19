@@ -1,0 +1,81 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Data structures and memory — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-63.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Data structures — a bounded least-recently-used cache Concrete task An offline knowledge viewer wants to retain its two most recently used lessons. Looking up a label in a list requires…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Data structures and memory — DedSec Project">
+<meta property="og:description" content="Data structures — a bounded least-recently-used cache Concrete task An offline knowledge viewer wants to retain its two most recently used lessons. Looking up a label in a list requires…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-63.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Data structures and memory — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Data structures and memory — DedSec Project">
+<meta name="twitter:description" content="Data structures — a bounded least-recently-used cache Concrete task An offline knowledge viewer wants to retain its two most recently used lessons. Looking up a label in a list requires…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Data structures and memory — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Data structures and memory — DedSec Project</h1><p>Data structures — a bounded least-recently-used cache Concrete task An offline knowledge viewer wants to retain its two most recently used lessons. Looking up a label in a list requires…</p><section><h1>Data structures — a bounded least-recently-used cache</h1>
+<h2>Concrete task</h2>
+<p>An offline knowledge viewer wants to retain its two most recently used lessons. Looking up a label in a list requires O(n) scanning; a hash map gives expected O(1) lookup but does not automatically track which entry was read most recently. Python OrderedDict supports key lookup and explicit recency updates. Define a fixed, positive integer capacity and evict the least recently used item when a new key exceeds it.</p>
+<h2>Runnable Python 3 lab</h2>
+<p>Save as cache_lab.py and run python3 cache_lab.py. All state stays in memory and assertions check eviction, misses and the invalid capacity boundary.</p>
+<pre><code class="language-python">from collections import OrderedDict
+MISSING = object()
+class Cache:
+    def __init__(self, capacity):
+        if type(capacity) is not int or capacity &lt; 1:
+            raise ValueError('positive integer capacity required')
+        self.capacity = capacity
+        self.items = OrderedDict()
+    def get(self, key):
+        if key not in self.items:
+            return MISSING
+        self.items.move_to_end(key)
+        return self.items[key]
+    def put(self, key, value):
+        self.items[key] = value
+        self.items.move_to_end(key)
+        if len(self.items) &gt; self.capacity:
+            return self.items.popitem(last=False)
+        return None
+c = Cache(2)
+assert c.get('a') is MISSING
+assert c.put('a', None) is None
+assert c.get('a') is None
+c.put('b', 2)
+assert c.get('a') is None
+assert c.put('c', 3) == ('b', 2)
+assert list(c.items) == ['a', 'c']
+try:
+    Cache(0)
+except ValueError:
+    pass
+else:
+    raise AssertionError('zero capacity was accepted')
+print('PASS cache: eviction, missing sentinel, recency')
+</code></pre>
+<h2>Memory and semantics</h2>
+<p>Both get and put are expected O(1) and storage is O(capacity). Merely using a normal insertion-ordered dict would not make reads update recency. The unique MISSING sentinel is essential because None is a legitimate stored value: returning None for an absent key would make the two states indistinguishable. The implementation does not synchronize simultaneous writers, so concurrent callers require a lock or a separate ownership boundary.</p>
+<h2>Bounded experiments and diagnostics</h2>
+<ol>
+<li>Set capacity to one and insert three keys. Predict which survives; then update an existing key and verify it becomes most recent.</li>
+<li>Compare equality and identity for two distinct lists. Discuss why mapping keys must be hashable while stored values may be mutable.</li>
+<li>Replace OrderedDict with a list of pairs, inspect worst-case key lookup, and explain the memory/time tradeoff for 10,000 keys.</li>
+<li>Test Cache(0), Cache(True) and a non-integer capacity. Explain why exact type checks reject booleans even though bool subclasses int in Python.</li>
+</ol>
+<p><strong>Evidence:</strong> printed PASS, observed eviction order, a missing-versus-None test and a stated maximum memory budget for an offline cache.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,60 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>AttributeError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-91.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Python AttributeError — distinguish missing fields from absent objects Reproduce two different causes An AttributeError can indicate that the object is the wrong type, that a property was…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="AttributeError — DedSec Project">
+<meta property="og:description" content="Python AttributeError — distinguish missing fields from absent objects Reproduce two different causes An AttributeError can indicate that the object is the wrong type, that a property was…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-91.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AttributeError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AttributeError — DedSec Project">
+<meta name="twitter:description" content="Python AttributeError — distinguish missing fields from absent objects Reproduce two different causes An AttributeError can indicate that the object is the wrong type, that a property was…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="AttributeError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>AttributeError — DedSec Project</h1><p>Python AttributeError — distinguish missing fields from absent objects Reproduce two different causes An AttributeError can indicate that the object is the wrong type, that a property was…</p><section><h1>Python AttributeError — distinguish missing fields from absent objects</h1>
+<h2>Reproduce two different causes</h2>
+<p>An AttributeError can indicate that the object is the wrong type, that a property was misspelled, or that the value is None. They are different contracts.</p>
+<pre><code class="language-python">item = {&quot;name&quot;: &quot;Ada&quot;}
+# item.name                 # dict has no attribute 'name'
+# None.strip()              # 'NoneType' has no attribute 'strip'
+assert item[&quot;name&quot;] == &quot;Ada&quot;
+</code></pre>
+<h2>Repair by validating the boundary</h2>
+<p>Use mapping operations for dictionaries and attribute syntax for objects designed with fields. If the API allows absence, handle None intentionally rather than swallowing every AttributeError.</p>
+<pre><code class="language-python">def display_name(record: dict | None) -&gt; str:
+    if record is None:
+        return &quot;(anonymous)&quot;
+    value = record.get(&quot;name&quot;)
+    if not isinstance(value, str):
+        raise TypeError(&quot;name must be a string&quot;)
+    return value.strip()
+
+assert display_name({&quot;name&quot;: &quot; Ada &quot;}) == &quot;Ada&quot;
+assert display_name(None) == &quot;(anonymous)&quot;
+</code></pre>
+<h2>Investigation</h2>
+<p>Print type(value) and repr(value) at the failing boundary without dumping passwords or personal records. Inspect the producer of the value, not only the consumer. A try/except AttributeError around a large code block can hide unrelated programming mistakes.</p>
+<p><strong>Test:</strong> pass an empty dictionary and confirm TypeError rather than a misleading fallback. Reference: https://docs.python.org/3/library/exceptions.html#AttributeError</p>
+<h2>Inspect the value producer</h2>
+<pre><code class="language-python">payload = {&quot;user&quot;: {&quot;name&quot;: &quot;Ada&quot;}}
+assert payload[&quot;user&quot;][&quot;name&quot;] == &quot;Ada&quot;
+</code></pre>
+<p>A dict does not offer <code>payload.user</code> by default. If a field can be absent, check the schema explicitly and distinguish a missing key from a value set to <code>None</code>. A data class or object with attributes has a different contract from a mapping. Your fix should be at the producer/consumer boundary, not an unrestricted <code>getattr(value, &quot;name&quot;, &quot;&quot;)</code> that masks malformed data.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

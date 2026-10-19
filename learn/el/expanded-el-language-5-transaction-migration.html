@@ -1,0 +1,93 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQLite: migrations με συναλλαγές και rollback — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/expanded-el-language-5-transaction-migration.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Η σωστή SQL δεν αρκεί για αξιόπιστο schema migration Δοκιμή σε απομονωμένη βάση μνήμης Φτιάξε πίνακα με constraint μη αρνητικής ποσότητας και χειρίσου την ενημέρωση μέσω ρητής συναλλαγής. Η…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SQLite: migrations με συναλλαγές και rollback — DedSec Project">
+<meta property="og:description" content="Η σωστή SQL δεν αρκεί για αξιόπιστο schema migration Δοκιμή σε απομονωμένη βάση μνήμης Φτιάξε πίνακα με constraint μη αρνητικής ποσότητας και χειρίσου την ενημέρωση μέσω ρητής συναλλαγής. Η…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/expanded-el-language-5-transaction-migration.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SQLite: migrations με συναλλαγές και rollback — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQLite: migrations με συναλλαγές και rollback — DedSec Project">
+<meta name="twitter:description" content="Η σωστή SQL δεν αρκεί για αξιόπιστο schema migration Δοκιμή σε απομονωμένη βάση μνήμης Φτιάξε πίνακα με constraint μη αρνητικής ποσότητας και χειρίσου την ενημέρωση μέσω ρητής συναλλαγής. Η…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SQLite: migrations με συναλλαγές και rollback — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>SQLite: migrations με συναλλαγές και rollback — DedSec Project</h1><p>Η σωστή SQL δεν αρκεί για αξιόπιστο schema migration Δοκιμή σε απομονωμένη βάση μνήμης Φτιάξε πίνακα με constraint μη αρνητικής ποσότητας και χειρίσου την ενημέρωση μέσω ρητής συναλλαγής. Η…</p><section><h1>Η σωστή SQL δεν αρκεί για αξιόπιστο schema migration</h1>
+<h2>Δοκιμή σε απομονωμένη βάση μνήμης</h2>
+<p>Φτιάξε πίνακα με constraint μη αρνητικής ποσότητας και χειρίσου την ενημέρωση μέσω ρητής συναλλαγής. Η βάση <code>:memory:</code> δεν αγγίζει πραγματικά δεδομένα. Σε αποτυχία constraint έλεγξε ότι η προηγούμενη τιμή παραμένει ίδια και δεν ολοκληρώθηκε μισή αλλαγή.</p>
+<pre><code class="language-python">import sqlite3
+con = sqlite3.connect(':memory:')
+con.execute('CREATE TABLE stock (sku TEXT PRIMARY KEY, quantity INTEGER NOT NULL CHECK(quantity&gt;=0))')
+con.execute('INSERT INTO stock VALUES (?, ?)', ('A1', 3))
+con.commit()
+try:
+    con.execute('BEGIN')
+    con.execute('UPDATE stock SET quantity=? WHERE sku=?', (-2, 'A1'))
+    con.commit()
+except sqlite3.IntegrityError:
+    con.rollback()
+assert con.execute('SELECT quantity FROM stock').fetchone()[0] == 3
+</code></pre>
+<h2>Γιατί απορρίφθηκε η εντολή;</h2>
+<p>Το CHECK constraint απαγορεύει αρνητική τιμή. Το UPDATE έγινε μέσα σε transaction και σε αποτυχία πρέπει να ακολουθήσει rollback. Αλλιώς η σύνδεση μπορεί να παραμείνει σε κατάσταση που ο καλών δεν περίμενε. Διαφορετικές ρυθμίσεις autocommit απαιτούν ρητή τεκμηρίωση.</p>
+<h2>Σχέδιο migration πραγματικής βάσης</h2>
+<p>Πάρε πρώτα επαληθευμένο backup, εξέτασε <code>PRAGMA user_version</code> και δοκίμασε την αλλαγή σε αντιπροσωπευτικό αντίγραφο. Αν προσθέσεις NOT NULL column χρειάζεται πολιτική για τις υπάρχουσες εγγραφές. Δεν υπάρχει εγγύηση ότι κάθε ALTER TABLE αντιστρέφεται εύκολα χωρίς απώλεια δεδομένων.</p>
+<h2>Τεστ παράδοσης</h2>
+<p>Δοκίμασε έγκυρη και μη έγκυρη ενημέρωση, επιβεβαίωσε rollback και δες τη δομή με <code>PRAGMA table_info(stock)</code>. Χρησιμοποίησε παραμέτρους SQL αντί να ενώνεις strings από χρήστη. Το παράδειγμα δεν αποδεικνύει συμπεριφορά άλλων database servers.</p>
+<h2>Δοκίμασε τη συναλλαγή της ίδιας της αλλαγής schema</h2>
+<p>Το αρχικό παράδειγμα ελέγχει constraint εγγραφής, όχι migration schema. Το παρακάτω ανεξάρτητο πείραμα ελέγχει επαναφορά DDL μετά από αποτυχία. Χρησιμοποιεί explicit SQL συναλλαγές με <code>isolation_level=None</code>, χωρίς εξάρτηση από μεταβαλλόμενες implicit προεπιλογές Python.</p>
+<pre><code class="language-python">import sqlite3
+con = sqlite3.connect(':memory:', isolation_level=None)
+con.execute('CREATE TABLE notes (body TEXT NOT NULL)')
+con.execute('INSERT INTO notes VALUES (?)', ('keep me',))
+con.execute('BEGIN IMMEDIATE')
+try:
+    con.execute('ALTER TABLE notes ADD COLUMN flag INTEGER NOT NULL DEFAULT 0')
+    con.execute('PRAGMA user_version=1')
+    raise RuntimeError('simulated migration interruption')
+except RuntimeError:
+    con.execute('ROLLBACK')
+assert [r[1] for r in con.execute('PRAGMA table_info(notes)')] == ['body']
+assert con.execute('PRAGMA user_version').fetchone()[0] == 0
+assert con.execute('SELECT body FROM notes').fetchone()[0] == 'keep me'
+con.close()
+</code></pre>
+<p>Επανάλαβε χωρίς τη συνθετική διακοπή και βάλε COMMIT στη διαδρομή επιτυχίας. Νέα στήλη και schema version πρέπει να εμφανίζονται μαζί. Η συναλλαγή δεν αντικαθιστά δοκιμασμένο backup πραγματικής βάσης. Έλεγξε χωριστά συμπεριφορές του driver όπως το executescript, που δεν έχει υποχρεωτικά τα ίδια transaction boundaries με διαδοχικά execute.</p>
+<p>Το BEGIN IMMEDIATE μπορεί να αποτύχει πριν από οποιαδήποτε αλλαγή όταν άλλη σύνδεση κρατά write transaction. Χειρίσου το busy αποτέλεσμα χωριστά από λάθος migration SQL. Μην επαναλαμβάνεις τυφλά αλλαγές schema μετά από αβέβαιο μερικό αποτέλεσμα.</p>
+<p>Πηγές: <a href="https://www.sqlite.org/lang_transaction.html">SQLite transactions</a> και <a href="https://docs.python.org/3/library/sqlite3.html">Python sqlite3</a>.</p>
+<h2>Σημεία αποθήκευσης και μερική αναίρεση συναλλαγής</h2>
+<p>Το savepoint ορίζει όριο αναίρεσης μέσα σε μεγαλύτερη συναλλαγή. Η επιστροφή σε αυτό αναιρεί επόμενες αλλαγές και διατηρεί προηγούμενη εργασία και εξωτερική συναλλαγή. Το release δεν δεσμεύει ανεξάρτητα μόνιμη αποθήκευση· εξωτερικό rollback μπορεί ακόμη να αναιρέσει τις αλλαγές.</p>
+<p>Χρησιμοποίησέ το όταν προαιρετικό στοιχείο παρτίδας μπορεί να αποτύχει με ρητό συμβόλαιο μερικής επιτυχίας. Αν ο επιχειρησιακός κανόνας απαιτεί κοινή επιτυχία όλων, η μερική ανάκαμψη τον παραβιάζει ακόμη και με έγκυρη SQL.</p>
+<pre><code class="language-python">import sqlite3
+from contextlib import closing
+with closing(sqlite3.connect(&quot;:memory:&quot;)) as db:
+    db.execute(&quot;CREATE TABLE items(id INTEGER PRIMARY KEY)&quot;)
+    db.execute(&quot;BEGIN&quot;)
+    db.execute(&quot;INSERT INTO items VALUES (1)&quot;)
+    db.execute(&quot;SAVEPOINT optional_item&quot;)
+    db.execute(&quot;INSERT INTO items VALUES (2)&quot;)
+    db.execute(&quot;ROLLBACK TO optional_item&quot;)
+    db.execute(&quot;RELEASE optional_item&quot;)
+    db.commit()
+    assert db.execute(&quot;SELECT id FROM items&quot;).fetchall() == [(1,)]
+print(&quot;outer work preserved&quot;)
+</code></pre>
+<p>Πρόσθεσε τελικό εξωτερικό rollback και απόδειξε ότι χάνονται ακόμη και αλλαγές απελευθερωμένου εσωτερικού σημείου. Τα ονόματα savepoint ελέγχονται από το πρόγραμμα και δεν προέρχονται από εξωτερική ετικέτα. Κατάγραψε αποδεκτά στοιχεία χωρίς ανεπιφύλακτη αναφορά επιτυχίας μερικής παρτίδας.</p>
+<p><a href="https://www.sqlite.org/lang_savepoint.html">Τεχνική αναφορά</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

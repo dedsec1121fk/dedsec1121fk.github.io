@@ -1,0 +1,391 @@
+/* Canonical lightweight galaxy for both the desktop and all imported HTML. */
+html body.theme-dark,html body.merged-dark{
+ color-scheme:dark!important;
+ --space-start:#010107;--space-middle:#090415;--space-end:#000005;--space-dim:rgba(0,0,0,.31);
+ --space-stars:url("starfield-dark.svg");
+ --space-ink:#f9f3ff;--space-muted:#dfceef;--space-surface:rgba(12,8,24,.79);--space-surface-soft:rgba(22,14,38,.79);
+ --space-line:#775895;--space-link:#d9bcff;--space-header:rgba(7,5,16,.91);--space-code:rgba(6,6,19,.88);--space-input:rgba(13,8,27,.86);
+ --galaxy-core:rgba(190,126,219,.18);--galaxy-mid:rgba(96,49,156,.25);--galaxy-dust:rgba(90,43,134,.17);--galaxy-shadow:rgba(3,2,18,.76);
+}
+html body.theme-light,html body.merged-light{
+ color-scheme:light!important;
+ --space-start:#f9f3ff;--space-middle:#e9dafa;--space-end:#f5ecff;--space-dim:rgba(26,12,48,.08);
+ --space-stars:url("starfield-light.svg");
+ --space-ink:#312047;--space-muted:#573d72;--space-surface:rgba(252,247,255,.79);--space-surface-soft:rgba(242,230,255,.83);
+ --space-line:#b596d2;--space-link:#64338e;--space-header:rgba(246,233,253,.92);--space-code:rgba(240,230,253,.88);--space-input:rgba(255,251,255,.91);
+ --galaxy-core:rgba(180,103,214,.23);--galaxy-mid:rgba(123,91,177,.16);--galaxy-dust:rgba(175,123,209,.15);--galaxy-shadow:rgba(238,216,252,.70);
+}
+html body.theme-dark,html body.theme-light,html body.merged-dark,html body.merged-light{
+ background-color:var(--space-start)!important;
+ background-image:linear-gradient(var(--space-dim),var(--space-dim)),var(--space-stars),linear-gradient(152deg,var(--space-start),var(--space-middle) 53%,var(--space-end))!important;
+ background-size:100% 100%,890px 650px,100% 100%!important;
+ background-position:center,center,center!important;
+ background-repeat:no-repeat,repeat,no-repeat!important;
+ background-attachment:fixed!important;
+ min-height:100dvh!important;overflow-x:clip!important;color:var(--space-ink)!important;
+}
+html body.theme-dark::before,html body.theme-dark::after,
+html body.theme-light::before,html body.theme-light::after,
+html body.merged-dark::before,html body.merged-dark::after,
+html body.merged-light::before,html body.merged-light::after{content:none!important}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}}
+
+/* Static precomputed SVG galaxy: fewer repaints during mobile scrolling. */
+@media(max-width:760px){html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light){background-attachment:fixed!important}}
+
+
+/* Shared consent UI. One cookie preference is essential; all extras are opt-in.
+   Explicit sizing avoids inherited legacy layout and giant icons. */
+#dedsec-cookie-manage{
+ position:static!important;left:auto!important;bottom:auto!important;
+ z-index:auto!important;display:grid!important;place-items:center!important;
+ width:43px!important;height:43px!important;min-width:43px!important;min-height:43px!important;
+ padding:9px!important;margin:0!important;border:1px solid var(--space-line)!important;
+ border-radius:12px!important;background:var(--space-header)!important;color:var(--space-ink)!important;
+ box-shadow:0 2px 10px #0006!important;cursor:pointer!important;
+}
+#dedsec-cookie-manage svg{width:25px!important;height:25px!important;display:block!important}
+#dedsec-cookie-manage:focus-visible{outline:2px solid var(--space-link)!important;outline-offset:3px!important}
+#dedsec-cookie-overlay[hidden]{display:none!important}
+#dedsec-cookie-overlay{
+ position:fixed!important;inset:0!important;z-index:8500!important;overflow:auto!important;
+ display:grid!important;place-items:end center!important;padding:16px 12px max(20px,env(safe-area-inset-bottom))!important;
+ background:rgba(1,0,9,.65)!important;
+}
+#dedsec-cookie-overlay .dedsec-cookie-panel{
+ width:min(560px,100%)!important;max-height:calc(100dvh - 42px)!important;overflow:auto!important;
+ padding:19px 22px 20px!important;margin:0!important;box-sizing:border-box!important;
+ border:1px solid var(--space-line)!important;border-radius:15px!important;
+ background:var(--space-header)!important;background-image:none!important;color:var(--space-ink)!important;
+ box-shadow:0 10px 45px #000b!important;text-align:left!important;
+}
+#dedsec-cookie-overlay .dedsec-cookie-hero{display:flex!important;align-items:center!important;gap:10px!important;background:none!important;border:0!important;margin:0 0 8px!important;padding:0!important}
+#dedsec-cookie-overlay .dedsec-cookie-hero>span{font-size:28px!important;color:var(--space-link)!important}
+#dedsec-cookie-overlay h2{font:800 clamp(18px,4.8vw,23px)/1.22 system-ui,sans-serif!important;letter-spacing:0!important;margin:0!important;padding:0!important;color:var(--space-ink)!important;text-align:left!important}
+#dedsec-cookie-overlay p{font:400 clamp(13px,3.4vw,15px)/1.48 system-ui,sans-serif!important;margin:0 0 12px!important;padding:0!important;color:var(--space-ink)!important;text-align:left!important;max-width:none!important}
+#dedsec-cookie-overlay #dedsec-cookie-state{font-size:12px!important;color:var(--space-muted)!important}
+#dedsec-cookie-overlay .dedsec-cookie-actions{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important;padding:0!important;background:none!important}
+#dedsec-cookie-overlay .dedsec-cookie-actions button{
+ width:100%!important;min-height:44px!important;height:auto!important;
+ margin:0!important;padding:9px 8px!important;border-radius:9px!important;
+ border:1px solid var(--space-line)!important;background:var(--space-surface-soft)!important;
+ color:var(--space-ink)!important;font:700 clamp(12px,3vw,14px)/1.2 system-ui,sans-serif!important;
+ text-align:center!important;cursor:pointer!important;white-space:normal!important;
+}
+#dedsec-cookie-overlay .dedsec-cookie-actions button:last-child{background:#68438f!important;color:#fff!important;border-color:#ae85db!important}
+#dedsec-cookie-overlay .dedsec-cookie-actions button:focus-visible{outline:2px solid var(--space-link)!important;outline-offset:3px!important}
+@media(max-width:350px){
+ #dedsec-cookie-overlay .dedsec-cookie-panel{padding:15px!important}
+ #dedsec-cookie-overlay .dedsec-cookie-actions{gap:6px!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #dedsec-cookie-overlay *,#dedsec-cookie-manage{animation:none!important;transition:none!important}
+}
+
+#dedsec-cookie-overlay #dedsec-cookie-privacy{display:inline-block!important;margin:0 0 11px!important;padding:0!important;background:transparent!important;text-decoration:underline!important;text-underline-offset:3px!important;color:var(--space-link)!important;font:600 13px/1.4 system-ui,sans-serif!important}
+
+/* The old floating launcher cookie icon is retired. The only manage button
+   is embedded beneath the trust row on the Home view. */
+#dedsec-cookie-manage{position:static!important;inset:auto!important}
+
+/* Bilingual consent controls show both their action icon and label. */
+#dedsec-cookie-overlay .dedsec-cookie-actions button{
+ display:flex!important;align-items:center!important;justify-content:center!important;
+ gap:8px!important;white-space:normal!important;
+}
+#dedsec-cookie-overlay .dedsec-cookie-actions button i{
+ display:inline-block!important;flex:none!important;
+ font-size:17px!important;line-height:1!important;color:inherit!important;
+}
+#dedsec-cookie-overlay .dedsec-cookie-actions button span{
+ color:inherit!important;font:inherit!important;line-height:1.25!important;
+}
+#dedsec-cookie-overlay .dedsec-cookie-actions button:first-child{
+ background:rgba(26,13,41,.54)!important;color:var(--space-ink)!important;
+}
+html body.theme-light #dedsec-cookie-overlay .dedsec-cookie-actions button:first-child,
+html body.merged-light #dedsec-cookie-overlay .dedsec-cookie-actions button:first-child{
+ background:rgba(243,232,255,.84)!important;color:var(--space-ink)!important;
+}
+@media(max-width:360px){
+ #dedsec-cookie-overlay .dedsec-cookie-actions button{gap:5px!important}
+ #dedsec-cookie-overlay .dedsec-cookie-actions button i{font-size:15px!important}
+}
+
+/* Retro Windows 95 system-font styling (uses OS fonts; no font download). */
+html,html body,html body button,html body input,html body select,html body textarea,
+html body :is(h1,h2,h3,h4,h5,h6,p,li,dt,dd,blockquote,summary,td,th,label,strong,small,span,a){
+ font-family:Tahoma,"MS Sans Serif","Microsoft Sans Serif",Arial,sans-serif!important;
+}
+html body :is(pre,code,kbd,samp),html body :is(pre,code,kbd,samp) *{
+ font-family:"Courier New",Consolas,monospace!important;
+}
+/* Windows 95 squared controls: round planets and aliens exist only inside SVG artwork. */
+html body *,html body *::before,html body *::after{border-radius:0!important;}
+/* Pure legible light-on-dark and dark-on-light ink. */
+html body:is(.theme-dark,.merged-dark){
+ --space-start:#000004!important;--space-middle:#040411!important;--space-end:#000003!important;
+ --space-dim:rgba(0,0,0,.56)!important;
+ --space-ink:#fafafa!important;--space-muted:#e1e1e5!important;--space-link:#ffffff!important;
+ --space-line:#78658c!important;--space-header:#05040d!important;
+ --space-surface:rgba(1,1,5,.04)!important;--space-surface-soft:rgba(1,1,5,.04)!important;
+}
+html body:is(.theme-light,.merged-light){
+ --space-start:#fffbff!important;--space-middle:#eee0fa!important;--space-end:#faf7ff!important;
+ --space-dim:rgba(56,33,88,.11)!important;
+ --space-ink:#111014!important;--space-muted:#353038!important;--space-link:#151018!important;
+ --space-line:#917d9f!important;--space-header:#faf5ff!important;
+ --space-surface:rgba(255,255,255,.05)!important;--space-surface-soft:rgba(255,255,255,.05)!important;
+}
+html body:is(.theme-dark,.merged-dark,.theme-light,.merged-light){
+ background-image:linear-gradient(var(--space-dim),var(--space-dim)),var(--space-stars),
+ linear-gradient(156deg,var(--space-start),var(--space-middle) 46%,var(--space-end))!important;
+}
+html body:is(.theme-dark,.merged-dark) :is(h1,h2,h3,h4,h5,h6,p,li,label,summary,th,td,blockquote,strong,em,small){
+ color:#fafafa!important;
+}
+html body:is(.theme-light,.merged-light) :is(h1,h2,h3,h4,h5,h6,p,li,label,summary,th,td,blockquote,strong,em,small){
+ color:#111014!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(.topbar,.merged-topbar) :is(a,button,span,i,i::before),
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(.topbar,.merged-topbar) :is(a,button):not(#dedsec-theme-specificity){
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(.topbar,.merged-topbar) :is(a,button):not(#dedsec-theme-specificity){
+ background:transparent!important;border:1px solid var(--space-line)!important;
+ box-shadow:none!important;
+}
+/* No blocks of old paint behind actual prose. Keep code and dialog legible. */
+html body:is(.merged-dark,.merged-light) .page-content :is(p,li,span,blockquote,strong,em):not(#dedsec-theme-specificity){
+ background:transparent!important;background-image:none!important;box-shadow:none!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(.page-header,.content-section,.panel,.result-card,.folder-card,.faq-card,.note,.warning){
+ border-radius:0!important;
+}
+
+/* 16 Oct: high-contrast Windows 95-inspired cosmic desktop (source of truth). */
+html body:is(.theme-dark,.merged-dark){
+ --space-start:#000006;--space-middle:#060816;--space-end:#010008;
+ --space-dim:rgba(0,0,0,.64);--space-ink:#fff;--space-muted:#ececf0;
+ --space-link:#fff;--space-line:#8a8497;--space-header:#03030a;
+ --space-surface:transparent;--space-surface-soft:transparent;
+ --space-input:#15141c;--space-code:#090915;
+}
+html body:is(.theme-light,.merged-light){
+ --space-start:#fff;--space-middle:#f5f4fc;--space-end:#fdfaff;
+ --space-dim:rgba(255,255,255,.18);--space-ink:#111;--space-muted:#23212a;
+ --space-link:#111;--space-line:#77717f;--space-header:#fff;
+ --space-surface:transparent;--space-surface-soft:transparent;
+ --space-input:#f3f1f7;--space-code:#eeedf7;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light){
+ font-family:"MS Sans Serif",Tahoma,"Microsoft Sans Serif",Arial,sans-serif!important;
+ font-size:15px!important;font-weight:400!important;letter-spacing:0!important;
+ background-size:100% 100%,890px 650px,100% 100%!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) *,
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) *::before,
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) *::after{
+ border-radius:0!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(h1,h2,h3,h4,h5,h6,p,span,li,label,small,strong,em,summary,a,blockquote,td,th){
+ color:var(--space-ink)!important;text-shadow:none!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) :is(
+ .topbar,.merged-topbar) :is(a,button,span,i),
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) :is(
+ .topbar,.merged-topbar) i::before{
+ color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light) .page-content
+ :is(p,span,strong,em,li,blockquote,summary):not(#dedsec-theme-specificity){
+ background-color:transparent!important;background-image:none!important;
+ box-shadow:none!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(.panel,.result-card,.folder-card,.content-section,.page-header,.guide-header,.faq-card,.note,.tip,.warning,.feature-card){
+ background-color:transparent!important;background-image:none!important;
+ box-shadow:none!important;
+}
+/* UI borders remain square; genuine text inputs/dialogs need opacity for reading. */
+
+/* Final higher-contrast matte galaxy: single cached SVG, no animated layers. */
+html body:is(.theme-dark,.merged-dark){
+ --space-dim:rgba(0,0,0,.72)!important;
+ --space-start:#000003!important;--space-middle:#060313!important;--space-end:#000002!important;
+ --space-ink:#fff!important;--space-muted:#f0f0f0!important;--space-link:#fff!important;
+ --space-header:#000003!important;
+}
+html body:is(.theme-light,.merged-light){
+ --space-dim:rgba(255,255,255,.095)!important;
+ --space-start:#fefbff!important;--space-middle:#efe4fa!important;--space-end:#f9f3ff!important;
+ --space-ink:#111!important;--space-muted:#25202e!important;--space-link:#111!important;
+ --space-header:#fefbff!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light),
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) :is(button,input,select,textarea){
+ font-family:"MS Sans Serif",Tahoma,"Microsoft Sans Serif",Arial,sans-serif!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) :is(
+ button,input,select,textarea,pre,.panel,.archive-panel,.result-card,.folder-card,
+ .home-trust,.home-trust-card,.app-icon,.cookie-pixel-icon,.app-icon-btn,
+ .content-section,.page-header,.note,.tip,.warning,.faq-card,.faq-item,
+ .guide-card,.tool-card,.platform-install-card,.info-box,.info-card,
+ .page-content,.merged-topbar,.topbar,.merged-action,.merged-home,.merged-search,
+ .nav-action-btn,.dedsec-cookie-panel,.dedsec-cookie-actions button
+ ){border-radius:0!important;box-shadow:none!important;}
+/* Remove decorative frames while retaining clear keyboard accessibility.
+   Strong background contrast, spacing and underlines replace card borders. */
+html body:is(.theme-dark,.theme-light) #app :is(
+ .panel,.archive-panel,.result-card,.folder-card,.home-trust,.home-trust-card,
+ .app-icon-btn,.app-icon,.cookie-pixel-icon,.lesson,.lesson-head
+ ){border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important}
+html body:is(.theme-dark,.theme-light) #topbar :is(.nav-action-btn,.brand img){border:0!important;box-shadow:none!important}
+html body:is(.merged-dark,.merged-light) :is(
+ .page-header,.content-section,.note,.tip,.warning,.alert,.faq-card,.faq-item,
+ .guide-card,.tool-card,.platform-install-card,.info-box,.info-card,
+ .merged-topbar,.merged-actions a,.merged-actions button
+ ){border:0!important;box-shadow:none!important}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) :is(a,button,input,select,textarea):focus-visible{
+ outline:2px dotted var(--space-ink)!important;outline-offset:3px!important;
+}
+/* Keep semantic controls distinguishable without box borders. */
+html body:is(.theme-dark,.theme-light) #app :is(input,select,textarea){border:0!important;border-bottom:1px solid currentColor!important}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light) :is(p,li,h1,h2,h3,h4,h5,span,strong,small){color:var(--space-ink)!important}
+
+
+/* TEST UNIFIED MATTE UI AND TOUCH CLEANUP — 2026-10-16 */
+/* This file is last for the desktop and @imported by the imported-page skin.
+   Use a deliberately stronger scoped selector than historical !important rules.
+   Preserve the opaque FIXED navbar strip, while removing decorative boxes. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c){
+  --ink:var(--space-ink)!important;
+  --muted:var(--space-ink)!important;
+  --link:var(--space-ink)!important;
+  --accent:var(--space-ink)!important;
+  --glyph:var(--space-ink)!important;
+  --merge-ink:var(--space-ink)!important;
+  --merge-muted:var(--space-ink)!important;
+  --merge-link:var(--space-ink)!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+/* Both themes must use their exact ink color, including the font icon glyph
+   rendered by Font Awesome in ::before and Android's text-fill path. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(h1,h2,h3,h4,h5,h6,p,span,small,li,dt,dd,summary,label,strong,em,blockquote,figcaption,th,td,a,button,i,code,kbd,samp),
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(.fas,.far,.fab,.fa,.fa-solid,.fa-regular,.fa-brands)::before{
+  color:var(--space-ink)!important;
+  -webkit-text-fill-color:var(--space-ink)!important;
+  text-shadow:none!important;
+}
+/* Navbar logo and actions: no box around the whole left title, the image,
+   or the four controls. Keep a solid bar to mask scrolled article text. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(#topbar,.merged-topbar){
+  border:0!important;border-width:0!important;border-radius:0!important;
+  box-shadow:none!important;
+  background:var(--space-header)!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(#topbar .brand,#topbar .brand img,#topbar .brand span,
+ .merged-topbar .merged-brand,.merged-topbar .merged-brand img,.merged-topbar .merged-brand span,
+ #topbar .nav-actions > a,#topbar .nav-actions > button,
+ .merged-topbar .merged-actions > a,.merged-topbar .merged-actions > button){
+  border:0!important;border-width:0!important;border-style:none!important;
+  outline:0!important;border-radius:0!important;
+  box-shadow:none!important;background:transparent!important;background-image:none!important;
+  color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(#topbar .nav-actions i,#topbar .nav-actions span,
+ .merged-topbar .merged-actions i,.merged-topbar .merged-actions span),
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(#topbar .nav-actions i,.merged-topbar .merged-actions i)::before{
+  color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+  background:transparent!important;border:0!important;text-shadow:none!important;
+}
+/* Root knowledge and cards: let the galaxy show through instead of overlaying
+   purple/pale fixed rectangles; retain enough spacing to read them. */
+html body:is(.theme-dark,.theme-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ #app :is(.panel,.archive-panel,.lesson,.lesson-head,.result-card,.folder-card,
+ .home-intro,.home-trust,.home-trust-card,.home-about-summary,.home-cookie-row,
+ .app-icon-btn,.app-icon,.cookie-pixel-icon,.empty){
+  border:0!important;border-radius:0!important;
+  background:transparent!important;background-image:none!important;
+  box-shadow:none!important;
+}
+/* Imported guides, tutorials, FAQ and installation controls share one plain
+   visual language. No solid text cards or purple boxes. */
+html body:is(.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(.page-content,.main-content,.page-main,.content-container,.guide-container)
+ :is(.page-header,.guide-header,.guide-hero,.intro-box,.intro-section,.hero,.hero-section,
+ .content-section,.platform-selector-intro,.platform-install-selector,
+ .platform-install-card,.platform-install-body,.requirements,
+ .note,.note-warning,.tip,.warning,.alert,.faq-card,.faq-item,.feature-card,.guide-card,
+ .info-card,.info-box,.tool-card,.academy-brief-card,.academy-callout,
+ .academy-platform-card,.post-install-value-block,.code-container,.code-block,
+ .copy-btn,pre,code,details,summary,.btn,.button){
+  border:0!important;border-color:transparent!important;border-radius:0!important;
+  background:transparent!important;background-image:none!important;
+  box-shadow:none!important;
+}
+html body:is(.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(.page-content,.main-content,.page-main,.content-container,.guide-container)
+ :is(.page-header,.content-section,.note,.tip,.warning,.faq-card,.platform-install-card,details)::before,
+html body:is(.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(.page-content,.main-content,.page-main,.content-container,.guide-container)
+ :is(.page-header,.content-section,.note,.tip,.warning,.faq-card,.platform-install-card,details)::after{
+  border:0!important;background:transparent!important;background-image:none!important;box-shadow:none!important;
+}
+/* Footer text and all destinations match the theme, not the old lavender
+   link scheme. Strip separators/colored button rectangles. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(#site-footer,.merged-footer,#site-footer .footer-buttons,
+ .merged-footer .footer-buttons,#site-footer .footer-buttons a,
+ .merged-footer .footer-buttons a){
+  border:0!important;border-radius:0!important;
+  background:transparent!important;background-image:none!important;box-shadow:none!important;
+  color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(#site-footer,.merged-footer) :is(a,p,span,small,strong,i),
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(#site-footer,.merged-footer) i::before{
+  color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+  text-shadow:none!important;
+}
+/* Chrome on Android can leave :hover/focus painted after a gesture. Remove
+   touch/drag highlights without losing explicit keyboard focus indicators. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(a,button,summary,[role="button"],.app-icon-btn,.app-icon){
+  -webkit-tap-highlight-color:transparent!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(a,button,summary):focus:not(:focus-visible){
+  outline:0!important;box-shadow:none!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(a,button,summary):focus-visible{
+  outline:2px dotted var(--space-ink)!important;outline-offset:3px!important;
+}
+@media(hover:none) and (pointer:coarse){
+ html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#test-skin-a):not(#test-skin-b):not(#test-skin-c)
+ :is(#app .app-icon-btn,#app .app-icon,#app .result-card,#app .folder-card,
+ #app #dedsec-cookie-manage,.page-content a,.page-content button,
+ .page-content summary,.merged-footer a,#site-footer a,
+ .merged-topbar a,.merged-topbar button,#topbar a,#topbar button):is(:hover,:active){
+  background:transparent!important;background-image:none!important;
+  border-color:transparent!important;box-shadow:none!important;
+  transform:none!important;text-shadow:none!important;
+ }
+}
+
+/* One composited fixed layer avoids repainting the SVG with scrolling content. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light){isolation:isolate;background-image:none!important}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)::before{content:""!important;position:fixed!important;inset:0!important;z-index:-1!important;pointer-events:none!important;background-color:var(--space-start);background-image:linear-gradient(var(--space-dim),var(--space-dim)),var(--space-stars),linear-gradient(152deg,var(--space-start),var(--space-middle) 53%,var(--space-end))!important;background-size:100% 100%,890px 650px,100% 100%!important;background-position:center!important;background-repeat:no-repeat,repeat,no-repeat!important;transform:translateZ(0)!important;will-change:transform;contain:strict;opacity:1!important;filter:none!important;animation:none!important}

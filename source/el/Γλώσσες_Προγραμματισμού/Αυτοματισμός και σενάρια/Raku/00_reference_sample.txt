@@ -1,0 +1,2 @@
+sub greet(Str $name) { "Hello, $name!" }
+say greet('Ada');

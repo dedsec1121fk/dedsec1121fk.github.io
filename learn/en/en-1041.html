@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Shell lint commands — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1041.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Recipe: check shell syntax without executing unknown scripts Scenario and acceptance criteria When reviewing a Bash script from an offline knowledge bundle, start with a syntax-only parse…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Shell lint commands — DedSec Project">
+<meta property="og:description" content="Recipe: check shell syntax without executing unknown scripts Scenario and acceptance criteria When reviewing a Bash script from an offline knowledge bundle, start with a syntax-only parse…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1041.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Shell lint commands — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Shell lint commands — DedSec Project">
+<meta name="twitter:description" content="Recipe: check shell syntax without executing unknown scripts Scenario and acceptance criteria When reviewing a Bash script from an offline knowledge bundle, start with a syntax-only parse…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Shell lint commands — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Shell lint commands — DedSec Project</h1><p>Recipe: check shell syntax without executing unknown scripts Scenario and acceptance criteria When reviewing a Bash script from an offline knowledge bundle, start with a syntax-only parse…</p><section><h1>Recipe: check shell syntax without executing unknown scripts</h1>
+<h2>Scenario and acceptance criteria</h2>
+<p>When reviewing a Bash script from an offline knowledge bundle, start with a syntax-only parse rather than executing it. <code>bash -n</code> can detect an unmatched <code>if</code> and many grammar mistakes without running ordinary shell statements. The fixture creates one valid and one broken script in a disposable folder and checks their exit status.</p>
+<h2>Complete executable example</h2>
+<p>Save as <code>08_Shell_check.py</code> and run with Python 3 and the standard library. The fixture works without internet or access to your real files.</p>
+<pre><code class="language-python">import shutil, subprocess, tempfile
+from pathlib import Path
+bash = shutil.which(&quot;bash&quot;)
+if bash is None:
+    raise SystemExit(&quot;SKIP: Bash executable not present&quot;)
+with tempfile.TemporaryDirectory() as folder:
+    good = Path(folder)/&quot;good.sh&quot;
+    broken = Path(folder)/&quot;broken.sh&quot;
+    good.write_text('echo &quot;This is never executed&quot;\n',encoding=&quot;utf-8&quot;)
+    broken.write_text(&quot;if true; then\necho missing fi\n&quot;,encoding=&quot;utf-8&quot;)
+    ok = subprocess.run([bash,&quot;-n&quot;,str(good)],capture_output=True,text=True)
+    bad = subprocess.run([bash,&quot;-n&quot;,str(broken)],capture_output=True,text=True)
+    assert ok.returncode==0
+    assert bad.returncode!=0
+    lint = shutil.which(&quot;shellcheck&quot;)
+    if lint is not None:
+        print(&quot;ShellCheck available; run manually with&quot;,lint)
+print(&quot;PASS Bash syntax-only validation&quot;)
+</code></pre>
+<h2>Technical explanation</h2>
+<p>A clean parse does not establish that a script is secure or correct. Bash syntax checking will not identify arbitrary destructive commands, command injection or runtime file errors; do not run untrusted scripts because they passed bash -n. ShellCheck can provide additional static lint warnings if separately installed. The example uses subprocess argument vectors and deliberately never passes shell=True.</p>
+<h2>Bounded practice</h2>
+<p>Add a script containing a syntactically valid but unsafe <code>rm</code> command; observe that bash -n accepts it. Explain why manual review and sandboxed execution policies are still needed. Try missing quotes and broken parentheses and collect the exit codes. Check whether Bash is available in Termux or Linux, and report SKIP rather than success if it is absent.</p>
+<h2>Diagnostics and safety</h2>
+<p>If Bash is not installed, the recipe should not report a successful parse. If ShellCheck is missing, record that lint was not performed rather than assuming it passed. A nonzero syntax-check exit code points to a grammar problem and should stop automated execution of the candidate.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

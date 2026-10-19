@@ -1,0 +1,6 @@
+CREATE OR REPLACE FUNCTION greet(name text)
+RETURNS text LANGUAGE plpgsql AS $
+BEGIN
+  RETURN 'Hello, ' || name || '!';
+END; $;
+SELECT greet('Ada');

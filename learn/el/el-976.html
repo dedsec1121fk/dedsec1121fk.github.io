@@ -1,0 +1,55 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>TS18048 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-976.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="TS18048 — η πιθανότητα undefined δεν είναι θεωρητική Αρχική αιτία Το TS18048 δείχνει ότι μία τιμή μπορεί να είναι undefined. Η Array.find επιστρέφει την πρώτη εγγραφή που ταιριάζει ή…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="TS18048 — DedSec Project">
+<meta property="og:description" content="TS18048 — η πιθανότητα undefined δεν είναι θεωρητική Αρχική αιτία Το TS18048 δείχνει ότι μία τιμή μπορεί να είναι undefined. Η Array.find επιστρέφει την πρώτη εγγραφή που ταιριάζει ή…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-976.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TS18048 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TS18048 — DedSec Project">
+<meta name="twitter:description" content="TS18048 — η πιθανότητα undefined δεν είναι θεωρητική Αρχική αιτία Το TS18048 δείχνει ότι μία τιμή μπορεί να είναι undefined. Η Array.find επιστρέφει την πρώτη εγγραφή που ταιριάζει ή…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="TS18048 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>TS18048 — DedSec Project</h1><p>TS18048 — η πιθανότητα undefined δεν είναι θεωρητική Αρχική αιτία Το TS18048 δείχνει ότι μία τιμή μπορεί να είναι undefined. Η Array.find επιστρέφει την πρώτη εγγραφή που ταιριάζει ή…</p><section><h1>TS18048 — η πιθανότητα undefined δεν είναι θεωρητική</h1>
+<h2>Αρχική αιτία</h2>
+<p>Το TS18048 δείχνει ότι μία τιμή μπορεί να είναι undefined. Η Array.find επιστρέφει την πρώτη εγγραφή που ταιριάζει ή undefined αν καμία δεν ταιριάζει. Η άμεση ανάγνωση match.title θεωρεί ότι κάθε αναγνωριστικό υπάρχει, πράγμα που μπορεί να είναι λάθος σε κενό πίνακα, λάθος κωδικό ή αλλαγμένα δεδομένα.</p>
+<h2>Πρακτική διόρθωση</h2>
+<p>Έλεγξε <code>match === undefined</code> πριν προσπελάσεις ιδιότητες. Η ανάλυση ροής ελέγχου της TypeScript περιορίζει έπειτα τον τύπο στη σωστή διαδρομή. Πέτα σαφές RangeError με τον κωδικό που λείπει αντί να εμφανιστεί αργότερα τυχαίο TypeError. Το πρόγραμμα ελέγχει επιτυχημένη αναζήτηση και εσκεμμένη αποτυχία.</p>
+<h2>Επαληθευμένο παράδειγμα TypeScript</h2>
+<pre><code class="language-typescript">type RecordItem = {id: string; title: string};
+function titleById(rows: RecordItem[], id: string): string {
+  const match = rows.find((row) =&gt; row.id === id);
+  if (match === undefined) throw new RangeError(`missing ID: ${id}`);
+  return match.title;
+}
+if (titleById([{id: 'A', title: 'Intro'}], 'A') !== 'Intro') throw Error();
+try { titleById([], 'B'); throw Error('accepted missing ID'); }
+catch (err) { if (!(err instanceof RangeError)) throw err; }
+console.log('PASS TS18048');
+</code></pre>
+<h2>Γιατί λειτουργεί</h2>
+<p>Το optional chaining είναι χρήσιμο όταν η απουσία αποτελεί νόμιμο αποτέλεσμα και ο τύπος επιστροφής το δηλώνει. Αν ο τίτλος είναι υποχρεωτικός, μην επιστρέφεις αθόρυβα κενή συμβολοσειρά. Η μη μηδενική βεβαίωση (<code>match!</code>) αφαιρείται στη JavaScript και δεν παρέχει προστασία. Μία εγγραφή με κενό τίτλο διαφέρει από μία εγγραφή που δεν υπάρχει.</p>
+<h2>Εντολές ελέγχου</h2>
+<p>Αποθήκευσε ως main.ts και εκτέλεσε <code>tsc --strict --target es2022 --module commonjs --outDir dist main.ts &amp;&amp; node dist/main.js</code>. Σε χωριστό αρχείο δήλωσε πίνακα, αναζήτησε με find και γράψε <code>console.log(match.id)</code> χωρίς έλεγχο. Η αναμενόμενη προειδοποίηση είναι TS18048.</p>
+<h2>Ασκήσεις διάγνωσης</h2>
+<p>Σύγκρινε με Map.get(id), που επίσης μπορεί να επιστρέψει undefined. Δημιούργησε αποτέλεσμα union <code>{ok:true,value:...}|{ok:false,error:...}</code> και γράψε κώδικα που ελέγχει το ok πριν χρησιμοποιήσει την τιμή.</p>
+<p><strong>Τεκμηρίωση:</strong> https://www.typescriptlang.org/docs/handbook/2/narrowing.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

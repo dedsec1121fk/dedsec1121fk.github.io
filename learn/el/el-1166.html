@@ -1,0 +1,103 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Επιθεώρηση κώδικα, μοντέλα απειλών και ασφαλείς προεπιλογές — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1166.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Ασφαλής επιθεώρηση — προκαταρκτικός έλεγχος ZIP Σενάριο και όριο εμπιστοσύνης Ένα εργαλείο τοπικής γνώσης εισάγει ZIP από τρίτους. Τα ονόματα των περιεχομένων είναι μη έμπιστα μεταδεδομένα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Επιθεώρηση κώδικα, μοντέλα απειλών και ασφαλείς προεπιλογές — DedSec Project">
+<meta property="og:description" content="Ασφαλής επιθεώρηση — προκαταρκτικός έλεγχος ZIP Σενάριο και όριο εμπιστοσύνης Ένα εργαλείο τοπικής γνώσης εισάγει ZIP από τρίτους. Τα ονόματα των περιεχομένων είναι μη έμπιστα μεταδεδομένα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1166.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Επιθεώρηση κώδικα, μοντέλα απειλών και ασφαλείς προεπιλογές — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Επιθεώρηση κώδικα, μοντέλα απειλών και ασφαλείς προεπιλογές — DedSec Project">
+<meta name="twitter:description" content="Ασφαλής επιθεώρηση — προκαταρκτικός έλεγχος ZIP Σενάριο και όριο εμπιστοσύνης Ένα εργαλείο τοπικής γνώσης εισάγει ZIP από τρίτους. Τα ονόματα των περιεχομένων είναι μη έμπιστα μεταδεδομένα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Επιθεώρηση κώδικα, μοντέλα απειλών και ασφαλείς προεπιλογές — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Επιθεώρηση κώδικα, μοντέλα απειλών και ασφαλείς προεπιλογές — DedSec Project</h1><p>Ασφαλής επιθεώρηση — προκαταρκτικός έλεγχος ZIP Σενάριο και όριο εμπιστοσύνης Ένα εργαλείο τοπικής γνώσης εισάγει ZIP από τρίτους. Τα ονόματα των περιεχομένων είναι μη έμπιστα μεταδεδομένα…</p><section><h1>Ασφαλής επιθεώρηση — προκαταρκτικός έλεγχος ZIP</h1>
+<h2>Σενάριο και όριο εμπιστοσύνης</h2>
+<p>Ένα εργαλείο τοπικής γνώσης εισάγει ZIP από τρίτους. Τα ονόματα των περιεχομένων είναι μη έμπιστα μεταδεδομένα: ένας επιτιθέμενος μπορεί να δοκιμάσει διαδρομές έξω από τον φάκελο, απόλυτες διαδρομές, ανάποδες κάθετους Windows, διπλά ονόματα, συμβολικούς συνδέσμους Unix ή υπερβολικά μεγάλα αποσυμπιεσμένα αρχεία. Ο έλεγχος πρέπει να γίνεται πριν από οποιαδήποτε εξαγωγή. Η παρακάτω συνάρτηση <strong>δεν εξάγει</strong> αρχεία: είναι περιορισμένος προκαταρκτικός έλεγχος και όχι πλήρης ασφαλής αποσυμπιεστής.</p>
+<h2>Εκτελέσιμο παράδειγμα Python 3</h2>
+<p>Αποθήκευσε ως zip_review.py και εκτέλεσε python3 zip_review.py. Οι δοκιμές δημιουργούν ZIP μέσα στη μνήμη, με τεχνητά ονόματα διαδρομών και σήμανση συμβολικού συνδέσμου.</p>
+<pre><code class="language-python">from io import BytesIO
+from pathlib import PurePosixPath
+from stat import S_IFMT, S_IFLNK
+from zipfile import ZipFile, ZipInfo
+
+def verify_manifest(blob, max_files=20, max_bytes=100_000):
+    total, names = 0, set()
+    with ZipFile(BytesIO(blob)) as archive:
+        for member in archive.infolist():
+            name = member.filename
+            parts = name.rstrip('/').split('/')
+            target = PurePosixPath(name)
+            if (not name or target.is_absolute() or '\\' in name
+                    or any(part in ('', '.', '..') for part in parts)
+                    or any(ord(ch) &lt; 32 for ch in name)):
+                raise ValueError('invalid ZIP member path')
+            if name in names:
+                raise ValueError('duplicate ZIP member')
+            names.add(name)
+            mode = S_IFMT(member.external_attr &gt;&gt; 16)
+            if mode == S_IFLNK:
+                raise ValueError('symlink in archive')
+            if member.is_dir():
+                continue
+            total += member.file_size
+            if len(names) &gt; max_files or total &gt; max_bytes:
+                raise ValueError('archive limit exceeded')
+            if member.file_size &gt; 0 and (member.compress_size == 0
+                   or member.file_size &gt; 100 * member.compress_size):
+                raise ValueError('suspicious compression ratio')
+    return len(names)
+
+def fixture(name):
+    b = BytesIO()
+    with ZipFile(b, 'w') as z:
+        z.writestr(name, 'hello')
+    return b.getvalue()
+
+assert verify_manifest(fixture('docs/lesson.txt')) == 1
+for wrong in ('../private.txt', 'docs/../private.txt', '/absolute', 'back\\slash'):
+    try: verify_manifest(fixture(wrong))
+    except ValueError: pass
+    else: raise AssertionError(wrong)
+symlink = ZipInfo('linked')
+symlink.create_system = 3
+symlink.external_attr = (0o120777 &lt;&lt; 16)
+b = BytesIO()
+with ZipFile(b, 'w') as z:
+    z.writestr(symlink, 'outside')
+try: verify_manifest(b.getvalue())
+except ValueError: pass
+else: raise AssertionError('symlink accepted')
+print('PASS ZIP preflight: path traversal, absolute, backslash, symlink')
+</code></pre>
+<h2>Ερμηνεία κινδύνων και όρια της λύσης</h2>
+<p>Ο κώδικας απορρίπτει κενά και απόλυτα ονόματα, τμήματα . ή .., ανάποδες κάθετους και χαρακτήρες ελέγχου, ακριβή διπλότυπα, συμβολικούς συνδέσμους και ύποπτα δηλωμένα μεγέθη. Αυτό δεν καθιστά την πραγματική εξαγωγή ασφαλή. Τα μεταδεδομένα μεγέθους δεν είναι απόλυτα αξιόπιστα. Χρειάζεται όριο στα <strong>πραγματικά αποσυμπιεσμένα byte</strong>, στον χρόνο, στη χρήση πόρων και στον χώρο δίσκου. Ο πλήρης αποσυμπιεστής πρέπει να ελέγχει ότι η τελική διαδρομή παραμένει μέσα σε ειδικό προσωρινό κατάλογο, να απορρίπτει ειδικούς τύπους αρχείων και να χειρίζεται συγκρούσεις όπως A.txt και a.txt ή ισοδύναμα ονόματα Unicode. Δεν καλύπτονται όλοι οι κανόνες διαδρομών των Windows, όπως το C:foo. Μην κάνεις εξαγωγή πάνω από προσωπικά αρχεία χωρίς ρητή συγκατάθεση και σχέδιο επαναφοράς.</p>
+<h2>Συγκεκριμένες δοκιμές αποτυχίας</h2>
+<ol>
+<li>Πρόσθεσε γράμμα δίσκου, όνομα με τελικό κενό, διπλό όνομα και δύο ονόματα με ισοδύναμη Unicode μορφή. Όρισε κανόνα και αντίστοιχη δοκιμή απόρριψης.</li>
+<li>Σύγκρινε το δηλωμένο file_size με τα πραγματικά byte αποσυμπίεσης κάτω από αυστηρό όριο.</li>
+<li>Σχεδίασε επίθεση με συμβολικό σύνδεσμο και επόμενο αρχείο που δείχνει έξω από τον προορισμό. Εξήγησε γιατί χρειάζεται έλεγχος πραγματικών διαδρομών.</li>
+<li>Κατάγραψε εισόδους, δικαιώματα, εγγραφές, απαγορευμένες ενέργειες, μηνύματα αποτυχίας και καθαρισμό προσωρινού καταλόγου.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> PASS, πέντε απορριπτέα ZIP και δήλωση ότι δεν αποδείχθηκε ασφάλεια πραγματικής εξαγωγής.</p>
+<h2>Πρόσθετη τεχνική ανάλυση</h2>
+<p>Η πολιτική browser χρειάζεται λειτουργικές δοκιμές μαζί με εξέταση κεφαλίδων. Ένας περιορισμός μπορεί να μπλοκάρει θέματα ή πλοήγηση ενώ η πρώτη εικόνα φαίνεται σωστή. Συγκέντρωσε ελεγχόμενες αναφορές και δοκίμασε αλληλεπιδράσεις πριν επιβολή. Ένα γενικό wildcard για καταστολή αναφορών μπορεί να ακυρώσει τον περιορισμό.</p>
+<p><a href="../el/fieldnotes-el-45.html">Εφαρμογή Content Security Policy με αναφορές παραβιάσεων</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

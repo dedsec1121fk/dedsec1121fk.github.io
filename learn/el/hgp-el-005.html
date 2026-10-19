@@ -1,0 +1,88 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Vulnerability Analysis και Prioritization — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-005.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Vulnerability Analysis και Prioritization Vulnerability analysis εξετάζει αν μια weakness εφαρμόζεται σε πραγματικό asset, ποια security property μπορεί να επηρεάσει και τι πρέπει να γίνει…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Vulnerability Analysis και Prioritization — DedSec Project">
+<meta property="og:description" content="Vulnerability Analysis και Prioritization Vulnerability analysis εξετάζει αν μια weakness εφαρμόζεται σε πραγματικό asset, ποια security property μπορεί να επηρεάσει και τι πρέπει να γίνει…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-005.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vulnerability Analysis και Prioritization — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Vulnerability Analysis και Prioritization — DedSec Project">
+<meta name="twitter:description" content="Vulnerability Analysis και Prioritization Vulnerability analysis εξετάζει αν μια weakness εφαρμόζεται σε πραγματικό asset, ποια security property μπορεί να επηρεάσει και τι πρέπει να γίνει…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Vulnerability Analysis και Prioritization — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Vulnerability Analysis και Prioritization — DedSec Project</h1><p>Vulnerability Analysis και Prioritization Vulnerability analysis εξετάζει αν μια weakness εφαρμόζεται σε πραγματικό asset, ποια security property μπορεί να επηρεάσει και τι πρέπει να γίνει…</p><section><p>Vulnerability analysis εξετάζει αν μια weakness εφαρμόζεται σε πραγματικό asset, ποια security property μπορεί να επηρεάσει και τι πρέπει να γίνει. Scanner output ή CVE match είναι η αρχή της ανάλυσης, όχι το τελικό conclusion.</p>
+<blockquote>
+<p><strong>Όριο εξουσιοδοτημένης χρήσης:</strong> Κάνε validation με τη λιγότερο intrusive μέθοδο που απαντά την ερώτηση. Προτίμησε vendor information, package/version evidence, configuration review, safe requests και isolated lab reproduction.</p>
+</blockquote>
+<h2>CVE, CWE και advisories</h2>
+<p><strong>CVE</strong> δίνει κοινό identifier σε disclosed vulnerability. <strong>CWE</strong> περιγράφει weakness classes όπως improper authorization, unsafe input handling ή memory-safety defects. Vendor/upstream advisories συνήθως είναι η καλύτερη πηγή για affected versions, patches, workarounds και prerequisites.</p>
+<h2>CVSS και πραγματικό risk</h2>
+<p>CVSS δίνει standardized technical severity. Δεν ξέρει όμως αν το service είναι Internet-facing, αν το affected feature είναι disabled, ποια data περιέχει το asset, ποια compensating controls υπάρχουν ή ποιο business process επηρεάζεται.</p>
+<p>Πρακτική προτεραιότητα = σοβαρότητα + εφαρμοσιμότητα + έκθεση + δικαιώματα + κρισιμότητα πόρου + ευαισθησία δεδομένων + έλεγχοι + ανίχνευση/ανάκαμψη + λειτουργικό πλαίσιο.</p>
+<h2>Applicability analysis</h2>
+<p>Πριν κάνεις finding, απάντησε:</p>
+<ol>
+<li>Είναι εγκατεστημένο το affected product/component;</li>
+<li>Είναι η πραγματική version affected;</li>
+<li>Είναι το vulnerable feature enabled/reachable;</li>
+<li>Ποιες privileges/user interaction χρειάζονται;</li>
+<li>Υπάρχει backported fix;</li>
+<li>Αλλάζει ουσιαστικά το exploitability κάποιο sandbox, proxy ή isolation control;</li>
+</ol>
+<h2>Safe validation ladder</h2>
+<ol>
+<li>Inventory evidence.</li>
+<li>Configuration evidence.</li>
+<li>Benign protocol evidence.</li>
+<li>Local reproduction σε intentionally vulnerable sample.</li>
+<li>Intrusive validation μόνο αν είναι ρητά approved και απαραίτητο.</li>
+</ol>
+<p>Σταμάτα μόλις απαντηθεί το security question.</p>
+<h2>Καλό finding</h2>
+<p>Πρέπει να περιέχει affected asset/component, timestamped evidence, root cause ή vulnerability reference, realistic impact, prerequisites, limitations, severity rationale, remediation και retest procedure.</p>
+<p>Μην χρησιμοποιείς δραματική γλώσσα. Γράψε τι αποδείχθηκε και τι παραμένει uncertain.</p>
+<h2>Remediation</h2>
+<p>Μπορεί να είναι patch/upgrade, disable unused feature, exposure reduction, stronger authorization, segmentation, credential rotation, detection ή documented risk acceptance. Workaround δεν είναι πάντα ισοδύναμο με patch· κατέγραψε residual risk.</p>
+<h2>Συχνά λάθη</h2>
+<ul>
+<li>Κάθε scanner match θεωρείται confirmed vulnerability.</li>
+<li>CVSS ως μοναδικό prioritization input.</li>
+<li>Άγνωστο ακριβές component/version.</li>
+<li>PoC όταν configuration evidence αρκεί.</li>
+<li>Παράβλεψη compensating controls.</li>
+<li>Remediation χωρίς regression test.</li>
+</ul>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Δημιούργησε τρία fictional assets: Internet-facing web service, internal workstation και isolated dev container. Δώσε και στα τρία την ίδια hypothetical high-severity library vulnerability και γράψε διαφορετικό priority για το καθένα με βάση exposure, data, privilege και recovery context.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ol>
+<li>Γιατί CVE match δεν είναι αυτόματα finding;</li>
+<li>Τι προσφέρει το CWE;</li>
+<li>Τι δεν γνωρίζει το CVSS για το περιβάλλον σου;</li>
+<li>Πότε αποφεύγεις intrusive validation;</li>
+<li>Τι κάνει ένα retest criterion reproducible;</li>
+</ol>
+<h2>Καθοδηγούμενη μελέτη</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>. Εξασκήσου στο να εξηγείς γιατί το ίδιο CVE έχει διαφορετικό risk σε διαφορετικά assets.</p>
+<h3>Συνέχεια</h3>
+<p>Προτεινόμενα μαθήματα: <strong>15, 26, 50, 84</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

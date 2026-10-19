@@ -1,0 +1,62 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Environments and reproducible builds — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-194.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Reproducible Python environments on Linux, Windows, and Termux When one Python process imports a package successfully and another reports ModuleNotFoundError, the first question is which…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Environments and reproducible builds — DedSec Project">
+<meta property="og:description" content="Reproducible Python environments on Linux, Windows, and Termux When one Python process imports a package successfully and another reports ModuleNotFoundError, the first question is which…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-194.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Environments and reproducible builds — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Environments and reproducible builds — DedSec Project">
+<meta name="twitter:description" content="Reproducible Python environments on Linux, Windows, and Termux When one Python process imports a package successfully and another reports ModuleNotFoundError, the first question is which…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Environments and reproducible builds — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Environments and reproducible builds — DedSec Project</h1><p>Reproducible Python environments on Linux, Windows, and Termux When one Python process imports a package successfully and another reports ModuleNotFoundError, the first question is which…</p><section><h1>Reproducible Python environments on Linux, Windows, and Termux</h1>
+<p>When one Python process imports a package successfully and another reports ModuleNotFoundError, the first question is which interpreter each process uses. A virtual environment isolates a project from system-wide libraries, but it does not automatically solve CPU architecture, operating-system support, or unavailable native dependencies.</p>
+<h2>Inspect before installing anything</h2>
+<pre><code class="language-python">import sys
+import platform
+from pathlib import Path
+
+print(sys.executable)
+print(sys.version.split()[0])
+print(platform.system(), platform.machine())
+print(Path.cwd())
+</code></pre>
+<p>Save this as inspect_env.py and run it through the exact interpreter used by the failing application. sys.executable identifies the running Python binary; the shell prompt alone is not reliable evidence that the right virtual environment is active. Path.cwd() is the working directory, which may differ from the script's location.</p>
+<h2>Use a project-owned interpreter when supported</h2>
+<p>On desktop Linux, a standard option is creating a venv using python3 -m venv .venv, then running .venv/bin/python -m pip --version. On Windows its interpreter normally lives under .venv\Scripts\python.exe. The module invocation ensures pip belongs to the interpreter named before -m. Some systems require separately installing venv support. On Termux, Python is supplied through its own pkg repository; confirm availability of venv and compatible wheels on that installation rather than copying distro-specific fixes.</p>
+<h2>Two failures that look similar but aren't</h2>
+<p>If pip says a requirement is installed, yet the application can't import it, compare the pip interpreter, sys.executable, and project launch command. A package might instead import but fail later because a native library is absent: installing it into the correct venv is then necessary but not sufficient. For a dependency with compiled extensions, the Python ABI and Android/Linux/Windows platform tags matter.</p>
+<h2>Practical investigation</h2>
+<p>Create an empty disposable project with inspect_env.py, print the values in a system interpreter and a project venv, and note which paths differ. Then record a minimal dependency manifest and rebuild the environment without copying the original site-packages folder. Compare interpreter version, dependency version, OS and architecture. Report observed outputs separately from predictions; passing installation alone is not proof the whole application works.</p>
+<h2>Cross-platform and accessibility</h2>
+<p>Do not assume Android tools exist on Ubuntu, or Windows paths exist on Termux. Test real input devices and screen readers where applicable. For command-line menus, support keyboard flow and preserve exit behavior.</p>
+<h3>Worked example</h3>
+<pre><code class="language-text">import sys
+from pathlib import Path
+print(sys.platform)
+print(Path.home())
+</code></pre>
+<h3>Practice</h3>
+<p>Describe why hard-coding /storage/emulated/0 fails on desktop Linux.</p>
+<h3>Corrected result / hint</h3>
+<p>The Android path is not present on a normal Linux machine.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

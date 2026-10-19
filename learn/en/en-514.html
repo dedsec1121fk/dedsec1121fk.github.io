@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>ReasonML — Expanded practice workbook — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-514.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="ReasonML — exhaustively match optional data Distinguish Reason from modern ReScript Reason syntax belongs to an OCaml-oriented ecosystem; examples from a modern ReScript project may differ…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="ReasonML — Expanded practice workbook — DedSec Project">
+<meta property="og:description" content="ReasonML — exhaustively match optional data Distinguish Reason from modern ReScript Reason syntax belongs to an OCaml-oriented ecosystem; examples from a modern ReScript project may differ…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-514.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ReasonML — Expanded practice workbook — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ReasonML — Expanded practice workbook — DedSec Project">
+<meta name="twitter:description" content="ReasonML — exhaustively match optional data Distinguish Reason from modern ReScript Reason syntax belongs to an OCaml-oriented ecosystem; examples from a modern ReScript project may differ…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="ReasonML — Expanded practice workbook — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>ReasonML — Expanded practice workbook — DedSec Project</h1><p>ReasonML — exhaustively match optional data Distinguish Reason from modern ReScript Reason syntax belongs to an OCaml-oriented ecosystem; examples from a modern ReScript project may differ…</p><section><h1>ReasonML — exhaustively match optional data</h1>
+<h2>Distinguish Reason from modern ReScript</h2>
+<p>Reason syntax belongs to an OCaml-oriented ecosystem; examples from a modern ReScript project may differ. In a matching Reason toolchain, consider:</p>
+<pre><code class="language-reason">let label = option =&gt;
+  switch (option) {
+  | Some(value) =&gt; &quot;value: &quot; ++ value
+  | None =&gt; &quot;missing&quot;
+  };
+let a = label(Some(&quot;Ada&quot;));
+let b = label(None);
+</code></pre>
+<p>The first result is expected to be &quot;value: Ada&quot; and the second &quot;missing&quot;. The match handles both constructors of option. The exact source syntax and string concatenation operator must be validated against your chosen compiler version before adoption.</p>
+<h2>Boundary case, not a missing case</h2>
+<p>Try Some(&quot;&quot;). Although the string is empty, the constructor is Some and the value exists. Removing the None branch makes the function non-exhaustive; capture compiler warnings or errors rather than assuming an unchecked runtime default.</p>
+<h2>Independent exercise</h2>
+<p>Build a parser returning option for a user-supplied nonempty label and a caller that handles None. Include an empty string, whitespace and a Unicode name in tests. Record whether you are using Reason/OCaml or ReScript, command line and observed output. No compiler run is claimed here.</p>
+<h2>Choose the matching toolchain before copying code</h2>
+<p>A file ending .re should be compiled with the specific Reason syntax integration installed in the OCaml build. Modern ReScript projects typically use .res files and should not be assumed to accept the same snippet. Write down compiler version and extension first, then compile the smallest function before adding a UI or database. Model a user lookup as an option and show that None differs from Some(&quot;&quot;), even when both would display an empty label under a careless formatting rule. Test a nested option input and explain why flattening it may discard meaningful states; do not replace every None with a fabricated name.</p>
+<h2>ReasonML</h2>
+<h3>Mental model</h3>
+<p>ReasonML provided an alternative syntax around OCaml and strongly typed functional programming; modern projects may use ReScript instead.</p>
+<h3>Minimal source sample</h3>
+<pre><code class="language-text">/* Conceptual typed function */
+let double = x =&gt; x * 2;
+</code></pre>
+<h3>Experiment to carry out</h3>
+<p>Identify which compiler and package ecosystem a repository actually uses before running its source; compare Reason syntax with current ReScript syntax.</p>
+<h3>A specific failure to distinguish</h3>
+<p>Do not treat legacy BuckleScript/Reason projects as universally compatible with recent ReScript compilers.</p>
+<p>To evaluate the exercise, record the initial input, predicted behavior and actual observation in a compatible ReasonML environment. Add a second run changing only one variable or argument; this makes the comparison attributable to a concrete cause. If the required runtime is not installed, treat the example as unexecuted source analysis and never label an imagined output as a passing test.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

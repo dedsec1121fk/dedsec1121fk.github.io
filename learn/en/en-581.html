@@ -1,0 +1,143 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>kotlin — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-581.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="kotlin — consolidated language guide Kotlin Typical use: General-purpose programming. Suggested file extension: .kt . How to run / environment: kotlinc Main.kt -include-runtime -d app.jar…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="kotlin — consolidated language guide — DedSec Project">
+<meta property="og:description" content="kotlin — consolidated language guide Kotlin Typical use: General-purpose programming. Suggested file extension: .kt . How to run / environment: kotlinc Main.kt -include-runtime -d app.jar…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-581.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="kotlin — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="kotlin — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="kotlin — consolidated language guide Kotlin Typical use: General-purpose programming. Suggested file extension: .kt . How to run / environment: kotlinc Main.kt -include-runtime -d app.jar…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="kotlin — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>kotlin — consolidated language guide — DedSec Project</h1><p>kotlin — consolidated language guide Kotlin Typical use: General-purpose programming. Suggested file extension: .kt . How to run / environment: kotlinc Main.kt -include-runtime -d app.jar…</p><section><h2>Kotlin</h2>
+<p><strong>Typical use:</strong> General-purpose programming.</p>
+<p><strong>Suggested file extension:</strong> <code>.kt</code>.</p>
+<p><strong>How to run / environment:</strong> kotlinc Main.kt -include-runtime -d app.jar &amp;&amp; java -jar app.jar.</p>
+<h3>Starter example</h3>
+<pre><code>fun greet(name: String) = &quot;Hello, $name!&quot;
+fun main() { println(greet(&quot;Ada&quot;)) }
+</code></pre>
+<h3>How to read it</h3>
+<p>Functions can have expression bodies; nullable types are explicit.</p>
+<h3>Common pitfall</h3>
+<p>Functions can have expression bodies; nullable types are explicit.</p>
+<h3>Model Android states explicitly</h3>
+<p>Kotlin's null-safety helps express absence, but calls into Java or Android framework may expose platform types requiring checks. Prefer immutable <code>val</code> for stable state, data classes for records, sealed types for UI loading/success/error.</p>
+<pre><code class="language-kotlin">sealed interface ResultState {
+  data object Loading : ResultState
+  data class Ready(val count: Int) : ResultState
+  data class Failed(val message: String) : ResultState
+}
+fun label(state: ResultState): String = when (state) {
+  ResultState.Loading -&gt; &quot;Loading&quot;
+  is ResultState.Ready -&gt; &quot;${state.count} results&quot;
+  is ResultState.Failed -&gt; state.message
+}
+</code></pre>
+<p>An Android Activity may be recreated; do not rely on fields alone for durable data. Separate UI state, repository storage and network data. Avoid blocking the main thread: use coroutines with a lifecycle-aware scope, cancel work appropriately, and handle errors.</p>
+<p><strong>Exercise:</strong> implement a search screen with three states, preserve query across rotation, and test a simulated network failure. Reference: https://kotlinlang.org/docs/home.html.</p>
+<h2>Kotlin — Expanded practice workbook</h2>
+<h3>Do not confuse nullable with validated</h3>
+<p>Kotlin can express that a value might be missing, but a non-null String can still contain invalid text. Use toIntOrNull and a domain-specific range check; do not use !! to force a non-null value from untrusted input.</p>
+<h3>Run on the JVM</h3>
+<p>Save as Main.kt. With the Kotlin CLI and compatible Java installed, run kotlinc Main.kt -include-runtime -d demo.jar &amp;&amp; java -jar demo.jar. Expected Kotlin parser OK. This is JVM Kotlin, not an Android app build.</p>
+<pre><code class="language-kotlin">fun parsePort(raw: String?): Int? {
+    val number = raw?.trim()?.toIntOrNull() ?: return null
+    return if (number in 1..65535) number else null
+}
+fun main() {
+    check(parsePort(&quot; 443 &quot;) == 443)
+    check(parsePort(null) == null)
+    check(parsePort(&quot;abc&quot;) == null)
+    check(parsePort(&quot;70000&quot;) == null)
+    println(&quot;Kotlin parser OK&quot;)
+}
+</code></pre>
+<h3>Trace the types</h3>
+<p>The safe-call chain returns null when raw is null or text conversion fails. The Elvis operator returns null from parsePort rather than throwing. The final if expression applies 1..65535. The inferred local number is Int, because the nullable path has already returned.</p>
+<h3>Practice</h3>
+<p>Test &quot;+3&quot;, &quot;-1&quot;, &quot;&quot;, Unicode digits, trailing whitespace and an integer too large for Int. Decide whether null should mean missing input and failed conversion alike; if callers need precise diagnostics, replace Int? with a sealed result hierarchy that distinguishes Missing, InvalidText, OutOfRange and Valid.</p>
+<h3>Platform debugging</h3>
+<p>kotlinc requires a compatible JDK on the build machine. On Android, Gradle/Android toolchains differ from this CLI exercise. Compare Kotlin/JDK versions before attributing a build issue to null safety. Do not suppress compiler warnings just to silence unsafe casts.
+Success: no NumberFormatException, four assertions pass. https://kotlinlang.org/docs/null-safety.html</p>
+<h2>Kotlin — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>kotlinc {file} -include-runtime -d demo.jar &amp;&amp; java -jar demo.jar</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>Kotlin — Focused mastery pathway</h2>
+<h3>Contract</h3>
+<p>Model ledger entries as immutable data classes and parsing as a sealed result. Accept identifiers A01 through Z99, a nonblank category and a nonnegative monetary string with exactly two fractional digits. Convert decimal amounts to integer cents without floating-point rounding. Duplicate transaction IDs must stop aggregation; overflow must be rejected, never wrapped or silently truncated.</p>
+<h3>Executable JVM lab</h3>
+<p>Save as LedgerLab.kt. Run kotlinc LedgerLab.kt -include-runtime -d ledger.jar followed by java -jar ledger.jar (JDK and Kotlin compiler required). The file has no network or filesystem writes.</p>
+<pre><code class="language-kotlin">import java.math.BigDecimal
+
+data class Entry(val id: String, val category: String, val cents: Long)
+sealed interface Result {
+    data class Accepted(val entry: Entry) : Result
+    data class Rejected(val reason: String) : Result
+}
+
+fun parse(id: String, category: String, amount: String): Result {
+    if (!id.matches(Regex(&quot;[A-Z][0-9]{2}&quot;))) return Result.Rejected(&quot;id&quot;)
+    if (category.isBlank()) return Result.Rejected(&quot;category&quot;)
+    if (!amount.matches(Regex(&quot;[0-9]+\\.[0-9]{2}&quot;))) return Result.Rejected(&quot;format&quot;)
+    val cents = try {
+        BigDecimal(amount).movePointRight(2).longValueExact()
+    } catch (_: ArithmeticException) { return Result.Rejected(&quot;overflow&quot;) }
+    return Result.Accepted(Entry(id, category, cents))
+}
+
+fun totals(input: List&lt;Entry&gt;): Map&lt;String, Long&gt; {
+    require(input.map { it.id }.distinct().size == input.size) { &quot;duplicate transaction&quot; }
+    return input.groupBy { it.category }
+        .mapValues { (_, entries) -&gt; entries.fold(0L) { sum, entry -&gt; Math.addExact(sum, entry.cents) } }
+}
+
+fun main() {
+    check(parse(&quot;A01&quot;, &quot;food&quot;, &quot;12.50&quot;) == Result.Accepted(Entry(&quot;A01&quot;, &quot;food&quot;, 1250)))
+    check(parse(&quot;A02&quot;, &quot;food&quot;, &quot;12.5&quot;) is Result.Rejected)
+    check(parse(&quot;A03&quot;, &quot;food&quot;, &quot;99999999999999999999.00&quot;) is Result.Rejected)
+    val a = (parse(&quot;A01&quot;, &quot;food&quot;, &quot;12.50&quot;) as Result.Accepted).entry
+    val b = (parse(&quot;A04&quot;, &quot;food&quot;, &quot;0.10&quot;) as Result.Accepted).entry
+    check(totals(listOf(a, b))[&quot;food&quot;] == 1260L)
+    check(totals(emptyList()).isEmpty())
+    check(runCatching { totals(listOf(a, a)) }.isFailure)
+    println(&quot;PASS: currency parsing, overflow and unique transaction IDs&quot;)
+}
+</code></pre>
+<h3>Why this design works</h3>
+<p>A data class supplies value equality that the assertions use. Sealed Accepted and Rejected cases let callers handle parse failure without null assertions. BigDecimal preserves base-ten input exactly; longValueExact rejects results that cannot fit Long. Math.addExact similarly guards the sum. These are separate failure boundaries: a valid individual amount can still overflow when added to a huge running total.</p>
+<h3>Bounded practice and failure diagnosis</h3>
+<ol>
+<li>Try 0.00, 00.01, -1.00, 1e3, NaN, 1.005 and an empty category. Write down whether format checks or arithmetic checks reject each case.</li>
+<li>Create two categories and verify separate totals. Then add two entries with the same ID in <em>different</em> categories: the uniqueness rule applies to the entire ledger, not per category.</li>
+<li>Exercise Math.addExact using synthetic large Entry values to demonstrate sum overflow. Do not substitute Double; discuss the different rounding contract.</li>
+<li>Replace the sealed result with nullable output only as an experiment: list information lost at the rejection boundary, then revert.</li>
+</ol>
+<p><strong>Completion evidence:</strong> console PASS, outputs of at least five rejected inputs, a duplicate-ID test, and a written distinction between input validation, exact conversion and aggregation. For file storage later, write to a temporary file and rename atomically where supported; do not claim coroutine cancellation provides transactional durability.</p>
+<h2>Kotlin — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>Nullability is tracked by the type system, but platform types from Java need care.</li>
+<li>Data classes provide value-oriented generated members for properties in the primary constructor.</li>
+<li>Coroutines suspend cooperatively; choose the correct dispatcher for blocking work.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

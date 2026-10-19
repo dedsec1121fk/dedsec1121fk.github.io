@@ -1,0 +1,123 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>c_plus_plus — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-893.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="c_plus_plus — consolidated language guide C++ Typical use: Systems and low-level programming. Suggested file extension: .cpp . How to run / environment: c++ -std=c++17 main.cpp -o main &amp;&amp;…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="c_plus_plus — consolidated language guide — DedSec Project">
+<meta property="og:description" content="c_plus_plus — consolidated language guide C++ Typical use: Systems and low-level programming. Suggested file extension: .cpp . How to run / environment: c++ -std=c++17 main.cpp -o main &amp;&amp;…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-893.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="c_plus_plus — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="c_plus_plus — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="c_plus_plus — consolidated language guide C++ Typical use: Systems and low-level programming. Suggested file extension: .cpp . How to run / environment: c++ -std=c++17 main.cpp -o main &amp;&amp;…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="c_plus_plus — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>c_plus_plus — consolidated language guide — DedSec Project</h1><p>c_plus_plus — consolidated language guide C++ Typical use: Systems and low-level programming. Suggested file extension: .cpp . How to run / environment: c++ -std=c++17 main.cpp -o main &amp;&amp;…</p><section><h2>C++</h2>
+<p><strong>Typical use:</strong> Systems and low-level programming.</p>
+<p><strong>Suggested file extension:</strong> <code>.cpp</code>.</p>
+<p><strong>How to run / environment:</strong> c++ -std=c++17 main.cpp -o main &amp;&amp; ./main.</p>
+<h3>Starter example</h3>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+std::string greet(const std::string&amp; n) { return &quot;Hello, &quot; + n + &quot;!&quot;; }
+int main() { std::cout &lt;&lt; greet(&quot;Ada&quot;) &lt;&lt; '\n'; }
+</code></pre>
+<h3>How to read it</h3>
+<p>Use standard containers and RAII to manage resources.</p>
+<h3>Common pitfall</h3>
+<p>Use standard containers and RAII to manage resources.</p>
+<h3>Ownership before clever abstractions</h3>
+<p>Modern C++ code should favor values and RAII-managed resources over manual <code>new</code>/<code>delete</code>. <code>std::vector</code> owns its elements, <code>std::string</code> owns text storage, and <code>std::unique_ptr</code> represents a unique heap owner. A <code>std::span</code> is a non-owning view; it does <strong>not</strong> extend the lifetime of its source.</p>
+<pre><code class="language-cpp">#include &lt;vector&gt;
+#include &lt;numeric&gt;
+#include &lt;stdexcept&gt;
+int average_floor(const std::vector&lt;int&gt;&amp; values) {
+    if (values.empty()) throw std::invalid_argument(&quot;empty&quot;);
+    long long total = std::accumulate(values.begin(), values.end(), 0LL);
+    return static_cast&lt;int&gt;(total / static_cast&lt;long long&gt;(values.size()));
+}
+</code></pre>
+<p>Use <code>const&amp;</code> for large read-only parameters when appropriate, values for small scalars, and move semantics when transferring ownership. Avoid dangling references to temporaries, invalid iterators after vector reallocation, and assuming <code>std::string</code> indexing is Unicode character indexing.</p>
+<p><strong>Lab:</strong> test the function with negative/positive values, then replace the vector with a range that outlives its temporary source and explain why that is unsafe. Use sanitizers on your own binaries where available.</p>
+<h2>C_Plus_Plus — Expanded practice workbook</h2>
+<h3>Choosing an interface</h3>
+<p>A CLI parser can return std::optional&lt;int&gt; instead of inventing a magic failure value such as -1. std::from_chars avoids exceptions and locale-dependent conversion for integers. Unlike many stream extraction operations, it does not silently allow unwanted suffixes when you check the returned pointer.</p>
+<h3>Compile</h3>
+<p>Save as main.cpp and run g++ -std=c++17 -Wall -Wextra main.cpp -o parser &amp;&amp; ./parser. Expected C++ parser OK. This uses C++17 optional and charconv, so a compiler that only supports C++11 is insufficient.</p>
+<pre><code class="language-cpp">#include &lt;charconv&gt;
+#include &lt;iostream&gt;
+#include &lt;optional&gt;
+#include &lt;string_view&gt;
+std::optional&lt;int&gt; parsePort(std::string_view text) {
+    if (text.empty()) return std::nullopt;
+    int value = 0;
+    auto first = text.data();
+    auto last = first + text.size();
+    auto answer = std::from_chars(first, last, value);
+    if (answer.ec != std::errc{} || answer.ptr != last ||
+        value &lt; 1 || value &gt; 65535) return std::nullopt;
+    return value;
+}
+int main() {
+    if (parsePort(&quot;443&quot;) != 443 ||
+        parsePort(&quot;12x&quot;).has_value() ||
+        parsePort(&quot;65536&quot;).has_value()) return 1;
+    std::cout &lt;&lt; &quot;C++ parser OK\n&quot;;
+}
+</code></pre>
+<h3>Explain each check</h3>
+<p>The ec member reports conversion failure, while ptr identifies exactly how many characters were consumed. Rejecting ptr != last makes &quot;12x&quot; invalid. This implementation deliberately rejects leading whitespace instead of trimming it. It also enforces 1..65535 after conversion.</p>
+<h3>Practice variations</h3>
+<p>Test empty text, -1, +42, 0008, trailing spaces, and a huge number. Check from_chars behavior with +, and decide whether to permit signs as part of your input grammar. Implement a trim function returning string_view without allocating, then rerun tests.</p>
+<h3>Ownership and errors</h3>
+<p>string_view does not own memory. Do not store a view into a destroyed temporary string. The optional result owns its int and has no such lifetime issue. When std::from_chars is missing at compile time, inspect language standard and library version rather than adding random headers.
+Success: exactly one accepted port and two rejected values. https://en.cppreference.com/w/cpp/utility/from_chars.html</p>
+<h2>C_Plus_Plus — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>c++ -std=c++17 -Wall -Wextra {file} -o demo &amp;&amp; ./demo</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>C Plus Plus — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>RAII ties resource cleanup to object lifetime; prefer standard library containers.</li>
+<li>References, raw pointers and smart pointers express different ownership or access contracts.</li>
+<li>Undefined behavior is not a recoverable exception and may produce unpredictable results.</li>
+</ol>
+<h2>RAII during partial construction and exceptions</h2>
+<p>Resource Acquisition Is Initialization couples ownership to object lifetime. If a later operation throws, already constructed automatic objects are destroyed during stack unwinding. Raw ownership hidden in an integer descriptor or bare pointer does not acquire this behavior merely because the variable is local.</p>
+<p>Prefer a small owning wrapper or a standard smart pointer, and make transfer of ownership explicit. A destructor should normally release resources without throwing. The fixture counts live resources so an exception path produces observable evidence instead of relying on the absence of a crash.</p>
+<pre><code class="language-cpp">#include &lt;cassert&gt;
+#include &lt;memory&gt;
+#include &lt;stdexcept&gt;
+struct Resource {
+    static int live;
+    Resource() { ++live; }
+    ~Resource() { --live; }
+    Resource(const Resource&amp;)=delete;
+    Resource&amp; operator=(const Resource&amp;)=delete;
+};
+int Resource::live=0;
+int main() {
+    try { auto item=std::make_unique&lt;Resource&gt;(); throw std::runtime_error(&quot;fixture&quot;); }
+    catch (const std::runtime_error&amp;) {}
+    assert(Resource::live==0);
+}
+</code></pre>
+<p>Test a failure while acquiring the second resource and a successful ownership transfer. Borrowed references must not outlive the owning object. RAII handles deterministic in-process cleanup; it does not promise that a destructor runs after abrupt process termination or a power failure.</p>
+<p><a href="https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines#Rr-raii">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,134 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>rust — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-725.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="rust — συγκεντρωτικός οδηγός Rust Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .rs . Εκτέλεση / περιβάλλον: rustc main.rs &amp;&amp; ./main. Αρχικό παράδειγμα Πώς…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="rust — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="rust — συγκεντρωτικός οδηγός Rust Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .rs . Εκτέλεση / περιβάλλον: rustc main.rs &amp;&amp; ./main. Αρχικό παράδειγμα Πώς…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-725.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="rust — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="rust — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="rust — συγκεντρωτικός οδηγός Rust Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .rs . Εκτέλεση / περιβάλλον: rustc main.rs &amp;&amp; ./main. Αρχικό παράδειγμα Πώς…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="rust — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>rust — συγκεντρωτικός οδηγός — DedSec Project</h1><p>rust — συγκεντρωτικός οδηγός Rust Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .rs . Εκτέλεση / περιβάλλον: rustc main.rs &amp;&amp; ./main. Αρχικό παράδειγμα Πώς…</p><section><h2>Rust</h2>
+<p><strong>Συνήθης χρήση:</strong> Προγραμματισμός συστημάτων.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.rs</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> rustc main.rs &amp;&amp; ./main.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>fn greet(name: &amp;str) -&gt; String { format!(&quot;Hello, {}!&quot;, name) }
+fn main() { println!(&quot;{}&quot;, greet(&quot;Ada&quot;)); }
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Η ιδιοκτησία και ο δανεισμός αποτρέπουν πολλά σφάλματα μνήμης.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Η ιδιοκτησία και ο δανεισμός αποτρέπουν πολλά σφάλματα μνήμης. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h3>Ownership και borrowing στη Rust</h3>
+<p>Η Rust εμποδίζει πολλά use-after-free στη μεταγλώττιση: μία τιμή έχει έναν owner, το <code>&amp;T</code> είναι κοινός immutable δανεισμός και το <code>&amp;mut T</code> αποκλειστικός mutable δανεισμός.</p>
+<pre><code class="language-rust">fn total(values: &amp;[i32]) -&gt; i32 {
+    values.iter().sum()
+}
+fn main() {
+    let values = vec![10, 20, 30];
+    assert_eq!(total(&amp;values), 60);
+    println!(&quot;{}&quot;, values.len()); // το borrow δεν μεταφέρει ownership
+}
+</code></pre>
+<p>Το <code>Result&lt;T,E&gt;</code> και ο τελεστής <code>?</code> βοηθούν στον χειρισμό λαθών. Το <code>Option&lt;T&gt;</code> εκφράζει απουσία χωρίς null pointer. Απόφυγε <code>unwrap()</code> σε απρόβλεπτο input. Το Cargo παρέχει <code>cargo check</code>, <code>cargo test</code>, <code>cargo clippy</code> όπου έχουν εγκατασταθεί.</p>
+<p><strong>Άσκηση:</strong> υλοποίησε <code>parse_positive(&amp;str)-&gt;Result&lt;u32,String&gt;</code>, έλεγξε 0, αρνητικά, άκυρο κείμενο και θετικά. Εξήγησε move <code>String</code> έναντι borrow <code>&amp;str</code>. Πηγή: https://doc.rust-lang.org/book/.</p>
+<h3>Rust: ιδιοκτησία, Result και οριακά tests</h3>
+<p>Οι κανόνες ownership της Rust καθορίζουν ποιος τροποποιεί δεδομένα και πόσο ισχύουν οι αναφορές. Δοκίμασε:</p>
+<pre><code class="language-rust">fn nonempty_name(input: &amp;str) -&gt; Result&lt;&amp;str, &amp;'static str&gt; {
+    let name = input.trim();
+    if name.is_empty() { return Err(&quot;empty name&quot;); }
+    Ok(name)
+}
+fn main() {
+    assert_eq!(nonempty_name(&quot; Ada &quot;).unwrap(), &quot;Ada&quot;);
+    assert!(nonempty_name(&quot;   &quot;).is_err());
+}
+</code></pre>
+<p>Το αποτέλεσμα δανείζεται ένα slice από την είσοδο αντί να δημιουργεί String. Γιατί δεν μπορεί μια συνάρτηση να επιστρέψει ασφαλώς αναφορά σε προσωρινό String που δημιουργήθηκε μέσα της; Το αντικείμενο καταστρέφεται στο return. Δοκίμασε τέτοιο λανθασμένο παράδειγμα και ερμήνευσε το lifetime error αντί να το παρακάμψεις.</p>
+<p>Φτιάξε δεύτερη υλοποίηση που επιστρέφει owned String ώστε ο caller να μην εξαρτάται από τη διάρκεια ζωής της εισόδου. Σύγκρινε API contract και ενδεχόμενη allocation. Διαχειρίσου Ok/Err με match χωρίς panic. Έλεγξε κενό, spaces, Unicode και συνηθισμένο όνομα.</p>
+<p>Για compile error προσδιόρισε αν αφορά τύπους, move, borrow ή lifetime και μείωσε το δείγμα. Μη χρησιμοποιείς unsafe για να καλύψεις ασάφεια ownership.</p>
+<p><strong>Επαλήθευση:</strong> τα tests περνούν και εξηγείς γιατί το borrowed slice απαιτεί ζωντανή αρχική είσοδο. Πηγή: https://doc.rust-lang.org/stable/book/ch09-00-error-handling.</p>
+<h2>Rust — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Στόχος</h3>
+<p>Ένας parser θετικών u16 πρέπει να επιστρέφει Result αντί να τερματίζει με panic. Οι αναφορές δανείζονται δεδομένα και το String κατέχει τη μνήμη του. Το map_err δείχνει γιατί ο τελεστής ? απαιτεί συμβατό τύπο σφάλματος στην επιστροφή.</p>
+<h3>Εκτέλεση</h3>
+<p>Αποθήκευσε main.rs. Εκτέλεσε rustc --test main.rs -o tests &amp;&amp; ./tests και έπειτα rustc main.rs -o app &amp;&amp; ./app. Περιμένεις επιτυχείς δοκιμές και Ok(42).</p>
+<pre><code class="language-rust">fn parse_limit(text: &amp;str) -&gt; Result&lt;u16, String&gt; {
+    let number: u16 = text.trim().parse()
+        .map_err(|_| &quot;not a u16&quot;.to_string())?;
+    if number == 0 { return Err(&quot;must be positive&quot;.to_string()); }
+    Ok(number)
+}
+fn main() { println!(&quot;{:?}&quot;, parse_limit(&quot; 42 &quot;)); }
+#[cfg(test)]
+mod tests {
+    use super::parse_limit;
+    #[test]
+    fn boundaries() {
+        assert_eq!(parse_limit(&quot;42&quot;).unwrap(), 42);
+        for bad in [&quot;0&quot;, &quot;-1&quot;, &quot;65536&quot;, &quot;word&quot;] {
+            assert!(parse_limit(bad).is_err());
+        }
+    }
+}
+</code></pre>
+<h3>Κατανόηση</h3>
+<p>Το trim δημιουργεί &amp;str slice από την αρχική είσοδο. Η parse απορρίπτει αρνητικούς και υπερχείλιση u16. Η απόρριψη μηδενός είναι κανόνας της εφαρμογής, όχι του τύπου. Δοκίμασε να επιστρέψεις αναφορά σε String που δημιουργείται τοπικά: ο compiler σωστά την απορρίπτει επειδή καταστρέφεται ο ιδιοκτήτης.</p>
+<h3>Επέκταση</h3>
+<p>Πέρασε &amp;input από δικό σου String και χρησιμοποίησε ξανά το input, αποδεικνύοντας ότι ο δανεισμός δεν το μετέφερε. Αντικατάστησε το String error με enum και χειρίσου το μέσω match αντί unwrap σε μη έμπιστη είσοδο. Έλεγξε κενά, 65535, 65536 και άδειο κείμενο.</p>
+<h3>Διάγνωση</h3>
+<p>E0382: συχνά χρήση τιμής μετά από move. E0502: αντικρουόμενοι δανεισμοί. Το rustc --version δείχνει toolchain, ενώ cargo test αφορά Cargo project. Μην κρύβεις σφάλματα ownership με unsafe.
+Επιτυχία: tests χωρίς panic και κατανόηση του slice. https://doc.rust-lang.org/book/</p>
+<h2>Rust — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>rustc {file} -o demo &amp;&amp; ./demo</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Rust — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Μικρό εργαστήριο με Option</h3>
+<p>Η μέθοδος get σε slice επιστρέφει Option και επιτρέπει διαχείριση απουσίας στοιχείου χωρίς panic. Το ? σε συνάρτηση που επιστρέφει Option προκαλεί πρόωρη επιστροφή None όταν λείπει τιμή. Το checked_add επιστρέφει None αντί να κάνει σιωπηρή αριθμητική υπερχείλιση.</p>
+<pre><code class="language-rust">fn first_two(values: &amp;[i32]) -&gt; Option&lt;i32&gt; {
+    let first = *values.get(0)?;
+    let second = *values.get(1)?;
+    first.checked_add(second)
+}
+fn main() {
+    assert_eq!(first_two(&amp;[3, 5]), Some(8));
+    assert_eq!(first_two(&amp;[]), None);
+    assert_eq!(first_two(&amp;[i32::MAX, 1]), None);
+}
+</code></pre>
+<p>Τα τρία assertions πρέπει να περάσουν στο κατάλληλο Rust compiler. Δεν χρειάζεται unsafe, ούτε ανεξέλεγκτη προσπέλαση με indexing. Δοκίμασε και το [9] ώστε να παρατηρήσεις ξεχωριστά το όριο μήκους.</p>
+<h3>Ο borrowing κανόνας που εμποδίζει dangling pointer</h3>
+<p>Φτιάξε προσωρινή συνάρτηση που προσπαθεί να επιστρέψει &amp;i32 προς μεταβλητή που ζει μόνο μέσα στο body της. Ο compiler πρέπει να απορρίψει την αναφορά, επειδή ο δανειζόμενος θα έμενε χωρίς ενεργό owner. Η διόρθωση είναι να επιστρέψεις owned value ή να δανειστείς δεδομένα που ο caller έχει και διατηρεί.</p>
+<h3>Διαχωρισμός ownership και runtime logic</h3>
+<p>Η ύπαρξη ελέγχου δανεισμού δεν αποδεικνύει ότι το επιχειρησιακό αποτέλεσμα είναι σωστό. Ακόμη και code με μηδενικά unsafe blocks μπορεί να έχει λάθος μονάδες, μη έγκυρη λογική πολιτικής ή ανεπαρκή έλεγχο JSON. Γράψε unit test που αποτυγχάνει για μία λανθασμένη επιχειρησιακή υπόθεση χωρίς καμία παραβίαση μνήμης.</p>
+<h3>Παραδοτέο</h3>
+<p>Τρέξε cargo test με τρεις οριακές περιπτώσεις: κενή λίστα, overflow και κανονικό αποτέλεσμα. Κατάγραψε rustc και cargo versions, τη διάγνωση για το εσκεμμένο dangling reference και τη διαφορά του checked_add από μια απλή πρόσθεση σε debug/release build. Μην ισχυριστείς ότι το παράδειγμα εκτελέστηκε μέσα στο αρχείο γνώσης: τα αποτελέσματα που περιγράφονται είναι προβλέψεις προς επαλήθευση.</p>
+<h2>Rust — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Η ιδιοκτησία και ο δανεισμός περιορίζουν αναφορές και χρόνο ζωής για ασφάλεια μνήμης.</li>
+<li>Το Result δηλώνει αποτυχία, το Option απουσία τιμής.</li>
+<li>Τα unsafe blocks απαιτούν ειδική τεκμηρίωση και δεν καταργούν όλους τους κανόνες ορθότητας.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

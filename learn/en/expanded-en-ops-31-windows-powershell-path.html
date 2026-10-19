@@ -1,0 +1,54 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Windows: PowerShell command discovery and Python launcher — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-ops-31-windows-powershell-path.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Windows command resolution has distinct layers Inspect which executable will run PowerShell aliases, functions and commands can shadow binaries with the same short name. The Python launcher…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Windows: PowerShell command discovery and Python launcher — DedSec Project">
+<meta property="og:description" content="Windows command resolution has distinct layers Inspect which executable will run PowerShell aliases, functions and commands can shadow binaries with the same short name. The Python launcher…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-ops-31-windows-powershell-path.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Windows: PowerShell command discovery and Python launcher — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Windows: PowerShell command discovery and Python launcher — DedSec Project">
+<meta name="twitter:description" content="Windows command resolution has distinct layers Inspect which executable will run PowerShell aliases, functions and commands can shadow binaries with the same short name. The Python launcher…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Windows: PowerShell command discovery and Python launcher — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Windows: PowerShell command discovery and Python launcher — DedSec Project</h1><p>Windows command resolution has distinct layers Inspect which executable will run PowerShell aliases, functions and commands can shadow binaries with the same short name. The Python launcher…</p><section><h1>Windows command resolution has distinct layers</h1>
+<h2>Inspect which executable will run</h2>
+<p>PowerShell aliases, functions and commands can shadow binaries with the same short name. The Python launcher (<code>py</code>) may select a different installed interpreter than the <code>python</code> command on PATH. A package installed with one interpreter will not necessarily be available through the other. Check the command type and executable path before changing environment variables or reinstalling Python.</p>
+<pre><code class="language-powershell">Get-Command python -All
+Get-Command py -All
+where.exe python
+py -0p
+python -c &quot;import sys; print(sys.executable)&quot;
+</code></pre>
+<h2>When a virtual environment appears broken</h2>
+<p>A venv created on one computer may contain interpreter paths that do not exist on another; recreate it from the dependency manifest rather than copying its whole directory. PowerShell activation can also be affected by execution policy, but launching <code>.venv\Scripts\python.exe</code> directly often avoids activation entirely. Do not disable Windows security features globally merely to run one script.</p>
+<h2>Different errors, different responses</h2>
+<p>“Python not found” suggests command discovery or installation. “ModuleNotFoundError” after Python starts suggests packages installed into the wrong interpreter, a shadowed module name or missing dependency. An “Access denied” on a downloaded executable involves rights or file blocking rather than a Python syntax error. Inspect the full error and the path involved.</p>
+<h2>End-to-end exercise</h2>
+<p>Create a disposable Python project with a requirements file and a fresh venv. Print <code>sys.executable</code>, install one harmless dependency using that binary's <code>-m pip</code>, and run a simple import test. Record Windows version, architecture and exact launcher choice. Validate without administrator rights whenever the project doesn't require them.</p>
+<h2>Run the chosen interpreter without activation</h2>
+<pre><code class="language-powershell">&amp; .\.venv\Scripts\python.exe -c &quot;import sys; print(sys.executable); print(sys.prefix)&quot;
+&amp; .\.venv\Scripts\python.exe -m pip --version
+</code></pre>
+<p>PowerShell's call operator <code>&amp;</code> is especially useful for an executable path held in a variable or containing spaces. Activating a venv changes the current shell environment; it is not required to invoke that interpreter directly. The legacy <code>py -0p</code> listing is not supported by every launcher implementation, so inspect <code>py --help</code> if that option is rejected.</p>
+<h2>Change the narrowest scope and verify a new shell</h2>
+<p><code>$env:Path</code> changes the current process environment. User-level and machine-level environment settings have different persistence and authority. Existing shells do not automatically receive all changes made elsewhere. After a deliberate PATH edit, open a fresh shell, run <code>Get-Command python -All</code>, then print <code>sys.executable</code> again. Preserve unrelated PATH entries and never replace the entire value merely to add a project tool.</p>
+<p>Test a path containing spaces and a local file named <code>json.py</code>: the latter can shadow Python's standard library independently of PATH. The resolution chain includes both shell command lookup and Python module lookup; recording only the first leaves half the diagnosis unexplained.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

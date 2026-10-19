@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Authorization Models: RBAC, ABAC, ReBAC and Policy Engines — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-093.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Authorization Models: RBAC, ABAC, ReBAC and Policy Engines Authorization is the core question “may this principal perform this action on this resource under these conditions?” This module…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Authorization Models: RBAC, ABAC, ReBAC and Policy Engines — DedSec Project">
+<meta property="og:description" content="Authorization Models: RBAC, ABAC, ReBAC and Policy Engines Authorization is the core question “may this principal perform this action on this resource under these conditions?” This module…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-093.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Authorization Models: RBAC, ABAC, ReBAC and Policy Engines — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Authorization Models: RBAC, ABAC, ReBAC and Policy Engines — DedSec Project">
+<meta name="twitter:description" content="Authorization Models: RBAC, ABAC, ReBAC and Policy Engines Authorization is the core question “may this principal perform this action on this resource under these conditions?” This module…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Authorization Models: RBAC, ABAC, ReBAC and Policy Engines — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Authorization Models: RBAC, ABAC, ReBAC and Policy Engines — DedSec Project</h1><p>Authorization Models: RBAC, ABAC, ReBAC and Policy Engines Authorization is the core question “may this principal perform this action on this resource under these conditions?” This module…</p><section><p>Authorization is the core question “may this principal perform this action on this resource under these conditions?” This module treats authorization as a graph/state problem and shows how models such as RBAC, ABAC, ReBAC, ACLs, and policy engines fail when context or lifecycle is incomplete.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>Reference monitor</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>RBAC</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>ABAC</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>ReBAC</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Deny and default semantics</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Caching</strong> and connect it to a concrete trust boundary or security invariant.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. Reference monitor</h3>
+<p>A strong authorization design has a small, consistently invoked decision point, complete mediation, trustworthy inputs, and auditable policy. Scattered ad hoc checks tend to drift.</p>
+<h3>2. RBAC</h3>
+<p>Roles simplify permission management but can create role explosion and over-broad bundles. Separate business roles from technical implementation roles and review inherited privileges.</p>
+<h3>3. ABAC</h3>
+<p>Attribute-based decisions combine properties of users, resources, actions, and environment. The security problem shifts to attribute provenance, freshness, default behavior, and policy complexity.</p>
+<h3>4. ReBAC</h3>
+<p>Relationship-based models express ownership, membership, hierarchy, and sharing. Graph traversal rules must define direction, transitivity, cycles, revocation, and the maximum relationship depth considered.</p>
+<h3>5. Deny and default semantics</h3>
+<p>Policy engines differ in how they combine permits, denies, errors, and missing data. A safe design documents fail-open/fail-closed behavior for every dependency.</p>
+<h3>6. Caching</h3>
+<p>Authorization caches improve performance but create revocation windows. Cache keys must include all security-relevant context, and invalidation needs to be designed rather than hoped for.</p>
+<h3>7. Administrative authorization</h3>
+<p>Who may change policy is often more important than the policy language itself. Separate policy authorship, deployment, emergency override, and audit responsibilities.</p>
+<h3>8. Testing policy</h3>
+<p>Test positive, negative, boundary, stale-attribute, cross-tenant, inherited-role, revoked-access, and dependency-failure cases. Property-based tests can be useful for invariants such as “no user can read another tenant without an explicit relationship.”</p>
+<h2>Authorized exercises</h2>
+<h3>Exercise 1 — Model a file-sharing application using RBAC and then ReBAC; compare which rules become simpler and which new risks appear</h3>
+<p>Model a file-sharing application using RBAC and then ReBAC; compare which rules become simpler and which new risks appear.</p>
+<h3>Exercise 2 — Write an authorization decision table with principal, action, resource, tenant, relationship, device posture, and time context</h3>
+<p>Write an authorization decision table with principal, action, resource, tenant, relationship, device posture, and time context.</p>
+<h3>Exercise 3 — Create regression tests for revocation and stale-cache behavior in a toy policy evaluator</h3>
+<p>Create regression tests for revocation and stale-cache behavior in a toy policy evaluator.</p>
+<h2>Knowledge checks</h2>
+<ol>
+<li>Explain the most important trust boundary in <strong>Authorization Models: RBAC, ABAC, ReBAC and Policy Engines</strong> without naming a security tool.</li>
+<li>Give one example where cryptographic or authentication success still does <strong>not</strong> imply authorization success.</li>
+<li>Describe one stale-state or replay condition relevant to this module.</li>
+<li>Identify one telemetry source that can support a strong conclusion and one blind spot it still leaves.</li>
+<li>Explain how you would turn a discovered weakness into a regression test rather than a one-time finding.</li>
+</ol>
+<h2>Guided study workflow</h2>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,85 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>stan — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-586.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="stan — συγκεντρωτικός οδηγός Stan Έννοια Η Stan περιγράφει πιθανοτικά μοντέλα με κατανομές και δεδομένα συγκεκριμένων τύπων· η δειγματοληψία γίνεται από ξεχωριστούς αλγορίθμους. Παράδειγμα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="stan — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="stan — συγκεντρωτικός οδηγός Stan Έννοια Η Stan περιγράφει πιθανοτικά μοντέλα με κατανομές και δεδομένα συγκεκριμένων τύπων· η δειγματοληψία γίνεται από ξεχωριστούς αλγορίθμους. Παράδειγμα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-586.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="stan — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="stan — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="stan — συγκεντρωτικός οδηγός Stan Έννοια Η Stan περιγράφει πιθανοτικά μοντέλα με κατανομές και δεδομένα συγκεκριμένων τύπων· η δειγματοληψία γίνεται από ξεχωριστούς αλγορίθμους. Παράδειγμα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="stan — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>stan — συγκεντρωτικός οδηγός — DedSec Project</h1><p>stan — συγκεντρωτικός οδηγός Stan Έννοια Η Stan περιγράφει πιθανοτικά μοντέλα με κατανομές και δεδομένα συγκεκριμένων τύπων· η δειγματοληψία γίνεται από ξεχωριστούς αλγορίθμους. Παράδειγμα…</p><section><h2>Stan</h2>
+<h3>Έννοια</h3>
+<p>Η Stan περιγράφει πιθανοτικά μοντέλα με κατανομές και δεδομένα συγκεκριμένων τύπων· η δειγματοληψία γίνεται από ξεχωριστούς αλγορίθμους.</p>
+<h3>Παράδειγμα πηγαίου κώδικα ή χρήσης</h3>
+<pre><code class="language-text">parameters { real mu; }
+model { mu ~ normal(0, 1); }
+</code></pre>
+<h3>Άσκηση με συγκεκριμένο στόχο</h3>
+<p>Δήλωσε πρώτα τις διαστάσεις δεδομένων. Ξεχώρισε prior από posterior αντί να θεωρείς κάθε δείγμα ανεξάρτητη μέτρηση.</p>
+<h3>Έλεγχος και διάγνωση</h3>
+<p>Το μοντέλο μπορεί να μεταγλωττίζεται αλλά να έχει divergences ή προβλήματα ταυτοποίησης· εξέτασε τα sampler diagnostics.</p>
+<p>Σημείωσε την είσοδο, το αναμενόμενο αποτέλεσμα και το πραγματικό αποτέλεσμα στην εγκατεστημένη έκδοση της Stan. Αν ο κώδικας δεν είναι προσβάσιμος από το κινητό, κράτησε το παράδειγμα ως μη δοκιμασμένο και εξήγησε τη σημασιολογία αντί να ισχυριστείς επιτυχία. Κάνε μια δεύτερη δοκιμή που απομονώνει μόνο τον μηχανισμό της άσκησης και κράτησε ακριβές σφάλμα με τρόπο που να μην εκθέτει προσωπικά δεδομένα.</p>
+<h3>Πρακτική συνέχεια</h3>
+<p>Διαμόρφωσε άλλο παράδειγμα με αλλαγή σε ένα μόνο βήμα. Περιέγραψε γιατί το αποτέλεσμα είναι διαφορετικό και αν η διαφορά οφείλεται στη σύνταξη, στο σύστημα εκτέλεσης ή σε εξωτερικό εργαλείο. Μην επεκτείνεις το έργο σε μη εξουσιοδοτημένα συστήματα.</p>
+<h2>Εργαστήριο εξάσκησης: Stan</h2>
+<h3>Δεδομένα, παράμετροι και κατανομή</h3>
+<p>Η Stan περιγράφει στατιστικό μοντέλο και όχι γενικό script εκτύπωσης αριθμών. Σε αρχείο <code>mean.stan</code>:</p>
+<pre><code class="language-stan">data {
+  int&lt;lower=1&gt; N;
+  array[N] real y;
+}
+parameters {
+  real mu;
+}
+model {
+  mu ~ normal(0, 5);
+  y ~ normal(mu, 1);
+}
+generated quantities {
+  real y_rep = normal_rng(mu, 1);
+}
+</code></pre>
+<p>Για δοκιμή όρισε <code>N = 3</code> και <code>y = [1.0, 1.2, 0.8]</code> μέσω CmdStan ή άλλου συμβατού host. Η <code>mu</code> έχει prior και οι παρατηρήσεις likelihood. Η <code>y_rep</code> είναι τυχαία παραγόμενη τιμή, <strong>όχι</strong> υποχρεωτικά ο δειγματικός μέσος. Δεν αποδίδουμε φανταστικές αριθμητικές εξόδους posterior.</p>
+<h3>Compilation και δειγματοληψία</h3>
+<p>Μεταγλώττισε πρώτα το μοντέλο και έπειτα τρέξε sampling με καταγεγραμμένο seed, warm-up και αριθμό δειγμάτων. Το επιτυχημένο compile δεν αποδεικνύει σύγκλιση αλυσίδων ούτε ποιότητα συμπερασμάτων. Εξέτασε διαθέσιμα diagnostics όπως <code>R-hat</code> και divergences, χωρίς να τα παραλείπεις από τον έλεγχο.</p>
+<h3>Διαφορετικά λάθη εισόδου</h3>
+<p>Δώσε <code>N=3</code> αλλά μόνο δύο στοιχεία <code>y</code> και έπειτα <code>N=0</code>. Η πρώτη περίπτωση παραβιάζει το μήκος πίνακα, η δεύτερη τον περιορισμό <code>lower=1</code>. Πρόκειται για σφάλματα ορίων δεδομένων, όχι απόδειξη ότι η κανονική κατανομή δεν έχει νόημα. Κατέγραψε σε ποιο στάδιο απορρίπτεται κάθε fixture.</p>
+<h3>Αυτόνομη μελέτη</h3>
+<p>Αντικατάστησε τη σταθερή διασπορά των παρατηρήσεων με θετική άγνωστη παράμετρο και δικαιολόγησε κατάλληλο prior. Εξήγησε την αβεβαιότητα εκτίμησης με μόνο τρεις μετρήσεις. Σύγκρινε predictive draws με σταθερά seeds χωρίς να ταυτίζεις διαφορετικά δείγματα. Αναφορά: https://mc-stan.org/docs/</p>
+<h2>Stan — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Πρακτικές εργασίες</h3>
+<ol>
+<li>Έλεγξε διαστάσεις και μονάδες ενός αριθμητικού μοντέλου.</li>
+<li>Σύγκρινε με μικρό παράδειγμα γνωστής αναλυτικής λύσης.</li>
+<li>Κατάγραψε κριτήρια σύγκλισης και ανοχές όπου χρειάζεται προσέγγιση.</li>
+</ol>
+<h3>Ερωτήσεις ουσίας</h3>
+<ul>
+<li>Ποιο αριθμητικό σφάλμα ή λάθος μονάδας αλλάζει το αποτέλεσμα;</li>
+<li>Ποια εργαλεία εκτελούν ή ελέγχουν το παράδειγμα και σε ποια έκδοση;</li>
+<li>Ποιο είναι το μικρότερο ελεγμένο πρόγραμμα; Ποιες είναι οι παρενέργειες;</li>
+<li>Πώς γίνεται διάκριση μεταξύ σφάλματος σύνταξης, λογικής και περιβάλλοντος;</li>
+<li>Πώς δοκιμάζονται άκυρα δεδομένα χωρίς βλάβη σε αρχεία ή σύστημα;</li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

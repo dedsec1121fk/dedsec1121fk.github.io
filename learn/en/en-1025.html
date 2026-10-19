@@ -1,0 +1,117 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>typescript — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1025.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="typescript — consolidated language guide TypeScript Typical use: Web and typed web languages. Suggested file extension: .ts . How to run / environment: Compile with tsc, then run generated…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="typescript — consolidated language guide — DedSec Project">
+<meta property="og:description" content="typescript — consolidated language guide TypeScript Typical use: Web and typed web languages. Suggested file extension: .ts . How to run / environment: Compile with tsc, then run generated…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1025.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="typescript — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="typescript — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="typescript — consolidated language guide TypeScript Typical use: Web and typed web languages. Suggested file extension: .ts . How to run / environment: Compile with tsc, then run generated…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="typescript — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>typescript — consolidated language guide — DedSec Project</h1><p>typescript — consolidated language guide TypeScript Typical use: Web and typed web languages. Suggested file extension: .ts . How to run / environment: Compile with tsc, then run generated…</p><section><h2>TypeScript</h2>
+<p><strong>Typical use:</strong> Web and typed web languages.</p>
+<p><strong>Suggested file extension:</strong> <code>.ts</code>.</p>
+<p><strong>How to run / environment:</strong> Compile with tsc, then run generated JS.</p>
+<h3>Starter example</h3>
+<pre><code>function greet(name: string): string {
+  return `Hello, ${name}!`;
+}
+console.log(greet(&quot;Ada&quot;));
+</code></pre>
+<h3>How to read it</h3>
+<p>Type annotations are checked before JavaScript output.</p>
+<h3>Common pitfall</h3>
+<p>Type annotations are checked before JavaScript output.</p>
+<h3>Types do not validate remote data</h3>
+<p>TypeScript checks code at build time. A server response parsed by <code>JSON.parse</code> is not magically safe just because it is assigned to an interface. Validate unknown input at the boundary:</p>
+<pre><code class="language-typescript">type Task = { id: number; title: string };
+function asTask(value: unknown): Task {
+  if (typeof value !== &quot;object&quot; || value === null) throw Error(&quot;not object&quot;);
+  const r = value as Record&lt;string, unknown&gt;;
+  if (typeof r.id !== &quot;number&quot; || !Number.isInteger(r.id) ||
+      typeof r.title !== &quot;string&quot;) throw Error(&quot;invalid task&quot;);
+  return { id: r.id, title: r.title };
+}
+</code></pre>
+<p>Use discriminated unions (<code>{kind:&quot;ok&quot;, value:T} | {kind:&quot;error&quot;, message:string}</code>) to model successful/failed states rather than optional fields everywhere. Use <code>strict</code> mode, narrow <code>unknown</code> before use, and avoid <code>any</code> in API boundaries. <code>as</code> is a type assertion, not proof.</p>
+<p><strong>Exercise:</strong> model loading/success/empty/error states for an offline lesson search and use exhaustive <code>switch</code> with <code>never</code> to catch new states. Reference: https://www.typescriptlang.org/docs/handbook/intro.html.</p>
+<h2>TypeScript — Expanded practice workbook</h2>
+<h3>Two different guarantees</h3>
+<p>TypeScript verifies source-level shapes and removes annotations when compiling. It cannot validate JSON arriving from a server. Treat remote values as unknown; only narrow to a trusted type after runtime checks.</p>
+<h3>Compile</h3>
+<p>Save as state.ts and run tsc --strict --target es2020 state.ts &amp;&amp; node state.js after installing TypeScript. Expected output is 4.</p>
+<pre><code class="language-typescript">type State =
+  | { kind: &quot;loading&quot; }
+  | { kind: &quot;ready&quot;; count: number }
+  | { kind: &quot;error&quot;; reason: string };
+function countFromNetwork(raw: unknown): number {
+  if (typeof raw !== &quot;number&quot; || !Number.isSafeInteger(raw) || raw &lt; 0)
+    throw Error(&quot;invalid count&quot;);
+  return raw;
+}
+function label(s: State): string {
+  switch (s.kind) {
+    case &quot;loading&quot;: return &quot;Loading&quot;;
+    case &quot;ready&quot;: return String(s.count);
+    case &quot;error&quot;: return s.reason;
+    default: {
+      const unreachable: never = s;
+      return unreachable;
+    }
+  }
+}
+console.log(label({ kind: &quot;ready&quot;, count: countFromNetwork(4) }));
+</code></pre>
+<h3>The deliberate compiler experiment</h3>
+<p>Extend the State union with {kind:&quot;empty&quot;} but do not add a switch case. Strict compilation fails at the assignment to never, proving that the switch is exhaustive. Restore the case and make the compiler happy. This is a compile-time test, different from tests of input data.</p>
+<h3>Runtime contract exercises</h3>
+<p>Pass NaN, 3.5, -1, null, and &quot;4&quot; to countFromNetwork and check that each throws. Passing JSON.parse(...) through an as assertion does not make the value valid. For UI work, represent error and loading states explicitly, rather than using undefined as an overloaded status.</p>
+<h3>Debugging</h3>
+<p>TS2322 indicates an incompatible type; TS2339 often indicates a property that has not been narrowed. Avoid any around untrusted boundaries. Browsers run the resulting JS rather than TypeScript source with annotations.
+Success: compiler catches the missing union branch; runtime rejects all five malformed values. https://www.typescriptlang.org/docs/handbook/2/narrowing.html</p>
+<h2>TypeScript — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>npx tsc --strict {file} &amp;&amp; node {base}.js</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>TypeScript — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>Type annotations are checked by the compiler but usually erased from emitted JavaScript.</li>
+<li>Narrow unknown values before accessing their fields; a type assertion does not validate runtime data.</li>
+<li>Model distinct states with tagged unions and exhaustive branching.</li>
+</ol>
+<h2>Validate unknown JSON before narrowing its type</h2>
+<p>A TypeScript annotation is erased at runtime. Asserting that parsed JSON is a User does not check that the payload contains the required fields. Receive external data as unknown and narrow it with runtime checks. Decide whether unknown fields are allowed, whether strings may be empty and whether numeric values must be finite integers.</p>
+<p>A type guard should express exactly the promise it makes. A guard that checks only the presence of an id cannot safely promise a full profile with nested preferences. Keep the boundary model small and map it into internal objects after validation.</p>
+<pre><code class="language-typescript">type Item = { id: number; name: string };
+function isItem(value: unknown): value is Item {
+  if (typeof value !== &quot;object&quot; || value === null) return false;
+  const row = value as Record&lt;string, unknown&gt;;
+  return typeof row.id === &quot;number&quot; &amp;&amp; Number.isSafeInteger(row.id) &amp;&amp; row.id &gt; 0 &amp;&amp;
+         typeof row.name === &quot;string&quot; &amp;&amp; row.name.length &gt; 0;
+}
+if (isItem({id: &quot;7&quot;, name: &quot;fixture&quot;})) throw Error(&quot;string ID accepted&quot;);
+if (!isItem({id: 7, name: &quot;fixture&quot;})) throw Error(&quot;valid item rejected&quot;);
+</code></pre>
+<p>Compile the fixture with your TypeScript configuration and execute its emitted JavaScript. Test null, arrays, fractional IDs and nested objects. This guard permits extra properties; change that policy explicitly if an exact schema is required. Avoid copying an untrusted object into privileged configuration with an unrestricted spread.</p>
+<p><a href="https://www.typescriptlang.org/docs/handbook/2/narrowing.html">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

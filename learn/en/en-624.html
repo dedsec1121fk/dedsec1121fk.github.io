@@ -1,0 +1,128 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>swift — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-624.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="swift — consolidated language guide Swift Mental model Swift uses optionals, value types and protocol-oriented designs across Apple platforms and other supported targets. Minimal source…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="swift — consolidated language guide — DedSec Project">
+<meta property="og:description" content="swift — consolidated language guide Swift Mental model Swift uses optionals, value types and protocol-oriented designs across Apple platforms and other supported targets. Minimal source…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-624.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="swift — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="swift — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="swift — consolidated language guide Swift Mental model Swift uses optionals, value types and protocol-oriented designs across Apple platforms and other supported targets. Minimal source…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="swift — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>swift — consolidated language guide — DedSec Project</h1><p>swift — consolidated language guide Swift Mental model Swift uses optionals, value types and protocol-oriented designs across Apple platforms and other supported targets. Minimal source…</p><section><h2>Swift</h2>
+<h3>Mental model</h3>
+<p>Swift uses optionals, value types and protocol-oriented designs across Apple platforms and other supported targets.</p>
+<h3>Minimal source sample</h3>
+<pre><code class="language-text">let values = [1, 2, 3]
+print(values.reduce(0, +))
+</code></pre>
+<h3>Experiment to carry out</h3>
+<p>Compare reduction with an empty array and practice safely unwrapping an optional instead of forcing it.</p>
+<h3>A specific failure to distinguish</h3>
+<p>Swift language support does not imply that UIKit or SwiftUI are available on a non-Apple target.</p>
+<p>To evaluate the exercise, record the initial input, predicted behavior and actual observation in a compatible Swift environment. Add a second run changing only one variable or argument; this makes the comparison attributable to a concrete cause. If the required runtime is not installed, treat the example as unexecuted source analysis and never label an imagined output as a passing test.</p>
+<h2>Swift — Expanded practice workbook</h2>
+<h3>Problem</h3>
+<p>A text field is not automatically an integer. Swift's Int initializer returns an Optional rather than crashing when conversion fails. guard lets you exit early and use the unwrapped value after the boundary.</p>
+<h3>Run the exercise</h3>
+<p>Save as main.swift. Where the Swift compiler is installed, run swiftc main.swift -o parser &amp;&amp; ./parser. Expected output: Swift parser OK. The Foundation import provides trimmingCharacters. Verify toolchain availability; Swift is not installed by default on every target platform.</p>
+<pre><code class="language-swift">import Foundation
+func parseLimit(_ raw: String) -&gt; Int? {
+    guard let value = Int(raw.trimmingCharacters(in: .whitespacesAndNewlines)),
+          (1...100).contains(value) else {
+        return nil
+    }
+    return value
+}
+if parseLimit(&quot; 10 &quot;) != 10 || parseLimit(&quot;101&quot;) != nil ||
+   parseLimit(&quot;word&quot;) != nil {
+    fatalError(&quot;validation regression&quot;)
+}
+print(&quot;Swift parser OK&quot;)
+</code></pre>
+<h3>Read the guard statement</h3>
+<p>Int returns nil for a noninteger or out-of-range numeric value. The guard condition also applies 1...100, which is application policy. Returning nil removes the need for force unwrap. On success the value is a nonoptional Int for the remainder of the function.</p>
+<h3>Extend thoughtfully</h3>
+<p>Try empty text, leading +, negative values, Unicode whitespace, 0010, 1.5 and very large integers. Replace nil with a throwing parser that reports Missing, InvalidNumber and OutsideRange separately. Explain when an Optional is enough and when diagnostics justify an Error enum.</p>
+<h3>Debugging and platforms</h3>
+<p>A runtime crash from value! usually indicates force-unwrapping a nil Optional. Use guard/if let rather than bypassing the type system. For Apple apps distinguish Foundation APIs from UI frameworks; this terminal lesson runs independently of SwiftUI.
+Success: three cases checked with no forced unwrap. https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics/</p>
+<h2>Swift — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>swift {file}</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>Swift — Focused mastery pathway</h2>
+<h3>Acceptance contract</h3>
+<p>Decode a small JSON checklist, reject duplicate identifiers and blank titles, verify struct copies do not share mutable state, and demonstrate an encode/decode round trip. Parsing succeeds only for the declared Codable fields: a missing required key is not a valid empty value. This exercise targets Foundation on a Swift CLI, not SwiftUI, iOS permissions or cloud storage.</p>
+<h3>Runnable lab</h3>
+<p>Save as ChecklistLab.swift and run swift ChecklistLab.swift on a system with Swift and Foundation. The checks do not modify any user files.</p>
+<pre><code class="language-swift">import Foundation
+
+struct Task: Codable, Equatable {
+    let id: Int
+    var title: String
+    var done: Bool
+}
+
+enum ListError: Error { case duplicateId, emptyTitle }
+
+func validate(_ tasks: [Task]) throws {
+    guard Set(tasks.map(\.id)).count == tasks.count else { throw ListError.duplicateId }
+    guard tasks.allSatisfy({ !$0.title.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty })
+        else { throw ListError.emptyTitle }
+}
+
+let input = &quot;&quot;&quot;
+[{&quot;id&quot;:1,&quot;title&quot;:&quot;Inspect logs&quot;,&quot;done&quot;:false}]
+&quot;&quot;&quot;.data(using: .utf8)!
+let original = try JSONDecoder().decode([Task].self, from: input)
+try validate(original)
+var copy = original
+copy[0].done = true
+precondition(original[0].done == false) // struct value semantics
+precondition(copy[0].done == true)
+precondition((try? validate(original + original)) == nil)
+precondition((try? JSONDecoder().decode([Task].self,
+    from: Data(&quot;[{\&quot;id\&quot;:2}]&quot;.utf8))) == nil)
+precondition((try? validate([Task(id: 3, title: &quot;   &quot;, done: false)])) == nil)
+let roundtrip = try JSONDecoder().decode([Task].self,
+    from: JSONEncoder().encode(copy))
+precondition(roundtrip == copy)
+print(&quot;PASS: Codable, copy semantics, duplicate IDs, invalid input&quot;)
+</code></pre>
+<h3>Behavior to explain</h3>
+<p>Task is a struct, so modifying one element of copy cannot mutate original. JSONDecoder handles types and required keys, but it does not enforce business rules such as unique IDs or nonblank titles: validate deliberately runs after decoding. Equatable proves the round trip preserves the chosen model fields. Using force unwraps for unpredictable user input would turn a recoverable parse error into a crash; the known in-source test fixture is the only forced conversion here.</p>
+<h3>Bounded variations and diagnostics</h3>
+<ol>
+<li>Remove done from the input JSON. Capture DecodingError.keyNotFound. Contrast this with an optional property and say whether the domain truly permits missing completion state.</li>
+<li>Add a second task with ID 1: validation must reject it. Try a title consisting only of tabs and spaces, then a title containing a non-Latin character; only the former should fail.</li>
+<li>Replace Task with a class as an experiment. Mutate copy[0].done and explain the observed sharing. Restore the struct and prove isolation again.</li>
+<li>For persistence, test an invalid destination path and propagate the write error. Avoid designing a successful-save message before the write actually completes.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS output, one captured decoding error, duplicate-ID rejection, a copy-vs-reference observation and an explanation of why Codable validation is not enough for a domain model.</p>
+<h2>Swift — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>Optionals explicitly represent the absence of a value and require safe unwrapping.</li>
+<li>Value types such as structs have copy semantics, while classes have reference semantics.</li>
+<li>Use defer for cleanup that should occur when leaving scope.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

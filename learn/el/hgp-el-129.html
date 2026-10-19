@@ -1,0 +1,76 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SCIM, Identity Lifecycle και Provisioning Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-129.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="SCIM, Identity Lifecycle και Provisioning Security Ελληνική έκδοση — Μάθημα 129. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό αυξάνει…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SCIM, Identity Lifecycle και Provisioning Security — DedSec Project">
+<meta property="og:description" content="SCIM, Identity Lifecycle και Provisioning Security Ελληνική έκδοση — Μάθημα 129. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό αυξάνει…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-129.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SCIM, Identity Lifecycle και Provisioning Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SCIM, Identity Lifecycle και Provisioning Security — DedSec Project">
+<meta name="twitter:description" content="SCIM, Identity Lifecycle και Provisioning Security Ελληνική έκδοση — Μάθημα 129. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό αυξάνει…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SCIM, Identity Lifecycle και Provisioning Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>SCIM, Identity Lifecycle και Provisioning Security — DedSec Project</h1><p>SCIM, Identity Lifecycle και Provisioning Security Ελληνική έκδοση — Μάθημα 129. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό αυξάνει…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 129.</strong> Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands παραμένουν στα Αγγλικά όπου αυτό αυξάνει την ακρίβεια.</p>
+</blockquote>
+<p>Δες το identity lifecycle πέρα από το login: joiner/mover/leaver, SCIM, groups, deprovisioning, authoritative sources, drift και reconciliation.</p>
+<h2>Μαθησιακοί στόχοι</h2>
+<p>Στο τέλος πρέπει να μπορείς να:</p>
+<ul>
+<li>εξηγήσεις το <strong>identity lifecycle states</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>SCIM resources and schemas</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>provisioning clients and service providers</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>group and role synchronization</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>deprovisioning and disable semantics</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+<li>εξηγήσεις το <strong>source-of-truth conflicts</strong> και να εντοπίσεις trust boundary, state transition και evidence που σχετίζονται με αυτό,</li>
+</ul>
+<h2>Βαθιές τεχνικές έννοιες</h2>
+<h3>1. identity lifecycle states</h3>
+<p>Provisioning είναι state machine: invited, active, suspended, disabled, deleted και restored καταστάσεις έχουν διαφορετική authority. Όρισε ποια source μπορεί να προκαλέσει κάθε transition και τι downstream access πρέπει να αλλάξει.</p>
+<h3>2. SCIM resources και schemas</h3>
+<p>SCIM μοντελοποιεί users, groups και extensions. Validate identifiers, mutability, uniqueness και tenant scope αντί να γράφεις κάθε incoming field απευθείας σε privileged directory attributes.</p>
+<h3>3. clients και service providers</h3>
+<p>SCIM client έχει συνήθως ισχυρή lifecycle authority πάνω στο service provider. Χρησιμοποίησε narrow credentials, strong authentication, environment/tenant scoping και audit για create/update/deactivate.</p>
+<h3>4. group και role synchronization</h3>
+<p>Group membership μπορεί να μεταφράζεται άμεσα σε roles. Έλεγξε nested groups, defaults, name collisions, propagation delays και αν η εξωτερική source είναι πράγματι authoritative για το συγκεκριμένο privilege.</p>
+<h3>5. deprovision και disable</h3>
+<p>Offboarding δεν τελειώνει με <code>active=false</code>. Χρειάζεται αφαίρεση sessions, tokens, group membership, service access και reconciliation των downstream systems που μπορεί να ήταν offline.</p>
+<h3>6. source-of-truth conflicts</h3>
+<p>HR, directory, IdP, app και manual admin state μπορεί να διαφωνούν. Όρισε precedence και conflict handling ώστε stale source να μην επανενεργοποιεί user ή privilege.</p>
+<h3>7. pagination, filtering και bulk</h3>
+<p>Pagination, PATCH και bulk operations δημιουργούν partial-success/retry state. Κράτησε operations idempotent όπου γίνεται, authorization ανά object και αρκετό status για ασφαλές reconciliation.</p>
+<h3>8. telemetry και reconciliation</h3>
+<p>Periodic reconciliation συγκρίνει intended identity state με πραγματικό application state. Βρες orphan/unmanaged accounts, privilege drift, failed provisioning και last-success timestamps αντί να εμπιστεύεσαι ένα API response.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<ul>
+<li><p><strong>Εργαστήριο 1 — Σχεδίασε συνθετικό κύκλο ζωής HR→IdP→SaaS για πρόσληψη, αλλαγή ρόλου και αποχώρηση.</strong></p>
+</li>
+<li><p><strong>Εργαστήριο 2 — Σχεδίασε τοπικό σύνολο JSON τύπου SCIM και επαλήθευσε ότι οι αλλαγές ομάδων παράγουν τις αναμενόμενες ελάχιστες άδειες.</strong></p>
+</li>
+<li><p><strong>Εργαστήριο 3 — Γράψε κατάλογο κατάργησης πρόσβασης που καλύπτει ενεργές συνεδρίες, API tokens, κοινόχρηστους πόρους και αποδεικτικά ελέγχου.</strong></p>
+</li>
+</ul>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p><a href="../en/hgp-en-129.html">English Module 129</a></p>
+<h2>Επόμενα μαθήματα</h2>
+<p>Σχετικά modules: <strong>021, 039, 042, 059, 092, 093, 128</strong>. Από το κύριο menu επίλεξε <strong>Αναζήτηση μαθημάτων</strong> για να βρεις σχετικά θέματα σε όλο το project.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

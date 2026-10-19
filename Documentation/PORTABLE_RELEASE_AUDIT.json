@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-19",
+  "scope": "DedSec website and bilingual learning library, source ZIP only; no repository writes",
+  "repositories_verified": {
+    "main": "dedsec1121fk/dedsec1121fk.github.io",
+    "test": "dedsec1121fk/Test",
+    "backup": "sal-scar/ded-sec"
+  },
+  "domains": {
+    "main": "https://ded-sec.space/",
+    "test_default": "https://dedsec1121fk.github.io/Test/",
+    "backup": "https://ded-sec.online/"
+  },
+  "generated_per_profile": {
+    "static_and_alias_html_pages": 359,
+    "english_learning_preview_pages": 669,
+    "greek_learning_preview_pages": 669,
+    "total_html_pages": 1697,
+    "indexed_sitemap_urls": 1517,
+    "other": [
+      "robots.txt",
+      "llms.txt",
+      "llms-full.txt",
+      "deployment-manifest.json",
+      "Open Graph",
+      "Twitter Cards",
+      "canonical URLs"
+    ]
+  },
+  "offline_checks": {
+    "three_target_static_portability_audits": "PASS",
+    "zero_broken_relative_links": true,
+    "per_page_social_metadata": true,
+    "real_branded_image_1200x630": true,
+    "knowledge_depth_strict": "PASS",
+    "existing_unit_tests": "17/17 PASS (new expansion tests included)",
+    "source_website_validation": "PASS",
+    "javascript_syntax": "PASS",
+    "prose_near_duplicate_shingle_audit": "PASS: no Jaccard ≥0.72 pairs",
+    "new_guides_english_and_greek": 35,
+    "rewritten_consolidated_titles": 88
+  },
+  "limitations": [
+    "Live public HTTPS card previews must be checked after the target domains are deployed; third-party social services have their own caches.",
+    "The default Test GitHub Pages hostname is based on the standard project-pages structure and may require --site-url override if that repository has a custom deployment URL.",
+    "Headless Chromium navigation timed out in the local container; the GitHub workflow retains its browser test and may report further issues.",
+    "Cloudflare Pages must have its build command and output directory configured; repository sources alone cannot perform server-side profile selection.",
+    "AI indexing/discovery via llms.txt is best-effort and cannot guarantee that any external AI service reads the file.",
+    "This update includes new examples which were syntax checked; not all platform commands were executed on real devices."
+  ]
+}

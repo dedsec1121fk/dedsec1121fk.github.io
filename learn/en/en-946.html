@@ -1,0 +1,59 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>risc_v_assembly — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-946.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="risc_v_assembly — consolidated language guide RISC-V assembly How the language behaves RISC-V instruction sets separate general register operations, loads/stores and optional extensions…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="risc_v_assembly — consolidated language guide — DedSec Project">
+<meta property="og:description" content="risc_v_assembly — consolidated language guide RISC-V assembly How the language behaves RISC-V instruction sets separate general register operations, loads/stores and optional extensions…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-946.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="risc_v_assembly — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="risc_v_assembly — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="risc_v_assembly — consolidated language guide RISC-V assembly How the language behaves RISC-V instruction sets separate general register operations, loads/stores and optional extensions…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="risc_v_assembly — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>risc_v_assembly — consolidated language guide — DedSec Project</h1><p>risc_v_assembly — consolidated language guide RISC-V assembly How the language behaves RISC-V instruction sets separate general register operations, loads/stores and optional extensions…</p><section><h2>RISC-V assembly</h2>
+<h3>How the language behaves</h3>
+<p>RISC-V instruction sets separate general register operations, loads/stores and optional extensions; the exact ISA variant matters.</p>
+<h3>Source fragment to analyze</h3>
+<pre><code class="language-text">li t0, 7
+li t1, 2
+add t2, t0, t1
+</code></pre>
+<h3>Deliberate exercise</h3>
+<p>Trace t0, t1 and t2 with a simulator that matches RV32 or RV64 as chosen; note which lines are pseudo-instructions.</p>
+<h3>Check a failure condition</h3>
+<p>Misaligned memory access and sign extension depend on instruction and environment; never infer behavior from a different CPU ISA.</p>
+<p>Record input, expected output and observed output with the actual RISC_V_Assembly implementation and version. If no compatible runtime exists on your current platform, label the fragment unexecuted and reason from its semantics rather than claiming a successful run. Run a second isolated experiment that changes only the mechanism under investigation; preserve the exact diagnostic while removing private data.</p>
+<h2>RISC V Assembly: applied exercises</h2>
+<h3>Study a standalone register fragment</h3>
+<p>The following RISC-V RV32I-style sequence is a <strong>fragment</strong>, not a complete hosted program or a Linux system-call example:</p>
+<pre><code class="language-asm">addi t0, zero, 3
+slli t1, t0, 1
+add  t2, t0, t1
+addi zero, t2, 9
+</code></pre>
+<p>After the first three instructions, <code>t0=3</code>, <code>t1=6</code>, <code>t2=9</code>. The final instruction attempts to write to register <code>zero</code>; writes to x0 are discarded, so x0 remains zero. Execute one step at a time in an RV32I-capable simulator and record exact register snapshots. Distinguish architectural registers from assembler names such as <code>t0</code>, and do not call this a self-contained executable without entry/exit code.</p>
+<h3>Contrast immediates and arithmetic</h3>
+<p><code>addi</code> adds a sign-extended immediate, while <code>slli</code> shifts the original bit pattern by an immediate count. Test input zero, then a value near the signed 32-bit limit, and explain modulo-32-bit behavior rather than assuming unbounded mathematical integers. For RV64 or compressed extensions, state the selected ISA mode explicitly before comparing machine encodings.</p>
+<h3>Reproduce a real assembler error</h3>
+<p>Change the immediate to a value that cannot be represented by the 12-bit signed encoding of <code>addi</code>, then inspect the assembler's diagnostic or pseudoinstruction expansion. Assemblers differ in whether they reject a form or rewrite a high-level pseudo-operation. Keep the actual source and output; never report a guessed error text as tested fact.</p>
+<h3>Independent task</h3>
+<p>Build an RV32I function that returns the square of a small integer in ABI return register <code>a0</code>, preserving callee-saved registers if used. Test zero, negative input and multiplication availability: the <code>mul</code> instruction belongs to the M extension, not base RV32I. Reference: https://riscv.org/technical/specifications/</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

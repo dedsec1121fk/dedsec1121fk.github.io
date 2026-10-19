@@ -1,0 +1,100 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>wren — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-635.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="wren — consolidated language guide Wren Working model Wren is a small class-based scripting language embedded in host programs. A host application normally supplies modules and the way…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="wren — consolidated language guide — DedSec Project">
+<meta property="og:description" content="wren — consolidated language guide Wren Working model Wren is a small class-based scripting language embedded in host programs. A host application normally supplies modules and the way…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-635.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="wren — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="wren — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="wren — consolidated language guide Wren Working model Wren is a small class-based scripting language embedded in host programs. A host application normally supplies modules and the way…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="wren — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>wren — consolidated language guide — DedSec Project</h1><p>wren — consolidated language guide Wren Working model Wren is a small class-based scripting language embedded in host programs. A host application normally supplies modules and the way…</p><section><h2>Wren</h2>
+<h3>Working model</h3>
+<p>Wren is a small class-based scripting language embedded in host programs. A host application normally supplies modules and the way source is executed.</p>
+<h3>Focused source example</h3>
+<pre><code class="language-text">class Counter {
+  construct new(n) { _n = n }
+  value { _n }
+}
+System.print(Counter.new(4).value)
+</code></pre>
+<p>Construct counters with distinct initial values and compare the returned values; distinguish getter syntax from a method call.</p>
+<h3>Evidence to collect</h3>
+<p>Record the exact Wren compiler or runtime version, required dependencies, and output from harmless test data. Predict an observation before checking it, and keep both the initial and revised source to show which change caused the result. Do not claim that a displayed fragment was executed if the platform is unavailable.</p>
+<h3>Failure mode worth investigating</h3>
+<p>Many Wren runtimes are embeddings rather than complete standalone packages; verify what the host actually exposes.</p>
+<h2>Wren: applied exercises</h2>
+<h3>Create a counter with a small invariant</h3>
+<p>Wren is a class-based, dynamically typed scripting language. Create a disposable script:</p>
+<pre><code class="language-wren">class Counter {
+  construct new() { _count = 0 }
+  increment() { _count = _count + 1 }
+  value { _count }
+}
+var c = Counter.new()
+c.increment()
+c.increment()
+System.print(c.value)
+</code></pre>
+<p>Expected output is <code>2</code>. The leading underscore marks an instance field in Wren syntax, and <code>value</code> is a getter. A constructed object starts with zero and changes only when <code>increment</code> executes. Run with the interpreter for the intended Wren version and record the actual output; no such runtime was executed in this review.</p>
+<h3>Test instance isolation</h3>
+<p>Construct two counters, increment only the first and inspect both values. Predict first value 1 and second value 0. This checks whether each constructed object has its own instance field; it does not test concurrent access or persistence. Explain what would change if the program instead stored a shared counter elsewhere.</p>
+<h3>Deliberate runtime failure</h3>
+<p>In a separate scratch copy, attempt to invoke a method that <code>Counter</code> does not define and record the actual runtime error. Wren does not type-check every message send ahead of execution as a static C# compiler would. A missing method is different from valid method execution with a wrong arithmetic result. Restore the original program for subsequent tests.</p>
+<h3>Independent exercise</h3>
+<p>Add <code>add(n)</code> that rejects negative inputs using an explicit error policy. Test zero, positive and negative values and repeated calls. Extend the class with <code>reset()</code> and specify whether reset is allowed after publication of a score. Record both the invariant and the exact interpreter version rather than importing Python or Lua assumptions. Reference: https://wren.io/</p>
+<h2>Wren — Focused mastery pathway</h2>
+<h3>Scope</h3>
+<p>Wren is a small embedded scripting language, not a Python package or a JavaScript runtime. A class controls its own internal quantity and rejects invalid operations. This example only manipulates in-memory data and does not require filesystem access.</p>
+<h3>Code (stock.wren)</h3>
+<pre><code class="language-wren">class Stock {
+  construct new(quantity) {
+    _quantity = quantity
+  }
+
+  quantity { return _quantity }
+
+  sell(amount) {
+    if (amount &lt;= 0 || amount &gt; _quantity) {
+      Fiber.abort(&quot;invalid sale&quot;)
+    }
+    _quantity = _quantity - amount
+  }
+}
+
+var stock = Stock.new(5)
+stock.sell(2)
+System.print(stock.quantity)
+</code></pre>
+<p>Expected normal output: 3. The underscore-prefixed field belongs to the instance; quantity is a getter exposed to callers. The constructor sets the initial state, and sell changes it only after validating the requested amount. For production use, also validate the <strong>constructor</strong> argument: the minimal example permits invalid starting quantity by design so you can test and repair that gap.</p>
+<h3>Practice and failure paths</h3>
+<ol>
+<li>Run sell(0) in a separate execution: it should abort with invalid sale rather than silently mutate the stock.</li>
+<li>Run sell(9) on a fresh Stock.new(5). Check that the operation fails before subtraction.</li>
+<li>Change the constructor to reject negative quantities; test both a negative initial state and zero.</li>
+<li>Wrap a deliberately failing operation in an appropriate Fiber.try scenario and compare handled errors with normal main-fiber termination.</li>
+<li>Decide whether amount should be constrained to whole numbers; Wren numeric values can be non-integer, so greater-than checks alone do not enforce inventory units.</li>
+</ol>
+<h3>Verification</h3>
+<p>Record Wren runtime version, launcher, stdout and error message for independent test runs. Wren does not use general try/catch syntax; its documented error handling is fiber-based. Reference: https://wren.io/error-handling.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

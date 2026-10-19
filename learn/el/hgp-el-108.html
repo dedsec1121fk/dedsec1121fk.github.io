@@ -1,0 +1,62 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-108.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning Ελληνική έκδοση — Μάθημα 108. Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning — DedSec Project">
+<meta property="og:description" content="Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning Ελληνική έκδοση — Μάθημα 108. Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-108.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning — DedSec Project">
+<meta name="twitter:description" content="Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning Ελληνική έκδοση — Μάθημα 108. Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning — DedSec Project</h1><p>Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning Ελληνική έκδοση — Μάθημα 108. Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 108.</strong> Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην αναζήτηση.</p>
+</blockquote>
+<h2>Στόχος του μαθήματος</h2>
+<p>Να κατανοήσεις σε βάθος το <strong>Advanced Code Auditing, Static Analysis, Dataflow και Taint Reasoning</strong>, να αναγνωρίζεις trust boundaries και failure states και να μπορείς να αποδείξεις ένα συμπέρασμα με ασφαλές, επαναλήψιμο evidence.</p>
+<h2>Βαθιές τεχνικές έννοιες</h2>
+<h3>1. Sources and sinks</h3>
+<p>Static analysis ξεκινά από untrusted/privileged data sources και security-sensitive sinks όπως query, file, command, auth decision ή serialization. Trace path και sanitization context αντί να ψάχνεις απλώς dangerous function names.</p>
+<h3>2. Taint analysis</h3>
+<p>Taint model σημειώνει data που προέρχεται από source και propagation μέχρι sink. Correctness εξαρτάται από accurate sources, sanitizers, aliases και framework semantics.</p>
+<h3>3. Control flow</h3>
+<p>Branches, exceptions και early returns καθορίζουν αν validation πραγματικά προηγείται του sink. Review dominated paths και error handling, όχι μόνο happy path.</p>
+<h3>4. Interprocedural analysis</h3>
+<p>Security flow περνά functions/modules/services. Call graphs, summaries και context sensitivity βοηθούν αλλά dynamic dispatch/reflection μπορούν να δημιουργήσουν gaps.</p>
+<h3>5. Stateful bugs</h3>
+<p>Authorization, races και lifecycle bugs συχνά απαιτούν sequence πολλών requests/events και δεν φαίνονται σε single-function taint. Μοντελοποίησε state machine και transitions.</p>
+<h3>6. Variant analysis</h3>
+<p>Μετά από root cause, ψάξε άλλα σημεία με ίδιο unsafe pattern ή missing invariant. Variant query πρέπει να βασίζεται στη μηχανική αιτία και όχι στο exact vulnerable string.</p>
+<h3>7. Tool limitations</h3>
+<p>Static tools έχουν false positives/negatives από framework models, generated code, native interfaces και reflection. Επιβεβαίωσε important findings με source reasoning και safe tests.</p>
+<h3>8. Review output</h3>
+<p>Καλό audit finding περιέχει source→transform→sink path, required context, impact, root cause, fix και regression test με μικρό evidence.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<ol>
+<li><strong>Audit a deliberately small local program and draw a source→transform→validation→sink dataflow for one input</strong> — εκτέλεσέ το μόνο στο isolated/owned lab και κατέγραψε before/after αποτέλεσμα.</li>
+<li><strong>Write a toy static-analysis rule or grep-like check for one unsafe coding pattern and document its false positives/false negatives</strong> — εκτέλεσέ το μόνο στο isolated/owned lab και κατέγραψε before/after αποτέλεσμα.</li>
+<li><strong>Perform variant analysis after fixing one toy bug and search sibling functions for the same root cause</strong> — εκτέλεσέ το μόνο στο isolated/owned lab και κατέγραψε before/after αποτέλεσμα.</li>
+</ol>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p><a href="../en/hgp-en-108.html">English Module 108</a></p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

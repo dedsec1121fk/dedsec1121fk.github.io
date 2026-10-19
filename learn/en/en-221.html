@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQL parameterization — applied explanation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-221.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="SQL parameters — distinguish query structure from values Problem A user searches local notes by title. The program must interpret the supplied title as literal data, not as part of SQL…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SQL parameterization — applied explanation — DedSec Project">
+<meta property="og:description" content="SQL parameters — distinguish query structure from values Problem A user searches local notes by title. The program must interpret the supplied title as literal data, not as part of SQL…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-221.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SQL parameterization — applied explanation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL parameterization — applied explanation — DedSec Project">
+<meta name="twitter:description" content="SQL parameters — distinguish query structure from values Problem A user searches local notes by title. The program must interpret the supplied title as literal data, not as part of SQL…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SQL parameterization — applied explanation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>SQL parameterization — applied explanation — DedSec Project</h1><p>SQL parameters — distinguish query structure from values Problem A user searches local notes by title. The program must interpret the supplied title as literal data, not as part of SQL…</p><section><h1>SQL parameters — distinguish query structure from values</h1>
+<h2>Problem</h2>
+<p>A user searches local notes by title. The program must interpret the supplied title as literal data, not as part of SQL syntax. Even a harmless title containing an apostrophe can break a string-concatenated statement; deliberately crafted text may change a predicate. Prepared parameter placeholders keep the query structure fixed while supplying values separately. This example compares the unsafe technique with the safe technique <em>only in a disposable in-memory SQLite database</em>.</p>
+<h2>Executable Python 3 demonstration</h2>
+<p>Save as sqlite_parameters_lab.py and run python3 sqlite_parameters_lab.py. The malicious-looking string is synthetic and the demonstration only performs SELECT queries over two test notes.</p>
+<pre><code class="language-python">import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;CREATE TABLE notes (id INTEGER PRIMARY KEY, title TEXT NOT NULL)&quot;)
+db.executemany(&quot;INSERT INTO notes(title) VALUES (?)&quot;,
+               [(&quot;alpha&quot;,), (&quot;beta&quot;,)])
+probe = &quot;alpha' OR 1=1 --&quot;
+count = db.execute(
+    &quot;SELECT COUNT(*) FROM notes WHERE title = ?&quot;, (probe,)
+).fetchone()[0]
+assert count == 0
+# Demonstration ONLY: never compose application SQL like this.
+insecure_sql = &quot;SELECT COUNT(*) FROM notes WHERE title = '&quot; + probe + &quot;'&quot;
+assert db.execute(insecure_sql).fetchone()[0] == 2
+assert db.execute(
+    &quot;SELECT title FROM notes WHERE title = ?&quot;, (&quot;alpha&quot;,)
+).fetchone()[0] == &quot;alpha&quot;
+print(&quot;PASS: literal parameter vs vulnerable concatenation&quot;)
+</code></pre>
+<h2>Correct reasoning</h2>
+<p>The bound placeholder SELECT ... WHERE title = ? treats the entire probe as a title and returns zero matches. Unsafe concatenation inserts the same text into the SQL grammar, changing the WHERE condition and returning both rows. Parameterization also handles Unicode and apostrophes without manual quote escaping. Placeholders cannot stand in for identifiers such as table names or ORDER BY column syntax: those must be chosen from a strict allowlist. Always apply access controls to the resulting query independently; safe parameters do not automatically authorize users to read every row.</p>
+<h2>Bounded verification tasks</h2>
+<ol>
+<li>Search for an ordinary title and a Greek title containing an apostrophe. Confirm that binding treats them as values.</li>
+<li>Replace the placeholder with direct string concatenation in the disposable fixture only, observe altered results, then restore the secure call.</li>
+<li>Attempt to parameterize a table name. Explain why SQL parsers treat identifiers and values differently, and implement an allowlisted selector for one of two known columns.</li>
+<li>Show that a parameterized UPDATE still needs a WHERE clause and permissions: injection prevention is not a substitute for domain authorization.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, query results from safe versus unsafe construction, allowed-identifier policy and a statement of authorization boundaries.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,51 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Git recovery: reflog, detached HEAD and discarded changes — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-ops-25-git-recovery-before-reset.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Distinguish uncommitted edits from unreachable commits Inspect state before repair git status , git branch --show-current and git log --oneline --decorate -8 reveal three different facts…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Git recovery: reflog, detached HEAD and discarded changes — DedSec Project">
+<meta property="og:description" content="Distinguish uncommitted edits from unreachable commits Inspect state before repair git status , git branch --show-current and git log --oneline --decorate -8 reveal three different facts…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-ops-25-git-recovery-before-reset.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Git recovery: reflog, detached HEAD and discarded changes — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Git recovery: reflog, detached HEAD and discarded changes — DedSec Project">
+<meta name="twitter:description" content="Distinguish uncommitted edits from unreachable commits Inspect state before repair git status , git branch --show-current and git log --oneline --decorate -8 reveal three different facts…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Git recovery: reflog, detached HEAD and discarded changes — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Git recovery: reflog, detached HEAD and discarded changes — DedSec Project</h1><p>Distinguish uncommitted edits from unreachable commits Inspect state before repair git status , git branch --show-current and git log --oneline --decorate -8 reveal three different facts…</p><section><h1>Distinguish uncommitted edits from unreachable commits</h1>
+<h2>Inspect state before repair</h2>
+<p><code>git status</code>, <code>git branch --show-current</code> and <code>git log --oneline --decorate -8</code> reveal three different facts: the working tree, selected branch and recent commit graph. A detached HEAD is valid when inspecting an older commit; it is not automatically data loss. If work was committed before an accidental reset, the local reflog may still reference it. Uncommitted edits are not generally recoverable through reflog.</p>
+<pre><code class="language-sh">git status --short
+git branch --show-current
+git log --oneline --decorate -8
+git reflog -8
+</code></pre>
+<h2>Protect evidence before trying another reset</h2>
+<p>If an unexpected commit is visible in reflog, record its full SHA and inspect it with <code>git show --stat &lt;sha&gt;</code>. Create a recovery branch at that commit only after verifying it is the intended object. Avoid <code>git reset --hard</code> or <code>git clean -fd</code> until you know which tracked, ignored and untracked files they would affect. For an unsaved working tree, copy the entire project to another local directory first.</p>
+<h2>A safe practice experiment</h2>
+<p>In a throwaway repository, create two commits on a topic branch and check out the earlier one. Observe detached HEAD, create another commit, then return to the original branch and examine reflog. You should be able to locate the detached commit by its SHA even if no branch currently points at it. Do not mistake this laboratory behavior for an unlimited guarantee: garbage collection and reflog expiry can make old objects unavailable.</p>
+<h2>Done criteria</h2>
+<p>Record the lost change's original branch, whether it was committed, the recovery SHA, and the exact files verified after restoration. Pushing recovered history to a shared remote is a separate action requiring review; avoid rewriting collaborators' history simply to repair your local state.</p>
+<h2>A recovery drill that does not discard work</h2>
+<p>Use an empty temporary directory. Configure a synthetic local Git identity there, create <code>note.txt</code> with <code>one</code>, add it and commit. Record that commit as A. Change the file to <code>two</code>, commit and record B. Run <code>git switch --detach A</code> using the recorded hash, create <code>detached.txt</code>, and commit it as C. Now <code>git switch -</code> can return to the preceding branch; <code>git reflog --date=iso -8</code> should show the detached commit.</p>
+<p>Inspect C with <code>git show --stat C</code> and create <code>git branch recovered C</code>, substituting the actual hash. <code>git show recovered:detached.txt</code> should retrieve the committed content without checking out or replacing your current files. The drill requires no reset, clean, force push or remote repository.</p>
+<h2>Uncommitted data needs a different recovery route</h2>
+<p>Reflog records movements of references in that local repository. It is not an automatic backup of unstaged file bytes, untracked files or work in another clone. Editor history, a filesystem backup, a previous stash or a copied working tree may help those cases. Inspect <code>git stash list</code> without assuming a stash exists. Protect any recovered files before attempting cleanup, and distinguish a branch name from the commit object it currently references.</p>
+<p>Reference: <a href="https://git-scm.com/docs/git-reflog">git reflog</a>.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

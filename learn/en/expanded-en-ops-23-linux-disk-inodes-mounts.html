@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux disk full: blocks, inodes and read-only mounts — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-ops-23-linux-disk-inodes-mounts.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Diagnose storage errors by errno and filesystem Space, quota and read-only access are different failures A failed file creation is not enough to conclude that the drive is full. ENOSPC…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Linux disk full: blocks, inodes and read-only mounts — DedSec Project">
+<meta property="og:description" content="Diagnose storage errors by errno and filesystem Space, quota and read-only access are different failures A failed file creation is not enough to conclude that the drive is full. ENOSPC…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-ops-23-linux-disk-inodes-mounts.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Linux disk full: blocks, inodes and read-only mounts — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Linux disk full: blocks, inodes and read-only mounts — DedSec Project">
+<meta name="twitter:description" content="Diagnose storage errors by errno and filesystem Space, quota and read-only access are different failures A failed file creation is not enough to conclude that the drive is full. ENOSPC…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Linux disk full: blocks, inodes and read-only mounts — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Linux disk full: blocks, inodes and read-only mounts — DedSec Project</h1><p>Diagnose storage errors by errno and filesystem Space, quota and read-only access are different failures A failed file creation is not enough to conclude that the drive is full. ENOSPC…</p><section><h1>Diagnose storage errors by errno and filesystem</h1>
+<h2>Space, quota and read-only access are different failures</h2>
+<p>A failed file creation is not enough to conclude that the drive is full. ENOSPC indicates unavailable filesystem space or metadata capacity; EDQUOT concerns an enforced quota; EROFS means the operation targets a read-only filesystem. EACCES instead concerns access permission. A read-only mount can have plenty of free blocks. Keep the exact exception before choosing a repair.</p>
+<h2>Inspect the destination, not just the root filesystem</h2>
+<pre><code class="language-sh">df -h .
+df -i .
+findmnt -T . -o TARGET,FSTYPE,OPTIONS
+du -h -d 1 .
+</code></pre>
+<p>Use the directory actually receiving the output in place of <code>.</code>. The temporary directory used during packaging can be on a different mount from the final ZIP. <code>df -i</code> is meaningful only for filesystems that expose useful inode accounting. <code>findmnt</code> is a Linux utility; a missing command on Android does not prove the storage is healthy or unhealthy.</p>
+<h2>A bounded write probe with an identifiable result</h2>
+<p>After inspecting the path, run this against a directory you control. It creates and removes one temporary file; it does not delete caches or existing documents.</p>
+<pre><code class="language-python">from pathlib import Path
+from tempfile import NamedTemporaryFile
+import errno
+
+target = Path('.')
+try:
+    with NamedTemporaryFile(dir=target, prefix='storage-probe-') as probe:
+        probe.write(b'ok\n')
+        probe.flush()
+        print('write probe succeeded')
+except OSError as exc:
+    print(errno.errorcode.get(exc.errno, 'UNKNOWN'), exc.filename)
+</code></pre>
+<p>A successful small write only demonstrates that this operation worked at this time. It cannot prove that a large build will fit or that buffered data has survived a power loss. Reproduce the original operation after a narrowly chosen correction.</p>
+<h2>Why du and df can disagree</h2>
+<p><code>du</code> measures the files it can traverse; <code>df</code> reports filesystem accounting. Deleted files still held open by a process can consume space until the last descriptor closes. Snapshots, reserved blocks and container layers create further differences. Permission-denied messages during <code>du</code> make its total incomplete. Inspect the owning process before restarting it; deleting additional unrelated files does not address an open deleted file.</p>
+<h2>Recovery decision</h2>
+<p>For block exhaustion, identify rebuildable output and estimate required headroom before removing it. For inode exhaustion, investigate unusually many small generated files. For EROFS following storage errors, preserve data and inspect kernel/storage diagnostics with the administrator; do not remount read-write as a blind first step. For quota exhaustion, free space elsewhere on the same disk may not change your allocation.</p>
+<p>Reference: <a href="https://man7.org/linux/man-pages/man2/open.2.html">Linux file-opening errors</a>.</p>
+<h2>Unlinked open files explain df/du disagreements</h2>
+<p>Removing a directory entry does not necessarily release the bytes immediately. An open file descriptor can keep an unlinked file alive until the last relevant reference closes. A filesystem-wide usage report may therefore count space that a directory walk cannot find by filename.</p>
+<p>Diagnose which process owns the open handle before restarting anything. Do not truncate a descriptor belonging to an unknown service just to make a number smaller. The Linux fixture uses only a temporary file and proves that its contents remain readable through the already-open handle after unlinking.</p>
+<pre><code class="language-python">import os, tempfile
+from pathlib import Path
+with tempfile.TemporaryDirectory() as folder:
+    path=Path(folder)/&quot;open.txt&quot;
+    path.write_bytes(b&quot;still referenced&quot;)
+    with path.open(&quot;rb&quot;) as stream:
+        path.unlink()
+        assert not path.exists()
+        assert stream.read() == b&quot;still referenced&quot;
+print(&quot;open handle retains data&quot;)
+</code></pre>
+<p>Run this on Linux or the private filesystem of Termux; file deletion rules differ on Windows. The tiny fixture does not measure reclaimed blocks. For an operational incident, compare mount scope, permissions and open-file evidence before concluding that filesystem accounting is broken.</p>
+<p><a href="https://pubs.opengroup.org/onlinepubs/9799919799/functions/unlink.html">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

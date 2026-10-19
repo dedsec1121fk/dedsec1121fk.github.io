@@ -1,0 +1,91 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Glossary: logging, leaks and schema migrations — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1125.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Glossary: logging, leaks and schema migrations Logging Definition and boundaries Recording contextual events with severity levels, timestamps and correlation IDs for diagnosis. Logs are…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Glossary: logging, leaks and schema migrations — DedSec Project">
+<meta property="og:description" content="Glossary: logging, leaks and schema migrations Logging Definition and boundaries Recording contextual events with severity levels, timestamps and correlation IDs for diagnosis. Logs are…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1125.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glossary: logging, leaks and schema migrations — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Glossary: logging, leaks and schema migrations — DedSec Project">
+<meta name="twitter:description" content="Glossary: logging, leaks and schema migrations Logging Definition and boundaries Recording contextual events with severity levels, timestamps and correlation IDs for diagnosis. Logs are…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Glossary: logging, leaks and schema migrations — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Glossary: logging, leaks and schema migrations — DedSec Project</h1><p>Glossary: logging, leaks and schema migrations Logging Definition and boundaries Recording contextual events with severity levels, timestamps and correlation IDs for diagnosis. Logs are…</p><section><h2>Logging</h2>
+<h3>Definition and boundaries</h3>
+<p>Recording contextual events with severity levels, timestamps and correlation IDs for diagnosis. Logs are observable output that can leak tokens or personal data if unsanitized.</p>
+<h3>Working miniature</h3>
+<pre><code class="language-text">import logging
+logging.basicConfig(level=logging.INFO)
+logging.info('processed %d records',3)
+</code></pre>
+<h3>Guided investigation</h3>
+<p>Log a rejected record with a synthetic request ID while deliberately omitting credentials. Check which fields reach the handler, not only the console text.</p>
+<h3>Check your understanding</h3>
+<p>For Logging, change one input in the example and explain whether the observed behavior still satisfies the stated definition. Record the exact output and distinguish a program error from a mistaken assumption.</p>
+<h2>Memory leak</h2>
+<h3>Definition and boundaries</h3>
+<p>Unexpected retention of objects past their useful lifetime. Long-lived caches, callbacks or references can cause this even with a garbage collector. High memory use from legitimate data is not necessarily a leak.</p>
+<h3>Working miniature</h3>
+<pre><code class="language-text">from collections import deque
+recent=deque(maxlen=10)
+for n in range(10000): recent.append(n)
+assert len(recent)==10
+</code></pre>
+<h3>Guided investigation</h3>
+<p>Compare an unbounded list with this bounded deque under repeated inputs. Use tracemalloc snapshots to identify retained allocations instead of guessing.</p>
+<h3>Retained references make objects live longer</h3>
+<p>An object may remain reachable through a growing registry even when its original local variable is deleted. Use a weak reference to observe this without exhausting memory.</p>
+<pre><code class="language-python">import gc, weakref
+class Entry: pass
+registry = []
+entry = Entry()
+watch = weakref.ref(entry)
+registry.append(entry)
+del entry
+gc.collect()
+assert watch() is not None
+registry.clear()
+gc.collect()
+assert watch() is None
+</code></pre>
+<p>Design a cache with a 100-entry maximum, then compare object retention after thousands of unique keys. Resident-set size alone is not sufficient to prove a leak because allocators may keep free pools; inspect surviving objects and owners.</p>
+<h2>Migration</h2>
+<h3>Definition and boundaries</h3>
+<p>A controlled upgrade from one data schema or service version to another. Migrations must consider existing rows, partial deployment and rollback options rather than editing a schema once.</p>
+<h3>Working miniature</h3>
+<pre><code class="language-text">CREATE TABLE tasks(id INTEGER PRIMARY KEY,title TEXT);
+ALTER TABLE tasks ADD COLUMN archived INTEGER NOT NULL DEFAULT 0;
+</code></pre>
+<h3>Guided investigation</h3>
+<p>Use a disposable SQLite database containing older rows; verify that the new archived field is 0 and plan how a rollback would handle it.</p>
+<h3>Upgrade old rows without losing their values</h3>
+<p>A schema migration is successful only if existing records remain valid and the new schema is compatible with the application.</p>
+<pre><code class="language-python">import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;CREATE TABLE tasks(id INTEGER PRIMARY KEY,title TEXT)&quot;)
+db.execute(&quot;INSERT INTO tasks(title) VALUES (?)&quot;, (&quot;review&quot;,))
+with db:
+    db.execute(&quot;ALTER TABLE tasks ADD COLUMN archived INTEGER NOT NULL DEFAULT 0&quot;)
+assert db.execute(&quot;SELECT title,archived FROM tasks&quot;).fetchone() == (&quot;review&quot;,0)
+db.close()
+</code></pre>
+<p>Extend the lab with PRAGMA user_version and execute the upgrade twice. The second pass should detect that the new version is already installed. For destructive migrations, plan backups and rollback before applying changes; DDL transaction semantics vary across engines.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

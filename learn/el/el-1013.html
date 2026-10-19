@@ -1,0 +1,48 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>deadlock detected — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1013.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="PostgreSQL deadlock detected: σταθερή σειρά locks και ασφαλή retries Ακριβής διάγνωση Το PostgreSQL deadlock με SQLSTATE 40P01 εμφανίζεται όταν τα transactions σχηματίζουν κύκλο αναμονής. Η…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="deadlock detected — DedSec Project">
+<meta property="og:description" content="PostgreSQL deadlock detected: σταθερή σειρά locks και ασφαλή retries Ακριβής διάγνωση Το PostgreSQL deadlock με SQLSTATE 40P01 εμφανίζεται όταν τα transactions σχηματίζουν κύκλο αναμονής. Η…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1013.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="deadlock detected — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="deadlock detected — DedSec Project">
+<meta name="twitter:description" content="PostgreSQL deadlock detected: σταθερή σειρά locks και ασφαλή retries Ακριβής διάγνωση Το PostgreSQL deadlock με SQLSTATE 40P01 εμφανίζεται όταν τα transactions σχηματίζουν κύκλο αναμονής. Η…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="deadlock detected — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>deadlock detected — DedSec Project</h1><p>PostgreSQL deadlock detected: σταθερή σειρά locks και ασφαλή retries Ακριβής διάγνωση Το PostgreSQL deadlock με SQLSTATE 40P01 εμφανίζεται όταν τα transactions σχηματίζουν κύκλο αναμονής. Η…</p><section><h1>PostgreSQL deadlock detected: σταθερή σειρά locks και ασφαλή retries</h1>
+<h2>Ακριβής διάγνωση</h2>
+<p>Το PostgreSQL deadlock με SQLSTATE 40P01 εμφανίζεται όταν τα transactions σχηματίζουν κύκλο αναμονής. Η βάση ανιχνεύει τον κύκλο και ακυρώνει ένα transaction. Η αύξηση timeout δεν διορθώνει τη σειρά κλειδωμάτων. Η απλή αναμονή για lock χωρίς κύκλο είναι διαφορετική περίπτωση.</p>
+<h2>Πείραμα σε αναλώσιμα δεδομένα</h2>
+<p>Εκτέλεσε μόνο σε προσωρινή τοπική βάση ή σε μη παραγωγικό περιβάλλον για το οποίο έχεις άδεια.</p>
+<pre><code class="language-sql">-- Shared lab table in an isolated database; two sessions are required:
+CREATE TABLE deadlock_lab_balances (id INTEGER PRIMARY KEY, amount INTEGER);
+INSERT INTO deadlock_lab_balances VALUES (1, 100), (2, 100);
+-- Connection A: BEGIN; UPDATE deadlock_lab_balances SET amount=amount+1 WHERE id=1;
+-- Connection B: BEGIN; UPDATE deadlock_lab_balances SET amount=amount+1 WHERE id=2;
+-- A then updates id=2; B then updates id=1 (deadlock cycle).
+-- Prefer both transactions updating ids in ascending order.\n-- Drop the lab table after both sessions finish: DROP TABLE deadlock_lab_balances;
+</code></pre>
+<h2>Διαδικασία επίλυσης</h2>
+<p>Συγκέντρωσε server logs και traces των transactions χωρίς ευαίσθητες παραμέτρους. Κράτα τις συναλλαγές μικρές, πάρε locks με κοινή σειρά και μη καλείς εξωτερικές υπηρεσίες ενώ κρατάς locks. Σε deadlock το transaction ακυρώνεται: επανάλαβε ολόκληρη τη συναλλαγή με όριο retries μόνο αν η ενέργεια είναι ασφαλής ή idempotent. Απαιτείται rollback πριν από νέα προσπάθεια.</p>
+<h2>Εργαστήριο / δοκιμή ορίων</h2>
+<p>Χρησιμοποίησε δύο PostgreSQL sessions με κοινό δοκιμαστικό πίνακα (τα TEMP tables δεν μοιράζονται μεταξύ sessions) και αναπαράγαγε αντίθετη σειρά row locks. Έπειτα ευθυγράμμισε τη σειρά ανά id. Σύγκρινε deadlock με lock timeout και κατέγραψε τα διαφορετικά SQLSTATE.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

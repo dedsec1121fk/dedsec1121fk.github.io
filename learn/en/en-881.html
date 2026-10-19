@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>wgsl — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-881.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="wgsl — consolidated language guide WGSL Typical use: Graphics shader languages. Suggested file extension: .wgsl . How to run / environment: Use in a WebGPU host with a render pipeline…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="wgsl — consolidated language guide — DedSec Project">
+<meta property="og:description" content="wgsl — consolidated language guide WGSL Typical use: Graphics shader languages. Suggested file extension: .wgsl . How to run / environment: Use in a WebGPU host with a render pipeline…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-881.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="wgsl — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="wgsl — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="wgsl — consolidated language guide WGSL Typical use: Graphics shader languages. Suggested file extension: .wgsl . How to run / environment: Use in a WebGPU host with a render pipeline…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="wgsl — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>wgsl — consolidated language guide — DedSec Project</h1><p>wgsl — consolidated language guide WGSL Typical use: Graphics shader languages. Suggested file extension: .wgsl . How to run / environment: Use in a WebGPU host with a render pipeline…</p><section><h2>WGSL</h2>
+<p><strong>Typical use:</strong> Graphics shader languages.</p>
+<p><strong>Suggested file extension:</strong> <code>.wgsl</code>.</p>
+<p><strong>How to run / environment:</strong> Use in a WebGPU host with a render pipeline.</p>
+<h3>Starter example</h3>
+<pre><code>@fragment
+fn main() -&gt; @location(0) vec4f {
+  return vec4f(0.2, 0.5, 0.8, 1.0);
+}
+</code></pre>
+<h3>How to read it</h3>
+<p>WebGPU shaders require host-side binding and pipeline setup.</p>
+<h3>Common pitfall</h3>
+<p>WebGPU shaders require host-side binding and pipeline setup.</p>
+<h2>WGSL — Expanded practice workbook</h2>
+<h3>Read the baseline source</h3>
+<pre><code class="language-text">@fragment
+fn main() -&gt; @location(0) vec4f {
+  return vec4f(0.2, 0.5, 0.8, 1.0);
+}
+</code></pre>
+<p><strong>Relevant environment:</strong> Use in a WebGPU host with a render pipeline.. Verify that the matching compiler, host or simulator is available before treating output as authoritative. For scripts that can interact with personal files or systems, use a scratch workspace and read-only fixtures by default.</p>
+<h3>Detailed working objective</h3>
+<p>Build a @fragment function returning @location(0) vec4f from UV input and confirm clipping/range behavior. Validate binding group declarations with the WebGPU host.</p>
+<h3>The failure that must be understood</h3>
+<p>WGSL has explicit address spaces and validation rules; browser/device feature support may reject a pipeline even when the source appears well typed.</p>
+<h2>WGSL — Focused mastery pathway</h2>
+<h3>Purpose and boundary</h3>
+<p>WGSL uses explicit stage attributes. Build a WebGPU pipeline where a vertex stage supplies clip-space position and an interpolated UV; a fragment stage emits a gradient with a circular mask. The WGSL file is shader source only. A JavaScript WebGPU host must create a device, pipeline and render pass to see pixels.</p>
+<h3>Minimal paired shader (gradient.wgsl)</h3>
+<pre><code class="language-wgsl">struct VertexOut {
+    @builtin(position) clip_pos: vec4f,
+    @location(0) uv: vec2f,
+};
+
+@vertex
+fn vs_main(@builtin(vertex_index) index: u32) -&gt; VertexOut {
+    var positions = array&lt;vec2f, 3&gt;(
+        vec2f(-1.0, -1.0), vec2f(3.0, -1.0), vec2f(-1.0, 3.0)
+    );
+    var result: VertexOut;
+    let p = positions[index];
+    result.clip_pos = vec4f(p, 0.0, 1.0);
+    result.uv = (p + vec2f(1.0, 1.0)) * 0.5;
+    return result;
+}
+
+@fragment
+fn fs_main(input: VertexOut) -&gt; @location(0) vec4f {
+    let uv = clamp(input.uv, vec2f(0.0), vec2f(1.0));
+    let d = distance(uv, vec2f(0.5, 0.5));
+    let inside = 1.0 - smoothstep(0.23, 0.27, d);
+    return vec4f(mix(vec3f(uv, 0.2), vec3f(1.0, 0.8, 0.1), inside), 1.0);
+}
+</code></pre>
+<p>The oversized triangle fills the clip region when drawn with three vertices. The vertex_index must remain in [0,2]; drawing more than three vertices would index outside the array. The fragment output format must match the host pipeline target.</p>
+<h3>Reproducible checks</h3>
+<ol>
+<li>Create a pipeline using entry points vs_main and fs_main, a compatible canvas format and draw(3). Inspect pipeline validation errors before investigating colors.</li>
+<li>Deliberately change the fragment input location to 1 while leaving vertex output at 0; record the stage-interface validation failure.</li>
+<li>At UV (0.5,0.5), inside is 1; at UV (0,0) it is 0. The transition covers distances 0.23 to 0.27.</li>
+<li>If a device is unavailable, report navigator.gpu/device acquisition failure separately from shader source errors.</li>
+<li>As an extension, add a uniform with @group(0) @binding(0) and a <em>matching</em> pipeline bind-group layout. A declared binding alone does not create the resource.</li>
+</ol>
+<h3>Evidence</h3>
+<p>Save WGSL and host source, browser version, adapter/device details, exact pipeline diagnostics and a rendered screenshot. Static reading or API validation without a draw pass is not proof of visible output.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

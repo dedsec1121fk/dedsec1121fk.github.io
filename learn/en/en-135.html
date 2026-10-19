@@ -1,0 +1,75 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>NullPointerException — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-135.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="NullPointerException — locate the boundary, not just the crash What the failure actually means In Java, a NullPointerException is thrown when code uses a null reference in an operation…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="NullPointerException — DedSec Project">
+<meta property="og:description" content="NullPointerException — locate the boundary, not just the crash What the failure actually means In Java, a NullPointerException is thrown when code uses a null reference in an operation…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-135.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NullPointerException — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NullPointerException — DedSec Project">
+<meta name="twitter:description" content="NullPointerException — locate the boundary, not just the crash What the failure actually means In Java, a NullPointerException is thrown when code uses a null reference in an operation…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="NullPointerException — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>NullPointerException — DedSec Project</h1><p>NullPointerException — locate the boundary, not just the crash What the failure actually means In Java, a NullPointerException is thrown when code uses a null reference in an operation…</p><section><h1>NullPointerException — locate the boundary, not just the crash</h1>
+<h2>What the failure actually means</h2>
+<p>In Java, a NullPointerException is thrown when code uses a null reference in an operation requiring an object. A typical example is calling a string method on Map.get(key) when the key is absent: Map.get returns null in that case, and some maps may also store actual null values. A long stack trace identifies where the dereference happened but not necessarily where the missing value originated.</p>
+<h2>Controlled solution</h2>
+<p>Build an API boundary that distinguishes a programming error (null map or key) from an expected but absent configuration entry. Objects.requireNonNull gives a clear diagnostic for forbidden null arguments. The helper checks that a key exists and holds nonblank text before calling strip. It intentionally reports a user-facing IllegalArgumentException for missing configuration rather than accidentally generating an NPE at the string method.</p>
+<h2>Source example</h2>
+<p>Save this as NullSafetyLab.java.</p>
+<pre><code class="language-java">import java.util.Map;
+import java.util.Objects;
+public class NullSafetyLab {
+    static String label(Map&lt;String, String&gt; config, String key) {
+        Objects.requireNonNull(config, &quot;config map is required&quot;);
+        Objects.requireNonNull(key, &quot;lookup key is required&quot;);
+        String value = config.get(key);
+        if (value == null || value.isBlank()) {
+            throw new IllegalArgumentException(&quot;missing or blank setting: &quot; + key);
+        }
+        return value.strip();
+    }
+    public static void main(String[] args) {
+        if (!&quot;ready&quot;.equals(label(Map.of(&quot;mode&quot;, &quot; ready &quot;), &quot;mode&quot;))) throw new AssertionError();
+        try {
+            label(Map.of(), &quot;mode&quot;);
+            throw new AssertionError(&quot;missing key accepted&quot;);
+        } catch (IllegalArgumentException expected) {
+            if (!expected.getMessage().contains(&quot;mode&quot;)) throw new AssertionError();
+        }
+        try {
+            label(null, &quot;mode&quot;);
+            throw new AssertionError(&quot;null map accepted&quot;);
+        } catch (NullPointerException expected) {
+            if (!&quot;config map is required&quot;.equals(expected.getMessage())) throw new AssertionError();
+        }
+        System.out.println(&quot;PASS: explicit API contract and missing-key diagnosis&quot;);
+    }
+}
+</code></pre>
+<h2>Why this design works</h2>
+<p>The test intentionally exercises both branches using local immutable fixtures. It checks the normal value, a missing key and a null map. The caller catches the documented exceptions and confirms their messages instead of swallowing every RuntimeException. Do not replace all null checks with Optional indiscriminately; decide where null is allowed, where absence is a normal result, and where it is a contract violation.</p>
+<h2>Reproduce the diagnosis safely</h2>
+<p>Compile and run on Java 11+ (the code uses isBlank and strip): javac NullSafetyLab.java &amp;&amp; java NullSafetyLab. Expected output begins PASS. Run java -version and javac -version if compilation or execution fails, because SDK and runtime versions may differ.</p>
+<h2>Practice and expected evidence</h2>
+<p>Remove the value check experimentally and predict the precise expression that triggers the NPE when Map.get returns null. Restore it, then test a blank string and a null key. Compare explicit checks with Objects.requireNonNull and record which exception class each is intended to represent. Never log secret configuration values while diagnosing a missing setting.</p>
+<p><strong>Authoritative reference:</strong> https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Objects.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

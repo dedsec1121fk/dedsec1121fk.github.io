@@ -1,0 +1,68 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Property based testing — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-219.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Property-based testing — seeded cases plus explicit invariants Subject under test Build a stable deduplication routine: preserve each distinct hashable value once, in the order of its first…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Property based testing — DedSec Project">
+<meta property="og:description" content="Property-based testing — seeded cases plus explicit invariants Subject under test Build a stable deduplication routine: preserve each distinct hashable value once, in the order of its first…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-219.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Property based testing — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Property based testing — DedSec Project">
+<meta name="twitter:description" content="Property-based testing — seeded cases plus explicit invariants Subject under test Build a stable deduplication routine: preserve each distinct hashable value once, in the order of its first…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Property based testing — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Property based testing — DedSec Project</h1><p>Property-based testing — seeded cases plus explicit invariants Subject under test Build a stable deduplication routine: preserve each distinct hashable value once, in the order of its first…</p><section><h1>Property-based testing — seeded cases plus explicit invariants</h1>
+<h2>Subject under test</h2>
+<p>Build a stable deduplication routine: preserve each distinct hashable value once, in the order of its <em>first</em> appearance. A few handwritten examples cannot exercise every sequence length and repetition pattern. Generate many bounded examples with a fixed pseudorandom seed so a failure is reproducible. Compare with an independent standard-library oracle and also assert structural properties that should hold for every input.</p>
+<h2>Executable Python 3 fixture</h2>
+<p>Save as property_lab.py and run python3 property_lab.py. The generator produces 100 sequences of up to 39 integers from 0 through 9, so there is no external service or unbounded random work.</p>
+<pre><code class="language-python">import random
+
+def unique(items):
+    seen, result = set(), []
+    for item in items:
+        if item not in seen:
+            seen.add(item)
+            result.append(item)
+    return result
+
+rng = random.Random(17)
+for _ in range(100):
+    xs = [rng.randrange(10) for _ in range(rng.randrange(40))]
+    result = unique(xs)
+    assert result == list(dict.fromkeys(xs))
+    assert unique(result) == result
+    assert set(result) == set(xs)
+    positions = [xs.index(value) for value in result]
+    assert positions == sorted(positions)
+assert unique([]) == []
+print(&quot;PASS: seeded properties and order preservation&quot;)
+</code></pre>
+<h2>What makes a useful property</h2>
+<p>Idempotence: deduplicating an already deduplicated list changes nothing. Membership preservation: the output contains exactly the set of input values. Order preservation: the first appearance positions must be strictly increasing. These properties do not prove correctness in every case, and the standard-library dict reference may share assumptions with the implementation. Independent specifications and hand-picked edge cases remain necessary. A seed makes the run repeatable, but a real property-based library can also shrink a failing sample into a smaller counterexample.</p>
+<h2>Bounded experiments</h2>
+<ol>
+<li>Intentionally reverse the resulting list and verify which property notices the defect; a mere membership check will miss ordering bugs.</li>
+<li>Include empty input, only repeated values and all-unique values. Record which tests are deterministic.</li>
+<li>Try unhashable list values. Decide whether the contract rejects them or needs an alternative equality-only algorithm.</li>
+<li>Increase the seed count and record the first failing seed for a deliberately mutated implementation. Explain how shrinking helps debugging.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, four independently stated properties, a reproducible seed and at least one mutation detected by a property.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

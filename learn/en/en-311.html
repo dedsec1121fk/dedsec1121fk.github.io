@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Practical scripts: retries, caching and graph traversal — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-311.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Practical scripts: retries, caching and graph traversal Retry Temporary Failures Safely The retry contract 11_bounded_retry.py retries only TimeoutError, with a fixed max_attempts count. A…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Practical scripts: retries, caching and graph traversal — DedSec Project">
+<meta property="og:description" content="Practical scripts: retries, caching and graph traversal Retry Temporary Failures Safely The retry contract 11_bounded_retry.py retries only TimeoutError, with a fixed max_attempts count. A…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-311.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Practical scripts: retries, caching and graph traversal — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Practical scripts: retries, caching and graph traversal — DedSec Project">
+<meta name="twitter:description" content="Practical scripts: retries, caching and graph traversal Retry Temporary Failures Safely The retry contract 11_bounded_retry.py retries only TimeoutError, with a fixed max_attempts count. A…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Practical scripts: retries, caching and graph traversal — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Practical scripts: retries, caching and graph traversal — DedSec Project</h1><p>Practical scripts: retries, caching and graph traversal Retry Temporary Failures Safely The retry contract 11_bounded_retry.py retries only TimeoutError, with a fixed max_attempts count. A…</p><section><h2>Retry Temporary Failures Safely</h2>
+<h3>The retry contract</h3>
+<p>11_bounded_retry.py retries only TimeoutError, with a fixed max_attempts count. A ValueError or other permanent exception is allowed to propagate immediately. The parameter is checked with exact integer type equality, so max_attempts=True is rejected rather than accidentally treated as one attempt. A caller-supplied pause callback receives the failed attempt number before the next attempt.</p>
+<h3>Run the controlled simulation</h3>
+<p>Execute python 11_bounded_retry.py. The simulated operation times out twice and succeeds on the third call. The test verifies exactly three invocations and pause callback arguments [1,2]. A separate check verifies that a ValueError is not swallowed; a boolean attempt limit is rejected. Expected output: retry budgets and exception boundaries passed.</p>
+<h3>Timing and side-effect safety</h3>
+<p>The default pause callback deliberately does nothing, keeping the teaching script fast and deterministic. In real network software, supply a bounded exponential backoff with jitter and enforce a total elapsed-time budget. Retry only operations known to be idempotent or protected with an idempotency key: a timeout can occur after a server has already committed a payment or write.</p>
+<h3>Further tests</h3>
+<p>Create an action that always raises TimeoutError and prove that it stops exactly at max_attempts and re-raises the final error. Add a deadline and an injectable clock, then test clock advancement without real sleeping. Log attempt counts without sensitive request bodies. Source: 11_bounded_retry.py. Reference: https://docs.python.org/3/library/exceptions.html#TimeoutError</p>
+<h2>Memoize Pure Function Results</h2>
+<h3>Why pure functions are good cache candidates</h3>
+<p>12_memoization.py implements Fibonacci using functools.lru_cache(maxsize=128). Each result depends only on its integer argument, so caching preserves correctness. A naive recursive Fibonacci repeats work; the cache reuses previous subproblems. The function rejects booleans, floats, negatives and inputs above 200 to make the recursion depth and domain explicit.</p>
+<h3>Execute and inspect</h3>
+<p>Run python 12_memoization.py. It clears the cache, confirms fibonacci(10)==55, repeats the same call and verifies cache_info().hits grows by one. It also tests n=0 and n=1 and rejects several invalid inputs. Expected message: memoization correctness and cache-hit checks passed. cache_info() exposes hits, misses, current size and maximum size; these are measurable facts rather than promises of speed.</p>
+<h3>Important limitations</h3>
+<p>lru_cache uses argument values as cache keys and can retain references to those arguments and results until eviction. Do not cache a function whose output depends on current time, network state, mutable global data or user permissions without explicit invalidation. Since the limit is 128, old entries may be evicted even if the same Fibonacci input is requested again later.</p>
+<h3>Extend the lesson</h3>
+<p>Compare repeated calls with a noncached iterative Fibonacci implementation, separately recording correctness and elapsed time for suitable n. Explain why naive recursion without caching has exponential repeated work. Add cache_clear when inputs are deliberately invalidated. Never assume caching untrusted mutable objects is safe. Source: 12_memoization.py. Reference: https://docs.python.org/3/library/functools.html#functools.lru_cache</p>
+<h2>Traverse a Graph with BFS</h2>
+<p>Breadth-first search visits nodes layer by layer using a FIFO queue. Record visited nodes before enqueueing neighbors to prevent cycles from growing the queue repeatedly.</p>
+<p>Test a disconnected graph, a self-loop, a diamond-shaped graph and a missing target. BFS finds shortest paths only when all edges have equal weight.</p>
+<p><strong>Working source:</strong> <code>13_queue_bfs.py</code> contains the standalone Python implementation and its executable assertions. Read the corresponding code entry to compare the explanation with actual behavior.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

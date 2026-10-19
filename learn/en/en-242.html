@@ -1,0 +1,99 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reading code: types, aliasing and mutable state — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-242.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Reading code: types, aliasing and mutable state Reading an unfamiliar codebase Core explanation Read the invocation before editing implementations. Identify entry point, command-line…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Reading code: types, aliasing and mutable state — DedSec Project">
+<meta property="og:description" content="Reading code: types, aliasing and mutable state Reading an unfamiliar codebase Core explanation Read the invocation before editing implementations. Identify entry point, command-line…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-242.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reading code: types, aliasing and mutable state — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reading code: types, aliasing and mutable state — DedSec Project">
+<meta name="twitter:description" content="Reading code: types, aliasing and mutable state Reading an unfamiliar codebase Core explanation Read the invocation before editing implementations. Identify entry point, command-line…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Reading code: types, aliasing and mutable state — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Reading code: types, aliasing and mutable state — DedSec Project</h1><p>Reading code: types, aliasing and mutable state Reading an unfamiliar codebase Core explanation Read the invocation before editing implementations. Identify entry point, command-line…</p><section><h2>Reading an unfamiliar codebase</h2>
+<h3>Core explanation</h3>
+<p>Read the invocation before editing implementations. Identify entry point, command-line arguments, configuration source, imports, caller graph, actual output, and the test suite. Reading every file alphabetically tells you far less than tracing one concrete input end-to-end. A function name is a hypothesis about behavior, not evidence.</p>
+<h3>Runnable example</h3>
+<pre><code class="language-python">def price_after_discount(cents: int, discount: int) -&gt; int:
+    if not 0 &lt;= discount &lt;= 100:
+        raise ValueError(&quot;invalid discount&quot;)
+    return cents * (100 - discount) // 100
+
+def main():
+    print(price_after_discount(1999, 10))
+
+if __name__ == &quot;__main__&quot;:
+    main()
+</code></pre>
+<h3>Interpret the results</h3>
+<p>Run <code>python app.py</code> after saving the snippet as app.py: the output is 1799 integer cents, rounded down. Trace main → price_after_discount → input check → arithmetic → print. Merely importing app does not print because its <code>__name__</code> guard protects main. Write down these observations before guessing which other files matter.</p>
+<h3>Independent practical lab</h3>
+<p>Create a trace table with columns input, responsible function, transformation, output. Predict and test discount 0, 100 and -1. Identify the missing contract for negative <code>cents</code> separately from discount validation. In a real repo, determine whether the file is generated, vendored, tested or maintained by the project before changing it. Preserve a minimal repro and rerun affected tests.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/<strong>main</strong>.html</p>
+<h2>Types and conversions</h2>
+<h3>Core explanation</h3>
+<p>A conversion that succeeds syntactically may still violate a business rule. Python <code>int(3.9)</code> truncates rather than rounds, and <code>bool</code> is a subclass of <code>int</code>. A text field containing digits still needs grammar and range validation before it becomes a safe value for arithmetic, persistence or permissions.</p>
+<h3>Runnable example</h3>
+<pre><code class="language-python">def parse_quantity(value: object) -&gt; int:
+    if not isinstance(value, str):
+        raise TypeError(&quot;expected text&quot;)
+    if not value.isascii() or not value.isdecimal():
+        raise ValueError(&quot;ASCII digits only&quot;)
+    number = int(value)
+    if number &gt; 500:
+        raise ValueError(&quot;range 0..500&quot;)
+    return number
+
+assert parse_quantity(&quot;004&quot;) == 4
+for invalid in (&quot;-1&quot;, &quot;3.5&quot;, &quot;٥&quot;, &quot;501&quot;):
+    try:
+        parse_quantity(invalid)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(invalid)
+</code></pre>
+<h3>Interpret the results</h3>
+<p>The accepted grammar allows leading zeros but rejects signs, decimals, non-ASCII numeral symbols, and values above 500. <code>isdecimal()</code> alone would also recognize certain Unicode numeral characters; <code>isascii()</code> explicitly limits this input protocol to ASCII digits. An empty string is rejected because <code>isdecimal()</code> is false.</p>
+<h3>Independent practical lab</h3>
+<p>Extend the function to reject leading zeros except the literal '0'. Test whitespace, True, None, 500, 501 and a 100,000-digit string. Introduce a maximum input length before integer conversion to bound resource consumption. Do not replace every exception with a default zero: invalid text, missing values and a legitimate zero must remain distinguishable.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/stdtypes.html#str.isdecimal</p>
+<h2>Mutable state and aliasing</h2>
+<h3>Core explanation</h3>
+<p>Two variable names can refer to the same mutable object. Copying an outer list does not necessarily copy dictionaries or lists nested within it; a modification through one reference can change another apparently separate view. Rebinding a name is different from mutating the shared object.</p>
+<h3>Runnable example</h3>
+<pre><code class="language-python">from copy import deepcopy
+original = [{&quot;name&quot;: &quot;Ada&quot;, &quot;scores&quot;: [8]}]
+shallow = original.copy()
+shallow[0][&quot;scores&quot;].append(9)
+assert original[0][&quot;scores&quot;] == [8, 9]
+
+isolated = deepcopy(original)
+isolated[0][&quot;scores&quot;].append(10)
+assert original[0][&quot;scores&quot;] == [8, 9]
+assert isolated[0][&quot;scores&quot;] == [8, 9, 10]
+</code></pre>
+<h3>Interpret the results</h3>
+<p>The first <code>copy()</code> duplicates only the outer list; its elements still refer to the original dictionary and nested scores list. <code>deepcopy</code> recursively copies these ordinary containers, so later changes to the isolated copy do not change the source. Deep copying sockets, locks or resource-owning objects is a different problem and may not be valid.</p>
+<h3>Independent practical lab</h3>
+<p>Draw an object graph with arrows from original, shallow and isolated to their inner structures. Rebind shallow[0] to an entirely new dictionary and check if original changes. Next design a function accepting read-only input and returning a new value instead of mutating its parameter. Compare memory cost and behavioral isolation explicitly.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/copy.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,99 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python: ονόματα, τύποι και απόντα κλειδιά — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-947.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Python: ονόματα, τύποι και απόντα κλειδιά NameError Τι συμβαίνει και πότε Το NameError δηλώνει ότι το όνομα που ζητήθηκε δεν ορίζεται στο τρέχον πεδίο. Προκύπτει από τυπογραφικό λάθος, από…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Python: ονόματα, τύποι και απόντα κλειδιά — DedSec Project">
+<meta property="og:description" content="Python: ονόματα, τύποι και απόντα κλειδιά NameError Τι συμβαίνει και πότε Το NameError δηλώνει ότι το όνομα που ζητήθηκε δεν ορίζεται στο τρέχον πεδίο. Προκύπτει από τυπογραφικό λάθος, από…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-947.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Python: ονόματα, τύποι και απόντα κλειδιά — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Python: ονόματα, τύποι και απόντα κλειδιά — DedSec Project">
+<meta name="twitter:description" content="Python: ονόματα, τύποι και απόντα κλειδιά NameError Τι συμβαίνει και πότε Το NameError δηλώνει ότι το όνομα που ζητήθηκε δεν ορίζεται στο τρέχον πεδίο. Προκύπτει από τυπογραφικό λάθος, από…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Python: ονόματα, τύποι και απόντα κλειδιά — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Python: ονόματα, τύποι και απόντα κλειδιά — DedSec Project</h1><p>Python: ονόματα, τύποι και απόντα κλειδιά NameError Τι συμβαίνει και πότε Το NameError δηλώνει ότι το όνομα που ζητήθηκε δεν ορίζεται στο τρέχον πεδίο. Προκύπτει από τυπογραφικό λάθος, από…</p><section><h2>NameError</h2>
+<h3>Τι συμβαίνει και πότε</h3>
+<p>Το NameError δηλώνει ότι το όνομα που ζητήθηκε δεν ορίζεται στο τρέχον πεδίο. Προκύπτει από τυπογραφικό λάθος, από ανάθεση που δεν εκτελέστηκε, από λανθασμένη σειρά αρχικοποίησης ή από εισαγωγή διαφορετικού module. Αν υπάρχει τοπική ανάθεση μέσα σε συνάρτηση, η πρώιμη χρήση μπορεί να δώσει UnboundLocalError.</p>
+<h3>Αυτοτελές εκτελέσιμο παράδειγμα</h3>
+<p>Αποθήκευσε το παράδειγμα ως 004_NameError.py και εκτέλεσε <code>python3 004_NameError.py</code>. Ο έλεγχος καλύπτει τη λανθασμένη είσοδο και τη διορθωμένη περίπτωση.</p>
+<pre><code class="language-python">def discount(price, eligible):
+    amount = price
+    if eligible:
+        amount = price * 0.9
+    return amount
+assert discount(100, True) == 90
+assert discount(100, False) == 100
+try:
+    eval(&quot;ammount&quot;, {})
+except NameError as exc:
+    assert &quot;ammount&quot; in str(exc)
+else:
+    raise AssertionError(&quot;misspelling was not caught&quot;)
+</code></pre>
+<h3>Διαγνωστική διαδικασία και ασφαλής διόρθωση</h3>
+<p>Ξεκίνα από την ακριβή ορθογραφία του traceback και το scope της συνάρτησης. Ακολούθησε τους κλάδους συνθηκών με την είσοδο που απέτυχε. Μη διορθώνεις το πρόβλημα προσθέτοντας αυθαίρετες τιμές στο globals(). Σε notebook επανεκκίνησε το kernel και εκτέλεσε όλα τα cells με τη σωστή σειρά.</p>
+<h3>Πρακτικό εργαστήριο / έλεγχος ορίων</h3>
+<p>Βάλε την αρχικοποίηση του amount μόνο μέσα στο if eligible. Βρες την αποτυχία όταν eligible=False, μετέφερε την αρχικοποίηση έξω και γράψε δύο τεστ. Έπειτα σύγκρινε NameError με UnboundLocalError σε συνάρτηση που διαβάζει x πριν από x = 1.</p>
+<h2>TypeError</h2>
+<h3>Τι συμβαίνει και πότε</h3>
+<p>Το TypeError εμφανίζεται όταν μια πράξη ή κλήση δέχεται μη συμβατούς τύπους: πρόσθεση str και int, κλήση μη callable τιμής, άγνωστο keyword ή ελλιπείς παραμέτρους. Πριν μετατρέψεις τύπους, βρες αν φταίει ο καλών κώδικας ή το συμβόλαιο API. Οι σιωπηρές μετατροπές μπορεί να κρύβουν προβλήματα εισόδου.</p>
+<h3>Αυτοτελές εκτελέσιμο παράδειγμα</h3>
+<p>Αποθήκευσε το παράδειγμα ως 006_TypeError.py και εκτέλεσε <code>python3 006_TypeError.py</code>. Ο έλεγχος καλύπτει τη λανθασμένη είσοδο και τη διορθωμένη περίπτωση.</p>
+<pre><code class="language-python">def total_cost(price, quantity):
+    if not isinstance(price, (int, float)):
+        raise TypeError(&quot;price must be numeric&quot;)
+    if type(quantity) is not int:
+        raise TypeError(&quot;quantity must be an integer&quot;)
+    return price * quantity
+assert total_cost(2.5, 3) == 7.5
+try:
+    total_cost(&quot;2.5&quot;, 3)
+except TypeError as exc:
+    assert &quot;numeric&quot; in str(exc)
+else:
+    raise AssertionError(&quot;invalid type accepted&quot;)
+</code></pre>
+<h3>Διαγνωστική διαδικασία και ασφαλής διόρθωση</h3>
+<p>Έλεγξε type(value), repr(value), την υπογραφή της συνάρτησης και το πρώτο σχετικό frame του traceback. Οι τιμές από input() ή JSON δεν έχουν πάντα τον αναμενόμενο τύπο. Κάνε έλεγχο στα όρια της εφαρμογής και ρητή μετατροπή μόνο όταν επιτρέπεται. Το bool είναι υποκλάση του int· χρησιμοποίησε type(x) is int όταν το True δεν πρέπει να σημαίνει μία μονάδα.</p>
+<h3>Πρακτικό εργαστήριο / έλεγχος ορίων</h3>
+<p>Επέκτεινε το συμβόλαιο ώστε να απορρίπτει αρνητική ποσότητα και μη πεπερασμένη τιμή. Ποιο σφάλμα είναι σωστό: TypeError ή ValueError; Τεκμηρίωσε τη διάκριση και γράψε assert για True ως ποσότητα και NaN ως τιμή.</p>
+<h2>KeyError</h2>
+<h3>Τι συμβαίνει και πότε</h3>
+<p>Το dict[key] προκαλεί KeyError όταν λείπει το κλειδί. Ο χειρισμός εξαρτάται από το σχήμα: ένα προαιρετικό εμφανιζόμενο όνομα μπορεί να έχει προεπιλογή, αλλά η απουσία αναγνωριστικού συναλλαγής είναι παραβίαση συμβολαίου. Η καθολική χρήση get() μπορεί να μετατρέπει χαλασμένα δεδομένα σε φαινομενικά έγκυρα.</p>
+<h3>Αυτοτελές εκτελέσιμο παράδειγμα</h3>
+<p>Αποθήκευσε το παράδειγμα ως 008_KeyError.py και εκτέλεσε <code>python3 008_KeyError.py</code>. Ο έλεγχος καλύπτει τη λανθασμένη είσοδο και τη διορθωμένη περίπτωση.</p>
+<pre><code class="language-python">def label(record):
+    order_id = record[&quot;id&quot;]  # required
+    nickname = record.get(&quot;nickname&quot;)
+    return f&quot;{order_id}: {nickname or 'Guest'}&quot;
+assert label({&quot;id&quot;: 7}) == &quot;7: Guest&quot;
+assert label({&quot;id&quot;: 7, &quot;nickname&quot;: &quot;Ada&quot;}) == &quot;7: Ada&quot;
+try:
+    label({&quot;nickname&quot;: &quot;Ada&quot;})
+except KeyError as exc:
+    assert exc.args == (&quot;id&quot;,)
+else:
+    raise AssertionError(&quot;required key was optional&quot;)
+</code></pre>
+<h3>Διαγνωστική διαδικασία και ασφαλής διόρθωση</h3>
+<p>Για μη ευαίσθητα δοκιμαστικά δεδομένα κατέγραψε sorted(record.keys()), όχι ολόκληρα πραγματικά payloads. Σύγκρινε το schema με το αποτέλεσμα του parser. Όταν το None είναι έγκυρη αποθηκευμένη τιμή, το get() δεν ξεχωρίζει απουσία από ρητή τιμή None χωρίς sentinel.</p>
+<h3>Πρακτικό εργαστήριο / έλεγχος ορίων</h3>
+<p>Δημιούργησε sentinel = object() και ξεχώρισε αν λείπει το nickname, αν είναι None ή αν είναι ''. Όρισε συμπεριφορά εμφάνισης για κάθε περίπτωση, διατηρώντας υποχρεωτικό το id, και έλεγξε και τα τρία όρια.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,71 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Database relation access and shell parsing failures — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-150.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Database relation access and shell parsing failures relation does not exist Exact diagnosis PostgreSQL error 42P01 reports an unresolved relation name. The table may exist in another…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Database relation access and shell parsing failures — DedSec Project">
+<meta property="og:description" content="Database relation access and shell parsing failures relation does not exist Exact diagnosis PostgreSQL error 42P01 reports an unresolved relation name. The table may exist in another…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-150.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Database relation access and shell parsing failures — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Database relation access and shell parsing failures — DedSec Project">
+<meta name="twitter:description" content="Database relation access and shell parsing failures relation does not exist Exact diagnosis PostgreSQL error 42P01 reports an unresolved relation name. The table may exist in another…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Database relation access and shell parsing failures — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Database relation access and shell parsing failures — DedSec Project</h1><p>Database relation access and shell parsing failures relation does not exist Exact diagnosis PostgreSQL error 42P01 reports an unresolved relation name. The table may exist in another…</p><section><h2>relation does not exist</h2>
+<h3>Exact diagnosis</h3>
+<p>PostgreSQL error 42P01 reports an unresolved relation name. The table may exist in another database or schema, may be absent because migrations did not run, or may require a quoted mixed-case identifier. Unquoted identifiers are folded to lowercase in PostgreSQL; this differs from naive expectations when importing schemas.</p>
+<h3>Disposable reproduction or inspection</h3>
+<p>Run only on an isolated local database or an authorized nonproduction environment.</p>
+<pre><code class="language-sql">-- Execute on an isolated PostgreSQL database, not production.
+SELECT current_database(), current_schema();
+SHOW search_path;
+SELECT to_regclass('public.orders');
+SELECT table_schema, table_name
+FROM information_schema.tables
+WHERE table_name ILIKE 'orders';
+-- Compare public.orders with explicitly quoted &quot;Orders&quot;.
+</code></pre>
+<h3>Resolution procedure</h3>
+<p>First confirm which connection string and database the application really uses. Inspect current_schema() and search_path, then qualify the relation as schema_name.table_name. Verify migration state and ownership without creating tables just to silence the error. Dynamic identifiers must be composed with safe identifier quoting, not value placeholders.</p>
+<h3>Lab and boundary conditions</h3>
+<p>Create a table in a dedicated lab schema; show that an unqualified lookup may fail when search_path excludes that schema but a qualified lookup succeeds. Compare names orders and &quot;Orders&quot;. Clean up only the temporary lab schema.</p>
+<h2>permission denied for relation</h2>
+<h3>Exact diagnosis</h3>
+<p>PostgreSQL error 42501 indicates insufficient privilege on an object for the current role. Permission on the database is not the same as permission on a particular table or schema. Table SELECT privileges, schema USAGE, sequences used by inserts and row-level security can be separate issues. Do not switch the application to a superuser to make the error disappear.</p>
+<h3>Disposable reproduction or inspection</h3>
+<p>Run only on an isolated local database or an authorized nonproduction environment.</p>
+<pre><code class="language-sql">-- Run read-only role checks as an authorized operator:
+SELECT current_user, session_user, current_database();
+SELECT has_schema_privilege(current_user, 'public', 'USAGE');
+SELECT has_table_privilege(current_user, 'public.orders', 'SELECT');
+-- Inspect granted privileges through information_schema
+-- or psql \dp for the specific relation.
+</code></pre>
+<h3>Resolution procedure</h3>
+<p>Capture the required operation (SELECT, INSERT, UPDATE or DELETE) and the effective database role. Inspect schema USAGE, table grants and relevant sequence permissions. A database administrator should grant the minimum privileges to the intended role after review; avoid GRANT ALL to PUBLIC. For row-level security, distinguish a denied table privilege from permitted SQL returning zero visible rows.</p>
+<h3>Lab and boundary conditions</h3>
+<p>In a disposable PostgreSQL database create a read-only test role, grant schema USAGE and SELECT on one table, and verify reading succeeds while INSERT fails. Record the exact grant and revoke commands for cleanup, and confirm unrelated tables remain inaccessible.</p>
+<h2>unexpected EOF while looking for matching</h2>
+<p><strong>Language / environment:</strong> Bash</p>
+<h3>Meaning</h3>
+<p>A quote or block delimiter is not closed.</p>
+<h3>Repair</h3>
+<p>Check quotes and here-doc terminators above the final reported line.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

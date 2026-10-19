@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>AssertionError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-99.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Python AssertionError — invariant failure versus production input validation Meaning and root cause An assertion checks a programmer&#x27;s assumption during testing or debugging. In Python…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="AssertionError — DedSec Project">
+<meta property="og:description" content="Python AssertionError — invariant failure versus production input validation Meaning and root cause An assertion checks a programmer&#x27;s assumption during testing or debugging. In Python…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-99.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AssertionError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AssertionError — DedSec Project">
+<meta name="twitter:description" content="Python AssertionError — invariant failure versus production input validation Meaning and root cause An assertion checks a programmer&#x27;s assumption during testing or debugging. In Python…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="AssertionError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>AssertionError — DedSec Project</h1><p>Python AssertionError — invariant failure versus production input validation Meaning and root cause An assertion checks a programmer&#x27;s assumption during testing or debugging. In Python…</p><section><h1>Python AssertionError — invariant failure versus production input validation</h1>
+<h2>Meaning and root cause</h2>
+<p>An assertion checks a programmer's assumption during testing or debugging. In Python, optimized execution using -O removes assert statements, including the evaluation of their condition. Do not authorize access, validate data, or enforce a resource limit using assert. A failing AssertionError from a unit test may signal a wrong expected result, an incorrect implementation, or a missing precondition.</p>
+<h2>Corrective approach</h2>
+<p>Implement a parse_limit boundary that validates ASCII decimal text and a range of 1 to 100 with ValueError, independently of optimization. Assertion statements test the expected output but are not the implementation's safety mechanism. A small collection of bad values must remain rejected under both normal and optimized Python execution.</p>
+<h2>Executable example</h2>
+<p>Save as assertion_lab.py.</p>
+<pre><code class="language-python">def parse_limit(text):
+    if not text.isascii() or not text.isdecimal():
+        raise ValueError('limit must contain ASCII decimal digits')
+    value = int(text)
+    if not 1 &lt;= value &lt;= 100:
+        raise ValueError('limit must be between 1 and 100')
+    return value
+
+assert parse_limit('12') == 12
+for bad in ('-1', '101', '1.5', ''):
+    try:
+        parse_limit(bad)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError('invalid limit accepted: ' + bad)
+print('PASS: validation always runs; assertions are only tests')
+</code></pre>
+<h2>Why this is different</h2>
+<p>The code uses text.isdecimal together with text.isascii so Unicode decimal-like characters outside ASCII do not silently become part of a configuration format. The input '0' parses as an integer but is outside the accepted range. The for loop raises AssertionError manually only if a rejected input unexpectedly succeeds; it is independent of Python's optimized assert removal.</p>
+<h2>Exact validation</h2>
+<p>Run python3 assertion_lab.py and python3 -O assertion_lab.py. Both should print PASS, because bad inputs raise ValueError even when assertions are stripped. To observe the optimization distinction safely, run python3 -c 'assert False' and python3 -O -c 'assert False; print(&quot;assert skipped&quot;)' separately; the first must fail while the second prints a message.</p>
+<h2>Guided experiments</h2>
+<p>Introduce a new bad value such as '٠' (Arabic-Indic digit) and explain why the documented ASCII-only contract rejects it. Record the precise call frame where a real AssertionError originated, inspect actual versus expected values, and never remove a failing test solely to make CI green. For untrusted input, choose explicit validation and typed exceptions.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

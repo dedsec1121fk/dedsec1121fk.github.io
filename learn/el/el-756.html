@@ -1,0 +1,48 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>GameMaker_Language — Αναλυτικός οδηγός εξάσκησης — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-756.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="GameMaker Language — έγκυρα όρια ζωής παίκτη Γράψε βοηθητική συνάρτηση GML Αναμένονται οι τιμές 100 και 0 στο debug output. Η clamp περιορίζει αριθμούς αλλά δεν εξακριβώνει ότι οποιαδήποτε…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="GameMaker_Language — Αναλυτικός οδηγός εξάσκησης — DedSec Project">
+<meta property="og:description" content="GameMaker Language — έγκυρα όρια ζωής παίκτη Γράψε βοηθητική συνάρτηση GML Αναμένονται οι τιμές 100 και 0 στο debug output. Η clamp περιορίζει αριθμούς αλλά δεν εξακριβώνει ότι οποιαδήποτε…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-756.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GameMaker_Language — Αναλυτικός οδηγός εξάσκησης — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GameMaker_Language — Αναλυτικός οδηγός εξάσκησης — DedSec Project">
+<meta name="twitter:description" content="GameMaker Language — έγκυρα όρια ζωής παίκτη Γράψε βοηθητική συνάρτηση GML Αναμένονται οι τιμές 100 και 0 στο debug output. Η clamp περιορίζει αριθμούς αλλά δεν εξακριβώνει ότι οποιαδήποτε…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="GameMaker_Language — Αναλυτικός οδηγός εξάσκησης — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>GameMaker_Language — Αναλυτικός οδηγός εξάσκησης — DedSec Project</h1><p>GameMaker Language — έγκυρα όρια ζωής παίκτη Γράψε βοηθητική συνάρτηση GML Αναμένονται οι τιμές 100 και 0 στο debug output. Η clamp περιορίζει αριθμούς αλλά δεν εξακριβώνει ότι οποιαδήποτε…</p><section><h1>GameMaker Language — έγκυρα όρια ζωής παίκτη</h1>
+<h2>Γράψε βοηθητική συνάρτηση GML</h2>
+<pre><code class="language-gml">function safe_hp(value) {
+    return clamp(value, 0, 100);
+}
+var a = safe_hp(120);
+var b = safe_hp(-5);
+show_debug_message(a);
+show_debug_message(b);
+</code></pre>
+<p>Αναμένονται οι τιμές 100 και 0 στο debug output. Η clamp περιορίζει αριθμούς αλλά δεν εξακριβώνει ότι οποιαδήποτε είσοδος είναι του σωστού τύπου. Σημείωσε την έκδοση GameMaker της δοκιμής.</p>
+<h2>Χρήση με events</h2>
+<p>Στο Create event όρισε hp = 100. Σε collision event αφαίρεσε damage μέσω safe_hp(hp - damage). Αν περιορίζεις μόνο την εμφάνιση του HUD, η πραγματική μεταβλητή μπορεί να μείνει αρνητική και να προκαλέσει διπλή μετάβαση σε θάνατο.</p>
+<h2>Αναπαραγωγή και διόρθωση</h2>
+<p>Αφαίρεσε προσωρινά τη safe_hp σε αντίγραφο δοκιμής και εφάρμοσε damage μεγαλύτερο από 100. Επανέφερε τη συνάρτηση και έλεγξε 0, 100, 101 και πολλαπλά χτυπήματα. Πρόσθεσε σημαία deathHandled για μία μόνο μετάβαση. Κατάγραψε σειρά Step/Collision events όταν δοκιμάσεις το παιχνίδι· εδώ δεν δηλώνεται εκτέλεση.</p>
+<h2>Απότρεψε διπλή μετάβαση σε θάνατο</h2>
+<p>Το αντικείμενο μπορεί να δεχτεί περισσότερα από ένα collision events πριν την επόμενη ορατή ανανέωση. Βάλε Boolean dead: πριν αφαιρέσεις επιπλέον ζωή έλεγξε αν είναι ήδη true και όταν hp γίνει μηδέν άλλαξέ το ακριβώς μία φορά. Κράτησε μετρητή deathTransitions και δοκίμασε ότι δεν αυξάνεται πάνω από 1 μετά από πολλά γρήγορα χτυπήματα. Χώρισε τη μόνιμη κατάσταση από τα εφέ: μια έκρηξη σωματιδίων εκτελείται μία φορά, ενώ το health bar μπορεί να διαβάζει συνέχεια hp. Έλεγξε αλλαγή room και restart ώστε οι μεταβλητές να επανέρχονται. Κρυφή αρνητική hp που στο UI φαίνεται ως μηδέν δεν είναι σωστή διόρθωση.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

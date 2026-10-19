@@ -1,0 +1,93 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-126.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations Logging Έννοια και όρια Καταγραφή συμβάντων με severity, timestamps και correlation IDs για διάγνωση. Τα logs μπορούν να εκθέσουν tokens…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations — DedSec Project">
+<meta property="og:description" content="Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations Logging Έννοια και όρια Καταγραφή συμβάντων με severity, timestamps και correlation IDs για διάγνωση. Τα logs μπορούν να εκθέσουν tokens…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-126.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations — DedSec Project">
+<meta name="twitter:description" content="Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations Logging Έννοια και όρια Καταγραφή συμβάντων με severity, timestamps και correlation IDs για διάγνωση. Τα logs μπορούν να εκθέσουν tokens…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations — DedSec Project</h1><p>Γλωσσάρι: καταγραφή, διαρροές μνήμης και migrations Logging Έννοια και όρια Καταγραφή συμβάντων με severity, timestamps και correlation IDs για διάγνωση. Τα logs μπορούν να εκθέσουν tokens…</p><section><h2>Logging</h2>
+<h3>Έννοια και όρια</h3>
+<p>Καταγραφή συμβάντων με severity, timestamps και correlation IDs για διάγνωση. Τα logs μπορούν να εκθέσουν tokens ή προσωπικά στοιχεία χωρίς σωστό sanitization.</p>
+<h3>Πρακτικό δείγμα</h3>
+<pre><code class="language-text">import logging
+logging.basicConfig(level=logging.INFO)
+logging.info('processed %d records',3)
+</code></pre>
+<h3>Οδηγούμενη διερεύνηση</h3>
+<p>Κατέγραψε απορριφθείσα εγγραφή με συνθετικό request ID χωρίς credentials. Έλεγξε ποια fields φτάνουν στον handler, όχι μόνο το console.</p>
+<h3>Κριτήριο κατανόησης</h3>
+<p>Στην έννοια Καταγραφή συμβάντων, άλλαξε μία είσοδο του παραδείγματος και εξήγησε αν η συμπεριφορά συνεχίζει να συμφωνεί με τον ορισμό. Κατέγραψε αποτέλεσμα και ξεχώρισε σφάλμα κώδικα από λανθασμένη υπόθεση.</p>
+<h2>Memory leak</h2>
+<h3>Έννοια και όρια</h3>
+<p>Ακούσια διατήρηση αντικειμένων πέρα από τη χρήσιμη διάρκεια ζωής τους. Μακρόβιες caches, callbacks και references προκαλούν προβλήματα ακόμη και με garbage collector. Μεγάλη μνήμη δεν σημαίνει πάντα leak.</p>
+<h3>Πρακτικό δείγμα</h3>
+<pre><code class="language-text">from collections import deque
+recent=deque(maxlen=10)
+for n in range(10000): recent.append(n)
+assert len(recent)==10
+</code></pre>
+<h3>Οδηγούμενη διερεύνηση</h3>
+<p>Σύγκρινε unbounded list με bounded deque σε επαναλαμβανόμενες εισόδους. Χρησιμοποίησε tracemalloc snapshots για retained allocations.</p>
+<h3>Retained references που παρατείνουν τη ζωή objects</h3>
+<p>Ένα object μπορεί να παραμένει προσβάσιμο από registry παρότι η αρχική τοπική μεταβλητή διαγράφτηκε. Το weak reference επιτρέπει έλεγχο χωρίς τεράστια allocations.</p>
+<pre><code class="language-python">import gc, weakref
+class Entry: pass
+registry = []
+entry = Entry()
+watch = weakref.ref(entry)
+registry.append(entry)
+del entry
+gc.collect()
+assert watch() is not None
+registry.clear()
+gc.collect()
+assert watch() is None
+</code></pre>
+<p>Σχεδίασε cache με όριο 100 entries και μέτρησε objects μετά από χιλιάδες διαφορετικά keys. Μόνο το RSS δεν αποδεικνύει leak: ο allocator μπορεί να κρατά ελεύθερα pools.</p>
+<h2>Migration</h2>
+<h3>Έννοια και όρια</h3>
+<p>Ελεγχόμενη αναβάθμιση schema ή έκδοσης. Migration λαμβάνει υπόψη παλιές γραμμές, σταδιακό deployment και επιλογές rollback, όχι μόνο μία αλλαγή σχήματος.</p>
+<h3>Πρακτικό δείγμα</h3>
+<pre><code class="language-text">CREATE TABLE tasks(id INTEGER PRIMARY KEY,title TEXT);
+ALTER TABLE tasks ADD COLUMN archived INTEGER NOT NULL DEFAULT 0;
+</code></pre>
+<h3>Οδηγούμενη διερεύνηση</h3>
+<p>Χρησιμοποίησε προσωρινή SQLite με παλιές γραμμές· έλεγξε ότι το νέο archived είναι 0 και σχεδίασε rollback.</p>
+<h3>Κριτήριο κατανόησης</h3>
+<p>Στην έννοια Μετάβαση σχήματος, άλλαξε μία είσοδο του παραδείγματος και εξήγησε αν η συμπεριφορά συνεχίζει να συμφωνεί με τον ορισμό. Κατέγραψε αποτέλεσμα και ξεχώρισε σφάλμα κώδικα από λανθασμένη υπόθεση.</p>
+<h3>Αλλαγή schema χωρίς απώλεια παλιών εγγραφών</h3>
+<p>Μία migration είναι σωστή όταν οι υπάρχουσες εγγραφές παραμένουν έγκυρες και το νέο schema υποστηρίζεται από την εφαρμογή.</p>
+<pre><code class="language-python">import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;CREATE TABLE tasks(id INTEGER PRIMARY KEY,title TEXT)&quot;)
+db.execute(&quot;INSERT INTO tasks(title) VALUES (?)&quot;, (&quot;review&quot;,))
+with db:
+    db.execute(&quot;ALTER TABLE tasks ADD COLUMN archived INTEGER NOT NULL DEFAULT 0&quot;)
+assert db.execute(&quot;SELECT title,archived FROM tasks&quot;).fetchone() == (&quot;review&quot;,0)
+db.close()
+</code></pre>
+<p>Πρόσθεσε PRAGMA user_version και εκτέλεσε upgrade δύο φορές. Τη δεύτερη πρέπει να ανιχνεύεται ότι έχει ήδη εφαρμοστεί. Για destructive migrations σχεδίασε backup/rollback πριν από αλλαγές. Τα DDL semantics διαφέρουν ανά engine.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

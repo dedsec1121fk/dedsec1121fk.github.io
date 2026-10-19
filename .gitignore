@@ -1,1 +1,5 @@
-_site/
+__pycache__/
+*.py[cod]
+.site-publish/
+browser-screenshots/
+Deployment/Generated/

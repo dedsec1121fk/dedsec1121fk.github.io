@@ -1,0 +1,89 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Debugging, Crash Triage και Root-Cause Analysis — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-065.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Debugging, Crash Triage και Root-Cause Analysis Ελληνική έκδοση — Μάθημα 065. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Debugging, Crash Triage και Root-Cause Analysis — DedSec Project">
+<meta property="og:description" content="Debugging, Crash Triage και Root-Cause Analysis Ελληνική έκδοση — Μάθημα 065. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-065.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Debugging, Crash Triage και Root-Cause Analysis — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Debugging, Crash Triage και Root-Cause Analysis — DedSec Project">
+<meta name="twitter:description" content="Debugging, Crash Triage και Root-Cause Analysis Ελληνική έκδοση — Μάθημα 065. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Debugging, Crash Triage και Root-Cause Analysis — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Debugging, Crash Triage και Root-Cause Analysis — DedSec Project</h1><p>Debugging, Crash Triage και Root-Cause Analysis Ελληνική έκδοση — Μάθημα 065. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 065.</strong> Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια.</p>
+</blockquote>
+<h2>Στόχος του μαθήματος</h2>
+<p>Σε αυτό το μάθημα εστιάζεις ειδικά στο <strong>Debugging, Crash Triage και Root-Cause Analysis</strong>. Στο τέλος πρέπει να μπορείς να περιγράψεις το security model με δικά σου λόγια, να αναγνωρίζεις τα βασικά failure modes, να σχεδιάζεις ασφαλή test cases και να εξηγείς ποιο evidence χρειάζεται για να στηριχθεί ένα συμπέρασμα.</p>
+<h2>Θέματα που καλύπτονται</h2>
+<ul>
+<li><strong>Why a crash is only the beginning</strong>
+Στο <strong>Why a crash is only the beginning</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+<li><strong>First-response checklist</strong>
+Για το <strong>First-response checklist</strong>, παρακολούθησε το input από client μέχρι parser/framework/backend και πίσω. Κατέγραψε normalization, origin/session context, server-side authorization και output handling ώστε να εντοπίζεις το ακριβές trust boundary.</li>
+<li><strong>Crash classes</strong>
+Στο <strong>Crash classes</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+<li><strong>Invalid memory access</strong>
+Στο <strong>Invalid memory access</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+<li><strong>Assertion or explicit abort</strong>
+Στο <strong>Assertion or explicit abort</strong>, ξεχώρισε root cause από exploitability. Κατέγραψε faulting operation, object lifetime/size, register και memory context, ενεργές mitigations και το μικρότερο harmless reproducer· επιβεβαίωσε τη διόρθωση με sanitizer/debugger και regression test.</li>
+<li><strong>Stack exhaustion</strong>
+Στο <strong>Stack exhaustion</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+<li><strong>Resource exhaustion</strong>
+Στο <strong>Resource exhaustion</strong>, ξεχώρισε root cause από exploitability. Κατέγραψε faulting operation, object lifetime/size, register και memory context, ενεργές mitigations και το μικρότερο harmless reproducer· επιβεβαίωσε τη διόρθωση με sanitizer/debugger και regression test.</li>
+<li><strong>Race-related fault</strong>
+Στο <strong>Race-related fault</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+<li><strong>Build for diagnosis</strong>
+Για το <strong>Build for diagnosis</strong>, χαρτογράφησε control plane, workload identity, permissions, artifact/data provenance και lifecycle. Έλεγξε πώς δημιουργείται authority, πού κληρονομείται, πώς ανακαλείται και τι audit trail παραμένει.</li>
+<li><strong>Reading a stack trace</strong>
+Στο <strong>Reading a stack trace</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+<li><strong>Registers and fault context</strong>
+Στο <strong>Registers and fault context</strong>, ξεχώρισε root cause από exploitability. Κατέγραψε faulting operation, object lifetime/size, register και memory context, ενεργές mitigations και το μικρότερο harmless reproducer· επιβεβαίωσε τη διόρθωση με sanitizer/debugger και regression test.</li>
+<li><strong>Core dumps and minidumps</strong>
+Στο <strong>Core dumps and minidumps</strong>, ξεχώρισε root cause από exploitability. Κατέγραψε faulting operation, object lifetime/size, register και memory context, ενεργές mitigations και το μικρότερο harmless reproducer· επιβεβαίωσε τη διόρθωση με sanitizer/debugger και regression test.</li>
+<li><strong>Minimize the reproducer</strong>
+Στο <strong>Minimize the reproducer</strong>, ξεχώρισε root cause από exploitability. Κατέγραψε faulting operation, object lifetime/size, register και memory context, ενεργές mitigations και το μικρότερο harmless reproducer· επιβεβαίωσε τη διόρθωση με sanitizer/debugger και regression test.</li>
+<li><strong>Triage memory corruption</strong>
+Στο <strong>Triage memory corruption</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+<li><strong>Exploitability is a separate assessment</strong>
+Στο <strong>Exploitability is a separate assessment</strong>, ξεχώρισε root cause από exploitability. Κατέγραψε faulting operation, object lifetime/size, register και memory context, ενεργές mitigations και το μικρότερο harmless reproducer· επιβεβαίωσε τη διόρθωση με sanitizer/debugger και regression test.</li>
+<li><strong>Patch quality</strong>
+Στο <strong>Patch quality</strong>, ξεχώρισε root cause από exploitability. Κατέγραψε faulting operation, object lifetime/size, register και memory context, ενεργές mitigations και το μικρότερο harmless reproducer· επιβεβαίωσε τη διόρθωση με sanitizer/debugger και regression test.</li>
+<li><strong>Safe debugger lab</strong>
+Για το <strong>Safe debugger lab</strong>, στο πλαίσιο του <strong>Debugging, Crash Triage και Root-Cause Analysis</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Crash-report template</strong>
+Στο <strong>Crash-report template</strong>, σύνδεσε τον υψηλού επιπέδου μηχανισμό με process, memory και runtime state. Χρησιμοποίησε harmless samples, debugger/sanitizer ή static analysis σε lab και κατέγραψε root cause, mitigation και observable artifacts.</li>
+</ul>
+<h2>Μέθοδος ανάλυσης</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a> για scope, evidence, note-taking και κριτήρια ολοκλήρωσης. Για το <strong>Debugging, Crash Triage και Root-Cause Analysis</strong>, πριν κάνεις οποιοδήποτε test σχεδίασε τα components, σημείωσε πού αλλάζει η εμπιστοσύνη και γράψε μία πρόταση που περιγράφει το security invariant που θέλεις να ελέγξεις.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Ακολούθησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>: γράψε expected result πριν το test, άλλαξε μία μεταβλητή κάθε φορά, κράτησε sanitized evidence και κάνε retest μετά το hardening του <strong>Debugging, Crash Triage και Root-Cause Analysis</strong>.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ul>
+<li>Μπορείς να εξηγήσεις το βασικό trust boundary του <strong>Debugging, Crash Triage και Root-Cause Analysis</strong> χωρίς σημειώσεις;</li>
+<li>Μπορείς να δώσεις ένα failure mode και να πεις ποιο evidence θα το επιβεβαίωνε;</li>
+<li>Μπορείς να ξεχωρίσεις symptom, root cause και compensating control;</li>
+<li>Μπορείς να σχεδιάσεις ασφαλές retest που δεν επεκτείνει το scope;</li>
+</ul>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p><a href="../en/hgp-en-065.html">English Module 065</a></p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

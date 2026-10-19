@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Algorithms and collections — hashing, queues and ordering — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-212.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Algorithms and collections — hashing, queues and ordering Hash maps and sets Mechanism and scope Hash maps associate keys with values and sets track membership. Average hash lookup is often…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Algorithms and collections — hashing, queues and ordering — DedSec Project">
+<meta property="og:description" content="Algorithms and collections — hashing, queues and ordering Hash maps and sets Mechanism and scope Hash maps associate keys with values and sets track membership. Average hash lookup is often…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-212.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Algorithms and collections — hashing, queues and ordering — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Algorithms and collections — hashing, queues and ordering — DedSec Project">
+<meta name="twitter:description" content="Algorithms and collections — hashing, queues and ordering Hash maps and sets Mechanism and scope Hash maps associate keys with values and sets track membership. Average hash lookup is often…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Algorithms and collections — hashing, queues and ordering — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Algorithms and collections — hashing, queues and ordering — DedSec Project</h1><p>Algorithms and collections — hashing, queues and ordering Hash maps and sets Mechanism and scope Hash maps associate keys with values and sets track membership. Average hash lookup is often…</p><section><h2>Hash maps and sets</h2>
+<h3>Mechanism and scope</h3>
+<p>Hash maps associate keys with values and sets track membership. Average hash lookup is often O(1), but equality/hash rules matter and an adversarial collision pattern can affect performance.</p>
+<h3>Implementation example</h3>
+<pre><code class="language-python">from collections import Counter
+counts=Counter(['red','blue','red'])
+assert counts['red']==2
+assert {'red','blue'}==set(counts)
+</code></pre>
+<h3>Reproduce and investigate</h3>
+<p>Implement duplicate detection with a set, then compare against nested-list searches. Test hashability of a list as a key and identify TypeError.</p>
+<h3>Evidence to record</h3>
+<p>For Hash maps and sets, document the exact input that changes this outcome, the operation responsible for the change, and one falsifying test. Measure memory or timing only where it changes the claim, and do not treat a successful demonstration as a proof for every input.</p>
+<h2>Stacks and queues</h2>
+<h3>Mechanism and scope</h3>
+<p>A stack processes newest items first (LIFO); a queue processes oldest first (FIFO). DFS is naturally stack-based and breadth-first traversal queue-based, so substituting one changes search order.</p>
+<h3>Implementation example</h3>
+<pre><code class="language-python">from collections import deque
+s=[1,2]; q=deque([1,2]);
+assert s.pop()==2
+assert q.popleft()==1
+</code></pre>
+<h3>Reproduce and investigate</h3>
+<p>Validate parentheses using a stack, then schedule tasks using a deque. Explain why list.pop(0) differs in complexity from deque.popleft().</p>
+<h3>Evidence to record</h3>
+<p>For Stacks and queues, document the exact input that changes this outcome, the operation responsible for the change, and one falsifying test. Measure memory or timing only where it changes the claim, and do not treat a successful demonstration as a proof for every input.</p>
+<h2>Sorting and stable ordering</h2>
+<h3>Mechanism and scope</h3>
+<p>A stable sort keeps the prior relative order of elements that compare equal. This supports multi-key sorting by applying stable passes from least significant to most significant key.</p>
+<h3>Implementation example</h3>
+<pre><code class="language-python">rows=[('Ada',2),('Bob',1),('Carl',2)]
+result=sorted(rows,key=lambda r:r[1]);
+assert result==[('Bob',1),('Ada',2),('Carl',2)]
+</code></pre>
+<h3>Reproduce and investigate</h3>
+<p>Reverse input order of equal-score rows and inspect stability. Add a primary name sort followed by score sort; explain how order of passes changes the final result.</p>
+<h3>Evidence to record</h3>
+<p>For Sorting and stable ordering, document the exact input that changes this outcome, the operation responsible for the change, and one falsifying test. Measure memory or timing only where it changes the claim, and do not treat a successful demonstration as a proof for every input.</p>
+<h2>Further engineering detail</h2>
+<p>An ordered traversal needs a unique tie-breaker even when a hash map efficiently finds individual records. For paginated database results, persist the complete sort key in the cursor. This avoids confusing lookup identity with traversal order, especially when many events share one timestamp.</p>
+<p><a href="../en/fieldnotes-en-38.html">Keyset pagination with stable ordering</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

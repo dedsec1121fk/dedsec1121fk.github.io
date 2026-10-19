@@ -1,0 +1,142 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Malware Analysis and Behavioral Triage — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-079.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Malware Analysis and Behavioral Triage Purpose: Learn professional malware-analysis methodology using isolated samples and benign training binaries, with emphasis on understanding behavior…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Malware Analysis and Behavioral Triage — DedSec Project">
+<meta property="og:description" content="Malware Analysis and Behavioral Triage Purpose: Learn professional malware-analysis methodology using isolated samples and benign training binaries, with emphasis on understanding behavior…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-079.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Malware Analysis and Behavioral Triage — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Malware Analysis and Behavioral Triage — DedSec Project">
+<meta name="twitter:description" content="Malware Analysis and Behavioral Triage Purpose: Learn professional malware-analysis methodology using isolated samples and benign training binaries, with emphasis on understanding behavior…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Malware Analysis and Behavioral Triage — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Malware Analysis and Behavioral Triage — DedSec Project</h1><p>Malware Analysis and Behavioral Triage Purpose: Learn professional malware-analysis methodology using isolated samples and benign training binaries, with emphasis on understanding behavior…</p><section><blockquote>
+<p><strong>Purpose:</strong> Learn professional malware-analysis methodology using isolated samples and benign training binaries, with emphasis on understanding behavior, extracting defensive indicators, and protecting the analyst environment.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Separate static triage, dynamic analysis, unpacking/obfuscation recognition, and reverse engineering.</li>
+<li>Build an isolated analysis environment and evidence workflow.</li>
+<li>Interpret imports, strings, persistence indicators, process/network/file behavior, and configuration.</li>
+<li>Produce defensive IOCs and behavior-based detections without developing malware.</li>
+<li>Understand the limitations of sandbox observations.</li>
+</ul>
+<h2>Safety first</h2>
+<p>Unknown binaries can destroy data, steal tokens, encrypt files, spread over reachable networks, or detect analysis environments. Use purpose-built isolated VMs with snapshots, no personal accounts, no shared clipboard/folders unless necessary, synthetic data, and tightly controlled networking.</p>
+<p>For this guide, prefer known benign training samples or binaries you write yourself to simulate behaviors. Do not download live malware merely to complete a lesson.</p>
+<h2>Analysis phases</h2>
+<p>A disciplined workflow is:</p>
+<ol>
+<li>provenance/hash and containment;</li>
+<li>static triage;</li>
+<li>behavioral hypotheses;</li>
+<li>controlled dynamic execution if safe/authorized;</li>
+<li>targeted reverse engineering;</li>
+<li>configuration/IOC extraction;</li>
+<li>detection opportunities;</li>
+<li>remediation/context;</li>
+<li>report and evidence cleanup.</li>
+</ol>
+<p>Not every sample needs full disassembly.</p>
+<h2>Static triage</h2>
+<p>Without execution, record file type, architecture, size, signatures, sections, imports, strings, resources, entropy patterns, packer/protector hints, and embedded URLs/domains. Compare hashes against internal threat intelligence where authorized.</p>
+<p>Static clues prioritize dynamic observation. They are not proof that an import or string is actually used.</p>
+<h2>Packing and obfuscation</h2>
+<p>Packers compress/encrypt code and restore it at runtime. Obfuscators alter control flow, names, strings, or data representation. Legitimate commercial software also uses these techniques.</p>
+<p>Indicators include unusually small import tables, high-entropy executable sections, runtime memory allocation + permission changes, or a small stub that transfers control elsewhere. Treat these as hypotheses.</p>
+<h2>Dynamic behavior</h2>
+<p>Observe in isolation:</p>
+<ul>
+<li>created/modified files;</li>
+<li>registry/config changes;</li>
+<li>new processes/threads;</li>
+<li>loaded modules;</li>
+<li>service/task/autostart changes;</li>
+<li>DNS/network attempts redirected to a safe sinkhole if needed;</li>
+<li>mutexes/pipes/IPC;</li>
+<li>logs and error behavior.</li>
+</ul>
+<p>Behavior should be timestamped so events can be correlated.</p>
+<h2>Process tree</h2>
+<p>A process tree helps explain execution chain. Record image, parent, command line, user/token, signer, hashes, start/end time, and major child relationships. Malware may inject or use legitimate processes, so parentage alone is not sufficient to attribute behavior.</p>
+<h2>Persistence concepts</h2>
+<p>Persistence is any mechanism that causes code/access to survive restart, logon, or another lifecycle boundary. Categories include startup entries, services, scheduled tasks, browser extensions, application plugins, cloud persistence, identity modifications, and firmware-level mechanisms.</p>
+<p>This module focuses on <strong>detecting and removing</strong> persistence. It does not provide instructions for hiding persistence.</p>
+<h2>Network behavior</h2>
+<p>Capture DNS names, destination IPs, ports, TLS certificate metadata, HTTP host/path patterns, protocol timing, and connection periodicity in the isolated lab. Avoid contacting real command-and-control infrastructure; use blocked networking, simulation, or sinkholing under controlled conditions.</p>
+<p>An IOC such as one IP may change quickly. Behavioral detections such as an unusual process creating persistence and immediately initiating outbound communication can be more durable.</p>
+<h2>Configuration extraction</h2>
+<p>Malware families often store configuration such as domains, campaign IDs, encryption keys, mutex names, paths, or protocol constants in encoded/obfuscated form. Extracting configuration can improve detection and scoping.</p>
+<p>Only analyze samples you are authorized to possess. Do not repurpose configuration to connect to criminal infrastructure.</p>
+<h2>Behavioral signatures</h2>
+<p>A high-quality behavior description may be:</p>
+<p>“Unsigned executable launched from user-writable directory creates a new autostart entry, writes a second executable, and starts outbound TLS shortly afterward.”</p>
+<p>This is more resilient than a single file hash. Translate behaviors into telemetry requirements before writing rules.</p>
+<h2>YARA concepts</h2>
+<p>YARA can identify file/memory patterns using strings and conditions. Good rules choose distinctive features while avoiding unstable absolute offsets or common library strings. Test rules against clean corpora to reduce false positives.</p>
+<p>Avoid publishing overly specific sensitive detection logic if doing so would materially aid active evasion in a real incident; coordinate with defenders.</p>
+<h2>Sandbox limitations</h2>
+<p>A sample may sleep, require user interaction, expect a particular locale/domain, need internet resources, or detect virtualization. “No behavior observed” does not mean “benign.” Static analysis and environment modeling are needed to interpret absence.</p>
+<p>Do not disable safety controls merely to force a sample to execute. Use vetted research infrastructure when deeper analysis is necessary.</p>
+<h2>Benign simulation lab</h2>
+<p>Write a harmless program that:</p>
+<ul>
+<li>creates a file in a temporary lab directory;</li>
+<li>spawns a child process that prints text;</li>
+<li>opens a localhost connection;</li>
+<li>writes a JSON configuration;</li>
+<li>exits.</li>
+</ul>
+<p>Capture its process/file/network behavior and write a behavioral detection description. This teaches the analysis workflow without malicious capability.</p>
+<h2>Report structure</h2>
+<ul>
+<li>sample provenance/hash;</li>
+<li>environment;</li>
+<li>static characteristics;</li>
+<li>observed behaviors;</li>
+<li>confidence and gaps;</li>
+<li>IOCs with stability rating;</li>
+<li>behavioral detection opportunities;</li>
+<li>remediation/scoping recommendations;</li>
+<li>screenshots/log excerpts;</li>
+<li>cleanup/snapshot reset.</li>
+</ul>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete Modules 07, 23, 37, 47, 64, 65, and 67.</p>
+<h3>Practice task</h3>
+<p>Analyze a benign simulator or recognized safe training sample in an isolated VM. Produce a one-page behavior report and one non-destructive YARA-style or telemetry-based detection concept.</p>
+<h3>Evidence to keep</h3>
+<p>Hash, static triage, timeline, process tree, file/network observations, and detection rationale.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>running unknown samples on a daily-use machine;</li>
+<li>letting a sample contact real infrastructure;</li>
+<li>treating one hash as a durable detection;</li>
+<li>assuming no sandbox behavior means benign;</li>
+<li>turning analysis into malware-development experimentation.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>Explain how static evidence, dynamic behavior, and reverse engineering support one another and identify what your analysis still cannot prove.</p>
+<h3>Continue with</h3>
+<p>Modules <strong>80, 81, 83, 84, and 85</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

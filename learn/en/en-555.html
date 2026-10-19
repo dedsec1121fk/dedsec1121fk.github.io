@@ -1,0 +1,65 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>crystal — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-555.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="crystal — consolidated language guide Crystal How the language behaves Crystal compiles a Ruby-like typed language to native code, with type inference and explicit handling of nilable…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="crystal — consolidated language guide — DedSec Project">
+<meta property="og:description" content="crystal — consolidated language guide Crystal How the language behaves Crystal compiles a Ruby-like typed language to native code, with type inference and explicit handling of nilable…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-555.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="crystal — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="crystal — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="crystal — consolidated language guide Crystal How the language behaves Crystal compiles a Ruby-like typed language to native code, with type inference and explicit handling of nilable…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="crystal — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>crystal — consolidated language guide — DedSec Project</h1><p>crystal — consolidated language guide Crystal How the language behaves Crystal compiles a Ruby-like typed language to native code, with type inference and explicit handling of nilable…</p><section><h2>Crystal</h2>
+<h3>How the language behaves</h3>
+<p>Crystal compiles a Ruby-like typed language to native code, with type inference and explicit handling of nilable values.</p>
+<h3>Source fragment to analyze</h3>
+<pre><code class="language-text">numbers = [1, 2, 3]
+puts numbers.sum
+</code></pre>
+<h3>Deliberate exercise</h3>
+<p>Check the sum and alter the program so a lookup can return nil; use a branch to prove that the value exists.</p>
+<h3>Check a failure condition</h3>
+<p>Ruby gems and Crystal shards are not interchangeable, and Ruby syntax similarity does not imply ABI compatibility.</p>
+<p>Record input, expected output and observed output with the actual Crystal implementation and version. If no compatible runtime exists on your current platform, label the fragment unexecuted and reason from its semantics rather than claiming a successful run. Run a second isolated experiment that changes only the mechanism under investigation; preserve the exact diagnostic while removing private data.</p>
+<h2>Crystal — Expanded practice workbook</h2>
+<h3>Build a typed transformation</h3>
+<p>Crystal resembles Ruby syntactically but compiles type-checked native programs. Put this in <code>scores.cr</code>:</p>
+<pre><code class="language-crystal">scores = [1, nil, 3] of Int32?
+doubled = scores.compact_map { |n| n.try { |value| value * 2 } }
+raise &quot;wrong result&quot; unless doubled == [2, 6]
+puts doubled.join(&quot;,&quot;)
+</code></pre>
+<p>Expected output is <code>2,6</code>. The explicit <code>Int32?</code> means elements can be <code>Int32</code> or <code>Nil</code>. The <code>try</code> call executes the block only for a non-nil receiver; <code>compact_map</code> excludes nil results. Confirm with <code>crystal run scores.cr</code> and record compiler version. Unlike a Ruby interpreter, the Crystal compiler reasons about types before running the program.</p>
+<h3>Observe a compiler failure</h3>
+<p>Change <code>value * 2</code> to <code>value + &quot;two&quot;</code> while leaving the data as integers. This is an invalid mixed-type operation. Capture the compiler's error location and explain why turning an integer into a string is not an automatic arithmetic conversion. Restore the valid expression and compile again.</p>
+<h3>Semantics of filtering versus conversion</h3>
+<p>Replace the missing element with <code>0</code> and compare <code>[2, 0, 6]</code> against the original <code>[2, 6]</code>. A missing score is different from a legitimate zero. Decide whether your application should retain a nil slot, reject it, or filter it. These policies change the length and meaning of the output collection. Use a separate fixture for an empty array and confirm that it yields no printed numbers rather than an exception.</p>
+<h3>Independent task</h3>
+<p>Implement <code>average(scores : Array(Int32?))</code> with an explicit policy for an all-nil array. Test positive, negative and missing values, plus a large sum near <code>Int32</code> limits. Name the return type and justify the chosen numeric representation. Never claim this sample is performance-verified without measurements. Reference: https://crystal-lang.org/reference/</p>
+<h2>Crystal — Focused mastery pathway</h2>
+<h3>Stage 1: understand the execution model</h3>
+<p>Implement a parser returning Int32? and handle nil through if rather than not_nil!. Test empty, invalid and out-of-range strings. Explain which restrictions are compile-time rather than Ruby's dynamic checks.</p>
+<h3>Stage 2: prove the rule with controlled cases</h3>
+<p>Process an Array of named records using each and compact_map, measuring allocations where Crystal's tooling permits. Compare value-type records with reference objects and identify ownership of mutable elements.</p>
+<h3>Stage 3: build a small, reviewable project</h3>
+<p>Build a small CLI for reading UTF-8 records, with explicit error handling and without assuming a Ruby gem works in Crystal. Add unit specs and verify compiler warnings with a pinned Crystal version.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

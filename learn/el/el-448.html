@@ -1,0 +1,98 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>hack — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-448.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="hack — συγκεντρωτικός οδηγός Hack Διαφορά από την PHP Η Hack είναι γλώσσα με ελέγχους τύπων στο οικοσύστημα HHVM. Ένα αρχείο με &lt;?hh δεν είναι πρόγραμμα για PHP CLI· η εκτέλεση με php δεν…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="hack — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="hack — συγκεντρωτικός οδηγός Hack Διαφορά από την PHP Η Hack είναι γλώσσα με ελέγχους τύπων στο οικοσύστημα HHVM. Ένα αρχείο με &lt;?hh δεν είναι πρόγραμμα για PHP CLI· η εκτέλεση με php δεν…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-448.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="hack — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="hack — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="hack — συγκεντρωτικός οδηγός Hack Διαφορά από την PHP Η Hack είναι γλώσσα με ελέγχους τύπων στο οικοσύστημα HHVM. Ένα αρχείο με &lt;?hh δεν είναι πρόγραμμα για PHP CLI· η εκτέλεση με php δεν…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="hack — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>hack — συγκεντρωτικός οδηγός — DedSec Project</h1><p>hack — συγκεντρωτικός οδηγός Hack Διαφορά από την PHP Η Hack είναι γλώσσα με ελέγχους τύπων στο οικοσύστημα HHVM. Ένα αρχείο με &lt;?hh δεν είναι πρόγραμμα για PHP CLI· η εκτέλεση με php δεν…</p><section><h2>Hack</h2>
+<h3>Διαφορά από την PHP</h3>
+<p>Η Hack είναι γλώσσα με ελέγχους τύπων στο οικοσύστημα HHVM. Ένα αρχείο με <code>&lt;?hh</code> δεν είναι πρόγραμμα για PHP CLI· η εκτέλεση με <code>php</code> δεν αποτελεί δοκιμή της Hack. Ο type checker απορρίπτει ασύμβατους τύπους, αλλά κανόνες όπως «ο αριθμός να μην είναι αρνητικός» απαιτούν ξεχωριστό έλεγχο.</p>
+<h3>Μικρό εργαστήριο για ρυθμισμένο έργο HHVM</h3>
+<p>Αποθήκευσε ως <code>lesson.hack</code>. Το <code>&lt;&lt;__EntryPoint&gt;&gt;</code> δηλώνει τη συνάρτηση εκκίνησης. Έλεγξε την έκδοση HHVM και τις ρυθμίσεις του έργου πριν επιλέξεις εντολή εκτέλεσης.</p>
+<pre><code class="language-hack">&lt;?hh
+function double_positive(int $n): int {
+  if ($n &lt; 0) {
+    throw new \InvalidArgumentException('negative');
+  }
+  return $n * 2;
+}
+&lt;&lt;__EntryPoint&gt;&gt;
+function main(): void {
+  echo double_positive(4), &quot;\n&quot;;
+  try {
+    double_positive(-1);
+  } catch (\InvalidArgumentException $_) {
+    echo &quot;rejected\n&quot;;
+  }
+}
+</code></pre>
+<p><strong>Αναμενόμενη έξοδος, χωρίς εκτέλεση εδώ:</strong> <code>8</code> και έπειτα <code>rejected</code>. Ο τύπος <code>int</code> δεν εγγυάται μη αρνητική τιμή· αυτή η απαίτηση επιβάλλεται από τον έλεγχο μέσα στη συνάρτηση.</p>
+<h3>Διάγνωση προβλημάτων</h3>
+<ul>
+<li><strong>PHP parse error:</strong> χρησιμοποιείται λάθος runtime. Επιβεβαίωσε ότι το αρχείο Hack εκτελείται από HHVM.</li>
+<li><strong>Σφάλμα τύπου για string:</strong> αυθαίρετο κείμενο δεν ικανοποιεί παράμετρο <code>int</code>. Κάνε μετατροπή και επικύρωση στο όριο εισόδου, όχι πρόχειρο cast που κρύβει το πρόβλημα.</li>
+<li><strong>Unhandled InvalidArgumentException:</strong> αποφάσισε αν ο καλών πρέπει να χειριστεί, να μεταφράσει ή να προωθήσει την εξαίρεση. Απόφυγε γενικά <code>catch</code> που κρύβουν άλλες αστοχίες.</li>
+<li><strong>Απουσία entry point ή λάθος έργο:</strong> εξέτασε <code>.hhconfig</code>, έκδοση HHVM και εντολή εκκίνησης. Τα διαθέσιμα εργαλεία διαφέρουν ανά έκδοση.</li>
+<li><strong>Ασυμβατότητα εξαρτήσεων:</strong> η Hack/HHVM δεν υποστηρίζει αυτόματα κάθε σύγχρονο πακέτο PHP.</li>
+</ul>
+<h3>Διαδρομή κατάκτησης</h3>
+<ol>
+<li>Με πραγματικά εργαλεία Hack, σημείωσε εκδόσεις HHVM και type checker, εκτέλεσε το πρόγραμμα και κράτησε τις δύο γραμμές εξόδου.</li>
+<li>Άλλαξε προσωρινά την πρώτη κλήση σε <code>double_positive(&quot;4&quot;)</code>, πρόβλεψε το σφάλμα τύπου και επανέφερε ακέραιο όρισμα.</li>
+<li>Έλεγξε μηδέν, ένα και αρνητικό αριθμό. Εξήγησε γιατί η μη αρνητικότητα είναι κανόνας κατά την εκτέλεση και όχι εγγύηση του <code>int</code>.</li>
+<li>Σύγκρινε εξαίρεση και ρητή αναπαράσταση αποτελέσματος για API που καλεί άλλο πρόγραμμα. Τεκμηρίωσε πώς γίνεται η ανάκαμψη από αποτυχία.</li>
+</ol>
+<p><strong>Επαλήθευση:</strong> μόνο στατική ανασκόπηση εδώ· το HHVM δεν είναι εγκατεστημένο. Μην δηλώσεις επιτυχημένη εκτέλεση χωρίς πραγματικό έλεγχο. <strong>Πηγή:</strong> https://docs.hhvm.com/hack/</p>
+<h2>Hack — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Πραγματικό αρχικό δείγμα</h3>
+<pre><code class="language-text">&lt;?hh
+&lt;&lt;__EntryPoint&gt;&gt;
+function main(): void {
+  echo &quot;Hello, Ada!\n&quot;;
+}
+</code></pre>
+<p><strong>Περιβάλλον:</strong> Run with HHVM in a configured Hack project.. Επιβεβαίωσε ότι έχεις το σωστό compiler, host ή simulator πριν θεωρήσεις την έξοδο αξιόπιστη. Για scripts με πρόσβαση σε προσωπικά αρχεία ή ρυθμίσεις, χρησιμοποίησε προσωρινά και read-only δεδομένα.</p>
+<h3>Συγκεκριμένος στόχος υλοποίησης</h3>
+<p>Χρησιμοποίησε typed collections και shape για JSON-like input στη Hack. Σύγκρινε nullable types και runtime checks του HHVM.</p>
+<h3>Κρίσιμο λάθος που πρέπει να αναγνωρίζεις</h3>
+<p>Η Hack/HHVM δεν είναι απλή PHP 8· έλεγξε typed mode και διαθέσιμο HHVM.</p>
+<h2>Hack — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Πρακτικές εργασίες</h3>
+<ol>
+<li>Φτιάξε προσβάσιμη φόρμα με ετικέτα και μήνυμα σφάλματος.</li>
+<li>Μοντελοποίησε ένα αίτημα και απάντηση μέσω HTTP API ή προσομοιωτή.</li>
+<li>Απόρριψε λανθασμένη είσοδο και κωδικοποίησε το κείμενο πριν την εισαγωγή σε HTML.</li>
+</ol>
+<h3>Ερωτήσεις ουσίας</h3>
+<ul>
+<li>Πού περνά η είσοδος χρήστη ένα όριο εμπιστοσύνης;</li>
+<li>Ποια εργαλεία εκτελούν ή ελέγχουν το παράδειγμα και σε ποια έκδοση;</li>
+<li>Ποιο είναι το μικρότερο ελεγμένο πρόγραμμα; Ποιες είναι οι παρενέργειες;</li>
+<li>Πώς γίνεται διάκριση μεταξύ σφάλματος σύνταξης, λογικής και περιβάλλοντος;</li>
+<li>Πώς δοκιμάζονται άκυρα δεδομένα χωρίς βλάβη σε αρχεία ή σύστημα;</li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

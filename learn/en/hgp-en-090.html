@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Database, Data-Layer and Query-Engine Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-090.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Database, Data-Layer and Query-Engine Security Database security is broader than SQL injection. It includes identity, query construction, stored logic, tenancy, replication, backups, search…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Database, Data-Layer and Query-Engine Security — DedSec Project">
+<meta property="og:description" content="Database, Data-Layer and Query-Engine Security Database security is broader than SQL injection. It includes identity, query construction, stored logic, tenancy, replication, backups, search…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-090.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Database, Data-Layer and Query-Engine Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Database, Data-Layer and Query-Engine Security — DedSec Project">
+<meta name="twitter:description" content="Database, Data-Layer and Query-Engine Security Database security is broader than SQL injection. It includes identity, query construction, stored logic, tenancy, replication, backups, search…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Database, Data-Layer and Query-Engine Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Database, Data-Layer and Query-Engine Security — DedSec Project</h1><p>Database, Data-Layer and Query-Engine Security Database security is broader than SQL injection. It includes identity, query construction, stored logic, tenancy, replication, backups, search…</p><section><p>Database security is broader than SQL injection. It includes identity, query construction, stored logic, tenancy, replication, backups, search engines, caching, encryption, and data lifecycle. This module teaches how to reason from a data asset to every component that can read or mutate it.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>Query construction</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Database identity</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Row and tenant isolation</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Stored logic and triggers</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>NoSQL and search engines</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Replication and backups</strong> and connect it to a concrete trust boundary or security invariant.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. Query construction</h3>
+<p>Parameterized queries separate code from data for supported values, but dynamic identifiers, sort expressions, filters, and stored procedures still require allowlisting and careful composition.</p>
+<h3>2. Database identity</h3>
+<p>Applications should use narrowly scoped service identities rather than owner/admin accounts. Distinguish schema migration privileges, runtime read/write privileges, analytics access, backup access, and emergency administration.</p>
+<h3>3. Row and tenant isolation</h3>
+<p>Multi-tenant systems need authorization at every path that reaches tenant data. Row-level security can add defense in depth, but application context, connection pooling, background jobs, exports, and caches must preserve tenant identity correctly.</p>
+<h3>4. Stored logic and triggers</h3>
+<p>Triggers, procedures, functions, extensions, and scheduled jobs execute inside a privileged data plane. Review ownership, definer/invoker behavior, search paths, extension provenance, and change control.</p>
+<h3>5. NoSQL and search engines</h3>
+<p>Document stores, key-value systems, and search engines have their own query languages and authorization models. Treat user-controlled operators, field selection, scriptable queries, and administrative APIs as distinct attack surfaces.</p>
+<h3>6. Replication and backups</h3>
+<p>Replicas, WAL/binlog streams, snapshots, exports, and backups are copies of sensitive data. Encryption, access control, retention, deletion, and restoration testing must include them.</p>
+<h3>7. Encryption boundaries</h3>
+<p>At-rest encryption protects media and some snapshot scenarios but does not stop an authorized database process from reading plaintext. Field-level/application-layer encryption changes key management and query capabilities and should be used intentionally.</p>
+<h3>8. Audit and anomaly detection</h3>
+<p>High-value events include privilege changes, schema changes, mass reads, unusual export jobs, authentication anomalies, failed authorization, and access from unexpected application identities.</p>
+<h2>Authorized exercises</h2>
+<h3>Exercise 1 — Build a localhost SQLite or PostgreSQL toy application with separate migration and runtime roles; document which statements each role should be able to execute</h3>
+<p>Build a localhost SQLite or PostgreSQL toy application with separate migration and runtime roles; document which statements each role should be able to execute.</p>
+<h3>Exercise 2 — Create a tenant-isolation test matrix that covers API calls, background jobs, exports, caching, and administrative tools</h3>
+<p>Create a tenant-isolation test matrix that covers API calls, background jobs, exports, caching, and administrative tools.</p>
+<h3>Exercise 3 — Take a harmless sample backup, restore it into an isolated lab, and verify the restore procedure includes permissions and secrets—not just data files</h3>
+<p>Take a harmless sample backup, restore it into an isolated lab, and verify the restore procedure includes permissions and secrets—not just data files.</p>
+<h2>Knowledge checks</h2>
+<ol>
+<li>Explain the most important trust boundary in <strong>Database, Data-Layer and Query-Engine Security</strong> without naming a security tool.</li>
+<li>Give one example where cryptographic or authentication success still does <strong>not</strong> imply authorization success.</li>
+<li>Describe one stale-state or replay condition relevant to this module.</li>
+<li>Identify one telemetry source that can support a strong conclusion and one blind spot it still leaves.</li>
+<li>Explain how you would turn a discovered weakness into a regression test rather than a one-time finding.</li>
+</ol>
+<h2>Guided study workflow</h2>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

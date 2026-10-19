@@ -1,0 +1,93 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQLite: transactional migrations and rollback fixtures — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-language-5-transaction-migration.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="A schema migration needs invariants, not only successful SQL syntax Start in a disposable in-memory database Create a table with a nonnegative quantity constraint and apply the schema under…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SQLite: transactional migrations and rollback fixtures — DedSec Project">
+<meta property="og:description" content="A schema migration needs invariants, not only successful SQL syntax Start in a disposable in-memory database Create a table with a nonnegative quantity constraint and apply the schema under…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-language-5-transaction-migration.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SQLite: transactional migrations and rollback fixtures — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQLite: transactional migrations and rollback fixtures — DedSec Project">
+<meta name="twitter:description" content="A schema migration needs invariants, not only successful SQL syntax Start in a disposable in-memory database Create a table with a nonnegative quantity constraint and apply the schema under…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SQLite: transactional migrations and rollback fixtures — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>SQLite: transactional migrations and rollback fixtures — DedSec Project</h1><p>A schema migration needs invariants, not only successful SQL syntax Start in a disposable in-memory database Create a table with a nonnegative quantity constraint and apply the schema under…</p><section><h1>A schema migration needs invariants, not only successful SQL syntax</h1>
+<h2>Start in a disposable in-memory database</h2>
+<p>Create a table with a nonnegative quantity constraint and apply the schema under explicit transaction control. Testing in <code>:memory:</code> isolates the example from production files. A failed constraint should not leave half of the intended operation applied; verify the record count and previous schema state.</p>
+<pre><code class="language-python">import sqlite3
+con = sqlite3.connect(':memory:')
+con.execute('CREATE TABLE stock (sku TEXT PRIMARY KEY, quantity INTEGER NOT NULL CHECK(quantity&gt;=0))')
+con.execute('INSERT INTO stock VALUES (?, ?)', ('A1', 3))
+con.commit()
+try:
+    con.execute('BEGIN')
+    con.execute('UPDATE stock SET quantity=? WHERE sku=?', (-2, 'A1'))
+    con.commit()
+except sqlite3.IntegrityError:
+    con.rollback()
+assert con.execute('SELECT quantity FROM stock').fetchone()[0] == 3
+</code></pre>
+<h2>Diagnose why it failed</h2>
+<p>The CHECK constraint rejects negative quantity. The UPDATE belongs to a transaction and must be rolled back after the exception; otherwise the connection may remain in an unintended transactional state. Another environment may use autocommit settings differently, so explicitly log the database driver and transaction configuration.</p>
+<h2>Migration plan for a real file</h2>
+<p>Make a verified backup of the database, inspect <code>PRAGMA user_version</code>, design the forward migration, and test it against a representative copy. If the migration adds a NOT NULL column, decide how legacy rows receive values. Never assume an ALTER TABLE statement can simply reverse every migration without data loss.</p>
+<h2>Acceptance criteria</h2>
+<p>Test both a valid and invalid mutation, verify the rollback invariant, and check the final schema with <code>PRAGMA table_info(stock)</code>. Use parameter placeholders instead of concatenating SQL from user input. The example is about local transactional behavior, not performance on a remote database server.</p>
+<h2>Make the schema change itself transactional</h2>
+<p>The first example tests a row constraint, not a schema migration. This independent in-memory experiment proves that a failed DDL migration can restore the previous schema. It uses explicit SQL transaction statements with <code>isolation_level=None</code>, avoiding dependence on Python's changing implicit transaction defaults.</p>
+<pre><code class="language-python">import sqlite3
+con = sqlite3.connect(':memory:', isolation_level=None)
+con.execute('CREATE TABLE notes (body TEXT NOT NULL)')
+con.execute('INSERT INTO notes VALUES (?)', ('keep me',))
+con.execute('BEGIN IMMEDIATE')
+try:
+    con.execute('ALTER TABLE notes ADD COLUMN flag INTEGER NOT NULL DEFAULT 0')
+    con.execute('PRAGMA user_version=1')
+    raise RuntimeError('simulated migration interruption')
+except RuntimeError:
+    con.execute('ROLLBACK')
+assert [r[1] for r in con.execute('PRAGMA table_info(notes)')] == ['body']
+assert con.execute('PRAGMA user_version').fetchone()[0] == 0
+assert con.execute('SELECT body FROM notes').fetchone()[0] == 'keep me'
+con.close()
+</code></pre>
+<p>Repeat without the simulated interruption and replace the rollback path with COMMIT. The added column and schema version should then appear together. A transaction does not replace a verified backup of a real database. Also check driver-specific operations such as executescript, which can interact with transaction boundaries differently from individual execute calls.</p>
+<p>Another connection may already hold the write transaction, so BEGIN IMMEDIATE can fail before any migration statement executes. Handle that busy result separately from invalid migration SQL, and avoid blindly retrying schema changes after an uncertain partial outcome.</p>
+<p>References: <a href="https://www.sqlite.org/lang_transaction.html">SQLite transactions</a> and <a href="https://docs.python.org/3/library/sqlite3.html">Python sqlite3</a>.</p>
+<h2>Savepoints and partial rollback inside a transaction</h2>
+<p>A savepoint marks a rollback boundary inside a larger transaction. Rolling back to it undoes later changes while keeping earlier work and the outer transaction alive. Releasing a savepoint is not the same as independently committing its changes to durable storage; an outer rollback can still undo them.</p>
+<p>Use this when one optional batch item may fail but the surrounding operation has an explicit partial-success contract. If the business rule requires all items to succeed together, partial recovery would violate that rule even though the SQL is valid.</p>
+<pre><code class="language-python">import sqlite3
+from contextlib import closing
+with closing(sqlite3.connect(&quot;:memory:&quot;)) as db:
+    db.execute(&quot;CREATE TABLE items(id INTEGER PRIMARY KEY)&quot;)
+    db.execute(&quot;BEGIN&quot;)
+    db.execute(&quot;INSERT INTO items VALUES (1)&quot;)
+    db.execute(&quot;SAVEPOINT optional_item&quot;)
+    db.execute(&quot;INSERT INTO items VALUES (2)&quot;)
+    db.execute(&quot;ROLLBACK TO optional_item&quot;)
+    db.execute(&quot;RELEASE optional_item&quot;)
+    db.commit()
+    assert db.execute(&quot;SELECT id FROM items&quot;).fetchall() == [(1,)]
+print(&quot;outer work preserved&quot;)
+</code></pre>
+<p>Add a final outer rollback and prove that even previously released inner work disappears. Keep savepoint names controlled by the program, not interpolated from an external item label. Log which items were accepted without reporting a partially successful batch as an unconditional success.</p>
+<p><a href="https://www.sqlite.org/lang_savepoint.html">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

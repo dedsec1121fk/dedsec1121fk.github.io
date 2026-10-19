@@ -1,0 +1,68 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1044.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία Χρησιμοποίησε Python 3.10 ή νεότερη σε άδειο φάκελο εξάσκησης. Κάθε script είναι ανεξάρτητο και δεν εγκαθιστά DedSec. Οι σύνδεσμοι…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία — DedSec Project">
+<meta property="og:description" content="Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία Χρησιμοποίησε Python 3.10 ή νεότερη σε άδειο φάκελο εξάσκησης. Κάθε script είναι ανεξάρτητο και δεν εγκαθιστά DedSec. Οι σύνδεσμοι…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1044.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία — DedSec Project">
+<meta name="twitter:description" content="Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία Χρησιμοποίησε Python 3.10 ή νεότερη σε άδειο φάκελο εξάσκησης. Κάθε script είναι ανεξάρτητο και δεν εγκαθιστά DedSec. Οι σύνδεσμοι…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία — DedSec Project</h1><p>Πέντε αρχικά projects: CLI, SQLite, απογραφή και αρχεία Χρησιμοποίησε Python 3.10 ή νεότερη σε άδειο φάκελο εξάσκησης. Κάθε script είναι ανεξάρτητο και δεν εγκαθιστά DedSec. Οι σύνδεσμοι…</p><section><p>Χρησιμοποίησε Python 3.10 ή νεότερη σε άδειο φάκελο εξάσκησης. Κάθε script είναι ανεξάρτητο και δεν εγκαθιστά DedSec. Οι σύνδεσμοι πηγαίου κώδικα είναι σχετικοί με αυτόν τον οδηγό. Ξεχώριζε την υπάρχουσα λειτουργία από τις προτεινόμενες επεκτάσεις: οι δεύτερες είναι ασκήσεις και δεν παρουσιάζονται ως ήδη υλοποιημένες δυνατότητες.</p>
+<h2>JSON εργασίες: σταθερά IDs και διατήρηση δεδομένων</h2>
+<p>Άνοιξε το <a href="el-1041.html">todo.py</a>. Από τον φάκελο του script δοκίμασε:</p>
+<pre><code class="language-sh">python todo.py --db practice.json add &quot;Study Python&quot;
+python todo.py --db practice.json add &quot;Read about queues&quot;
+python todo.py --db practice.json done 1
+python todo.py --db practice.json list
+</code></pre>
+<p>Αναμένονται χωριστά IDs 1 και 2, με <code>[x]</code> μόνο στην πρώτη εργασία. Με νέα εκτέλεση list πρέπει να διαβάζεται το ίδιο αρχείο. Το σχετικό <code>--db</code> εξαρτάται από τον τρέχοντα φάκελο, οπότε διαφορετικό cwd μπορεί να δημιουργήσει άλλη βάση χωρίς να έχει χαθεί η πρώτη.</p>
+<p>Το πρόγραμμα γράφει προσωρινό sibling και αντικαθιστά τον προορισμό. Αυτό μειώνει τον κίνδυνο μισογραμμένου τελικού JSON, αλλά το σταθερό προσωρινό όνομα δεν είναι concurrency lock ούτε εγγύηση αντοχής σε διακοπή ρεύματος. Δύο writers μπορούν να αντικαταστήσουν ο ένας τις αλλαγές του άλλου. Κράτησε το αρχικό πείραμα single-process· πολλοί writers χρειάζονται συντονισμό ή transactional storage.</p>
+<p>Δοκίμασε <code>done 999</code> και κενό title: πρέπει να αποτύχουν χωρίς αλλαγή έγκυρης βάσης. Φτιάξε χωριστό malformed JSON fixture και κράτησε το error. Επέκταση: έλεγξε id, title και done κάθε φορτωμένης εγγραφής, μαζί με duplicate IDs και λάθος τύπους. Μην «επισκευάζεις» unreadable δεδομένα αντικαθιστώντας τα σιωπηλά με άδεια λίστα.</p>
+<h2>SQLite σημειώσεις: παράμετροι, σειρά και νέα σύνδεση</h2>
+<p>Διάβασε το <a href="el-1045.html">notes.py</a>. Το πραγματικό schema χρησιμοποιεί στήλη <code>text</code>, όχι <code>body</code>, και εμφανίζει εγγραφές με ORDER BY id.</p>
+<pre><code class="language-sh">python notes.py --db practice.sqlite3 add &quot;It's a note&quot;
+python notes.py --db practice.sqlite3 add &quot;Δοκιμή&quot;
+python notes.py --db practice.sqlite3 list
+</code></pre>
+<p>Το εισαγωγικό πρέπει να αποθηκευτεί ως δεδομένο, τα ελληνικά να διατηρηθούν και οι δύο εγγραφές να εμφανιστούν με σειρά ID. Εκτέλεσε list σε νέα διεργασία για έλεγχο persistence. Το placeholder <code>?</code> δεσμεύει τιμή αντί να ενώνει είσοδο χρήστη με SQL syntax.</p>
+<p>Το NOT NULL απορρίπτει null αλλά επιτρέπει κενή συμβολοσειρά. Προτεινόμενη επέκταση: απόρριψη whitespace-only κειμένου πριν από INSERT και database CHECK αν ο κανόνας πρέπει να ισχύει για όλους τους writers. Δοκίμασε quote, Unicode, κενή είσοδο και δεύτερη σύνδεση μετά από commit. Για πλήθος σημειώσεων χρησιμοποίησε <code>SELECT COUNT(*) FROM notes</code>, όχι υπόθεση ότι το cursor.rowcount ενός SELECT δίνει το πλήθος. Μην αλλάξεις πραγματικό schema χωρίς δοκιμασμένο backup.</p>
+<h2>SHA-256 απογραφή: ένα byte αλλάζει ένα digest</h2>
+<p>Άνοιξε το <a href="el-1047.html">hashes.py</a>. Φτιάξε practice-files με <code>alpha.txt</code> που περιέχει <code>abc</code> και <code>beta.txt</code> που περιέχει <code>xyz</code>.</p>
+<pre><code class="language-sh">python hashes.py ./practice-files
+</code></pre>
+<p>Αποθήκευσε το manifest έξω από τον εξεταζόμενο φάκελο. Πρόσθεσε μόνο <code>!</code> στο alpha.txt και επανάλαβε: πρέπει να αλλάξει ένα content digest. Αν το report γραφτεί μέσα στον φάκελο απογραφής, γίνεται και αυτό νέα είσοδος και μπερδεύει τη σύγκριση.</p>
+<p>Βρες στον κώδικα το chunk size και την πολιτική traversal. Το incremental hashing περιορίζει το data buffer, αλλά μια τεράστια λίστα paths μπορεί ακόμη να καταναλώσει μνήμη. Unreadable αρχείο, symlink και αλλαγή αρχείου κατά την ανάγνωση χρειάζονται ρητή αντιμετώπιση. Επέκταση: αποτυχία με σαφές status όταν η απογραφή είναι ελλιπής. Το hash συγκρίνει δεδομένα με αναμενόμενο digest· δεν αποδεικνύει ποιος έδωσε αυτό το digest.</p>
+<h2>ZIP επιθεώρηση: ονόματα και δηλωμένα μεγέθη</h2>
+<p>Άνοιξε το <a href="el-1051.html">inspect_zip.py</a>. Δημιούργησε μικρό ZIP με readme.txt και sub/data.txt και εξέτασέ το χωρίς extraction:</p>
+<pre><code class="language-sh">python inspect_zip.py practice.zip
+</code></pre>
+<p>Σύγκρινε τα μέλη και τα δηλωμένα μεγέθη. Σε δεύτερο συνθετικό ZIP βάλε <code>../outside.txt</code> και δες την αναφορά. Δεν χρειάζεται να γραφτεί κανένα extracted αρχείο για να επιθεωρηθεί το directory του archive. Αν η υπάρχουσα έκδοση απλώς αναφέρει ύποπτο μέλος, η μετατροπή σε απόρριψη είναι νέα δυνατότητα και όχι δεδομένη ιδιότητα.</p>
+<p>Σχεδίασε tests για absolute path, backslash traversal που στοχεύει Windows, διπλά ονόματα μελών, υπερβολικό entry count και μεγάλο expanded size. Ένα όνομα μπορεί να ερμηνεύεται διαφορετικά σε Linux και Windows. Τα metadata βοηθούν σε preflight limits αλλά δεν αποδεικνύουν πραγματικό κόστος αποσυμπίεσης. Αν προσθέσεις extraction, χρειάζονται όρια και στα πραγματικά bytes που παράγονται.</p>
+<h2>Κάρτες κειμένου: shuffle δεν σημαίνει βαθμολόγηση</h2>
+<p>Άνοιξε το <a href="el-1053.html">flashcards.py</a>. Γράψε UTF-8 TSV με όρο και ορισμό χωρισμένα από πραγματικό tab, όχι από τα δύο σύμβολα backslash και t.</p>
+<pre><code class="language-sh">python flashcards.py sample.tsv --seed 4
+</code></pre>
+<p>Με Enter εμφανίζεται ο ορισμός. Το αρχικό script ανακατεύει κάρτες με seeded local random generator και αποκαλύπτει απαντήσεις· δεν βαθμολογεί typed answers, δεν σώζει πρόοδο και δεν υλοποιεί spaced repetition. Ίδιο deck και runtime με ίδιο seed πρέπει να δίνουν ίδια σειρά. Αλλαγή της σειράς αρχικών γραμμών αλλάζει την είσοδο παρότι το seed μένει σταθερό.</p>
+<p>Δοκίμασε άδειο deck, μία κάρτα, malformed γραμμή μίας στήλης και ελληνικό ορισμό. Δες πώς παραλείπονται γραμμές με λιγότερες από δύο στήλες. Επέκταση: αναφορά αριθμών skipped γραμμών. Για μελλοντική αποθήκευση προόδου πρόσθεσε stable card IDs και χωριστό state αρχείο. Αλλαγή ερώτησης δεν πρέπει να μεταφέρει στατιστικά άλλης κάρτας. Αυτά είναι ειδικά προβλήματα state management και όχι η ίδια γενική άσκηση <code>len</code> σε κάθε project.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

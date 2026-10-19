@@ -1,0 +1,79 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Release engineering, offline packages and honest validation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-17.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Release engineering — a reproducible bilingual ZIP fixture Acceptance contract and scope A release of the bilingual offline library needs an immutable source revision, an inventory of…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Release engineering, offline packages and honest validation — DedSec Project">
+<meta property="og:description" content="Release engineering — a reproducible bilingual ZIP fixture Acceptance contract and scope A release of the bilingual offline library needs an immutable source revision, an inventory of…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-17.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Release engineering, offline packages and honest validation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Release engineering, offline packages and honest validation — DedSec Project">
+<meta name="twitter:description" content="Release engineering — a reproducible bilingual ZIP fixture Acceptance contract and scope A release of the bilingual offline library needs an immutable source revision, an inventory of…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Release engineering, offline packages and honest validation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Release engineering, offline packages and honest validation — DedSec Project</h1><p>Release engineering — a reproducible bilingual ZIP fixture Acceptance contract and scope A release of the bilingual offline library needs an immutable source revision, an inventory of…</p><section><h1>Release engineering — a reproducible bilingual ZIP fixture</h1>
+<h2>Acceptance contract and scope</h2>
+<p>A release of the bilingual offline library needs an immutable source revision, an inventory of files, repeatable build inputs and metadata, integrity evidence, and a rollback plan. Byte-identical packages made in the documented toolchain should have the same SHA-256. Hashes detect altered bytes but do not independently authenticate the publisher. Passing ZIP CRC checks also does not establish that every lesson is accurate or each code example runs on Windows, Linux and Android.</p>
+<h2>Executable Python 3 build and check</h2>
+<p>Save as release_lab.py and run python3 release_lab.py. The program creates an in-memory archive with ordered entries, fixed timestamps and POSIX mode metadata. ZIP_STORED avoids compression differences from zlib versions in this small fixture.</p>
+<pre><code class="language-python">import hashlib
+from io import BytesIO
+from zipfile import ZIP_STORED, ZipFile, ZipInfo
+
+def build(files):
+    result = BytesIO()
+    with ZipFile(result, 'w') as z:
+        for name in sorted(files):
+            if name.startswith('/') or '..' in name.split('/'):
+                raise ValueError('unsafe archive path')
+            info = ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+            info.compress_type = ZIP_STORED
+            info.external_attr = 0o100644 &lt;&lt; 16
+            z.writestr(info, files[name])
+    return result.getvalue()
+
+files = {'English/lesson.md': b'# English\n',
+         'Greek/lesson.md': '# Ελληνικά\n'.encode()}
+first, second = build(files), build(dict(reversed(list(files.items()))))
+assert first == second
+expected = hashlib.sha256(first).hexdigest()
+assert hashlib.sha256(second).hexdigest() == expected
+with ZipFile(BytesIO(first)) as archive:
+    assert archive.namelist() == sorted(files)
+    assert archive.testzip() is None
+    assert all(archive.read(name) == files[name] for name in files)
+changed = build({**files, 'English/lesson.md': b'# Changed\n'})
+assert hashlib.sha256(changed).hexdigest() != expected
+print('PASS release: stable fixture, CRC, byte changes and SHA-256')
+</code></pre>
+<h2>Real release gates</h2>
+<p>Build from a concrete, immutable commit SHA and produce fresh indexes <strong>after</strong> editing Markdown so the website and archive refer to the same texts. Compare both language inventories by stable lesson identity rather than assuming translated path names match. Stage artifacts outside the public directory and hash the final published bytes. Verify SHA-256 on a downloaded copy using a trusted checksum; ZIP testzip provides CRC-based corruption detection but not authenticity. Record operating system, interpreter, compression mode, dependency versions and flags needed to reproduce the binary. A correct release also needs negative and integration tests, browser checks, offline open tests, and a documented fallback to the previous working artifact.</p>
+<h2>Exercises and reproducibility diagnostics</h2>
+<ol>
+<li>Change exactly one content byte and confirm the SHA-256 changes. Reverse the input dictionary insertion order and confirm output does not change.</li>
+<li>Export synthetic English and Greek pairs with different human-readable names. Compare stable logical IDs and report missing partners.</li>
+<li>Simulate a crash before publishing. Explain how a temporary file followed by verification and atomic replacement, where supported, prevents incomplete replacement.</li>
+<li>Build with a second Python runtime or operating system and compare output digests. Report unknown or untested environments instead of extrapolating.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, hash of the generated fixture, input file inventory, tool versions and an honest validation matrix distinguishing tested from untested requirements.</p>
+<h2>Further engineering detail</h2>
+<p>Pinning an external dependency means reviewing a pair: the release URL and the digest of its exact bytes. Update and roll back that pair together. A hash recomputed from whatever a remote server returns during every build verifies transport consistency with itself, not approval of a specific reviewed release.</p>
+<p><a href="../en/fieldnotes-en-46.html">Subresource integrity and release pinning</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

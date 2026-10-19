@@ -1,0 +1,6 @@
+module hello;
+  initial begin
+    $display("Hello, Ada!");
+    $finish;
+  end
+endmodule

@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>forth — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-660.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="forth — consolidated language guide Forth How the language behaves Forth evaluates words on an explicit data stack; the code&#x27;s stack effect is often more informative than its variable…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="forth — consolidated language guide — DedSec Project">
+<meta property="og:description" content="forth — consolidated language guide Forth How the language behaves Forth evaluates words on an explicit data stack; the code&#x27;s stack effect is often more informative than its variable…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-660.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="forth — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="forth — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="forth — consolidated language guide Forth How the language behaves Forth evaluates words on an explicit data stack; the code&#x27;s stack effect is often more informative than its variable…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="forth — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>forth — consolidated language guide — DedSec Project</h1><p>forth — consolidated language guide Forth How the language behaves Forth evaluates words on an explicit data stack; the code&#x27;s stack effect is often more informative than its variable…</p><section><h2>Forth</h2>
+<h3>How the language behaves</h3>
+<p>Forth evaluates words on an explicit data stack; the code's stack effect is often more informative than its variable names.</p>
+<h3>Source fragment to analyze</h3>
+<pre><code class="language-text">3 4 + .
+</code></pre>
+<h3>Deliberate exercise</h3>
+<p>Write the stack state after each token and explain why the print word consumes the result. Define a new square word using dup and *.</p>
+<h3>Check a failure condition</h3>
+<p>A stack underflow is not a harmless arithmetic exception; document expected stack depth before combining words.</p>
+<p>Record input, expected output and observed output with the actual Forth implementation and version. If no compatible runtime exists on your current platform, label the fragment unexecuted and reason from its semantics rather than claiming a successful run. Run a second isolated experiment that changes only the mechanism under investigation; preserve the exact diagnostic while removing private data.</p>
+<h2>Forth — Expanded practice workbook</h2>
+<h3>Inspect the smallest source</h3>
+<pre><code class="language-text">: greet  .&quot; Hello, Ada!&quot; cr ;
+greet
+</code></pre>
+<p><strong>Run or compilation context:</strong> gforth hello.fs.. Treat this as a baseline: save a copy, confirm the toolchain version and note whether the example merely evaluates a value, prints text, or creates external effects. Production accounts, datasets and hardware must not be used for first attempts.</p>
+<h3>Work through the actual mechanism</h3>
+<p>Write stack-effect comments for a word calculating squared sum of two numbers. Trace DUP, SWAP and arithmetic, then test for stack underflow.</p>
+<h3>Diagnose the sharp edge</h3>
+<p>Unlike conventional argument passing, Forth words consume stack cells implicitly. Return-stack misuse and data-stack imbalance can corrupt later execution.</p>
+<h2>Forth — Focused mastery pathway</h2>
+<h3>Mechanism</h3>
+<p>Forth operates on a data stack rather than naming each intermediate value. A comment of the form ( a b -- result ) documents what a word consumes and produces; it is not automatic runtime type checking. The rightmost item in the comment represents the top of stack.</p>
+<h3>Small Gforth exercise</h3>
+<pre><code class="language-forth">: squared ( n -- n-squared ) dup * ;
+: sum-of-squares ( a b -- result ) squared swap squared + ;
+3 4 sum-of-squares .
+</code></pre>
+<p>Expected display: 25. Trace the stack: (3 4) becomes (3 16) after squared; swap makes (16 3); squared makes (16 9); + leaves (25). By comparison, 3 4 + dup * produces 49 because it squares the sum instead of summing squares.</p>
+<h3>Independent and failing experiments</h3>
+<ol>
+<li>Run 3 squared and -3 squared, then print results. Both should produce 9 for in-range signed cells.</li>
+<li>Remove one argument before sum-of-squares in a disposable REPL and capture the stack-underflow diagnostic.</li>
+<li>Ask what 0 squared does and test it. Distinguish empty stack from the legitimate integer zero.</li>
+<li>Multiply very large integers and record cell-width overflow instead of assuming arbitrary precision.</li>
+<li>Write a new word mean2 using + 2 / and test odd sums. Define whether integer truncation is acceptable.</li>
+<li>For an interactive calculator, accept only known words and values. Do not evaluate untrusted text from files or a website.</li>
+</ol>
+<h3>Evidence and constraints</h3>
+<p>Save the precise Gforth version, console input/output, one failed run and the stack trace at each step. A correct effect comment is useful review evidence but does not substitute for execution. Official manual: https://gforth.org/manual/Stack_002dEffect-Comments-Tutorial.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,157 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>go — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-690.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="go — συγκεντρωτικός οδηγός Go Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .go . Εκτέλεση / περιβάλλον: go run main.go. Αρχικό παράδειγμα Πώς διαβάζεται Στη Go…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="go — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="go — συγκεντρωτικός οδηγός Go Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .go . Εκτέλεση / περιβάλλον: go run main.go. Αρχικό παράδειγμα Πώς διαβάζεται Στη Go…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-690.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="go — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="go — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="go — συγκεντρωτικός οδηγός Go Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .go . Εκτέλεση / περιβάλλον: go run main.go. Αρχικό παράδειγμα Πώς διαβάζεται Στη Go…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="go — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>go — συγκεντρωτικός οδηγός — DedSec Project</h1><p>go — συγκεντρωτικός οδηγός Go Συνήθης χρήση: Προγραμματισμός συστημάτων. Προτεινόμενη επέκταση αρχείου: .go . Εκτέλεση / περιβάλλον: go run main.go. Αρχικό παράδειγμα Πώς διαβάζεται Στη Go…</p><section><h2>Go</h2>
+<p><strong>Συνήθης χρήση:</strong> Προγραμματισμός συστημάτων.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.go</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> go run main.go.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>package main
+import &quot;fmt&quot;
+func greet(name string) string { return &quot;Hello, &quot; + name + &quot;!&quot; }
+func main() { fmt.Println(greet(&quot;Ada&quot;)) }
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Στη Go τα σφάλματα συχνά επιστρέφονται ρητά ως τιμές.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Στη Go τα σφάλματα συχνά επιστρέφονται ρητά ως τιμές. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h3>Go module με ρητά και ελεγμένα σφάλματα</h3>
+<p>Στη Go μια αναμενόμενη αποτυχία συνήθως επιστρέφεται ως error, όχι ως exception. Δημιούργησε module με τη συνάρτηση:</p>
+<pre><code class="language-go">package demo
+import (
+    &quot;errors&quot;
+    &quot;strconv&quot;
+)
+func ParsePort(text string) (int, error) {
+    n, err := strconv.Atoi(text)
+    if err != nil { return 0, err }
+    if n &lt; 1 || n &gt; 65535 { return 0, errors.New(&quot;port out of range&quot;) }
+    return n, nil
+}
+</code></pre>
+<p>Με go mod init example.com/demo δημιούργησε port_test.go και τρέξε go test:</p>
+<pre><code class="language-go">package demo
+import &quot;testing&quot;
+func TestParsePort(t *testing.T) {
+    for _, tc := range []struct{ raw string; valid bool }{
+        {&quot;80&quot;, true}, {&quot;0&quot;, false}, {&quot;65536&quot;, false}, {&quot;abc&quot;, false},
+    } {
+        _, err := ParsePort(tc.raw)
+        if (err == nil) != tc.valid { t.Errorf(&quot;%s: err=%v&quot;, tc.raw, err) }
+    }
+}
+</code></pre>
+<p>Εξήγησε γιατί πρώτα ελέγχεται το σφάλμα Atoi και μετά το επιτρεπτό εύρος. Διαχώρισε error από panic: λανθασμένη είσοδος χρήστη είναι αναμενόμενη αποτυχία, όχι πάντοτε προγραμματιστικό σφάλμα. Μια goroutine δεν κάνει αυτόματα τον κώδικα ταχύτερο· πριν από concurrency χρειάζεται σκέψη για ακύρωση και κοινά δεδομένα.</p>
+<p><strong>Επιτυχία:</strong> περνούν τέσσερα tests, μια άκυρη πόρτα δεν επιστρέφεται ως έγκυρη και ο caller ελέγχει ρητά το err. Πηγές: https://go.dev/doc/tutorial/handle-errors και https://go.dev/doc/tutorial/add-a-test.</p>
+<h2>Go — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Γιατί χρειάζεται</h3>
+<p>Το struct περιγράφει τα αναμενόμενα πεδία, αλλά ο json.Decoder επιτρέπει συχνά άγνωστα κλειδιά. Ένα λάθος στο όνομα ρύθμισης μπορεί να περάσει απαρατήρητο. Απόρριψε άγνωστα πεδία, πρόσθεσε λογικά όρια και βεβαιώσου ότι δεν υπάρχει δεύτερο JSON.</p>
+<h3>Εκτέλεση</h3>
+<p>Αποθήκευσε main.go και τρέξε go run main.go. Χρησιμοποιούνται μόνο standard packages. Περιμένεις offline 3. Τα τρία κακά δείγματα πρέπει να επιστρέψουν error, όχι να ενεργοποιήσουν το panic της δοκιμής.</p>
+<pre><code class="language-go">package main
+import (&quot;encoding/json&quot;; &quot;errors&quot;; &quot;fmt&quot;; &quot;io&quot;; &quot;strings&quot;)
+type Config struct { Name string; Limit int }
+func readConfig(raw string) (Config, error) {
+    var c Config
+    decoder := json.NewDecoder(strings.NewReader(raw))
+    decoder.DisallowUnknownFields()
+    if err := decoder.Decode(&amp;c); err != nil { return c, err }
+    if c.Name == &quot;&quot; || c.Limit &lt; 1 || c.Limit &gt; 100 {
+        return c, errors.New(&quot;bad config values&quot;)
+    }
+    var extra interface{}
+    if err := decoder.Decode(&amp;extra); err != io.EOF {
+        return c, errors.New(&quot;trailing JSON or invalid tail&quot;)
+    }
+    return c, nil
+}
+func main() {
+    good, err := readConfig(&quot;{\&quot;Name\&quot;:\&quot;offline\&quot;,\&quot;Limit\&quot;:3}&quot;)
+    if err != nil { panic(err) }
+    fmt.Println(good.Name, good.Limit)
+    for _, raw := range []string{
+        &quot;{\&quot;Name\&quot;:\&quot;x\&quot;,\&quot;Limt\&quot;:3}&quot;,
+        &quot;{\&quot;Name\&quot;:\&quot;x\&quot;,\&quot;Limit\&quot;:0}&quot;,
+        &quot;{\&quot;Name\&quot;:\&quot;x\&quot;,\&quot;Limit\&quot;:2} true&quot;,
+    } {
+        if _, err := readConfig(raw); err == nil { panic(&quot;bad data accepted&quot;) }
+    }
+}
+</code></pre>
+<h3>Εξήγηση</h3>
+<p>Η DisallowUnknownFields εντοπίζει το Limt αντί Limit. Μετά την πρώτη Decode, η δεύτερη πρέπει να επιστρέψει io.EOF· διαφορετικά υπάρχει επιπλέον περιεχόμενο. Κενό όνομα και τιμή έξω από 1..100 είναι κανόνες εφαρμογής, όχι σφάλματα σύνταξης JSON.</p>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Γράψε table-driven tests με testing.T για null, πίνακα, δεκαδικό αριθμό, δεύτερη JSON τιμή και λανθασμένο πεδίο. Πρόσεξε πως διπλά keys μπορεί να γίνουν δεκτά: χρειάζεται επιπλέον έλεγχος αν απαγορεύονται. Σε εισερχόμενα bytes από δίκτυο βάλε όριο μεγέθους πριν τη Decode.</p>
+<h3>Διάγνωση</h3>
+<p>Δες go version και σε project τρέξε go mod init example/config και go test. Κράτα την αρχική αιτία σφάλματος με fmt.Errorf και %w. Μην εμφανίζεις μυστικά config στα logs.
+Επιτυχία: offline 3 και απόρριψη τριών περιπτώσεων. https://pkg.go.dev/encoding/json</p>
+<h2>Go — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>go run {file}</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Go — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Ο παραγωγός χρειάζεται τρόπο να σταματήσει</h3>
+<p>Η goroutine μπορεί να συνεχίζει όταν ο caller έχει πάψει να διαβάζει το κανάλι. Αν επιχειρεί αποστολή σε unbuffered channel χωρίς receiver, περιμένει επ' αόριστον. Το context παρέχει σήμα διακοπής το οποίο εξετάζεται από select.</p>
+<pre><code class="language-go">package main
+import (
+    &quot;context&quot;
+    &quot;fmt&quot;
+)
+func worker(ctx context.Context, out chan&lt;- int) {
+    for n := 0; ; n++ {
+        select {
+        case &lt;-ctx.Done():
+            return
+        case out &lt;- n:
+        }
+    }
+}
+func main() {
+    ctx, cancel := context.WithCancel(context.Background())
+    out := make(chan int)
+    go worker(ctx, out)
+    fmt.Println(&lt;-out)
+    cancel()
+}
+</code></pre>
+<p>Το πρόγραμμα δείχνει cancellation signal, όχι απόδειξη ότι ολοκληρώθηκε η worker πριν επιστρέψει το main. Για synchronization πρόσθεσε done := make(chan struct{}), defer close(done) στη worker, και αναμονή &lt;-done μετά το cancel. Έτσι μπορείς να ισχυριστείς ότι η worker όντως τερμάτισε.</p>
+<h3>Close ownership</h3>
+<p>Το κανάλι δεν κλείνει αυτόματα όταν σταματά μία goroutine. Το κλείσιμο από receiver ή από πολλούς senders χωρίς συντονισμό δημιουργεί κινδύνους panic. Σε pipeline με πολλούς producers χρησιμοποίησε WaitGroup και κλείσε το output αφού ολοκληρωθούν όλοι, από το κατάλληλο ownership scope.</p>
+<h3>Διαχωρισμός race από deadlock</h3>
+<p>Ο race detector μπορεί να εντοπίσει πραγματικές ταυτόχρονες προσπελάσεις shared state, όχι κάθε μπλοκάρισμα και όχι απαραίτητα όλες τις σπάνιες διαδρομές εκτέλεσης. Μη βάζεις time.Sleep σαν «απόδειξη» συγχρονισμού· τα αποτελέσματα εξαρτώνται από scheduling.</p>
+<h3>Κριτήρια αποδοχής</h3>
+<p>Δοκίμασε cancellation πριν το πρώτο receive και μετά από ένα receive, με bounded timeout μόνο στο test harness. Έπειτα επέκτεινε σε δύο workers που παράγουν τιμές και σε έναν collector που τερματίζει χωρίς leaks. Κατάγραψε έκδοση Go, test outputs, race detector αποτέλεσμα και ποιος κλείνει κάθε κανάλι. Η επιτυχία μιας εκτέλεσης δεν αποδεικνύει καθολική απουσία concurrency bugs.</p>
+<h2>Go — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Οι goroutines είναι ελαφριές ταυτόχρονες συναρτήσεις αλλά απαιτούν διαχείριση κύκλου ζωής.</li>
+<li>Τα channels συντονίζουν επικοινωνία· το κλείσιμο δεν είναι γενικό εργαλείο τερματισμού.</li>
+<li>Τα σφάλματα συνήθως επιστρέφονται ως τιμές και πρέπει να ελέγχονται.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

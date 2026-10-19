@@ -1,0 +1,496 @@
+{
+  "base_records_per_locale": 634,
+  "added_topic_pairs": 35,
+  "files": [
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/17_Termux_Repository_Recovery.md",
+      "id": "expanded-en-ops-17-termux-repository-recovery",
+      "chars": 2092,
+      "sha256": "f0706158bf00131aea4fabf6dad819125d7d8fcea1e630bb95b953559de147e0"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/17_Termux_Repository_Recovery.md",
+      "id": "expanded-el-ops-17-termux-repository-recovery",
+      "chars": 1852,
+      "sha256": "64fe25f7258f6cebb9847fdfc7ddca51746d04016e401aa9c761e32a170083bc"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/18_Android_Storage_And_Symlinks.md",
+      "id": "expanded-en-ops-18-android-storage-and-symlinks",
+      "chars": 1898,
+      "sha256": "6b5d8ca0940792fe23aed09e5b64d0e80f526e514596e3da7a9fce62c69320cf"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/18_Android_Storage_And_Symlinks.md",
+      "id": "expanded-el-ops-18-android-storage-and-symlinks",
+      "chars": 1838,
+      "sha256": "e62f1e76d8ae3be538c2fc28230b56ed83b0b18f4c1a8c5318e8b64cfa5b5225"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/19_Pip_Native_Dependencies.md",
+      "id": "expanded-en-ops-19-pip-native-dependencies",
+      "chars": 2086,
+      "sha256": "7d486566a79bbc8d383ff7c63f0aefe7b4d9e6e9a9426d93a674bac641764b3e"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/19_Pip_Native_Dependencies.md",
+      "id": "expanded-el-ops-19-pip-native-dependencies",
+      "chars": 1808,
+      "sha256": "874ec5042125ef7e5ee1a0dc3e970e2fbb25246da4aaf74af492e6fadc22d728"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/20_Android_Process_Limits.md",
+      "id": "expanded-en-ops-20-android-process-limits",
+      "chars": 1906,
+      "sha256": "f8213331172258f5f99480429f846e9bbcb5070f3ae9726afed6bd81fb4bf563"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/20_Android_Process_Limits.md",
+      "id": "expanded-el-ops-20-android-process-limits",
+      "chars": 1755,
+      "sha256": "e2e82e35b6df6041eb2c7ef5c6df49fdaa09300e6d8c2b53e76f5d2cebbf20ac"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/21_Proot_Container_Limitations.md",
+      "id": "expanded-en-ops-21-proot-container-limitations",
+      "chars": 3057,
+      "sha256": "8377b0c56fa65bc1905d2cd47cd1520290b4de9e497270e509500ee7abc55788"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/21_Proot_Container_Limitations.md",
+      "id": "expanded-el-ops-21-proot-container-limitations",
+      "chars": 2871,
+      "sha256": "5e5af649f678624478b12b1b791e8bc5724ade931f1277291a647775bd759a3a"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/22_Linux_Permissions_ACLs.md",
+      "id": "expanded-en-ops-22-linux-permissions-acls",
+      "chars": 3045,
+      "sha256": "7b01045db7f3552b00762e2ec46b9b1486d2ca306e83cc94911cdca33272f183"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/22_Linux_Permissions_ACLs.md",
+      "id": "expanded-el-ops-22-linux-permissions-acls",
+      "chars": 2830,
+      "sha256": "6c990121baa2d4ddc84fb3d2b457bb0d896c9489f19e4a50ea1a5a846a288539"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/23_Linux_Disk_Inodes_Mounts.md",
+      "id": "expanded-en-ops-23-linux-disk-inodes-mounts",
+      "chars": 2816,
+      "sha256": "991a208b1b702f94ddd97ebc47369bb673b88ec10b2f4451d596a21efcc20c3a"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/23_Linux_Disk_Inodes_Mounts.md",
+      "id": "expanded-el-ops-23-linux-disk-inodes-mounts",
+      "chars": 2504,
+      "sha256": "a7674a3b9f87dfff9e99e50cbd17195d50dc46c004b9805daa60715ee2831e7e"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/24_Linux_DNS_And_TLS.md",
+      "id": "expanded-en-ops-24-linux-dns-and-tls",
+      "chars": 3482,
+      "sha256": "0bc83afc1965edc61625ca0e92e0dc159112121f6d4955df290b93199d654b22"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/24_Linux_DNS_And_TLS.md",
+      "id": "expanded-el-ops-24-linux-dns-and-tls",
+      "chars": 3179,
+      "sha256": "2015d44e0ffd5deba29ba609d30551d9afefae4230241a82e5f28947deaccf55"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/25_Git_Recovery_Before_Reset.md",
+      "id": "expanded-en-ops-25-git-recovery-before-reset",
+      "chars": 3171,
+      "sha256": "6ddfbaf786ad619884fac3d08a963995e43603d7aa75a964a943efc5808c8f4a"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/25_Git_Recovery_Before_Reset.md",
+      "id": "expanded-el-ops-25-git-recovery-before-reset",
+      "chars": 2973,
+      "sha256": "86f05f1c292ca7297b0e932a61ade633d4897d3f957a37a3f10f39d67132b6f0"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/26_Python_Environment_Forensics.md",
+      "id": "expanded-en-ops-26-python-environment-forensics",
+      "chars": 1931,
+      "sha256": "edaf847bfbfc3398288feaf75d9f106fc164f03cf5297989c1c17d66482b2144"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/26_Python_Environment_Forensics.md",
+      "id": "expanded-el-ops-26-python-environment-forensics",
+      "chars": 1823,
+      "sha256": "a891eb40227e69b3f6710be3850b95181d73229189b72816a5760c76f438b92b"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/27_Reproducible_Builds_And_Zips.md",
+      "id": "expanded-en-ops-27-reproducible-builds-and-zips",
+      "chars": 1777,
+      "sha256": "b51130146ddca00d9828d5302cca1f705b920dd027b06bff7ded0e3fc93420ea"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/27_Reproducible_Builds_And_Zips.md",
+      "id": "expanded-el-ops-27-reproducible-builds-and-zips",
+      "chars": 1599,
+      "sha256": "04947c015e1ca827770b9752edf82bb13c8b0c8345e5380414902f99bd9be01c"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/28_CI_Without_Wasting_Minutes.md",
+      "id": "expanded-en-ops-28-ci-without-wasting-minutes",
+      "chars": 1969,
+      "sha256": "5ffbb1679fe6181ad47230a56bfb743790a24f97a5f77598610e378ea2c802c4"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/28_CI_Without_Wasting_Minutes.md",
+      "id": "expanded-el-ops-28-ci-without-wasting-minutes",
+      "chars": 1750,
+      "sha256": "18cd21c0dbbbf5cf4e28b55b972986790e85cccb4a3e5e882b04dac411f38c27"
+    },
+    {
+      "locale": "en",
+      "path": "Reverse Engineering/English/20_Binary_Header_Validation.md",
+      "id": "expanded-en-reverse-20-binary-header-validation",
+      "chars": 3802,
+      "sha256": "73a3ebc73b1f6f6f5c6409764def108cbec8601330a5cdd18be39f49e8367189"
+    },
+    {
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/20_Binary_Header_Validation.md",
+      "id": "expanded-el-reverse-20-binary-header-validation",
+      "chars": 3524,
+      "sha256": "35e64292725d86a807489882fd1b0030e92fca3940bd1b1b5f8de47369f27cb9"
+    },
+    {
+      "locale": "en",
+      "path": "Reverse Engineering/English/21_ELF_And_PE_Read_Only.md",
+      "id": "expanded-en-reverse-21-elf-and-pe-read-only",
+      "chars": 3387,
+      "sha256": "edc85e02b268deb0c4258be96a920fe21c4096cd7c42811b1328cea8efb23f23"
+    },
+    {
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/21_ELF_And_PE_Read_Only.md",
+      "id": "expanded-el-reverse-21-elf-and-pe-read-only",
+      "chars": 3055,
+      "sha256": "f22f2d60a5b1d73837f188521fe09777c29d7b128289502a2357676e730ded91"
+    },
+    {
+      "locale": "en",
+      "path": "Reverse Engineering/English/22_JavaScript_Bundle_Tracing.md",
+      "id": "expanded-en-reverse-22-javascript-bundle-tracing",
+      "chars": 1952,
+      "sha256": "d097bb78230d05089d6a2be144ea641dcb1e37f6bc26a2960efd022e05c730ae"
+    },
+    {
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/22_JavaScript_Bundle_Tracing.md",
+      "id": "expanded-el-reverse-22-javascript-bundle-tracing",
+      "chars": 1713,
+      "sha256": "2c222b4624830afbc686c54fd6d391443b97277899661d073d8d2ba11670930b"
+    },
+    {
+      "locale": "en",
+      "path": "Reverse Engineering/English/23_APK_Read_Only_Inspection.md",
+      "id": "expanded-en-reverse-23-apk-read-only-inspection",
+      "chars": 1867,
+      "sha256": "dad48635ea2ea16e0b3ca09116193927f0e7214a94d24a6cf02117f17b2b631f"
+    },
+    {
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/23_APK_Read_Only_Inspection.md",
+      "id": "expanded-el-reverse-23-apk-read-only-inspection",
+      "chars": 1694,
+      "sha256": "578b07cd02eb371a1e3a3de6033add795bb2f3e6b31e2bb09b17b673140be7f3"
+    },
+    {
+      "locale": "en",
+      "path": "Reverse Engineering/English/24_PCAP_Protocol_Triage.md",
+      "id": "expanded-en-reverse-24-pcap-protocol-triage",
+      "chars": 1792,
+      "sha256": "2d9a1a64efaaa895d3b45dff70727e72a302366f31c08785ae04bf177feb0227"
+    },
+    {
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/24_PCAP_Protocol_Triage.md",
+      "id": "expanded-el-reverse-24-pcap-protocol-triage",
+      "chars": 1629,
+      "sha256": "c1bc964f083b1e625e581a797da150c6ff7d20445072537bd5b186b5ba0d236a"
+    },
+    {
+      "locale": "en",
+      "path": "Reverse Engineering/English/25_Evidence_Ledger_And_Diff.md",
+      "id": "expanded-en-reverse-25-evidence-ledger-and-diff",
+      "chars": 1834,
+      "sha256": "0aeca8f3781ceaca6241fc412a256b3ba461b01e390a9573dd92fd7bfc68ef45"
+    },
+    {
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/25_Evidence_Ledger_And_Diff.md",
+      "id": "expanded-el-reverse-25-evidence-ledger-and-diff",
+      "chars": 1576,
+      "sha256": "8c7c70489a23e5cad58c8be8f40b34b1a994fca1ff10d9ecc9f8e2c292aadfd0"
+    },
+    {
+      "locale": "en",
+      "path": "Reverse Engineering/English/26_Safe_Archive_Forensics.md",
+      "id": "expanded-en-reverse-26-safe-archive-forensics",
+      "chars": 1906,
+      "sha256": "718abafa76e2bde4421d7809b57b28bc9134809a5cc80c646ba060f942c82e60"
+    },
+    {
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/26_Safe_Archive_Forensics.md",
+      "id": "expanded-el-reverse-26-safe-archive-forensics",
+      "chars": 1743,
+      "sha256": "4bf86e53b8d6fe4793362f3de55eeb65b4599116b7f20f41a8fd54c853a8a152"
+    },
+    {
+      "locale": "en",
+      "path": "Security_Engineering/14_Threat_Model_For_Offline_Website.md",
+      "id": "expanded-en-security-14-threat-model-for-offline-website",
+      "chars": 1833,
+      "sha256": "12aaf3a95b1aed8b59f49c7c826a2a77de626227139fb6ca14d047bc49183b9e"
+    },
+    {
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/14_Threat_Model_For_Offline_Website.md",
+      "id": "expanded-el-security-14-threat-model-for-offline-website",
+      "chars": 1612,
+      "sha256": "bd86831fda7a03f798edb35651854ec35b63870cac443b535ade045f893f9c9a"
+    },
+    {
+      "locale": "en",
+      "path": "Security_Engineering/15_Secrets_Incident_Response.md",
+      "id": "expanded-en-security-15-secrets-incident-response",
+      "chars": 1806,
+      "sha256": "26c9b344bc23296b65d06f739e05bceda0a53c2d11adc904ca52bcadc5932e44"
+    },
+    {
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/15_Secrets_Incident_Response.md",
+      "id": "expanded-el-security-15-secrets-incident-response",
+      "chars": 1585,
+      "sha256": "d3ec3cdef582405cf7bf0308396eb40ebef36172a27692c5552205d87f851bb9"
+    },
+    {
+      "locale": "en",
+      "path": "Security_Engineering/16_Dependency_Provenance_SBOM.md",
+      "id": "expanded-en-security-16-dependency-provenance-sbom",
+      "chars": 1963,
+      "sha256": "df048209a6e5670794afc3422a689673c410dbd3bcd3528f3680f6c4eb9b1991"
+    },
+    {
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/16_Dependency_Provenance_SBOM.md",
+      "id": "expanded-el-security-16-dependency-provenance-sbom",
+      "chars": 1766,
+      "sha256": "fbb9b22d4c37da4eeb4d440745799f58e739d78c71a8f8b5941a846b5b22755e"
+    },
+    {
+      "locale": "en",
+      "path": "Security_Engineering/17_Web_Input_Output_Contracts.md",
+      "id": "expanded-en-security-17-web-input-output-contracts",
+      "chars": 1861,
+      "sha256": "67c6001f697b5f3e374ec53367df4a16f9b3dcc7ccc5c17158d9b3d1dcb4eb11"
+    },
+    {
+      "locale": "el",
+      "path": "Μηχανική_Ασφάλειας/17_Web_Input_Output_Contracts.md",
+      "id": "expanded-el-security-17-web-input-output-contracts",
+      "chars": 1785,
+      "sha256": "a5e02399f845d2077b644fef51f3598df43f1fbf158402843c1d38f47381c115"
+    },
+    {
+      "locale": "en",
+      "path": "Programming_Languages/General/Python/05_Pytest_Fixtures.md",
+      "id": "expanded-en-language-5-pytest-fixtures",
+      "chars": 2105,
+      "sha256": "e09ce92e85d09a6c4a8fa00cea65d4c7534043abc3491c84a3cc17aed9793f95"
+    },
+    {
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/Python/05_Pytest_Fixtures.md",
+      "id": "expanded-el-language-5-pytest-fixtures",
+      "chars": 1901,
+      "sha256": "5a1cde19d63d00fa64f30a950a63537a40f02629199d70ce147f2fb25a747b3b"
+    },
+    {
+      "locale": "en",
+      "path": "Programming_Languages/Web/JavaScript/05_Async_Fetch_Timeout.md",
+      "id": "expanded-en-language-5-async-fetch-timeout",
+      "chars": 2008,
+      "sha256": "e23f2a49c33f6a2b454d40cc5ce25ec823b287a8570bbb7d99ffe1266a399002"
+    },
+    {
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/JavaScript/05_Async_Fetch_Timeout.md",
+      "id": "expanded-el-language-5-async-fetch-timeout",
+      "chars": 1789,
+      "sha256": "b517ddba24fc4e8d3272292833aefbc2fe42b9b00333c2a2f382439bf5ffe2ae"
+    },
+    {
+      "locale": "en",
+      "path": "Programming_Languages/Scripting/Bash/05_Paths_And_Safe_Shell.md",
+      "id": "expanded-en-language-5-paths-and-safe-shell",
+      "chars": 3178,
+      "sha256": "37bf1c8df0e97caf0f2040eb91a5d067ad6c754fae1ae15a3c8f3c385c9ae02a"
+    },
+    {
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Αυτοματισμός και σενάρια/Bash/05_Paths_And_Safe_Shell.md",
+      "id": "expanded-el-language-5-paths-and-safe-shell",
+      "chars": 2899,
+      "sha256": "517abd71d0bc610a06bc4add8c3cadac5b94c4e910fe7e008199f1fe439b15fd"
+    },
+    {
+      "locale": "en",
+      "path": "Programming_Languages/Systems/Rust/05_Ownership_Parsing.md",
+      "id": "expanded-en-language-5-ownership-parsing",
+      "chars": 1837,
+      "sha256": "7bcdf03a532575169fe5c19ba104aa9724321369cd659f13bb6629186712ca9e"
+    },
+    {
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/Rust/05_Ownership_Parsing.md",
+      "id": "expanded-el-language-5-ownership-parsing",
+      "chars": 1709,
+      "sha256": "05f3690d80ccf213d24456e3f4bab379a2718e0e3983b5e75ecb3570948fb333"
+    },
+    {
+      "locale": "en",
+      "path": "Programming_Languages/Systems/C/05_Bounded_Read.md",
+      "id": "expanded-en-language-5-bounded-read",
+      "chars": 1804,
+      "sha256": "d675be8ff3c44a3ecb7023b2da7ac68bcfb0905993185f6fce58411876030551"
+    },
+    {
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/C/05_Bounded_Read.md",
+      "id": "expanded-el-language-5-bounded-read",
+      "chars": 1629,
+      "sha256": "217ca0630511e0b473374429bca7da09020fb198c4e553108003bfc72d24cf59"
+    },
+    {
+      "locale": "en",
+      "path": "Programming_Languages/Data/SQL_SQLite/05_Transaction_Migration.md",
+      "id": "expanded-en-language-5-transaction-migration",
+      "chars": 3767,
+      "sha256": "f349e83e382a93309f8761b6142a925dcdbc99b4c03c23f6cebfd95c3120bf79"
+    },
+    {
+      "locale": "el",
+      "path": "Γλώσσες_Προγραμματισμού/Βάσεις και επεξεργασία δεδομένων/SQL_SQLite/05_Transaction_Migration.md",
+      "id": "expanded-el-language-5-transaction-migration",
+      "chars": 3444,
+      "sha256": "cc75cb4827fb227653062dee4c1d7ba87287a534ae469512053fe87be4bfffba"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/29_Systemd_Journal_Diagnostics.md",
+      "id": "expanded-en-ops-29-systemd-journal-diagnostics",
+      "chars": 1987,
+      "sha256": "b87b9bf0c76a4a9e1c16dc1485467aeb920ec7da75e4771e5e13d7165c8f9f4e"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/30_SSH_Connection_Triage.md",
+      "id": "expanded-en-ops-30-ssh-connection-triage",
+      "chars": 1774,
+      "sha256": "d9ac97d666f25883ddd2d47b15419df6ef14e0204c917ee5f76c60fa477c2918"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/31_Windows_PowerShell_Path.md",
+      "id": "expanded-en-ops-31-windows-powershell-path",
+      "chars": 3156,
+      "sha256": "78d44eff1026dbef4ebbc01ef64f84835947f336b92b3c7a95a798665fc566bb"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/32_Android_APK_Deployment.md",
+      "id": "expanded-en-ops-32-android-apk-deployment",
+      "chars": 1779,
+      "sha256": "5ac870e8260221cca66c2aa880138352f9f2eb307b3c95d847363af15b000e71"
+    },
+    {
+      "locale": "en",
+      "path": "Advanced_Engineering_Labs/33_Static_Web_Accessibility.md",
+      "id": "expanded-en-ops-33-static-web-accessibility",
+      "chars": 1937,
+      "sha256": "00b647fa9ddb2315924c99afbcf4bd464352c9ecb2631a7613815c795e5c657e"
+    },
+    {
+      "locale": "en",
+      "path": "Reverse Engineering/English/27_DotNet_Metadata_Inspection.md",
+      "id": "expanded-en-reverse-27-dotnet-metadata-inspection",
+      "chars": 1785,
+      "sha256": "cad005b94cc4cb388fc6cfca7c509776042c758f6ff90b697fd2936973779740"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/29_Systemd_Journal_Diagnostics.md",
+      "id": "expanded-el-ops-29-systemd-journal-diagnostics",
+      "chars": 1672,
+      "sha256": "41cd061f0934a779734f6ac5b62011beb5b8e29742e8d90f1522b9508c109a1b"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/30_SSH_Connection_Triage.md",
+      "id": "expanded-el-ops-30-ssh-connection-triage",
+      "chars": 1524,
+      "sha256": "9023455d67949afa36a71bc4dd38d10517b1f732eb77fcc7fb219cc18dca5eba"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/31_Windows_PowerShell_Path.md",
+      "id": "expanded-el-ops-31-windows-powershell-path",
+      "chars": 2871,
+      "sha256": "6fee9ef7fa2ce01bebfecc9e9a2d1bad60f56ca2cb1466ae0407fc0063994568"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/32_Android_APK_Deployment.md",
+      "id": "expanded-el-ops-32-android-apk-deployment",
+      "chars": 1582,
+      "sha256": "0375292ce3e27278ab908d0f6a7b8e707434524723cd89809125085e527a5f40"
+    },
+    {
+      "locale": "el",
+      "path": "Προχωρημένα_Εργαστήρια_Μηχανικής/33_Static_Web_Accessibility.md",
+      "id": "expanded-el-ops-33-static-web-accessibility",
+      "chars": 1801,
+      "sha256": "67bdc730f7f5fdb255f496c579057b11e28a3c479d5e36f8e22fd0ec6caeba68"
+    },
+    {
+      "locale": "el",
+      "path": "Reverse Engineering/Greek/27_DotNet_Metadata_Inspection.md",
+      "id": "expanded-el-reverse-27-dotnet-metadata-inspection",
+      "chars": 1504,
+      "sha256": "1c6bf7059f4bdea317bad14ddedea5ea42651f263f8abd2a6016515d3a007e65"
+    }
+  ]
+}

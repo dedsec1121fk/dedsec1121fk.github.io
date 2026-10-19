@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Virtualization, Hypervisors, Virtual Machines and Confidential Computing — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-094.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Virtualization, Hypervisors, Virtual Machines and Confidential Computing Virtualization creates strong but not absolute boundaries. This module explains hypervisor architecture, virtual…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Virtualization, Hypervisors, Virtual Machines and Confidential Computing — DedSec Project">
+<meta property="og:description" content="Virtualization, Hypervisors, Virtual Machines and Confidential Computing Virtualization creates strong but not absolute boundaries. This module explains hypervisor architecture, virtual…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-094.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Virtualization, Hypervisors, Virtual Machines and Confidential Computing — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Virtualization, Hypervisors, Virtual Machines and Confidential Computing — DedSec Project">
+<meta name="twitter:description" content="Virtualization, Hypervisors, Virtual Machines and Confidential Computing Virtualization creates strong but not absolute boundaries. This module explains hypervisor architecture, virtual…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Virtualization, Hypervisors, Virtual Machines and Confidential Computing — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Virtualization, Hypervisors, Virtual Machines and Confidential Computing — DedSec Project</h1><p>Virtualization, Hypervisors, Virtual Machines and Confidential Computing Virtualization creates strong but not absolute boundaries. This module explains hypervisor architecture, virtual…</p><section><p>Virtualization creates strong but not absolute boundaries. This module explains hypervisor architecture, virtual devices, management planes, snapshots, host integration, nested virtualization, and confidential-computing concepts from a defensive research perspective.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>Hypervisor models</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Hardware virtualization</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Virtual devices</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Snapshots and images</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Management plane</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Nested virtualization</strong> and connect it to a concrete trust boundary or security invariant.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. Hypervisor models</h3>
+<p>Type-1 and hosted hypervisors differ in deployment architecture, but both mediate CPU, memory, interrupts, and devices. The management plane and device-emulation surface are often as important as the core scheduler.</p>
+<h3>2. Hardware virtualization</h3>
+<p>CPU extensions and second-level address translation allow guest execution while retaining host control over privileged operations and memory mappings. Security analysis should distinguish guest virtual, guest physical, and host physical addresses.</p>
+<h3>3. Virtual devices</h3>
+<p>Network cards, storage controllers, graphics, USB, shared folders, clipboard, and guest agents expand the interface between guest and host. Disable integration features that are unnecessary for the workload.</p>
+<h3>4. Snapshots and images</h3>
+<p>VM images and snapshots can contain credentials, encryption keys, tokens, memory-resident secrets, and stale software. Treat them as sensitive artifacts with lifecycle controls.</p>
+<h3>5. Management plane</h3>
+<p>Hypervisor APIs, consoles, orchestration, templates, and backup systems can control many guests at once. Strong MFA, dedicated administration paths, logging, and separation of duties are essential.</p>
+<h3>6. Nested virtualization</h3>
+<p>Nested guests add more layers and make performance/security assumptions harder to reason about. Document which layer owns each security feature rather than assuming the inner guest can enforce host-level guarantees.</p>
+<h3>7. Confidential computing</h3>
+<p>Hardware-backed confidential VMs/TEEs aim to protect workload memory from parts of the host stack. Attestation and key-release policy become central; side channels, availability, and trusted I/O remain separate concerns.</p>
+<h3>8. Boundary verification</h3>
+<p>A good test plan checks device exposure, guest-agent privileges, network isolation, image provenance, snapshot handling, time synchronization, logging, and management-plane authorization without attempting host escape.</p>
+<h2>Authorized exercises</h2>
+<h3>Exercise 1 — Build a local VM threat model listing every host/guest integration feature and justify whether it is required</h3>
+<p>Build a local VM threat model listing every host/guest integration feature and justify whether it is required.</p>
+<h3>Exercise 2 — Take a disposable VM snapshot with non-sensitive test data and document what security-sensitive state a real snapshot could preserve</h3>
+<p>Take a disposable VM snapshot with non-sensitive test data and document what security-sensitive state a real snapshot could preserve.</p>
+<h3>Exercise 3 — Compare the trust assumptions of a normal VM, container, and confidential VM in a one-page matrix</h3>
+<p>Compare the trust assumptions of a normal VM, container, and confidential VM in a one-page matrix.</p>
+<h2>Knowledge checks</h2>
+<ol>
+<li>Explain the most important trust boundary in <strong>Virtualization, Hypervisors, Virtual Machines and Confidential Computing</strong> without naming a security tool.</li>
+<li>Give one example where cryptographic or authentication success still does <strong>not</strong> imply authorization success.</li>
+<li>Describe one stale-state or replay condition relevant to this module.</li>
+<li>Identify one telemetry source that can support a strong conclusion and one blind spot it still leaves.</li>
+<li>Explain how you would turn a discovered weakness into a regression test rather than a one-time finding.</li>
+</ol>
+<h2>Guided study workflow</h2>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,53 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>TS2339 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-974.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="TS2339 — διάκρινε την παραλλαγή πριν διαβάσεις ειδική ιδιότητα Αρχική αιτία Το TS2339 εμφανίζεται όταν η ιδιότητα δεν υπάρχει στον στατικό τύπο που χειρίζεσαι. Σε έναν σύνθετο τύπο union η…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="TS2339 — DedSec Project">
+<meta property="og:description" content="TS2339 — διάκρινε την παραλλαγή πριν διαβάσεις ειδική ιδιότητα Αρχική αιτία Το TS2339 εμφανίζεται όταν η ιδιότητα δεν υπάρχει στον στατικό τύπο που χειρίζεσαι. Σε έναν σύνθετο τύπο union η…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-974.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TS2339 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TS2339 — DedSec Project">
+<meta name="twitter:description" content="TS2339 — διάκρινε την παραλλαγή πριν διαβάσεις ειδική ιδιότητα Αρχική αιτία Το TS2339 εμφανίζεται όταν η ιδιότητα δεν υπάρχει στον στατικό τύπο που χειρίζεσαι. Σε έναν σύνθετο τύπο union η…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="TS2339 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>TS2339 — DedSec Project</h1><p>TS2339 — διάκρινε την παραλλαγή πριν διαβάσεις ειδική ιδιότητα Αρχική αιτία Το TS2339 εμφανίζεται όταν η ιδιότητα δεν υπάρχει στον στατικό τύπο που χειρίζεσαι. Σε έναν σύνθετο τύπο union η…</p><section><h1>TS2339 — διάκρινε την παραλλαγή πριν διαβάσεις ειδική ιδιότητα</h1>
+<h2>Αρχική αιτία</h2>
+<p>Το TS2339 εμφανίζεται όταν η ιδιότητα δεν υπάρχει στον στατικό τύπο που χειρίζεσαι. Σε έναν σύνθετο τύπο union η ιδιότητα μπορεί να υπάρχει σε μία παραλλαγή και να λείπει από άλλη. Για παράδειγμα, μία κίνηση αφής έχει συντεταγμένες x/y, ενώ μία πληκτρολόγηση έχει κείμενο. Η ανάγνωση event.x χωρίς έλεγχο της παραλλαγής είναι λανθασμένη.</p>
+<h2>Πρακτική διόρθωση</h2>
+<p>Χρησιμοποίησε discriminated union με πεδίο <code>kind</code>. Ο έλεγχος <code>event.kind === 'tap'</code> περιορίζει τον τύπο στην παραλλαγή με x και y, ενώ η άλλη περίπτωση χρησιμοποιεί το text. Οι δύο διαδρομές ελέγχονται σε κανονική εκτέλεση και με <code>--strict</code>.</p>
+<h2>Επαληθευμένο παράδειγμα TypeScript</h2>
+<pre><code class="language-typescript">type UiEvent = {kind: 'tap'; x: number; y: number} | {kind: 'type'; text: string};
+function render(event: UiEvent): string {
+  if (event.kind === 'tap') return `tap at ${event.x},${event.y}`;
+  return `typed ${event.text}`;
+}
+if (render({kind: 'tap', x: 2, y: 3}) !== 'tap at 2,3') throw Error();
+if (render({kind: 'type', text: 'ok'}) !== 'typed ok') throw Error();
+console.log('PASS TS2339');
+</code></pre>
+<h2>Γιατί λειτουργεί</h2>
+<p>Η προσθήκη δυναμικής ιδιότητας σε αντικείμενο JavaScript δεν ενημερώνει αυτόματα τη δήλωση τύπου. Το optional chaining δεν διορθώνει μία ιδιότητα που δεν υπάρχει σε κανένα μέλος του δηλωμένου τύπου. Το <code>as any</code> αποκρύπτει το πραγματικό πρόβλημα και μπορεί να οδηγήσει σε crash αργότερα.</p>
+<h2>Εντολές ελέγχου</h2>
+<p>Αποθήκευσε ως main.ts και εκτέλεσε <code>tsc --strict --target es2022 --module commonjs --outDir dist main.ts &amp;&amp; node dist/main.js</code>. Αναμένεται PASS. Σε χωριστό bad.ts δήλωσε τον ίδιο UiEvent και γράψε <code>function wrong(e: UiEvent) { return e.x; }</code>. Η μεταγλώττιση πρέπει να δείξει TS2339.</p>
+<h2>Ασκήσεις διάγνωσης</h2>
+<p>Πρόσθεσε παραλλαγή 'scroll' και χειρίσου την με πλήρες switch και never στην απρόβλεπτη περίπτωση. Δοκίμασε την ανορθόγραφη ιδιότητα event.txt. Σύγκρινε τον έλεγχο kind με την υπόθεση ότι μια ιδιότητα υπάρχει επειδή είναι truthy.</p>
+<p><strong>Τεκμηρίωση:</strong> https://www.typescriptlang.org/docs/handbook/2/narrowing.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

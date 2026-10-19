@@ -1,0 +1,62 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Post-Quantum Migration, Crypto Agility και Hybrid Deployment — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-101.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Post-Quantum Migration, Crypto Agility και Hybrid Deployment Ελληνική έκδοση — Μάθημα 101. Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην αναζήτηση…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Post-Quantum Migration, Crypto Agility και Hybrid Deployment — DedSec Project">
+<meta property="og:description" content="Post-Quantum Migration, Crypto Agility και Hybrid Deployment Ελληνική έκδοση — Μάθημα 101. Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην αναζήτηση…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-101.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Post-Quantum Migration, Crypto Agility και Hybrid Deployment — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Post-Quantum Migration, Crypto Agility και Hybrid Deployment — DedSec Project">
+<meta name="twitter:description" content="Post-Quantum Migration, Crypto Agility και Hybrid Deployment Ελληνική έκδοση — Μάθημα 101. Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην αναζήτηση…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Post-Quantum Migration, Crypto Agility και Hybrid Deployment — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Post-Quantum Migration, Crypto Agility και Hybrid Deployment — DedSec Project</h1><p>Post-Quantum Migration, Crypto Agility και Hybrid Deployment Ελληνική έκδοση — Μάθημα 101. Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην αναζήτηση…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 101.</strong> Διατηρούνται οι διεθνείς τεχνικοί όροι όπου είναι ακριβέστεροι και ευκολότεροι στην αναζήτηση.</p>
+</blockquote>
+<h2>Στόχος του μαθήματος</h2>
+<p>Να κατανοήσεις σε βάθος το <strong>Post-Quantum Migration, Crypto Agility και Hybrid Deployment</strong>, να αναγνωρίζεις trust boundaries και failure states και να μπορείς να αποδείξεις ένα συμπέρασμα με ασφαλές, επαναλήψιμο evidence.</p>
+<h2>Βαθιές τεχνικές έννοιες</h2>
+<h3>1. Cryptographic inventory</h3>
+<p>Migration ξεκινά με inventory algorithms, protocols, certificates, keys, libraries, hardware και data lifetimes. Χωρίς dependency map δεν μπορείς να ξέρεις ποιο σύστημα μπλοκάρει αλλαγή ή ποια δεδομένα χρειάζονται προτεραιότητα.</p>
+<h3>2. Harvest-now risk</h3>
+<p>Data που κρυπτογραφούνται σήμερα μπορεί να συλλεχθούν και να αποκρυπτογραφηθούν αργότερα αν έχουν μακροχρόνια αξία και εξαρτώνται από public-key schemes που απειλούνται από future quantum capability. Prioritize confidentiality horizon και exposure.</p>
+<h3>3. Standards</h3>
+<p>Χρησιμοποίησε finalized/recognized post-quantum standards και vendor/platform guidance αντί για home-grown primitives. Algorithm selection είναι μόνο μέρος του migration· interoperability, key sizes και protocol integration είναι εξίσου σημαντικά.</p>
+<h3>4. Crypto agility</h3>
+<p>Agility σημαίνει ότι algorithms/keys μπορούν να αλλάξουν με versioned policy και authenticated negotiation χωρίς unsafe fallback. Hard-coded assumptions και fixed field sizes κάνουν migration ακριβό.</p>
+<h3>5. Hybrid approaches</h3>
+<p>Hybrid deployment συνδυάζει classical και post-quantum mechanisms ώστε failure ενός νέου component να μην είναι μοναδικό trust anchor. Η composition πρέπει να ακολουθεί reviewed standards/protocol profiles και να αποφεύγει custom combining logic.</p>
+<h3>6. PKI impact</h3>
+<p>Certificates, enrollment, HSM/KMS, revocation, chain validation και network appliances μπορεί να έχουν size/algorithm constraints. Test end-to-end PKI workflows και recovery πριν από broad rollout.</p>
+<h3>7. Migration sequencing</h3>
+<p>Ξεκίνα από inventory και low-risk interoperability labs, μετά dual-support/rotation, service migration και retirement legacy algorithms σύμφωνα με data lifetime και dependency readiness.</p>
+<h3>8. Evidence</h3>
+<p>Κράτησε algorithm inventory, owners, versions, test vectors, handshake/certificate sizes, latency, failure modes και rollback criteria ώστε η migration να είναι measurable engineering project.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<ol>
+<li><strong>Build a cryptographic inventory for a small local application and record every library/API that creates or validates keys/signatures</strong> — εκτέλεσέ το μόνο στο isolated/owned lab και κατέγραψε before/after αποτέλεσμα.</li>
+<li><strong>Create a compatibility test plan that anticipates larger key/signature objects and handshake messages without claiming unsupported algorithms are production-ready</strong> — εκτέλεσέ το μόνο στο isolated/owned lab και κατέγραψε before/after αποτέλεσμα.</li>
+<li><strong>Classify sample data sets by confidentiality lifetime and use that to rank migration priority</strong> — εκτέλεσέ το μόνο στο isolated/owned lab και κατέγραψε before/after αποτέλεσμα.</li>
+</ol>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p><a href="../en/hgp-en-101.html">English Module 101</a></p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

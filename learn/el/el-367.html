@@ -1,0 +1,68 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>fantom — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-367.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="fantom — συγκεντρωτικός οδηγός Fantom Τι προσφέρει η γλώσσα Η Fantom στοχεύει σε virtual-machine περιβάλλοντα με typed classes, modules που ονομάζονται pods και κοινή standard library…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="fantom — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="fantom — συγκεντρωτικός οδηγός Fantom Τι προσφέρει η γλώσσα Η Fantom στοχεύει σε virtual-machine περιβάλλοντα με typed classes, modules που ονομάζονται pods και κοινή standard library…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-367.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="fantom — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="fantom — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="fantom — συγκεντρωτικός οδηγός Fantom Τι προσφέρει η γλώσσα Η Fantom στοχεύει σε virtual-machine περιβάλλοντα με typed classes, modules που ονομάζονται pods και κοινή standard library…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="fantom — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>fantom — συγκεντρωτικός οδηγός — DedSec Project</h1><p>fantom — συγκεντρωτικός οδηγός Fantom Τι προσφέρει η γλώσσα Η Fantom στοχεύει σε virtual-machine περιβάλλοντα με typed classes, modules που ονομάζονται pods και κοινή standard library…</p><section><h2>Fantom</h2>
+<h3>Τι προσφέρει η γλώσσα</h3>
+<p>Η Fantom στοχεύει σε virtual-machine περιβάλλοντα με typed classes, modules που ονομάζονται pods και κοινή standard library.</p>
+<h3>Μικρό παράδειγμα προς μελέτη</h3>
+<pre><code class="language-text">class Main {
+  static Void main() { echo(&quot;Hello from Fantom&quot;) }
+}
+</code></pre>
+<p>Εντόπισε τη μέθοδο εισόδου, άλλαξε το μήνυμα και κατέγραψε την έκδοση του runtime.</p>
+<h3>Τι να επαληθεύσεις</h3>
+<p>Κατάγραψε την πραγματική έκδοση εργαλείου, τις απαιτούμενες εξαρτήσεις και την έξοδο σε δοκιμαστικά δεδομένα για τη Fantom. Πρόβλεψε το αποτέλεσμα πριν το ελέγξεις και διατήρησε την αρχική και τη διορθωμένη εκδοχή ώστε να φαίνεται η αιτιώδης διαφορά. Μην αποκαλείς ένα απόσπασμα εκτελεσμένο αν δεν έχεις το κατάλληλο περιβάλλον.</p>
+<h3>Παγίδα ειδική για το θέμα</h3>
+<p>Μην υποθέτεις ότι κάθε pod εκτελείται αμετάβλητο σε JVM ή JavaScript· έλεγξε συμβατότητα στόχου.</p>
+<h2>Εργαστήριο εξάσκησης: Fantom</h2>
+<p>Η Fantom μπορεί να στοχεύει διαφορετικά managed runtimes. Οι τύποι Str, Int και Void ανήκουν στη δική της σύνταξη και δεν πρέπει να ερμηνεύονται αυτόματα ως Java ή C#. Για εκτέλεση απαιτείται συμβατή εγκατάσταση Fantom· τα παρακάτω αποτελούν παραδείγματα για μελέτη, όχι καταγεγραμμένες πραγματικές δοκιμές.</p>
+<h3>Άσκηση 1: ποια είναι η είσοδος του προγράμματος;</h3>
+<pre><code class="language-fantom">class Hello {
+  static Void main() {
+    Str[] names := [&quot;Ada&quot;, &quot;Grace&quot;]
+    echo(names.size)
+  }
+}
+</code></pre>
+<p>Εδώ δημιουργείται λίστα δύο συμβολοσειρών. Σε συμβατό runtime η αναμενόμενη έξοδος είναι 2. Αφαίρεσε νοητικά όλα τα στοιχεία και πρόβλεψε αν αλλάζει ο τύπος της λίστας ή μόνο το μέγεθος. Εξήγησε γιατί το static Void main() δηλώνει μέθοδο εκκίνησης και γιατί το echo() προκαλεί ορατό αποτέλεσμα, δηλαδή παρενέργεια.</p>
+<h3>Άσκηση 2: χειρισμός τύπων χωρίς αυθαίρετη μετατροπή</h3>
+<p>Φτιάξε ένα Int και ένα Str που περιέχει αριθμητικά ψηφία. Δεν είναι ισοδύναμο να κάνεις αριθμητική πράξη σε Str και να προσθέσεις δύο Int. Ερεύνησε την ρητή μετατροπή που παρέχει η εγκατεστημένη Fantom και πώς αναφέρει μη αποδεκτή είσοδο. Για Str? εξήγησε τη διαφορά ανάμεσα σε απουσία τιμής και κενή συμβολοσειρά. Μια μέθοδος που απαιτεί non-null αντικείμενο χρειάζεται κατάλληλο έλεγχο πριν κληθεί.</p>
+<h3>Άσκηση 3: τρία διαφορετικά σφάλματα</h3>
+<p>Σχεδίασε ξεχωριστό δοκιμαστικό για index εκτός ορίων, για αρχείο που δεν υπάρχει και για τιμή λάθος τύπου. Σε λίστα δύο στοιχείων ο δείκτης 2 είναι εκτός ορίων, αν αρχίζουμε από το 0. Η έλλειψη αρχείου εξαρτάται από πραγματικό path και filesystem· το σφάλμα τύπου μπορεί να εντοπίζεται ήδη στη μεταγλώττιση. Μην ισχυρίζεσαι κοινή διάγνωση για αυτά τα αίτια.</p>
+<h3>Απόδειξη ολοκλήρωσης</h3>
+<p>Χρειάζονται η ακριβής έκδοση Fantom, το backend, η εντολή εκτέλεσης, οι προβλέψεις και οι παρατηρήσεις ως χωριστά πεδία. Χωρίς runtime δήλωσε ρητά ότι έγινε μόνο μελέτη κώδικα. Κριτήριο είναι η κατανόηση μεθόδου, λίστας, ορίων και nullability, όχι η επανάληψη ενός γενικού Hello World.</p>
+<h2>Fantom — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Στάδιο 1: κατανόηση εκτέλεσης</h3>
+<p>Εγκατάστησε συμβατό Fantom runtime και δημιούργησε pod με class και main. Ξεχώρισε compilation source από εκτέλεση pod.</p>
+<h3>Στάδιο 2: απόδειξη με ελεγχόμενες δοκιμές</h3>
+<p>Χρησιμοποίησε nullable types και typed list για inventory. Δοκίμασε missing item και αντικατάστησε τη σιωπηλή διάδοση null με domain result.</p>
+<h3>Στάδιο 3: μικρό ολοκληρωμένο έργο</h3>
+<p>Εξέτασε Java και JavaScript backends με pure computation και σημείωσε ποιες APIs υπάρχουν. Κράτησε συγκεκριμένο SDK/dependencies: browser και JVM διαφέρουν.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

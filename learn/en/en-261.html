@@ -1,0 +1,91 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Async cancellation, safe paths and subprocess execution — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-261.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Async cancellation, safe paths and subprocess execution Async IO and cancellation Track: Systems Core explanation Asynchronous IO avoids blocking while waiting on external operations. It…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Async cancellation, safe paths and subprocess execution — DedSec Project">
+<meta property="og:description" content="Async cancellation, safe paths and subprocess execution Async IO and cancellation Track: Systems Core explanation Asynchronous IO avoids blocking while waiting on external operations. It…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-261.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Async cancellation, safe paths and subprocess execution — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Async cancellation, safe paths and subprocess execution — DedSec Project">
+<meta name="twitter:description" content="Async cancellation, safe paths and subprocess execution Async IO and cancellation Track: Systems Core explanation Asynchronous IO avoids blocking while waiting on external operations. It…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Async cancellation, safe paths and subprocess execution — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Async cancellation, safe paths and subprocess execution — DedSec Project</h1><p>Async cancellation, safe paths and subprocess execution Async IO and cancellation Track: Systems Core explanation Asynchronous IO avoids blocking while waiting on external operations. It…</p><section><h2>Async IO and cancellation</h2>
+<p><strong>Track:</strong> Systems</p>
+<h3>Core explanation</h3>
+<p>Asynchronous IO avoids blocking while waiting on external operations. It does not make CPU-heavy tasks automatically faster. Support timeouts, cancellation and resource cleanup.</p>
+<h3>Hands-on application</h3>
+<p>Design an asynchronous request timeout with cleanup in finally.</p>
+<h3>How the system actually behaves</h3>
+<p>Asynchronous I/O interleaves tasks while waiting for operations. <code>async def</code> returns a coroutine object that must be awaited or scheduled. Cancellation is part of the task's lifecycle: cleanup belongs in finally, and swallowing CancelledError can prevent graceful shutdown.</p>
+<h3>Runnable controlled experiment</h3>
+<pre><code class="language-python">import asyncio
+async def worker():
+    try: await asyncio.sleep(10)
+    finally: print('cleanup')
+async def main():
+    task=asyncio.create_task(worker())
+    await asyncio.sleep(0)
+    task.cancel()
+    try: await task
+    except asyncio.CancelledError: pass
+asyncio.run(main())
+</code></pre>
+<h3>Failure analysis and extension</h3>
+<p>Record the order of creation, first suspension, cancellation and cleanup. Compare cancelling a Task with merely abandoning a coroutine; add a shared resource and verify finally closes it.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/asyncio-task.html</p>
+<h2>Filesystem paths and symlinks</h2>
+<p><strong>Track:</strong> Systems</p>
+<h3>Core explanation</h3>
+<p>Canonicalization, relative paths and symbolic links affect access control. For archive extraction and uploads, reject paths escaping the intended root; a string prefix alone is not a secure containment test.</p>
+<h3>Hands-on application</h3>
+<p>Check whether a resolved child path remains inside a temporary workspace.</p>
+<h3>How the system actually behaves</h3>
+<p>A path is a name resolved by the filesystem, not a permanent identity of the target object. Symlinks, relative components and mount points can alter the resolved destination. <code>Path.resolve</code> is useful for diagnostics but does not alone prevent a time-of-check/time-of-use race if another process can change the tree.</p>
+<h3>Runnable controlled experiment</h3>
+<pre><code class="language-python">from pathlib import Path
+from tempfile import TemporaryDirectory
+with TemporaryDirectory() as p:
+    root=Path(p).resolve()
+    (root/'ok.txt').write_text('ok')
+    assert (root/'ok.txt').resolve().is_relative_to(root)
+</code></pre>
+<h3>Failure analysis and extension</h3>
+<p>Compare an inside file and a sibling named root-extra to show why string startswith is unsafe. For hostile filesystem writers, research directory-relative, no-follow file opens and validate the opened descriptor.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/pathlib.html</p>
+<h2>Subprocess safety</h2>
+<p><strong>Track:</strong> Systems</p>
+<h3>Core explanation</h3>
+<p>Pass argument arrays to subprocess APIs and avoid shell interpretation for untrusted values. Use timeouts, explicit working directories and checked return codes.</p>
+<h3>Hands-on application</h3>
+<p>Invoke a benign version-check command with an argument list, not string interpolation.</p>
+<h3>How the system actually behaves</h3>
+<p>Subprocess arguments are data when passed as an explicit array with shell=False; joining user strings into a shell command changes the parsing and may execute unintended operators. Limit runtime, check exit codes and capture only bounded output when external commands handle untrusted inputs.</p>
+<h3>Runnable controlled experiment</h3>
+<pre><code class="language-python">import subprocess,sys
+text='hello; echo unexpected'
+p=subprocess.run([sys.executable,'-c','import sys; print(sys.argv[1])',text],capture_output=True,text=True,check=True,timeout=3)
+assert p.stdout.strip()==text
+</code></pre>
+<h3>Failure analysis and extension</h3>
+<p>Test a command returning exit code 7 and catch CalledProcessError. Test a child exceeding its timeout; compare FileNotFoundError with a nonzero exit and reject arbitrary executable paths by policy.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/subprocess.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

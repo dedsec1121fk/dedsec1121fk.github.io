@@ -1,0 +1,95 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Γλωσσάρι: προαιρετικοί τύποι, overflow και packages — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-134.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Γλωσσάρι: προαιρετικοί τύποι, overflow και packages Optional Ακριβής σημασία API που διακρίνει παρουσία από απουσία. Rust Option&lt;T , TypeScript optional fields και Python T None εκφράζουν…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Γλωσσάρι: προαιρετικοί τύποι, overflow και packages — DedSec Project">
+<meta property="og:description" content="Γλωσσάρι: προαιρετικοί τύποι, overflow και packages Optional Ακριβής σημασία API που διακρίνει παρουσία από απουσία. Rust Option&lt;T , TypeScript optional fields και Python T None εκφράζουν…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-134.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Γλωσσάρι: προαιρετικοί τύποι, overflow και packages — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Γλωσσάρι: προαιρετικοί τύποι, overflow και packages — DedSec Project">
+<meta name="twitter:description" content="Γλωσσάρι: προαιρετικοί τύποι, overflow και packages Optional Ακριβής σημασία API που διακρίνει παρουσία από απουσία. Rust Option&lt;T , TypeScript optional fields και Python T None εκφράζουν…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Γλωσσάρι: προαιρετικοί τύποι, overflow και packages — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Γλωσσάρι: προαιρετικοί τύποι, overflow και packages — DedSec Project</h1><p>Γλωσσάρι: προαιρετικοί τύποι, overflow και packages Optional Ακριβής σημασία API που διακρίνει παρουσία από απουσία. Rust Option&lt;T , TypeScript optional fields και Python T None εκφράζουν…</p><section><h2>Optional</h2>
+<h3>Ακριβής σημασία</h3>
+<p>API που διακρίνει παρουσία από απουσία. Rust Option&lt;T&gt;, TypeScript optional fields και Python T|None εκφράζουν παρόμοια έννοια με διαφορετικό runtime.</p>
+<h3>Πείραμα αναφοράς</h3>
+<pre><code class="language-text">def first(items: list[int]) -&gt; int | None:
+    return items[0] if items else None
+assert first([]) is None
+assert first([0])==0
+</code></pre>
+<h3>Διερεύνηση ορίου</h3>
+<p>Αντικατάστησε None με tagged found/missing result και σύγκρινε caller όταν το έγκυρο αποτέλεσμα είναι 0.</p>
+<h3>Ανεξάρτητος έλεγχος</h3>
+<p>Για Προαιρετική τιμή, γράψε την αναμενόμενη έξοδο πριν από εκτέλεση. Άλλαξε μία σημαντική παραδοχή και βρες αν το πρόβλημα ανήκει σε caller, implementation ή περιβάλλον.</p>
+<h3>Το μηδέν είναι τιμή, όχι missing argument</h3>
+<p>Δήλωσε την απουσία ρητά. Το truthiness συγχωνεύει μηδέν με None και μπορεί να αλλάξει τη σημασία των δεδομένων.</p>
+<pre><code class="language-python">def remaining(capacity, limit=None):
+    if capacity &lt; 0 or (limit is not None and limit &lt; 0):
+        raise ValueError(&quot;negative&quot;)
+    return capacity if limit is None else min(capacity, limit)
+assert remaining(7) == 7
+assert remaining(7, 0) == 0
+assert remaining(7, 3) == 3
+</code></pre>
+<p>Αντικατάστησε τον έλεγχο None με falsy-value check για να αναπαράγεις bug στο μηδενικό όριο. Tagged Result είναι καλύτερο όταν missing, invalid και present διαφέρουν. Optional annotations δεν επικυρώνουν εξωτερικό JSON.</p>
+<h2>Overflow</h2>
+<h3>Ακριβής σημασία</h3>
+<p>Αποτέλεσμα εκτός εύρους αριθμητικού τύπου. Μια γλώσσα μπορεί να κάνει trap, wrap ή reject. Οι Python integers διαφέρουν από unsigned 8-bit registers.</p>
+<h3>Πείραμα αναφοράς</h3>
+<pre><code class="language-text">def add_u8(a,b):
+    if not (0&lt;=a&lt;=255 and 0&lt;=b&lt;=255): raise ValueError()
+    if a &gt; 255-b: raise OverflowError()
+    return a+b
+assert add_u8(255,0)==255
+</code></pre>
+<h3>Διερεύνηση ορίου</h3>
+<p>Δοκίμασε add_u8(250,6) και σύγκρινε error με wrapping counter. Εξήγησε τον κίνδυνο overflow σε χρηματικά ποσά.</p>
+<h3>Ανεξάρτητος έλεγχος</h3>
+<p>Για Υπερχείλιση, γράψε την αναμενόμενη έξοδο πριν από εκτέλεση. Άλλαξε μία σημαντική παραδοχή και βρες αν το πρόβλημα ανήκει σε caller, implementation ή περιβάλλον.</p>
+<h3>Έλεγξε το fixed-width όριο πριν από serialization</h3>
+<p>Οι Python integers είναι arbitrary precision αλλά ένα binary unsigned byte φτάνει έως 255. Ο έλεγχος πρέπει να ακολουθεί τον τύπο προορισμού.</p>
+<pre><code class="language-python">def add_u8(a, b):
+    if any(type(v) is not int or not 0 &lt;= v &lt;= 255 for v in (a,b)):
+        raise ValueError(&quot;unsigned byte expected&quot;)
+    if a &gt; 255-b:
+        raise OverflowError(&quot;byte overflow&quot;)
+    return a+b
+assert add_u8(200, 55) == 255
+try:
+    add_u8(200, 56)
+except OverflowError: pass
+else: raise AssertionError(&quot;invalid result accepted&quot;)
+</code></pre>
+<p>Σύγκρινε απόρριψη με modulo-256 wrapping. Το wrapping μπορεί να επιτρέπεται σε protocol αλλά είναι επικίνδυνο για μεγέθη και οικονομικά δεδομένα. Το C signed overflow είναι undefined behavior.</p>
+<h2>Package manager</h2>
+<h3>Ακριβής σημασία</h3>
+<p>Resolver και installer dependencies. Η εμπιστοσύνη αφορά registries, lockfiles, version constraints, hooks εγκατάστασης και platform compatibility.</p>
+<h3>Πείραμα αναφοράς</h3>
+<pre><code class="language-text">python -m pip --version
+python -m pip list --format=columns
+</code></pre>
+<h3>Διερεύνηση ορίου</h3>
+<p>Σε προσωρινό virtual environment εγκατάστησε έμπιστο pinned package, δες resolved version και σύγκρινε με unpinned requirement.</p>
+<h3>Ανεξάρτητος έλεγχος</h3>
+<p>Για Διαχειριστής πακέτων, γράψε την αναμενόμενη έξοδο πριν από εκτέλεση. Άλλαξε μία σημαντική παραδοχή και βρες αν το πρόβλημα ανήκει σε caller, implementation ή περιβάλλον.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

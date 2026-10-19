@@ -1,0 +1,182 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Footprinting, Reconnaissance and Attack-Surface Discovery — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-002.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Footprinting, Reconnaissance and Attack-Surface Discovery Reconnaissance is the process of building an accurate picture of an authorized target before deeper testing. Good reconnaissance is…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Footprinting, Reconnaissance and Attack-Surface Discovery — DedSec Project">
+<meta property="og:description" content="Footprinting, Reconnaissance and Attack-Surface Discovery Reconnaissance is the process of building an accurate picture of an authorized target before deeper testing. Good reconnaissance is…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-002.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Footprinting, Reconnaissance and Attack-Surface Discovery — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Footprinting, Reconnaissance and Attack-Surface Discovery — DedSec Project">
+<meta name="twitter:description" content="Footprinting, Reconnaissance and Attack-Surface Discovery Reconnaissance is the process of building an accurate picture of an authorized target before deeper testing. Good reconnaissance is…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Footprinting, Reconnaissance and Attack-Surface Discovery — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Footprinting, Reconnaissance and Attack-Surface Discovery — DedSec Project</h1><p>Footprinting, Reconnaissance and Attack-Surface Discovery Reconnaissance is the process of building an accurate picture of an authorized target before deeper testing. Good reconnaissance is…</p><section><p>Reconnaissance is the process of building an accurate picture of an authorized target before deeper testing. Good reconnaissance is evidence-driven: it distinguishes information that is publicly observable from information obtained through direct interaction, and it records the source and confidence of each claim.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> Passive research can still involve privacy, contractual, or policy constraints. Active discovery must remain inside the written assessment scope. Use <code>example.com</code>, localhost, or a lab domain for exercises in this module.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>distinguish passive, active, authenticated, and internal discovery;</li>
+<li>build an asset inventory from multiple evidence sources;</li>
+<li>understand DNS, certificate, registration, and web metadata;</li>
+<li>identify cloud, SaaS, repository, and identity exposure safely;</li>
+<li>track provenance and confidence for reconnaissance findings;</li>
+<li>turn reconnaissance into a prioritized attack-surface map.</li>
+</ul>
+<h2>Reconnaissance is an inventory problem</h2>
+<p>The goal is not to collect the largest number of names. The goal is to answer useful questions: Which assets belong to the organization? Which are Internet-facing? Which identities administer them? Which technologies and third-party dependencies are present? Which assets appear abandoned or inconsistently managed? Which observations are confirmed and which are only hypotheses?</p>
+<h2>Passive discovery</h2>
+<p>Passive sources do not require sending probes to the target service. Examples include:</p>
+<ul>
+<li>public DNS and certificate-transparency data;</li>
+<li>registration and autonomous-system information;</li>
+<li>public code repositories and package registries;</li>
+<li>organization websites, documentation, job postings, and status pages;</li>
+<li>vendor security advisories and public asset documentation;</li>
+<li>public cloud/SaaS references deliberately published by the owner.</li>
+</ul>
+<p>Passive does not mean unrestricted. Avoid collecting unnecessary personal data and do not attempt to access private accounts or content.</p>
+<h2>DNS fundamentals for reconnaissance</h2>
+<p>Useful record types include:</p>
+<ul>
+<li><strong>A / AAAA:</strong> IPv4 and IPv6 addresses;</li>
+<li><strong>CNAME:</strong> alias to another hostname;</li>
+<li><strong>MX:</strong> mail exchangers;</li>
+<li><strong>NS:</strong> authoritative name servers;</li>
+<li><strong>TXT:</strong> text records used by mechanisms such as SPF, DKIM, domain verification, and other services;</li>
+<li><strong>CAA:</strong> certificate-authority authorization policy.</li>
+</ul>
+<p>Safe local or documentation-oriented examples:</p>
+<pre><code class="language-bash">nslookup example.com
+dig example.com A
+dig example.com AAAA
+dig example.com MX
+</code></pre>
+<p>A DNS answer is evidence about DNS state, not proof that a specific application, owner, or security control is present. Record resolver, timestamp, TTL, and whether the answer may be split-horizon or cached.</p>
+<h2>Certificate and TLS metadata</h2>
+<p>Certificates can reveal hostnames, issuing authorities, validity periods, and organizational deployment patterns. Certificate Transparency can help find publicly issued names, but a certificate entry does not prove that the hostname is currently reachable or still owned by the same team.</p>
+<h2>Web metadata</h2>
+<p>For an authorized web property, useful read-only observations include:</p>
+<ul>
+<li>response status and redirect chain;</li>
+<li>TLS configuration and certificate metadata;</li>
+<li>security headers;</li>
+<li>server or framework hints that are intentionally exposed;</li>
+<li><code>robots.txt</code>, <code>security.txt</code>, and public sitemaps;</li>
+<li>documented API endpoints and public OpenAPI descriptions;</li>
+<li>public JavaScript bundle names and source-map exposure.</li>
+</ul>
+<p>Do not turn a reconnaissance exercise into uncontrolled content brute forcing. If directory enumeration is in scope, perform it against a deliberately vulnerable or locally hosted training application with an agreed request rate.</p>
+<h2>Repository and package exposure</h2>
+<p>Public repositories can reveal architecture, dependencies, historical filenames, issue discussions, CI configuration, and accidentally committed secrets. Never assume a string that looks like a credential is safe to test. Report suspected secrets through the agreed channel and allow the owner to rotate them.</p>
+<p>For dependency research, distinguish:</p>
+<ul>
+<li>direct dependency versus transitive dependency;</li>
+<li>declared version versus actually deployed version;</li>
+<li>package name similarity versus verified package identity;</li>
+<li>public vulnerability match versus reachable vulnerable code path.</li>
+</ul>
+<h2>Cloud and SaaS attack surface</h2>
+<p>Organizations may expose cloud load balancers, object-storage endpoints, identity-provider domains, SaaS tenants, support portals, and development platforms. A hostname pattern is not sufficient evidence of ownership. Confirm through approved inventories, DNS relationships, certificate data, or customer-provided context.</p>
+<h2>Provenance and confidence</h2>
+<p>For every discovered asset, record:</p>
+<table>
+<thead>
+<tr>
+  <th>Field</th>
+  <th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Asset</td>
+  <td><code>portal.lab.example</code></td>
+</tr>
+<tr>
+  <td>Source</td>
+  <td>DNS / certificate / owner inventory</td>
+</tr>
+<tr>
+  <td>First seen</td>
+  <td>timestamp</td>
+</tr>
+<tr>
+  <td>Confidence</td>
+  <td>confirmed / probable / unconfirmed</td>
+</tr>
+<tr>
+  <td>Environment</td>
+  <td>production / staging / unknown</td>
+</tr>
+<tr>
+  <td>Owner</td>
+  <td>team or system owner if known</td>
+</tr>
+<tr>
+  <td>Exposure</td>
+  <td>public / internal / unknown</td>
+</tr>
+<tr>
+  <td>Next validation</td>
+  <td>minimal authorized test</td>
+</tr>
+</tbody>
+</table>
+<p>This prevents a common failure: treating stale search-engine or certificate data as current truth.</p>
+<h2>Active reconnaissance in a lab</h2>
+<p>Active reconnaissance directly interacts with a system. Examples include resolving a hostname, making a normal HTTP request, checking a small approved port list, or retrieving a service banner. Keep the rate bounded and document exactly what was sent.</p>
+<p>A safe local exercise can use Python's HTTP server:</p>
+<pre><code class="language-bash">mkdir -p ~/hgp-lab/recon &amp;&amp; cd ~/hgp-lab/recon
+printf 'lab page\n' &gt; index.html
+python -m http.server 8000 --bind 127.0.0.1
+</code></pre>
+<p>In another Termux session:</p>
+<pre><code class="language-bash">curl -I http://127.0.0.1:8000/
+</code></pre>
+<p>Stop the server when finished.</p>
+<h2>Turning findings into an attack-surface map</h2>
+<p>Group assets by trust boundary rather than only by hostname. Useful groups include Internet edge, identity, email, source control, CI/CD, cloud control plane, APIs, remote access, mobile backends, third-party integrations, and monitoring/recovery systems.</p>
+<p>Prioritize assets that combine high authority, sensitive data, broad exposure, weak ownership, or weak observability.</p>
+<h2>Common mistakes</h2>
+<ul>
+<li>Copying old command examples against public domains.</li>
+<li>Equating a discovered hostname with an in-scope asset.</li>
+<li>Treating a technology fingerprint as a confirmed vulnerable version.</li>
+<li>Collecting personal data that is irrelevant to the security objective.</li>
+<li>Ignoring IPv6, alternate domains, or third-party identity surfaces.</li>
+<li>Failing to timestamp findings that can change quickly.</li>
+</ul>
+<h2>Safe lab</h2>
+<p>Build an attack-surface worksheet for a fictional organization with five assets: website, API, identity provider, code repository, and cloud account. For each, record trust boundary, owner, evidence source, likely sensitive data, and one minimal validation step.</p>
+<h2>Knowledge check</h2>
+<ol>
+<li>Why is provenance important in OSINT?</li>
+<li>What is the difference between passive and active reconnaissance?</li>
+<li>Why can certificate data become stale?</li>
+<li>What would make a repository finding high priority?</li>
+<li>How do you avoid treating search results as proof of ownership?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. Complete the attack-surface worksheet before moving to active scanning.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>03, 34, 35, 43</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

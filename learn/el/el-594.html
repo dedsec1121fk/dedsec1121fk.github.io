@@ -1,0 +1,54 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>brainfuck — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-594.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="brainfuck — συγκεντρωτικός οδηγός Brainfuck Μοντέλο λειτουργίας Η Brainfuck είναι εσκεμμένα ελάχιστη esoteric γλώσσα με pointer και οκτώ εντολές. Παράδειγμα Δοκίμασέ το με νόημα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="brainfuck — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="brainfuck — συγκεντρωτικός οδηγός Brainfuck Μοντέλο λειτουργίας Η Brainfuck είναι εσκεμμένα ελάχιστη esoteric γλώσσα με pointer και οκτώ εντολές. Παράδειγμα Δοκίμασέ το με νόημα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-594.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="brainfuck — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="brainfuck — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="brainfuck — συγκεντρωτικός οδηγός Brainfuck Μοντέλο λειτουργίας Η Brainfuck είναι εσκεμμένα ελάχιστη esoteric γλώσσα με pointer και οκτώ εντολές. Παράδειγμα Δοκίμασέ το με νόημα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="brainfuck — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>brainfuck — συγκεντρωτικός οδηγός — DedSec Project</h1><p>brainfuck — συγκεντρωτικός οδηγός Brainfuck Μοντέλο λειτουργίας Η Brainfuck είναι εσκεμμένα ελάχιστη esoteric γλώσσα με pointer και οκτώ εντολές. Παράδειγμα Δοκίμασέ το με νόημα…</p><section><h2>Brainfuck</h2>
+<h3>Μοντέλο λειτουργίας</h3>
+<p>Η Brainfuck είναι εσκεμμένα ελάχιστη esoteric γλώσσα με pointer και οκτώ εντολές.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-text">+++[&gt;++&lt;-]&gt;.
+</code></pre>
+<h3>Δοκίμασέ το με νόημα</h3>
+<p>Παρακολούθησε pointer και cells ανά επανάληψη και υπολόγισε ποιο byte εξάγεται.</p>
+<h3>Σφάλμα που πρέπει να ξεχωρίσεις</h3>
+<p>Το cell width, EOF και wraparound διαφέρουν ανά interpreter· δεν υπάρχει μία καθολική συμπεριφορά.</p>
+<p>Για να κρίνεις την άσκηση, κατέγραψε την αρχική είσοδο, την πρόβλεψη και την παρατήρηση σε πραγματικό, συμβατό περιβάλλον Brainfuck. Δώσε ξεχωριστό παράδειγμα όπου αλλάζει μόνο μία μεταβλητή ή ένα όρισμα. Αν εργάζεσαι χωρίς την αναγκαία εφαρμογή, μελέτησε τη σύνταξη ως παράδειγμα και μην παρουσιάζεις το κείμενο ως εκτελεσμένο test.</p>
+<h2>Brainfuck — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Στάδιο 1: κατανόηση εκτέλεσης</h3>
+<p>Ξεκίνα από μηδενισμένο tape και ανέλυσε +++++[&gt;+++++&lt;-]&gt;. Σημείωσε κάθε φορά θέση pointer και τιμές cells. Ο βρόχος εκτελείται πέντε φορές και εμφανίζει byte 25.</p>
+<h3>Στάδιο 2: απόδειξη με ελεγχόμενες δοκιμές</h3>
+<p>Άλλαξε μόνο αρχικό μετρητή, υπολόγισε τον νέο κωδικό byte πριν τρέξεις. Σύγκρινε wrapping 8-bit cells με ευρύτερα cells· η συμπεριφορά overflow εξαρτάται από interpreter.</p>
+<h3>Στάδιο 3: μικρό ολοκληρωμένο έργο</h3>
+<p>Γράψε πρόγραμμα που διαβάζει ένα byte και το εμφανίζει. Δοκίμασε EOF και όρια tape στην επιλεγμένη υλοποίηση. Παρουσίασε πίνακα pointer/cells/termination.</p>
+<h3>Έλεγχος ορθότητας interpreter Brainfuck</h3>
+<p>Το κελί δεν είναι χαρακτήρας· η έξοδος παράγει byte. Όρισε αν γίνεται κυκλική αριθμητική modulo 256 και αν επιτρέπονται αρνητικοί δείκτες ταινίας. Πριν την εκτέλεση, αντιστοίχισε τις αγκύλες με stack: κάθε '[' αποθηκεύεται και κάθε ']' συνδέεται με το τελευταίο άνοιγμα. Απόρριψε όσα μένουν ασύνδετα. Δοκίμασε:</p>
+<pre><code class="language-text">+++[&gt;++&lt;-]&gt;.
+</code></pre>
+<p>Το κελί 1 έχει τελική τιμή έξι αν όλα ξεκινούν στο μηδέν. Το byte εξόδου είναι 0x06 και όχι ο ASCII χαρακτήρας '6'. Έλεγξε μη ισορροπημένες αγκύλες, εμφωλευμένους βρόχους, EOF στο ',' και σκόπιμα ατελείωτο βρόχο με όριο βημάτων. Σύγκρινε βελτιστοποιημένο interpreter με απλή υλοποίηση αναφοράς σε τερματιζόμενα προγράμματα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

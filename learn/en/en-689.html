@@ -1,0 +1,75 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>mercury — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-689.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="mercury — consolidated language guide Mercury Typical use: Logic programming. Suggested file extension: .m . How to run / environment: mmc --make hello (Mercury toolchain). Starter example…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="mercury — consolidated language guide — DedSec Project">
+<meta property="og:description" content="mercury — consolidated language guide Mercury Typical use: Logic programming. Suggested file extension: .m . How to run / environment: mmc --make hello (Mercury toolchain). Starter example…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-689.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="mercury — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="mercury — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="mercury — consolidated language guide Mercury Typical use: Logic programming. Suggested file extension: .m . How to run / environment: mmc --make hello (Mercury toolchain). Starter example…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="mercury — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>mercury — consolidated language guide — DedSec Project</h1><p>mercury — consolidated language guide Mercury Typical use: Logic programming. Suggested file extension: .m . How to run / environment: mmc --make hello (Mercury toolchain). Starter example…</p><section><h2>Mercury</h2>
+<p><strong>Typical use:</strong> Logic programming.</p>
+<p><strong>Suggested file extension:</strong> <code>.m</code>.</p>
+<p><strong>How to run / environment:</strong> mmc --make hello (Mercury toolchain).</p>
+<h3>Starter example</h3>
+<pre><code>:- module hello.
+:- interface.
+:- import_module io.
+:- pred main(io::di, io::uo) is det.
+:- implementation.
+main(!IO) :- io.write_string(&quot;Hello, Ada!\n&quot;, !IO).
+</code></pre>
+<h3>How to read it</h3>
+<p>Logic language with strict type and mode declarations.</p>
+<h3>Common pitfall</h3>
+<p>Logic language with strict type and mode declarations.</p>
+<h2>Mercury — Expanded practice workbook</h2>
+<h3>Inspect the smallest source</h3>
+<pre><code class="language-text">:- module hello.
+:- interface.
+:- import_module io.
+:- pred main(io::di, io::uo) is det.
+:- implementation.
+main(!IO) :- io.write_string(&quot;Hello, Ada!\n&quot;, !IO).
+</code></pre>
+<p><strong>Run or compilation context:</strong> mmc --make hello (Mercury toolchain).. Treat this as a baseline: save a copy, confirm the toolchain version and note whether the example merely evaluates a value, prints text, or creates external effects. Production accounts, datasets and hardware must not be used for first attempts.</p>
+<h3>Work through the actual mechanism</h3>
+<p>Create a deterministic predicate and a multi-solution predicate over a small relation. Declare modes and determinism, and let the compiler reject a mismatched declaration.</p>
+<h3>Diagnose the sharp edge</h3>
+<p>Mercury treats determinism and instantiation states as part of its interface; Prolog syntax is similar but not freely interchangeable.</p>
+<h2>Mercury — Focused mastery pathway</h2>
+<h3>Applied exercises</h3>
+<ol>
+<li>Describe a tiny parent/ancestor relation and query it in the proper language host.</li>
+<li>Show how an additional fact changes the result set.</li>
+<li>Explain termination or search-order effects of a recursive rule.</li>
+</ol>
+<ul>
+<li>Does execution search for solutions or execute steps in order?</li>
+<li>Which exact runtime, compiler, host, and version does the reference need?</li>
+<li>What is the smallest working program and what side effects does it have?</li>
+<li>How do syntax, logic, and environment errors differ?</li>
+<li>How can invalid inputs be tested without modifying real user files?</li>
+</ul>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

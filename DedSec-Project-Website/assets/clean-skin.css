@@ -1,0 +1,142 @@
+/* DedSec Test — unified minimal skin, 16 October 2026.
+   This file is loaded AFTER the root legacy CSS and imported BEFORE imported
+   legacy CSS. Four zero-match :not IDs deliberately win historical !important
+   selectors while leaving existing real IDs and class names intact. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d){
+  --action-blue:#75bcff!important;
+  --action-line:rgba(117,188,255,.78)!important;
+}
+html body:is(.theme-light,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d){
+  --action-blue:#075bbd!important;
+  --action-line:rgba(7,91,189,.76)!important;
+}
+/* No cards, colored slabs, outlines or borders behind ordinary information.
+   The fixed navbar remains solid for correct scroll contrast. Cookie consent
+   dialog is deliberately excluded as a required interaction surface. */
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d) #app *:not(.search-hit),
+html body:is(.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(.page-content,.main-content,.page-main,.content-container,.guide-container) *:not(.search-hit){
+  border:0!important;border-radius:0!important;
+  background-color:transparent!important;background-image:none!important;
+  box-shadow:none!important;
+}
+/* Font icons must not inherit legacy lavender branding. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(#app,.page-content,.main-content) :is(i,.fas,.far,.fab,.fa,.fa-solid,.fa-brands),
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(#app,.page-content,.main-content) :is(i,.fas,.far,.fab,.fa,.fa-solid,.fa-brands)::before{
+  color:var(--space-ink)!important;
+  -webkit-text-fill-color:var(--space-ink)!important;
+}
+/* No accidental root-frame around the project title, nor frames behind
+   navigation controls. Only this navbar surface is opaque, by design. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(#topbar,.merged-topbar){
+  background:var(--space-header)!important;
+  border:0!important;outline:0!important;box-shadow:none!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(#topbar .brand,#topbar .brand img,#topbar .brand span,
+ .merged-topbar .merged-brand,.merged-topbar .merged-brand img,.merged-topbar .merged-brand span,
+ #topbar .nav-actions > :is(a,button),.merged-topbar .merged-actions > :is(a,button)){
+  background:transparent!important;background-image:none!important;
+  border:0!important;outline:0!important;box-shadow:none!important;
+  color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+}
+/* The user requested a Markdown-like link separator: blue linked text,
+   a thin line directly beneath, and an arrow. Existing arrows are detected
+   in JavaScript to avoid rendering two. Unlinked prose remains theme ink. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ a.dedsec-text-link,
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ a.dedsec-text-link :is(span,strong,em,h3,h4,.feature-cta){
+  color:var(--action-blue)!important;-webkit-text-fill-color:var(--action-blue)!important;
+  text-decoration:underline!important;text-decoration-color:var(--action-line)!important;
+  text-decoration-thickness:1px!important;text-underline-offset:.21em!important;
+  text-shadow:none!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ a.dedsec-text-link.dedsec-append-arrow::after{
+  content:" →"!important;display:inline!important;
+  color:var(--action-blue)!important;-webkit-text-fill-color:var(--action-blue)!important;
+  font-weight:700!important;
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ a.dedsec-text-link :is(p,small,.feature-description){
+  color:var(--space-ink)!important;-webkit-text-fill-color:var(--space-ink)!important;
+  text-decoration:none!important;
+}
+/* Launcher tiles and lesson/library cards are themselves links. Color only
+   their LABELS blue; keep explanatory copy white/black. */
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ #app :is(.app-icon-btn .app-label,.result-card strong,.folder-card strong){
+  color:var(--action-blue)!important;-webkit-text-fill-color:var(--action-blue)!important;
+  text-decoration:underline!important;text-decoration-color:var(--action-line)!important;
+  text-decoration-thickness:1px!important;text-underline-offset:3px!important;
+}
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ #app :is(.app-icon-btn .app-label,.result-card strong,.folder-card strong)::after{
+  content:" →"!important;color:var(--action-blue)!important;-webkit-text-fill-color:var(--action-blue)!important;
+}
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ #app .folder-card small{display:none!important}
+/* Note: starfield artwork stays in the BODY. Content has no solid panels. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(#site-footer,.merged-footer,#site-footer .footer-buttons,.merged-footer .footer-buttons,
+ #site-footer a,.merged-footer a){
+  border:0!important;background:transparent!important;background-image:none!important;box-shadow:none!important;
+  color:var(--space-ink)!important;
+}
+/* Treat linked words in footer with same blue + separator + arrow. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(#site-footer,.merged-footer) a.dedsec-text-link{
+  color:var(--action-blue)!important;-webkit-text-fill-color:var(--action-blue)!important;
+}
+/* Icon-led category titles; simple monochrome outlines, no solid heading box. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(.launcher-group-heading,.merged-topic-heading){
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  gap:13px!important;margin:20px auto 10px!important;padding:7px 5px!important;
+  text-align:center!important;border:0!important;background:transparent!important;box-shadow:none!important;
+}
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ #app .launcher-group{margin:28px auto 34px!important;max-width:1220px!important}
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ #app .launcher-group-heading h2{margin:0!important;font-size:clamp(21px,3vw,30px)!important;line-height:1.3!important;color:var(--space-ink)!important}
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ #app .launcher-group-heading p{margin:3px 0 0!important;font-size:clamp(13px,1.8vw,16px)!important;color:var(--space-ink)!important;line-height:1.5!important}
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ #app .launcher-group-glyph{
+  display:grid!important;place-items:center!important;width:40px!important;height:40px!important;flex:0 0 40px!important;
+  border:0!important;background:transparent!important;color:var(--space-ink)!important;
+}
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ #app .launcher-group-glyph svg{width:35px!important;height:35px!important;stroke:currentColor!important}
+/* Imported article headings gain a discreet icon, not a picture frame. */
+html body:is(.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ .page-content h2.merged-topic-heading{
+  text-align:center!important;color:var(--space-ink)!important;
+}
+html body:is(.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ h2.merged-topic-heading .merged-topic-icon{
+  color:var(--space-ink)!important;font-size:.86em!important;min-width:1.35em!important;text-align:center!important;
+}
+/* Usability on Android: no unwanted blue/purple tap boxes or stuck hover
+   while scrolling. Keyboard users retain a clear dotted outline. */
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light)
+ :is(a,button,summary,[role="button"]){
+  -webkit-tap-highlight-color:transparent!important;
+}
+@media(hover:none) and (pointer:coarse){
+ html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(.app-icon-btn,.result-card,.folder-card,.merged-topbar a,.merged-topbar button,
+ #topbar a,#topbar button,.page-content a,.page-content button):is(:hover,:active){
+  background:transparent!important;box-shadow:none!important;transform:none!important;
+ }
+}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(a,button,summary):focus:not(:focus-visible){outline:0!important}
+html body:is(.theme-dark,.theme-light,.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
+ :is(a,button,summary):focus-visible{
+  outline:2px dotted var(--space-ink)!important;outline-offset:3px!important;
+}

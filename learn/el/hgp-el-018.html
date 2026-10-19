@@ -1,0 +1,87 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ασφάλεια IoT και OT — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-018.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Ασφάλεια IoT και OT Τα Internet of Things (IoT) και Operational Technology (OT) περιβάλλοντα συνδυάζουν software, embedded hardware, radios, φυσικές διεργασίες, cloud services, mobile…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Ασφάλεια IoT και OT — DedSec Project">
+<meta property="og:description" content="Ασφάλεια IoT και OT Τα Internet of Things (IoT) και Operational Technology (OT) περιβάλλοντα συνδυάζουν software, embedded hardware, radios, φυσικές διεργασίες, cloud services, mobile…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-018.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ασφάλεια IoT και OT — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ασφάλεια IoT και OT — DedSec Project">
+<meta name="twitter:description" content="Ασφάλεια IoT και OT Τα Internet of Things (IoT) και Operational Technology (OT) περιβάλλοντα συνδυάζουν software, embedded hardware, radios, φυσικές διεργασίες, cloud services, mobile…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Ασφάλεια IoT και OT — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Ασφάλεια IoT και OT — DedSec Project</h1><p>Ασφάλεια IoT και OT Τα Internet of Things (IoT) και Operational Technology (OT) περιβάλλοντα συνδυάζουν software, embedded hardware, radios, φυσικές διεργασίες, cloud services, mobile…</p><section><p>Τα Internet of Things (IoT) και Operational Technology (OT) περιβάλλοντα συνδυάζουν software, embedded hardware, radios, φυσικές διεργασίες, cloud services, mobile εφαρμογές, update pipelines και συσκευές με πολύ μεγάλο lifecycle. Η αξιολόγηση ασφάλειας πρέπει να εξετάζει τόσο το ψηφιακό compromise όσο και τις πιθανές επιπτώσεις στον φυσικό κόσμο.</p>
+<blockquote>
+<p><strong>Όριο εξουσιοδότησης:</strong> Έλεγχε μόνο συσκευές, δίκτυα, firmware, cloud accounts και φυσικές διεργασίες που σου ανήκουν ή είναι ρητά εντός scope. Απόφυγε disruptive radio/control/safety tests σε shared ή production περιβάλλοντα. Προτίμησε emulator, development board, captured data και απομονωμένο lab.</p>
+</blockquote>
+<h2>Μαθησιακοί στόχοι</h2>
+<ul>
+<li>Να αναγνωρίζεις IoT/OT trust boundaries.</li>
+<li>Να χαρτογραφείς device, gateway, cloud, app και update σχέσεις.</li>
+<li>Να αξιολογείς identity, secrets, management interfaces και update trust.</li>
+<li>Να κατανοείς γιατί safety και availability αλλάζουν το testing model.</li>
+<li>Να επιλέγεις κατάλληλο evidence για embedded/operational περιβάλλοντα.</li>
+</ul>
+<h2>Αρχιτεκτονική IoT</h2>
+<p>Ένα IoT προϊόν μπορεί να περιλαμβάνει sensor/actuator, microcontroller ή embedded Linux, local radio, gateway, vendor cloud API, mobile app και signing/update infrastructure. Αντιμετώπισε τα σαν διαφορετικά trust zones. Ένα app bug μπορεί να εκθέσει device credentials, ένα cloud authorization bug να επηρεάσει ολόκληρο fleet και ένα compromised update key να περάσει πολλά τοπικά boundaries.</p>
+<h2>Device identity και provisioning</h2>
+<p>Έλεγξε πώς αποκτά η συσκευή την πρώτη της identity, αν τα credentials είναι μοναδικά ανά unit, πού αποθηκεύονται keys, πώς γίνεται ownership transfer και πώς γίνεται decommission. Shared factory passwords ή undocumented recovery accounts δημιουργούν fleet-wide risk. Το provisioning πρέπει να δένει τη συσκευή με τον σωστό owner/tenant και να αφήνει audit trail.</p>
+<h2>Management interfaces και local services</h2>
+<p>Κατέγραψε listening services, debug interfaces, serial/JTAG access, web administration, Bluetooth/Wi-Fi pairing, discovery protocols και maintenance ports. Interface που χρειάζεται μόνο στην παραγωγή/επισκευή δεν πρέπει να παραμένει broadly exposed. Management paths χρειάζονται authentication, authorization, resource controls και ασφαλές recovery.</p>
+<h2>Firmware και secure updates</h2>
+<p>Για το update system απάντησε: ποιος επιτρέπεται να δημοσιεύσει artifact, πώς επαληθεύεται η αυθεντικότητα, πώς ελέγχεται downgrade/rollback και τι γίνεται μετά από failed update. Η digital signature είναι μόνο ένα μέρος του trust· verification keys, version policy, boot chain και recovery πρέπει επίσης να είναι αξιόπιστα.</p>
+<h2>Secrets και storage</h2>
+<p>Εξέτασε hard-coded secrets, API tokens, Wi-Fi credentials, certificates, debug logs, crash dumps και backup/export files. Προτίμησε per-device secrets, hardware-backed storage όπου υποστηρίζεται, rotation και ελάχιστα permissions στο cloud/API layer.</p>
+<h2>Cloud APIs και authorization</h2>
+<p>IoT APIs συχνά χειρίζονται identifiers για devices, homes, fleets ή tenants. Κάθε operation πρέπει να κάνει server-side authorization του caller απέναντι στο συγκεκριμένο object/action. Έγκυρο token δεν σημαίνει ότι ο caller κατέχει οποιοδήποτε device ID έστειλε.</p>
+<h2>OT και cyber-physical systems</h2>
+<p>OT περιλαμβάνει industrial control, building automation, energy, manufacturing και άλλα συστήματα όπου integrity/availability επηρεάζουν φυσικές διεργασίες. Safety interlocks, deterministic operation, change management, vendor support, legacy protocols και recovery μπορεί να έχουν μεγαλύτερη προτεραιότητα από aggressive probing.</p>
+<p>Passive discovery και configuration review είναι συνήθως ασφαλέστερη αρχή. Κάθε state-changing test χρειάζεται operator-approved rollback και safety plan.</p>
+<h2>Segmentation και gateways</h2>
+<p>Χώρισε device networks από user workstations και management planes. Τα gateways πρέπει να επιτρέπουν μόνο τα πραγματικά αναγκαία protocols/destinations. Κατέγραψε required east-west και north-south flows αντί να δίνεις broad connectivity επειδή μια συσκευή είναι δύσκολη στη διαχείριση.</p>
+<h2>Logging και fleet visibility</h2>
+<p>Χρήσιμο evidence: firmware version, secure boot/update state, device identity, provisioning, failed authentication, config changes, cloud API decisions, gateway connections και recovery actions. Απόφυγε secrets στα logs και φρόντισε time correlation μεταξύ device, gateway και cloud.</p>
+<h2>Συνηθισμένα λάθη</h2>
+<ul>
+<li>Εμπιστοσύνη σε κάθε device του local network.</li>
+<li>Shared default/fleet-wide credentials.</li>
+<li>Updates χωρίς authenticated provenance ή rollback policy.</li>
+<li>Debug interfaces ενεργά χωρίς ownership controls.</li>
+<li>Cloud authorization μόνο με client-supplied object IDs.</li>
+<li>OT testing σαν να είναι disposable web lab.</li>
+<li>Απουσία ασφαλούς recovery όταν μια συσκευή αποτύχει.</li>
+</ul>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Χρησιμοποίησε development board, emulator ή spare IoT device που σου ανήκει. Σχεδίασε device→gateway/cloud/app data flow, κατέγραψε local services, firmware/update state και πού φυλάσσονται credentials. Άλλαξε μία ακίνδυνη ρύθμιση και επιβεβαίωσε ποια local/cloud logs καταγράφουν την αλλαγή. Επανέφερε το αρχικό state.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ol>
+<li>Γιατί per-device identity είναι καλύτερη από fleet-wide password;</li>
+<li>Τι πρέπει να είναι αξιόπιστο πέρα από την update signature;</li>
+<li>Γιατί OT testing έχει αυστηρότερα όρια;</li>
+<li>Ποιο authorization check χρειάζεται multi-tenant IoT API;</li>
+<li>Ποιο evidence συνδέει device event με cloud decision;</li>
+</ol>
+<h2>Καθοδηγούμενη μελέτη</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>. Εξέτασε ολόκληρο lifecycle: manufacture, provisioning, normal operation, update, ownership transfer, incident recovery και decommissioning.</p>
+<h3>Συνέχισε με</h3>
+<p>Προτεινόμενα modules: <strong>41, 48, 54, 56, 83, 103, 122, 123</strong>. Από το menu χρησιμοποίησε <strong>Αναζήτηση μαθημάτων</strong> για embedded, hardware και radio θέματα.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

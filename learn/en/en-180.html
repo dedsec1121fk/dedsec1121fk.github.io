@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Variables and types — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-180.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Variables and types — convert input before arithmetic Concept and intended result A variable holds a reference to a value. In Python, the value has a type: &quot;12&quot; is text and 12 is an…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Variables and types — DedSec Project">
+<meta property="og:description" content="Variables and types — convert input before arithmetic Concept and intended result A variable holds a reference to a value. In Python, the value has a type: &quot;12&quot; is text and 12 is an…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-180.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Variables and types — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Variables and types — DedSec Project">
+<meta name="twitter:description" content="Variables and types — convert input before arithmetic Concept and intended result A variable holds a reference to a value. In Python, the value has a type: &quot;12&quot; is text and 12 is an…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Variables and types — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Variables and types — DedSec Project</h1><p>Variables and types — convert input before arithmetic Concept and intended result A variable holds a reference to a value. In Python, the value has a type: &quot;12&quot; is text and 12 is an…</p><section><h1>Variables and types — convert input before arithmetic</h1>
+<h2>Concept and intended result</h2>
+<p>A variable holds a reference to a value. In Python, the value has a type: <code>&quot;12&quot;</code> is text and <code>12</code> is an integer, so they are not interchangeable in arithmetic. Many command-line and form inputs arrive as strings. Here we define a deliberate conversion boundary: ASCII decimal digits only, no leading zeros except zero itself, and an upper bound of 50 units.</p>
+<h2>Runnable Python 3 exercise</h2>
+<p>Save as <code>02_Variables_and_types.py</code> and run with Python 3. Predict the output before executing; every example has assertions and uses only local synthetic values.</p>
+<pre><code class="language-python">def parse_units(token):
+    if type(token) is not str or not token.isascii() or not token.isdecimal():
+        raise ValueError(&quot;ASCII decimal text required&quot;)
+    if len(token) &gt; 1 and token.startswith(&quot;0&quot;):
+        raise ValueError(&quot;no leading zeros&quot;)
+    number = int(token)
+    if number &gt; 50: raise ValueError(&quot;limit 50&quot;)
+    return number
+count = parse_units(&quot;12&quot;)
+label = &quot;pieces&quot;
+assert count == 12 and type(count) is int
+assert type(label) is str
+assert f&quot;{count} {label}&quot; == &quot;12 pieces&quot;
+for bad in (&quot;03&quot;,&quot;-2&quot;,&quot;2.0&quot;,&quot;٢&quot;,True,&quot;51&quot;):
+    try: parse_units(bad)
+    except ValueError: pass
+    else: raise AssertionError(&quot;bad text accepted&quot;)
+print(&quot;PASS typed quantity conversion&quot;)
+</code></pre>
+<h2>Why this works</h2>
+<p>Converting <code>int(token)</code> without checking the input shape can accept forms that do not belong to the chosen user interface. The explicit ASCII rule rejects other Unicode numeral scripts; this is a product decision rather than a universal rule about all numeric writing systems. <code>type(token) is str</code> prevents True or an integer from being silently accepted as a string. The final f-string converts a validated integer into display text only when producing the label.</p>
+<h2>Guided learner lab</h2>
+<p>Before executing, predict <code>&quot;12&quot; + &quot;3&quot;</code> and <code>12 + 3</code>, and explain why the first produces text rather than 15. Test '0', '50', '51', '03', '٢' and '-1'. Decide whether your real interface needs internationalized numeral input; if so, define a different parser explicitly instead of removing checks at random. Add one test proving that type(label) remains str.</p>
+<h2>Diagnosing mistakes</h2>
+<p>TypeError often identifies a mismatch between values and operations, not a reason to stringify every value. If the user enters unexpected numerals, keep the original input and show the required format. Do not swallow errors and replace every invalid value with zero, because zero may mean something legitimate.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

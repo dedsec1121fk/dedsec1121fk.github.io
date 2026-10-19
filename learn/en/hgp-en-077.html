@@ -1,0 +1,133 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Network Protocol Reverse Engineering and Traffic Analysis — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-077.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Network Protocol Reverse Engineering and Traffic Analysis Purpose: Learn how to reconstruct an unknown or poorly documented protocol from packet captures and a controlled implementation you…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Network Protocol Reverse Engineering and Traffic Analysis — DedSec Project">
+<meta property="og:description" content="Network Protocol Reverse Engineering and Traffic Analysis Purpose: Learn how to reconstruct an unknown or poorly documented protocol from packet captures and a controlled implementation you…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-077.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Network Protocol Reverse Engineering and Traffic Analysis — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Network Protocol Reverse Engineering and Traffic Analysis — DedSec Project">
+<meta name="twitter:description" content="Network Protocol Reverse Engineering and Traffic Analysis Purpose: Learn how to reconstruct an unknown or poorly documented protocol from packet captures and a controlled implementation you…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Network Protocol Reverse Engineering and Traffic Analysis — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Network Protocol Reverse Engineering and Traffic Analysis — DedSec Project</h1><p>Network Protocol Reverse Engineering and Traffic Analysis Purpose: Learn how to reconstruct an unknown or poorly documented protocol from packet captures and a controlled implementation you…</p><section><blockquote>
+<p><strong>Purpose:</strong> Learn how to reconstruct an unknown or poorly documented protocol from packet captures and a controlled implementation you own.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Separate transport framing from application semantics.</li>
+<li>Infer fields, lengths, message types, state, checksums, and encodings.</li>
+<li>Use controlled input variation to identify field meaning.</li>
+<li>Distinguish encrypted, compressed, encoded, and binary data.</li>
+<li>Build a minimal protocol specification from evidence.</li>
+</ul>
+<h2>Start below the application</h2>
+<p>Before interpreting payload bytes, identify transport facts: TCP, UDP, QUIC, Unix socket, serial, BLE characteristic, or another carrier. TCP is a byte stream, not a message protocol. Application message boundaries must be defined separately by lengths, delimiters, fixed-size records, higher-level framing, or connection lifecycle.</p>
+<p>UDP preserves datagram boundaries but applications may still fragment logical messages themselves.</p>
+<h2>Direction and roles</h2>
+<p>Determine which endpoint initiates the connection and which sends the first application message. Label directions <code>client → server</code> and <code>server → client</code> rather than relying on IP addresses that may change.</p>
+<p>Identify handshake, steady-state requests, responses, keepalives, errors, and shutdown behavior.</p>
+<h2>Capture discipline</h2>
+<p>For a protocol you own, capture one simple action at a time:</p>
+<ol>
+<li>connect and do nothing;</li>
+<li>connect and authenticate using synthetic credentials if the lab requires it;</li>
+<li>perform action A once;</li>
+<li>repeat A with one field changed;</li>
+<li>perform action B;</li>
+<li>intentionally cause a benign validation error;</li>
+<li>disconnect cleanly.</li>
+</ol>
+<p>The controlled variation makes field inference much stronger.</p>
+<h2>Hex and ASCII views</h2>
+<p>Binary analysis uses both byte offsets and decoded representations. ASCII/UTF-8 text may be embedded among binary lengths and identifiers. Repeated constants can indicate magic values, protocol versions, opcodes, separators, or flags.</p>
+<p>Do not assume a recognizable string means the entire protocol is text-based.</p>
+<h2>Fixed header hypothesis</h2>
+<p>Many protocols start with a fixed header containing fields such as:</p>
+<ul>
+<li>magic/version;</li>
+<li>message type;</li>
+<li>flags;</li>
+<li>sequence/request ID;</li>
+<li>payload length;</li>
+<li>checksum;</li>
+<li>timestamp.</li>
+</ul>
+<p>Compare multiple messages and mark bytes that remain constant, increment, correlate with payload size, or change with action type.</p>
+<h2>Endianness</h2>
+<p>To infer integer byte order, choose a value you can control. If setting a synthetic count to <code>0x0102</code> yields bytes <code>01 02</code>, the field is big-endian; <code>02 01</code> suggests little-endian. Confirm with more than one value.</p>
+<p>Network standards often use big-endian, but custom protocols may not.</p>
+<h2>Length-prefixed framing</h2>
+<p>If a field changes exactly with message size, test whether it includes the header itself or only payload. A common parser bug occurs when sender and receiver disagree about units, signedness, maximum size, or nested lengths.</p>
+<p>Your protocol specification should state exact offset, width, endian, allowed range, and whether the field includes headers.</p>
+<h2>Type-length-value structures</h2>
+<p>TLV designs encode a type identifier, a length, then a value. Variants may align/pad fields, nest TLVs, or use variable-length integers. Once you suspect TLV, compare messages with optional fields and see whether unknown elements can be skipped based on their declared length.</p>
+<h2>Checksums and integrity</h2>
+<p>A changing field near the end/header may be a checksum, MAC, or hash. A checksum detects accidental corruption but does not prove authenticity. A keyed MAC provides authenticity/integrity when keys are protected.</p>
+<p>Do not attempt to defeat authentication in third-party protocols. In your own lab, simply identify whether a field changes with payload and consult source/specification afterward.</p>
+<h2>Compression versus encryption</h2>
+<p>High-entropy payloads can result from encryption, compression, or encoded binary data. Clues include handshake negotiation, fixed magic headers, length behavior, repeated plaintext metadata, and whether identical inputs produce identical output.</p>
+<p>Encryption should be assumed opaque unless you possess legitimate keys in your own environment.</p>
+<h2>Stateful protocols</h2>
+<p>A message may only be valid after a handshake or prior state transition. Build a state diagram. Track sequence numbers, session IDs, negotiated version/features, authentication state, and timeouts.</p>
+<p>Protocol security often fails when a parser accepts a message in the wrong state.</p>
+<h2>Error messages as an oracle</h2>
+<p>In your own implementation, errors reveal parser expectations. Compare malformed-but-benign local inputs: truncated message, unsupported version, unknown type, invalid length. Map each failure to the validation stage.</p>
+<p>A production protocol should avoid leaking unnecessary secrets while still logging enough server-side detail for diagnosis.</p>
+<h2>Wireshark/tshark methodology</h2>
+<p>If using packet-analysis tools, begin with filters that isolate your own lab endpoints and one connection. Follow the stream, mark message boundaries, export only the payloads you are authorized to analyze, and annotate offsets.</p>
+<p>A custom Wireshark dissector is an excellent advanced project after you understand the format. It turns reverse-engineered fields into reusable analysis and can improve defensive visibility.</p>
+<h2>Python parser project</h2>
+<p>Once the format is understood, write a parser that:</p>
+<ul>
+<li>accepts bytes, not a network target;</li>
+<li>validates minimum header length;</li>
+<li>checks declared lengths before slicing;</li>
+<li>rejects unsupported versions/types;</li>
+<li>uses explicit endian conversions;</li>
+<li>returns structured fields;</li>
+<li>preserves unknown fields safely;</li>
+<li>never allocates unbounded memory from a declared length.</li>
+</ul>
+<p>Then fuzz the parser locally using Module 68.</p>
+<h2>Safe lab</h2>
+<p>Write a tiny localhost client/server with a custom frame: 4-byte magic, 1-byte version, 1-byte type, 2-byte big-endian payload length, payload. Capture three benign message types and reverse the format without looking at the server source. Then compare with source.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete Modules 08, 20, 51, 61, 68, and 78 when available.</p>
+<h3>Practice task</h3>
+<p>Reverse-engineer a protocol you wrote yourself from a packet capture, then implement a standalone parser and a short specification.</p>
+<h3>Evidence to keep</h3>
+<p>PCAP from the private lab, annotated hex, state diagram, inferred field table, parser, and source comparison.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>treating TCP packets as application messages;</li>
+<li>guessing endian from one sample;</li>
+<li>mistaking compression for encryption;</li>
+<li>capturing third-party/private traffic;</li>
+<li>writing a parser that trusts declared lengths.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>Given several captures, explain how you would infer framing, field width, endian, and state without access to source code.</p>
+<h3>Continue with</h3>
+<p>Modules <strong>78, 79, 80, 83, and 85</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

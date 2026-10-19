@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Distributed systems consistency — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-203.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Distributed consistency — duplicate events and stale replicas Problem and terminology Suppose two replicas display a counter derived from delivered order events. Replica A receives order-7…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Distributed systems consistency — DedSec Project">
+<meta property="og:description" content="Distributed consistency — duplicate events and stale replicas Problem and terminology Suppose two replicas display a counter derived from delivered order events. Replica A receives order-7…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-203.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Distributed systems consistency — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Distributed systems consistency — DedSec Project">
+<meta name="twitter:description" content="Distributed consistency — duplicate events and stale replicas Problem and terminology Suppose two replicas display a counter derived from delivered order events. Replica A receives order-7…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Distributed systems consistency — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Distributed systems consistency — DedSec Project</h1><p>Distributed consistency — duplicate events and stale replicas Problem and terminology Suppose two replicas display a counter derived from delivered order events. Replica A receives order-7…</p><section><h1>Distributed consistency — duplicate events and stale replicas</h1>
+<h2>Problem and terminology</h2>
+<p>Suppose two replicas display a counter derived from delivered order events. Replica A receives order-7, but replica B has not received it yet. A read of B returns an older value even though A already processed the event. Eventual consistency permits this transient gap, assuming delivery eventually succeeds. Read-your-writes consistency would require routing or tracking a version so the original writer does not observe an older state. Linearizability is stronger: all operations must appear at one instant between their invocation and completion.</p>
+<h2>Executable deterministic model</h2>
+<p>Save as replica_lab.py and run python3 replica_lab.py. There is no network, consensus engine or actual database: this is a bounded delivery model that demonstrates idempotent handling and temporary disagreement.</p>
+<pre><code class="language-python">class Replica:
+    def __init__(self):
+        self.total = 0
+        self.events = set()
+        self.version = 0
+
+    def apply(self, event):
+        if event[&quot;id&quot;] in self.events:
+            return False
+        self.events.add(event[&quot;id&quot;])
+        self.total += event[&quot;delta&quot;]
+        self.version += 1
+        return True
+
+a, b = Replica(), Replica()
+event = {&quot;id&quot;: &quot;order-7&quot;, &quot;delta&quot;: 2}
+assert a.apply(event)
+assert not a.apply(event)
+assert a.total == 2 and b.total == 0
+assert b.apply(event) and b.total == 2
+assert not b.apply(event)
+assert a.events == b.events
+print(&quot;PASS: stale read, duplicate delivery, convergence&quot;)
+</code></pre>
+<h2>What this proves and what it cannot prove</h2>
+<p>An event ID prevents duplicate application <em>within one replica</em> as long as the seen set survives. It does not grant exactly-once delivery; messages may be delivered at least once. The example eventually converges after B receives the same event. It does not solve conflicting concurrent writes, lost durable storage, Byzantine faults or leader election. A counter that combines independent updates across replicas needs a formal merge rule or ordered event log, not the simplistic latest-version overwrite.</p>
+<h2>Bounded lab tasks</h2>
+<ol>
+<li>Deliver the event to A only, show B's stale read, then deliver it twice to B. Log versions and counters after every step.</li>
+<li>Introduce a second event with a distinct ID. Try both delivery orders at A and B and check whether the final counter agrees.</li>
+<li>Simulate a restart that discards the seen IDs and replay order-7. Observe the duplicate count; specify where deduplication state must be made durable.</li>
+<li>Draw a timeline of a client writing at A and reading from B. State which consistency guarantee the observed stale read violates, and which weaker guarantee still allows it.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, step-by-step event timeline, explicit assumptions of reliable eventual delivery and one limitation of this model. Do not claim a simulated dictionary implements distributed consensus.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

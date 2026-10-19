@@ -1,0 +1,84 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ανάλυση σύνταξης και επικύρωση εισόδου — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1154.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Ανάλυση σύνταξης και επικύρωση — περιορισμένη μορφή ρυθμίσεων Πρόβλημα και συμβόλαιο εισόδου Μία τοπική εφαρμογή CLI διαβάζει μικρό αρχείο ρυθμίσεων με mode, limit και label. Το περιεχόμενο…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Ανάλυση σύνταξης και επικύρωση εισόδου — DedSec Project">
+<meta property="og:description" content="Ανάλυση σύνταξης και επικύρωση — περιορισμένη μορφή ρυθμίσεων Πρόβλημα και συμβόλαιο εισόδου Μία τοπική εφαρμογή CLI διαβάζει μικρό αρχείο ρυθμίσεων με mode, limit και label. Το περιεχόμενο…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1154.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ανάλυση σύνταξης και επικύρωση εισόδου — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ανάλυση σύνταξης και επικύρωση εισόδου — DedSec Project">
+<meta name="twitter:description" content="Ανάλυση σύνταξης και επικύρωση — περιορισμένη μορφή ρυθμίσεων Πρόβλημα και συμβόλαιο εισόδου Μία τοπική εφαρμογή CLI διαβάζει μικρό αρχείο ρυθμίσεων με mode, limit και label. Το περιεχόμενο…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Ανάλυση σύνταξης και επικύρωση εισόδου — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Ανάλυση σύνταξης και επικύρωση εισόδου — DedSec Project</h1><p>Ανάλυση σύνταξης και επικύρωση — περιορισμένη μορφή ρυθμίσεων Πρόβλημα και συμβόλαιο εισόδου Μία τοπική εφαρμογή CLI διαβάζει μικρό αρχείο ρυθμίσεων με mode, limit και label. Το περιεχόμενο…</p><section><h1>Ανάλυση σύνταξης και επικύρωση — περιορισμένη μορφή ρυθμίσεων</h1>
+<h2>Πρόβλημα και συμβόλαιο εισόδου</h2>
+<p>Μία τοπική εφαρμογή CLI διαβάζει μικρό αρχείο ρυθμίσεων με mode, limit και label. Το περιεχόμενο θεωρείται μη έμπιστο κείμενο: δεν πρέπει να εκτελείται ως κώδικας Python, κέλυφος, pickle ή πρότυπο. Κάθε επιτρεπόμενο κλειδί εμφανίζεται μόνο μία φορά. Η μόνη λειτουργία είναι read, το όριο πρέπει να είναι ακέραιος ASCII από 1 έως 50, και η ετικέτα δεν επιτρέπεται να είναι κενή. Κενές γραμμές και σχόλια ολόκληρης γραμμής είναι έγκυρα. Άγνωστα κλειδιά, επαναλήψεις, υπερβολικό μέγεθος UTF-8 και λανθασμένα ζεύγη πρέπει να απορρίπτονται. Η απλή μορφή δεν περιλαμβάνει εμφωλευμένες δομές, πολυγραμμικές τιμές σε εισαγωγικά ή σχόλια στην ίδια γραμμή.</p>
+<h2>Εκτελέσιμο εργαστήριο Python 3</h2>
+<p>Αποθήκευσε ως config_lab.py και εκτέλεσε python3 config_lab.py. Ο αναλυτής δέχεται κείμενο και δεν διαβάζει προσωπικά αρχεία: όλες οι δοκιμές χρησιμοποιούν τεχνητά δεδομένα.</p>
+<pre><code class="language-python">import re
+
+def parse_config(text):
+    if len(text.encode('utf-8')) &gt; 2048:
+        raise ValueError('configuration too large')
+    allowed = {'mode', 'limit', 'label'}
+    result = {}
+    for number, line in enumerate(text.splitlines(), 1):
+        stripped = line.strip()
+        if not stripped or stripped.startswith('#'):
+            continue
+        key, sep, value = stripped.partition('=')
+        key = key.strip()
+        value = value.strip()
+        if not sep or not re.fullmatch(r'[a-z]+', key) or key not in allowed:
+            raise ValueError(f'line {number}: bad or unknown key')
+        if key in result:
+            raise ValueError(f'line {number}: duplicate {key}')
+        result[key] = value
+    if result.get('mode') != 'read':
+        raise ValueError('mode must be read')
+    limit = result.get('limit')
+    if limit is None or not re.fullmatch(r'[0-9]+', limit) or not 1 &lt;= int(limit) &lt;= 50:
+        raise ValueError('limit must be integer 1..50')
+    if not result.get('label'):
+        raise ValueError('label must be nonempty')
+    return {'mode': 'read', 'limit': int(limit), 'label': result['label']}
+
+assert parse_config('# comment\nmode=read\nlimit=5\nlabel=Ελληνικά\n')['label'] == 'Ελληνικά'
+for bad in ('mode=write\nlimit=1\nlabel=x', 'mode=read\nlimit=0\nlabel=x',
+            'mode=read\nlimit=2\nlabel=', 'mode=read\nlimit=2\nlabel=x\nlimit=3',
+            'mode=read\nlimit=2\nlabel=x\nexec=yes',
+            'mode=read\nlimit=2\nlabel=x\n' + 'x'*2048):
+    try: parse_config(bad)
+    except ValueError: pass
+    else: raise AssertionError('bad input accepted')
+print('PASS parser: schema, Unicode, repeated keys, limits and size')
+</code></pre>
+<h2>Διαχωρισμός σύνταξης από κανόνες</h2>
+<p>Η partition εντοπίζει το πρώτο ίσον, αλλά αυτό από μόνο του δεν σημαίνει ότι ένα κλειδί επιτρέπεται. Το κανονικό μοτίβο δέχεται μόνο πεζά λατινικά γράμματα, ενώ μία ρητή λίστα απορρίπτει απροσδόκητα ονόματα. Ο έλεγχος διπλοτύπων αποτρέπει τη σιωπηρή αντικατάσταση προηγούμενης τιμής. Για το όριο προηγείται ο συντακτικός έλεγχος και ακολουθεί η μετατροπή σε ακέραιο και ο έλεγχος του διαστήματος. Η απουσία, η κενή τιμή και η λανθασμένη μορφή αποτελούν διαφορετικές περιπτώσεις, παρότι εδώ έχουν κοινή δημόσια κατηγορία σφάλματος. Το μέγεθος ελέγχεται σε byte UTF-8 πριν από την ανάλυση, όχι μόνο σε χαρακτήρες. Αν η γλώσσα ρυθμίσεων επεκταθεί, πρόσθεσε όρια αριθμού και μήκους γραμμών. Ποτέ μη συνθέτεις εντολές κελύφους από τέτοιο κείμενο.</p>
+<h2>Ασκήσεις και εντοπισμός αποτυχιών</h2>
+<ol>
+<li>Επανάλαβε το ίδιο κλειδί δύο φορές. Ο έλεγχος πρέπει να σταματά στη δεύτερη εμφάνιση και να μην κρατά απλώς την τελευταία τιμή.</li>
+<li>Δοκίμασε 0, 005, 51, -1, 1.5 και αραβικούς αριθμητικούς χαρακτήρες. Εξήγησε την επιλογή μόνο ASCII.</li>
+<li>Πρόσθεσε άγνωστο κλειδί exec και επιβεβαίωσε ότι δεν αντιμετωπίζεται ως εντολή. Δοκίμασε ίσον μέσα σε τιμή και όρισε κανόνα διαφυγής.</li>
+<li>Δημιούργησε μεγάλο ελληνικό κείμενο και σύγκρινε byte με χαρακτήρες. Πρόσθεσε διαφορετικά διαγνωστικά για απούσα και κενή υποχρεωτική τιμή.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> PASS, αρνητικές δοκιμές, περιγραφή γραμματικής και καταγραφή της σύνταξης που δεν υποστηρίζεται.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

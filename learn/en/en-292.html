@@ -1,0 +1,61 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Practical scripts: search text, JSON and CSV validation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-292.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Practical scripts: search text, JSON and CSV validation Normalize Search Text What the implementation does The function normalize() in 01_normalize_search.py first applies casefold, then…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Practical scripts: search text, JSON and CSV validation — DedSec Project">
+<meta property="og:description" content="Practical scripts: search text, JSON and CSV validation Normalize Search Text What the implementation does The function normalize() in 01_normalize_search.py first applies casefold, then…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-292.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Practical scripts: search text, JSON and CSV validation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Practical scripts: search text, JSON and CSV validation — DedSec Project">
+<meta name="twitter:description" content="Practical scripts: search text, JSON and CSV validation Normalize Search Text What the implementation does The function normalize() in 01_normalize_search.py first applies casefold, then…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Practical scripts: search text, JSON and CSV validation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Practical scripts: search text, JSON and CSV validation — DedSec Project</h1><p>Practical scripts: search text, JSON and CSV validation Normalize Search Text What the implementation does The function normalize() in 01_normalize_search.py first applies casefold, then…</p><section><h2>Normalize Search Text</h2>
+<h3>What the implementation does</h3>
+<p>The function normalize() in 01_normalize_search.py first applies casefold, then Unicode NFD decomposition, then strips combining marks. This allows searches such as ΣΥΝΑΡΤΗΣΗ and συναρτηση to share a match key; it also removes Latin accent marks. It is intended for searching, not for canonical file names, usernames or security identifiers: distinct strings can collapse to the same normalized value.</p>
+<h3>Run and observe</h3>
+<p>Run python 01_normalize_search.py. The assertions cover Greek capital letters, tonos, Latin decomposed accents, an empty string and an invalid None input. Expected output is search normalization checks passed. Read the source and explain why type checking occurs before calling casefold; otherwise a None value produces an obscure AttributeError.</p>
+<h3>Independent lab</h3>
+<p>Create a list of original titles including café, cafe, προγραμματισμός and προγραμματισμοσ. Keep the originals for display while building a separate normalized search index. Ask whether users should distinguish accent marks and compare NFD with NFKC on a few compatibility characters. For languages where diacritics alter identity, removing them may produce incorrect matches.</p>
+<h3>Limits</h3>
+<p>Python code-point string comparison is not a complete human-language collation engine. Some Unicode confusables are unrelated characters and are not made equal by NFD. Do not use normalized search keys for authentication or authorization. Working source: 01_normalize_search.py; official reference: https://docs.python.org/3/library/unicodedata.html</p>
+<h2>Validate a JSON Configuration</h2>
+<h3>The important distinction</h3>
+<p>Parsing JSON only verifies syntax. The validate() function in 02_validate_config.py requires exactly two keys: enabled (real bool) and max_items (integer from 1 to 1000). It rejects missing and unexpected keys, making typos visible. Python bool is a subclass of int, so an isinstance(value, int) check could accidentally accept true as 1; explicit type equality avoids that trap.</p>
+<h3>Run the built-in checks</h3>
+<p>Execute python 02_validate_config.py. The positive case accepts an enabled configuration with 12 items. Negative cases include enabled as a string, max_items as a boolean, zero, a surprise debug key, a missing key and JSON arrays. Expected output is configuration schema checks passed. The validator does not write files or connect to services.</p>
+<h3>Add a useful lab</h3>
+<p>Build a CLI that reads a local JSON file in UTF-8 and calls validate before changing any setting. Handle file-not-found separately from JSON syntax and schema failures. Show only field names in error messages, never raw configuration values that may contain secrets. Extend the model with an explicit optional description field and update both allowed-key policy and tests.</p>
+<h3>Advanced limitation</h3>
+<p>Python's default json.loads accepts duplicate object keys by keeping the later value. If duplicate-key rejection is part of your security or maintenance contract, implement a custom object_pairs_hook and test it; merely checking the resulting dict does not reveal duplicates. Working source: 02_validate_config.py. Reference: https://docs.python.org/3/library/json.html</p>
+<h2>Summarize CSV with Bad Rows</h2>
+<h3>Data format and calculations</h3>
+<p>03_csv_statistics.py reads a strict name,score CSV header with csv.DictReader. It checks the name and score fields, rejects extra columns, blank values, invalid float conversions and non-finite nan/inf numbers, then calculates the mean of only valid rows using statistics.fmean. It reports rejected records using the physical line number at the end of each parsed CSV record.</p>
+<h3>Test it</h3>
+<p>Run python 03_csv_statistics.py. The original feed Ada 10, Grace 20 and Lin invalid produces count=2, mean=15.0 and bad_lines=[4]. The tests also confirm that a quoted comma in a name is not treated as an extra column and that non-finite scores and extra cells are rejected.</p>
+<h3>Understand the line numbering</h3>
+<p>A quoted CSV record can span several physical lines. reader.line_num therefore tracks the last physical line consumed rather than a simple sequential row count. A blank physical line is skipped by DictReader. If your format forbids blank lines or quoted newlines, add a separate schema-level rule. Parsing strictness alone does not establish all application constraints.</p>
+<h3>Extend the exercise</h3>
+<p>Add a minimum/maximum score range, for example 0 to 100, and prove that -1 and 101 do not influence the reported average. For huge files, accept a file handle (opened with newline=&quot;&quot;) and avoid storing all valid values; choose a numeric aggregation method and discuss floating-point error. Source: 03_csv_statistics.py. Documentation: https://docs.python.org/3/library/csv.html</p>
+<h2>Further engineering detail</h2>
+<p>CSV field parsing and spreadsheet interpretation are different trust boundaries. Validate row shape and types during import, then define an independent export policy for formula-like cell content. Quoting a comma correctly proves that the CSV structure survives; it does not prove a spreadsheet will display untrusted input as plain text.</p>
+<p><a href="../en/fieldnotes-en-40.html">CSV import contracts and spreadsheet formula boundaries</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

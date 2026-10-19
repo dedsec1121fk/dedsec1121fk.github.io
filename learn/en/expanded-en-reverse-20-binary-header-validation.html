@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reverse engineering: inspect binary headers and bounded offsets — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-reverse-20-binary-header-validation.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Understand a binary structure before opening it in a disassembler Start with a synthetic file you own A file signature is evidence of a possible format, not proof that all later fields are…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Reverse engineering: inspect binary headers and bounded offsets — DedSec Project">
+<meta property="og:description" content="Understand a binary structure before opening it in a disassembler Start with a synthetic file you own A file signature is evidence of a possible format, not proof that all later fields are…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-reverse-20-binary-header-validation.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Reverse engineering: inspect binary headers and bounded offsets — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reverse engineering: inspect binary headers and bounded offsets — DedSec Project">
+<meta name="twitter:description" content="Understand a binary structure before opening it in a disassembler Start with a synthetic file you own A file signature is evidence of a possible format, not proof that all later fields are…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Reverse engineering: inspect binary headers and bounded offsets — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Reverse engineering: inspect binary headers and bounded offsets — DedSec Project</h1><p>Understand a binary structure before opening it in a disassembler Start with a synthetic file you own A file signature is evidence of a possible format, not proof that all later fields are…</p><section><h1>Understand a binary structure before opening it in a disassembler</h1>
+<h2>Start with a synthetic file you own</h2>
+<p>A file signature is evidence of a possible format, not proof that all later fields are valid. Create a test fixture with a four-byte marker, an unsigned little-endian length and a UTF-8 payload. The fixed-width header is 8 bytes; an offset points to the first byte after that header. Never trust a declared payload size without checking how many bytes actually remain.</p>
+<pre><code class="language-python">from struct import pack, unpack_from
+blob = b&quot;DEMO&quot; + pack(&quot;&lt;I&quot;, 3) + b&quot;cat&quot;
+assert blob[:4] == b&quot;DEMO&quot;
+length = unpack_from(&quot;&lt;I&quot;, blob, 4)[0]
+assert length &lt;= len(blob) - 8
+assert blob[8:8+length] == b&quot;cat&quot;
+</code></pre>
+<h2>Generate two failure fixtures</h2>
+<p>Truncate the last byte and confirm a parser rejects the payload before attempting to decode it. Then replace the header length with a very large number; do not allocate that size. Checking the declared length against the actual file size prevents both out-of-range slicing assumptions and uncontrolled memory requests. A parser that returns an empty slice for invalid data may silently hide corruption.</p>
+<h2>Separate observation from inference</h2>
+<p>In a hex viewer, record the first 16 bytes and mark each field's offset, width, signedness and byte order. If an unknown binary starts with ELF, PE or ZIP-like bytes, inspect it with a read-only tool appropriate for that format and compare the claim with actual structural offsets. Do not execute samples of unknown provenance just to “see what happens.”</p>
+<h2>Lab deliverable</h2>
+<p>Produce a field table for the synthetic example, three fixture hashes, expected accept/reject results and a precise error code for truncation. A useful reverse-engineering note should include the bytes that support every structural claim, not simply identify a recognizable magic number.</p>
+<h2>Turn observations into a parser contract</h2>
+<p>This format contains exactly one record. Reject a truncated header, a bad marker, a length beyond the byte buffer, invalid UTF-8 and trailing bytes. An upper size bound limits decoded text, but a file reader must also enforce its own input-byte limit before loading a large file.</p>
+<pre><code class="language-python">from struct import pack, unpack_from
+
+def parse_record(blob):
+    if len(blob) &lt; 8:
+        raise ValueError('short header')
+    if blob[:4] != b'DEMO':
+        raise ValueError('bad magic')
+    length = unpack_from('&lt;I', blob, 4)[0]
+    if length &gt; 1024 or length != len(blob) - 8:
+        raise ValueError('invalid length')
+    return blob[8:].decode('utf-8', errors='strict')
+
+valid = b'DEMO' + pack('&lt;I', 3) + b'cat'
+assert parse_record(valid) == 'cat'
+for broken in (b'', valid[:-1], valid + b'!',
+               b'DEMO' + pack('&lt;I', 2**32-1),
+               b'DEMO' + pack('&lt;I', 1) + b'\xff'):
+    try:
+        parse_record(broken)
+    except (ValueError, UnicodeDecodeError):
+        continue
+    raise AssertionError('malformed record accepted')
+</code></pre>
+<p>The subtraction check <code>length != len(blob) - 8</code> happens only after proving the header exists. That ordering matters in languages with unsigned arithmetic, where subtracting eight from a shorter length can underflow. Python integers do not overflow, but the same file format can be implemented in a fixed-width language later.</p>
+<h2>Byte lengths are not character counts</h2>
+<p>For <code>γάτα</code>, UTF-8 byte length and Python character count differ. Store the encoded byte length in the header and test the decoded string separately. A field table should distinguish offset 4 (where length is stored) from offset 8 (where payload begins), and record little-endian byte order. The parser contract above rejects padding; a format that permits multiple records needs a cursor and a different trailing-data policy.</p>
+<p>Reference: <a href="https://docs.python.org/3/library/struct.html">Python struct</a>.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

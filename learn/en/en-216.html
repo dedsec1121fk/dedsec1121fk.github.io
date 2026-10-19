@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Graph traversal — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-216.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Graph traversal — cycle-safe breadth-first search Contract A small offline dependency graph is represented as a mapping from every known node to its neighbors. Return a shortest path in…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Graph traversal — DedSec Project">
+<meta property="og:description" content="Graph traversal — cycle-safe breadth-first search Contract A small offline dependency graph is represented as a mapping from every known node to its neighbors. Return a shortest path in…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-216.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Graph traversal — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Graph traversal — DedSec Project">
+<meta name="twitter:description" content="Graph traversal — cycle-safe breadth-first search Contract A small offline dependency graph is represented as a mapping from every known node to its neighbors. Return a shortest path in…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Graph traversal — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Graph traversal — DedSec Project</h1><p>Graph traversal — cycle-safe breadth-first search Contract A small offline dependency graph is represented as a mapping from every known node to its neighbors. Return a shortest path in…</p><section><h1>Graph traversal — cycle-safe breadth-first search</h1>
+<h2>Contract</h2>
+<p>A small offline dependency graph is represented as a mapping from every known node to its neighbors. Return a shortest path in <em>number of edges</em> between two existing nodes; return None when no route exists. Reject unknown start or goal nodes and dangling neighbor references. With unweighted edges, breadth-first search visits nodes in layers and can guarantee the minimum edge count. Dijkstra is needed when edge weights differ.</p>
+<h2>Executable Python 3 lab</h2>
+<p>Save as bfs_lab.py and run python3 bfs_lab.py. The graph contains a cycle, two equally short choices, and a disconnected island. Neighbors are sorted to make tie-breaking deterministic for the fixture.</p>
+<pre><code class="language-python">from collections import deque
+
+def shortest(graph, start, goal):
+    if start not in graph or goal not in graph:
+        raise ValueError(&quot;unknown node&quot;)
+    pending = deque([(start, [start])])
+    visited = {start}
+    while pending:
+        node, path = pending.popleft()
+        if node == goal:
+            return path
+        for neighbor in sorted(graph[node]):
+            if neighbor not in graph:
+                raise ValueError(&quot;dangling neighbor&quot;)
+            if neighbor not in visited:
+                visited.add(neighbor)
+                pending.append((neighbor, path + [neighbor]))
+    return None
+
+g = {&quot;a&quot;:[&quot;c&quot;,&quot;b&quot;],&quot;b&quot;:[&quot;a&quot;,&quot;d&quot;],&quot;c&quot;:[&quot;a&quot;,&quot;d&quot;],
+     &quot;d&quot;:[&quot;b&quot;,&quot;c&quot;],&quot;island&quot;:[]}
+assert shortest(g,&quot;a&quot;,&quot;d&quot;) == [&quot;a&quot;,&quot;b&quot;,&quot;d&quot;]
+assert shortest(g,&quot;a&quot;,&quot;island&quot;) is None
+assert shortest(g,&quot;a&quot;,&quot;a&quot;) == [&quot;a&quot;]
+try:
+    shortest(g,&quot;ghost&quot;,&quot;a&quot;)
+except ValueError:
+    pass
+else:
+    raise AssertionError(&quot;unknown start accepted&quot;)
+print(&quot;PASS: BFS shortest edges, cycles, no path&quot;)
+</code></pre>
+<h2>Invariants and complexity</h2>
+<p>Add a node to visited when it is <em>enqueued</em>, not when it is dequeued. That prevents two parents from repeatedly adding it and keeps the queue bounded. A FIFO deque ensures all paths with k edges are processed before paths with k+1 edges. Traversal visits each vertex and edge at most a constant number of times, O(V+E), assuming adjacency iteration is already available. This example sorts each adjacency list, adding sorting cost; the path-list copying also introduces extra work, so a production implementation for large graphs should track predecessor nodes and reconstruct the path once.</p>
+<h2>Controlled failure cases</h2>
+<ol>
+<li>Add a self-loop and duplicate neighbors. Ensure the search terminates and returns the same shortest edge count.</li>
+<li>Remove island's connections or the goal itself: distinguish no-path (None) from unknown-node (ValueError).</li>
+<li>Replace the deque with a LIFO stack and find a graph where the first route is longer than the BFS answer.</li>
+<li>For an undirected edge, verify the reverse edge is present. For directed graphs, explain why it need not be.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, queue/visited trace, one disconnected case and a written note on weighted edges and tie-breaking.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

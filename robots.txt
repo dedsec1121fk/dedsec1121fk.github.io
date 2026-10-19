@@ -1,6 +1,5 @@
-# DedSec Project — official website
+# DedSec Project public website
 User-agent: *
 Allow: /
 
-# XML sitemap for Google and other search engines (English + Greek)
 Sitemap: https://ded-sec.space/sitemap.xml

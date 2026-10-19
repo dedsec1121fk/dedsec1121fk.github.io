@@ -1,0 +1,83 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ταυτόχρονη εκτέλεση, παραλληλισμός και ακύρωση — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1158.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Ταυτόχρονη εκτέλεση και ακύρωση — σωστή απελευθέρωση πόρων Σενάριο και αμετάβλητος κανόνας Μία εφαρμογή γνώσης χωρίς διαδίκτυο μπορεί να ακυρώσει την ευρετηρίαση όταν ο χρήστης κλείσει τη…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Ταυτόχρονη εκτέλεση, παραλληλισμός και ακύρωση — DedSec Project">
+<meta property="og:description" content="Ταυτόχρονη εκτέλεση και ακύρωση — σωστή απελευθέρωση πόρων Σενάριο και αμετάβλητος κανόνας Μία εφαρμογή γνώσης χωρίς διαδίκτυο μπορεί να ακυρώσει την ευρετηρίαση όταν ο χρήστης κλείσει τη…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1158.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ταυτόχρονη εκτέλεση, παραλληλισμός και ακύρωση — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ταυτόχρονη εκτέλεση, παραλληλισμός και ακύρωση — DedSec Project">
+<meta name="twitter:description" content="Ταυτόχρονη εκτέλεση και ακύρωση — σωστή απελευθέρωση πόρων Σενάριο και αμετάβλητος κανόνας Μία εφαρμογή γνώσης χωρίς διαδίκτυο μπορεί να ακυρώσει την ευρετηρίαση όταν ο χρήστης κλείσει τη…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Ταυτόχρονη εκτέλεση, παραλληλισμός και ακύρωση — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Ταυτόχρονη εκτέλεση, παραλληλισμός και ακύρωση — DedSec Project</h1><p>Ταυτόχρονη εκτέλεση και ακύρωση — σωστή απελευθέρωση πόρων Σενάριο και αμετάβλητος κανόνας Μία εφαρμογή γνώσης χωρίς διαδίκτυο μπορεί να ακυρώσει την ευρετηρίαση όταν ο χρήστης κλείσει τη…</p><section><h1>Ταυτόχρονη εκτέλεση και ακύρωση — σωστή απελευθέρωση πόρων</h1>
+<h2>Σενάριο και αμετάβλητος κανόνας</h2>
+<p>Μία εφαρμογή γνώσης χωρίς διαδίκτυο μπορεί να ακυρώσει την ευρετηρίαση όταν ο χρήστης κλείσει τη σελίδα. Οι κοινόχρηστοι πόροι, όπως τα ασύγχρονα κλειδώματα, πρέπει να απελευθερώνονται ακόμη και όταν η ακύρωση φτάνει στη διάρκεια αναμονής. Η ταυτόχρονη εκτέλεση εναλλάσσει εργασίες, ενώ ο πραγματικός παραλληλισμός εκτελεί πράξεις την ίδια στιγμή. Οι συναρτήσεις asyncio συνεργάζονται στα σημεία await, αλλά δεν προστατεύουν αυτόματα κοινόχρηστα μεταβαλλόμενα δεδομένα. Πριν προσθέσεις εργάτες, καθόρισε ιδιοκτησία πόρων και συμπεριφορά ακύρωσης.</p>
+<h2>Εκτελέσιμο παράδειγμα Python 3.11+</h2>
+<p>Αποθήκευσε ως cancellation_lab.py και εκτέλεσε python3 cancellation_lab.py. Ένας εργάτης παίρνει το κλείδωμα, δηλώνει ότι ξεκίνησε και περιμένει ένα γεγονός. Ο ελεγκτής ακυρώνει την εργασία και ελέγχει ότι η finally απελευθέρωσε το κλείδωμα. Το παράδειγμα δεν δημιουργεί νήματα, δίκτυο, αρχεία ή χρονοδιακόπτες.</p>
+<pre><code class="language-python">import asyncio
+
+async def do_work(lock, started, unblock, trace):
+    async with lock:
+        trace.append('entered')
+        started.set()
+        try:
+            await unblock.wait()
+            trace.append('finished')
+        finally:
+            trace.append('cleanup')
+
+async def test():
+    lock, started, unblock = asyncio.Lock(), asyncio.Event(), asyncio.Event()
+    trace = []
+    task = asyncio.create_task(do_work(lock, started, unblock, trace))
+    await started.wait()
+    assert lock.locked()
+    task.cancel()
+    try:
+        await task
+    except asyncio.CancelledError:
+        pass
+    else:
+        raise AssertionError('cancellation not delivered')
+    assert trace == ['entered', 'cleanup']
+    assert not lock.locked()
+    async with lock:
+        trace.append('reacquired')
+    assert trace[-1] == 'reacquired'
+    print('PASS async: cancellation, finally cleanup, lock release')
+
+asyncio.run(test())
+</code></pre>
+<h2>Τι αποδεικνύει το αποτέλεσμα</h2>
+<p>Η Task.cancel ζητά ακύρωση και η CancelledError παραδίδεται σε σημείο αναμονής. Κατά την έξοδο εκτελείται η finally και ο διαχειριστής async with απελευθερώνει το κλείδωμα. Ο έλεγχος lock.locked αποδεικνύει το συγκεκριμένο σενάριο, όχι όλες τις πιθανές περιπτώσεις αποκλεισμού ή υλοποιήσεις βιβλιοθηκών. Η ακύρωση μπορεί να συμπέσει χρονικά με την κανονική ολοκλήρωση: οι δοκιμές πρέπει να ξεχωρίζουν τα αποτελέσματα. Η απελευθέρωση του κλειδώματος <strong>δεν</strong> σημαίνει ότι ανακλήθηκε μία εγγραφή σε βάση ή αρχείο. Η ανθεκτικότητα δεδομένων χρειάζεται χωριστές συναλλαγές ή έλεγχο προσωρινής εγγραφής και ασφαλούς αντικατάστασης.</p>
+<h2>Στοχευμένες ασκήσεις και διάγνωση</h2>
+<ol>
+<li>Κάλεσε task.cancel πριν από started.wait και παρατήρησε τι αλλάζει όταν ο εργάτης δεν έχει προλάβει να ξεκινήσει.</li>
+<li>Πρόσθεσε δεύτερο εργάτη που περιμένει το ίδιο κλείδωμα και επιβεβαίωσε ότι προχωρά μετά την ακύρωση του πρώτου.</li>
+<li>Προκάλεσε συνηθισμένη εξαίρεση μέσα στο κλείδωμα και εξέτασε αν η finally εκτελείται και τότε.</li>
+<li>Προσομοίωσε ατελή εγγραφή σε προσωρινό αρχείο και σχεδίασε ανεξάρτητη αποκατάσταση. Η ακύρωση δεν αναιρεί αυτόματα τα byte.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> PASS, ακριβής σειρά γεγονότων, διάκριση ταυτόχρονης εκτέλεσης από παραλληλισμό και σχέδιο ανάκτησης μισογραμμένων δεδομένων.</p>
+<h2>Πρόσθετη τεχνική ανάλυση</h2>
+<p>Ακύρωση και υπερφόρτωση συναντώνται στον τερματισμό ουράς. Ο παραγωγός που περιμένει πρέπει να μαθαίνει όταν αποτύχουν όλοι οι καταναλωτές. Όρισε αφύπνιση παραγωγών, επιβεβαίωση αποδεκτών εργασιών και διατήρηση ημιτελών μετά επανεκκίνηση. Ο περιορισμένος buffer απαιτεί ρητή πολιτική αντί να κρύβει υπερφόρτωση στη μνήμη.</p>
+<p><a href="../el/fieldnotes-el-37.html">Περιορισμένες ουρές εργασίας και χειρισμός υπερφόρτωσης</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

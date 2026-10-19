@@ -1,0 +1,63 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>ocaml — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-814.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="ocaml — συγκεντρωτικός οδηγός OCaml Έννοια Η OCaml συνδυάζει αλγεβρικούς τύπους, pattern matching και modules και υποστηρίζει λειτουργικό και προστακτικό ύφος. Παράδειγμα πηγαίου κώδικα ή…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="ocaml — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="ocaml — συγκεντρωτικός οδηγός OCaml Έννοια Η OCaml συνδυάζει αλγεβρικούς τύπους, pattern matching και modules και υποστηρίζει λειτουργικό και προστακτικό ύφος. Παράδειγμα πηγαίου κώδικα ή…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-814.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ocaml — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ocaml — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="ocaml — συγκεντρωτικός οδηγός OCaml Έννοια Η OCaml συνδυάζει αλγεβρικούς τύπους, pattern matching και modules και υποστηρίζει λειτουργικό και προστακτικό ύφος. Παράδειγμα πηγαίου κώδικα ή…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="ocaml — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>ocaml — συγκεντρωτικός οδηγός — DedSec Project</h1><p>ocaml — συγκεντρωτικός οδηγός OCaml Έννοια Η OCaml συνδυάζει αλγεβρικούς τύπους, pattern matching και modules και υποστηρίζει λειτουργικό και προστακτικό ύφος. Παράδειγμα πηγαίου κώδικα ή…</p><section><h2>OCaml</h2>
+<h3>Έννοια</h3>
+<p>Η OCaml συνδυάζει αλγεβρικούς τύπους, pattern matching και modules και υποστηρίζει λειτουργικό και προστακτικό ύφος.</p>
+<h3>Παράδειγμα πηγαίου κώδικα ή χρήσης</h3>
+<pre><code class="language-text">let rec length = function
+  | [] -&gt; 0
+  | _ :: xs -&gt; 1 + length xs;;
+</code></pre>
+<h3>Άσκηση με συγκεκριμένο στόχο</h3>
+<p>Παρακολούθησε αναδρομή σε κενή και τριμελή λίστα και παρατήρησε warning για ελλιπές match.</p>
+<h3>Έλεγχος και διάγνωση</h3>
+<p>Μην κρύβεις ελλιπές pattern matching με τυφλό wildcard· κάλυψε τους πραγματικούς constructors.</p>
+<p>Σημείωσε την είσοδο, το αναμενόμενο αποτέλεσμα και το πραγματικό αποτέλεσμα στην εγκατεστημένη έκδοση της OCaml. Αν ο κώδικας δεν είναι προσβάσιμος από το κινητό, κράτησε το παράδειγμα ως μη δοκιμασμένο και εξήγησε τη σημασιολογία αντί να ισχυριστείς επιτυχία. Κάνε μια δεύτερη δοκιμή που απομονώνει μόνο τον μηχανισμό της άσκησης και κράτησε ακριβές σφάλμα με τρόπο που να μην εκθέτει προσωπικά δεδομένα.</p>
+<h2>OCaml — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Ένα σαφές συμβόλαιο για παρονομαστή μηδέν</h3>
+<p>Οι ακέραιοι OCaml έχουν πεπερασμένο εύρος και η διαίρεση με μηδέν δεν πρέπει να κρύβεται. Στο <code>safe_div.ml</code>:</p>
+<pre><code class="language-ocaml">let safe_div a b =
+  if b = 0 then None else Some (a / b)
+
+let () =
+  assert (safe_div 9 2 = Some 4);
+  assert (safe_div 9 0 = None);
+  assert (safe_div (-7) 2 = Some (-3));
+  print_endline &quot;checks passed&quot;
+</code></pre>
+<p>Δοκίμασε <code>ocaml safe_div.ml</code>. Η ακέραια διαίρεση OCaml αποκόπτει προς το μηδέν: η <code>-7 / 2</code> δίνει <code>-3</code>. Μην τη συγχέεις με μαθηματική στρογγυλοποίηση προς το αρνητικό άπειρο. Η <code>None</code> σημαίνει αποτυχία και όχι αριθμητικό μηδέν. Σημείωσε έκδοση runtime και πραγματικά αποτελέσματα.</p>
+<h3>Πλήρης αντιστοίχιση παραλλαγών</h3>
+<p>Φτιάξε <code>let show = function None -&gt; &quot;invalid&quot; | Some n -&gt; string_of_int n</code>. Ο κανόνας καλύπτει τις δύο πιθανές κατασκευές. Αφαίρεσε προσωρινά τη <code>None</code> και παρατήρησε το warning για μη πλήρες pattern. Προσοχή: warning δεν συνεπάγεται πάντα σφάλμα compilation, εκτός αν η διαμόρφωση το απαιτεί. Εξήγησε ποια είσοδος μπορεί να καταλήξει σε <code>Match_failure</code>.</p>
+<h3>Καθαρές τιμές και παρενέργειες</h3>
+<p>Η <code>safe_div</code> υπολογίζει option χωρίς να εκτυπώνει. Το μπλοκ <code>let () =</code> εκτελεί assertions και output. Σύγκρινε με υλοποίηση που πετά εξαίρεση και εξήγησε γιατί ο καλών της option εκδοχής μπορεί να αποφασίσει μέσω pattern matching. Δοκίμασε πολλές εισόδους διατηρώντας το ζεύγος αριθμών κάθε αιτήματος.</p>
+<h3>Οριακή άσκηση</h3>
+<p>Εξέτασε <code>max_int</code> και <code>min_int</code>: οι ακέραιοι δεν αναπαριστούν οποιοδήποτε μαθηματικό αριθμό. Πρόσθεσε αρνητικό παρονομαστή, μηδενικό αριθμητή και κενή λίστα αιτημάτων. Δήλωσε ποιες περιπτώσεις δοκιμάστηκαν πραγματικά και ποιες αποτελούν στατική ανάλυση. Πηγή: https://ocaml.org/docs</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

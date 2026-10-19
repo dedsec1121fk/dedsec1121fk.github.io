@@ -1,0 +1,59 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>E0382 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-986.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Rust E0382 — χρήση δεδομένων μετά το move Παρακολούθησε τον owner Ένα String συνήθως μεταφέρεται όταν περνά by value. Το αρχικό binding παύει να το κατέχει και δεν επιτρέπεται η χρήση του…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="E0382 — DedSec Project">
+<meta property="og:description" content="Rust E0382 — χρήση δεδομένων μετά το move Παρακολούθησε τον owner Ένα String συνήθως μεταφέρεται όταν περνά by value. Το αρχικό binding παύει να το κατέχει και δεν επιτρέπεται η χρήση του…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-986.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="E0382 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="E0382 — DedSec Project">
+<meta name="twitter:description" content="Rust E0382 — χρήση δεδομένων μετά το move Παρακολούθησε τον owner Ένα String συνήθως μεταφέρεται όταν περνά by value. Το αρχικό binding παύει να το κατέχει και δεν επιτρέπεται η χρήση του…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="E0382 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>E0382 — DedSec Project</h1><p>Rust E0382 — χρήση δεδομένων μετά το move Παρακολούθησε τον owner Ένα String συνήθως μεταφέρεται όταν περνά by value. Το αρχικό binding παύει να το κατέχει και δεν επιτρέπεται η χρήση του…</p><section><h1>Rust E0382 — χρήση δεδομένων μετά το move</h1>
+<h2>Παρακολούθησε τον owner</h2>
+<p>Ένα String συνήθως μεταφέρεται όταν περνά by value. Το αρχικό binding παύει να το κατέχει και δεν επιτρέπεται η χρήση του. Ο compiler αποκλείει αυτό το σφάλμα ήδη στο compile.</p>
+<pre><code class="language-rust">fn consume(text: String) -&gt; usize { text.len() }
+
+fn main() {
+    let message = String::from(&quot;hello&quot;);
+    // let size = consume(message); println!(&quot;{}&quot;, message); // E0382
+    let size = consume(message.clone());
+    assert_eq!(size, 5);
+    assert_eq!(message, &quot;hello&quot;);
+}
+</code></pre>
+<h2>Χρειάζεται πράγματι αντιγραφή;</h2>
+<p>Το clone δημιουργεί δεύτερο String με allocation. Αν μια συνάρτηση μόνο διαβάζει, χρησιμοποίησε borrow slice:</p>
+<pre><code class="language-rust">fn measure(text: &amp;str) -&gt; usize { text.len() }
+
+fn check() {
+    let original = String::from(&quot;hello&quot;);
+    assert_eq!(measure(&amp;original), 5);
+    assert_eq!(original, &quot;hello&quot;);
+}
+</code></pre>
+<h2>Πείραμα</h2>
+<p>Ενεργοποίησε τη λανθασμένη ακολουθία και δες E0382 με cargo check. Σύγκρινε String με i32 που έχει Copy. Σχεδίασε ποιος κατέχει τιμή μετά από κάθε statement. Αν ο callee χρειάζεται ownership, επανασχεδίασε τη μεταφορά ή την επιστροφή του αντί να προσθέτεις clone παντού.</p>
+<p>Πηγή: https://doc.rust-lang.org/error_codes/E0382.html</p>
+<h2>Πρόσθετος έλεγχος: ownership δεν σημαίνει σωστό αποτέλεσμα</h2>
+<p>Φτιάξε <code>fn length(text: &amp;str) -&gt; usize { text.len() }</code> και κάλεσέ την δύο φορές με <code>&amp;message</code>· το αρχικό <code>String</code> παραμένει διαθέσιμο. Έπειτα σύγκρινε <code>&quot;é&quot;.len()</code> με <code>&quot;é&quot;.chars().count()</code>: το πρώτο μετρά bytes UTF-8 και το δεύτερο Unicode scalar values. Η Rust μπορεί να αποδείξει σωστό borrowing, όχι ότι διάλεξες σωστή μονάδα μέτρησης. Για ουρά που <strong>πρέπει να κρατήσει</strong> το μήνυμα, η μεταφορά ownership είναι θεμιτή και η χρήση της παλιάς μεταβλητής πρέπει να απαγορεύεται. Κατέγραψε τρεις ξεχωριστές λύσεις: borrow για ανάγνωση, move για αλλαγή ιδιοκτήτη, clone μόνο όταν απαιτείται αντίγραφο.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,87 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Packet Capture, Sniffing και Network Visibility — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-008.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Packet Capture, Sniffing και Network Visibility Packet capture δίνει άμεσο evidence για επικοινωνία μεταξύ systems. Είναι χρήσιμο για troubleshooting, incident response και protocol…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Packet Capture, Sniffing και Network Visibility — DedSec Project">
+<meta property="og:description" content="Packet Capture, Sniffing και Network Visibility Packet capture δίνει άμεσο evidence για επικοινωνία μεταξύ systems. Είναι χρήσιμο για troubleshooting, incident response και protocol…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-008.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Packet Capture, Sniffing και Network Visibility — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Packet Capture, Sniffing και Network Visibility — DedSec Project">
+<meta name="twitter:description" content="Packet Capture, Sniffing και Network Visibility Packet capture δίνει άμεσο evidence για επικοινωνία μεταξύ systems. Είναι χρήσιμο για troubleshooting, incident response και protocol…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Packet Capture, Sniffing και Network Visibility — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Packet Capture, Sniffing και Network Visibility — DedSec Project</h1><p>Packet Capture, Sniffing και Network Visibility Packet capture δίνει άμεσο evidence για επικοινωνία μεταξύ systems. Είναι χρήσιμο για troubleshooting, incident response και protocol…</p><section><p>Packet capture δίνει άμεσο evidence για επικοινωνία μεταξύ systems. Είναι χρήσιμο για troubleshooting, incident response και protocol analysis, αλλά ένα PCAP μπορεί να περιέχει credentials, tokens, προσωπικά δεδομένα και confidential information.</p>
+<blockquote>
+<p><strong>Όριο εξουσιοδοτημένης χρήσης:</strong> Κάνε capture μόνο σε interfaces/networks που σου ανήκουν ή έχεις ρητή άδεια να monitorάρεις. Προτίμησε localhost/VM lab ή prerecorded captures. Μην interceptάρεις traffic τρίτων.</p>
+</blockquote>
+<h2>Τι αποδεικνύει ένα capture</h2>
+<p>Αποδεικνύει τι είδε το συγκεκριμένο capture point. Δεν αποδεικνύει απαραίτητα τι συνέβη σε άλλο σημείο. Packets μπορεί να χαθούν, να αλλάξουν από proxy/NAT, να είναι encrypted ή να μην παρατηρούνται λόγω offload.</p>
+<p>Κατέγραψε interface/location, timestamps, filter, relevant IP/ports, θέση σε σχέση με NAT/proxy και πιθανό packet loss.</p>
+<h2>Protocol layers</h2>
+<p>Χρήσιμη σειρά:</p>
+<ol>
+<li>Link layer — MAC/VLAN/frame type.</li>
+<li>IP — IPv4/IPv6, TTL/hop limit, fragmentation.</li>
+<li>Transport — TCP state ή UDP datagrams.</li>
+<li>DNS/ICMP/control traffic.</li>
+<li>TLS/certificate/protocol negotiation.</li>
+<li>Application layer μόνο όταν legitimately observable.</li>
+</ol>
+<p>Encryption μπορεί να κρύβει payload αλλά να αφήνει useful metadata για endpoints, timing, volume και protocol negotiation.</p>
+<h2>Switched networks</h2>
+<p>Σε normal switched Ethernet ένας host δεν βλέπει αυτόματα όλο το unicast traffic. Defenders χρησιμοποιούν approved SPAN/TAP, gateway sensors, host agents ή cloud traffic mirroring. Μην χρησιμοποιείς poisoning/interception πάνω σε shared network για να «δεις περισσότερα».</p>
+<h2>Filters</h2>
+<p>Capture filter περιορίζει τι αποθηκεύεται. Display filter περιορίζει τι εμφανίζεται μετά. Πολύ narrow capture μπορεί να χάσει context· πολύ broad capture μπορεί να συλλέξει unnecessary sensitive data.</p>
+<p>Safe localhost example:</p>
+<pre><code class="language-bash">tcpdump -i lo tcp port 8000
+</code></pre>
+<p>Παράγαγε μόνο δικό σου local request και σταμάτησε αμέσως μετά.</p>
+<h2>TCP, DNS και TLS evidence</h2>
+<p>Σε TCP παρατήρησε handshake, sequence behavior, retransmissions, resets και teardown. Retransmission δεν είναι αυτόματα attack.</p>
+<p>Σε DNS παρατήρησε queried names, resolver, response codes και TTL. Encrypted DNS μεταφέρει visibility σε endpoint/resolver logs.</p>
+<p>Σε TLS μπορείς να δεις protocol/certificate metadata και connection relationships χωρίς να αποδυναμώνεις production encryption.</p>
+<h2>PCAP handling</h2>
+<p>PCAP μπορεί να έχει cleartext passwords από legacy protocols, bearer tokens, cookies, email content ή internal hostnames. Χρησιμοποίησε access controls, minimum retention και sanitized extracts στα reports.</p>
+<h2>Συχνά λάθη</h2>
+<ul>
+<li>Capture χωρίς γνώση του position στο network path.</li>
+<li>Absence of packet = «δεν έγινε event».</li>
+<li>Τεράστια captures με άσχετα sensitive data.</li>
+<li>Retransmission/reset ως attack χωρίς context.</li>
+<li>Disable TLS για visibility.</li>
+<li>Capture third-party traffic.</li>
+</ul>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Ξεκίνα localhost HTTP server, capture μόνο TCP/8000 στο loopback, κάνε δύο requests και σταμάτησε. Εντόπισε setup, request/response και teardown και σύγκρινε timeline με server access log.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ol>
+<li>Τι αποδεικνύει ένα capture;</li>
+<li>Γιατί έχει σημασία το capture location;</li>
+<li>Capture filter vs display filter;</li>
+<li>Τι metadata μένει χρήσιμο με TLS;</li>
+<li>Ποια privacy risks έχει ένα PCAP;</li>
+</ol>
+<h2>Καθοδηγούμενη μελέτη</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>. Κάθε conclusion να βασίζεται σε packet evidence και τουλάχιστον μία δεύτερη πηγή.</p>
+<h3>Συνέχεια</h3>
+<p>Προτεινόμενα μαθήματα: <strong>12, 23, 51, 77</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

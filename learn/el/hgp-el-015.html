@@ -1,0 +1,99 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Penetration Testing: Scope, Evidence, Reporting και Retest — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-015.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Penetration Testing: Scope, Evidence, Reporting και Retest Ένα επαγγελματικό penetration test είναι ελεγχόμενη αξιολόγηση συγκεκριμένων security objectives μέσα σε συμφωνημένο scope. Η αξία…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Penetration Testing: Scope, Evidence, Reporting και Retest — DedSec Project">
+<meta property="og:description" content="Penetration Testing: Scope, Evidence, Reporting και Retest Ένα επαγγελματικό penetration test είναι ελεγχόμενη αξιολόγηση συγκεκριμένων security objectives μέσα σε συμφωνημένο scope. Η αξία…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-015.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Penetration Testing: Scope, Evidence, Reporting και Retest — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Penetration Testing: Scope, Evidence, Reporting και Retest — DedSec Project">
+<meta name="twitter:description" content="Penetration Testing: Scope, Evidence, Reporting και Retest Ένα επαγγελματικό penetration test είναι ελεγχόμενη αξιολόγηση συγκεκριμένων security objectives μέσα σε συμφωνημένο scope. Η αξία…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Penetration Testing: Scope, Evidence, Reporting και Retest — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Penetration Testing: Scope, Evidence, Reporting και Retest — DedSec Project</h1><p>Penetration Testing: Scope, Evidence, Reporting και Retest Ένα επαγγελματικό penetration test είναι ελεγχόμενη αξιολόγηση συγκεκριμένων security objectives μέσα σε συμφωνημένο scope. Η αξία…</p><section><p>Ένα επαγγελματικό penetration test είναι ελεγχόμενη αξιολόγηση συγκεκριμένων security objectives μέσα σε συμφωνημένο scope. Η αξία του δεν μετριέται από το πόσα εργαλεία εκτελέστηκαν, αλλά από την ποιότητα της απόδειξης, τον περιορισμό κινδύνου, την ανάλυση root cause και το αν το αποτέλεσμα μπορεί να διορθωθεί και να επανελεγχθεί.</p>
+<blockquote>
+<p><strong>Όριο εξουσιοδότησης:</strong> Πριν από οποιοδήποτε active test χρειάζονται γραπτή εξουσιοδότηση, συγκεκριμένο scope, χρονικό παράθυρο, επιτρεπόμενες/απαγορευμένες τεχνικές, emergency contacts και κανόνες διαχείρισης δεδομένων.</p>
+</blockquote>
+<h2>Μαθησιακοί στόχοι</h2>
+<ul>
+<li>Να γράφεις Rules of Engagement (RoE).</li>
+<li>Να μετατρέπεις business/security στόχους σε μετρήσιμα tests.</li>
+<li>Να διαχειρίζεσαι test accounts, δεδομένα και evidence.</li>
+<li>Να χρησιμοποιείς minimal-impact validation.</li>
+<li>Να γράφεις findings με severity, confidence, root cause και remediation.</li>
+<li>Να εκτελείς σωστό retest και cleanup.</li>
+</ul>
+<h2>Pre-engagement</h2>
+<p>Καθόρισε owner συστημάτων, in-scope/out-of-scope assets, source addresses, test accounts, ημερομηνίες, τεχνικές, production constraints, τρίτους/cloud restrictions, stop contacts, retention/encryption evidence και τρόπο παράδοσης report. Ένα απλό target list δεν αντικαθιστά αυτά τα στοιχεία.</p>
+<h2>Objectives και threat model</h2>
+<p>Μετέτρεψε αόριστο «βρες vulnerabilities» σε ερωτήσεις όπως:</p>
+<ul>
+<li>Μπορεί ένας normal test user να προσπελάσει object άλλου tenant;</li>
+<li>Μπορεί public service να επικοινωνήσει με management network που πρέπει να είναι απομονωμένο;</li>
+<li>Αν ένα test identity αλλάξει privilege, καταγράφεται και ανιχνεύεται;</li>
+</ul>
+<p>Έτσι κάθε test έχει expected behavior.</p>
+<h2>Discovery και validation</h2>
+<p>Ξεκίνα από inventories και passive evidence. Το active scanning πρέπει να είναι bounded. Για κάθε finding προτίμησε το μικρότερο proof: ανάγνωση synthetic object, harmless marker, local crash reproduction ή non-destructive test function. Μην συλλέγεις πραγματικά δεδομένα απλώς για πιο εντυπωσιακό screenshot.</p>
+<h2>Evidence management</h2>
+<p>Κατέγραψε timestamp, tester, asset/version, request ή configuration, relevant response/log, auth context, expected/observed behavior και hashes όπου χρειάζεται. Κάνε redaction σε secrets και προσωπικά δεδομένα.</p>
+<h2>Severity και business risk</h2>
+<p>Ξεχώρισε technical severity από business impact. Δήλωσε prerequisites, exploitability, blast radius, criticality, existing controls και confidence. Αν μια υπόθεση δεν επαληθεύτηκε, γράψε το ξεκάθαρα.</p>
+<h2>Δομή finding</h2>
+<p>Ένα χρήσιμο finding περιλαμβάνει:</p>
+<ol>
+<li>τίτλο και affected assets,</li>
+<li>σύνοψη,</li>
+<li>ασφαλή reproduction/evidence,</li>
+<li>impact στο συγκεκριμένο περιβάλλον,</li>
+<li>root cause,</li>
+<li>remediation,</li>
+<li>retest criteria,</li>
+<li>references.</li>
+</ol>
+<h2>Retest και cleanup</h2>
+<p>Το retest επαναλαμβάνει το αρχικό security invariant μετά τη διόρθωση και ελέγχει ότι η λειτουργικότητα παραμένει σωστή. Στο cleanup αφαίρεσε test accounts, synthetic records και προσωρινές αλλαγές που δημιούργησες, αλλά <strong>διατήρησε τα νόμιμα audit/security logs</strong>.</p>
+<h2>Συνηθισμένα λάθη</h2>
+<ul>
+<li>Scanner output ως τελικό pentest report.</li>
+<li>Άτυπη επέκταση scope.</li>
+<li>Περιττή συλλογή production data.</li>
+<li>Δημιουργία persistence/destructive impact για «proof».</li>
+<li>Απόκρυψη αβεβαιότητας.</li>
+<li>Finding χωρίς actionable remediation.</li>
+<li>Παράλειψη retest.</li>
+</ul>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Γράψε RoE για φανταστικό lab δύο hosts. Όρισε έναν authorization στόχο, έναν network-exposure στόχο και έναν detection στόχο. Για κάθε έναν κατέγραψε evidence, safe stop condition και retest criteria. Έπειτα γράψε ένα sample finding χρησιμοποιώντας μόνο synthetic δεδομένα.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ol>
+<li>Γιατί τα RoE είναι περισσότερα από target list;</li>
+<li>Γιατί προτιμάται minimal proof;</li>
+<li>Τι πρέπει να γίνεται redacted από evidence;</li>
+<li>Πώς διαφέρει retest από απλή επιβεβαίωση ότι εγκαταστάθηκε patch;</li>
+<li>Γιατί τα security logs δεν διαγράφονται στο cleanup;</li>
+</ol>
+<h2>Καθοδηγούμενη μελέτη</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>. Ένα ολοκληρωμένο lab πρέπει να παράγει scope, evidence και επαγγελματικό finding—not μόνο command output.</p>
+<h3>Συνέχισε με</h3>
+<p>Προτεινόμενα επόμενα modules: <strong>26, 27, 43, 50, 85</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

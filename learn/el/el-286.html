@@ -1,0 +1,86 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>mysql_sql — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-286.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="mysql_sql — συγκεντρωτικός οδηγός MySQL SQL Βασική ιδέα Η MySQL SQL λειτουργεί σε σχεσιακούς πίνακες με vendor-specific συναρτήσεις· οι εγγυήσεις transactions εξαρτώνται και από το storage…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="mysql_sql — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="mysql_sql — συγκεντρωτικός οδηγός MySQL SQL Βασική ιδέα Η MySQL SQL λειτουργεί σε σχεσιακούς πίνακες με vendor-specific συναρτήσεις· οι εγγυήσεις transactions εξαρτώνται και από το storage…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-286.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="mysql_sql — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="mysql_sql — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="mysql_sql — συγκεντρωτικός οδηγός MySQL SQL Βασική ιδέα Η MySQL SQL λειτουργεί σε σχεσιακούς πίνακες με vendor-specific συναρτήσεις· οι εγγυήσεις transactions εξαρτώνται και από το storage…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="mysql_sql — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>mysql_sql — συγκεντρωτικός οδηγός — DedSec Project</h1><p>mysql_sql — συγκεντρωτικός οδηγός MySQL SQL Βασική ιδέα Η MySQL SQL λειτουργεί σε σχεσιακούς πίνακες με vendor-specific συναρτήσεις· οι εγγυήσεις transactions εξαρτώνται και από το storage…</p><section><h2>MySQL SQL</h2>
+<h3>Βασική ιδέα</h3>
+<p>Η MySQL SQL λειτουργεί σε σχεσιακούς πίνακες με vendor-specific συναρτήσεις· οι εγγυήσεις transactions εξαρτώνται και από το storage engine.</p>
+<h3>Μικρό εκπαιδευτικό απόσπασμα</h3>
+<pre><code class="language-text">SELECT 2 + 3 AS total;
+</code></pre>
+<h3>Άσκηση βασισμένη στη συγκεκριμένη συμπεριφορά</h3>
+<p>Φτιάξε δοκιμαστικό πίνακα με nullable στήλη και σύγκρινε COUNT(*) με COUNT(column) μετά από NULL.</p>
+<h3>Διάγνωση και όρια</h3>
+<p>Το SQL mode και το collation επηρεάζουν comparisons και μη έγκυρες τιμές· έλεγξε @@sql_mode.</p>
+<p>Κάνε την άσκηση με πραγματικά δοκιμαστικά δεδομένα και με έκδοση MySQL_SQL που ταιριάζει στον κώδικα. Σημείωσε μία αρχική πρόβλεψη και την πραγματική έξοδο. Για περίπλοκο ή μη διαθέσιμο runtime, παρουσίασε τη στατική ανάλυση ως τέτοια, όχι ως επιτυχημένη εκτέλεση. Δοκίμασε ξεχωριστά την κανονική περίπτωση και μία οριακή τιμή, χωρίς πραγματικά προσωπικά ή παραγωγικά δεδομένα.</p>
+<h3>Εμβάθυνση</h3>
+<p>Σχεδίασε μια δεύτερη ανεξάρτητη εφαρμογή του ίδιου μηχανισμού και περιέγραψε ποια συγκεκριμένη παραδοχή πρέπει να αλλάξει. Αν χρειάζεται διαφορετικό λειτουργικό σύστημα ή host application, γράψε ρητά τη διαφορά και τι μπορεί να εξεταστεί offline από το κινητό.</p>
+<h2>MySQL_SQL — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Ξεκίνησε από αληθινή σύνταξη</h3>
+<p>Το αρχικό παράδειγμα της MySQL SQL είναι η μικρότερη αφετηρία. Διάβασε τη σειρά των πράξεων και τον τρόπο εμφάνισης, έπειτα επιβεβαίωσέ το στο σωστό περιβάλλον. Μην θεωρείς ότι η σύνταξη άλλης γλώσσας έχει ίδια σημασία.</p>
+<pre><code class="language-text">SELECT CONCAT('Hello, ', 'Ada', '!') AS greeting;
+</code></pre>
+<p><strong>Περιβάλλον εκτέλεσης:</strong> Run in a MySQL client.. Έλεγξε έκδοση compiler/interpreter πριν τροποποιήσεις τον κώδικα και κράτησε την αρχική έξοδο. Δούλεψε σε προσωρινό κατάλογο, μακριά από πραγματικά δεδομένα.</p>
+<h3>Οδηγούμενο εργαστήριο</h3>
+<p>Φτιάξε πίνακα visits, ομαδοποίησε scores ανά city και σύγκρινε EXPLAIN με/χωρίς index στο φίλτρο πόλης. Μέτρησε σε χιλιάδες γραμμές, όχι τρεις.</p>
+<h3>Δοκιμές ορίων</h3>
+<p>Τα indexes επιβαρύνουν εγγραφές και δεν επιλέγονται πάντοτε από optimizer. Χρησιμοποίησε bound parameters αντί SQL concatenation.</p>
+<h3>Προχωρημένη αποστολή</h3>
+<p>Φτιάξε ξεχωριστό αρχείο για το παραπάνω εργαστήριο και πειραματίσου με μία αλλαγή σε σειρά, σχήμα, τύπο, scope ή περιβάλλον, ανάλογα με τη MySQL SQL. Καθόρισε invariant και σύγκρινε αναμενόμενη με πραγματική έξοδο. Αν κάτι διαφέρει, απομόνωσε το ελάχιστο παράδειγμα πριν μεγαλώσεις το πρόγραμμα.</p>
+<h2>MySQL_SQL — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Πίνακας λογαριασμών για ελεγχόμενη μεταφορά</h3>
+<p>Μια μεταφορά ποσού ανάμεσα σε δύο εγγραφές χρειάζεται atomicity. Δύο ανεξάρτητα UPDATE σε autocommit mode μπορούν να αφήσουν το dataset σε μερικώς ενημερωμένη κατάσταση αν το δεύτερο βήμα αποτύχει.</p>
+<pre><code class="language-sql">CREATE TABLE accounts (
+  id BIGINT PRIMARY KEY,
+  balance DECIMAL(12,2) NOT NULL
+) ENGINE=InnoDB;
+INSERT INTO accounts VALUES (1,100.00),(2,20.00);
+
+START TRANSACTION;
+UPDATE accounts SET balance=balance-10 WHERE id=1;
+UPDATE accounts SET balance=balance+10 WHERE id=2;
+COMMIT;
+</code></pre>
+<p>Με αυτή την ελεγχόμενη είσοδο, η αναμενόμενη κατάσταση μετά το commit είναι 90.00 και 30.00. Επισήμανε όμως ότι το παράδειγμα δεν εμποδίζει αρνητικό balance ούτε επαληθεύει πως οι εγγραφές υπάρχουν. Μια πραγματική υπηρεσία χρειάζεται κανόνες επαλήθευσης, locking strategy και rollback σε αποτυχία.</p>
+<h3>Τι σημαίνει isolation</h3>
+<p>Στη MySQL InnoDB η isolation level επηρεάζει visibility και concurrency. Έλεγξε ποια transaction isolation χρησιμοποιείς πριν συζητήσεις repeatable reads ή locking. Το SELECT ... FOR UPDATE μπορεί να βοηθήσει όταν η απόφαση μεταφοράς εξαρτάται από την τρέχουσα τιμή balance· δεν είναι αντικατάστατο σωστού χειρισμού deadlocks.</p>
+<h3>Παραμετροποίηση</h3>
+<p>Όταν application code δέχεται id ή ποσό από χρήστη, χρησιμοποίησε prepared statements με bound values αντί για concatenation SQL strings. Αυτό διαχωρίζει δεδομένα από SQL syntax. Το ότι το πεδίο εισόδου δηλώθηκε numeric στη φόρμα δεν είναι server-side προστασία.</p>
+<h3>Ελεγχόμενες αποτυχίες</h3>
+<p>Σε test-only βάση δημιούργησε περίπτωση όπου το destination id απουσιάζει και αξιολόγησε τον αριθμό επηρεασμένων γραμμών πριν το commit. Αφαίρεσε προσωρινά το COMMIT και δώσε ROLLBACK για να βεβαιωθείς ότι κανένα υπόλοιπο δεν μεταβλήθηκε.</p>
+<h3>Παραδοτέο</h3>
+<p>Δώσε SQL script που επαναφέρει αρχική κατάσταση μεταξύ tests, αποτελέσματα σε δύο sessions υπό concurrency και MySQL version. Διαχώρισε ACID προϋποθέσεις από business invariants, επειδή μία επιτυχημένη transaction μπορεί να έχει λογικά λανθασμένη συμπεριφορά.</p>
+<h2>MySQL SQL — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Οι διάλεκτοι SQL διαφέρουν σε συναρτήσεις, τύπους και κλειδώματα.</li>
+<li>Οι συναλλαγές, τα ευρετήρια και οι κανόνες σύγκρισης κειμένου επηρεάζουν αποτέλεσμα και επιδόσεις.</li>
+<li>Πέρασε τιμές με parameters οδηγού αντί για σύνθεση εισόδου χρήστη σε SQL.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

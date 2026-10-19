@@ -1,0 +1,114 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Denial-of-Service Resilience and Resource-Exhaustion Testing — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-010.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Denial-of-Service Resilience and Resource-Exhaustion Testing Denial of service (DoS) is any condition that prevents legitimate users from obtaining a required service. Causes include…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Denial-of-Service Resilience and Resource-Exhaustion Testing — DedSec Project">
+<meta property="og:description" content="Denial-of-Service Resilience and Resource-Exhaustion Testing Denial of service (DoS) is any condition that prevents legitimate users from obtaining a required service. Causes include…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-010.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Denial-of-Service Resilience and Resource-Exhaustion Testing — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Denial-of-Service Resilience and Resource-Exhaustion Testing — DedSec Project">
+<meta name="twitter:description" content="Denial-of-Service Resilience and Resource-Exhaustion Testing Denial of service (DoS) is any condition that prevents legitimate users from obtaining a required service. Causes include…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Denial-of-Service Resilience and Resource-Exhaustion Testing — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Denial-of-Service Resilience and Resource-Exhaustion Testing — DedSec Project</h1><p>Denial-of-Service Resilience and Resource-Exhaustion Testing Denial of service (DoS) is any condition that prevents legitimate users from obtaining a required service. Causes include…</p><section><p>Denial of service (DoS) is any condition that prevents legitimate users from obtaining a required service. Causes include malicious traffic, software defects, dependency failure, capacity exhaustion, queue saturation, lock contention, storage pressure, and misconfiguration. Defensive engineering focuses on resilience and controlled capacity testing—not flooding third-party systems.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> Never generate high-volume or disruptive traffic toward public or shared systems. Perform load and resource-exhaustion tests only in isolated environments with explicit limits, monitoring, stop conditions, and owner approval.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>identify CPU, memory, connection, thread, queue, disk, and dependency bottlenecks;</li>
+<li>distinguish volumetric, protocol, and application-layer resource exhaustion;</li>
+<li>understand rate limiting, quotas, backpressure, timeouts, and circuit breakers;</li>
+<li>design safe capacity tests;</li>
+<li>collect evidence that separates attack traffic from ordinary failure;</li>
+<li>plan graceful degradation and recovery.</li>
+</ul>
+<h2>Availability as a system property</h2>
+<p>Availability is affected by every dependency required to serve a request. A frontend can be healthy while its database connection pool is exhausted; a network can be reachable while a queue is full; an API can return quickly while an asynchronous worker backlog grows uncontrollably.</p>
+<p>Map the full request path and identify bounded resources.</p>
+<h2>Resource-exhaustion classes</h2>
+<h3>Compute</h3>
+<p>Expensive parsing, compression, regular expressions, cryptography, image processing, or poorly bounded algorithms can consume CPU.</p>
+<h3>Memory</h3>
+<p>Unbounded request bodies, caches, queues, decompression, object retention, or too many concurrent sessions can exhaust memory.</p>
+<h3>Connections and file descriptors</h3>
+<p>Servers have finite sockets, descriptors, worker threads, and connection-pool entries. Slow or abandoned clients can consume these resources even without high bandwidth.</p>
+<h3>Storage and logs</h3>
+<p>Large uploads, runaway logs, temporary files, and database growth can fill storage. Logging every rejected request at excessive detail can itself become a resource problem.</p>
+<h3>Dependencies</h3>
+<p>DNS, identity providers, databases, third-party APIs, cloud control planes, and message queues can become unavailable or slow. Timeouts and retry behavior determine whether a local failure remains local or cascades.</p>
+<h2>Defensive controls</h2>
+<ul>
+<li>per-identity and per-resource quotas;</li>
+<li>rate limits with appropriate burst handling;</li>
+<li>bounded request/body sizes;</li>
+<li>connection and execution timeouts;</li>
+<li>queue limits and backpressure;</li>
+<li>circuit breakers and retry budgets;</li>
+<li>caching where safe;</li>
+<li>autoscaling with cost limits;</li>
+<li>graceful degradation;</li>
+<li>upstream DDoS protection for Internet services;</li>
+<li>monitoring of saturation, latency, errors, and dropped work.</li>
+</ul>
+<p>A rate limit without identity context can punish many legitimate users behind one NAT or fail to stop distributed abuse. Choose the key carefully.</p>
+<h2>Safe load testing</h2>
+<p>A capacity test needs:</p>
+<ol>
+<li>isolated or dedicated environment;</li>
+<li>explicit maximum request rate and concurrency;</li>
+<li>baseline measurements;</li>
+<li>telemetry for CPU, memory, connections, queue depth, latency, and errors;</li>
+<li>automatic stop conditions;</li>
+<li>rollback/recovery plan;</li>
+<li>owner present or reachable during the test.</li>
+</ol>
+<p>Use a normal load-testing framework in your lab and increase load gradually. The objective is to find the knee of the curve and verify controls, not to make the system fail as violently as possible.</p>
+<h2>Detection</h2>
+<p>Useful signals include sudden changes in request rate, unique source/identity distribution, endpoint mix, error rate, queue depth, connection states, CPU/memory saturation, cache hit ratio, and dependency latency.</p>
+<p>Do not label every traffic spike as malicious. Product launches, software updates, backup jobs, or misbehaving clients can produce similar symptoms.</p>
+<h2>Recovery</h2>
+<p>Resilience includes the ability to shed load, protect critical functions, restore dependencies, clear backlogs safely, and verify data consistency after pressure is removed.</p>
+<h2>Common mistakes</h2>
+<ul>
+<li>Testing production without explicit limits.</li>
+<li>Measuring only requests per second.</li>
+<li>Ignoring dependency saturation and queues.</li>
+<li>Using retries without budgets or jitter.</li>
+<li>Logging so aggressively that the defense consumes the resource.</li>
+<li>Treating autoscaling as unlimited protection.</li>
+</ul>
+<h2>Safe lab</h2>
+<p>Create a local service with a deliberately small worker or queue limit. Send a slowly increasing number of normal requests from the same device, staying within a low preset ceiling. Record latency, errors, and resource use. Add a simple rate limit or queue bound and compare behavior. Stop before the host becomes unstable.</p>
+<h2>Knowledge check</h2>
+<ol>
+<li>Why can low-bandwidth traffic still create DoS conditions?</li>
+<li>What is backpressure?</li>
+<li>Why can retries make an outage worse?</li>
+<li>Which measurements identify saturation before total failure?</li>
+<li>What belongs in a safe load-test stop condition?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. Practice capacity reasoning with bounded localhost tests only.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>12, 48, 59, 91</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Post-Quantum Migration, Crypto Agility and Hybrid Deployment — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-101.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Post-Quantum Migration, Crypto Agility and Hybrid Deployment Post-quantum security is now an engineering migration problem. NIST has standardized ML-KEM, ML-DSA, and SLH-DSA and urges…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Post-Quantum Migration, Crypto Agility and Hybrid Deployment — DedSec Project">
+<meta property="og:description" content="Post-Quantum Migration, Crypto Agility and Hybrid Deployment Post-quantum security is now an engineering migration problem. NIST has standardized ML-KEM, ML-DSA, and SLH-DSA and urges…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-101.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Post-Quantum Migration, Crypto Agility and Hybrid Deployment — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Post-Quantum Migration, Crypto Agility and Hybrid Deployment — DedSec Project">
+<meta name="twitter:description" content="Post-Quantum Migration, Crypto Agility and Hybrid Deployment Post-quantum security is now an engineering migration problem. NIST has standardized ML-KEM, ML-DSA, and SLH-DSA and urges…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Post-Quantum Migration, Crypto Agility and Hybrid Deployment — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Post-Quantum Migration, Crypto Agility and Hybrid Deployment — DedSec Project</h1><p>Post-Quantum Migration, Crypto Agility and Hybrid Deployment Post-quantum security is now an engineering migration problem. NIST has standardized ML-KEM, ML-DSA, and SLH-DSA and urges…</p><section><p>Post-quantum security is now an engineering migration problem. NIST has standardized ML-KEM, ML-DSA, and SLH-DSA and urges organizations to begin migration planning. This module focuses on discovery, dependency mapping, protocol readiness, testing, and long-lived data risk.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>Cryptographic inventory</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Harvest-now risk</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Standards</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Crypto agility</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Hybrid approaches</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>PKI impact</strong> and connect it to a concrete trust boundary or security invariant.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. Cryptographic inventory</h3>
+<p>Find where public-key cryptography is used: TLS, VPNs, SSH, code signing, certificates, document signatures, device identity, firmware, backups, HSMs, libraries, protocols, and third-party services.</p>
+<h3>2. Harvest-now risk</h3>
+<p>Data with long confidentiality lifetimes may need earlier protection because captured ciphertext could be stored and attacked later. Prioritize based on sensitivity and required secrecy duration rather than hype.</p>
+<h3>3. Standards</h3>
+<p>FIPS 203 standardizes ML-KEM; FIPS 204 ML-DSA; FIPS 205 SLH-DSA. Migration decisions must also consider protocol profiles, ecosystem support, certification, performance, and interoperability.</p>
+<h3>4. Crypto agility</h3>
+<p>Applications should avoid hard-coded assumptions about key size, signature size, certificate shape, or one algorithm. Build explicit algorithm identifiers, versioning, test coverage, and policy controls.</p>
+<h3>5. Hybrid approaches</h3>
+<p>Some deployments combine classical and post-quantum mechanisms during transition. Security depends on how secrets/signatures are combined and whether the surrounding protocol specifies the hybrid construction correctly.</p>
+<h3>6. PKI impact</h3>
+<p>Larger keys/signatures can affect certificate chains, handshake sizes, embedded storage, MTU-sensitive protocols, HSM support, and constrained devices. Measure rather than assume compatibility.</p>
+<h3>7. Migration sequencing</h3>
+<p>Inventory → classify data/uses → identify dependencies → test libraries/protocols → prioritize high-value use cases → deploy with rollback → monitor interoperability → retire quantum-vulnerable use when policy requires.</p>
+<h3>8. Evidence</h3>
+<p>Track algorithm, key size/type, owner, library/provider, protocol, certificate profile, data lifetime, replacement plan, test status, and deprecation date. A spreadsheet without system ownership is not an actionable inventory.</p>
+<h2>Authorized exercises</h2>
+<h3>Exercise 1 — Build a cryptographic inventory for a small local application and record every library/API that creates or validates keys/signatures</h3>
+<p>Build a cryptographic inventory for a small local application and record every library/API that creates or validates keys/signatures.</p>
+<h3>Exercise 2 — Create a compatibility test plan that anticipates larger key/signature objects and handshake messages without claiming unsupported algorithms are production-ready</h3>
+<p>Create a compatibility test plan that anticipates larger key/signature objects and handshake messages without claiming unsupported algorithms are production-ready.</p>
+<h3>Exercise 3 — Classify sample data sets by confidentiality lifetime and use that to rank migration priority</h3>
+<p>Classify sample data sets by confidentiality lifetime and use that to rank migration priority.</p>
+<h2>Knowledge checks</h2>
+<ol>
+<li>Explain the most important trust boundary in <strong>Post-Quantum Migration, Crypto Agility and Hybrid Deployment</strong> without naming a security tool.</li>
+<li>Give one example where cryptographic or authentication success still does <strong>not</strong> imply authorization success.</li>
+<li>Describe one stale-state or replay condition relevant to this module.</li>
+<li>Identify one telemetry source that can support a strong conclusion and one blind spot it still leaves.</li>
+<li>Explain how you would turn a discovered weakness into a regression test rather than a one-time finding.</li>
+</ol>
+<h2>Guided study workflow</h2>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

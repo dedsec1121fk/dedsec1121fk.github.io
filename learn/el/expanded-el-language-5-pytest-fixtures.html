@@ -1,0 +1,61 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python: unit tests, fixtures και έλεγχος παλινδρόμησης — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/expanded-el-language-5-pytest-fixtures.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Python tests: μικρές, ανεξάρτητες και αποδείξιμες συμπεριφορές Γράψε πρώτα τον κανόνα Θέλουμε συνάρτηση που αποδέχεται πραγματικό μη αρνητικό ακέραιο ποσότητας. Η μετατροπή οποιουδήποτε…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Python: unit tests, fixtures και έλεγχος παλινδρόμησης — DedSec Project">
+<meta property="og:description" content="Python tests: μικρές, ανεξάρτητες και αποδείξιμες συμπεριφορές Γράψε πρώτα τον κανόνα Θέλουμε συνάρτηση που αποδέχεται πραγματικό μη αρνητικό ακέραιο ποσότητας. Η μετατροπή οποιουδήποτε…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/expanded-el-language-5-pytest-fixtures.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Python: unit tests, fixtures και έλεγχος παλινδρόμησης — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Python: unit tests, fixtures και έλεγχος παλινδρόμησης — DedSec Project">
+<meta name="twitter:description" content="Python tests: μικρές, ανεξάρτητες και αποδείξιμες συμπεριφορές Γράψε πρώτα τον κανόνα Θέλουμε συνάρτηση που αποδέχεται πραγματικό μη αρνητικό ακέραιο ποσότητας. Η μετατροπή οποιουδήποτε…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Python: unit tests, fixtures και έλεγχος παλινδρόμησης — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Python: unit tests, fixtures και έλεγχος παλινδρόμησης — DedSec Project</h1><p>Python tests: μικρές, ανεξάρτητες και αποδείξιμες συμπεριφορές Γράψε πρώτα τον κανόνα Θέλουμε συνάρτηση που αποδέχεται πραγματικό μη αρνητικό ακέραιο ποσότητας. Η μετατροπή οποιουδήποτε…</p><section><h1>Python tests: μικρές, ανεξάρτητες και αποδείξιμες συμπεριφορές</h1>
+<h2>Γράψε πρώτα τον κανόνα</h2>
+<p>Θέλουμε συνάρτηση που αποδέχεται πραγματικό μη αρνητικό ακέραιο ποσότητας. Η μετατροπή οποιουδήποτε string δεν ταυτίζεται με τον έλεγχο επιχειρησιακής τιμής. Η αποτυχία πρέπει να δίνει σαφή εξαίρεση και όχι «βολικό» αποτέλεσμα που κρύβει λανθασμένα δεδομένα. Τα tests πρέπει να ελέγχουν το δημόσιο συμβόλαιο και όχι το όνομα μιας τοπικής μεταβλητής.</p>
+<pre><code class="language-python">import pytest
+
+def quantity(value):
+    if isinstance(value, bool) or not isinstance(value, int):
+        raise TypeError('integer required')
+    if value &lt; 0:
+        raise ValueError('negative quantity')
+    return value
+
+@pytest.mark.parametrize('value', [0, 1, 999])
+def test_accepts_int(value):
+    assert quantity(value) == value
+
+def test_rejects_bool():
+    with pytest.raises(TypeError):
+        quantity(True)
+
+def test_rejects_negative():
+    with pytest.raises(ValueError):
+        quantity(-1)
+</code></pre>
+<h2>Η παγίδα του bool</h2>
+<p>Στην Python το bool είναι υποκλάση του int, οπότε το απλό <code>isinstance(True, int)</code> επιστρέφει αληθές. Αν το σύστημα αποθεμάτων απαιτεί ποσότητα και όχι flag, πρέπει να το απορρίπτουμε ρητά. Τα boundary tests δείχνουν στους μελλοντικούς maintainers ποια συμπεριφορά είναι σκόπιμη και γιατί.</p>
+<h2>Διαχώρισε τα επίπεδα δοκιμών</h2>
+<p>Το παραπάνω unit test δεν χρειάζεται δίκτυο ή πραγματικό filesystem. Έλεγχοι υπηρεσιών, αρχείων ή native ABI ανήκουν σε integration tests με ελεγχόμενες εισόδους. Για προσωρινά αρχεία στο pytest μπορείς να χρησιμοποιήσεις το <code>tmp_path</code>, ώστε να μην τροποποιείται ο πραγματικός workspace. Η έκδοση Python/pytest πρέπει να καταγράφεται.</p>
+<h2>Τεκμήριο ολοκλήρωσης</h2>
+<p>Για νέο bug γράψε test που αρχικά αποτυγχάνει και μετά διορθώνεις τη συνάρτηση. Κατάγραψε το πραγματικό red → green, την έξοδο των tests και την έκδοση εργαλείων. Δεν ισχυριζόμαστε ότι ο κώδικας εκτελέστηκε στη συσκευή του αναγνώστη.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

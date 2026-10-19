@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Practical scripts: JSONL, SHA-256 and workspace boundaries — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-298.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Practical scripts: JSONL, SHA-256 and workspace boundaries Filter a JSONL Stream One JSON value per physical line 04_jsonl_filter.py consumes an iterable of text lines and decodes each…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Practical scripts: JSONL, SHA-256 and workspace boundaries — DedSec Project">
+<meta property="og:description" content="Practical scripts: JSONL, SHA-256 and workspace boundaries Filter a JSONL Stream One JSON value per physical line 04_jsonl_filter.py consumes an iterable of text lines and decodes each…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-298.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Practical scripts: JSONL, SHA-256 and workspace boundaries — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Practical scripts: JSONL, SHA-256 and workspace boundaries — DedSec Project">
+<meta name="twitter:description" content="Practical scripts: JSONL, SHA-256 and workspace boundaries Filter a JSONL Stream One JSON value per physical line 04_jsonl_filter.py consumes an iterable of text lines and decodes each…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Practical scripts: JSONL, SHA-256 and workspace boundaries — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Practical scripts: JSONL, SHA-256 and workspace boundaries — DedSec Project</h1><p>Practical scripts: JSONL, SHA-256 and workspace boundaries Filter a JSONL Stream One JSON value per physical line 04_jsonl_filter.py consumes an iterable of text lines and decodes each…</p><section><h2>Filter a JSONL Stream</h2>
+<h3>One JSON value per physical line</h3>
+<p>04_jsonl_filter.py consumes an iterable of text lines and decodes each independently. Every decoded value must be an object with an integer level; booleans are rejected despite Python considering them integer subclasses. Rows with level below min_level are valid but filtered out, which differs from malformed records placed in errors.</p>
+<h3>Inspect output, not just success</h3>
+<p>Run python 04_jsonl_filter.py. The provided sequence contains level 1, 3, invalid text, boolean true, level 2, and an empty line. With default threshold 2, accepted levels are [3,2] and error lines are [3,4,6]. It also tests a generator input and rejects min_level=True. Unlike JSON arrays, JSONL expects one independent document per physical line.</p>
+<h3>Independent exercise</h3>
+<p>Consume a file using open(path, encoding=&quot;utf-8&quot;) and pass the open file object directly as an iterator. Add a maximum line length before json.loads so untrusted huge records do not exhaust memory. Decide whether blank lines should be skipped or reported; this implementation deliberately reports them. If you need to preserve discarded-but-valid rows, return a separate filtered count.</p>
+<h3>Resource constraint</h3>
+<p>The input can be streamed without loading every original line, but accepted rows and error positions are accumulated in lists. For very large logs, yield accepted rows incrementally and send errors to a separate bounded sink. Source: 04_jsonl_filter.py; format: https://jsonlines.org/</p>
+<h2>Verify Bytes with SHA-256</h2>
+<h3>Two distinct functions</h3>
+<p>sha256_bytes(data) digests an already loaded bytes object. sha256_file(path) reads a file in chunks of 65,536 bytes by default, avoiding loading a multi-gigabyte file into memory. The second function explicitly rejects zero, negative and boolean chunk_size values. Both return lowercase hexadecimal digests.</p>
+<h3>Reproduce the reference vector</h3>
+<p>Run python 05_sha256_memory.py. SHA-256 of the three bytes abc must equal ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad. The test writes a file in a temporary directory, verifies hashing with one-byte chunks, changes one byte and confirms the digest changes. It also covers empty bytes. No third-party packages are used.</p>
+<h3>Why a matching hash is not authentication</h3>
+<p>A digest establishes equality relative to a trusted expected value, but a malicious file and a matching malicious digest can be distributed together. For release downloads, obtain the expected hash or signature through authenticated, independent release metadata. Do not treat a matching hash from the same untrusted website as proof of publisher identity.</p>
+<h3>Extended lab</h3>
+<p>Compare the chunked digest with hashlib.sha256(Path(...).read_bytes()) for a small fixture, then hash a larger synthetic file and measure peak memory. Be aware that the file may change while being read and that symlinks point to other files; hashing is not a filesystem sandbox. Source: 05_sha256_memory.py. Reference: https://docs.python.org/3/library/hashlib.html</p>
+<h2>Keep Paths Inside a Workspace</h2>
+<h3>What allowed() actually checks</h3>
+<p>The function in 06_path_containment.py resolves a known existing root strictly. Relative candidate paths are resolved relative to that root, absolute candidates are handled as absolute, and containment is checked using actual Path parent components. This rejects a sibling named workspace-extra that would fool a naïve string startswith check.</p>
+<h3>Safe fixture checks</h3>
+<p>Run python 06_path_containment.py. The script builds its own temporary workspace, then checks a real file, a relative file name, parent traversal, a similarly prefixed sibling path, and (if the OS supports creating it) a symlink escaping outside the workspace. Expected output is resolved containment checks passed (not race-free).</p>
+<h3>Important trust limitation</h3>
+<p>The result is a snapshot. If an attacker can replace a symlink between resolve() and a later open(), a path initially considered inside may point outside. This time-of-check/time-of-use race makes allowed() insufficient to protect secrets from hostile filesystem writers. For that threat model, use directory-relative opening with appropriate OS facilities, no-follow policies and constrained capabilities, then validate the opened file descriptor.</p>
+<h3>Exercise</h3>
+<p>Compare allowed(root, Path(&quot;hello.txt&quot;)) with allowed(root, Path(&quot;../escape.txt&quot;)). Confirm that the function raises when the root does not exist (strict=True). Create a link pointing outside and observe rejection; do not rely on this preflight as your only authorization control. Source: 06_path_containment.py. Path API: https://docs.python.org/3/library/pathlib.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

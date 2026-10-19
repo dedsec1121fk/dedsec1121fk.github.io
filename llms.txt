@@ -1,49 +1,76 @@
-# DedSec Project — Official Website
+# DedSec Project — official bilingual website and learning library
 
-> DedSec Project is an independently developed cybersecurity education and software toolkit, established on October 20, 2024. Its public toolkit runs on Android through Termux and on Ubuntu, Kali Linux, and Linux Mint. The canonical website is https://ded-sec.space/; the toolkit source is https://github.com/dedsec1121fk/DedSec.
+> DedSec Project provides a free Android/Termux and Linux toolkit, documentation, programming lessons, troubleshooting, and defensive security education. Public toolkit: https://github.com/dedsec1121fk/DedSec. Ethical and authorized use only.
 
-## Official pages (English)
+## Official pages
+- [Home / Αρχική](https://ded-sec.space/)
+- [Installation / Εγκατάσταση](https://ded-sec.space/Pages/guide-for-installation.html)
+- [Tools / Εργαλεία](https://ded-sec.space/Pages/learn-about-the-tools.html)
+- [Assistance / Βοήθεια](https://ded-sec.space/Pages/assistance.html)
+- [FAQ / Συχνές ερωτήσεις](https://ded-sec.space/Pages/faq.html)
+- [TikDev](https://ded-sec.space/TikDev.html)
 
-- [Home](https://ded-sec.space/): Overview of the project, platforms, and official resources.
-- [Installation guide](https://ded-sec.space/Pages/guide-for-installation.html): Set up the toolkit on Android/Termux or supported Linux distributions.
-- [Tool catalogue](https://ded-sec.space/Pages/learn-about-the-tools.html): Current public tools, their supported platforms, and output paths; also documents optional GitHub Sponsors benefits.
-- [Assistance](https://ded-sec.space/Pages/assistance.html): Troubleshooting guides for Termux and supported Linux distributions.
-- [FAQ](https://ded-sec.space/Pages/faq.html): Common questions about installation, tools, downloading, safety, and sponsorship.
-- [ButSystem.py](https://ded-sec.space/Pages/butsystem-exclusive.html): A free component included in DedSec Project, not a separate paid product.
-- [Founder's story and vision](https://ded-sec.space/Pages/about-founder.html): Project history and vision.
-- [Contact and credits](https://ded-sec.space/Pages/contact-credits.html): Official contact options and contributors.
-- [Privacy policy](https://ded-sec.space/Pages/privacy-policy.html): Website privacy information.
+## Selected practical guides (English and Greek)
+- [Runtime lifetimes and data-structure selection](https://ded-sec.space/learn/en/en-1.html)
+- [Parsing, grammars and input validation](https://ded-sec.space/learn/en/en-3.html)
+- [State machines, invariants and predictable interfaces](https://ded-sec.space/learn/en/en-4.html)
+- [SQL transactions, constraints and schema migrations](https://ded-sec.space/learn/en/en-6.html)
+- [Concurrency, parallelism and cancellation](https://ded-sec.space/learn/en/en-7.html)
+- [Unicode, encodings and multilingual search](https://ded-sec.space/learn/en/en-8.html)
+- [HTTP contracts, timeouts and safe retries](https://ded-sec.space/learn/en/en-9.html)
+- [CLI programs, Termux and desktop portability](https://ded-sec.space/learn/en/en-13.html)
+- [Code review, threat modeling and secure defaults](https://ded-sec.space/learn/en/en-15.html)
+- [Release engineering, offline packages and honest validation](https://ded-sec.space/learn/en/en-17.html)
+- [Algorithm drills — linear/binary search and frequency maps](https://ded-sec.space/learn/en/en-18.html)
+- [01 linear search](https://ded-sec.space/learn/en/en-19.html)
+- [02 binary search](https://ded-sec.space/learn/en/en-21.html)
+- [03 frequency map](https://ded-sec.space/learn/en/en-23.html)
+- [Algorithm drills — two pointers, stacks and sliding windows](https://ded-sec.space/learn/en/en-24.html)
+- [04 two pointers](https://ded-sec.space/learn/en/en-25.html)
+- [05 stack matching](https://ded-sec.space/learn/en/en-27.html)
+- [Breadth-first search](https://ded-sec.space/learn/en/en-28.html)
+- [06 bfs](https://ded-sec.space/learn/en/en-29.html)
+- [Depth-first search](https://ded-sec.space/learn/en/en-30.html)
+- [07 dfs](https://ded-sec.space/learn/en/en-31.html)
+- [08 sliding window](https://ded-sec.space/learn/en/en-33.html)
+- [Algorithm drills — sorting, dynamic programming and prefix sums](https://ded-sec.space/learn/en/en-34.html)
+- [09 sorting](https://ded-sec.space/learn/en/en-35.html)
+- [Dijkstra shortest paths](https://ded-sec.space/learn/en/en-36.html)
+- [10 dijkstra](https://ded-sec.space/learn/en/en-37.html)
+- [Topological sort](https://ded-sec.space/learn/en/en-38.html)
+- [11 topological sort](https://ded-sec.space/learn/en/en-39.html)
+- [Ασκήσεις αλγορίθμων: γραμμική/δυαδική αναζήτηση και συχνότητες](https://ded-sec.space/learn/el/el-1.html)
+- [01 linear search](https://ded-sec.space/learn/el/el-2.html)
+- [02 binary search](https://ded-sec.space/learn/el/el-4.html)
+- [03 frequency map](https://ded-sec.space/learn/el/el-6.html)
+- [Ασκήσεις αλγορίθμων: δύο δείκτες, στοίβες και κυλιόμενα παράθυρα](https://ded-sec.space/learn/el/el-7.html)
+- [04 two pointers](https://ded-sec.space/learn/el/el-8.html)
+- [05 stack matching](https://ded-sec.space/learn/el/el-10.html)
+- [Αναζήτηση κατά πλάτος](https://ded-sec.space/learn/el/el-11.html)
+- [06 bfs](https://ded-sec.space/learn/el/el-12.html)
+- [Αναζήτηση κατά βάθος](https://ded-sec.space/learn/el/el-13.html)
+- [07 dfs](https://ded-sec.space/learn/el/el-14.html)
+- [08 sliding window](https://ded-sec.space/learn/el/el-16.html)
+- [Ασκήσεις αλγορίθμων: ταξινόμηση, δυναμικός προγραμματισμός, αθροίσματα](https://ded-sec.space/learn/el/el-17.html)
+- [09 sorting](https://ded-sec.space/learn/el/el-18.html)
+- [Συντομότερες διαδρομές Dijkstra](https://ded-sec.space/learn/el/el-19.html)
+- [10 dijkstra](https://ded-sec.space/learn/el/el-20.html)
+- [Τοπολογική ταξινόμηση](https://ded-sec.space/learn/el/el-21.html)
+- [11 topological sort](https://ded-sec.space/learn/el/el-22.html)
+- [12 fibonacci dp](https://ded-sec.space/learn/el/el-24.html)
+- [13 prefix sums](https://ded-sec.space/learn/el/el-26.html)
+- [14 safe text normalization](https://ded-sec.space/learn/el/el-28.html)
+- [Επεξεργασία παρτίδων](https://ded-sec.space/learn/el/el-29.html)
+- [15 rate limited batch](https://ded-sec.space/learn/el/el-30.html)
+- [Παραδείγματα σφαλμάτων: Python και JavaScript](https://ded-sec.space/learn/el/el-31.html)
+- [Διόρθωση συμβάντων UI, SQL queries και διαδρομών shell](https://ded-sec.space/learn/el/el-35.html)
+- [Αποτυχίες και ιδιοκτησία μνήμης σε κώδικα συστημάτων](https://ded-sec.space/learn/el/el-38.html)
+- [Go: αγνοημένο σφάλμα](https://ded-sec.space/learn/el/el-41.html)
+- [Παραδείγματα σφαλμάτων: Rust, PHP, TypeScript και Python](https://ded-sec.space/learn/el/el-42.html)
 
-## Επίσημες σελίδες (Ελληνικά)
+## Full index
+- [Full website and lesson content](https://ded-sec.space/llms-full.txt)
+- [XML sitemap](https://ded-sec.space/sitemap.xml)
 
-- [Αρχική](https://ded-sec.space/el/): Παρουσίαση του DedSec Project.
-- [Οδηγός εγκατάστασης](https://ded-sec.space/el/Pages/guide-for-installation.html): Οδηγίες εγκατάστασης για Android/Termux και Linux.
-- [Κατάλογος εργαλείων](https://ded-sec.space/el/Pages/learn-about-the-tools.html): Εργαλεία, υποστηριζόμενες πλατφόρμες, προαιρετικές παροχές υποστηρικτών.
-- [Βοήθεια](https://ded-sec.space/el/Pages/assistance.html): Οδηγοί και αντιμετώπιση προβλημάτων.
-- [Συχνές ερωτήσεις](https://ded-sec.space/el/Pages/faq.html): Εγκατάσταση, ασφάλεια, downloads και υποστήριξη.
-- [ButSystem.py](https://ded-sec.space/el/Pages/butsystem-exclusive.html): Δωρεάν μέρος του DedSec Project.
-- [Ιστορία και όραμα](https://ded-sec.space/el/Pages/about-founder.html): Ιστορία του δημιουργού και στόχοι.
-- [Επικοινωνία και συντελεστές](https://ded-sec.space/el/Pages/contact-credits.html): Επίσημα κανάλια και αναγνώριση συνεργατών.
-- [Πολιτική απορρήτου](https://ded-sec.space/el/Pages/privacy-policy.html): Πληροφορίες απορρήτου.
-
-## Environment and installation notes
-
-- Supported main-toolkit environments: Android with Termux, Ubuntu, Kali Linux, and Linux Mint; specific utilities may be platform-limited.
-- Follow the official installation guide and repository instructions; typical launcher commands are `bash Setup.sh` followed by `./Run.sh`.
-- Linux desktop environments use a project-local `.venv/` and `Compat/bin/` for compatibility.
-- On Termux, outputs commonly use `~/storage/downloads/` after storage permission is configured; on Linux desktops, outputs commonly use `~/Downloads/` or the XDG Downloads directory.
-- The public toolkit is free. GitHub Sponsors is optional and may offer sponsor-only tools or ebook benefits; consult the current catalogue for up-to-date details.
-
-## Source and discovery
-
-- [Official toolkit source and releases](https://github.com/dedsec1121fk/DedSec)
-- [Website repository](https://github.com/dedsec1121fk/dedsec1121fk.github.io)
-- [Full English and Greek page directory](https://ded-sec.space/llms-full.txt)
-- [XML sitemap with canonical URLs and language alternates](https://ded-sec.space/sitemap.xml)
-- [robots.txt](https://ded-sec.space/robots.txt)
-
-## Safety and interpretation
-
-- Cybersecurity guidance and tools are for lawful learning, defensive research, and authorized testing. No page grants permission to assess third-party systems.
-- Prefer the current official website and toolkit repository over third-party mirrors or historical information.
-- Follow the specific page's platform, dependency, and file-location notes rather than assuming every tool runs everywhere.
+## Notes
+Instructional articles are maintained in paired English/Greek source files. Verify version-specific commands, APIs and permissions against current documentation; avoid implying that all platform-specific examples were executed.

@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Errors and exception handling — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-187.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Errors and exception handling Handle only failures you can recover from. Keep meaningful error messages and avoid a catch-all that silently hides problems. Use finally or context managers…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Errors and exception handling — DedSec Project">
+<meta property="og:description" content="Errors and exception handling Handle only failures you can recover from. Keep meaningful error messages and avoid a catch-all that silently hides problems. Use finally or context managers…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-187.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Errors and exception handling — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Errors and exception handling — DedSec Project">
+<meta name="twitter:description" content="Errors and exception handling Handle only failures you can recover from. Keep meaningful error messages and avoid a catch-all that silently hides problems. Use finally or context managers…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Errors and exception handling — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Errors and exception handling — DedSec Project</h1><p>Errors and exception handling Handle only failures you can recover from. Keep meaningful error messages and avoid a catch-all that silently hides problems. Use finally or context managers…</p><section><p>Handle only failures you can recover from. Keep meaningful error messages and avoid a catch-all that silently hides problems. Use finally or context managers for cleanup.</p>
+<h2>Worked example</h2>
+<pre><code class="language-text">text = &quot;123&quot;
+try:
+    value = int(text)
+except ValueError:
+    print(&quot;not a number&quot;)
+else:
+    print(value * 2)
+</code></pre>
+<h2>Practice</h2>
+<p>Try text=&quot;abc&quot; and explain the new branch.</p>
+<h2>Corrected result / hint</h2>
+<p>The ValueError branch reports invalid numeric text.</p>
+<h2>Exceptions are part of the interface</h2>
+<p>Catch an exception only where you can make a useful decision. An absent optional file may trigger a default; a corrupt required configuration should fail clearly. Do not swallow all errors or silently replace malformed input with good-looking values.</p>
+<pre><code class="language-python">from pathlib import Path
+def load_name(path):
+    try: text=Path(path).read_text(encoding=&quot;utf-8&quot;)
+    except FileNotFoundError: return &quot;anonymous&quot;
+    if not text.strip(): raise ValueError(&quot;empty name file&quot;)
+    return text.strip()
+</code></pre>
+<p>Differentiate <code>FileNotFoundError</code>, <code>PermissionError</code> and <code>UnicodeDecodeError</code>; they demand different repairs. Use <code>raise ... from exc</code> when translating a low-level failure into a domain-specific one. <code>finally</code> is for cleanup, not suppressing errors.</p>
+<p><strong>Exercise:</strong> test missing file, unreadable file where practical, empty file, invalid UTF-8 and valid file; assert that each produces the intended outcome.</p>
+<h2>Distinguish parsing from application rules</h2>
+<pre><code class="language-python">def parse_score(text):
+    try:
+        value = int(text)
+    except ValueError as exc:
+        raise ValueError(&quot;not an integer&quot;) from exc
+    if value &lt; 0:
+        raise ValueError(&quot;negative score&quot;)
+    return value
+
+assert parse_score(&quot;0&quot;) == 0
+assert parse_score(&quot;12&quot;) == 12
+</code></pre>
+<p>Test <code>&quot;bad&quot;</code> and <code>&quot;-2&quot;</code> separately. Both produce <code>ValueError</code>, but one originates in conversion and one in a documented domain constraint. Preserve the original cause when wrapping an exception. Returning zero in <code>except Exception</code> would silently turn corrupted input into a valid score. Extend this into file input: handle <code>FileNotFoundError</code> at the file operation, use a context manager for cleanup, and add <code>unittest.assertRaisesRegex</code> for each rejection. Record precisely which exception each boundary may recover from. Reference: https://docs.python.org/3/tutorial/errors.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

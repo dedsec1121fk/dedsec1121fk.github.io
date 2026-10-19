@@ -1,0 +1,96 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Glossary: injection, interfaces and interpreters — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1116.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Glossary: injection, interfaces and interpreters Injection Meaning and constraints Injection occurs when untrusted data is interpreted as commands or executable syntax instead of remaining…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Glossary: injection, interfaces and interpreters — DedSec Project">
+<meta property="og:description" content="Glossary: injection, interfaces and interpreters Injection Meaning and constraints Injection occurs when untrusted data is interpreted as commands or executable syntax instead of remaining…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1116.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glossary: injection, interfaces and interpreters — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Glossary: injection, interfaces and interpreters — DedSec Project">
+<meta name="twitter:description" content="Glossary: injection, interfaces and interpreters Injection Meaning and constraints Injection occurs when untrusted data is interpreted as commands or executable syntax instead of remaining…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Glossary: injection, interfaces and interpreters — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Glossary: injection, interfaces and interpreters — DedSec Project</h1><p>Glossary: injection, interfaces and interpreters Injection Meaning and constraints Injection occurs when untrusted data is interpreted as commands or executable syntax instead of remaining…</p><section><h2>Injection</h2>
+<h3>Meaning and constraints</h3>
+<p>Injection occurs when untrusted data is interpreted as commands or executable syntax instead of remaining data. SQL string concatenation, shell execution and unsafe HTML construction cross different trust boundaries; escaping for one context does not protect another.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">import sqlite3
+c = sqlite3.connect(':memory:')
+c.execute('CREATE TABLE users(name TEXT)')
+c.execute('INSERT INTO users VALUES (?)', ('Ada',))
+assert c.execute('SELECT * FROM users WHERE name=?', (&quot;' OR 1=1 --&quot;,)).fetchall() == []
+c.close()
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Compare parameterized SQL with a string concatenation example <em>only in a disposable local database</em>. Explain why identifiers still require an allowlist and why subprocess arguments should be passed as arrays with shell=False.</p>
+<p><strong>Further reading:</strong> https://cheatsheetseries.owasp.org/cheatsheets/SQL_Injection_Prevention_Cheat_Sheet.html</p>
+<h2>Interface</h2>
+<h3>Meaning and constraints</h3>
+<p>An interface describes the operations available to a caller without requiring them to know the implementation. A useful contract specifies accepted inputs, return values, errors and side effects. Two implementations that share method names are not necessarily behaviorally substitutable.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">from typing import Protocol
+class Store(Protocol):
+    def get(self, key: str) -&gt; str | None: ...
+class MemoryStore:
+    def __init__(self): self.data = {'x':'ok'}
+    def get(self, key): return self.data.get(key)
+assert MemoryStore().get('x') == 'ok'
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Build a second Store that reads from a scratch file and ensure both use the same missing-key behavior. Note that Protocol checks by static type tools do not perform full runtime schema validation.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/library/typing.html#typing.Protocol</p>
+<h2>Interpreter</h2>
+<h3>Meaning and constraints</h3>
+<p>An interpreter executes a language's program or intermediate representation, often evaluating statements as it runs. CPython compiles Python source to bytecode before its virtual machine executes it; therefore 'interpreted' does not mean source always runs without compilation.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">import dis
+def add(a, b): return a + b
+assert add(2,3) == 5
+dis.dis(add)  # shows bytecode for the current interpreter
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Compare <code>python -m py_compile example.py</code> with running the script. Observe that syntax compilation can succeed even when a runtime branch contains a division by zero. Don't treat disassembly as portable across Python versions.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/library/dis.html</p>
+<h2>Invariant</h2>
+<h3>Definition and boundaries</h3>
+<p>A property preserved after each allowed operation. If a debit is permitted only when the balance can cover it, balance &gt;= 0 remains true. An invariant is stronger than a check performed only once.</p>
+<h3>Working miniature</h3>
+<pre><code class="language-text">def debit(balance, amount):
+    if not 0 &lt;= amount &lt;= balance: raise ValueError('bad debit')
+    return balance-amount
+assert debit(10,3)==7
+</code></pre>
+<h3>Guided investigation</h3>
+<p>Try 0, 10 and 11 as withdrawals from 10. Prove every valid operation preserves a nonnegative result, and make sure the invalid call raises.</p>
+<h3>Demonstrate the invariant, not just a passing output</h3>
+<p>In prefix sums the claim before iteration i is that total equals the sum of elements before i. Initialization uses zero; the next addition preserves that claim; termination proves all elements were included.</p>
+<pre><code class="language-python">def prefix(items):
+    total, result = 0, []
+    for i, value in enumerate(items):
+        assert total == sum(items[:i])
+        total += value
+        result.append(total)
+    return result
+assert prefix([2,-1,4]) == [2,1,5]
+assert prefix([]) == []
+</code></pre>
+<p>Move the assertion after the update and observe the first failing case. Remember that Python assertions can be disabled in optimized execution and cannot replace input validation.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

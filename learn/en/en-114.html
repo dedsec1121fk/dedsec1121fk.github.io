@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>TS18048 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-114.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="TS18048 — possible undefined is a real missing-result branch Root cause TS18048 warns that a value is possibly undefined. Array.find returns the first matching element or undefined if there…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="TS18048 — DedSec Project">
+<meta property="og:description" content="TS18048 — possible undefined is a real missing-result branch Root cause TS18048 warns that a value is possibly undefined. Array.find returns the first matching element or undefined if there…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-114.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="TS18048 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TS18048 — DedSec Project">
+<meta name="twitter:description" content="TS18048 — possible undefined is a real missing-result branch Root cause TS18048 warns that a value is possibly undefined. Array.find returns the first matching element or undefined if there…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="TS18048 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>TS18048 — DedSec Project</h1><p>TS18048 — possible undefined is a real missing-result branch Root cause TS18048 warns that a value is possibly undefined. Array.find returns the first matching element or undefined if there…</p><section><h1>TS18048 — possible undefined is a real missing-result branch</h1>
+<h2>Root cause</h2>
+<p>TS18048 warns that a value is possibly undefined. Array.find returns the first matching element or undefined if there is no match. Reading match.title immediately assumes all requested IDs exist, a premise that can fail on an empty array, a misspelled key, or a changed dataset.</p>
+<h2>Reliable fix</h2>
+<p>Check <code>match === undefined</code> before accessing its properties; TypeScript's control-flow analysis then narrows the type in the success branch. Throw a RangeError containing the missing ID rather than relying on a later TypeError. The test confirms the normal branch and an explicit absent-ID failure.</p>
+<h2>Verified TypeScript example</h2>
+<pre><code class="language-typescript">type RecordItem = {id: string; title: string};
+function titleById(rows: RecordItem[], id: string): string {
+  const match = rows.find((row) =&gt; row.id === id);
+  if (match === undefined) throw new RangeError(`missing ID: ${id}`);
+  return match.title;
+}
+if (titleById([{id: 'A', title: 'Intro'}], 'A') !== 'Intro') throw Error();
+try { titleById([], 'B'); throw Error('accepted missing ID'); }
+catch (err) { if (!(err instanceof RangeError)) throw err; }
+console.log('PASS TS18048');
+</code></pre>
+<h2>Why it works</h2>
+<p>Optional chaining is useful if a missing result is acceptable and the return type reflects undefined, but a mandatory title lookup should not silently return an empty string. The non-null assertion operator (<code>match!</code>) compiles away and does not protect runtime. Do not confuse <code>undefined</code> from a missing lookup with a record whose title is an empty string; those require distinct policies.</p>
+<h2>Reproduction and build commands</h2>
+<p>Save as main.ts and run <code>tsc --strict --target es2022 --module commonjs --outDir dist main.ts &amp;&amp; node dist/main.js</code>. Reproduce TS18048 in a separate file with <code>const match = rows.find(...); console.log(match.id);</code> compiled under <code>--strict</code> and a recent TypeScript version.</p>
+<h2>Diagnostics to practice</h2>
+<p>Replace find with <code>Map.get(id)</code> and identify the same undefined possibility. Design a union such as <code>{ok:true,value:...}|{ok:false,error:...}</code> instead of exceptions, then verify that callers narrow on ok before using value.</p>
+<p><strong>Reference:</strong> https://www.typescriptlang.org/docs/handbook/2/narrowing.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

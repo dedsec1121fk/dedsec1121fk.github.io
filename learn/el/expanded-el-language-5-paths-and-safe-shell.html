@@ -1,0 +1,74 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bash: σωστά quotes, filenames και διαχείριση αποτυχιών — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/expanded-el-language-5-paths-and-safe-shell.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Τα ονόματα αρχείων είναι δεδομένα, όχι σύνταξη της shell Αντιμετώπισε κάθε filename ως αυθαίρετο κείμενο Ένα path μπορεί να έχει κενά, αστερίσκους ή να αρχίζει με παύλα. Η μη περικλεισμένη…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Bash: σωστά quotes, filenames και διαχείριση αποτυχιών — DedSec Project">
+<meta property="og:description" content="Τα ονόματα αρχείων είναι δεδομένα, όχι σύνταξη της shell Αντιμετώπισε κάθε filename ως αυθαίρετο κείμενο Ένα path μπορεί να έχει κενά, αστερίσκους ή να αρχίζει με παύλα. Η μη περικλεισμένη…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/expanded-el-language-5-paths-and-safe-shell.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Bash: σωστά quotes, filenames και διαχείριση αποτυχιών — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bash: σωστά quotes, filenames και διαχείριση αποτυχιών — DedSec Project">
+<meta name="twitter:description" content="Τα ονόματα αρχείων είναι δεδομένα, όχι σύνταξη της shell Αντιμετώπισε κάθε filename ως αυθαίρετο κείμενο Ένα path μπορεί να έχει κενά, αστερίσκους ή να αρχίζει με παύλα. Η μη περικλεισμένη…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Bash: σωστά quotes, filenames και διαχείριση αποτυχιών — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Bash: σωστά quotes, filenames και διαχείριση αποτυχιών — DedSec Project</h1><p>Τα ονόματα αρχείων είναι δεδομένα, όχι σύνταξη της shell Αντιμετώπισε κάθε filename ως αυθαίρετο κείμενο Ένα path μπορεί να έχει κενά, αστερίσκους ή να αρχίζει με παύλα. Η μη περικλεισμένη…</p><section><h1>Τα ονόματα αρχείων είναι δεδομένα, όχι σύνταξη της shell</h1>
+<h2>Αντιμετώπισε κάθε filename ως αυθαίρετο κείμενο</h2>
+<p>Ένα path μπορεί να έχει κενά, αστερίσκους ή να αρχίζει με παύλα. Η μη περικλεισμένη μεταβλητή στη shell μπορεί να προκαλέσει word splitting και wildcard expansion, αλλάζοντας απρόβλεπτα τα αρχεία που θα επεξεργαστεί μια εντολή. Βάλε quotes γύρω από μεταβλητές path και χρησιμοποίησε <code>--</code> όπου υποστηρίζεται για ονόματα που μοιάζουν με options.</p>
+<pre><code class="language-bash">#!/usr/bin/env bash
+set -euo pipefail
+root=&quot;${1:?provide an existing directory}&quot;
+if [[ ! -d &quot;$root&quot; ]]; then
+  printf 'not a directory: %s\n' &quot;$root&quot; &gt;&amp;2
+  exit 2
+fi
+root=&quot;$(cd -- &quot;$root&quot; &amp;&amp; pwd -P)&quot;
+find &quot;$root&quot; -maxdepth 1 -type f -print0 |
+while IFS= read -r -d '' file; do
+  printf 'file: %q\n' &quot;$file&quot;
+done
+</code></pre>
+<h2>Γιατί χρειαζόμαστε NUL delimiter</h2>
+<p>Σε Unix ακόμη και newline επιτρέπεται μέσα σε filename. Η επεξεργασία ανά γραμμή μπορεί επομένως να κόβει ένα όνομα στη μέση. Τα <code>-print0</code> και <code>read -d ''</code> διατηρούν ακριβή όρια. Το παράδειγμα απλώς εμφανίζει paths και δεν τα τροποποιεί.</p>
+<h2>Τα όρια του strict mode</h2>
+<p>Το <code>set -e</code> δεν συμπεριφέρεται ίδια σε conditionals, pipelines και command substitutions· δεν είναι μηχανισμός rollback. Το <code>pipefail</code> βοηθά σε αποτυχίες pipeline, αλλά διεργασίες background χρειάζονται explicit wait. Φτιάξε δοκιμές με κενό directory, όνομα με spaces και όνομα που περιέχει newline.</p>
+<h2>Τι πρέπει να αποδειχθεί</h2>
+<p>Κάθε πραγματικό αρχείο πρέπει να αναφέρεται ακριβώς μία φορά. Σημείωσε Bash version και OS, επειδή όλα τα shells δεν υποστηρίζουν <code>[[...]]</code> ή <code>read -d</code>. Μην εκτελείς Bash-specific κώδικα ως απλό POSIX sh χωρίς έλεγχο.</p>
+<h2>Δοκίμασε directory arguments που μοιάζουν με options</h2>
+<p>Τα quotes κρατούν ένα argument ενιαίο, αλλά δεν εμποδίζουν το πρόγραμμα να ερμηνεύσει αρχική παύλα ως option. Το starting point του <code>find</code> κανονικοποιείται παρακάτω σε απόλυτη διαδρομή, ώστε να δέχεται directory που αρχίζει με <code>-</code>. Το <code>--</code> στο <code>cd</code> ανήκει στο Bash builtin· άλλα εργαλεία χρειάζονται ξεχωριστό έλεγχο υποστήριξης.</p>
+<p>Σε άδειο προσωρινό directory δημιούργησε αρχεία <code>two words.txt</code>, <code>star*.txt</code> και όνομα που περιέχει newline. Η έξοδος <code>%q</code> είναι shell-escaped παρουσίαση και δεν είναι γενικό line-based format ανταλλαγής. Μην τη δίνεις σε <code>eval</code>. Αν άλλο πρόγραμμα χρειάζεται πραγματικά filenames, διατήρησε NUL delimiters αντί για την οπτική αναπαράσταση.</p>
+<h2>Το pipeline δεν είναι συναλλαγή</h2>
+<p>Αν ο consumer σταματήσει νωρίς, ο producer μπορεί να αποτύχει με SIGPIPE. Με pipefail αποτυγχάνει τότε ολόκληρο το pipeline, ακόμη κι αν καταναλώθηκε το αναμενόμενο πρώτο αποτέλεσμα. Εξέτασε τι απαιτεί η σύμβαση της εφαρμογής αντί για γενικό <code>|| true</code>. Ήδη γραμμένα δεδομένα παραμένουν μετά από επόμενο error. Προσωρινό output και τελικό rename είναι χωριστός σχεδιασμός, όχι λειτουργία που παρέχει το <code>set -e</code>.</p>
+<p>Πηγή: <a href="https://www.gnu.org/s/bash/manual/html_node/Word-Splitting.html">Bash word splitting</a>.</p>
+<h2>Κατάσταση pipeline και σκόπιμος χειρισμός σφαλμάτων</h2>
+<p>Ένα pipeline κανονικά αναφέρει την έξοδο της τελευταίας εντολής. Προηγούμενο στάδιο μπορεί να αποτύχει ενώ ο τελικός μορφοποιητής πετυχαίνει. Το pipefail αλλάζει την κατάσταση αλλά δεν αποφασίζει ποιοι κωδικοί αναμένονται. Εργαλεία όπως grep διαχωρίζουν «χωρίς αντιστοίχιση» από πραγματικό σφάλμα, οπότε μια καθολική αποτυχία απορρίπτει έγκυρο κενό αποτέλεσμα.</p>
+<p>Το τοπικό δείγμα έχει αποτυχημένο παραγωγό και επιτυχημένο καταναλωτή. Εξετάζει άμεσα την κατάσταση αντί να θεωρεί το set -e πλήρες σύστημα εξαιρέσεων. Χρειάζεται ιδιαίτερη σαφήνεια σε συνθήκες, υποκελύφη και παγίδες καθαρισμού.</p>
+<pre><code class="language-bash">set -u
+set +o pipefail
+(exit 7) | cat &gt;/dev/null
+normal=$?
+set -o pipefail
+(exit 7) | cat &gt;/dev/null
+strict=$?
+[[ &quot;$normal&quot; == 0 &amp;&amp; &quot;$strict&quot; == 7 ]] || exit 1
+printf 'pipeline statuses: %s %s\n' &quot;$normal&quot; &quot;$strict&quot;
+</code></pre>
+<p>Δοκίμασε χωριστά κενή αναζήτηση και μη αναγνώσιμο αρχείο. Αποθήκευσε αμέσως την κατάσταση πριν την αντικαταστήσει άλλη εντολή. Σε ονόματα από διεργασία διατήρησε διαχωρισμό NUL όπου υποστηρίζεται· οι αλλαγές γραμμής δεν είναι σαφείς όταν ανήκουν στο όνομα.</p>
+<p><a href="https://www.gnu.org/software/bash/manual/html_node/Pipelines.html">Τεχνική αναφορά</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,72 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Ακέραιοι, κινητή υποδιαστολή και ακρίβεια — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-48.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Αριθμητική ακρίβεια — στρογγυλοποίηση με καθορισμένο κανόνα Κριτήρια επιτυχίας Ένα τοπικό εργαλείο πληρωμών δέχεται μη αρνητικά δεκαδικά ποσά ως κείμενο, με ένα έως τρία ψηφία μετά την…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Ακέραιοι, κινητή υποδιαστολή και ακρίβεια — DedSec Project">
+<meta property="og:description" content="Αριθμητική ακρίβεια — στρογγυλοποίηση με καθορισμένο κανόνα Κριτήρια επιτυχίας Ένα τοπικό εργαλείο πληρωμών δέχεται μη αρνητικά δεκαδικά ποσά ως κείμενο, με ένα έως τρία ψηφία μετά την…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-48.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Ακέραιοι, κινητή υποδιαστολή και ακρίβεια — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Ακέραιοι, κινητή υποδιαστολή και ακρίβεια — DedSec Project">
+<meta name="twitter:description" content="Αριθμητική ακρίβεια — στρογγυλοποίηση με καθορισμένο κανόνα Κριτήρια επιτυχίας Ένα τοπικό εργαλείο πληρωμών δέχεται μη αρνητικά δεκαδικά ποσά ως κείμενο, με ένα έως τρία ψηφία μετά την…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Ακέραιοι, κινητή υποδιαστολή και ακρίβεια — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Ακέραιοι, κινητή υποδιαστολή και ακρίβεια — DedSec Project</h1><p>Αριθμητική ακρίβεια — στρογγυλοποίηση με καθορισμένο κανόνα Κριτήρια επιτυχίας Ένα τοπικό εργαλείο πληρωμών δέχεται μη αρνητικά δεκαδικά ποσά ως κείμενο, με ένα έως τρία ψηφία μετά την…</p><section><h1>Αριθμητική ακρίβεια — στρογγυλοποίηση με καθορισμένο κανόνα</h1>
+<h2>Κριτήρια επιτυχίας</h2>
+<p>Ένα τοπικό εργαλείο πληρωμών δέχεται μη αρνητικά δεκαδικά ποσά ως κείμενο, με ένα έως τρία ψηφία μετά την υποδιαστολή. Το τελικό άθροισμα έχει δύο δεκαδικά ψηφία. Χρησιμοποίησε ROUND_HALF_EVEN και στρογγυλοποίησε μία φορά το τελικό σύνολο, όχι κάθε εγγραφή χωριστά. Τιμές NaN, Infinity, αρνητικά ποσά, εκθετική γραφή ή κενά πεδία απορρίπτονται. Πριν από την επεξεργασία χρηματικών ποσών, καθόρισε σαφώς τη μορφή εισόδου και τον τρόπο στρογγυλοποίησης.</p>
+<h2>Εκτελέσιμο εργαστήριο Python 3</h2>
+<p>Αποθήκευσε ως precision_lab.py και εκτέλεσε python3 precision_lab.py. Η βιβλιοθήκη decimal διατηρεί τα δεκαδικά ψηφία του αρχικού κειμένου, χωρίς ενδιάμεση προσέγγιση κινητής υποδιαστολής. Οι έλεγχοι συγκρίνουν τη στρογγυλοποίηση κάθε γραμμής με τη στρογγυλοποίηση του συνολικού ποσού.</p>
+<pre><code class="language-python">from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN, ROUND_HALF_UP
+import re
+CENT = Decimal('0.01')
+def rounded_total(values):
+    total = Decimal(0)
+    for token in values:
+        if not isinstance(token, str) or not re.fullmatch(r'[0-9]+\.[0-9]{1,3}', token):
+            raise ValueError('unsupported monetary input')
+        total += Decimal(token)
+    try:
+        return total.quantize(CENT, rounding=ROUND_HALF_EVEN)
+    except InvalidOperation as error:
+        raise ValueError('amount outside active decimal precision') from error
+assert rounded_total(['0.10', '0.20']) == Decimal('0.30')
+assert rounded_total(['0.015'] * 3) == Decimal('0.04')
+assert sum((Decimal('0.015').quantize(CENT, rounding=ROUND_HALF_EVEN) for _ in range(3)), Decimal(0)) == Decimal('0.06')
+assert Decimal('1.005').quantize(CENT, rounding=ROUND_HALF_UP) == Decimal('1.01')
+for bad in ('NaN', 'Infinity', '-2.00', '2e3', ''):
+    try: rounded_total([bad])
+    except ValueError: pass
+    else: raise AssertionError('bad token accepted: ' + bad)
+print('PASS precision: exact sum, rounding order, bad values')
+</code></pre>
+<h2>Γιατί προκύπτουν διαφορετικά αποτελέσματα</h2>
+<p>Ένας δυαδικός float δεν μπορεί να αποθηκεύσει ακριβώς κάθε δεκαδικό κλάσμα. Στην Python το 0.1 + 0.2 δεν είναι ακριβώς ίσο με 0.3. Η Decimal από συμβολοσειρά διατηρεί την επιθυμητή δεκαδική τιμή, ενώ η Decimal από float μεταφέρει την προσέγγιση του float. Τρία ποσά 0.015 δίνουν 0.045: με ROUND_HALF_EVEN η τελική στρογγυλοποίηση παράγει 0.04. Αν πρώτα στρογγυλοποιηθεί κάθε ποσό σε 0.02, το άθροισμα γίνεται 0.06. Το ποιος κανόνας εφαρμόζεται εξαρτάται από τις πραγματικές λογιστικές απαιτήσεις. Για 1.005 η ROUND_HALF_UP δίνει 1.01, ενώ η HALF_EVEN δίνει 1.00.</p>
+<h2>Μικρές ασκήσεις και διάγνωση</h2>
+<ol>
+<li>Σύγκρινε Decimal('0.1') και Decimal(0.1) και εξήγησε γιατί διαφέρουν.</li>
+<li>Δοκίμασε 0.00, 000.001, κενό πεδίο και άδεια λίστα. Κατάγραψε ποιες περιπτώσεις είναι αποδεκτές και τι επιστρέφουν.</li>
+<li>Αντικατάστησε προσωρινά τη HALF_EVEN με HALF_UP και βρες αριθμούς που επηρεάζονται. Η πολιτική δεν πρέπει να αλλάζει σιωπηλά.</li>
+<li>Προκάλεσε περιορισμό ακρίβειας με υπερβολικά μεγάλο δεκαδικό κείμενο και χειρίσου ρητά το σφάλμα.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> έξοδος PASS, πίνακας συγκρίσεων και τεκμηρίωση των πέντε απορριπτέων τιμών.</p>
+<h2>Πρόσθετη τεχνική ανάλυση</h2>
+<p>Η συμφωνία συνόλων απαιτεί ορισμό του σταδίου στρογγυλοποίησης. Άθροισμα στρογγυλεμένων γραμμών και στρογγυλοποίηση ακριβούς συνόλου διαφέρουν χωρίς αριθμητικό ελάττωμα. Διατήρησε αρχικές δεκαδικές εισόδους και κανόνα ώστε η αναφορά να εξηγεί τη διαφορά αντί να την κρύβει με μορφοποίηση.</p>
+<p><a href="../el/fieldnotes-el-42.html">Πολιτικές δεκαδικής στρογγυλοποίησης και συμφωνία συνόλων</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

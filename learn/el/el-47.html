@@ -1,0 +1,74 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Πολυπλοκότητα αλγορίθμων — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-47.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Πολυπλοκότητα αλγορίθμων — μέτρηση συγκρίσεων πριν από τον χρόνο Σύμβαση και μέγεθος εισόδου Μία τοπική μηχανή αναζήτησης ελέγχει ποια ζητούμενα ονόματα υπάρχουν στον κατάλογο. Όρισε n ως…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Πολυπλοκότητα αλγορίθμων — DedSec Project">
+<meta property="og:description" content="Πολυπλοκότητα αλγορίθμων — μέτρηση συγκρίσεων πριν από τον χρόνο Σύμβαση και μέγεθος εισόδου Μία τοπική μηχανή αναζήτησης ελέγχει ποια ζητούμενα ονόματα υπάρχουν στον κατάλογο. Όρισε n ως…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-47.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Πολυπλοκότητα αλγορίθμων — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Πολυπλοκότητα αλγορίθμων — DedSec Project">
+<meta name="twitter:description" content="Πολυπλοκότητα αλγορίθμων — μέτρηση συγκρίσεων πριν από τον χρόνο Σύμβαση και μέγεθος εισόδου Μία τοπική μηχανή αναζήτησης ελέγχει ποια ζητούμενα ονόματα υπάρχουν στον κατάλογο. Όρισε n ως…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Πολυπλοκότητα αλγορίθμων — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Πολυπλοκότητα αλγορίθμων — DedSec Project</h1><p>Πολυπλοκότητα αλγορίθμων — μέτρηση συγκρίσεων πριν από τον χρόνο Σύμβαση και μέγεθος εισόδου Μία τοπική μηχανή αναζήτησης ελέγχει ποια ζητούμενα ονόματα υπάρχουν στον κατάλογο. Όρισε n ως…</p><section><h1>Πολυπλοκότητα αλγορίθμων — μέτρηση συγκρίσεων πριν από τον χρόνο</h1>
+<h2>Σύμβαση και μέγεθος εισόδου</h2>
+<p>Μία τοπική μηχανή αναζήτησης ελέγχει ποια ζητούμενα ονόματα υπάρχουν στον κατάλογο. Όρισε n ως το πλήθος ζητήσεων και m ως το πλήθος διαθέσιμων ονομάτων. Η ένθετη αναζήτηση μπορεί να κάνει n*m συγκρίσεις όταν όλα τα ονόματα λείπουν. Μία άλλη λύση δημιουργεί σύνολο κατακερματισμού, συνήθως σε O(m) χρόνο με O(m) επιπλέον μνήμη, και μετά εκτελεί αναμενόμενες αναζητήσεις O(1). Για μικρά δεδομένα το κόστος κατασκευής του συνόλου μπορεί να είναι μεγαλύτερο από το όφελος.</p>
+<h2>Εκτελέσιμο παράδειγμα Python 3</h2>
+<p>Αποθήκευσε ως complexity_lab.py και εκτέλεσε python3 complexity_lab.py. Η πρώτη συνάρτηση μετρά τις πραγματικές συγκρίσεις, ενώ και οι δύο διατηρούν διπλές ζητήσεις στο αποτέλεσμα.</p>
+<pre><code class="language-python">def nested_lookup(left, right):
+    found, comparisons = [], 0
+    for item in left:
+        for candidate in right:
+            comparisons += 1
+            if item == candidate:
+                found.append(item)
+                break
+    return found, comparisons
+
+def indexed_lookup(left, right):
+    index = set(right)
+    return [item for item in left if item in index]
+
+left = ['a', 'b', 'z', 'a']
+right = ['b', 'a']
+found, steps = nested_lookup(left, right)
+assert found == ['a', 'b', 'a'] and steps == 7
+assert indexed_lookup(left, right) == found
+assert nested_lookup([], right) == ([], 0)
+try:
+    indexed_lookup([[1]], [[1]])
+except TypeError:
+    pass
+else:
+    raise AssertionError('unhashable values were accepted')
+print('PASS complexity: equivalent membership, measured comparisons')
+</code></pre>
+<h2>Τι αποδεικνύεται</h2>
+<p>Στο δείγμα η ένθετη αναζήτηση κάνει επτά συγκρίσεις, επειδή και το z ελέγχεται χωρίς να βρεθεί. Οι επτά πράξεις δεν διαρκούν πάντα τον ίδιο χρόνο σε όλες τις συσκευές. Τα σύνολα απαιτούν κατακερματίσιμες τιμές με συμβατή ισότητα και συνάρτηση hash· λίστες μέσα σε λίστες προκαλούν TypeError. Μία κακή συνάρτηση κατακερματισμού μπορεί να χειροτερέψει τη συμπεριφορά. Το αναμενόμενο O(1) δεν είναι απόλυτη εγγύηση χειρότερης περίπτωσης.</p>
+<h2>Ασκήσεις και έλεγχοι</h2>
+<ol>
+<li>Δημιούργησε 100, 1000 και 5000 ζητήσεις χωρίς επιτυχία. Κράτησε το m σταθερό και έπειτα θέσε m=n. Μέτρησε συγκρίσεις.</li>
+<li>Τοποθέτησε το συχνότερο όνομα στην αρχή και στο τέλος της δεύτερης λίστας. Εξήγησε πώς αλλάζει ο αριθμός βημάτων.</li>
+<li>Σύγκρινε με τομή δύο συνόλων και εξήγησε γιατί η αφαίρεση των διπλών ζητήσεων αλλάζει το αποτέλεσμα.</li>
+<li>Μέτρησε χρόνο με time.perf_counter σε επαναλαμβανόμενες εκτελέσεις μετά από προθέρμανση. Κατάγραψε έκδοση Python και συσκευή, μαζί με το επιπλέον κόστος μνήμης.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> PASS, πίνακας n/m/συγκρίσεων και απόδειξη αποτυχίας για μη κατακερματίσιμα στοιχεία.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

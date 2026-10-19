@@ -1,0 +1,159 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>API Authorization, State Machines and Distributed Abuse Cases — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-071.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="API Authorization, State Machines and Distributed Abuse Cases Purpose: Study API security at the level where serious logic bugs occur: object identity, function authority, workflow state…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="API Authorization, State Machines and Distributed Abuse Cases — DedSec Project">
+<meta property="og:description" content="API Authorization, State Machines and Distributed Abuse Cases Purpose: Study API security at the level where serious logic bugs occur: object identity, function authority, workflow state…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-071.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="API Authorization, State Machines and Distributed Abuse Cases — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="API Authorization, State Machines and Distributed Abuse Cases — DedSec Project">
+<meta name="twitter:description" content="API Authorization, State Machines and Distributed Abuse Cases Purpose: Study API security at the level where serious logic bugs occur: object identity, function authority, workflow state…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="API Authorization, State Machines and Distributed Abuse Cases — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>API Authorization, State Machines and Distributed Abuse Cases — DedSec Project</h1><p>API Authorization, State Machines and Distributed Abuse Cases Purpose: Study API security at the level where serious logic bugs occur: object identity, function authority, workflow state…</p><section><blockquote>
+<p><strong>Purpose:</strong> Study API security at the level where serious logic bugs occur: object identity, function authority, workflow state, concurrency, tenancy, delegation, and distributed consistency.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Model object-level and function-level authorization separately.</li>
+<li>Build an authorization matrix from subjects, actions, resources, and context.</li>
+<li>Analyze state-machine and race-condition failures.</li>
+<li>Understand tenancy boundaries, delegation, replay, idempotency, and event-driven authorization.</li>
+<li>Create negative tests that prove a policy rather than merely exercise happy paths.</li>
+</ul>
+<h2>Authentication is only the first gate</h2>
+<p>An API can strongly authenticate a caller and still be insecure if it authorizes the wrong object or action. The decision should conceptually answer:</p>
+<p><strong>May subject S perform action A on resource R under context C?</strong></p>
+<p>Context can include tenant, ownership, group membership, transaction state, device posture, time, delegation, approval state, and policy version. If code checks only “is the caller logged in?”, the policy is incomplete.</p>
+<h2>Object-level authorization</h2>
+<p>Object-level authorization determines whether the caller can access a particular record, document, account, project, invoice, message, or other object. Identifiers should be treated as locators, not proof of authority.</p>
+<p>A strong test suite creates at least two users and multiple objects in different ownership/tenant states, then verifies read/update/delete behavior for every relevant combination.</p>
+<h2>Function-level authorization</h2>
+<p>Function-level authorization determines whether a caller can invoke an administrative or privileged operation at all. Routes such as user management, billing adjustment, export, key rotation, configuration, moderation, or support impersonation need explicit policy independent of whether their URLs are hidden from ordinary clients.</p>
+<p>Backend routing should not infer privilege from UI visibility or client-supplied role fields.</p>
+<h2>Property-level authorization</h2>
+<p>A caller may be authorized to update an object but not every field on it. Mass-assignment and over-posting bugs happen when a framework binds all supplied properties to a model, including fields the caller should not control.</p>
+<p>Define writable fields by operation and caller class. Treat server-owned fields—role, tenant ID, approval state, balance, ownership, verification state—as protected unless a specific workflow grants change authority.</p>
+<h2>Authorization matrix</h2>
+<p>Before writing tests, build a matrix:</p>
+<table>
+<thead>
+<tr>
+  <th>Subject</th>
+  <th>Action</th>
+  <th>Resource relationship</th>
+  <th>Expected</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>owner</td>
+  <td>read</td>
+  <td>own object</td>
+  <td>allow</td>
+</tr>
+<tr>
+  <td>owner</td>
+  <td>update</td>
+  <td>own object</td>
+  <td>allow</td>
+</tr>
+<tr>
+  <td>user</td>
+  <td>read</td>
+  <td>another user's object</td>
+  <td>deny</td>
+</tr>
+<tr>
+  <td>tenant admin</td>
+  <td>read</td>
+  <td>same-tenant object</td>
+  <td>policy-dependent</td>
+</tr>
+<tr>
+  <td>tenant admin</td>
+  <td>read</td>
+  <td>other tenant</td>
+  <td>deny</td>
+</tr>
+<tr>
+  <td>service A</td>
+  <td>write</td>
+  <td>service B namespace</td>
+  <td>deny unless delegated</td>
+</tr>
+</tbody>
+</table>
+<p>This makes missing cases obvious.</p>
+<h2>Multi-tenancy</h2>
+<p>Tenant isolation is a high-value invariant. Tenant context should come from trusted identity/session state, not a request field the caller can arbitrarily choose. Database queries, cache keys, object storage paths, search indexes, background jobs, exports, and logs all need tenant-aware design.</p>
+<p>A common failure is enforcing tenant filters in the web handler but forgetting them in a background worker or secondary query path.</p>
+<h2>State-machine authorization</h2>
+<p>An action may be legal only in one state. An order can be canceled before shipment but not after. A recovery token can be used before expiry but only once. An invitation can be accepted by the intended recipient while pending, not after revocation.</p>
+<p>Test transitions, not just endpoints. Attempt skip, repeat, reverse, and concurrent execution in your local lab.</p>
+<h2>Replay and idempotency</h2>
+<p>Distributed systems retry. A network timeout does not reveal whether the server processed a request. Idempotency keys or transaction identifiers can prevent duplicate effects for operations such as payments or provisioning.</p>
+<p>Security-sensitive one-time actions should bind tokens to purpose, subject, audience, object, and lifetime and mark successful consumption atomically.</p>
+<h2>Race conditions and TOCTOU</h2>
+<p>Two requests can both pass a check before either commits the change. This can violate quotas, balances, one-time token semantics, role changes, or ownership rules.</p>
+<p>Mitigations include transactions, row/version locks, unique constraints, atomic compare-and-swap, serializable operations where appropriate, and designing invariants into the data layer rather than only application code.</p>
+<h2>Event-driven systems</h2>
+<p>Authorization becomes harder when a frontend writes an event and a worker later performs the action. The worker must know which principal authorized the request, what policy applied, whether authority is still valid, and whether the event can be replayed.</p>
+<p>Do not blindly trust fields inside a message merely because it came from an internal queue. Internal components can be buggy or compromised.</p>
+<h2>Delegation</h2>
+<p>Delegation allows one principal to act on behalf of another under bounded authority. OAuth scopes, service-to-service tokens, signed job capabilities, and support workflows are examples.</p>
+<p>Good delegation is explicit about subject, actor, audience, scope, lifetime, and revocation. Logging should preserve both the human/original subject and the acting service when possible.</p>
+<h2>Confused deputy in APIs</h2>
+<p>A privileged service becomes a confused deputy when an unprivileged caller can cause it to use its authority on a caller-chosen target. Server-side URL fetchers, file converters, cloud management helpers, and integration brokers are common shapes.</p>
+<p>Prevent this by binding target choices to policy and minimizing the service's own ambient authority.</p>
+<h2>Pagination, filters, and exports</h2>
+<p>Authorization must survive alternative data access paths. Bulk exports, search endpoints, GraphQL resolvers, analytics views, pagination cursors, filters, and autocomplete can leak objects even when the main record endpoint is correct.</p>
+<p>Treat every representation as a separate policy enforcement point unless authorization is centralized below them.</p>
+<h2>GraphQL considerations</h2>
+<p>GraphQL exposes a flexible query graph. Security review should cover resolver authorization, field-level policy, query complexity/depth, batching, introspection policy, object identifiers, subscriptions, and data-loader caching across users/tenants.</p>
+<p>The schema's flexibility does not remove the need for server-side per-object decisions.</p>
+<h2>Rate controls and abuse economics</h2>
+<p>Some API weaknesses are valid functionality used at harmful scale: enumeration, scraping, expensive search, bulk invitation, or high-cost AI operations. Combine authorization with quotas, anomaly detection, bounded pagination, per-identity limits, and business rules.</p>
+<p>Rate limiting is not a substitute for access control; it reduces abuse volume.</p>
+<h2>Safe local authorization lab</h2>
+<p>Implement an in-memory API model with two tenants, two users per tenant, objects, and roles. You do not need a framework; Python functions are enough. Define <code>authorize(subject, action, resource, context)</code> and generate all subject/action/resource combinations.</p>
+<p>Add a transfer workflow with states <code>pending → approved → completed</code> and assert that skipping or repeating a state fails. Then simulate two concurrent “use once” operations using threads and fix the race with an atomic/locked operation.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete Modules 21, 22, 39, 40, 41, 61, 68, and 69.</p>
+<h3>Practice task</h3>
+<p>Build an authorization matrix containing at least 30 cases and automate it. Include two tenants, property-level restrictions, and one stateful workflow.</p>
+<h3>Evidence to keep</h3>
+<p>Policy matrix, test output, state diagram, one intentionally introduced local failure, fix, and regression test.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>treating object IDs as authorization;</li>
+<li>trusting tenant IDs from request bodies;</li>
+<li>checking policy only in the UI;</li>
+<li>ignoring workers/export/search paths;</li>
+<li>testing only successful workflows.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>Explain object-, function-, and property-level authorization, then show how concurrency can violate a correct-looking check.</p>
+<h3>Continue with</h3>
+<p>Modules <strong>72, 76, 84, and 85</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

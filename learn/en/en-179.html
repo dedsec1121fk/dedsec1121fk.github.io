@@ -1,0 +1,56 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>What is a program? — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-179.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="What is a program? A testable input-to-output contract Concept and intended result A program is a set of steps the computer executes using explicit input and rules. For a simple shop…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="What is a program? — DedSec Project">
+<meta property="og:description" content="What is a program? A testable input-to-output contract Concept and intended result A program is a set of steps the computer executes using explicit input and rules. For a simple shop…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-179.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="What is a program? — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="What is a program? — DedSec Project">
+<meta name="twitter:description" content="What is a program? A testable input-to-output contract Concept and intended result A program is a set of steps the computer executes using explicit input and rules. For a simple shop…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="What is a program? — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>What is a program? — DedSec Project</h1><p>What is a program? A testable input-to-output contract Concept and intended result A program is a set of steps the computer executes using explicit input and rules. For a simple shop…</p><section><h1>What is a program? A testable input-to-output contract</h1>
+<h2>Concept and intended result</h2>
+<p>A program is a set of steps the computer executes using explicit input and rules. For a simple shop receipt, the inputs are a price in integer cents and an item quantity. The output is the total in cents. Decide the allowed domain before writing code: prices cannot be negative, and the quantity is a whole number from zero through 100. A syntactically valid multiplication can still be a wrong program if it quietly accepts negative amounts.</p>
+<h2>Runnable Python 3 exercise</h2>
+<p>Save as <code>01_What_is_a_program.py</code> and run with Python 3. Predict the output before executing; every example has assertions and uses only local synthetic values.</p>
+<pre><code class="language-python">def total_cents(price_cents, count):
+    if type(price_cents) is not int or price_cents &lt; 0:
+        raise ValueError(&quot;price must be nonnegative integer cents&quot;)
+    if type(count) is not int or not 0 &lt;= count &lt;= 100:
+        raise ValueError(&quot;invalid quantity&quot;)
+    return price_cents * count
+assert total_cents(125, 3) == 375
+assert total_cents(125, 0) == 0
+for inputs in ((-1,2),(100,-1),(100,101),(True,2)):
+    try: total_cents(*inputs)
+    except ValueError: pass
+    else: raise AssertionError(&quot;invalid inputs accepted&quot;)
+print(&quot;PASS input -&gt; checked rule -&gt; output&quot;)
+</code></pre>
+<h2>Why this works</h2>
+<p>The function isolates one calculation and returns a result rather than printing inside the logic. Its caller can display euros later, but the core keeps integer cents to avoid decimal rounding problems. The <code>type(...) is int</code> check intentionally rejects Boolean input, even though Python considers bool a subtype of int. Separate invalid input from a legitimate total of zero. Assertions express the expected behavior in a form a machine can check.</p>
+<h2>Guided learner lab</h2>
+<p>Draw a three-box diagram for input, validation and output. Change the unit price to 149 cents and quantity to four; calculate 596 cents on paper before running. Predict outputs for quantity zero and the rejected cases. Add a maximum-price check and write one test on each side of its boundary. Keep the same result for the same input so the helper stays deterministic.</p>
+<h2>Diagnosing mistakes</h2>
+<p>If the output seems incorrect, print or inspect the two inputs before multiplication and identify whether their units are cents or euros. If a program fails while another example runs, capture its exact input and traceback. A passing example is evidence for those cases, not proof of every possible input.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,183 @@
+{
+  "records": {
+    "en": {
+      "entries": 687,
+      "lines_reviewed": 26436,
+      "unique_source_paths": 687,
+      "unique_bodies": 687,
+      "full_body_duplicate_groups": 0,
+      "title_collision_groups": 0,
+      "potential_repeated_long_lines": [
+        {
+          "id": "en-138",
+          "path": "Error_Encyclopedia/057_cannot_find_symbol.md",
+          "count": 1
+        },
+        {
+          "id": "en-150",
+          "path": "Error_Encyclopedia/069_relation_does_not_exist.md",
+          "count": 1
+        },
+        {
+          "id": "en-204",
+          "path": "Knowledge_Encyclopedia/Advanced/067_Data_pipelines_and_ETL.md",
+          "count": 1
+        },
+        {
+          "id": "en-365",
+          "path": "Programming_Languages/Blockchain/Vyper.md",
+          "count": 1
+        },
+        {
+          "id": "en-391",
+          "path": "Programming_Languages/Data/Apache_Spark_SQL.md",
+          "count": 1
+        },
+        {
+          "id": "en-437",
+          "path": "Programming_Languages/Educational/Logo.md",
+          "count": 1
+        },
+        {
+          "id": "en-479",
+          "path": "Programming_Languages/Functional/Factor/01_EXPANDED_WORKBOOK.md",
+          "count": 1
+        },
+        {
+          "id": "en-581",
+          "path": "Programming_Languages/General/Kotlin.md",
+          "count": 1
+        },
+        {
+          "id": "en-643",
+          "path": "Programming_Languages/Hardware/Verilog.md",
+          "count": 1
+        },
+        {
+          "id": "en-998",
+          "path": "Programming_Languages/Web/JavaScript.md",
+          "count": 1
+        },
+        {
+          "id": "en-1088",
+          "path": "Terminology_Glossary/025_Concurrency.md",
+          "count": 1
+        },
+        {
+          "id": "en-1092",
+          "path": "Terminology_Glossary/029_Data_race.md",
+          "count": 1
+        }
+      ]
+    },
+    "el": {
+      "entries": 687,
+      "lines_reviewed": 27614,
+      "unique_source_paths": 687,
+      "unique_bodies": 687,
+      "full_body_duplicate_groups": 0,
+      "title_collision_groups": 0,
+      "potential_repeated_long_lines": [
+        {
+          "id": "el-93",
+          "path": "Γλωσσάρι_Ορολογίας/029_Data_race.md",
+          "count": 1
+        },
+        {
+          "id": "el-456",
+          "path": "Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/JavaScript.md",
+          "count": 1
+        },
+        {
+          "id": "el-930",
+          "path": "Εγκυκλοπαίδεια_Γνώσης/Προχωρημένα/067_Data_pipelines_and_ETL.md",
+          "count": 1
+        },
+        {
+          "id": "el-1000",
+          "path": "Εγχειρίδιο_Σφαλμάτων/057_cannot_find_symbol.md",
+          "count": 1
+        },
+        {
+          "id": "el-1012",
+          "path": "Εγχειρίδιο_Σφαλμάτων/069_relation_does_not_exist.md",
+          "count": 1
+        }
+      ]
+    },
+    "methods": {
+      "entries": 30,
+      "lines_reviewed": 385,
+      "unique_source_paths": 30,
+      "unique_bodies": 30,
+      "full_body_duplicate_groups": 0,
+      "title_collision_groups": 0,
+      "potential_repeated_long_lines": []
+    }
+  },
+  "total_records": 1404,
+  "lines_reviewed": 54435,
+  "violations": [],
+  "title_collisions": {
+    "en": 0,
+    "el": 0,
+    "methods": 0
+  },
+  "rendered_title_collisions": {
+    "en": 0,
+    "el": 0,
+    "methods": 0
+  },
+  "expanded_existing_lessons_by_locale": {
+    "en": 0,
+    "el": 0
+  },
+  "expanded_existing_lessons": {
+    "en": 0,
+    "el": 0,
+    "added_pages": 0
+  },
+  "termux_catalogue_sync": {
+    "source_records": 32,
+    "curated_records": 32,
+    "locale_counts": {
+      "en": 16,
+      "el": 16
+    },
+    "missing": [],
+    "duplicate_paths": [],
+    "min_lesson_characters": 1239
+  },
+  "archive_quality": {
+    "English": {
+      "markdown_files": 474,
+      "under_500_bytes": 0,
+      "under_1000_bytes": 0,
+      "empty_mastery_paths": [],
+      "empty_mastery_count": 0
+    },
+    "Greek": {
+      "markdown_files": 474,
+      "under_500_bytes": 0,
+      "under_1000_bytes": 0,
+      "empty_mastery_paths": [],
+      "empty_mastery_count": 0
+    }
+  },
+  "source_consistency": {
+    "enrichments_checked": 0,
+    "mismatch_count": 0,
+    "mismatches": []
+  },
+  "remaining_short_content": {
+    "English": 0,
+    "Greek": 0
+  },
+  "completion_gate": {
+    "status": "pending",
+    "remaining_empty_mastery_scaffolds": 0,
+    "remaining_short_markdown_documents": 0,
+    "site_archive_mismatches": 0,
+    "note": "Never declare comprehensive completion solely from page counts or clean scaffolds. Full subject-specific editorial review, code execution and browser regression checks still require evidence."
+  }
+}

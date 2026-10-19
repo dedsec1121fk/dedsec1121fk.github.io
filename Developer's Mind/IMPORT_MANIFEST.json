@@ -1,0 +1,11 @@
+{
+  "source": "Curated bilingual offline archive supplied by the user; consolidated topic-paired website indexes",
+  "source_rule": "Canonical website bodies and retained source files; no synthetic padding.",
+  "privacy": "Owner handles, personal names, personal mail and phone strings redacted.",
+  "files_imported": {
+    "English": 634,
+    "Greek": 634
+  },
+  "limit": "Only indexed, textual source files are re-exported; pre-existing supplemental files and binaries are left unchanged.",
+  "expanded_existing_lessons": 0
+}

@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>E0308 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-128.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Rust E0308 — an expression has the wrong type Find the incompatible branch Rust branches producing a value need compatible types. An accidental semicolon converts a value expression into…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="E0308 — DedSec Project">
+<meta property="og:description" content="Rust E0308 — an expression has the wrong type Find the incompatible branch Rust branches producing a value need compatible types. An accidental semicolon converts a value expression into…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-128.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="E0308 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="E0308 — DedSec Project">
+<meta name="twitter:description" content="Rust E0308 — an expression has the wrong type Find the incompatible branch Rust branches producing a value need compatible types. An accidental semicolon converts a value expression into…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="E0308 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>E0308 — DedSec Project</h1><p>Rust E0308 — an expression has the wrong type Find the incompatible branch Rust branches producing a value need compatible types. An accidental semicolon converts a value expression into…</p><section><h1>Rust E0308 — an expression has the wrong type</h1>
+<h2>Find the incompatible branch</h2>
+<p>Rust branches producing a value need compatible types. An accidental semicolon converts a value expression into unit (), causing a mismatch with the declared return type.</p>
+<pre><code class="language-rust">fn classify(score: u8) -&gt; &amp;'static str {
+    if score &gt;= 50 { &quot;pass&quot; } else { &quot;retry&quot; }
+}
+fn main() {
+    assert_eq!(classify(49), &quot;retry&quot;);
+    assert_eq!(classify(50), &quot;pass&quot;);
+}
+</code></pre>
+<p>The following deliberately broken function would yield a mismatch:</p>
+<pre><code class="language-rust">// fn broken() -&gt; i32 {
+//     let value = 3;
+//     value; // semicolon returns unit (), not i32
+// }
+</code></pre>
+<h2>Repair the type contract</h2>
+<p>Read both sides of if, every match arm, the function return type, and the final block expression. Decide whether two string branches should return both borrowed &amp;str values or both owned Strings. Do not use an unchecked cast simply to make the error disappear.</p>
+<h2>Independent exercise</h2>
+<p>Rewrite classify to return an enum with Pass and Retry variants, derive PartialEq and test scores 0, 49, 50, 100, 255. Compiler type correctness and business threshold correctness are separate requirements.</p>
+<p>Official diagnostic: https://doc.rust-lang.org/error_codes/E0308.html</p>
+<h2>Diagnose the type of each branch</h2>
+<p>A frequent repair is to wrap <em>both</em> outcomes in the same algebraic type rather than forcing a cast:</p>
+<pre><code class="language-rust">fn parse_port(text: &amp;str) -&gt; Result&lt;u16, &amp;'static str&gt; {
+    match text.parse::&lt;u16&gt;() {
+        Ok(value) if value &gt; 0 =&gt; Ok(value),
+        Ok(_) =&gt; Err(&quot;port must be nonzero&quot;),
+        Err(_) =&gt; Err(&quot;invalid decimal port&quot;),
+    }
+}
+</code></pre>
+<p>Test <code>&quot;8080&quot;</code> as success, <code>&quot;0&quot;</code> as domain failure and <code>&quot;70000&quot;</code> as parse failure. An <code>Ok(8080)</code> arm and a bare <code>&quot;invalid&quot;</code> arm are incompatible: the latter must be <code>Err(...)</code>. Keeping a typed error result is clearer than silencing a mismatch with unchecked numeric conversions. Also inspect the final expression: <code>Ok(value);</code> followed by no expression returns <code>()</code>.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

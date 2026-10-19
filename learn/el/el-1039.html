@@ -1,0 +1,59 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>HTTP 500 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1039.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="HTTP 500 — σφάλμα διακομιστή με σωστή διάγνωση Περιβάλλον: web servers, reverse proxies, API backends και clients. Τι σημαίνει ο κωδικός Το HTTP 500 δηλώνει ότι ο server αντιμετώπισε…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="HTTP 500 — DedSec Project">
+<meta property="og:description" content="HTTP 500 — σφάλμα διακομιστή με σωστή διάγνωση Περιβάλλον: web servers, reverse proxies, API backends και clients. Τι σημαίνει ο κωδικός Το HTTP 500 δηλώνει ότι ο server αντιμετώπισε…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1039.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HTTP 500 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HTTP 500 — DedSec Project">
+<meta name="twitter:description" content="HTTP 500 — σφάλμα διακομιστή με σωστή διάγνωση Περιβάλλον: web servers, reverse proxies, API backends και clients. Τι σημαίνει ο κωδικός Το HTTP 500 δηλώνει ότι ο server αντιμετώπισε…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="HTTP 500 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>HTTP 500 — DedSec Project</h1><p>HTTP 500 — σφάλμα διακομιστή με σωστή διάγνωση Περιβάλλον: web servers, reverse proxies, API backends και clients. Τι σημαίνει ο κωδικός Το HTTP 500 δηλώνει ότι ο server αντιμετώπισε…</p><section><h1>HTTP 500 — σφάλμα διακομιστή με σωστή διάγνωση</h1>
+<p><strong>Περιβάλλον:</strong> web servers, reverse proxies, API backends και clients.</p>
+<h2>Τι σημαίνει ο κωδικός</h2>
+<p>Το HTTP 500 δηλώνει ότι ο server αντιμετώπισε συνθήκη που τον εμπόδισε να εξυπηρετήσει το αίτημα. Δεν προσδιορίζει από μόνο του την αιτία. Διαφέρει από <code>404</code> (μη διαθέσιμο resource), <code>429</code> (περιορισμός ρυθμού) και <code>502</code>/<code>503</code> (συχνά πρόβλημα upstream ή διαθεσιμότητας). Η <code>fetch()</code> του browser μπορεί να εκπληρωθεί κανονικά <strong>με</strong> status 500, οπότε απαιτείται έλεγχος <code>response.ok</code>.</p>
+<h2>Ασφαλής τοπική προσομοίωση</h2>
+<p>Ο ακόλουθος server αποστέλλει σκόπιμα 500. Είναι <strong>προσομοίωση απόκρισης</strong>, όχι πραγματικό unhandled exception:</p>
+<pre><code class="language-python">from http.server import BaseHTTPRequestHandler, HTTPServer
+
+class Demo(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(500)
+        self.send_header(&quot;Content-Type&quot;, &quot;text/plain; charset=utf-8&quot;)
+        self.end_headers()
+        self.wfile.write(b&quot;Internal failure&quot;)
+
+HTTPServer((&quot;127.0.0.1&quot;, 8766), Demo).serve_forever()
+</code></pre>
+<p>Σε δεύτερο τερματικό εκτέλεσε <code>curl -i http://127.0.0.1:8766/</code>. <strong>Αναμενόμενο:</strong> <code>HTTP/1.0 500 Internal Server Error</code> και μικρό κείμενο απόκρισης. Τερμάτισε με Ctrl-C. Η σύνδεση είναι μόνο στο loopback.</p>
+<h2>Εντοπισμός πραγματικής βλάβης</h2>
+<ol>
+<li>Κατάγραψε ώρα, path, καθαρισμένες παραμέτρους και request/correlation ID. Όχι κωδικούς, tokens ή προσωπικά δεδομένα.</li>
+<li>Σύνδεσε το request ID με τα δομημένα logs και τα exception details που βλέπουν μόνο οι υπεύθυνοι διαχείρισης.</li>
+<li>Έλεγξε έκδοση deployment, ρυθμίσεις περιβάλλοντος, εξαρτήσεις, migrations βάσης και όρια πόρων.</li>
+<li>Κάνε αναπαραγωγή στο staging με μη ευαίσθητα δεδομένα και πρόσθεσε regression test.</li>
+<li>Εμφάνισε στον χρήστη σταθερό, ασφαλές μήνυμα χωρίς stack trace και εσωτερικές πληροφορίες.</li>
+</ol>
+<h2>Client και επαναλήψεις</h2>
+<p>Σε JavaScript έλεγξε <code>if (!response.ok) { /* χειρισμός status */ }</code>. Μην επαναλαμβάνεις αυτόματα κάθε <code>POST</code>: το backend μπορεί να έχει αποθηκεύσει μέρος της πράξης πριν επιστρέψει 500. Χρησιμοποίησε idempotency keys όπου υποστηρίζονται και ξεχώρισε προσωρινή αστοχία από μόνιμο bug εφαρμογής.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

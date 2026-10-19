@@ -1,0 +1,140 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-074.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security Purpose: Understand Linux isolation and privilege mechanisms deeply enough to review services, containers…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security — DedSec Project">
+<meta property="og:description" content="Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security Purpose: Understand Linux isolation and privilege mechanisms deeply enough to review services, containers…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-074.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security — DedSec Project">
+<meta name="twitter:description" content="Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security Purpose: Understand Linux isolation and privilege mechanisms deeply enough to review services, containers…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security — DedSec Project</h1><p>Linux Internals — Capabilities, Namespaces, Seccomp, LSM and eBPF Security Purpose: Understand Linux isolation and privilege mechanisms deeply enough to review services, containers…</p><section><blockquote>
+<p><strong>Purpose:</strong> Understand Linux isolation and privilege mechanisms deeply enough to review services, containers, Android/Termux constraints, and kernel-facing attack surface.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Explain Linux credentials, capabilities, namespaces, cgroups, seccomp, and LSM roles.</li>
+<li>Understand why root inside a container is not automatically host root, yet remains high risk.</li>
+<li>Recognize the kernel as a shared security boundary.</li>
+<li>Understand eBPF's security/observability role at a high level.</li>
+<li>Inspect your own process isolation without bypassing restrictions.</li>
+</ul>
+<h2>Linux credentials</h2>
+<p>Linux processes carry real/effective/saved user and group identifiers, supplementary groups, capability sets, namespaces, and security-module context. Files and IPC objects have ownership, mode bits, ACLs, labels, and other metadata.</p>
+<p>Authorization is layered. A UID match may permit something that an SELinux policy denies, or a capability may permit an operation otherwise reserved for UID 0.</p>
+<h2>Capabilities</h2>
+<p>Linux capabilities divide traditional root authority into named units such as network administration, ownership override, raw I/O, or process-control abilities. A process can have permitted, effective, inheritable, bounding, and ambient capability sets depending on execution context.</p>
+<p>Least privilege means removing capabilities not required by the workload. Some capabilities are so broad that they effectively undermine container boundaries when granted unnecessarily.</p>
+<h2>Namespaces</h2>
+<p>Namespaces provide separate views of selected kernel resources. Common namespace classes include:</p>
+<ul>
+<li>PID;</li>
+<li>mount;</li>
+<li>network;</li>
+<li>IPC;</li>
+<li>UTS/hostname;</li>
+<li>user;</li>
+<li>cgroup;</li>
+<li>time on supporting kernels.</li>
+</ul>
+<p>Namespaces change <strong>view and identity context</strong>; they do not create a separate kernel. Containers combine namespaces with cgroups, capabilities, seccomp, LSM policy, filesystem layout, and runtime configuration.</p>
+<h2>User namespaces</h2>
+<p>User namespaces can map a process's namespace-local UIDs/GIDs to different host IDs. They support rootless containers and reduce host authority in some designs. Kernel attack surface reachable from unprivileged user namespaces must be carefully maintained, which is why distributions may differ in enablement policy.</p>
+<h2>Cgroups</h2>
+<p>Control groups account for and limit resources such as CPU, memory, process count, and I/O. They are important for availability containment. Namespaces answer “what can the process see?” while cgroups help answer “how much can it consume?”</p>
+<p>Resource isolation is security-relevant because unlimited memory/process creation can become denial of service even when filesystem permissions are correct.</p>
+<h2>Seccomp</h2>
+<p>Seccomp filtering restricts which system calls a process may make. The Linux kernel documentation describes seccomp-BPF as a way to filter incoming system calls and reduce reachable kernel entry points.</p>
+<p>A good seccomp profile is workload-specific. An overly broad profile offers little reduction; an overly narrow one breaks legitimate behavior. Generate policy from understanding, then test failure handling.</p>
+<h2>Landlock and unprivileged sandboxing</h2>
+<p>Landlock is a stackable Linux Security Module interface designed to let processes restrict their own ambient filesystem/network rights where supported. It illustrates an important pattern: applications can voluntarily reduce what compromised code would be able to reach.</p>
+<p>Availability depends on kernel version/configuration; do not assume a specific Android/Termux device exposes it.</p>
+<h2>Linux Security Modules</h2>
+<p>LSM provides hooks for security modules such as SELinux and AppArmor. These systems can enforce mandatory policy beyond traditional discretionary permissions.</p>
+<p>Android relies heavily on SELinux plus the application sandbox. Termux runs as an ordinary Android application UID and cannot simply acquire host root or bypass SELinux without the device itself being modified.</p>
+<h2><code>no_new_privs</code></h2>
+<p>The <code>no_new_privs</code> process attribute prevents <code>execve()</code> from granting additional privilege through mechanisms such as set-user-ID binaries. It is commonly combined with sandboxing/seccomp designs.</p>
+<p>The principle is monotonic privilege reduction: after a process enters an untrusted parsing stage, it should be difficult to gain new authority.</p>
+<h2>Chroot versus isolation</h2>
+<p><code>chroot</code> changes path resolution root for a process but is not a complete container/security sandbox by itself, especially for privileged processes. Modern isolation uses multiple controls rather than treating a changed filesystem root as sufficient.</p>
+<h2>Kernel attack surface</h2>
+<p>Every enabled syscall, filesystem, protocol, device driver, ioctl, eBPF interface, namespace operation, and kernel parser may contribute reachable code. Kernel self-protection aims to reduce exposed functionality and make exploitation harder through memory protections, read-only data, stack protections, CFI-like mechanisms, and restricted interfaces.</p>
+<p>Keep kernels patched and minimize unnecessary privileged device access.</p>
+<h2>eBPF</h2>
+<p>eBPF executes verified programs in kernel-related contexts for networking, tracing, observability, and security. Because eBPF is powerful, kernel versions and configuration place restrictions on who can load programs and what helpers/types are available.</p>
+<p>Defenders use eBPF for high-fidelity telemetry; platform maintainers also treat verifier/runtime bugs as serious kernel security issues. Do not attempt to bypass unprivileged eBPF restrictions.</p>
+<h2><code>/proc</code>, <code>/sys</code>, and observability</h2>
+<p>Linux exposes process/system state through virtual filesystems. Containers and Android may mount filtered views. Read-only inspection can reveal namespace IDs, capability masks, cgroup membership, and mount layout.</p>
+<p>For your own process, examples may include:</p>
+<pre><code class="language-console">cat /proc/self/status
+cat /proc/self/cgroup
+cat /proc/self/mountinfo | head
+</code></pre>
+<p>Interpret what is available on your environment; permissions intentionally differ.</p>
+<h2>Safe isolation lab</h2>
+<p>On a disposable Linux VM with a container runtime, run a minimal container and compare inside/outside:</p>
+<ul>
+<li>PID view;</li>
+<li>hostname;</li>
+<li>network interfaces;</li>
+<li>mount table;</li>
+<li>UID mapping;</li>
+<li>capability set;</li>
+<li>cgroup membership.</li>
+</ul>
+<p>Do not attempt to escape the container. Your goal is proving which boundaries exist and which kernel is shared.</p>
+<h2>Hardening review</h2>
+<p>For a service/container ask:</p>
+<ul>
+<li>can it run as non-root?</li>
+<li>which capabilities can be dropped?</li>
+<li>is the filesystem read-only where possible?</li>
+<li>are host devices/sockets mounted?</li>
+<li>is privileged mode disabled?</li>
+<li>are resource limits defined?</li>
+<li>is seccomp/LSM policy active?</li>
+<li>are secrets mounted narrowly?</li>
+<li>can it reach unnecessary networks?</li>
+<li>is the kernel maintained?</li>
+</ul>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete Modules 24, 33, 53, 62, and 73 for comparison.</p>
+<h3>Practice task</h3>
+<p>Inventory namespaces, capabilities, cgroups, and security-module context for a process you own and a disposable container. Explain what each control isolates and what remains shared.</p>
+<h3>Evidence to keep</h3>
+<p>Sanitized <code>/proc</code> output, capability list, namespace diagram, and a least-privilege hardening plan.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>assuming namespace root equals host root;</li>
+<li>treating containers as VMs;</li>
+<li>granting broad capabilities to fix permissions quickly;</li>
+<li>using <code>chroot</code> as a complete sandbox;</li>
+<li>trying to bypass Android/Linux security restrictions for a learning task.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>Explain namespaces versus cgroups versus seccomp versus LSM, and identify which layer reduces kernel attack surface.</p>
+<h3>Continue with</h3>
+<p>Modules <strong>75, 76, 80, 81, and 85</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

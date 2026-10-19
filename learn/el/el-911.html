@@ -1,0 +1,106 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-911.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript Αίτημα και απάντηση HTTP Πρακτική εξήγηση HTTP request έχει method, target και headers, ενώ response δίνει status, headers…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript — DedSec Project">
+<meta property="og:description" content="Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript Αίτημα και απάντηση HTTP Πρακτική εξήγηση HTTP request έχει method, target και headers, ενώ response δίνει status, headers…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-911.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript — DedSec Project">
+<meta name="twitter:description" content="Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript Αίτημα και απάντηση HTTP Πρακτική εξήγηση HTTP request έχει method, target και headers, ενώ response δίνει status, headers…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript — DedSec Project</h1><p>Τεχνολογίες web: HTTP, REST, cache, προσβασιμότητα και JavaScript Αίτημα και απάντηση HTTP Πρακτική εξήγηση HTTP request έχει method, target και headers, ενώ response δίνει status, headers…</p><section><h2>Αίτημα και απάντηση HTTP</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>HTTP request έχει method, target και headers, ενώ response δίνει status, headers και πιθανώς body. Επιτυχημένη TCP σύνδεση δεν εγγυάται HTTP 2xx.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-http">GET /health HTTP/1.1
+Host: example.test
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{&quot;ok&quot;:true}
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Σύγκρινε 200, 404 και 503. Πότε επιτρέπεται retry και πώς ελέγχεται Content-Type πριν από JSON parsing;</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για HTTP request and response εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+<h2>REST και μοντελοποίηση πόρων</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Resource API χρησιμοποιεί σταθερά IDs και HTTP method semantics. GET πρέπει να είναι safe, PUT idempotent όταν εφαρμόζεται σωστά, ενώ επαναλαμβανόμενο POST ίσως δημιουργεί duplicates.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-http">GET /tasks/5 HTTP/1.1
+Host: example.test
+
+PUT /tasks/5 HTTP/1.1
+Host: example.test
+Content-Type: application/json
+
+{&quot;title&quot;:&quot;Ready&quot;}
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Σχεδίασε 404 για missing task 5 και δοκίμασε identical PUT δύο φορές. Εξήγησε πώς URI ταυτοποιεί resource.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για REST and resource modeling εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+<h2>Προσωρινή αποθήκευση και ανανέωση</h2>
+<h3>Το πρόβλημα και η ουσία</h3>
+<p>Η φρεσκάδα και η διάρκεια αποθήκευσης δεν είναι ίδια. Το Cache-Control: max-age=60 επιτρέπει reuse όσο το response είναι fresh. Όταν παλιώσει, το If-None-Match ελέγχει το ETag. Το 304 επαναχρησιμοποιεί cached body υπό τους κανόνες cache· αλλαγή επιστρέφει 200.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-http">HTTP/1.1 200 OK
+Cache-Control: public, max-age=60
+ETag: &quot;guide-v1&quot;
+
+GET /guide HTTP/1.1
+If-None-Match: &quot;guide-v1&quot;
+</code></pre>
+<h3>Ανεξάρτητος έλεγχος</h3>
+<p>Σχεδίασε timeline: t=0 αποθήκευση 200, t=30 reuse, t=61 conditional request. Δοκίμασε 304 και νέο 200. Μην αποθηκεύεις δημόσια προσωποποιημένα responses· εξέτασε private, no-store και Vary.</p>
+<p><strong>Επίσημη τεκμηρίωση:</strong> https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching</p>
+<h2>Προσβασιμότητα HTML</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Accessible HTML μεταφέρει ρόλους και labels μέσω semantics: button είναι interactive, heading οργανώνει κείμενο και label ονομάζει control. Η εμφάνιση δεν αρκεί.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-html">&lt;label for=&quot;search&quot;&gt;Search lessons&lt;/label&gt;
+&lt;input id=&quot;search&quot; type=&quot;search&quot;&gt;
+&lt;button type=&quot;button&quot;&gt;Open results&lt;/button&gt;
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Πλοηγήσου μόνο με keyboard, έλεγξε focus order και screen reader. Αντικατάστησε button με div και βρες ποια συμπεριφορά χάνεται.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για HTML accessibility εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+<h2>Συμβάντα JavaScript και ασύγχρονη κατάσταση</h2>
+<h3>Πρακτική εξήγηση</h3>
+<p>Event handlers μπορούν να ξεκινήσουν async work με απαντήσεις εκτός σειράς. Ένα αυξανόμενο request ID αποτρέπει παλιά απάντηση από το να αντικαταστήσει νέα.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-javascript">let latest=0;
+async function search(term,fetchRows){
+  const ticket=++latest;
+  const rows=await fetchRows(term);
+  return ticket===latest?rows:null;
+}
+</code></pre>
+<h3>Πραγματική άσκηση</h3>
+<p>Φτιάξε δύο controlled Promises, επίλυσε πρώτα τη νεότερη και έλεγξε ότι η παλιά αγνοείται. Ξεχώρισε debounce και stale-result cancellation.</p>
+<h3>Έλεγχος συμβολαίου</h3>
+<p>Για JavaScript events and asynchronous state εξήγησε πώς ο caller ξεχωρίζει έγκυρο αποτέλεσμα από silent failure. Δοκίμασε normal και boundary input και σημείωσε έκδοση και αποτέλεσμα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

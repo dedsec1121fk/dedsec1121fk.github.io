@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>lean_4 — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-713.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="lean_4 — consolidated language guide Lean 4 Operational idea Lean 4 combines theorem proving with a functional language; propositions and programs share typed expression machinery. Source…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="lean_4 — consolidated language guide — DedSec Project">
+<meta property="og:description" content="lean_4 — consolidated language guide Lean 4 Operational idea Lean 4 combines theorem proving with a functional language; propositions and programs share typed expression machinery. Source…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-713.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="lean_4 — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="lean_4 — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="lean_4 — consolidated language guide Lean 4 Operational idea Lean 4 combines theorem proving with a functional language; propositions and programs share typed expression machinery. Source…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="lean_4 — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>lean_4 — consolidated language guide — DedSec Project</h1><p>lean_4 — consolidated language guide Lean 4 Operational idea Lean 4 combines theorem proving with a functional language; propositions and programs share typed expression machinery. Source…</p><section><h2>Lean 4</h2>
+<h3>Operational idea</h3>
+<p>Lean 4 combines theorem proving with a functional language; propositions and programs share typed expression machinery.</p>
+<h3>Source or deliberately marked concept</h3>
+<pre><code class="language-text">def double (n : Nat) : Nat := n + n
+#eval double 4
+</code></pre>
+<h3>Apply it to one controlled task</h3>
+<p>Distinguish evaluation of a function from proof of a universal property. Sketch the induction cases for a basic theorem.</p>
+<h3>Check the important boundary</h3>
+<p>A successful example evaluation cannot certify a theorem for every natural number.</p>
+<p>Work with disposable data in a genuine implementation of Lean_4 where available. Record the actual tool version and compare your prediction with observed output. If a compatible runtime is missing, clearly mark this as static analysis instead of claiming it passed execution. Split the normal case from at least one boundary value, and avoid using sensitive or production datasets merely to follow a tutorial.</p>
+<h2>Lean_4 — Expanded practice workbook</h2>
+<h3>Inspect the smallest source</h3>
+<pre><code class="language-text">def greet (name : String) : String := &quot;Hello, &quot; ++ name ++ &quot;!&quot;
+#eval greet &quot;Ada&quot;
+</code></pre>
+<p><strong>Run or compilation context:</strong> lean Hello.lean.. Treat this as a baseline: save a copy, confirm the toolchain version and note whether the example merely evaluates a value, prints text, or creates external effects. Production accounts, datasets and hardware must not be used for first attempts.</p>
+<h3>Work through the actual mechanism</h3>
+<p>Prove a simple equality by rfl and then prove n + 0 = n for Nat by induction or a named theorem. Confirm the environment has no sorry or axioms introduced.</p>
+<h3>Diagnose the sharp edge</h3>
+<p>Lean 4 syntax is not Lean 2/3 syntax; old tutorials can silently suggest obsolete keywords and tactics.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

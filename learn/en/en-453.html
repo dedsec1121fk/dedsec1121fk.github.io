@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>common_lisp — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-453.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="common_lisp — consolidated language guide Common Lisp Operational idea Common Lisp is a multi-paradigm Lisp with macros, packages and the condition system. Source or deliberately marked…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="common_lisp — consolidated language guide — DedSec Project">
+<meta property="og:description" content="common_lisp — consolidated language guide Common Lisp Operational idea Common Lisp is a multi-paradigm Lisp with macros, packages and the condition system. Source or deliberately marked…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-453.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="common_lisp — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="common_lisp — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="common_lisp — consolidated language guide Common Lisp Operational idea Common Lisp is a multi-paradigm Lisp with macros, packages and the condition system. Source or deliberately marked…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="common_lisp — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>common_lisp — consolidated language guide — DedSec Project</h1><p>common_lisp — consolidated language guide Common Lisp Operational idea Common Lisp is a multi-paradigm Lisp with macros, packages and the condition system. Source or deliberately marked…</p><section><h2>Common Lisp</h2>
+<h3>Operational idea</h3>
+<p>Common Lisp is a multi-paradigm Lisp with macros, packages and the condition system.</p>
+<h3>Source or deliberately marked concept</h3>
+<pre><code class="language-text">(defun double (n) (* n 2))
+(double 5)
+</code></pre>
+<h3>Apply it to one controlled task</h3>
+<p>Compare evaluating a quoted form with invoking double; then design a function accepting a list of numbers.</p>
+<h3>Check the important boundary</h3>
+<p>Package symbols and lexical variables are different concepts; avoid accidental collisions when composing libraries.</p>
+<p>Work with disposable data in a genuine implementation of Common_Lisp where available. Record the actual tool version and compare your prediction with observed output. If a compatible runtime is missing, clearly mark this as static analysis instead of claiming it passed execution. Split the normal case from at least one boundary value, and avoid using sensitive or production datasets merely to follow a tutorial.</p>
+<h2>Common_Lisp — Expanded practice workbook</h2>
+<h3>A value plus a presence flag</h3>
+<p>Common Lisp <code>car</code> of NIL returns NIL, so using NIL alone as a missing-value marker can be ambiguous. A second return value can describe presence:</p>
+<pre><code class="language-lisp">(defun safe-first (items)
+  (if (consp items)
+      (values (car items) t)
+      (values nil nil)))
+
+(multiple-value-bind (item present) (safe-first '(10 20))
+  (assert (and present (= item 10))))
+(multiple-value-bind (item present) (safe-first nil)
+  (assert (and (null item) (not present))))
+(format t &quot;checks passed~%&quot;)
+</code></pre>
+<p>Load this in a Common Lisp implementation such as SBCL and note its version. The expected printed message is <code>checks passed</code>. <code>values</code> and <code>multiple-value-bind</code> are language mechanisms, not ordinary cons cells or list elements. Compare calling <code>safe-first</code> in a context that consumes only its primary value.</p>
+<h3>Why nil is not always a missing record</h3>
+<p>Consider <code>(safe-first '(nil 5))</code>. The first return value is NIL but the presence flag must be true. If the caller ignored the second result, it could falsely conclude that the list was empty. Explain how this differs from a list of strings in which empty string is itself a valid value.</p>
+<h3>Deliberate type error</h3>
+<p>Try applying <code>(+ &quot;2&quot; 3)</code> in a disposable REPL and capture the actual type-condition message. Do not rely on a particular debugger restart prompt: the available restarts and interactive UI are implementation-specific. Handle a genuine type mismatch rather than forcing arbitrary strings into arithmetic.</p>
+<h3>Further exercise</h3>
+<p>Write <code>safe-last</code> that distinguishes an empty proper list from a final element equal to NIL. Test <code>()</code>, <code>(1 2)</code> and <code>(1 nil)</code>; explain how <code>listp</code> differs from checking whether a nonempty cons cell exists. Document evaluation of optional and keyword parameters in a second function. Reference: https://www.lispworks.com/documentation/HyperSpec/Front/</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

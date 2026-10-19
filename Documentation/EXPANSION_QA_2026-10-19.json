@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-19",
+  "source_zip": "DedSec_Portable_Main_Test_Backup_SEO.zip",
+  "output_artifact_type": "portable source ZIP; not deployed",
+  "github_actions_minutes_used": 0,
+  "indexed_records_each_locale": 669,
+  "indexed_markdown_guides_each_locale": 422,
+  "other_markdown_each_locale": 16,
+  "new_original_topic_pairs": 35,
+  "new_markdown_files": 70,
+  "existing_english_greek_titles_rewritten": 88,
+  "strict_depth_audit": "PASS",
+  "duplicate_full_bodies": "zero",
+  "exact_repeated_substantive_paragraph_groups": 0,
+  "high_similarity_prose_pairs_at_0_72": 0,
+  "unpaired_topic_keys": 0,
+  "broken_offline_markdown_links": 0,
+  "unit_tests": "17/17 PASS",
+  "new_code_snippets_syntax_checked": 70,
+  "runtime_checks": {
+    "python_and_c_samples": "PASS on Linux; results of standalone new code fixture runner",
+    "rust_sample": "NOT EXECUTED: rustc not installed",
+    "live_Android_Termux_Windows": "NOT EXECUTED"
+  },
+  "browser_testing": "Full localhost Chromium navigation attempted, blocked with ERR_BLOCKED_BY_ADMINISTRATOR. Previous inline browser smoke record retained but not extended.",
+  "deployments": {
+    "main": {
+      "repository": "dedsec1121fk/dedsec1121fk.github.io",
+      "base_url": "https://ded-sec.space/",
+      "preview_pages_by_language": {
+        "en": 669,
+        "el": 669
+      },
+      "sitemap_urls": 1517,
+      "robots_policy": "index"
+    },
+    "test": {
+      "repository": "dedsec1121fk/Test",
+      "base_url": "https://dedsec1121fk.github.io/Test/",
+      "preview_pages_by_language": {
+        "en": 669,
+        "el": 669
+      },
+      "sitemap_urls": 1517,
+      "robots_policy": "noindex"
+    },
+    "backup": {
+      "repository": "sal-scar/ded-sec",
+      "base_url": "https://ded-sec.online/",
+      "preview_pages_by_language": {
+        "en": 669,
+        "el": 669
+      },
+      "sitemap_urls": 1517,
+      "robots_policy": "index"
+    }
+  },
+  "primary_official_documentation_links": [
+    "https://github.com/termux/termux-packages/wiki/Package-Management",
+    "https://docs.python.org/3/library/venv.html",
+    "https://source.android.com/docs/security/features/apksigning",
+    "https://docs.github.com/en/actions/how-tos/secure-your-work"
+  ],
+  "limits": [
+    "No claim that all specialized programming-language examples are executable on every platform.",
+    "Semantic accuracy was manually improved but not independently certified for every existing topic.",
+    "Live social-card previews, real hardware tests and production website publication require separate checks."
+  ]
+}

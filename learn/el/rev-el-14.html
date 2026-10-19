@@ -1,0 +1,52 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Σύγκριση συμπεριφοράς εκδόσεων — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/rev-el-14.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Σύγκριση εκδόσεων: συμπεριφορά, δομή και metadata Μοντέλο και όρια συμπερασμάτων Δύο builds με διαφορετικά hashes δεν έχουν απαραίτητα διαφορετική συμπεριφορά· timestamps, compression και…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Σύγκριση συμπεριφοράς εκδόσεων — DedSec Project">
+<meta property="og:description" content="Σύγκριση εκδόσεων: συμπεριφορά, δομή και metadata Μοντέλο και όρια συμπερασμάτων Δύο builds με διαφορετικά hashes δεν έχουν απαραίτητα διαφορετική συμπεριφορά· timestamps, compression και…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/rev-el-14.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Σύγκριση συμπεριφοράς εκδόσεων — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Σύγκριση συμπεριφοράς εκδόσεων — DedSec Project">
+<meta name="twitter:description" content="Σύγκριση εκδόσεων: συμπεριφορά, δομή και metadata Μοντέλο και όρια συμπερασμάτων Δύο builds με διαφορετικά hashes δεν έχουν απαραίτητα διαφορετική συμπεριφορά· timestamps, compression και…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Σύγκριση συμπεριφοράς εκδόσεων — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Σύγκριση συμπεριφοράς εκδόσεων — DedSec Project</h1><p>Σύγκριση εκδόσεων: συμπεριφορά, δομή και metadata Μοντέλο και όρια συμπερασμάτων Δύο builds με διαφορετικά hashes δεν έχουν απαραίτητα διαφορετική συμπεριφορά· timestamps, compression και…</p><section><h1>Σύγκριση εκδόσεων: συμπεριφορά, δομή και metadata</h1>
+<h2>Μοντέλο και όρια συμπερασμάτων</h2>
+<p>Δύο builds με διαφορετικά hashes δεν έχουν απαραίτητα διαφορετική συμπεριφορά· timestamps, compression και metadata μπορούν να αλλάζουν bytes. Αντίστροφα, μια μικρή αλλαγή source μπορεί να αλλάξει κρίσιμο branch. Σύγκρινε στο σωστό επίπεδο: hash για ταυτότητα, δομημένο diff για πεδία και regression fixtures για συμπεριφορά.</p>
+<h2>Αυτοτελές δοκιμαστικό δείγμα</h2>
+<pre><code class="language-python">from hashlib import sha256
+import difflib
+a = &quot;limit=10\nmode=fast\n&quot;
+b = &quot;limit=11\nmode=fast\n&quot;
+assert sha256(a.encode()).digest() != sha256(b.encode()).digest()
+diff = list(difflib.unified_diff(
+    a.splitlines(True), b.splitlines(True), fromfile=&quot;old&quot;, tofile=&quot;new&quot;))
+assert any(&quot;-limit=10&quot; in line for line in diff)
+assert any(&quot;+limit=11&quot; in line for line in diff)
+print(&quot;&quot;.join(diff))
+</code></pre>
+<h2>Βήματα έρευνας και ελέγχου</h2>
+<p>Πριν από diff, κανονικοποίησε μόνο πεδία που έχεις τεκμηριώσει ότι δεν επηρεάζουν το ερώτημα· μη διαγράφεις άγνωστα στοιχεία. Κατάγραψε αλλαγές αρχείων, γραμμών και dependencies. Για κάθε πιθανή λειτουργική αλλαγή βρες είσοδο που διαφοροποιεί παλιά και νέα έκδοση. Κράτησε και τα δύο πρωτότυπα με hashes.</p>
+<h2>Πρακτικό εργαστήριο</h2>
+<p>Φτιάξε δύο ZIP με ίδιο κείμενο αλλά διαφορετικό archive timestamp και δείξε ότι τα ZIP hashes διαφέρουν ενώ τα extracted contents είναι ίδια. Μετά άλλαξε ένα αριθμητικό όριο και γράψε regression test που αποκαλύπτει τη διαφορά στο boundary.</p>
+<h2>Σύγκρινε σωστό επίπεδο ισοδυναμίας</h2>
+<p>Φτιάξε δύο ZIP με ίδιο ακριβώς δικό σου κείμενο αλλά διαφορετικό timestamp στο αρχείο. Οι συνολικοί SHA-256 των ZIP μπορεί να διαφέρουν, ενώ το hash του εξαγόμενου κειμένου είναι ίδιο. Κατέγραψε τρία επίπεδα: bytes container, metadata entries και πραγματικό περιεχόμενο. Σε δεύτερο παράδειγμα άλλαξε ένα κατώφλι σε απλή μαθηματική συνάρτηση και γράψε τεστ που αποτυγχάνει ακριβώς στο όριο. Μη θεωρείς όλα τα metadata άχρηστα: δικαιώματα, σειρά, timestamps ή υπογραφές ενδέχεται να έχουν σημασία. Κάθε «κανονικοποιημένο» diff χρειάζεται ρητό κανόνα για το τι αγνοεί.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

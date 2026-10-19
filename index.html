@@ -1,200 +1,43 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en"><head><script src="assets/boot.js?v=ddc8a5999f0f"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#05040b">
+<title>DedSec Project</title>
+<link rel="icon" type="image/png" href="dedsec/Favicons/favicon-48.png">
+<link rel="stylesheet" href="dedsec/Assets/vendor/fontawesome/css/all.min.css?v=74005d7c17d4">
+<link rel="stylesheet" href="assets/ui.css?v=992c0d62b004"><link rel="stylesheet" href="assets/galaxy.css?v=4196cfb3afb8"><link rel="stylesheet" href="assets/clean-skin.css?v=26cd28cb1744"><link rel="stylesheet" href="assets/refinement.css?v=e1f2d34386b6"><link rel="preload" href="assets/starfield-dark.svg" as="image" type="image/svg+xml">
+<link rel="preload" as="image" href="dedsec/Assets/Images/Logos/Black%20Purple%20Butterfly%20Logo.jpeg"><script>window.__dedsecBootStart=Date.now();</script>
+<script defer src="assets/cookie-consent.js?v=59a57d8cbb19"></script><script type="application/json" data-knowledge-src="data/en.js?v=d47ae876df76"></script><script type="application/json" data-knowledge-src="data/el.js?v=bc0cbeac9987"></script><script type="application/json" data-knowledge-src="data/methods.js?v=8f9ecb566f21"></script><script type="application/json" data-knowledge-src="data/hacking-guide.js?v=190f73b6b2d4"></script><script type="application/json" data-knowledge-src="data/termux-troubleshooting.js?v=4758ca85ab57"></script><script type="application/json" data-knowledge-src="data/deep-dive.js?v=b965855678fc"></script><script type="application/json" data-knowledge-src="data/hacking-complete-1.js?v=841ac049b9d5"></script><script type="application/json" data-knowledge-src="data/hacking-complete-2.js?v=69cecd73ec10"></script><script type="application/json" data-knowledge-src="data/algorithm-addenda.js?v=702ebf1e034e"></script><script type="application/json" data-knowledge-src="data/lesson-expansions-termux-curated.js?v=3a9f277b0aa9"></script><script type="application/json" data-knowledge-src="data/apply-lesson-expansions.js?v=dd36a126920e"></script><script defer src="assets/knowledge-renderer.js?v=9d2e23c26082"></script><script type="application/json" data-knowledge-src="data/site-search.js?v=6a69e07f002c"></script><script defer src="assets/knowledge-search.js?v=9b494b45dd6f"></script><script defer src="assets/page-controls.js?v=3294bd926d29"></script><script defer src="assets/ui.js?v=0cb5c17714a7"></script>
 
-<html data-deployment="main" data-repository="dedsec1121fk/dedsec1121fk.github.io" lang="en">
-<head>
-<!--MAINTAIN_SEO: Edit <title> + meta description per page; keep canonical to the production domain for SEO.--><link href="/Favicons/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
-<title>DedSec Project - Cross-Platform Cybersecurity Toolkit</title>
-<meta content="#07060d" name="theme-color"/>
-<meta content="dark light" name="color-scheme"/>
-<meta content="DedSec Project — Learn Termux and Build from Android" name="title"/>
-<meta content="Run DedSec Project on Termux for Android or on Ubuntu, Kali Linux, and Linux Mint with shared setup, tools, paths, and assistance." name="description"/>
-<link href="/Favicons/favicon.ico" rel="icon" sizes="any"/>
-<link href="/Favicons/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
-<link href="/Favicons/favicon-48.png" rel="icon" sizes="48x48" type="image/png"/>
-<link href="/Favicons/favicon-16.png" rel="icon" sizes="16x16" type="image/png"/>
-<link href="/Favicons/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/>
-<link href="/site.webmanifest" rel="manifest"/>
-<meta content="DedSec Project, Termux tools, Android cybersecurity, OSINT tools, networking utilities, no-root toolkit, open source security toolkit, ethical hacking (authorized), penetration testing education, dedsec1121fk" name="keywords"/>
-<meta content="DedSec Project" name="author"/>
-<meta content="index,follow,max-image-preview:large" name="robots"/>
-<meta content="English" name="language"/>
-<meta content="7 days" name="revisit-after"/>
-<meta content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: https://img.shields.io https://raw.githubusercontent.com; connect-src 'self' https://api.github.com https://www.google-analytics.com https://region1.google-analytics.com https://stats.g.doubleclick.net; frame-ancestors 'none';" http-equiv="Content-Security-Policy"/>
-<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
-<meta content="DENY" http-equiv="X-Frame-Options"/>
-<meta content="1; mode=block" http-equiv="X-XSS-Protection"/>
-<meta content="strict-origin-when-cross-origin" http-equiv="Referrer-Policy"/>
-<meta content="website" property="og:type"/>
-<meta content="https://ded-sec.space/" property="og:url"/>
-<meta content="DedSec Project - Cross-Platform Cybersecurity Toolkit" property="og:title"/>
-<meta content="Run DedSec Project on Termux for Android or on Ubuntu, Kali Linux, and Linux Mint with shared setup, tools, paths, and assistance." property="og:description"/>
-<meta content="https://ded-sec.space/Assets/Images/og/og-dark.jpg" property="og:image"/>
-<meta content="1200" property="og:image:width"/>
-<meta content="630" property="og:image:height"/>
-<meta content="DedSec Project — cybersecurity and Termux learning resources" property="og:image:alt"/>
-<meta content="https://ded-sec.space/Assets/Images/og/og-dark.jpg" name="twitter:image"/>
-<meta content="DedSec Project" property="og:site_name"/>
-<meta content="https://ded-sec.space/" name="twitter:url"/>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
-<link href="/style.css?v=20261009a" rel="stylesheet"/><link href="/Assets/sales-optimization.css?v=20260807q" rel="stylesheet"/>
-<script type="application/ld+json">[
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "DedSec Project",
-    "url": "https://ded-sec.space/"
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "DedSec Project Toolkit",
-    "operatingSystem": "Android (Termux), Ubuntu, Kali Linux, Linux Mint",
-    "applicationCategory": "SecurityApplication",
-    "offers": {
-      "@type": "Offer",
-      "price": "0",
-      "priceCurrency": "EUR"
-    },
-    "description": "The DedSec Project is a Termux toolkit for Android that bundles OSINT footprint checks, URL/file vetting, authorized network and device diagnostics, and productivity automations into one easy menu. Each tool includes clear prompts, saved output paths, and guided workflows for privacy awareness and authorized testing.",
-    "author": {
-      "@type": "Person",
-      "name": "dedsec1121fk",
-      "url": "https://github.com/dedsec1121fk"
-    }
-  },
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "DedSec Project",
-    "url": "https://ded-sec.space/",
-    "logo": "https://ded-sec.space/Assets/Images/Logos/Black%20Purple%20Butterfly%20Logo.jpeg",
-    "sameAs": [
-      "https://github.com/dedsec1121fk",
-      "https://t.me/dedsecproject"
-    ]
-  }
-]</script>
-<meta content="summary_large_image" name="twitter:card"/><meta content="DedSec Project - Cross-Platform Cybersecurity Toolkit" name="twitter:title"/><meta content="Run DedSec Project on Termux for Android or on Ubuntu, Kali Linux, and Linux Mint with shared setup, tools, paths, and assistance." name="twitter:description"/><meta content="strict-origin-when-cross-origin" name="referrer"/><meta content="en_US" property="og:locale"/><meta content="el_GR" property="og:locale:alternate"/><meta content="DedSec Project — cybersecurity and Termux learning resources" name="twitter:image:alt"/><script id="ld-website" type="application/ld+json">{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "DedSec Project",
-  "url": "https://ded-sec.space/",
-  "description": "DedSec Project: a Termux toolkit for Android with OSINT, URL/file verification, network/device diagnostics, and automation utilities — built for privacy awareness and authorized use.",
-  "inLanguage": [
-    "en",
-    "el"
-  ],
-  "publisher": {
-    "@type": "Organization",
-    "name": "DedSec Project",
-    "url": "https://ded-sec.space/",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://ded-sec.space/Assets/Images/og/og-dark.jpg"
-    }
-  }
-}</script><script defer="" src="/Assets/cookie-consent.js?v=20260807q"></script><link href="https://ded-sec.space/" rel="canonical"/><link href="https://ded-sec.space/" hreflang="en" rel="alternate"/><link href="https://ded-sec.space/el/" hreflang="el" rel="alternate"/><link href="https://ded-sec.space/" hreflang="x-default" rel="alternate"/><link href="/Assets/premium-theme.css?v=20261012safe1" rel="stylesheet"/></head>
-<body class="dark-theme home-page">
-&lt;!--MAINTAIN_SITE: Key maintenance: NAV links must match real files; global theme/language logic is in /script.js?v=20260807q&gt;
-<nav class="main-nav">
-<div class="nav-container">
-<div class="nav-title"><div class="site-title">DedSec Project</div>
-</div>
-<button aria-label="Toggle navigation" class="burger-menu" id="burger-menu" type="button">
-<span class="burger-line"></span>
-<span class="burger-line"></span>
-<span class="burger-line"></span>
-<span class="burger-label" data-en="MENU" data-gr="ΜΕΝΟΥ">MENU</span>
-</button>
-<div class="nav-menu" id="nav-menu"><a class="nav-link" data-en="Home" data-gr="Αρχική" href="/index.html">Home</a>
-<a class="nav-link" data-en="Guide For Installation" data-gr="Οδηγός Εγκατάστασης" href="/Pages/guide-for-installation.html">Guide For Installation</a>
-<a class="nav-link" data-en="Learn About The Tools" data-gr="Μάθε για τα Εργαλεία" href="/Pages/learn-about-the-tools.html">Learn About The Tools</a>
-<a class="nav-link" data-en="Assistance" data-gr="Βοήθεια" href="/Pages/assistance.html">Assistance</a>
-<a class="nav-link" data-en="Frequently Asked Questions" data-gr="Συχνές Ερωτήσεις" href="/Pages/faq.html">Frequently Asked Questions</a>
-<a class="nav-link" data-en="Privacy Policy" data-gr="Πολιτική Απορρήτου" href="/Pages/privacy-policy.html">Privacy Policy</a>
-<a class="nav-link" data-en="Contact &amp; Credits" data-gr="Επικοινωνία &amp; Συντελεστές" href="/Pages/contact-credits.html">Contact &amp; Credits</a>
-<a class="nav-link" data-en="Founder's Story &amp; Project's Vision" data-gr="Η Ιστορία του Ιδρυτή &amp; Το Όραμα του Project" href="/Pages/about-founder.html">Founder's Story &amp; Project's Vision</a>
-</div>
-<div class="nav-actions">
-<button aria-label="Toggle theme" class="nav-action-btn nav-theme-btn" id="nav-theme-switcher" type="button">
-<span aria-hidden="true" class="nav-action-label nav-theme-label" data-dark="☾" data-light="☀">☀</span>
-</button>
-<button aria-label="Change language" class="nav-action-btn nav-lang-btn" id="nav-lang-switcher" type="button">
-<span class="nav-action-label nav-lang-label" data-en="ΕΛ" data-gr="EN">ΕΛ</span>
-</button>
-</div>
-</div>
-</nav>
-<div class="phone-container">
-<div class="screen">
-<main class="home-screen">
-<header class="home-page-header" id="top">
-<h1 class="hero-title sales-hero-title" data-en="DedSec Project" data-gr="DedSec Project">DedSec Project</h1>
-<p class="sales-hero-subtitle" data-en="Use the DedSec Project from Termux on Android or from supported Linux desktops with one shared cross-platform workflow." data-gr="Χρησιμοποίησε το DedSec Project από Termux σε Android ή από υποστηριζόμενα Linux desktops με ένα κοινό cross-platform workflow.">Use the DedSec Project from Termux on Android or from supported Linux desktops with one shared cross-platform workflow.</p>
-</header><section aria-label="Project overview" class="home-intro-panel">
-<div aria-label="Project proof" class="trust-indicators home-proof-row">
-<div class="trust-item trust-item--google-rank"><strong>#1</strong><span data-en="In Google Results" data-gr="Στα Αποτελέσματα Google">In Google Results</span></div>
-<div class="trust-item trust-item--badges"><img alt="GitHub Stars" class="trust-badge-img" decoding="async" loading="lazy" src="https://img.shields.io/github/stars/dedsec1121fk/DedSec.svg?style=social"/><span data-en="GitHub Stars" data-gr="Αστέρια GitHub">GitHub Stars</span></div>
-<div class="trust-item trust-item--badges"><img alt="GitHub Forks" class="trust-badge-img" decoding="async" loading="lazy" src="https://img.shields.io/github/forks/dedsec1121fk/DedSec.svg?style=social"/><span data-en="GitHub Forks" data-gr="Forks GitHub">GitHub Forks</span></div>
-</div>
-<div aria-label="Key project facts" class="project-facts-box home-facts-row">
-</div>
-</section>
-<section aria-labelledby="home-decision-title" class="content-section home-decision-section" id="highlights">
-<span class="sales-section-label">START HERE</span>
-<h2 id="home-decision-title">Choose One Path: Free Project Or Sponsor Support</h2>
-<p class="sales-section-intro" data-en="Start free for the complete public project. Optional GitHub sponsorship helps fund testing, writing, translations and maintenance; sponsor benefits remain separate from the free learning path." data-gr="Ξεκίνα δωρεάν με το πλήρες δημόσιο project. Η προαιρετική υποστήριξη μέσω GitHub Sponsors βοηθά στη χρηματοδότηση δοκιμών, συγγραφής, μεταφράσεων και συντήρησης· τα προνόμια των sponsors παραμένουν ξεχωριστά από τη δωρεάν μαθησιακή διαδρομή.">Start free for the complete public project. Optional GitHub sponsorship helps fund testing, writing, translations and maintenance; sponsor benefits remain separate from the free learning path.</p>
-<div class="home-decision-grid">
-<article class="home-decision-card home-decision-card--free">
-<span class="home-decision-number">01 · FREE</span>
-<h3 data-en="Install DedSec Free" data-gr="Εγκατέστησε Το DedSec Δωρεάν">Install DedSec Free</h3>
-<p data-en="Install the complete open-source DedSec Project on Termux for Android, Ubuntu, Kali Linux, or Linux Mint." data-gr="Εγκατέστησε το πλήρες open-source DedSec Project σε Termux για Android, Ubuntu, Kali Linux ή Linux Mint.">Install the complete open-source DedSec Project on Termux for Android, Ubuntu, Kali Linux, or Linux Mint.</p>
+<link rel="stylesheet" href="assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/">
+<meta name="description" content="DedSec Project — tools, guides, debugging and a bilingual offline programming library.">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="DedSec Project">
+<meta property="og:description" content="DedSec Project — tools, guides, debugging and a bilingual offline programming library.">
+<meta property="og:url" content="https://ded-sec.space/">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DedSec Project">
+<meta name="twitter:description" content="DedSec Project — tools, guides, debugging and a bilingual offline programming library.">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body class="theme-dark"><a class="skip" href="#app">Skip to content</a>
+<header id="topbar" class="topbar">
+<a class="brand" href="#home" id="brand" title="DedSec Project"><img src="dedsec/Assets/Images/Logos/Black%20Purple%20Butterfly%20Logo.jpeg" alt="" width="36" height="36"><span>DedSec Project</span></a>
 
-<span aria-hidden="true" class="legacy-anchor" id="butsystem-free"></span>
-<a class="sales-btn sales-btn-primary" data-en="Install DedSec Free" data-gr="Εγκατάσταση DedSec Δωρεάν" href="/Pages/guide-for-installation.html">Install DedSec Free</a><a class="sales-btn sales-btn-secondary home-github-cta" href="https://github.com/dedsec1121fk/DedSec" rel="noopener noreferrer" target="_blank"><span data-en="View on GitHub" data-gr="Προβολή στο GitHub">View on GitHub</span> <span aria-hidden="true" class="home-github-star-symbol">★</span> <span aria-label="GitHub star count" class="home-github-star-count" data-github-star-count=""></span></a>
-</article>
-<article class="home-decision-card home-decision-card--paid">
-<span class="home-decision-number">02 · SUPPORT</span>
-<h3>Support Through GitHub Sponsors</h3>
-<p data-en="GitHub Sponsors is optional. Sponsor tiers add private extras, and the $25 Ultimate Supporter tier includes the current five-ebook library in English and Greek." data-gr="Το GitHub Sponsors είναι προαιρετικό. Τα επίπεδα υποστήριξης προσφέρουν ιδιωτικά πρόσθετα και το $25 Ultimate Supporter tier περιλαμβάνει την τρέχουσα βιβλιοθήκη πέντε ebooks στα Αγγλικά και στα Ελληνικά.">GitHub Sponsors is optional. Sponsor tiers add private extras, and the $25 Ultimate Supporter tier includes the current five-ebook library in English and Greek.</p>
-<p class="home-decision-flow"><strong data-en="Sponsor extras · Five-ebook library" data-gr="Προνόμια sponsors · Βιβλιοθήκη πέντε ebooks">Sponsor extras · Five-ebook library</strong></p>
-<span aria-hidden="true" class="legacy-anchor" id="guides"></span><span aria-hidden="true" class="legacy-anchor" id="support-project"></span>
-<a class="sales-btn sales-btn-primary" href="https://github.com/sponsors/dedsec1121fk">View Sponsor Tiers</a>
-</article>
-</div>
-<p class="home-decision-note"><strong>Not sure?</strong> Start with the Installation Guide for your platform. GitHub Sponsors is optional if you want to support the project or use a sponsor benefit.</p>
-</section>
-<section class="content-section founder-home-section" id="about-founder">
-<div class="founder-home-layout">
-<div class="founder-home-mark"><img alt="DedSec Project butterfly logo" decoding="async" loading="lazy" src="/Assets/Images/Logos/Black%20Purple%20Butterfly%20Logo.jpeg"/></div>
-<div>
-<h2 data-en="The Story Behind DedSec Project — And The Vision That Guides It" data-gr="Η Ιστορία Πίσω Από Το DedSec Project — Και Το Όραμα Που Το Καθοδηγεί">The Story Behind DedSec Project — And The Vision That Guides It</h2>
-<p data-en="The project began from a fascination with Watch Dogs, technology, privacy, and the idea of learning programming by building practical tools from Android." data-gr="Το project ξεκίνησε από τη γοητεία για το Watch Dogs, την τεχνολογία, την ιδιωτικότητα και την ιδέα της εκμάθησης προγραμματισμού μέσα από τη δημιουργία πρακτικών εργαλείων στο Android.">The project began from a fascination with Watch Dogs, technology, privacy, and the idea of learning programming by building practical tools from Android.</p>
-<a class="sales-btn sales-btn-secondary" data-en="Read the Founder's Story &amp; Project's Vision" data-gr="Διάβασε την Ιστορία του Ιδρυτή &amp; το Όραμα του Project" href="/Pages/about-founder.html">Read the Founder's Story &amp; Project's Vision</a>
-</div>
-</div>
-</section><section aria-labelledby="featured-article-section-title" class="content-section featured-articles-section" id="featured-articles"><h2 data-en="Featured Articles" data-gr="Επιλεγμένα Άρθρα" id="featured-article-section-title">Featured Articles</h2><div class="featured-articles-grid"></div></section><footer class="main-footer">
-<div>
-<div class="footer-link-buttons">
-<a class="footer-mini-btn" href="https://ded-sec.space" rel="noopener noreferrer" target="_blank">Main Website</a>
-<a class="footer-mini-btn" href="https://github.com/dedsec1121fk/DedSec" rel="noopener noreferrer" target="_blank">Main DedSec Project Repository</a>
-</div>
-<div class="footer-link-buttons footer-preferred-source-row"><a aria-label="Set DedSec Project website as a preferred source in Google" class="footer-mini-btn footer-preferred-source-btn" data-en="Set DedSec Project As A Preferred Google Source" data-en-aria-label="Set DedSec Project website as a preferred source in Google" data-gr="Όρισε Το DedSec Project Ως Προτιμώμενη Πηγή Στο Google" data-gr-aria-label="Όρισε την ιστοσελίδα του DedSec Project ως προτιμώμενη πηγή στο Google" href="https://www.google.com/preferences/source?q=ded-sec.space" id="google-preferred-source-btn" rel="external noopener noreferrer" target="_blank">Set DedSec Project As A Preferred Google Source</a></div>
-<p class="footer-links-note">If something happens to our main links, use the backups below.</p>
-<div class="footer-link-buttons">
-<a class="footer-mini-btn" href="https://ded-sec.online" rel="noopener noreferrer" target="_blank">Backup Website</a>
-<a class="footer-mini-btn" href="https://github.com/sal-scar/DedSec" rel="noopener noreferrer" target="_blank">Backup DedSec Project Repository</a>
-</div>
-</div>
-<p class="footer-tracker-note">Optional Google Analytics remains disabled unless you accept it. Use the “Cookie settings” button to review what is used or change your choice, and see the Privacy Policy for details.</p>
-<p>© 2024-2026 DedSec Project. All Rights Reserved.</p>
-<p>Made by dedsec1121fk.</p>
-</footer>
-</main>
-</div>
-</div>
-<script defer="" src="/script.js?v=20261009a"></script>
-</body>
-</html>
+<div class="nav-actions"><a class="nav-action-btn nav-search-btn" href="#library" id="nav-search" aria-label="Search the knowledge archive" title="Search the knowledge archive"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"><circle cx="10.4" cy="10.4" r="6.4"/><path d="m15.3 15.3 6 6"/></svg></a><button type="button" class="nav-action-btn nav-theme-btn" id="nav-theme-switcher" aria-label="Change theme"><span class="nav-action-label nav-theme-label" aria-hidden="true"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.7 16.1A8.9 8.9 0 0 1 7.9 3.3a9.2 9.2 0 1 0 12.8 12.8Z"/></svg></span></button><button type="button" class="nav-action-btn nav-lang-btn" id="nav-lang-switcher" aria-label="Change language"><span class="nav-action-label nav-lang-label">ΕΛ</span></button><a class="nav-action-btn nav-home-btn" id="nav-home" href="#home" aria-label="Home" title="Home"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 10.2 9.5-7.6 9.5 7.6V21h-6.6v-7H9.1v7H2.5z"/></svg></a></div><form id="top-search" role="search" onsubmit="return false"><label for="searchInput" data-en="Search the website" data-gr="Αναζήτησε στην ιστοσελίδα">Search the website</label><input id="searchInput" type="search" autocomplete="off" enterkeyhint="search" placeholder="Search website, errors, tools..." maxlength="250" aria-label="Search website" /><details class="search-help"><summary data-en="Advanced search" data-gr="Σύνθετη αναζήτηση">Advanced search</summary><p data-en='All words must match. Use "exact phrase", -exclude, OR, lang:en|el|all, topic:security, type:page|code|lesson, in:title. Accents, prefixes and small title typos are supported.' data-gr='Όλες οι λέξεις πρέπει να ταιριάζουν. Χρησιμοποίησε "ακριβή φράση", -εξαίρεση, OR, lang:en|el|all, topic:security, type:page|code|lesson, in:title. Υποστηρίζονται τόνοι, προθέματα και μικρά λάθη στους τίτλους.'>All words must match. Use "exact phrase", -exclude, OR, lang:en|el|all, topic:security, type:page|code|lesson, in:title.</p></details></form></header>
+<main id="app" tabindex="-1" aria-live="polite"></main>
+<div id="collapseOverlay" class="collapse-overlay" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Restore broken desktop" hidden><div class="collapse-crack" aria-hidden="true"></div><button type="button" id="restore" class="restore-button" data-en="Restore desktop" data-gr="Επαναφορά desktop">Restore desktop</button></div>
+<noscript><main class="noscript">JavaScript is required for the desktop. Open <a href="dedsec/Pages/guide-for-installation.html">DedSec installation guides</a> or <a href="dedsec/Pages/learn-about-the-tools.html">tool documentation</a> directly.</main></noscript>
+<footer class="merged-footer" id="site-footer"><div class="footer-buttons"><a href="https://github.com/dedsec1121fk/DedSec" target="_blank" rel="noopener noreferrer" data-en="Main DedSec Project Repository" data-gr="Κύριο Repository DedSec Project">Main DedSec Project Repository</a><a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer" data-en="Website Repository" data-gr="Αποθετήριο Ιστοσελίδας">Website Repository</a></div><div class="footer-buttons"><a href="https://www.google.com/preferences/source?q=ded-sec.space" target="_blank" rel="noopener noreferrer" data-en="Set DedSec Project as Preferred Google Source" data-gr="Προτίμησε το DedSec Project στις πηγές Google">Set DedSec Project as Preferred Google Source</a></div><p data-en="If the main website is unavailable, use our backups." data-gr="Αν η κύρια ιστοσελίδα δεν λειτουργεί, χρησιμοποίησε τις εφεδρικές.">If the main website is unavailable, use our backups.</p><div class="footer-buttons"><a href="https://ded-sec.online" target="_blank" rel="noopener noreferrer" data-en="Backup Website" data-gr="Εφεδρική Ιστοσελίδα">Backup Website</a><a href="https://github.com/sal-scar/DedSec" target="_blank" rel="noopener noreferrer" data-en="Backup Repository" data-gr="Εφεδρικό Repository">Backup Repository</a></div><p>© 2024–2026 DedSec Project. All Rights Reserved.</p><p>Made by dedsec1121fk.</p></footer></body></html>

@@ -1,0 +1,187 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>php — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-471.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="php — συγκεντρωτικός οδηγός PHP Περιβάλλον εκτέλεσης Η PHP λειτουργεί σε CLI ή μέσω web server. Η επιτυχία στη γραμμή εντολών δεν αποδεικνύει ότι είναι σωστές οι HTTP κεφαλίδες ή η…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="php — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="php — συγκεντρωτικός οδηγός PHP Περιβάλλον εκτέλεσης Η PHP λειτουργεί σε CLI ή μέσω web server. Η επιτυχία στη γραμμή εντολών δεν αποδεικνύει ότι είναι σωστές οι HTTP κεφαλίδες ή η…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-471.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="php — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="php — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="php — συγκεντρωτικός οδηγός PHP Περιβάλλον εκτέλεσης Η PHP λειτουργεί σε CLI ή μέσω web server. Η επιτυχία στη γραμμή εντολών δεν αποδεικνύει ότι είναι σωστές οι HTTP κεφαλίδες ή η…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="php — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>php — συγκεντρωτικός οδηγός — DedSec Project</h1><p>php — συγκεντρωτικός οδηγός PHP Περιβάλλον εκτέλεσης Η PHP λειτουργεί σε CLI ή μέσω web server. Η επιτυχία στη γραμμή εντολών δεν αποδεικνύει ότι είναι σωστές οι HTTP κεφαλίδες ή η…</p><section><h2>PHP</h2>
+<h3>Περιβάλλον εκτέλεσης</h3>
+<p>Η PHP λειτουργεί σε CLI ή μέσω web server. Η επιτυχία στη γραμμή εντολών δεν αποδεικνύει ότι είναι σωστές οι HTTP κεφαλίδες ή η επεξεργασία παραμέτρων. Κατέγραψε την έκδοση και το περιβάλλον εκτέλεσης πριν συγκρίνεις αποτελέσματα.</p>
+<h3>Εργαστήριο: απουσία, λανθασμένος τύπος και HTML</h3>
+<p>Αποθήκευσε ως <code>safe-label.php</code>. Εκτέλεσε <code>php -l safe-label.php &amp;&amp; php safe-label.php</code> με PHP 8+.</p>
+<pre><code class="language-php">&lt;?php
+declare(strict_types=1);
+function safe_label(array $query): string {
+    if (!array_key_exists('label', $query)) return '(missing)';
+    if (!is_string($query['label'])) return '(invalid)';
+    return htmlspecialchars(trim($query['label']), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+$tests = [
+    [['label' =&gt; ' Ada &amp; Co '], 'Ada &amp;amp; Co'],
+    [[], '(missing)'],
+    [['label' =&gt; ['unexpected']], '(invalid)'],
+    [['label' =&gt; '&lt;script&gt;'], '&amp;lt;script&amp;gt;'],
+];
+foreach ($tests as [$input, $expected]) {
+    if (safe_label($input) !== $expected) throw new RuntimeException('failed');
+}
+echo count($tests), &quot; checks passed\n&quot;;
+</code></pre>
+<p>Αναμενόμενη έξοδος: <code>4 checks passed</code>. Ένα ανύπαρκτο κλειδί διαφέρει από ένα κλειδί που περιέχει πίνακα. Η κωδικοποίηση HTML εφαρμόζεται στο σημείο εμφάνισης· δεν καθιστά ασφαλές ένα SQL ερώτημα. Για SQL χρησιμοποίησε δεσμευμένες παραμέτρους, ενώ για JSON κατάλληλη κωδικοποίηση JSON.</p>
+<h3>Διάγνωση ανά σύμπτωμα</h3>
+<ul>
+<li><strong>Undefined array key:</strong> έλεγξε πρώτα αν υπάρχει το κλειδί. Η <code>array_key_exists</code> ξεχωρίζει την απουσία από το <code>null</code>, ενώ το <code>??</code> συνήθως τα συνδυάζει.</li>
+<li><strong>TypeError:</strong> μια παράμετρος όπως <code>?label[]=x</code> μπορεί να φτάσει ως πίνακας. Έλεγξε τον τύπο πριν από συναρτήσεις συμβολοσειρών.</li>
+<li><strong>Headers already sent:</strong> εντόπισε πρόωρη έξοδο ή BOM πριν από <code>header()</code> και <code>setcookie()</code>. Μην κρύβεις την προειδοποίηση.</li>
+<li><strong>Λειτουργεί στο CLI αλλά όχι στον ιστό:</strong> σύγκρινε εκδόσεις PHP, επεκτάσεις, ρυθμίσεις ini, δρομολόγηση, δικαιώματα και logs. Το <code>php --ini</code> αφορά το CLI και όχι κατ' ανάγκη τον web runtime.</li>
+<li><strong>Λάθος χαρακτήρες:</strong> έλεγξε τη χρήση UTF-8 σε HTTP και HTML.</li>
+</ul>
+<h3>Διαδρομή κατάκτησης</h3>
+<ol>
+<li>Πρόβλεψε τις τέσσερις εξόδους, εκτέλεσε το αρχείο και σημείωσε έκδοση PHP και αποτέλεσμα.</li>
+<li>Πρόσθεσε <code>['label' =&gt; ' &quot;quoted&quot; ']</code> και έλεγξε ότι επιστρέφει <code>&amp;quot;quoted&amp;quot;</code>. Εξήγησε το <code>ENT_QUOTES</code>.</li>
+<li>Σε τοπικό δοκιμαστικό server, κάλεσε <code>safe_label($_GET)</code> και δοκίμασε απουσία παραμέτρου και <code>?label[]=x</code>.</li>
+<li>Αφαίρεσε προσωρινά τον έλεγχο τύπου, κατέγραψε την αποτυχία, επανέφερέ τον και εξήγησε την αιτία.</li>
+</ol>
+<p><strong>Επίσημη πηγή:</strong> https://www.php.net/manual/en/function.htmlspecialchars.php</p>
+<h2>PHP — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Γιατί χρειάζεται σύμβαση</h3>
+<p>Οι δυαδικοί δεκαδικοί κινητής υποδιαστολής μπορούν να δώσουν απροσδόκητη στρογγυλοποίηση. Αποθήκευσε ποσότητες και τιμές σε ακέραιες μικρότερες μονάδες όπου το επιτρέπει το πρόβλημα και έλεγξε κάθε εγγραφή από JSON.</p>
+<h3>Εκτέλεση</h3>
+<p>Αποθήκευσε total.php και τρέξε php total.php με PHP που υποστηρίζει JSON_THROW_ON_ERROR. Περιμένεις 375 cents. Δεν χρειάζεται web server ή βάση.</p>
+<pre><code class="language-php">&lt;?php
+declare(strict_types=1);
+function totalCents(array $rows): int {
+    $total = 0;
+    foreach ($rows as $row) {
+        if (!is_array($row) ||
+            !isset($row[&quot;qty&quot;], $row[&quot;unit_cents&quot;]) ||
+            !is_int($row[&quot;qty&quot;]) || !is_int($row[&quot;unit_cents&quot;])) {
+            throw new InvalidArgumentException(&quot;invalid row&quot;);
+        }
+        $qty = $row[&quot;qty&quot;];
+        $price = $row[&quot;unit_cents&quot;];
+        if ($qty &lt; 0 || $price &lt; 0 ||
+            ($qty &gt; 0 &amp;&amp; $price &gt; intdiv(PHP_INT_MAX - $total, $qty))) {
+            throw new InvalidArgumentException(&quot;invalid amount or overflow&quot;);
+        }
+        $total += $qty * $price;
+    }
+    return $total;
+}
+$rows = json_decode('[{&quot;qty&quot;:2,&quot;unit_cents&quot;:150},{&quot;qty&quot;:1,&quot;unit_cents&quot;:75}]',
+                    true, 512, JSON_THROW_ON_ERROR);
+if (totalCents($rows) !== 375) throw new RuntimeException(&quot;bad total&quot;);
+echo &quot;375 cents\n&quot;;
+</code></pre>
+<h3>Ερμηνεία</h3>
+<p>Η json_decode με true επιστρέφει associative arrays. Οι έλεγχοι τύπων απορρίπτουν κείμενο &quot;2&quot; ακόμη κι αν μοιάζει αριθμός. Αρνητικές ποσότητες και τιμές απορρίπτονται. Ο έλεγχος intdiv πριν τον πολλαπλασιασμό προστατεύει από overflow του PHP_INT_MAX. Βασίζεται στο ότι το ήδη συγκεντρωμένο άθροισμα είναι μη αρνητικό.</p>
+<h3>Προκλήσεις</h3>
+<p>Δοκίμασε δεκαδική ποσότητα, τιμή που λείπει, αρνητικό αριθμό, άδειο array, άκυρο JSON και πολύ μεγάλο γινόμενο. Αποφάσισε αν επιτρέπεται μηδενική ποσότητα. Φτιάξε ξεχωριστή συνάρτηση εμφάνισης ποσών· μην αποθηκεύεις διαμορφωμένα strings ως αριθμούς.</p>
+<h3>Διάγνωση και ασφάλεια</h3>
+<p>Έλεγξε php -v και php -l total.php. Ένα undefined array key δείχνει ανεπαρκή επικύρωση. Μη βάζεις εξωτερικές τιμές απευθείας σε SQL ή HTML: οι bound parameters και το HTML escaping λύνουν διαφορετικά προβλήματα.
+Επιτυχία: 375 cents και σωστή απόρριψη λαθών. https://www.php.net/manual/en/function.json-decode.php</p>
+<h2>PHP — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των υπαρχόντων αρχείων</h3>
+<p>Στον φάκελο PHP εκτέλεσε <code>php -v</code>, <code>php -l Practical_Code/01_safe_output.php</code>, <code>php Practical_Code/01_safe_output.php</code> και <code>php Practical_Code/02_arrays.php</code>. Το πρώτο αρχείο εμφανίζει το όνομα <code>Ada &amp;lt;script&amp;gt;</code> με κωδικοποίηση HTML. Το δεύτερο φιλτράρει τον πίνακα <code>[3, 7, 9]</code> και εμφανίζει λίστα JSON με 7 και 9. Αρκεί η PHP στο τερματικό· δεν απαιτείται web server ή δίκτυο.</p>
+<h3>Πείραμα: κωδικοποίηση εξόδου</h3>
+<p>Το πρώτο αρχείο καλεί <code>htmlspecialchars($name, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8')</code>. Άλλαξε το δοκιμαστικό όνομα σε <code>Ada &amp; Bob</code> και πρόβλεψε την κωδικοποίηση του <code>&amp;</code>. Δοκίμασε κενή συμβολοσειρά και εισαγωγικά. Η συνάρτηση είναι κατάλληλη για κείμενο HTML, όχι για SQL, πηγαίο κώδικα JavaScript, CSS ή αυθαίρετα URL. Έλεγξε την είσοδο ξεχωριστά και κωδικοποίησε μία φορά στο σημείο εξόδου. Αν εμφανίζονται οι οντότητες κυριολεκτικά, έλεγξε διπλή κωδικοποίηση και τύπο απόκρισης.</p>
+<h3>Πείραμα: κλειδιά πινάκων και μορφή JSON</h3>
+<p>Η <code>array_filter</code> διατηρεί τα αρχικά κλειδιά. Με όριο 7 στον πίνακα <code>[3, 7, 9]</code> μένουν οι δείκτες 1 και 2. Η <code>array_values</code> δημιουργεί συνεχόμενους δείκτες, ώστε η <code>json_encode</code> να δώσει λίστα JSON αντί για αντικείμενο. Αφαίρεσε προσωρινά την <code>array_values</code> και σύγκρινε. Δοκίμασε όρια 3, 7 και 10, συμπεριλαμβάνοντας το κενό αποτέλεσμα.</p>
+<h3>Αναπαραγώγιμος έλεγχος</h3>
+<p>Αποθήκευσε ως <code>check.php</code> και εκτέλεσε <code>php -l check.php &amp;&amp; php check.php</code>:</p>
+<pre><code class="language-php">&lt;?php
+declare(strict_types=1);
+$encoded = htmlspecialchars('Ada &amp; Bob', ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+$numbers = array_values(array_filter([3, 7, 9], fn(int $n): bool =&gt; $n &gt;= 7));
+if ($encoded !== 'Ada &amp;amp; Bob' || $numbers !== [7, 9]) exit(1);
+echo &quot;OK\n&quot;;
+</code></pre>
+<p>Μη μηδενικός κωδικός εξόδου σημαίνει αποτυχία. Αν δεν ανοίγει αρχείο, έλεγξε <code>pwd</code> και διαδρομή. Αν το JSON έχει απροσδόκητα κλειδιά, εξέτασε <code>array_keys</code>.</p>
+<h3>Τεκμήρια ολοκλήρωσης</h3>
+<p>Κατέγραψε έκδοση PHP, ακριβείς εντολές και έξοδο για κανονικές και οριακές τιμές. Εξήγησε γιατί η κωδικοποίηση HTML και η επαναρίθμηση φιλτραρισμένης λίστας λύνουν διαφορετικά προβλήματα. Επανέφερε τα αρχικά αρχεία μετά το πείραμα.</p>
+<h2>PHP — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Επικύρωση στον διακομιστή</h3>
+<p>Δημιούργησε <code>form.php</code> σε προσωρινό φάκελο. Χρησιμοποίησε μόνο δοκιμαστικά ονόματα. Οι περιορισμοί της φόρμας βοηθούν τον χρήστη, αλλά παρακάμπτονται· η PHP 8.0+ πρέπει να ελέγχει ανεξάρτητα την είσοδο POST.</p>
+<pre><code class="language-php">&lt;?php
+declare(strict_types=1);
+function validateName(mixed $value): array {
+    if (!is_string($value)) return [null, 'Name must be text'];
+    $name = trim($value);
+    if (!preg_match('/\A[\p{L} ]{1,40}\z/u', $name)) {
+        return [null, 'Use 1-40 letters or spaces'];
+    }
+    return [$name, null];
+}
+function htmlText(string $s): string {
+    return htmlspecialchars($s, ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+$post = ($_SERVER['REQUEST_METHOD'] ?? 'GET') === 'POST';
+[$name, $error] = $post ? validateName($_POST['name'] ?? null) : [null, null];
+?&gt;
+&lt;form method=&quot;post&quot;&gt;
+  &lt;label for=&quot;name&quot;&gt;Εμφανιζόμενο όνομα&lt;/label&gt;
+  &lt;input id=&quot;name&quot; name=&quot;name&quot; required maxlength=&quot;40&quot; aria-describedby=&quot;hint&quot;&gt;
+  &lt;p id=&quot;hint&quot;&gt;Μόνο γράμματα και κενά.&lt;/p&gt;
+  &lt;button type=&quot;submit&quot;&gt;Έλεγχος&lt;/button&gt;
+&lt;/form&gt;
+&lt;?php if ($error !== null): ?&gt;
+  &lt;p role=&quot;alert&quot;&gt;&lt;?= htmlText($error) ?&gt;&lt;/p&gt;
+&lt;?php elseif ($post): ?&gt;
+  &lt;p&gt;&lt;?= htmlText('Γεια σου, ' . $name) ?&gt;&lt;/p&gt;
+&lt;?php endif; ?&gt;
+</code></pre>
+<p>Η κανονική έκφραση δέχεται γράμματα Unicode και απλά κενά, αλλά αποκλείει παύλες, αποστρόφους και συνδυαστικά διακριτικά. Είναι περιοριστικός <strong>κανόνας άσκησης</strong>, όχι καθολικός κανόνας για πραγματικά ονόματα.</p>
+<h3>Εκτέλεση και διερεύνηση</h3>
+<p>Έλεγξε τη σύνταξη με <code>php -l form.php</code>. Εκτέλεσε <code>php -S 127.0.0.1:8000</code> στον ίδιο φάκελο και υπέβαλε <code>Ada</code>, <code>Μαρία</code>, κενή τιμή και κείμενο που μοιάζει με HTML. Ο ενσωματωμένος server είναι μόνο για τοπική ανάπτυξη. Ο browser μπορεί να εμποδίσει την κενή τιμή, αλλά η PHP πρέπει να απορρίπτει απευθείας κενό POST. Δοκίμασε <code>name[]=x</code> ώστε ένας πίνακας να μην προκαλεί σφάλμα τύπου. Ξεχώρισε HTTP 404 (λάθος φάκελος), πεδίο που λείπει (λάθος <code>name</code>), άκυρη είσοδο και παράλειψη κωδικοποίησης εξόδου.</p>
+<h3>Οριακές τιμές και επέκταση</h3>
+<p>Δοκίμασε 40 και 41 γράμματα. Κατέγραψε κωδικό HTTP και έξοδο χωρίς προσωπικά δεδομένα. Φόρμα που μεταβάλλει δεδομένα χρειάζεται προστασία CSRF και ασφαλείς συνεδρίες· εδώ εμφανίζεται μόνο χαιρετισμός. Ένα API με JSON χρειάζεται ελεγχόμενη απόκριση 4xx και σαφή τύπο περιεχομένου.</p>
+<h3>Τεκμήρια επάρκειας</h3>
+<p>Κατέγραψε έκδοση PHP, έλεγχο σύνταξης, κανονικές, άκυρες και οριακές τιμές, καθώς και τι εκτελέστηκε σε browser ή CLI. Εξήγησε γιατί η επικύρωση εισόδου και η κωδικοποίηση HTML προστατεύουν διαφορετικά όρια εμπιστοσύνης.</p>
+<h2>PHP — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Επικύρωση χωρίς σιωπηρή μετατροπή τύπου</h3>
+<p>Η PHP μπορεί να μετατρέπει αριθμητικές συμβολοσειρές σε συγκρίσεις και πράξεις. Στο όριο ενός αιτήματος χρειάζεται ρητός κανόνας. Το παράδειγμα δέχεται δεκαδικές <strong>συμβολοσειρές</strong> από 0 έως 120, απορρίπτει αρχικά μηδενικά, κενά, πρόσημα, πίνακες και τιμές εκτός ορίων και επιστρέφει <code>null</code> σε αποτυχία:</p>
+<pre><code class="language-php">&lt;?php
+declare(strict_types=1);
+function parseAge(mixed $value): ?int {
+    if (!is_string($value) ||
+        !preg_match('/\A(?:0|[1-9][0-9]{0,2})\z/', $value)) return null;
+    $age = (int) $value;
+    return $age &lt;= 120 ? $age : null;
+}
+foreach (['0', '120', '121', '01', '-1'] as $input) {
+    echo $input . ' =&gt; ' . var_export(parseAge($input), true) . &quot;\n&quot;;
+}
+</code></pre>
+<p>Οι δύο πρώτες τιμές γίνονται δεκτές· οι άλλες τρεις δίνουν <code>NULL</code>. Το εύρος είναι κανόνας άσκησης, όχι καθολικός ορισμός ηλικίας. Ένα πεδίο <code>age[]</code> μπορεί να φτάσει ως πίνακας και απορρίπτεται από τον έλεγχο τύπου.</p>
+<h3>Διατεταγμένοι χάρτες και JSON</h3>
+<p>Οι πίνακες PHP είναι διατεταγμένοι χάρτες με ακέραια ή λεκτικά κλειδιά. Η <code>array_filter</code> διατηρεί τα κλειδιά, οπότε φιλτραρισμένος αριθμητικός πίνακας μπορεί να γίνει αντικείμενο JSON. Χρησιμοποίησε <code>array_values</code> όταν απαιτείται λίστα JSON. Έλεγξε απρόσμενη μορφή με <code>array_keys</code>. Η <code>json_decode($text, true, 512, JSON_THROW_ON_ERROR)</code> προκαλεί <code>JsonException</code> σε άκυρο JSON· διαχειρίσου την εξαίρεση χωρίς να θεωρείς την αποτυχία έγκυρη είσοδο.</p>
+<h3>Κωδικοί πρόσβασης και διαγνωστικά</h3>
+<p>Αποθήκευσε επαληθευτές με <code>password_hash($password, PASSWORD_DEFAULT)</code> και έλεγξε υποψήφιες τιμές με <code>password_verify</code>. Τα salted hashes διαφέρουν μεταξύ εκτελέσεων· μην συγκρίνεις νέα hashes, μην καταγράφεις μυστικά και μην αντικαθιστάς το password hashing με απλό SHA-256. Η <code>password_needs_rehash</code> βοηθά στην αλλαγή πολιτικής. Η <code>php -l file.php</code> ελέγχει σύνταξη, η <code>php -v</code> έκδοση CLI και η <code>php -m</code> επεκτάσεις. Ο web server μπορεί να έχει άλλες ρυθμίσεις. Μην εμφανίζεις <code>display_errors</code> δημόσια και αφαίρεσε προσωρινές σελίδες <code>phpinfo()</code>.</p>
+<h3>Επαλήθευση</h3>
+<p>Έλεγξε <code>parseAge('0') === 0</code>, <code>parseAge('121') === null</code> και <code>parseAge('01') === null</code>. Δοκίμασε συνθετικό password με σωστή και λάθος τιμή· δώσε άκυρο JSON και διαχειρίσου <code>JsonException</code>. Κατέγραψε πραγματική έξοδο και εξήγησε γιατί επικύρωση, κωδικοποίηση HTML, παραμετροποιημένη SQL και hashing προστατεύουν διαφορετικά όρια εμπιστοσύνης.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

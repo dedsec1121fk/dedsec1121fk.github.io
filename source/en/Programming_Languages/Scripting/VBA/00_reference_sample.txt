@@ -1,0 +1,3 @@
+Sub Greet()
+    Debug.Print "Hello, Ada!"
+End Sub

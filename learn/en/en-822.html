@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>nushell — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-822.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="nushell — consolidated language guide Nushell Category: Scripting. Extension: .nu . Run: nu lesson.nu with Nushell installed. Nushell pipes structured values between commands. A list of…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="nushell — consolidated language guide — DedSec Project">
+<meta property="og:description" content="nushell — consolidated language guide Nushell Category: Scripting. Extension: .nu . Run: nu lesson.nu with Nushell installed. Nushell pipes structured values between commands. A list of…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-822.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="nushell — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="nushell — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="nushell — consolidated language guide Nushell Category: Scripting. Extension: .nu . Run: nu lesson.nu with Nushell installed. Nushell pipes structured values between commands. A list of…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="nushell — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>nushell — consolidated language guide — DedSec Project</h1><p>nushell — consolidated language guide Nushell Category: Scripting. Extension: .nu . Run: nu lesson.nu with Nushell installed. Nushell pipes structured values between commands. A list of…</p><section><h2>Nushell</h2>
+<p><strong>Category:</strong> Scripting. <strong>Extension:</strong> <code>.nu</code>. <strong>Run:</strong> <code>nu lesson.nu</code> with Nushell installed.</p>
+<p>Nushell pipes structured values between commands. A list of integers remains a list rather than becoming whitespace-separated text. This matters when names, paths or records contain spaces.</p>
+<h3>Reproducible calculation</h3>
+<p>Save the following as <code>lesson.nu</code>:</p>
+<pre><code class="language-nu">let values = [2 4 6]
+let doubled = ($values | each {|n| $n * 2 })
+print ($doubled | math sum)
+</code></pre>
+<p>Run <code>nu lesson.nu</code>. Expected output: <code>24</code>. <code>each</code> transforms each integer, while <code>math sum</code> aggregates the resulting list. The parentheses pass the complete pipeline result to <code>print</code>.</p>
+<h3>Debug the type, not the formatting</h3>
+<p>In the interactive shell, run <code>[2 4 6] | describe</code> and <code>help each</code>. Replace the list with <code>[&quot;2&quot; &quot;4&quot;]</code> and investigate the type mismatch before adding conversions. Do not parse a human-formatted table from an external command when a structured alternative exists.</p>
+<h3>Exercise and edge cases</h3>
+<p>Create records with fields <code>name</code> and <code>points</code>. Filter records with <code>points &gt;= 5</code> and count them. Repeat with an empty list, one record and a record with a missing field. Explain which input should be rejected rather than silently defaulted.</p>
+<h3>Platform troubleshooting</h3>
+<p>Verify <code>nu --version</code> before executing scripts. Windows and Linux builds exist; Termux support depends on available packages and CPU architecture. A missing executable usually indicates installation or <code>PATH</code>, while a syntax error can mean POSIX-shell syntax was copied into Nushell. Quote paths containing spaces and test any file-modifying pipeline in a temporary directory first.</p>
+<h2>NuShell: applied exercises</h2>
+<h3>Reproduce the starter's computation</h3>
+<p><code>00_starter.nu</code> takes a list of integers, doubles each using <code>each</code>, and passes the results to <code>print</code>. Start with the purely numeric case <code>[1 2 3] | each {|n| $n * 2 }</code>. Predict the three values 2, 4 and 6 before running. Inspect the pipeline value and avoid assuming it is one unstructured string; Nushell processes typed values. You can inspect a value's type using <code>describe</code>.</p>
+<h3>Work with a finite table</h3>
+<p>In a scratch Nushell session create this literal table and query it:</p>
+<pre><code class="language-nu">let jobs = [[name size]; [alpha 4] [beta 9] [gamma 12]]
+$jobs | where size &gt; 5 | get name
+</code></pre>
+<p>The expected name values are <code>beta</code> and <code>gamma</code>. The semicolon separates column headers from rows. The <code>where</code> stage retains records with size above five; <code>get name</code> extracts a list of cell values rather than preserving the whole table. Compare with <code>select name</code>, which keeps tabular records. Record the Nushell version, the <code>describe</code> result and the visible values. This recipe has not been run in the connected shell.</p>
+<h3>A safe failed lookup</h3>
+<p>Try <code>$jobs | get nonexistent</code> and capture the actual cell-path error. This is structurally different from a table that <strong>has</strong> a <code>name</code> column but no matching rows. Also create a row with a string in the size column and observe what the comparison operator does under the installed version; do not claim every Nushell release silently coerces strings to integers.</p>
+<h3>Extending the pipeline</h3>
+<p>Add a <code>delta</code> row with size 5 and verify that the strict <code>&gt; 5</code> excludes it while <code>&gt;= 5</code> includes it. Next sort by size and explain whether the projected names preserve the same ordering. If you process file metadata with <code>ls</code>, limit the exercise to a disposable directory: real path names or permission errors introduce unrelated variables.</p>
+<h3>Completion evidence</h3>
+<p>Submit the starter result, typed table result, the failing column lookup and a boundary test at size 5. Explain the distinctions among list, table and record, and why errors in a command pipeline deserve capture rather than being hidden by a generic fallback. Reference: https://www.nushell.sh/book/</p>
+<h2>NuShell — Focused mastery pathway</h2>
+<h3>Foundation exercise</h3>
+<p>Create a Nushell table from a test CSV and inspect typed columns rather than converting every row to an unstructured string.</p>
+<h3>Problem-solving exercise</h3>
+<p>Use where, select and group-by to summarize rows; verify the output schema and observe how null fields differ from empty strings.</p>
+<h3>Independent project</h3>
+<p>Build a read-only inventory pipeline for one temporary directory and export results to JSON. Compare pipeline errors with a legitimate empty table; avoid assuming Bash syntax.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

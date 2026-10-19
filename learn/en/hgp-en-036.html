@@ -1,0 +1,131 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Python for Security Automation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-036.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Python for Security Automation Purpose: Use Python to automate defensive security work safely, reproducibly, and with strong input/output controls. Security automation mindset Automation…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Python for Security Automation — DedSec Project">
+<meta property="og:description" content="Python for Security Automation Purpose: Use Python to automate defensive security work safely, reproducibly, and with strong input/output controls. Security automation mindset Automation…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-036.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Python for Security Automation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Python for Security Automation — DedSec Project">
+<meta name="twitter:description" content="Python for Security Automation Purpose: Use Python to automate defensive security work safely, reproducibly, and with strong input/output controls. Security automation mindset Automation…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Python for Security Automation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Python for Security Automation — DedSec Project</h1><p>Python for Security Automation Purpose: Use Python to automate defensive security work safely, reproducibly, and with strong input/output controls. Security automation mindset Automation…</p><section><blockquote>
+<p><strong>Purpose:</strong> Use Python to automate defensive security work safely, reproducibly, and with strong input/output controls.</p>
+</blockquote>
+<h2>Security automation mindset</h2>
+<p>Automation should reduce repetitive work without hiding decisions. A script that can change many systems quickly needs stronger safeguards than a command used once by an experienced operator.</p>
+<p>Design for:</p>
+<ul>
+<li>explicit scope;</li>
+<li>validated input;</li>
+<li>deterministic output;</li>
+<li>bounded concurrency;</li>
+<li>dry-run modes where changes occur;</li>
+<li>useful logs;</li>
+<li>graceful errors;</li>
+<li>testability.</li>
+</ul>
+<h2>Parsing structured data</h2>
+<p>Security tools often emit JSON, CSV, XML, or line-oriented logs. Prefer structured formats over scraping colorful terminal output.</p>
+<p>Example pattern:</p>
+<pre><code class="language-python">import json
+from pathlib import Path
+
+data = json.loads(Path(&quot;findings.json&quot;).read_text())
+for finding in data:
+    print(finding.get(&quot;severity&quot;), finding.get(&quot;title&quot;))
+</code></pre>
+<p>Never assume keys exist or types are correct when ingesting untrusted data.</p>
+<h2>Hashing and integrity</h2>
+<p>SHA-256 is useful for file integrity identifiers:</p>
+<pre><code class="language-python">import hashlib
+from pathlib import Path
+
+def sha256(path: Path) -&gt; str:
+    h = hashlib.sha256()
+    with path.open(&quot;rb&quot;) as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b&quot;&quot;):
+            h.update(chunk)
+    return h.hexdigest()
+</code></pre>
+<p>A hash proves equality of bytes when computed correctly; it does not prove the file is benign or trustworthy.</p>
+<h2>HTTP clients</h2>
+<p>When automating authorized API checks, define timeouts, validate TLS, handle rate limits, and avoid logging secrets. Do not disable certificate verification to make errors disappear.</p>
+<h2>Concurrency</h2>
+<p>Concurrency can accidentally turn a harmless checker into a service-impacting load generator. Use small explicit worker limits, rate limits, and retry budgets. Default to conservative values.</p>
+<h2>Subprocess security</h2>
+<p>Prefer:</p>
+<pre><code class="language-python">subprocess.run([&quot;program&quot;, &quot;--flag&quot;, value], check=True)
+</code></pre>
+<p>over command strings. Validate file paths and arguments. Avoid passing untrusted text to a shell.</p>
+<h2>Secrets</h2>
+<p>Read secrets from an appropriate secret store or environment rather than source code. Redact them in logs and exception messages. Rotate any real secret that reaches Git history.</p>
+<h2>SQLite for local evidence</h2>
+<p>Python's built-in SQLite support is useful for normalized local collections such as asset inventories, lab results, and detection-test records. Use parameterized queries rather than string formatting SQL statements.</p>
+<h2>Logging pattern</h2>
+<pre><code class="language-python">import logging
+logging.basicConfig(level=logging.INFO, format=&quot;%(asctime)s %(levelname)s %(message)s&quot;)
+</code></pre>
+<p>Decide what belongs in logs before production use.</p>
+<h2>CLI design</h2>
+<p>Use <code>argparse</code> for clear help, required arguments, defaults, and mutually exclusive options. A good tool should explain itself with <code>--help</code>.</p>
+<h2>Safe project ideas</h2>
+<ul>
+<li>Local guide search engine.</li>
+<li>File-integrity inventory.</li>
+<li>CVE/asset correlation using downloaded authorized datasets.</li>
+<li>Log normalizer for synthetic events.</li>
+<li>Configuration linter.</li>
+<li>SBOM comparison tool.</li>
+<li>Certificate-expiry inventory for owned services.</li>
+<li>Backup verification utility.</li>
+<li>Markdown link validator.</li>
+</ul>
+<h2>Testing</h2>
+<p>Separate parsing and decision logic from I/O so it can be unit tested. Include malformed input, empty data, Unicode, duplicate entries, and partial files.</p>
+<h2>Lab — Security findings normalizer</h2>
+<p>Create three sample scanner-export files in different JSON shapes. Write an adapter for each format and normalize to:</p>
+<pre><code class="language-text">asset, finding_id, title, severity, evidence, status
+</code></pre>
+<p>Then deduplicate exact duplicates and produce a Markdown summary. Use only synthetic data.</p>
+<p><strong>Learning goal:</strong> automation is most valuable when it improves data quality and repeatability.</p>
+<h2>Python automation engineering</h2>
+<p>Security scripts often start as one-off utilities and quietly become operational dependencies. Design them as small software projects from the beginning.</p>
+<h3>Inputs and validation</h3>
+<p>Accept explicit command-line arguments, validate file paths and expected schema, bound input sizes where practical, and fail with clear messages. Never assume external JSON/CSV/log data contains every field or valid types.</p>
+<h3>Secrets</h3>
+<p>Do not hardcode tokens/passwords. Use environment variables, OS/application secret stores, or approved vault systems as appropriate. Avoid printing secret values in debug output. If a token must be tested, log only a safe identifier or last few characters if policy permits.</p>
+<h3>Determinism and evidence</h3>
+<p>Include timestamps/timezone in reports, preserve original input when evidence matters, and make output reproducible. For parsers, keep a small synthetic fixture so you can test behavior after code changes.</p>
+<h3>Error handling</h3>
+<p>Differentiate expected operational errors (missing file, malformed record, timeout) from programming bugs. Use non-zero exit codes for failure and avoid broad exception handlers that silently hide errors.</p>
+<h3>Dependencies</h3>
+<p>Prefer the standard library when it meets the need. When third-party packages are justified, pin/manage them according to the project's policy, monitor vulnerabilities, and document why the dependency is required.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Modules 28–31 and Python basics.</p>
+<h3>Practice task</h3>
+<p>Write a local defensive utility that reads synthetic JSON/log data, validates input, produces a report, handles errors, and includes tests. Do not make network exploitation the program's purpose.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>23, 37, 45, 59</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

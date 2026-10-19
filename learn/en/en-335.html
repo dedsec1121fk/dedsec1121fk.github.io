@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Order Dependencies with Topological Sorting — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-335.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Topological ordering — enforce build prerequisites and reject cycles A realistic dependency graph An offline build pipeline can release an artifact only after its tests pass, and tests can…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Order Dependencies with Topological Sorting — DedSec Project">
+<meta property="og:description" content="Topological ordering — enforce build prerequisites and reject cycles A realistic dependency graph An offline build pipeline can release an artifact only after its tests pass, and tests can…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-335.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Order Dependencies with Topological Sorting — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Order Dependencies with Topological Sorting — DedSec Project">
+<meta name="twitter:description" content="Topological ordering — enforce build prerequisites and reject cycles A realistic dependency graph An offline build pipeline can release an artifact only after its tests pass, and tests can…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Order Dependencies with Topological Sorting — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Order Dependencies with Topological Sorting — DedSec Project</h1><p>Topological ordering — enforce build prerequisites and reject cycles A realistic dependency graph An offline build pipeline can release an artifact only after its tests pass, and tests can…</p><section><h1>Topological ordering — enforce build prerequisites and reject cycles</h1>
+<h2>A realistic dependency graph</h2>
+<p>An offline build pipeline can release an artifact only after its tests pass, and tests can run only after the build. Represent each stage as a node and list its prerequisites. A valid topological order places every prerequisite before the dependent stage. The existing function uses indegree counts and a queue, sometimes called Kahn's algorithm. It rejects cycles rather than returning an incomplete order, which prevents silently skipping mandatory build steps.</p>
+<p><strong>Working source:</strong> 23_topological_sort.py. Run python3 23_topological_sort.py and then execute the following independent test from the same directory. The example verifies precedence without assuming one arbitrary ordering for unrelated nodes.</p>
+<h2>Executable tests of four contracts</h2>
+<pre><code class="language-python">from runpy import run_path
+topological = run_path(&quot;23_topological_sort.py&quot;)[&quot;topological&quot;]
+order = topological({
+    &quot;release&quot;: [&quot;test&quot;], &quot;test&quot;: [&quot;build&quot;], &quot;build&quot;: []
+})
+assert order.index(&quot;build&quot;) &lt; order.index(&quot;test&quot;) &lt; order.index(&quot;release&quot;)
+assert topological({&quot;release&quot;: [&quot;test&quot;]}) == [&quot;test&quot;, &quot;release&quot;]
+assert topological({}) == []
+try:
+    topological({&quot;a&quot;: [&quot;b&quot;], &quot;b&quot;: [&quot;a&quot;]})
+except ValueError:
+    pass
+else:
+    raise AssertionError(&quot;dependency cycle accepted&quot;)
+print(&quot;PASS dependency order, inferred node, empty input and cycle&quot;)
+</code></pre>
+<h2>Read the implementation, not just the result</h2>
+<p>The source derives all nodes from both dictionary keys and referenced dependencies. This means topological({'release':['test']}) implicitly creates a node named test even though the caller did not explicitly register it. In a permissive system this may be convenient; in a build orchestrator it may conceal a misspelled or missing task definition. The current code uses sorted queues and sorted children to produce stable ordering for comparable string keys. Its general time complexity is O(V + E) ignoring sorting; the extra sorting adds comparison costs and is justified only if deterministic tie-breaking is required.</p>
+<h2>Failure-oriented exercises</h2>
+<ol>
+<li>Add a standalone lint node to the graph and check that the output keeps all nodes, even when multiple topological orders exist.</li>
+<li>Introduce a cycle build -&gt; test -&gt; build and verify the error. Explain why returning a partial list could skip a critical stage.</li>
+<li>Deliberately misspell a dependency (for example biuld). Observe its implicit inclusion. Implement a strict alternative that rejects referenced nodes absent from the dictionary.</li>
+<li>Repeat an identical prerequisite twice. Explain why set(needs) deduplicates it for indegree calculation, and discuss whether a user-facing validator should instead reject duplicates.</li>
+<li>Generate a deep chain of a thousand stages; verify each dependency appears before its child without exhaustively comparing every pair.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, a cycle rejection, one test of undeclared dependencies, and an explicit policy on missing tasks and tie-breaking.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

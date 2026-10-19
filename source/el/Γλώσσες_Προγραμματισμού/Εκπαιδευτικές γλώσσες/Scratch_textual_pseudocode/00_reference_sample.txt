@@ -1,0 +1,3 @@
+when green flag clicked
+set [name v] to [Ada]
+say (join [Hello, ] (name))

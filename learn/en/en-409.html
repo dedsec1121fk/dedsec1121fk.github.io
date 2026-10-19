@@ -1,0 +1,63 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>sas — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-409.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="sas — consolidated language guide SAS How the language behaves SAS separates DATA-step row processing from PROC-based analysis and reporting; the processing step changes how observations…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="sas — consolidated language guide — DedSec Project">
+<meta property="og:description" content="sas — consolidated language guide SAS How the language behaves SAS separates DATA-step row processing from PROC-based analysis and reporting; the processing step changes how observations…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-409.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="sas — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="sas — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="sas — consolidated language guide SAS How the language behaves SAS separates DATA-step row processing from PROC-based analysis and reporting; the processing step changes how observations…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="sas — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>sas — consolidated language guide — DedSec Project</h1><p>sas — consolidated language guide SAS How the language behaves SAS separates DATA-step row processing from PROC-based analysis and reporting; the processing step changes how observations…</p><section><h2>SAS</h2>
+<h3>How the language behaves</h3>
+<p>SAS separates DATA-step row processing from PROC-based analysis and reporting; the processing step changes how observations flow.</p>
+<h3>Source fragment to analyze</h3>
+<pre><code class="language-text">data scores;
+  input id score;
+  datalines;
+1 10
+2 20
+;
+run;
+proc means data=scores; var score; run;
+</code></pre>
+<h3>Deliberate exercise</h3>
+<p>Compute the mean manually and explain why the DATA step creates observations whereas PROC MEANS reads them.</p>
+<h3>Check a failure condition</h3>
+<p>The automatic retention and missing-value rules of SAS DATA steps can surprise users from Python or SQL.</p>
+<p>Record input, expected output and observed output with the actual SAS implementation and version. If no compatible runtime exists on your current platform, label the fragment unexecuted and reason from its semantics rather than claiming a successful run. Run a second isolated experiment that changes only the mechanism under investigation; preserve the exact diagnostic while removing private data.</p>
+<h2>SAS — Expanded practice workbook</h2>
+<h3>Start with actual syntax</h3>
+<p>The archive's starter gives a minimal valid entry point for SAS. Read its operators, declarations and output mechanism; then verify it with the correct interpreter rather than treating another language's syntax as interchangeable.</p>
+<pre><code class="language-text">data _null_;
+  put 'Hello, Ada!';
+run;
+</code></pre>
+<p><strong>Run context:</strong> Execute in a licensed SAS environment.. Before editing, check the exact compiler or interpreter version and save its output. Keep this exercise in a scratch directory, not inside a production project.</p>
+<h3>Guided laboratory</h3>
+<p>Build a DATA step with numeric scores and use PROC MEANS SUM, N and NMISS. Compare missing numeric '.' with character missing values and inspect the SAS log.</p>
+<h3>Boundary-case investigation</h3>
+<p>BY processing usually requires sorting first; implicit type coercions can silently alter a column's meaning.</p>
+<h3>Extended assignment</h3>
+<p>Starting from the exact sample, implement the guided lab in a separate file, then attempt one change involving ordering, shape, type, scope or environment as appropriate to SAS. Explain your invariant and compare expected versus actual output in a small table. Preserve a minimal reproducer for any unexpected behavior; only then expand the example.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

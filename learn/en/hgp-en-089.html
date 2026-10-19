@@ -1,0 +1,76 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>GraphQL, gRPC, WebSockets and Real-Time API Security — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-089.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="GraphQL, gRPC, WebSockets and Real-Time API Security Modern applications expose more than REST. GraphQL, gRPC, WebSockets, server-sent events, and asynchronous APIs move authorization and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="GraphQL, gRPC, WebSockets and Real-Time API Security — DedSec Project">
+<meta property="og:description" content="GraphQL, gRPC, WebSockets and Real-Time API Security Modern applications expose more than REST. GraphQL, gRPC, WebSockets, server-sent events, and asynchronous APIs move authorization and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-089.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="GraphQL, gRPC, WebSockets and Real-Time API Security — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="GraphQL, gRPC, WebSockets and Real-Time API Security — DedSec Project">
+<meta name="twitter:description" content="GraphQL, gRPC, WebSockets and Real-Time API Security Modern applications expose more than REST. GraphQL, gRPC, WebSockets, server-sent events, and asynchronous APIs move authorization and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="GraphQL, gRPC, WebSockets and Real-Time API Security — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>GraphQL, gRPC, WebSockets and Real-Time API Security — DedSec Project</h1><p>GraphQL, gRPC, WebSockets and Real-Time API Security Modern applications expose more than REST. GraphQL, gRPC, WebSockets, server-sent events, and asynchronous APIs move authorization and…</p><section><p>Modern applications expose more than REST. GraphQL, gRPC, WebSockets, server-sent events, and asynchronous APIs move authorization and resource-control decisions into different protocol shapes. Security testing must follow the application’s state model, not assume every request is a simple HTTP endpoint.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>GraphQL schema surface</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Query complexity</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Object and field authorization</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>gRPC semantics</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>WebSocket lifecycle</strong> and connect it to a concrete trust boundary or security invariant.</li>
+<li>Explain <strong>Realtime multi-tenancy</strong> and connect it to a concrete trust boundary or security invariant.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. GraphQL schema surface</h3>
+<p>A GraphQL schema exposes types, fields, arguments, mutations, and relationships. Authorization must be enforced on resolvers and business objects, not inferred from whether a field is hidden from introspection.</p>
+<h3>2. Query complexity</h3>
+<p>Nested queries, aliases, batching, pagination, and expensive resolvers can amplify backend work. Define query-depth/complexity budgets, data-loader behavior, timeouts, and per-principal resource limits.</p>
+<h3>3. Object and field authorization</h3>
+<p>A user allowed to read an object may not be allowed to read every field or invoke every mutation. Model object-level, property-level, and function-level authorization separately.</p>
+<h3>4. gRPC semantics</h3>
+<p>gRPC uses HTTP/2 framing and strongly typed protobuf messages, but serialization does not provide authorization. Interceptors, metadata, service/method policy, message limits, deadline propagation, and reflection exposure need explicit review.</p>
+<h3>5. WebSocket lifecycle</h3>
+<p>Authorization can change after a WebSocket upgrade. Validate the initial handshake, authenticate subscriptions/actions, handle token expiry/revocation, enforce message-size/rate limits, and close stale sessions deliberately.</p>
+<h3>6. Realtime multi-tenancy</h3>
+<p>Subscriptions and event channels can leak cross-tenant data if routing keys, topics, or filters are built from attacker-controlled identifiers without server-side ownership checks.</p>
+<h3>7. Protocol translation</h3>
+<p>Gateways often translate JSON/HTTP into gRPC or events. Security assumptions can be lost when one layer normalizes headers, paths, identities, or error codes differently from the next.</p>
+<h3>8. Observability</h3>
+<p>Log principal, operation/method, object or tenant scope, complexity/cost, result class, and correlation IDs. Avoid logging raw secrets or entire message bodies by default.</p>
+<h2>Authorized exercises</h2>
+<h3>Exercise 1 — Implement a tiny localhost GraphQL-like toy resolver in Python and write authorization tests for object and field access without exposing it beyond loopback</h3>
+<p>Implement a tiny localhost GraphQL-like toy resolver in Python and write authorization tests for object and field access without exposing it beyond loopback.</p>
+<h3>Exercise 2 — Model a WebSocket session as states: unauthenticated, authenticated, reauthenticated, revoked, closed; define allowed messages in each state</h3>
+<p>Model a WebSocket session as states: unauthenticated, authenticated, reauthenticated, revoked, closed; define allowed messages in each state.</p>
+<h3>Exercise 3 — Create a gRPC security review checklist covering identity propagation, method authorization, deadlines, message limits, and logging</h3>
+<p>Create a gRPC security review checklist covering identity propagation, method authorization, deadlines, message limits, and logging.</p>
+<h2>Knowledge checks</h2>
+<ol>
+<li>Explain the most important trust boundary in <strong>GraphQL, gRPC, WebSockets and Real-Time API Security</strong> without naming a security tool.</li>
+<li>Give one example where cryptographic or authentication success still does <strong>not</strong> imply authorization success.</li>
+<li>Describe one stale-state or replay condition relevant to this module.</li>
+<li>Identify one telemetry source that can support a strong conclusion and one blind spot it still leaves.</li>
+<li>Explain how you would turn a discovered weakness into a regression test rather than a one-time finding.</li>
+</ol>
+<h2>Guided study workflow</h2>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,7 @@
+# Prove parity instead of promising it
+
+For each supported platform create a row for launch, input, state, saved files, core features, language, and recovery. Mark tested / not tested / intentionally different. Similar code and screenshots do not guarantee the same user experience.
+
+## Verification scenario
+
+Build a platform matrix for Android Termux, Ubuntu, Kali Linux and Linux Mint. Test installation commands, opening the site, filesystem permissions, search, saved state, languages and recovery separately. Mark untested hardware 'not tested'; a shared codebase can still fail under Android storage permissions. State which steps were observed and which require future verification.

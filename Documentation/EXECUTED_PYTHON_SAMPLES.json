@@ -1,0 +1,175 @@
+{
+  "scope": "24 existing English practical script labs; executed in disposable Linux folder",
+  "runtime": "3.13.5",
+  "platform": "Linux",
+  "results": [
+    {
+      "script": "01_normalize_search.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "προγραμματισμοσ python\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "02_validate_config.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "valid and invalid settings tested\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "03_csv_statistics.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "{'count': 2, 'mean': 15.0, 'bad_lines': [4]}\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "04_jsonl_filter.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "[{'level': 3}] [3]\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "05_sha256_memory.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "3b7fcd35a45bf5c9420f48ab93210f02de3a46bba169bda3145a63c2416b5589\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "06_path_containment.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "path traversal blocked\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "07_diff_text.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "--- old\n+++ new\n@@ -1,2 +1,2 @@\n one\n-two\n+three\n\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "08_markdown_headings.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "Markdown heading index checks passed\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "09_log_events.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "[(1, {'level': 'INFO', 'message': 'start'}), (2, {'level': 'ERROR', 'message': 'invalid log line'})]\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "10_sqlite_tasks.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "[('Learn SQLite', 1)]\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "11_bounded_retry.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "retry succeeded after 3 attempts\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "12_memoization.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "CacheInfo(hits=8, misses=11, maxsize=128, currsize=11)\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "13_queue_bfs.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "['a', 'b', 'c', 'd']\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "14_batched_generator.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "[(0, 1, 2), (3, 4, 5), (6,)]\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "15_merge_sorted.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "[0, 1, 2, 3, 4, 5, 6]\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "16_backup_manifest.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "{'test.txt': '50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c'}\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "17_zip_preview.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "[('notes.txt', True, 5), ('../outside.txt', False, 3)]\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "18_token_bucket.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "rate limiter passed\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "19_api_errors.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "{'error': {'code': 'invalid_input', 'message': 'Bad value', 'field': 'age'}}\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "20_deep_merge.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "{'ui': {'theme': 'dark', 'lang': 'el'}}\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "21_utf8_roundtrip.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "Python και Ελληνικά\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "22_sliding_window.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "[4, 6, 6, 3]\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "23_topological_sort.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "['build', 'test', 'release']\n",
+      "stderr_excerpt": ""
+    },
+    {
+      "script": "24_simple_http_parse.py",
+      "exit_code": 0,
+      "status": "pass",
+      "stdout_excerpt": "{'version': '1.1', 'code': 200, 'reason': 'OK'}\n",
+      "stderr_excerpt": ""
+    }
+  ]
+}

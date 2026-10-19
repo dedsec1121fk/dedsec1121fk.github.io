@@ -1,0 +1,284 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>python — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-592.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="python — consolidated language guide Python Typical use: General-purpose programming. Suggested file extension: .py . How to run / environment: python hello.py. Starter example How to read…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="python — consolidated language guide — DedSec Project">
+<meta property="og:description" content="python — consolidated language guide Python Typical use: General-purpose programming. Suggested file extension: .py . How to run / environment: python hello.py. Starter example How to read…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-592.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="python — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="python — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="python — consolidated language guide Python Typical use: General-purpose programming. Suggested file extension: .py . How to run / environment: python hello.py. Starter example How to read…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="python — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>python — consolidated language guide — DedSec Project</h1><p>python — consolidated language guide Python Typical use: General-purpose programming. Suggested file extension: .py . How to run / environment: python hello.py. Starter example How to read…</p><section><h2>Python</h2>
+<p><strong>Typical use:</strong> General-purpose programming.</p>
+<p><strong>Suggested file extension:</strong> <code>.py</code>.</p>
+<p><strong>How to run / environment:</strong> python hello.py.</p>
+<h3>Starter example</h3>
+<pre><code class="language-python">def greet(name):
+    return f&quot;Hello, {name}!&quot;
+
+for person in [&quot;Ada&quot;, &quot;Grace&quot;]:
+    print(greet(person))
+</code></pre>
+<h3>How to read it</h3>
+<p>Indentation defines blocks; functions return values.</p>
+<h3>Common pitfall</h3>
+<p>Indentation defines blocks; functions return values.</p>
+<h3>From beginner script to tested program</h3>
+<p>Python is strongest when you separate pure data operations from I/O. Build a tiny report that counts categories without depending on file location:</p>
+<pre><code class="language-python">from collections import Counter
+def count_events(lines):
+    return Counter(line.strip() for line in lines if line.strip())
+assert count_events([&quot;open\n&quot;,&quot;save\n&quot;,&quot;open\n&quot;])=={&quot;open&quot;:2,&quot;save&quot;:1}
+</code></pre>
+<p>Next read actual lines using <code>Path(file).read_text(encoding=&quot;utf-8&quot;).splitlines()</code>, catch <code>FileNotFoundError</code> at the CLI boundary and show a helpful message. Use <code>python -m venv .venv</code> when supported, activate the environment and install only packages the program actually needs. In Termux, do not assume <code>python3-venv</code> from Debian instructions works the same way; use the packages supplied by Termux.</p>
+<p><strong>Learn deeply:</strong> iterators vs materialized lists, mutability vs copying, context managers, exceptions, type hints versus runtime validation, tests. <strong>Practice:</strong> stream a 10,000-row CSV, count events, reject malformed rows with line numbers, and write three <code>unittest</code> cases. Source: https://docs.python.org/3/tutorial/ and https://docs.python.org/3/library/unittest.html.</p>
+<h3>Work through a real parser, not just print statements</h3>
+<p>Python is expressive because small functions, exceptions and standard-library tests make behavior inspectable. Write a CSV-free integer reader so that the lab has no external dependency:</p>
+<pre><code class="language-python">def parse_ids(text):
+    result = []
+    for line_number, raw in enumerate(text.splitlines(), 1):
+        value = raw.strip()
+        if not value or value.startswith(&quot;#&quot;):
+            continue
+        try:
+            number = int(value)
+        except ValueError as exc:
+            raise ValueError(f&quot;line {line_number}: not an integer&quot;) from exc
+        if number &lt; 0:
+            raise ValueError(f&quot;line {line_number}: negative identifier&quot;)
+        result.append(number)
+    return result
+
+assert parse_ids(&quot;4\n#note\n 7 &quot;) == [4, 7]
+</code></pre>
+<p>Predict and test empty input, comments, whitespace, -1, a non-number, and repeated integers. Decide whether duplicates are allowed <em>before</em> changing the implementation. The first useful traceback line gives the exception type, but the failing frame in your own code locates the missing assumption.</p>
+<p>Next refactor the function so that it yields values lazily, and explain why a generator can save memory but postpones exceptions until iteration. Compare list and generator output with unit tests; do not claim a performance improvement without measuring.</p>
+<p>For project work, create a virtual environment with python -m venv .venv where supported, check python -m pip --version, and keep a requirements file for third-party dependencies. On Termux, confirm the Python version and available packages before assuming a desktop wheel will install.</p>
+<p><strong>Passing result:</strong> tests cover six inputs and you can explain why the invalid token raises a chained ValueError. Sources: https://docs.python.org/3/tutorial/errors.html and https://docs.python.org/3/library/venv.html.</p>
+<h2>Python — Expanded practice workbook</h2>
+<h3>The problem and constraints</h3>
+<p>A comma can be part of a quoted field; splitting a CSV row with str.split(&quot;,&quot;) corrupts data. Use csv.DictReader to distinguish the serialized format from the validation rules. This exercise accepts a strict two-column header and normalizes status while preserving names.</p>
+<h3>Run and predict</h3>
+<p>Save as parser.py and execute python parser.py. It needs no third-party dependencies. The expected output is parser OK. The first valid record has a comma in its name, not three columns.</p>
+<pre><code class="language-python">import csv
+from io import StringIO
+def summarize(text):
+    reader = csv.DictReader(StringIO(text))
+    if reader.fieldnames != [&quot;name&quot;, &quot;status&quot;]:
+        raise ValueError(&quot;wrong header&quot;)
+    counts = {&quot;ok&quot;: 0, &quot;fail&quot;: 0}
+    for record, row in enumerate(reader, 2):
+        if None in row:
+            raise ValueError(f&quot;extra value at record {record}&quot;)
+        name = (row[&quot;name&quot;] or &quot;&quot;).strip()
+        status = (row[&quot;status&quot;] or &quot;&quot;).strip().lower()
+        if not name or status not in counts:
+            raise ValueError(f&quot;invalid record {record}&quot;)
+        counts[status] += 1
+    return counts
+assert summarize('name,status\n&quot;Ada, Jr&quot;,ok\nGrace,FAIL\n') == {&quot;ok&quot;: 1, &quot;fail&quot;: 1}
+for broken in (&quot;name,status\n,ok\n&quot;, &quot;name,status\nA,other\n&quot;, &quot;name,status\nA,ok,extra\n&quot;):
+    try:
+        summarize(broken)
+    except ValueError:
+        continue
+    raise AssertionError(&quot;bad record accepted&quot;)
+print(&quot;parser OK&quot;)
+</code></pre>
+<h3>Investigate the edge cases</h3>
+<p>The loop counts logical CSV records, not necessarily physical lines: a quoted field may contain a newline. To report physical lines, inspect reader.line_num. Extend the tests to cover empty input, missing status, duplicated names, Unicode names and a multiline quoted name. Decide whether repeated names are allowed before adding a uniqueness constraint.</p>
+<h3>Extension lab</h3>
+<p>Change summarize to accept an opened file handle rather than an entire string; use open(path, encoding=&quot;utf-8&quot;, newline=&quot;&quot;) with argparse at the CLI boundary. Catch FileNotFoundError where the CLI can explain the issue; do not swallow input-validation errors. For large inputs test 100,000 rows without copying every row into another list.</p>
+<h3>Diagnose</h3>
+<p>If import csv resolves to a local csv.py, rename that file to avoid standard-library shadowing. For UnicodeDecodeError inspect the actual file encoding rather than dropping invalid bytes. A malformed quoted CSV field may require stricter parsing with reader.strict=True; explain how the policy differs.
+Success: totals 1/1 and three invalid records rejected. https://docs.python.org/3/library/csv.html</p>
+<h2>Python — Practical runnable code lab</h2>
+<h3>How to run the samples</h3>
+<p>These independent samples use the appropriate language toolchain. Representative command: <code>python3 {file}</code>. Replace placeholders with the actual filename, keep test data isolated, and do not interpret this as automatic installation.</p>
+<h2>Python — Focused mastery pathway</h2>
+<h3>Goal and contract</h3>
+<p>Build a small accounting importer that accepts a text stream, validates each CSV record, totals exact decimal amounts and replaces an existing JSON report only after every record is valid. The CSV header is id,amount,note. Quoted commas and newlines inside note are valid CSV; duplicate IDs, malformed quoting and invalid cent values are not. No third-party packages or network access are needed.</p>
+<h3>Run the self-check</h3>
+<p>Save this code as csv_lab.py. Run python3 csv_lab.py (or py -3 csv_lab.py on Windows). It creates only temporary files and prints PASS if its assertions succeed. Do not run with -O, which disables assert statements.</p>
+<pre><code class="language-python">import csv
+import io
+import json
+import os
+import re
+import tempfile
+from decimal import Decimal
+from pathlib import Path
+
+IDENT = re.compile(r&quot;[\w-]{1,24}\Z&quot;, re.UNICODE)
+MONEY = re.compile(r&quot;(?:0|[1-9][0-9]{0,5})\.[0-9]{2}\Z&quot;)
+
+def summarize(stream):
+    reader = csv.reader(stream, strict=True)
+    if next(reader, None) != [&quot;id&quot;, &quot;amount&quot;, &quot;note&quot;]:
+        raise ValueError(&quot;header must be id,amount,note&quot;)
+    seen, total = set(), Decimal(&quot;0.00&quot;)
+    for fields in reader:
+        if len(fields) != 3:
+            raise ValueError(f&quot;row ending on line {reader.line_num}: expected 3 columns&quot;)
+        ident, raw, note = fields
+        if not IDENT.fullmatch(ident) or ident.strip() != ident:
+            raise ValueError(f&quot;line {reader.line_num}: invalid id&quot;)
+        if ident in seen:
+            raise ValueError(f&quot;line {reader.line_num}: duplicate id&quot;)
+        if not MONEY.fullmatch(raw):
+            raise ValueError(f&quot;line {reader.line_num}: amount needs exact cents&quot;)
+        if len(note) &gt; 80 or &quot;\x00&quot; in note:
+            raise ValueError(f&quot;line {reader.line_num}: invalid note&quot;)
+        seen.add(ident)
+        total += Decimal(raw)
+    if not seen:
+        raise ValueError(&quot;empty import&quot;)
+    return {&quot;rows&quot;: len(seen), &quot;total&quot;: str(total)}
+
+def publish(stream, target):
+    summary = summarize(stream)  # No output is opened before validation succeeds.
+    target, temporary = Path(target), None
+    try:
+        with tempfile.NamedTemporaryFile(&quot;w&quot;, encoding=&quot;utf-8&quot;, newline=&quot;\n&quot;,
+                dir=target.parent, prefix=&quot;.csv-lab-&quot;, delete=False) as out:
+            temporary = Path(out.name)
+            json.dump(summary, out, ensure_ascii=False, sort_keys=True)
+            out.write(&quot;\n&quot;)
+            out.flush()
+            os.fsync(out.fileno())
+        os.replace(temporary, target)  # Same-directory atomic replacement.
+    finally:
+        if temporary is not None:
+            temporary.unlink(missing_ok=True)
+    return summary
+
+def test():
+    good = 'id,amount,note\nΔοκιμή-1,12.50,&quot;quoted, comma&quot;\nB2,0.01,&quot;two\nlines&quot;\n'
+    with tempfile.TemporaryDirectory() as directory:
+        target = Path(directory) / &quot;report.json&quot;
+        assert publish(io.StringIO(good), target) == {&quot;rows&quot;: 2, &quot;total&quot;: &quot;12.51&quot;}
+        previous = target.read_bytes()
+        bad = [
+            'id,amount,note\nA1,1.00,ok\nA1,2.00,duplicate\n',
+            'id,amount,note\nA1,1.001,not cents\n',
+            'id,amount,note\nA1,1.00,&quot;unclosed\n',
+            'id,amount,note\nA1,1.00\n',
+            'id,amount,note\n',
+            'id,amount,note\nA1,1000000.00,too large\n',
+        ]
+        for sample in bad:
+            try:
+                publish(io.StringIO(sample), target)
+                raise AssertionError(&quot;invalid import was accepted&quot;)
+            except (ValueError, csv.Error):
+                assert target.read_bytes() == previous, &quot;report was overwritten&quot;
+        assert json.loads(previous) == {&quot;rows&quot;: 2, &quot;total&quot;: &quot;12.51&quot;}
+    print(&quot;PASS: quoted/multiline CSV, exact cents, six rejections, atomic report&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    test()
+</code></pre>
+<h3>Understand the design decisions</h3>
+<p>csv.reader(strict=True) understands quoted fields and reports physical line numbers. Splitting input on commas or newlines would corrupt the multiline fixture. Decimal avoids binary floating-point errors in currency, while the amount regex rejects extra decimal places instead of rounding silently. The set of seen identifiers detects duplicates; memory is proportional to distinct IDs rather than the full input, so a truly unbounded import should use disk-backed uniqueness checking.</p>
+<p>publish validates the entire stream before opening an output file. It writes a temporary file beside the destination and uses os.replace for an atomic same-filesystem replacement. Invalid input cannot overwrite the previous report. This is not a universal power-loss durability guarantee: fsync of the directory and transactional storage may be required for stronger promises. An unwritable or missing parent directory should produce a real OS error, not a silently redirected output.</p>
+<h3>Fault investigation</h3>
+<ol>
+<li>Swap the header columns to amount,id,note. Identify which precondition rejects the file before processing records.</li>
+<li>Duplicate the Unicode identifier Δοκιμή-1, then try 1.001 as an amount. Check that the old report bytes remain identical.</li>
+<li>Add a note with an embedded newline. Compare csv.reader.line_num with the number of logical CSV records.</li>
+<li>Feed 100,000 synthetic records from a generator-backed stream. Measure memory and explain the cost of the seen-ID set.</li>
+<li>Test a nonexistent output directory and a read-only directory. Separate input errors from filesystem errors.</li>
+</ol>
+<h3>Next lab and evidence</h3>
+<p>Extract summarize and publish into a library module and add argparse for explicit input/output paths. Test an empty input, UTF-8 BOM, duplicate identifier, unfinished quote, 999999.99 and an over-limit amount. Decide whether to support BOM before implementing it. Submit the actual test outputs and explain why os.replace does not replace a database transaction when multiple files or tables must change together.</p>
+<h2>Python — Technical notes and common pitfalls</h2>
+<h3>Core knowledge</h3>
+<ol>
+<li>Indentation forms blocks; container mutation through shared references can affect callers.</li>
+<li>Exceptions carry a traceback; use context managers for file or lock cleanup.</li>
+<li>Generators yield values incrementally; async functions manage cooperative IO, not CPU parallelism automatically.</li>
+</ol>
+<h2>Visual Basic .NET</h2>
+<h3>Operational idea</h3>
+<p>VB.NET is a .NET language using its own syntax for classes, modules and event handling.</p>
+<h3>Source or deliberately marked concept</h3>
+<pre><code class="language-text">Module Program
+  Sub Main()
+    Console.WriteLine(2 + 3)
+  End Sub
+End Module
+</code></pre>
+<h3>Apply it to one controlled task</h3>
+<p>Trace the module entry point and compare Option Strict On with implicit narrowing conversions.</p>
+<h3>Check the important boundary</h3>
+<p>VB.NET is not the same environment as VBA or legacy VBScript; distinguish .NET assemblies from Office macros.</p>
+<p>Work with disposable data in a genuine implementation of Visual_Basic_NET where available. Record the actual tool version and compare your prediction with observed output. If a compatible runtime is missing, clearly mark this as static analysis instead of claiming it passed execution. Split the normal case from at least one boundary value, and avoid using sensitive or production datasets merely to follow a tutorial.</p>
+<h2>Visual_Basic_NET — Focused mastery pathway</h2>
+<h3>Language model and syntax</h3>
+<p>Enable Option Strict On in a VB.NET console project, and parse a bounded numeric input using Integer.TryParse.</p>
+<h3>Intermediate exercise and counterexample</h3>
+<p>Use Select Case over a small status enum. Check every case, including Unknown, and compare nullable values to default integers without implicit conversion.</p>
+<h3>Independent project and verification</h3>
+<p>Create a read-only CSV report with explicit Using blocks around streams. Test missing files, wrong encoding and empty records; log exceptions at the CLI boundary and pin the .NET target framework.</p>
+<h2>One shared practice method for every language</h2>
+<p>Study the language's <strong>actual reference sample</strong> and its declared host before attempting exercises. Predict behavior, change one small detail, test a safe invalid input, record the actual result and exact toolchain. Because programming languages include compiled code, SQL, hardware descriptions and proofs, there is no universal execute command.</p>
+<h3>Six pieces of evidence</h3>
+<ol>
+<li>Language implementation, version and necessary dependencies.</li>
+<li>Minimal accepted program, query or model.</li>
+<li>Predicted effect before execution.</li>
+<li>Recorded result, or a clear “not tested”.</li>
+<li>At least one meaningful edge case.</li>
+<li>Why a change did or did not behave as expected.</li>
+</ol>
+<p>Language-specific exercises belong beside their original lessons; generic instructions live only here to avoid repeating the same text in hundreds of documents.</p>
+<h2>&lt;Language name&gt;</h2>
+<h3>Purpose</h3>
+<p>Where this language is commonly used.</p>
+<h3>Tooling</h3>
+<p>Compiler/interpreter and version to verify.</p>
+<h3>Basic syntax</h3>
+<p>One simple, version-pinned, verified program and output.</p>
+<h3>Worked lesson</h3>
+<p>Explain input, variables, branching, repetition and output where applicable.</p>
+<h3>Exercise and corrected answer</h3>
+<p>A task the reader can attempt and a checked answer.</p>
+<h3>Common errors and compatibility</h3>
+<p>Runtime version, data types and platform limitations.</p>
+<h3>References</h3>
+<p>Official documentation homepage and a dated review note.</p>
+<h2>Subprocess boundaries: arguments, exit status and deadlines</h2>
+<p>Passing a command as an argument list preserves the boundary between the executable and each argument. An argument containing spaces remains one value; it is not a second command. Shell interpretation is a separate feature and should be enabled only when the shell grammar is actually required. Do not build a shell string from an uploaded filename or user message.</p>
+<p>A child process has at least three outcomes to model: successful exit, nonzero exit and timeout. A successful launch is not a successful operation. Capture only bounded output in a real service; capture_output retains everything in memory. The fixture starts the same Python interpreter and passes a deliberately awkward filename as inert data.</p>
+<pre><code class="language-python">import subprocess, sys
+name = &quot;report; this is data.txt&quot;
+run = subprocess.run([sys.executable, &quot;-c&quot;, &quot;import sys; print(sys.argv[1])&quot;, name],
+                     text=True, capture_output=True, timeout=2, check=True)
+assert run.stdout.strip() == name
+failed = subprocess.run([sys.executable, &quot;-c&quot;, &quot;raise SystemExit(7)&quot;], timeout=2)
+assert failed.returncode == 7
+print(&quot;argument and exit boundaries verified&quot;)
+</code></pre>
+<p>Add a child that sleeps beyond its deadline and assert TimeoutExpired. When a process starts descendants, specify how the entire process group is cancelled; stopping one parent is not a general process-tree cleanup guarantee. Never log a full argument list if it can contain credentials.</p>
+<p><a href="https://docs.python.org/3/library/subprocess.html">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

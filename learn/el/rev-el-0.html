@@ -1,0 +1,106 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/rev-el-0.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware Ξεκίνα από τα τεκμήρια Βασική έννοια Η αντίστροφη μηχανική φτιάχνει μια ελέγξιμη εξήγηση από παρατηρήσεις. Δεν ανακτά…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware — DedSec Project">
+<meta property="og:description" content="Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware Ξεκίνα από τα τεκμήρια Βασική έννοια Η αντίστροφη μηχανική φτιάχνει μια ελέγξιμη εξήγηση από παρατηρήσεις. Δεν ανακτά…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/rev-el-0.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware — DedSec Project">
+<meta name="twitter:description" content="Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware Ξεκίνα από τα τεκμήρια Βασική έννοια Η αντίστροφη μηχανική φτιάχνει μια ελέγξιμη εξήγηση από παρατηρήσεις. Δεν ανακτά…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware — DedSec Project</h1><p>Βασικές αρχές reverse engineering: τεκμήρια, Android και firmware Ξεκίνα από τα τεκμήρια Βασική έννοια Η αντίστροφη μηχανική φτιάχνει μια ελέγξιμη εξήγηση από παρατηρήσεις. Δεν ανακτά…</p><section><h2>Ξεκίνα από τα τεκμήρια</h2>
+<h3>Βασική έννοια</h3>
+<p>Η αντίστροφη μηχανική φτιάχνει μια ελέγξιμη εξήγηση από παρατηρήσεις. Δεν ανακτά αυτομάτως τον αυθεντικό πηγαίο κώδικα. Ξεκίνα με μία ερώτηση, έναν στόχο και σαφή όρια.</p>
+<h3>Χωρίς AI: πράξη</h3>
+<p>Διάλεξε δικό σου demo, γράψε μέγεθος, SHA-256 και αρχικά bytes πριν πειράξεις οτιδήποτε. Χώρισε τις σημειώσεις σε παρατηρήσεις και υποθέσεις.</p>
+<h3>Επαλήθευση</h3>
+<p>Εξήγησε γιατί η υπογραφή DMR1 από μόνη της δεν αποδεικνύει ότι ένα αρχείο είναι έγκυρο.</p>
+<h3>Προαιρετικά με AI</h3>
+<p>Ζήτησε δύο πιθανές ερμηνείες μιας ανώνυμης παρατήρησης και σχεδίασε test που ξεχωρίζει τις υποθέσεις.</p>
+<h3>Έρευνα που ξεκινά από ερώτημα</h3>
+<p>Ας υποθέσουμε ότι ένας δικός σου offline μετατροπέας διαβάζει εγγραφή τεσσάρων bytes. Γράψε ελέγξιμη υπόθεση: «Το πρώτο byte δηλώνει έκδοση ή πλήθος;». Κατασκεύασε δύο αντίγραφα που διαφέρουν μόνο σε αυτό το byte και σύγκρινε τις εξόδους. Κράτησε ανέπαφο το πρωτότυπο. Αν δεν αλλάξει τίποτα, δεν αποδείχθηκε η υπόθεση· ίσως το πεδίο αγνοείται ή προστατεύεται με checksum.</p>
+<p><strong>Ημερολόγιο:</strong> SHA-256, άδεια εξέτασης, σύστημα, έκδοση, hash εισόδου, πραγματική έξοδος, υπόθεση, επόμενο πείραμα, βεβαιότητα (επιβεβαιωμένο / πιθανό / άγνωστο). Ένα string είναι ένδειξη και όχι απόδειξη εκτέλεσης.</p>
+<p><strong>Άσκηση:</strong> όρισε δική σου φανταστική μορφή με μαγική τετράδα και count. Κράτησε τρεις παρατηρήσεις πριν κοιτάξεις τον πηγαίο κώδικα.</p>
+<h2>Επιθεώρηση πακέτων Android</h2>
+<h3>Βασική έννοια</h3>
+<p>Το APK περιέχει manifest, resources και compiled κώδικα. Τα δηλωμένα permissions δεν αποδεικνύουν ότι χρησιμοποιήθηκαν.</p>
+<h3>Χωρίς AI: πράξη</h3>
+<p>Δες δικό σου APK με zipfile της Python ή συμβατό εργαλείο. Σύγκρινε manifest και resources με το πηγαίο project.</p>
+<h3>Επαλήθευση</h3>
+<p>Βρες δηλωμένη activity και εξήγησε γιατί δεν αποδεικνύει ότι ο χρήστης άνοιξε την οθόνη.</p>
+<h3>Προαιρετικά με AI</h3>
+<p>Το AI μπορεί να εξηγήσει ανώνυμα permissions αλλά όχι να εφεύρει runtime συμπεριφορά.</p>
+<h3>Στατική ανάλυση δικού σου Android APK</h3>
+<p>Το APK είναι ZIP-based αλλά περιέχει οργανωμένα resources, manifest και DEX bytecode. Ξεκίνα από hash, package ID, υπογραφή, permissions και δηλωμένα entry points. Με Android Studio APK Analyzer ή SDK <code>apkanalyzer</code>/<code>aapt</code> (αν είναι εγκατεστημένα) εξέτασε χωρίς εκτέλεση. Το exported component αποτελεί πιθανό σημείο εισόδου, όχι απόδειξη ευπάθειας.</p>
+<p><strong>Εργαστήριο:</strong> φτιάξε κενή εφαρμογή Android με μία Activity, build debug APK, σημείωσε package name/manifest. Πρόσθεσε μία αβλαβή permission και κάνε ξανά build. Σύγκρινε υπογραφές/permissions. Για αλλαγές κώδικα παρατήρησε DEX methods και επίδραση obfuscation. Μην εγκαθιστάς άγνωστα APK στο κύριο κινητό για δοκιμές.</p>
+<p><strong>Περιορισμοί:</strong> κώδικας που ανασυνθέτει το JADX δεν είναι ακριβώς ο αρχικός Kotlin/Java. Η κρυπτογραφική υπογραφή βεβαιώνει την ακεραιότητα σε σχέση με κλειδί, όχι μόνη της αξιοπιστία εκδότη.</p>
+<h2>Περιοχές και όρια firmware</h2>
+<h3>Βασική έννοια</h3>
+<p>Το firmware συνδυάζει κώδικα, δεδομένα, filesystems και συμπιεσμένες περιοχές. Οι υπογραφές δείχνουν πιθανά offsets αλλά δεν εγγυώνται ασφαλή εξαγωγή.</p>
+<h3>Χωρίς AI: πράξη</h3>
+<p>Φτιάξε συνθετικό αρχείο με δύο τμήματα και δηλωμένα μήκη. Έλεγξε offsets και μη επικάλυψη με Python slices χωρίς εκτέλεση.</p>
+<h3>Επαλήθευση</h3>
+<p>Άλλαξε ένα μήκος ώστε να ξεπερνά το τέλος αρχείου και απαίτησε απόρριψη από parser.</p>
+<h3>Προαιρετικά με AI</h3>
+<p>Το AI μπορεί να προτείνει χάρτη περιοχών, αλλά απόρριψε υποθέσεις εκτός ορίων.</p>
+<h3>Ανάλυση περιοχών firmware χωρίς εκτέλεση ή flash</h3>
+<p>Ένα firmware μπορεί να έχει bootloader, kernel, device tree, συμπιεσμένο filesystem, ρυθμίσεις και ψηφιακή υπογραφή. Ένα magic header σε κάποιο offset δεν ταυτοποιεί το σύνολο του αρχείου.</p>
+<p>Κατασκεύασε υποθετική εικόνα από μικρό ASCII header, ZIP με fixture.txt και δεκαέξι μηδενικά bytes. Κατέγραψε μέγεθος και SHA-256 πριν εξετάσεις οτιδήποτε.</p>
+<pre><code class="language-sh">file demo.img
+sha256sum demo.img
+xxd -l 96 demo.img
+</code></pre>
+<p>Κάνε χάρτη με offset αρχής, offset τέλους, πιθανό τύπο, απευθείας τεκμήριο και βεβαιότητα. Για ZIP επιβεβαίωσε σε ποια θέση αρχίζει και αν viewer μπορεί να διαβάσει την απομονωμένη περιοχή. Αν δηλωμένο μήκος υπερβαίνει τα διαθέσιμα bytes, ανέφερε κακόμορφη είσοδο. Η υψηλή εντροπία δεν αποδεικνύει από μόνη της κρυπτογράφηση.</p>
+<p>Δοκίμασε τρία σφάλματα σε αντίγραφα: αλλοίωση μήκους, περικοπή και επιπλέον bytes. Το εργαλείο σου πρέπει να ξεχωρίζει τις αιτίες χωρίς να τροποποιεί το πρωτότυπο.</p>
+<p>Μη γράφεις αβέβαιες εικόνες σε πραγματική συσκευή. Οι αυτόματοι unpackers μπορεί και αυτοί να έχουν ευπάθειες. Επιτυχία σημαίνει αναπαραγώγιμος χάρτης bytes, όχι πειστική εικασία.</p>
+<h2>Ημερολόγιο τεκμηρίων και ακεραιότητα</h2>
+<h3>Βασική έννοια</h3>
+<p>Οι ισχυρισμοί χρειάζονται εντοπίσιμες παρατηρήσεις. Σημείωσε hash, ημερομηνία, έκδοση εργαλείου, είσοδο, output, ερμηνεία, αβεβαιότητα και επόμενο test. Το CRC32 δεν είναι ψηφιακή υπογραφή.</p>
+<h3>Χωρίς AI: πράξη</h3>
+<p>Γράψε ισχυρισμό C-01: το δείγμα έχει δύο εγγραφές. Σύνδεσέ τον με header count, decoding και checksum.</p>
+<h3>Επαλήθευση</h3>
+<p>Αλλοίωσε το δείγμα και βρες ποιο συμπέρασμα χάνει την απόδειξή του.</p>
+<h3>Προαιρετικά με AI</h3>
+<p>Δώσε στο AI αριθμημένα τεκμήρια και απόρριψε προτάσεις χωρίς συγκεκριμένο ID.</p>
+<h3>Ημερολόγιο τεκμηρίων για αναπαραγωγή</h3>
+<p>Φτιάξε έξι στήλες: SHA-256 αρχείου, εργαλείο/έκδοση, ακριβής ενέργεια, είσοδος δοκιμής, πραγματική έξοδος και ερμηνεία/αβεβαιότητα. Κράτησε ώρα UTC και το πρωτότυπο μόνο για ανάγνωση.</p>
+<p><strong>Άσκηση:</strong> κάνε compile δικό σου δείγμα C με -O0, κράτησε hash και τα πρώτα 32 bytes σε hex viewer, έπειτα κάνε build με -O2 και γράψε δεύτερη εγγραφή. Διαφορετικό hash αποδεικνύει αλλαγή bytes, όχι την αιτία. Η φράση «το branch εκτελείται όταν x=2» παραμένει υπόθεση έως ότου τρέξεις αυτή την είσοδο.</p>
+<p>Παράδειγμα: fixture-debug | SHA256 … | xxd -l 32 | file header | παρατηρήθηκαν bytes τύπου ELF | απαιτείται έλεγχος αρχιτεκτονικής. Κατάγραψε flags μεταγλώττισης και εντολή ώστε άλλος να ξαναφτιάξει το αποτέλεσμα.</p>
+<p>Ξεχώρισε τεκμήρια από ερμηνείες. Screenshot χωρίς hash, offset και συνθήκες δοκιμής δεν επαρκεί. Αφαίρεσε tokens και ιδιωτικά paths από δημόσια αναφορά.</p>
+<p><strong>Κριτήριο:</strong> άλλος αναγνώστης βρίσκει τα ίδια bytes και επαναλαμβάνει την παρατήρηση χωρίς να εμπιστεύεται τη δική σου περιγραφή.</p>
+<h2>Χειροκίνητη και AI-assisted μεθοδολογία</h2>
+<h3>Βασική έννοια</h3>
+<p>Το AI είναι προαιρετικός συνεργάτης, όχι προϋπόθεση εκτέλεσης. Και οι δύο πορείες απαιτούν ερώτηση, παρατήρηση, υπόθεση, test διάψευσης και τεκμήρια.</p>
+<h3>Χωρίς AI: πράξη</h3>
+<p>Χωρίς AI, δημιούργησε δύο συνθετικά binaries, εξέτασε bytes, σύγκρινε outputs και γράψε αναφορά σε Markdown ή χαρτί.</p>
+<h3>Επαλήθευση</h3>
+<p>Με AI, ζήτησε εναλλακτικά layouts και απόρριψε όσα δεν υποστηρίζονται από τα πραγματικά bytes.</p>
+<h3>Προαιρετικά με AI</h3>
+<p>Τα τελικά κριτήρια δεν αλλάζουν: επαναλήψιμα αποτελέσματα, σαφή σφάλματα, καταγεγραμμένα άγνωστα και ιδιωτικότητα.</p>
+<h3>Σύγκρινε χειροκίνητη ανάλυση και υποθέσεις AI</h3>
+<p><strong>Χωρίς AI:</strong> διάλεξε απαντήσιμο ερώτημα όπως «ο parser απορρίπτει payload με περιττό μήκος;». Σημείωσε έκδοση αρχείου, βρες την σχετική συνθήκη, πρόβλεψε αποτέλεσμα για δύο μήκη, εκτέλεσε τα tests και κράτησε τις εξόδους. Μη μετρημένες διαδρομές παραμένουν άγνωστες.</p>
+<p><strong>Με AI:</strong> δώσε μικρά αποπροσωποποιημένα αποσπάσματα bytes, disassembly ή pseudocode. Ζήτησε δύο ανταγωνιστικές εξηγήσεις και ελάχιστη είσοδο που τις διαχωρίζει. Στο “if (n &amp; 1) return 7; return 2”, πρόβλεψε τα αποτελέσματα για n=0 και n=3 και σύγκρινε με πραγματική έξοδο. Μην θεωρείς γνωστά τα αυθεντικά ονόματα μεταβλητών ή όλες τις διαδρομές.</p>
+<p>Χρησιμοποίησε πίνακα: ισχυρισμός | χειροκίνητα τεκμήρια | υπόθεση AI | διαχωριστική δοκιμή | αποδοχή/απόρριψη/άγνωστο. Αν το AI επινοήσει συνάρτηση, ζήτησε πηγή ή πείραμα.</p>
+<p><strong>Πότε σταματάμε:</strong> ασαφής εξουσιοδότηση, άγνωστη αρχιτεκτονική, αδύνατη πρόσβαση ή ανεπαρκείς μετρήσεις. Το «δεν γνωρίζουμε» είναι θεμιτό αποτέλεσμα.</p>
+<p><strong>Αυτοέλεγχος:</strong> περιέγραψε μία λανθασμένη πρόβλεψη και τη μέτρηση που τη διόρθωσε.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

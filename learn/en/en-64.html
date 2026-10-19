@@ -1,0 +1,74 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Algorithm complexity — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-64.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Algorithmic complexity — compare operations before timings Contract and input size A local search system must identify which requested labels exist in an index. Define n as the number of…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Algorithm complexity — DedSec Project">
+<meta property="og:description" content="Algorithmic complexity — compare operations before timings Contract and input size A local search system must identify which requested labels exist in an index. Define n as the number of…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-64.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Algorithm complexity — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Algorithm complexity — DedSec Project">
+<meta name="twitter:description" content="Algorithmic complexity — compare operations before timings Contract and input size A local search system must identify which requested labels exist in an index. Define n as the number of…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Algorithm complexity — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Algorithm complexity — DedSec Project</h1><p>Algorithmic complexity — compare operations before timings Contract and input size A local search system must identify which requested labels exist in an index. Define n as the number of…</p><section><h1>Algorithmic complexity — compare operations before timings</h1>
+<h2>Contract and input size</h2>
+<p>A local search system must identify which requested labels exist in an index. Define n as the number of requests and m as the number of indexed labels. A nested scan may make n*m equality checks when every request misses. An alternative builds a hash set from the indexed labels in expected O(m) time and O(m) space, then performs expected O(1) lookups for each request. This extra allocation may not pay off for very small inputs.</p>
+<h2>Executable Python 3 comparison</h2>
+<p>Save as complexity_lab.py and run python3 complexity_lab.py. The nested version reports its exact comparison count; both variants preserve repeated requested labels.</p>
+<pre><code class="language-python">def nested_lookup(left, right):
+    found, comparisons = [], 0
+    for item in left:
+        for candidate in right:
+            comparisons += 1
+            if item == candidate:
+                found.append(item)
+                break
+    return found, comparisons
+
+def indexed_lookup(left, right):
+    index = set(right)
+    return [item for item in left if item in index]
+
+left = ['a', 'b', 'z', 'a']
+right = ['b', 'a']
+found, steps = nested_lookup(left, right)
+assert found == ['a', 'b', 'a'] and steps == 7
+assert indexed_lookup(left, right) == found
+assert nested_lookup([], right) == ([], 0)
+try:
+    indexed_lookup([[1]], [[1]])
+except TypeError:
+    pass
+else:
+    raise AssertionError('unhashable values were accepted')
+print('PASS complexity: equivalent membership, measured comparisons')
+</code></pre>
+<h2>Interpreting the result</h2>
+<p>The fixture performs seven nested comparisons, including a full unsuccessful search for z. This does not mean seven comparisons always take the same duration on different hardware. Hash sets require hashable values and equality/hash compatibility; nested Python lists cannot serve as set elements. A pathological hash function can degrade expected performance, so the expected O(1) average membership cost is not an unconditional worst-case bound.</p>
+<h2>Exercises and diagnostic experiments</h2>
+<ol>
+<li>Run with n=100, 1000 and 5000 unmatched requests. Keep m fixed, then set m=n. Explain why comparison counts change.</li>
+<li>Put the most frequent request at the front and back of the right-hand list. Count best and worst ordering effects.</li>
+<li>Compare this output with a set intersection; explain why deleting repeated requests changes the program contract.</li>
+<li>Use time.perf_counter for multiple warmed-up runs and log Python version, hardware and input shapes. State memory cost separately from elapsed time.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS output, a small table of n, m and comparison counts, and a failure demonstration for unhashable input.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cloud Logging, Detection and Cross-Cloud Investigation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-137.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Cloud Logging, Detection and Cross-Cloud Investigation Cloud investigations depend on control-plane and identity evidence distributed across services. Learn normalized event models…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Cloud Logging, Detection and Cross-Cloud Investigation — DedSec Project">
+<meta property="og:description" content="Cloud Logging, Detection and Cross-Cloud Investigation Cloud investigations depend on control-plane and identity evidence distributed across services. Learn normalized event models…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-137.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cloud Logging, Detection and Cross-Cloud Investigation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cloud Logging, Detection and Cross-Cloud Investigation — DedSec Project">
+<meta name="twitter:description" content="Cloud Logging, Detection and Cross-Cloud Investigation Cloud investigations depend on control-plane and identity evidence distributed across services. Learn normalized event models…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Cloud Logging, Detection and Cross-Cloud Investigation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Cloud Logging, Detection and Cross-Cloud Investigation — DedSec Project</h1><p>Cloud Logging, Detection and Cross-Cloud Investigation Cloud investigations depend on control-plane and identity evidence distributed across services. Learn normalized event models…</p><section><p>Cloud investigations depend on control-plane and identity evidence distributed across services. Learn normalized event models, immutable collection, correlation, time, multi-account structure and investigation playbooks.</p>
+<h2>Learning objectives</h2>
+<p>By the end of this module you should be able to:</p>
+<ul>
+<li>Explain <strong>control-plane audit logs</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>identity and token context</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>data-plane versus management-plane telemetry</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>multi-account/project/subscription aggregation</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>log integrity and retention</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+<li>Explain <strong>time synchronization and event ordering</strong> and identify its most important trust boundary, state transition, and evidence source.</li>
+</ul>
+<h2>Deep concepts</h2>
+<h3>1. control-plane audit logs</h3>
+<p>Cloud audit logs record administrative/API actions such as identity, policy, networking, storage, and resource changes. Enable and centralize them before an incident; retroactive investigation is impossible for events the provider/account never retained.</p>
+<h3>2. identity and token context</h3>
+<p>A cloud event is meaningful only when caller identity, assumed role/service principal, session/token context, source, target resource, and organization/account/tenant are correlated. Normalize temporary identities back to their parent workload or human where possible.</p>
+<h3>3. data-plane versus management-plane logs</h3>
+<p>Management-plane logs describe configuration/control actions, while data-plane logs describe access to workloads or stored data. High-value investigations often require both because a policy change and subsequent data access happen in different telemetry systems.</p>
+<h3>4. central aggregation</h3>
+<p>Send logs to a security account/project or independent store with narrow write/admin permissions. Cross-account aggregation reduces the chance that compromise of one workload lets an attacker erase the only copy of its control-plane evidence.</p>
+<h3>5. integrity and retention</h3>
+<p>Use provider/object controls, immutability where appropriate, retention policy, export verification, and restricted deletion to preserve evidence. Retention should reflect incident-detection latency, legal/privacy requirements, and cost rather than a single arbitrary number.</p>
+<h3>6. time synchronization and ordering</h3>
+<p>Distributed cloud events may arrive late, use different timestamps, or represent server/client time differently. Preserve original timestamps and ingestion time, correlate with stable request/session IDs, and avoid assuming displayed order equals causal order.</p>
+<h3>7. cross-cloud normalization</h3>
+<p>AWS, Azure, GCP, SaaS, and identity providers use different names for principals, resources, actions, and outcomes. Normalize into a common investigation schema while preserving provider-specific raw fields so analysts can pivot without losing semantics.</p>
+<h3>8. investigation pivots and evidence preservation</h3>
+<p>Start from a known indicator—identity, resource, IP, request ID, key, or time window—and pivot across identity, control plane, workload, network, and data access. Export only necessary evidence, hash important artifacts, and document query/time-zone assumptions for reproducibility.</p>
+<h2>Authorized lab sequence</h2>
+<ul>
+<li><p><strong>Lab 1 — Create a synthetic multi-cloud event dataset and normalize five fields across three provider-style schemas.</strong></p>
+</li>
+<li><p><strong>Lab 2 — Build an investigation timeline for a fictional policy change followed by unusual access and remediation.</strong></p>
+</li>
+<li><p><strong>Lab 3 — Design retention tiers for high-value audit logs, noisy data-plane logs and forensic snapshots.</strong></p>
+</li>
+</ul>
+<h2>Knowledge checks</h2>
+<p>Answer these without looking at the notes:</p>
+<h2>Next modules</h2>
+<p>Recommended related modules: <strong>019, 023, 037, 047, 059, 076, 080, 105, 106</strong>. From the main menu, choose <strong>Search lessons</strong> to find related sections across the full guide.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

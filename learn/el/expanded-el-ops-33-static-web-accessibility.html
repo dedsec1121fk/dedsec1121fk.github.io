@@ -1,0 +1,47 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Static ιστοσελίδα γνώσης: προσβασιμότητα και offline πλοήγηση — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/expanded-el-ops-33-static-web-accessibility.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Εικονίδια χωρίς σωστή συμπεριφορά δεν αρκούν για προσβασιμότητα Πληκτρολόγιο και touch είναι χωριστές δοκιμές Ένα clickable εικονίδιο πρέπει να είναι link ή button με κατανοητό accessible…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Static ιστοσελίδα γνώσης: προσβασιμότητα και offline πλοήγηση — DedSec Project">
+<meta property="og:description" content="Εικονίδια χωρίς σωστή συμπεριφορά δεν αρκούν για προσβασιμότητα Πληκτρολόγιο και touch είναι χωριστές δοκιμές Ένα clickable εικονίδιο πρέπει να είναι link ή button με κατανοητό accessible…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/expanded-el-ops-33-static-web-accessibility.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Static ιστοσελίδα γνώσης: προσβασιμότητα και offline πλοήγηση — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Static ιστοσελίδα γνώσης: προσβασιμότητα και offline πλοήγηση — DedSec Project">
+<meta name="twitter:description" content="Εικονίδια χωρίς σωστή συμπεριφορά δεν αρκούν για προσβασιμότητα Πληκτρολόγιο και touch είναι χωριστές δοκιμές Ένα clickable εικονίδιο πρέπει να είναι link ή button με κατανοητό accessible…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Static ιστοσελίδα γνώσης: προσβασιμότητα και offline πλοήγηση — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Static ιστοσελίδα γνώσης: προσβασιμότητα και offline πλοήγηση — DedSec Project</h1><p>Εικονίδια χωρίς σωστή συμπεριφορά δεν αρκούν για προσβασιμότητα Πληκτρολόγιο και touch είναι χωριστές δοκιμές Ένα clickable εικονίδιο πρέπει να είναι link ή button με κατανοητό accessible…</p><section><h1>Εικονίδια χωρίς σωστή συμπεριφορά δεν αρκούν για προσβασιμότητα</h1>
+<h2>Πληκτρολόγιο και touch είναι χωριστές δοκιμές</h2>
+<p>Ένα clickable εικονίδιο πρέπει να είναι link ή button με κατανοητό accessible name και ορατό focus. Μενού που λειτουργεί μόνο με hover δεν εξυπηρετεί keyboard ή πολλά κινητά. Όταν το UI ανοίγει panel, πρέπει να διατηρεί λογική σειρά focus και να γνωστοποιεί την κατάσταση στο assistive technology. Δοκίμασε zoom 200% και στενή οθόνη χωρίς να αποκρύπτονται ουσιαστικά controls.</p>
+<pre><code class="language-html">&lt;nav aria-label=&quot;Knowledge sections&quot;&gt;
+  &lt;a href=&quot;#programming&quot;&gt;Programming&lt;/a&gt;
+  &lt;a href=&quot;#troubleshooting&quot;&gt;Troubleshooting&lt;/a&gt;
+&lt;/nav&gt;
+&lt;button type=&quot;button&quot; aria-expanded=&quot;false&quot; aria-controls=&quot;details&quot;&gt;More details&lt;/button&gt;
+&lt;section id=&quot;details&quot; hidden&gt;Additional guide sections&lt;/section&gt;
+</code></pre>
+<h2>Offline λειτουργία σημαίνει διαφορετικό περιβάλλον</h2>
+<p>Σε ιστοσελίδα που ανοίγει με <code>file://</code> ή τοπικό HTTP, σωστά relative paths είναι απαραίτητα. Εξωτερικές γραμματοσειρές, CDN scripts και δυναμικά API calls μπορεί να μην λειτουργούν χωρίς Internet. Έλεγξε CSS, εικόνες, scripts και search index με απενεργοποιημένο δίκτυο. Μερικοί browsers επιβάλλουν αυστηρότερους περιορισμούς file-origin από το localhost HTTP, επομένως τεκμηρίωσε τον πραγματικά υποστηριζόμενο τρόπο εκκίνησης.</p>
+<h2>Χρήσιμη αναζήτηση</h2>
+<p>Τα αποτελέσματα χρειάζονται σαφείς τίτλους και κατάσταση «δεν βρέθηκε». Ο χρήστης πληκτρολογίου πρέπει να υποβάλλει, να καθαρίζει και να επιστρέφει στα αποτελέσματα χωρίς να χάνει το focus. Όταν αλλάζει γλώσσα, πρέπει να ενημερώνεται και το <code>lang</code> του document μαζί με τις ετικέτες.</p>
+<h2>Αποδείξεις</h2>
+<p>Κατάγραψε σειρά tab, screenshots touch, zoom, offline search και βασικό έλεγχο προσβάσιμων ονομάτων. Ένα αυτόματο DOM test βρίσκει προβλήματα attributes αλλά δεν πιστοποιεί ολόκληρη την εμπειρία χρήσης.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

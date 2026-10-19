@@ -1,0 +1,103 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Firewalls, IDS/IPS, Honeypots and Detection Validation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-012.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Firewalls, IDS/IPS, Honeypots and Detection Validation Preventive and detective controls are valuable only when their policy, coverage, telemetry, and failure modes are understood. This…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Firewalls, IDS/IPS, Honeypots and Detection Validation — DedSec Project">
+<meta property="og:description" content="Firewalls, IDS/IPS, Honeypots and Detection Validation Preventive and detective controls are valuable only when their policy, coverage, telemetry, and failure modes are understood. This…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-012.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Firewalls, IDS/IPS, Honeypots and Detection Validation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Firewalls, IDS/IPS, Honeypots and Detection Validation — DedSec Project">
+<meta name="twitter:description" content="Firewalls, IDS/IPS, Honeypots and Detection Validation Preventive and detective controls are valuable only when their policy, coverage, telemetry, and failure modes are understood. This…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Firewalls, IDS/IPS, Honeypots and Detection Validation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Firewalls, IDS/IPS, Honeypots and Detection Validation — DedSec Project</h1><p>Firewalls, IDS/IPS, Honeypots and Detection Validation Preventive and detective controls are valuable only when their policy, coverage, telemetry, and failure modes are understood. This…</p><section><p>Preventive and detective controls are valuable only when their policy, coverage, telemetry, and failure modes are understood. This module explains how to validate network and host controls without attempting to bypass or disable them.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> Detection testing must use approved events and known test sources. Do not evade monitoring, disable controls, flood sensors, or create deceptive activity outside an authorized lab or coordinated purple-team exercise.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>distinguish stateless filtering, stateful filtering, proxies, WAFs, IDS, IPS, EDR, and deception systems;</li>
+<li>understand policy order, default action, zones, identity, and application context;</li>
+<li>design detection-validation tests with expected telemetry;</li>
+<li>measure false positives, false negatives, and visibility gaps;</li>
+<li>use honeypots safely;</li>
+<li>turn test results into control improvements.</li>
+</ul>
+<h2>Firewalls</h2>
+<p>A firewall enforces policy between trust zones or workloads. Rules should be reviewed for source, destination, protocol, port/application, identity where supported, direction, action, logging, owner, and expiry.</p>
+<p>Common weaknesses include overly broad sources, <code>any/any</code> rules, shadowed rules, forgotten temporary exceptions, IPv4/IPv6 mismatch, management interfaces exposed to user networks, and rules whose business owner no longer exists.</p>
+<h2>Stateful filtering</h2>
+<p>Stateful devices track connection state, but “stateful” does not mean “secure.” Policy still needs correct direction, service identity, timeout behavior, and logging. Asymmetric routing or proxies can complicate interpretation.</p>
+<h2>Proxies and WAFs</h2>
+<p>Reverse proxies and WAFs terminate or inspect application traffic and can enforce normalization, rate limits, authentication integration, or application-layer rules. They should not be treated as substitutes for secure application code and server-side authorization.</p>
+<h2>IDS and IPS</h2>
+<p>An IDS observes and alerts; an IPS can block or modify traffic depending on design. Detection quality depends on placement, parsing, signatures/analytics, tuning, encryption visibility, time synchronization, asset context, and downstream triage.</p>
+<p>A detection test should state the expected result in advance: which sensor sees the event, which log contains it, whether an alert is expected, and who receives it.</p>
+<h2>EDR and host telemetry</h2>
+<p>Endpoint controls may observe process creation, file changes, network activity, registry/configuration changes, identity events, memory behavior, or script execution. Coverage differs by platform and policy. Validate specific telemetry rather than assuming “EDR installed” equals “everything visible.”</p>
+<h2>Honeypots and deception</h2>
+<p>A honeypot is a deliberately monitored decoy. It should be isolated, contain no real sensitive data, have no path to become a pivot into production, and clearly fall under organizational policy. The value is high-signal observation, not retaliation.</p>
+<h2>A detection-validation loop</h2>
+<ol>
+<li>Define a benign event representing the behavior to detect.</li>
+<li>Record source, target, identity, and time.</li>
+<li>Predict which telemetry should exist.</li>
+<li>Generate the event in an approved lab.</li>
+<li>Verify raw telemetry before alert logic.</li>
+<li>Verify detection and triage routing.</li>
+<li>Document blind spots and false assumptions.</li>
+<li>Tune the control and rerun the same test.</li>
+</ol>
+<h2>Useful metrics</h2>
+<ul>
+<li>telemetry coverage;</li>
+<li>alert precision and recall where measurable;</li>
+<li>time from event to ingest;</li>
+<li>time from ingest to alert;</li>
+<li>time to triage;</li>
+<li>percentage of alerts with enough identity/asset context;</li>
+<li>rule ownership and last validation date.</li>
+</ul>
+<h2>Common mistakes</h2>
+<ul>
+<li>Testing whether monitoring can be bypassed rather than whether it detects the intended behavior.</li>
+<li>Assuming an alert proves the underlying event occurred exactly as described.</li>
+<li>Ignoring raw telemetry and only checking the SIEM rule.</li>
+<li>Leaving temporary firewall rules indefinitely.</li>
+<li>Deploying deception systems with real credentials or production reachability.</li>
+<li>Forgetting IPv6 and cloud control-plane logs.</li>
+</ul>
+<h2>Safe lab</h2>
+<p>Create a local service and a host firewall rule that allows only localhost. Generate one allowed and one denied connection from controlled sources. Verify the firewall evidence. Then generate a harmless known test event and trace it from raw log to alert or dashboard.</p>
+<h2>Knowledge check</h2>
+<ol>
+<li>Why does control placement matter?</li>
+<li>What is the difference between raw telemetry and a detection?</li>
+<li>Why is an <code>any/any</code> rule hard to govern?</li>
+<li>What makes a honeypot safe to operate?</li>
+<li>Why should detection validation be repeatable?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. Preserve expected-versus-observed evidence for every control test.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>23, 47, 59, 80, 106</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

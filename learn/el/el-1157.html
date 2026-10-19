@@ -1,0 +1,84 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Συναλλαγές SQL, περιορισμοί και μεταβολές σχήματος — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1157.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Μεταβολές σχήματος SQLite — επανάληψη και επαναφορά μετά από αποτυχία Σενάριο και αμετάβλητος κανόνας Μία εφαρμογή σημειώσεων χωρίς σύνδεση ξεκινά με πίνακα εργασιών έκδοσης ένα, όπου κάθε…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Συναλλαγές SQL, περιορισμοί και μεταβολές σχήματος — DedSec Project">
+<meta property="og:description" content="Μεταβολές σχήματος SQLite — επανάληψη και επαναφορά μετά από αποτυχία Σενάριο και αμετάβλητος κανόνας Μία εφαρμογή σημειώσεων χωρίς σύνδεση ξεκινά με πίνακα εργασιών έκδοσης ένα, όπου κάθε…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1157.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Συναλλαγές SQL, περιορισμοί και μεταβολές σχήματος — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Συναλλαγές SQL, περιορισμοί και μεταβολές σχήματος — DedSec Project">
+<meta name="twitter:description" content="Μεταβολές σχήματος SQLite — επανάληψη και επαναφορά μετά από αποτυχία Σενάριο και αμετάβλητος κανόνας Μία εφαρμογή σημειώσεων χωρίς σύνδεση ξεκινά με πίνακα εργασιών έκδοσης ένα, όπου κάθε…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Συναλλαγές SQL, περιορισμοί και μεταβολές σχήματος — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Συναλλαγές SQL, περιορισμοί και μεταβολές σχήματος — DedSec Project</h1><p>Μεταβολές σχήματος SQLite — επανάληψη και επαναφορά μετά από αποτυχία Σενάριο και αμετάβλητος κανόνας Μία εφαρμογή σημειώσεων χωρίς σύνδεση ξεκινά με πίνακα εργασιών έκδοσης ένα, όπου κάθε…</p><section><h1>Μεταβολές σχήματος SQLite — επανάληψη και επαναφορά μετά από αποτυχία</h1>
+<h2>Σενάριο και αμετάβλητος κανόνας</h2>
+<p>Μία εφαρμογή σημειώσεων χωρίς σύνδεση ξεκινά με πίνακα εργασιών έκδοσης ένα, όπου κάθε εγγραφή έχει ακέραιο κλειδί και μοναδικό μη κενό τίτλο. Η δεύτερη έκδοση προσθέτει σημαία ολοκλήρωσης που δέχεται μόνο μηδέν ή ένα. Η αναβάθμιση υπάρχουσας βάσης πρέπει να επαναλαμβάνεται χωρίς διαγραφή σημειώσεων. Τα ονόματα πινάκων προέρχονται από έμπιστο κώδικα και οι τιμές του χρήστη μπαίνουν με δεσμευμένες παραμέτρους. Μία αποτυχημένη ομάδα εγγραφών δεν πρέπει να αφήνει τη βάση σε ενδιάμεση κατάσταση.</p>
+<h2>Εκτελέσιμο εργαστήριο Python 3</h2>
+<p>Αποθήκευσε ως migration_lab.py και εκτέλεσε python3 migration_lab.py. Η βάση βρίσκεται στη μνήμη. Ελέγχονται αρχική αναβάθμιση, επανάληψη χωρίς διπλές αλλαγές, αναίρεση μετά από διπλό τίτλο και έλεγχος ακεραιότητας.</p>
+<pre><code class="language-python">import sqlite3
+
+def migrate(db):
+    current = db.execute('PRAGMA user_version').fetchone()[0]
+    if current &gt; 2:
+        raise ValueError('database is newer than this program')
+    with db:
+        if current == 0:
+            db.execute('CREATE TABLE task(id INTEGER PRIMARY KEY, title TEXT NOT NULL UNIQUE)')
+            db.execute('PRAGMA user_version = 1')
+            current = 1
+        if current == 1:
+            db.execute('ALTER TABLE task ADD COLUMN done INTEGER NOT NULL DEFAULT 0 CHECK(done IN (0,1))')
+            db.execute('PRAGMA user_version = 2')
+
+with sqlite3.connect(':memory:') as db:
+    migrate(db)
+    migrate(db)  # migration is idempotent
+    assert db.execute('PRAGMA user_version').fetchone()[0] == 2
+    with db:
+        db.execute('INSERT INTO task(title) VALUES (?)', ('alpha',))
+    before = db.execute('SELECT COUNT(*) FROM task').fetchone()[0]
+    try:
+        with db:
+            db.execute('INSERT INTO task(title) VALUES (?)', ('temporary',))
+            db.execute('INSERT INTO task(title) VALUES (?)', ('alpha',))
+    except sqlite3.IntegrityError:
+        pass
+    else:
+        raise AssertionError('UNIQUE failed to reject a duplicate')
+    assert db.execute('SELECT COUNT(*) FROM task').fetchone()[0] == before
+    assert db.execute('SELECT done FROM task').fetchall() == [(0,)]
+    assert db.execute('PRAGMA integrity_check').fetchone() == ('ok',)
+print('PASS SQL migration: version, idempotency, UNIQUE, rollback, integrity')
+</code></pre>
+<h2>Κατανόηση των συναλλαγών</h2>
+<p>Το PRAGMA user_version κρατά αριθμό έκδοσης μέσα στο αρχείο SQLite. Η συνάρτηση διαβάζει την έκδοση και εκτελεί μόνο τα βήματα που λείπουν, μέσα σε συναλλαγή. Η νέα στήλη χρησιμοποιεί NOT NULL DEFAULT 0 για έγκυρη αρχική τιμή, ενώ το CHECK περιορίζει τις μελλοντικές εγγραφές. Ο περιορισμός UNIQUE αποτρέπει διπλούς τίτλους ακόμη και όταν ο προγραμματιστής ξεχάσει τον έλεγχο στην εφαρμογή. Στη δοκιμή αποτυχίας εισάγεται αρχικά η temporary, αλλά η δεύτερη προσπάθεια για alpha προκαλεί IntegrityError. Η συναλλαγή αναιρείται ολόκληρη, επομένως δεν διατηρείται η προσωρινή εγγραφή. Η συμπεριφορά συνδέεται με τον τρόπο συναλλαγών της βιβλιοθήκης και της βάσης, γι' αυτό χρειάζεται επαλήθευση στο πραγματικό περιβάλλον. Ο διαχειριστής with db δεν κλείνει αυτομάτως τη σύνδεση.</p>
+<h2>Ελεγχόμενες ασκήσεις και προστασία δεδομένων</h2>
+<ol>
+<li>Φτιάξε προσωρινή βάση έκδοσης ένα με πραγματικές δοκιμαστικές εγγραφές, αναβάθμισέ την και απόδειξε ότι τίτλοι και νέα προεπιλεγμένη τιμή διατηρούνται.</li>
+<li>Προκάλεσε σφάλμα στη μέση μιας μεταβολής σχήματος και εξέτασε PRAGMA user_version και sqlite_master. Μη θεωρείς δεδομένη την ατομικότητα χωρίς δοκιμή των πραγματικών εντολών.</li>
+<li>Δοκίμασε δύο συνδέσεις σε προσωρινό αρχείο βάσης και κατέγραψε τι βλέπει ο αναγνώστης πριν και μετά το commit. Χειρίσου SQLITE_BUSY χωρίς κατάργηση περιορισμών.</li>
+<li>Απόρριψε βάση με μεγαλύτερο user_version από την εφαρμογή. Δημιούργησε και επανάφερε επιτυχώς ένα δοκιμαστικό backup πριν από πραγματική αναβάθμιση.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> PASS, πλήθη εγγραφών πριν και μετά το σφάλμα, μεταβολές user_version, integrity_check και δοκιμασμένο σχέδιο αντιγράφου ασφαλείας. Μην εκτελείς αυτό το εργαστήριο σε προσωπικές βάσεις.</p>
+<h2>Πρόσθετη τεχνική ανάλυση</h2>
+<p>Προστάτεψε αλλαγή με την αρχικά αναγνωσμένη έκδοση και όχι μόνο το ID γραμμής. Θεώρησε μηδενικές επηρεασμένες γραμμές πιθανή σύγκρουση και διατήρησε τον νικητή. Η συναλλαγή δίνει ατομική εκτέλεση, ενώ η ρητή συνθήκη έκδοσης δίνει τον κανόνα που εμποδίζει σιωπηρή αντικατάσταση αλλαγής άλλου συντάκτη.</p>
+<p><a href="../el/fieldnotes-el-39.html">Αισιόδοξος συγχρονισμός και αποτροπή χαμένων ενημερώσεων</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

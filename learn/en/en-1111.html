@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Glossary: heaps, HTTP and idempotence — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1111.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Glossary: heaps, HTTP and idempotence Heap Meaning and constraints The word heap has two separate uses: the dynamic memory region used for allocations, and a priority-queue data structure…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Glossary: heaps, HTTP and idempotence — DedSec Project">
+<meta property="og:description" content="Glossary: heaps, HTTP and idempotence Heap Meaning and constraints The word heap has two separate uses: the dynamic memory region used for allocations, and a priority-queue data structure…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1111.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glossary: heaps, HTTP and idempotence — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Glossary: heaps, HTTP and idempotence — DedSec Project">
+<meta name="twitter:description" content="Glossary: heaps, HTTP and idempotence Heap Meaning and constraints The word heap has two separate uses: the dynamic memory region used for allocations, and a priority-queue data structure…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Glossary: heaps, HTTP and idempotence — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Glossary: heaps, HTTP and idempotence — DedSec Project</h1><p>Glossary: heaps, HTTP and idempotence Heap Meaning and constraints The word heap has two separate uses: the dynamic memory region used for allocations, and a priority-queue data structure…</p><section><h2>Heap</h2>
+<h3>Meaning and constraints</h3>
+<p>The word heap has two separate uses: the dynamic memory region used for allocations, and a priority-queue data structure. A binary min-heap stores a partial ordering that makes the smallest key accessible efficiently; it does not keep every element globally sorted.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">import heapq
+items = [9, 2, 5, 1]
+heapq.heapify(items)
+assert heapq.heappop(items) == 1
+assert heapq.heappop(items) == 2
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Print the internal heap list after heapify and prove it need not be sorted. Distinguish the O(log n) push/pop operations from a memory allocation on the process heap.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/library/heapq.html</p>
+<h2>HTTP</h2>
+<h3>Meaning and constraints</h3>
+<p>HTTP defines a client-server exchange of methods, target resources, headers, status codes and possibly bodies. HTTP is stateless at the protocol layer; applications can correlate requests using cookies, tokens and server-side sessions. A 200 status does not certify that JSON data has the right schema.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-http">GET /status HTTP/1.1
+Host: example.test
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{&quot;ok&quot;:true}
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Sketch separate responses 200, 404, 429 and 503. Describe which failures can be retried, when Retry-After matters, and why CORS is a browser enforcement mechanism rather than an HTTP authentication system.</p>
+<p><strong>Further reading:</strong> https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview</p>
+<h2>Idempotence</h2>
+<h3>Meaning and constraints</h3>
+<p>An operation is idempotent when repeating it has the same intended effect as doing it once. Setting a flag to true is idempotent, whereas incrementing a counter ordinarily is not. In HTTP, method idempotence is about intended server effects, not necessarily identical response bytes.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">state = {'enabled': False, 'counter': 0}
+def enable(): state['enabled'] = True
+def increment(): state['counter'] += 1
+enable(); enable(); assert state['enabled'] is True
+increment(); increment(); assert state['counter'] == 2
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Design an API endpoint that accepts an idempotency key for a payment-like test action. Model a repeated request after a network timeout and prevent accidental duplicate writes; don't use real payment services.</p>
+<p><strong>Further reading:</strong> https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Idempotent</p>
+<h2>Immutable</h2>
+<h3>Meaning and constraints</h3>
+<p>An immutable value cannot be changed in place through its exposed interface. Python tuples are immutable containers but may contain references to mutable objects; immutability of the outer tuple does not recursively freeze everything it contains.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">items = ([1,2],)
+items[0].append(3)
+assert items == ([1,2,3],)
+# items[0] = [4]  # TypeError: tuple assignment is forbidden
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Compare a frozen dataclass with a regular one, then test a frozen field that holds a list. Decide when a deep immutable representation is needed for safe caching or cross-thread messaging.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/library/stdtypes.html#tuples</p>
+<h2>Index</h2>
+<h3>Meaning and constraints</h3>
+<p>An index can be a position into an ordered collection or a separate data structure accelerating database lookups. Python sequence indexes usually start at zero and negative indexes count from the end; a database index instead stores searchable keys and references to records.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">words = ['first', 'second', 'third']
+assert words[0] == 'first'
+assert words[-1] == 'third'
+assert words[1:3] == ['second', 'third']
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Try words[3] and record IndexError. Then create an indexed SQLite column and compare EXPLAIN QUERY PLAN before and after, noting that an optimizer may avoid an index for a tiny table.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/library/stdtypes.html#common-sequence-operations</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

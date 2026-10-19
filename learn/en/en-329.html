@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Merge Nested Configuration Carefully — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-329.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Deep dictionary merge — policy, copies and conflicting types Define the merge contract before writing code A configuration override should replace explicitly specified values while…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Merge Nested Configuration Carefully — DedSec Project">
+<meta property="og:description" content="Deep dictionary merge — policy, copies and conflicting types Define the merge contract before writing code A configuration override should replace explicitly specified values while…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-329.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Merge Nested Configuration Carefully — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Merge Nested Configuration Carefully — DedSec Project">
+<meta name="twitter:description" content="Deep dictionary merge — policy, copies and conflicting types Define the merge contract before writing code A configuration override should replace explicitly specified values while…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Merge Nested Configuration Carefully — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Merge Nested Configuration Carefully — DedSec Project</h1><p>Deep dictionary merge — policy, copies and conflicting types Define the merge contract before writing code A configuration override should replace explicitly specified values while…</p><section><h1>Deep dictionary merge — policy, copies and conflicting types</h1>
+<h2>Define the merge contract before writing code</h2>
+<p>A configuration override should replace explicitly specified values while preserving unrelated defaults. In the existing merge function, dictionary-versus-dictionary values are merged recursively; lists, scalar values and None are replaced as whole values rather than concatenated or ignored. It first makes a deep copy, so callers may mutate the result without changing the original nested configuration. Top-level non-dictionary arguments raise TypeError.</p>
+<p><strong>Working source:</strong> 20_deep_merge.py. Execute python3 20_deep_merge.py to inspect the original example, then save the following independent test as test_merge.py in the same folder. This deliberately exercises nested copies, list replacement, type conflict and invalid top-level input.</p>
+<h2>Executable independent tests</h2>
+<pre><code class="language-python">from runpy import run_path
+merge = run_path(&quot;20_deep_merge.py&quot;)[&quot;merge&quot;]
+defaults = {&quot;ui&quot;: {&quot;lang&quot;: &quot;en&quot;, &quot;theme&quot;: &quot;dark&quot;}, &quot;tabs&quot;: [&quot;a&quot;]}
+result = merge(defaults, {
+    &quot;ui&quot;: {&quot;lang&quot;: &quot;el&quot;}, &quot;tabs&quot;: [&quot;b&quot;], &quot;new&quot;: None
+})
+assert result == {
+    &quot;ui&quot;: {&quot;lang&quot;: &quot;el&quot;, &quot;theme&quot;: &quot;dark&quot;},
+    &quot;tabs&quot;: [&quot;b&quot;], &quot;new&quot;: None
+}
+result[&quot;ui&quot;][&quot;theme&quot;] = &quot;light&quot;
+assert defaults[&quot;ui&quot;][&quot;theme&quot;] == &quot;dark&quot;
+assert merge({&quot;a&quot;: {&quot;b&quot;: 1}}, {&quot;a&quot;: 5})[&quot;a&quot;] == 5
+try:
+    merge([], {})
+except TypeError:
+    pass
+else:
+    raise AssertionError(&quot;non-dictionary source accepted&quot;)
+print(&quot;PASS merge: isolation, replacement, recursion, type guard&quot;)
+</code></pre>
+<h2>Why accidental mutation is a real bug</h2>
+<p>A shallow copy such as dict(defaults) copies only the outer mapping: defaults['ui'] and the new result's nested ui object can still point to the same dictionary. Updating a nested theme in the result would unexpectedly modify the reusable defaults. copy.deepcopy recursively allocates separate mutable containers. The function also copies override values so a caller modifying the returned list does not mutate the input override list. This is useful in a GUI where the user can change settings without affecting an uncommitted default profile.</p>
+<h2>Understand the conflict policy</h2>
+<p>The example replaces tabs ['a'] with ['b']; it does not join both lists. A dictionary value may be replaced with an integer, and an explicit None remains a value rather than meaning 'delete'. These choices are application policy rather than a universal definition of deep merge. Before deploying, decide how unknown keys, secret-bearing values and schema migrations will be validated. Blindly merging a user-supplied configuration does not make it safe.</p>
+<h2>Fault-oriented exercises</h2>
+<ol>
+<li>Replace the deepcopy calls with shallow copies in a throwaway copy and show an assertion that now fails.</li>
+<li>Create a nested dict/list structure, change a list inside the result and verify both original inputs remain unchanged.</li>
+<li>Decide whether conflicting types should be rejected rather than replaced. Implement one strict policy and test it explicitly.</li>
+<li>Investigate self-referential dictionaries and excessive nesting. The current recursion does not impose a depth bound; write a plan to detect cycles or cap nesting rather than claiming unrestricted input safety.</li>
+</ol>
+<p><strong>Completion:</strong> PASS, unchanged inputs, a documented list/None policy, and one reproduced aliasing bug.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

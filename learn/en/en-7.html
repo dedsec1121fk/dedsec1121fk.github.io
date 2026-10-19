@@ -1,0 +1,83 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Concurrency, parallelism and cancellation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-7.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Concurrency and cancellation — release shared resources reliably Scenario and invariant An offline indexing task may be cancelled when the user closes a knowledge page. Shared asynchronous…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Concurrency, parallelism and cancellation — DedSec Project">
+<meta property="og:description" content="Concurrency and cancellation — release shared resources reliably Scenario and invariant An offline indexing task may be cancelled when the user closes a knowledge page. Shared asynchronous…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-7.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Concurrency, parallelism and cancellation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Concurrency, parallelism and cancellation — DedSec Project">
+<meta name="twitter:description" content="Concurrency and cancellation — release shared resources reliably Scenario and invariant An offline indexing task may be cancelled when the user closes a knowledge page. Shared asynchronous…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Concurrency, parallelism and cancellation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Concurrency, parallelism and cancellation — DedSec Project</h1><p>Concurrency and cancellation — release shared resources reliably Scenario and invariant An offline indexing task may be cancelled when the user closes a knowledge page. Shared asynchronous…</p><section><h1>Concurrency and cancellation — release shared resources reliably</h1>
+<h2>Scenario and invariant</h2>
+<p>An offline indexing task may be cancelled when the user closes a knowledge page. Shared asynchronous resources such as locks must be released even if cancellation happens during a suspended await. Concurrency interleaves tasks, whereas parallelism means simultaneous execution. Python asyncio coroutines cooperate at await boundaries and do not automatically protect shared mutable state. An application must define ownership, cancellation boundaries and cleanup before adding workers.</p>
+<h2>Executable Python 3.11+ fixture</h2>
+<p>Save as cancellation_lab.py and run python3 cancellation_lab.py. The worker acquires a lock, announces that it started, then waits on an event. The controller cancels the task and checks that its finally block released the lock, allowing another task to acquire it. No threads, network, disk writes or timers are required.</p>
+<pre><code class="language-python">import asyncio
+
+async def do_work(lock, started, unblock, trace):
+    async with lock:
+        trace.append('entered')
+        started.set()
+        try:
+            await unblock.wait()
+            trace.append('finished')
+        finally:
+            trace.append('cleanup')
+
+async def test():
+    lock, started, unblock = asyncio.Lock(), asyncio.Event(), asyncio.Event()
+    trace = []
+    task = asyncio.create_task(do_work(lock, started, unblock, trace))
+    await started.wait()
+    assert lock.locked()
+    task.cancel()
+    try:
+        await task
+    except asyncio.CancelledError:
+        pass
+    else:
+        raise AssertionError('cancellation not delivered')
+    assert trace == ['entered', 'cleanup']
+    assert not lock.locked()
+    async with lock:
+        trace.append('reacquired')
+    assert trace[-1] == 'reacquired'
+    print('PASS async: cancellation, finally cleanup, lock release')
+
+asyncio.run(test())
+</code></pre>
+<h2>Interpreting the outcome</h2>
+<p>When Task.cancel requests cancellation, a CancelledError is delivered at a suspension point. The finally block runs during stack unwinding and the async-with lock context releases the lock. Checking lock.locked is evidence for this fixture, not a guarantee about arbitrary blocking code or every library. Cancellation can race with normal completion; tests need to distinguish both outcomes. A released lock does <strong>not</strong> imply a filesystem write or database transaction has been rolled back. For durable changes, use database transactions or verified temporary-file replacement independently of asyncio cancellation handling.</p>
+<h2>Bounded experiments and diagnostics</h2>
+<ol>
+<li>Move task.cancel to before started.wait, then observe how assertions must change when the task was never scheduled.</li>
+<li>Put a second worker behind the same lock and verify it can proceed after the first is cancelled. Check the trace for cleanup exactly once.</li>
+<li>Introduce a deliberately failing operation under the lock. Show whether the finally block runs for ordinary exceptions as well as cancellation.</li>
+<li>Simulate a partial temporary-file write on a disposable path. Design independent cleanup and atomic replacement; do not assume cancellation itself reverts bytes.</li>
+</ol>
+<p><strong>Completion evidence:</strong> PASS, exact trace order, distinction between concurrency and parallelism, and a recovery plan for partially persisted work.</p>
+<h2>Further engineering detail</h2>
+<p>Cancellation and overload meet at queue shutdown. A producer waiting to enqueue must learn when all consumers have failed. Define how blocked producers wake, how accepted tasks are acknowledged and whether unfinished tasks survive restart. Bounded buffering makes this policy necessary instead of concealing overload in memory growth.</p>
+<p><a href="../en/fieldnotes-en-37.html">Bounded work queues and overload decisions</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

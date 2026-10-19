@@ -1,0 +1,92 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>glsl — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-324.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="glsl — συγκεντρωτικός οδηγός GLSL Συνήθης χρήση: Γλώσσες shaders. Προτεινόμενη επέκταση αρχείου: .glsl . Εκτέλεση / περιβάλλον: Μεταγλώττιση ως fragment shader σε κατάλληλο περιβάλλον…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="glsl — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="glsl — συγκεντρωτικός οδηγός GLSL Συνήθης χρήση: Γλώσσες shaders. Προτεινόμενη επέκταση αρχείου: .glsl . Εκτέλεση / περιβάλλον: Μεταγλώττιση ως fragment shader σε κατάλληλο περιβάλλον…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-324.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="glsl — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="glsl — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="glsl — συγκεντρωτικός οδηγός GLSL Συνήθης χρήση: Γλώσσες shaders. Προτεινόμενη επέκταση αρχείου: .glsl . Εκτέλεση / περιβάλλον: Μεταγλώττιση ως fragment shader σε κατάλληλο περιβάλλον…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="glsl — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>glsl — συγκεντρωτικός οδηγός — DedSec Project</h1><p>glsl — συγκεντρωτικός οδηγός GLSL Συνήθης χρήση: Γλώσσες shaders. Προτεινόμενη επέκταση αρχείου: .glsl . Εκτέλεση / περιβάλλον: Μεταγλώττιση ως fragment shader σε κατάλληλο περιβάλλον…</p><section><h2>GLSL</h2>
+<p><strong>Συνήθης χρήση:</strong> Γλώσσες shaders.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.glsl</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> Μεταγλώττιση ως fragment shader σε κατάλληλο περιβάλλον γραφικών.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>#version 330 core
+out vec4 FragColor;
+void main() { FragColor = vec4(0.2, 0.5, 0.8, 1.0); }
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Οι shaders υπολογίζουν εικονοστοιχεία και δεν έχουν έξοδο κονσόλας.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Οι shaders υπολογίζουν εικονοστοιχεία και δεν έχουν έξοδο κονσόλας. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h2>GLSL — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Πραγματικό αρχικό δείγμα</h3>
+<pre><code class="language-text">#version 330 core
+out vec4 FragColor;
+void main() { FragColor = vec4(0.2, 0.5, 0.8, 1.0); }
+</code></pre>
+<p><strong>Περιβάλλον:</strong> Compile as a fragment shader in a supported graphics host.. Επιβεβαίωσε ότι έχεις το σωστό compiler, host ή simulator πριν θεωρήσεις την έξοδο αξιόπιστη. Για scripts με πρόσβαση σε προσωπικά αρχεία ή ρυθμίσεις, χρησιμοποίησε προσωρινά και read-only δεδομένα.</p>
+<h3>Συγκεκριμένος στόχος υλοποίησης</h3>
+<p>Υλοποίησε fragment gradient από normalized UV και clamp χρώματος. Σύγκρινε linear color με sRGB display και δοκίμασε UV στα όρια.</p>
+<h3>Κρίσιμο λάθος που πρέπει να αναγνωρίζεις</h3>
+<p>Οι εκδόσεις GLSL/OpenGL ES έχουν precision qualifiers· desktop shader μπορεί να αποτύχει σε mobile GPU.</p>
+<h2>GLSL — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Στόχος και περιβάλλον</h3>
+<p>Δημιούργησε σε desktop OpenGL 3.3 ένα fragment shader με χρωματική διαβάθμιση και κύκλο με μαλακή ακμή. Χρησιμοποιούμε GLSL 330 core, <strong>όχι</strong> έτοιμο κώδικα για OpenGL ES: εκεί απαιτούνται άλλη έκδοση και κατάλληλοι κανόνες precision. Το πρόγραμμα-ξενιστής πρέπει να συνδέει vertex stage που παρέχει το interpolated v_uv.</p>
+<h3>Κώδικας (circle.frag)</h3>
+<pre><code class="language-glsl">#version 330 core
+in vec2 v_uv;
+out vec4 fragColor;
+uniform float u_radius;
+
+void main() {
+    vec2 uv = clamp(v_uv, vec2(0.0), vec2(1.0));
+    float distanceFromCenter = length(uv - vec2(0.5));
+    float circle = 1.0 - smoothstep(
+        u_radius - 0.01, u_radius + 0.01, distanceFromCenter
+    );
+    vec3 background = vec3(uv.x, uv.y, 0.2);
+    fragColor = vec4(mix(background, vec3(1.0, 0.9, 0.2), circle), 1.0);
+}
+</code></pre>
+<p>Το v_uv είναι παρεμβαλλόμενη συντεταγμένη επιφάνειας, όχι θέση pixel. Το clamp μετατρέπει τιμές UV εκτός [0,1] σε άκρα, αντί για επανάληψη υφής. Η ζώνη του smoothstep έχει πλάτος 0.02 μονάδες UV και όχι σταθερά pixels. Η μετατροπή linear/sRGB εξαρτάται από το render target και την εφαρμογή, όχι από αυτόν τον κώδικα.</p>
+<h3>Δοκιμές και εντοπισμός αιτίας</h3>
+<ol>
+<li>Με u_radius=0.25, στο UV (0.5,0.5) ο κύκλος έχει πλήρη ένταση, ενώ στα (0,0) και (1,1) μηδενική.</li>
+<li>Στο (0.75,0.5) η ένταση της ακμής αναμένεται περίπου 0.5.</li>
+<li>Χρησιμοποίησε μη τετράγωνο viewport· αν ο κύκλος παραμορφώνεται, χρειάζεται διόρθωση αναλογίας αξόνων.</li>
+<li>Άλλαξε σκόπιμα το όνομα εξόδου στο vertex shader και κράτησε το σφάλμα <strong>σύνδεσης</strong>, όχι μόνο μεταγλώττισης fragment.</li>
+<li>Έλεγξε ξεχωριστά συσκευή OpenGL ES: η έκδοση 330 core δεν σημαίνει ότι υποστηρίζεται σε Android.</li>
+</ol>
+<h3>Απόδειξη ολοκλήρωσης</h3>
+<p>Κράτησε το ζεύγος vertex/fragment, πραγματική έκδοση OpenGL context, logs compilation/link, εικόνες και ρυθμίσεις χρώματος του host. Χωρίς πραγματικό GL περιβάλλον, το παράδειγμα αποτελεί στατική μελέτη και όχι επιβεβαιωμένο GPU test.</p>
+<h2>GLSL — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Τα στάδια shader έχουν διαφορετικές εισόδους, εξόδους και περιορισμούς.</li>
+<li>Οι συντεταγμένες και η ακρίβεια επηρεάζουν τα αριθμητικά αποτελέσματα.</li>
+<li>Δοκίμασε μέσα σε αντίστοιχο γραφικό pipeline, όχι ως απλό CLI πρόγραμμα.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

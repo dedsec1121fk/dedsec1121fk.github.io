@@ -1,0 +1,78 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>llvm_ir — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-699.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="llvm_ir — συγκεντρωτικός οδηγός LLVM IR Τι προσφέρει η γλώσσα Το LLVM IR είναι ενδιάμεση αναπαράσταση με τύπους που χρησιμοποιείται σε toolchains, όχι assembly που εκτελείται απευθείας σε…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="llvm_ir — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="llvm_ir — συγκεντρωτικός οδηγός LLVM IR Τι προσφέρει η γλώσσα Το LLVM IR είναι ενδιάμεση αναπαράσταση με τύπους που χρησιμοποιείται σε toolchains, όχι assembly που εκτελείται απευθείας σε…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-699.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="llvm_ir — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="llvm_ir — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="llvm_ir — συγκεντρωτικός οδηγός LLVM IR Τι προσφέρει η γλώσσα Το LLVM IR είναι ενδιάμεση αναπαράσταση με τύπους που χρησιμοποιείται σε toolchains, όχι assembly που εκτελείται απευθείας σε…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="llvm_ir — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>llvm_ir — συγκεντρωτικός οδηγός — DedSec Project</h1><p>llvm_ir — συγκεντρωτικός οδηγός LLVM IR Τι προσφέρει η γλώσσα Το LLVM IR είναι ενδιάμεση αναπαράσταση με τύπους που χρησιμοποιείται σε toolchains, όχι assembly που εκτελείται απευθείας σε…</p><section><h2>LLVM IR</h2>
+<h3>Τι προσφέρει η γλώσσα</h3>
+<p>Το LLVM IR είναι ενδιάμεση αναπαράσταση με τύπους που χρησιμοποιείται σε toolchains, όχι assembly που εκτελείται απευθείας σε CPU.</p>
+<h3>Μικρό παράδειγμα προς μελέτη</h3>
+<pre><code class="language-text">define i32 @add(i32 %a, i32 %b) {
+entry:
+  %sum = add i32 %a, %b
+  ret i32 %sum
+}
+</code></pre>
+<p>Εντόπισε υπογραφή, βασικό block και SSA value. Σύγκρινε σωστό τύπο επιστροφής με σκόπιμα λανθασμένο μέσα στον verifier.</p>
+<h3>Τι να επαληθεύσεις</h3>
+<p>Κατάγραψε την πραγματική έκδοση εργαλείου, τις απαιτούμενες εξαρτήσεις και την έξοδο σε δοκιμαστικά δεδομένα για τη LLVM_IR. Πρόβλεψε το αποτέλεσμα πριν το ελέγξεις και διατήρησε την αρχική και τη διορθωμένη εκδοχή ώστε να φαίνεται η αιτιώδης διαφορά. Μην αποκαλείς ένα απόσπασμα εκτελεσμένο αν δεν έχεις το κατάλληλο περιβάλλον.</p>
+<h3>Παγίδα ειδική για το θέμα</h3>
+<p>Η σύνταξη και τα attributes αλλάζουν μεταξύ εκδόσεων LLVM· έλεγξε τα IR με εργαλεία ίδιας έκδοσης.</p>
+<h2>Εργαστήριο εξάσκησης: LLVM IR</h2>
+<h3>Εκτέλεση του αρχικού module</h3>
+<p>Το <code>00_starter.ll</code> έχει <code>define i32 @main()</code> και τερματίζει με <code>ret i32 0</code>. Αντέγραψέ το σε <code>exercise.ll</code> ώστε να μη χαλάσεις το αρχικό. Με συμβατά εργαλεία LLVM εκτέλεσε:</p>
+<pre><code class="language-sh">llvm-as exercise.ll -o exercise.bc
+lli exercise.bc
+printf 'exit status: %s\n' &quot;$?&quot;
+</code></pre>
+<p>Η επιτυχής εκτέλεση αναμένεται να επιστρέψει κωδικό μηδέν. Η <code>lli</code> δεν εκτυπώνει την ακέραια επιστροφή στην οθόνη: ο κωδικός εξόδου είναι άλλο κανάλι παρατήρησης. Κράτησε τις εκδόσεις <code>llvm-as --version</code> και <code>lli --version</code>, επειδή διαφορές μεταξύ τους επηρεάζουν την ανάγνωση του IR. Οι εντολές δεν έχουν εκτελεστεί στο παρόν περιβάλλον.</p>
+<h3>Μία ελεγχόμενη αλλαγή</h3>
+<p>Άλλαξε μόνο το <code>ret i32 0</code> σε <code>ret i32 7</code>. Πρόβλεψε κωδικό εξόδου <code>7</code> για συστήματα που χρησιμοποιούν τη <code>main</code> ως σημείο εισόδου και επανέλαβε τη μεταγλώττιση. Μη συμπεράνεις ότι ο κωδικός εξόδου διατηρεί οποιονδήποτε 32-bit αριθμό: πολλά λειτουργικά εκθέτουν περιορισμένο εύρος. Για πλήρη ακέραια τιμή χρησιμοποίησε κατάλληλο πρόγραμμα κλήσης.</p>
+<h3>Σκόπιμο σφάλμα τύπων</h3>
+<p>Σε προσωρινό αντίγραφο βάλε <code>ret i64 7</code> χωρίς αλλαγή του <code>define i32 @main()</code>. Οι τύποι της εντολής επιστροφής και της συνάρτησης δεν συμφωνούν. Εκτέλεσε <code>llvm-as</code>, αποθήκευσε την πραγματική διαγνωστική έξοδο και μετά διόρθωσε σε <code>ret i32 7</code>. Η διόρθωση πρέπει να εξηγεί την ασυμφωνία, όχι να βασίζεται σε τυχαίες δοκιμές.</p>
+<h3>Άσκηση με έλεγχο ροής</h3>
+<p>Δημιούργησε δεύτερη υλοποίηση με blocks <code>entry</code>, <code>positive</code> και <code>nonpositive</code>. Σύγκρινε μια παράμετρο με μηδέν με <code>icmp sgt i32</code>, διακλάδωσε με <code>br i1</code> και τερμάτισε <strong>κάθε</strong> προσπελάσιμο block. Όλες οι επιστροφές πρέπει να είναι <code>i32</code>. Αν ενώσεις τις δύο διαδρομές με <code>phi</code>, δώσε μία είσοδο ανά προκάτοχο block.</p>
+<h3>Κριτήρια ελέγχου</h3>
+<p>Εξήγησε γιατί το <code>i32</code> είναι συμβόλαιο και γιατί δεν υπάρχει αυτόματη πτώση στο επόμενο block. Σύγκρινε το <code>llvm-dis</code> με το αρχικό κείμενο, κράτησε ένα θετικό και ένα αρνητικό τεστ και σημείωσε την αρχιτεκτονική στόχο. Αναφορά: https://llvm.org/docs/LangRef.html</p>
+<h2>LLVM_IR — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Μια ελάχιστη συνάρτηση</h3>
+<p>Η LLVM Intermediate Representation περιγράφει typed operations μέσα σε basic blocks. Κάθε SSA temporary έχει έναν ορισμό, αλλά η μνήμη είναι διαφορετική περίπτωση και απαιτεί load/store ή κατάλληλες μετατροπές. Αποθήκευσε το παράδειγμα σε add.ll.</p>
+<pre><code class="language-llvm">define i32 @add(i32 %a, i32 %b) {
+entry:
+  %sum = add i32 %a, %b
+  ret i32 %sum
+}
+</code></pre>
+<p>Η συνάρτηση επιστρέφει το άθροισμα των δύο i32. Έλεγξε τη σύνταξη με llvm-as add.ll και εξέτασε το module με εργαλεία της ίδιας LLVM έκδοσης. Μη συγχέεις το LLVM IR με φορητό assembly συγκεκριμένου επεξεργαστή: το IR μπορεί να μετασχηματιστεί και να μεταγλωττιστεί για διαφορετικά targets με target-specific επιλογές.</p>
+<h3>Πότε δεν ισχύει μια υποτιθέμενη ιδιότητα</h3>
+<p>Η πρόσθεση i32 χωρίς επισημάνσεις διαχειρίζεται υπερχείλιση με modular συμπεριφορά στο πλάτος i32. Αν χρησιμοποιήσεις add nsw, δηλώνεις ότι δεν υπάρχει signed overflow· όταν αυτή η υπόθεση παραβιάζεται μπορεί να προκύψει poison value, κάτι διαφορετικό από «έγκυρο αριθμητικό αποτέλεσμα με wrap». Μην προσθέτεις τέτοιες σημαίες απλώς για να κάνει ο optimizer πιο πολλά.</p>
+<h3>Φ-κόμβοι και control flow</h3>
+<p>Γράψε δεύτερη συνάρτηση με δύο predecessors που επιστρέφουν διαφορετική τιμή. Στο join block χρησιμοποίησε phi ώστε το SSA αποτέλεσμα να αντιστοιχεί στο εκάστοτε προηγούμενο block. Η phi είναι επιλογή βάσει CFG predecessor, όχι ένας αυθαίρετος imperative assignment.</p>
+<h3>Κριτήρια αποδοχής</h3>
+<p>Εξέτασε έγκυρο και σκόπιμα μη έγκυρο type mismatch, διάβασε το diagnostic του llvm-as και χρησιμοποίησε opt -verify με συμβατή LLVM έκδοση. Σύγκρινε i32 με i64 χωρίς να υποθέτεις ότι ο ίδιος bitpattern έχει πάντα την ίδια αριθμητική ερμηνεία. Κατάγραψε toolchain version, target assumptions και πραγματικά αποτελέσματα. Τα παραδείγματα είναι για δοκιμή, όχι πιστοποιημένες εκτελέσεις.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

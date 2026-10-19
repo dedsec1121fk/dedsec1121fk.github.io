@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Calculate a file SHA-256 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1035.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Recipe: streaming SHA-256 for local file verification Intended use and acceptance criteria This recipe calculates a SHA-256 digest of any local file without reading it into RAM at once. Use…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Calculate a file SHA-256 — DedSec Project">
+<meta property="og:description" content="Recipe: streaming SHA-256 for local file verification Intended use and acceptance criteria This recipe calculates a SHA-256 digest of any local file without reading it into RAM at once. Use…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1035.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Calculate a file SHA-256 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Calculate a file SHA-256 — DedSec Project">
+<meta name="twitter:description" content="Recipe: streaming SHA-256 for local file verification Intended use and acceptance criteria This recipe calculates a SHA-256 digest of any local file without reading it into RAM at once. Use…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Calculate a file SHA-256 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Calculate a file SHA-256 — DedSec Project</h1><p>Recipe: streaming SHA-256 for local file verification Intended use and acceptance criteria This recipe calculates a SHA-256 digest of any local file without reading it into RAM at once. Use…</p><section><h1>Recipe: streaming SHA-256 for local file verification</h1>
+<h2>Intended use and acceptance criteria</h2>
+<p>This recipe calculates a SHA-256 digest of any local file without reading it into RAM at once. Use it to compare a previously trusted expected digest against a downloaded offline resource. The example exercises one-byte and 64 KiB read sizes and proves that adding one byte changes the result.</p>
+<h2>Complete runnable example</h2>
+<p>Save this as <code>02_File_hash.py</code> and execute with Python 3. The fixture is disposable and has no network dependency.</p>
+<pre><code class="language-python">import hashlib, tempfile
+from pathlib import Path
+def sha256_file(path, chunk_size=65536):
+    if type(chunk_size) is not int or chunk_size &lt; 1:
+        raise ValueError(&quot;invalid chunk size&quot;)
+    digest = hashlib.sha256()
+    with open(path, &quot;rb&quot;) as stream:
+        for chunk in iter(lambda: stream.read(chunk_size), b&quot;&quot;):
+            digest.update(chunk)
+    return digest.hexdigest()
+with tempfile.TemporaryDirectory() as directory:
+    item = Path(directory) / &quot;αρχείο.bin&quot;
+    item.write_bytes(b&quot;abc&quot;)
+    expected = hashlib.sha256(b&quot;abc&quot;).hexdigest()
+    assert sha256_file(item, 1) == expected
+    assert sha256_file(item, 65536) == expected
+    item.write_bytes(b&quot;abcd&quot;)
+    assert sha256_file(item) != expected
+    item.write_bytes(b&quot;&quot;)
+    assert sha256_file(item) == hashlib.sha256(b&quot;&quot;).hexdigest()
+print(&quot;PASS streaming file SHA-256&quot;)
+</code></pre>
+<h2>Guarantees and limitations</h2>
+<p>The digest updates incrementally over raw bytes; hash results are independent of chunk size. Unicode characters in the path do not change the bytes being hashed. An empty file also has a valid deterministic digest. A SHA-256 match demonstrates identity to the trusted reference at comparison time, not publisher authenticity or immunity to concurrent edits. Hashing a file while another process is writing it may produce a digest of an inconsistent snapshot.</p>
+<h2>Adaptation lab</h2>
+<p>Run it against synthetic 10 MiB data using chunk sizes 1, 4096 and 65536 and compare digests. Catch FileNotFoundError separately from PermissionError. Decide whether to inspect file size and timestamp before and after hashing; neither alone is an atomic snapshot. Never replace signature verification with a self-published checksum.</p>
+<h2>Troubleshooting and release check</h2>
+<p>If two files with apparently identical text hash differently, compare encoded bytes, line endings, BOM and Unicode normalization. Do not decode or normalize when the goal is exact file integrity. If the expected digest came from the same untrusted download channel, investigate provenance before trusting it.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

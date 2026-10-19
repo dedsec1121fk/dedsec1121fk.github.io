@@ -1,0 +1,95 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Βάσεις Termux και Android Linux — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-028.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Βάσεις Termux και Android Linux Ελληνική έκδοση — Μάθημα 028. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια. Στόχος…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Βάσεις Termux και Android Linux — DedSec Project">
+<meta property="og:description" content="Βάσεις Termux και Android Linux Ελληνική έκδοση — Μάθημα 028. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια. Στόχος…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-028.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Βάσεις Termux και Android Linux — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Βάσεις Termux και Android Linux — DedSec Project">
+<meta name="twitter:description" content="Βάσεις Termux και Android Linux Ελληνική έκδοση — Μάθημα 028. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια. Στόχος…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Βάσεις Termux και Android Linux — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Βάσεις Termux και Android Linux — DedSec Project</h1><p>Βάσεις Termux και Android Linux Ελληνική έκδοση — Μάθημα 028. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια. Στόχος…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 028.</strong> Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια.</p>
+</blockquote>
+<h2>Στόχος του μαθήματος</h2>
+<p>Το Termux προσφέρει Linux-like userland πάνω στο Android, αλλά δεν είναι πλήρης desktop διανομή ούτε παρακάμπτει το Android security model. Για αξιόπιστη χρήση πρέπει να κατανοείς storage permissions, package management, process lifetime, networking, SSH, Python environments και τα όρια που επιβάλλει το Android sandbox.</p>
+<p>Σε αυτό το μάθημα εστιάζεις ειδικά στο <strong>Βάσεις Termux και Android Linux</strong>. Στο τέλος πρέπει να μπορείς να περιγράψεις το security model με δικά σου λόγια, να αναγνωρίζεις τα βασικά failure modes, να σχεδιάζεις ασφαλή test cases και να εξηγείς ποιο evidence χρειάζεται για να στηριχθεί ένα συμπέρασμα.</p>
+<h2>Θέματα που καλύπτονται</h2>
+<ul>
+<li><strong>What Termux actually is</strong>
+Για το <strong>What Termux actually is</strong>, δες το workflow σαν reproducible local environment: paths, package/source provenance, permissions, environment state, error handling και rollback. Στο Termux προτίμησε standard-library εργαλεία, explicit paths και δοκιμές σε harmless local files/services.</li>
+<li><strong>Installation and update hygiene</strong>
+Για το <strong>Installation and update hygiene</strong>, στο πλαίσιο του <strong>Βάσεις Termux και Android Linux</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Storage model</strong>
+Για το <strong>Storage model</strong>, κατέγραψε ποιος μπορεί να γράψει/διαβάσει το state, πού αποθηκεύεται, πώς προστατεύεται at rest, ποιο backup/sync behavior υπάρχει και πότε το data πρέπει να διαγράφεται ή να ανακαλείται.</li>
+<li><strong>Core shell navigation</strong>
+Για το <strong>Core shell navigation</strong>, δες το workflow σαν reproducible local environment: paths, package/source provenance, permissions, environment state, error handling και rollback. Στο Termux προτίμησε standard-library εργαλεία, explicit paths και δοκιμές σε harmless local files/services.</li>
+<li><strong>Files, permissions, and executables</strong>
+Για το <strong>Files, permissions, and executables</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Environment variables</strong>
+Για το <strong>Environment variables</strong>, δες το workflow σαν reproducible local environment: paths, package/source provenance, permissions, environment state, error handling και rollback. Στο Termux προτίμησε standard-library εργαλεία, explicit paths και δοκιμές σε harmless local files/services.</li>
+<li><strong>Package management fundamentals</strong>
+Για το <strong>Package management fundamentals</strong>, δες το workflow σαν reproducible local environment: paths, package/source provenance, permissions, environment state, error handling και rollback. Στο Termux προτίμησε standard-library εργαλεία, explicit paths και δοκιμές σε harmless local files/services.</li>
+<li><strong>Processes and jobs</strong>
+Στο <strong>Processes and jobs</strong>, χαρτογράφησε process → socket → interface/route → peer και ποια identity/host-key/DNS πληροφορία εμπιστεύεται κάθε βήμα. Ξεκίνα από loopback ή δικό σου SSH endpoint και επιβεβαίωσε listening scope, authentication και logs.</li>
+<li><strong>Networking basics in Termux</strong>
+Για το <strong>Networking basics in Termux</strong>, δες το workflow σαν reproducible local environment: paths, package/source provenance, permissions, environment state, error handling και rollback. Στο Termux προτίμησε standard-library εργαλεία, explicit paths και δοκιμές σε harmless local files/services.</li>
+<li><strong>Android sandboxing and root</strong>
+Στο <strong>Android sandboxing and root</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+<li><strong>Termux add-ons</strong>
+Για το <strong>Termux add-ons</strong>, δες το workflow σαν reproducible local environment: paths, package/source provenance, permissions, environment state, error handling και rollback. Στο Termux προτίμησε standard-library εργαλεία, explicit paths και δοκιμές σε harmless local files/services.</li>
+<li><strong>Baseline setup lesson</strong>
+Για το <strong>Baseline setup lesson</strong>, ξεκίνα από observable behavior και διαθέσιμα data sources, όχι από technique ID μόνο. Γράψε detection hypothesis, required fields, expected benign collisions, tuning strategy και validation event ώστε η κάλυψη να είναι μετρήσιμη.</li>
+<li><strong>Common mistakes</strong>
+Στο <strong>Common mistakes</strong>, μετέτρεψε τη θεωρία του <strong>Βάσεις Termux και Android Linux</strong> σε ελέγξιμα κριτήρια: τι πρέπει να μπορείς να εξηγήσεις, ποιο λάθος assumption εμφανίζεται συχνότερα, ποιο safe lab το αποκαλύπτει και ποιο retest αποδεικνύει ότι το διόρθωσες.</li>
+<li><strong>Mini lab — Build a known-good Termux baseline</strong>
+Για το <strong>Mini lab — Build a known-good Termux baseline</strong>, χαρτογράφησε control plane, workload identity, permissions, artifact/data provenance και lifecycle. Έλεγξε πώς δημιουργείται authority, πού κληρονομείται, πώς ανακαλείται και τι audit trail παραμένει.</li>
+<li><strong>Primary references</strong>
+Για το <strong>Primary references</strong>, ξεχώρισε normative specification από tutorial ή vendor summary. Κατέγραψε έκδοση/ημερομηνία, ποιο requirement στηρίζει το συμπέρασμα και ποιο μέρος του <strong>Βάσεις Termux και Android Linux</strong> χρειάζεται επανέλεγχο όταν αλλάξει η πηγή.</li>
+<li><strong>Practical Termux foundation drills</strong>
+Στο <strong>Practical Termux foundation drills</strong>, όρισε συγκεκριμένο objective, owned/local scope, expected result και stop condition. Κράτησε μόνο sanitized evidence, σύγκρινε expected με observed behavior και ολοκλήρωσε με remediation και ίδιο regression test.</li>
+<li><strong>Drill 1 — Know your environment</strong>
+Στο <strong>Drill 1 — Know your environment</strong>, όρισε συγκεκριμένο objective, owned/local scope, expected result και stop condition. Κράτησε μόνο sanitized evidence, σύγκρινε expected με observed behavior και ολοκλήρωσε με remediation και ίδιο regression test.</li>
+<li><strong>Drill 2 — Permission reasoning</strong>
+Για το <strong>Drill 2 — Permission reasoning</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Drill 3 — Rebuildability</strong>
+Στο <strong>Drill 3 — Rebuildability</strong>, όρισε συγκεκριμένο objective, owned/local scope, expected result και stop condition. Κράτησε μόνο sanitized evidence, σύγκρινε expected με observed behavior και ολοκλήρωσε με remediation και ίδιο regression test.</li>
+<li><strong>Android-specific guidance</strong>
+Στο <strong>Android-specific guidance</strong>, σχεδίασε τα layers device/OS/app/firmware, τα privilege boundaries, permissions/entitlements και την αλυσίδα update/boot trust. Επιβεβαίωσε assumptions μόνο σε emulator, development board ή δική σου συσκευή.</li>
+</ul>
+<h2>Μέθοδος ανάλυσης</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a> για scope, evidence, note-taking και κριτήρια ολοκλήρωσης. Για το <strong>Βάσεις Termux και Android Linux</strong>, πριν κάνεις οποιοδήποτε test σχεδίασε τα components, σημείωσε πού αλλάζει η εμπιστοσύνη και γράψε μία πρόταση που περιγράφει το security invariant που θέλεις να ελέγξεις.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Κράτησε όλα τα labs μέσα στο δικό σου τηλέφωνο, localhost ή συστήματα που ελέγχεις. Ξεκίνα με read-only commands και διατήρησε backups για scripts/configuration.</p>
+<p>Ακολούθησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>: γράψε expected result πριν το test, άλλαξε μία μεταβλητή κάθε φορά, κράτησε sanitized evidence και κάνε retest μετά το hardening του <strong>Βάσεις Termux και Android Linux</strong>.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ul>
+<li>Μπορείς να εξηγήσεις το βασικό trust boundary του <strong>Βάσεις Termux και Android Linux</strong> χωρίς σημειώσεις;</li>
+<li>Μπορείς να δώσεις ένα failure mode και να πεις ποιο evidence θα το επιβεβαίωνε;</li>
+<li>Μπορείς να ξεχωρίσεις symptom, root cause και compensating control;</li>
+<li>Μπορείς να σχεδιάσεις ασφαλές retest που δεν επεκτείνει το scope;</li>
+</ul>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p><a href="../en/hgp-en-028.html">English Module 028</a></p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

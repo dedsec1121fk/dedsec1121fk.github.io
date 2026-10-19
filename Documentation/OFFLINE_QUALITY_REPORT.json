@@ -1,0 +1,84 @@
+{
+  "source": "Updated DedSec_Portable_Main_Test_Backup_SEO.zip; additive authored bilingual expansion; no repository changes",
+  "github_actions_used_in_this_edit": 0,
+  "original_records_per_language": {
+    "en": 1188,
+    "el": 1188
+  },
+  "retained_records_per_language": {
+    "en": 669,
+    "el": 669
+  },
+  "retained_markdown_guides_per_language": {
+    "en": 422,
+    "el": 422
+  },
+  "supporting_source_and_reference_records_per_language": {
+    "en": 247,
+    "el": 247
+  },
+  "repaired_knowledge_areas": [
+    "Clojure with Erlang, Factor, Gleam, PureScript and ReasonML relocated",
+    "Unicode with dependency security, software tests, Git and search indexing relocated",
+    "Git and release management separated from consent and environment setup",
+    "Data modeling separated from thread/process concurrency",
+    "Environment configuration separated from threat modeling and least privilege",
+    "Algorithmic data structures separated from reproducing bugs",
+    "Several multi-topic teaching collections accurately renamed"
+  ],
+  "machine_checked": {
+    "stable_topic_pairing": true,
+    "content_strict_audit": "pass",
+    "shallow_padding_and_empty": {
+      "en": {
+        "under_threshold": 0,
+        "repeated_scaffolds": 0,
+        "template_padding": 0,
+        "empty_sections": 0
+      },
+      "el": {
+        "under_threshold": 0,
+        "repeated_scaffolds": 0,
+        "template_padding": 0,
+        "empty_sections": 0
+      }
+    },
+    "substantive_repeated_paragraph_groups": 0,
+    "archive_parity": "pass",
+    "internal_markdown_links": "262 valid / 0 broken",
+    "website_static_validation": "pass",
+    "python_practical_labs_passed": 24,
+    "python_practical_labs_total": 24,
+    "unit_tests": "17 passed",
+    "chromium_inline_browser_smoke": "4 viewport loads; no JavaScript errors; theme/language/search controls responded; no horizontal overflow",
+    "near_duplicate_similarity": "No pairs at 0.72+ Jaccard prose four-word shingles across 438 English and 438 Greek Markdown files.",
+    "new_code_snippets_syntax_checked": 70,
+    "new_example_runtime_checks": "Python and C examples tested on this Linux container; Rust compiler unavailable; see EXPANSION_QA for precise details.",
+    "portable_site_checks": "Main, Test and backup each 1517 URLs, 1697 HTML pages, 669 previews per language; no broken relative links."
+  },
+  "browser_scope": {
+    "mobile_viewport": "390x844",
+    "desktop_viewport": "1280x800",
+    "tested": "HTML+CSS+JS executed inside Chromium with script order preserved and inline assets; cookie decision, language, theme, search",
+    "not_tested": "Full URL navigation, file/HTTP loading, real cross-device render, imagery and fonts, and complete accessibility"
+  },
+  "not_certified": [
+    "Independent review of every technical explanation and niche-language compiler example",
+    "Full Windows/Android/Termux runtime and real device QA",
+    "Real URL/browser navigation in this restricted runtime",
+    "Production deployment",
+    "Newly added Rust example runtime execution (compiler unavailable in the editing environment)"
+  ],
+  "docs": [
+    "Documentation/OFFLINE_CURATION_MANIFEST.json",
+    "Documentation/INLINE_BROWSER_TEST.json",
+    "Documentation/EXECUTED_PYTHON_SAMPLES.json",
+    "Documentation/English/16_CURATED_OFFLINE_KNOWLEDGE.md",
+    "Documentation/Greek/16_ΕΠΙΜΕΛΗΜΕΝΗ_OFFLINE_ΓΝΩΣΗ.md"
+  ],
+  "expanded_topic_pairs": 35,
+  "existing_consolidated_titles_edited": {
+    "en": 44,
+    "el": 44
+  }
+}

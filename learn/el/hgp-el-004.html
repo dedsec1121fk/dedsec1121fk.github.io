@@ -1,0 +1,119 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Service Enumeration και Protocol-Aware Validation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-004.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Service Enumeration και Protocol-Aware Validation Enumeration σημαίνει ότι προχωράς από το «υπάρχει service» σε δομημένη κατανόηση protocol behavior, identities, configuration και exposed…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Service Enumeration και Protocol-Aware Validation — DedSec Project">
+<meta property="og:description" content="Service Enumeration και Protocol-Aware Validation Enumeration σημαίνει ότι προχωράς από το «υπάρχει service» σε δομημένη κατανόηση protocol behavior, identities, configuration και exposed…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-004.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Service Enumeration και Protocol-Aware Validation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Service Enumeration και Protocol-Aware Validation — DedSec Project">
+<meta name="twitter:description" content="Service Enumeration και Protocol-Aware Validation Enumeration σημαίνει ότι προχωράς από το «υπάρχει service» σε δομημένη κατανόηση protocol behavior, identities, configuration και exposed…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Service Enumeration και Protocol-Aware Validation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Service Enumeration και Protocol-Aware Validation — DedSec Project</h1><p>Service Enumeration και Protocol-Aware Validation Enumeration σημαίνει ότι προχωράς από το «υπάρχει service» σε δομημένη κατανόηση protocol behavior, identities, configuration και exposed…</p><section><p>Enumeration σημαίνει ότι προχωράς από το «υπάρχει service» σε δομημένη κατανόηση protocol behavior, identities, configuration και exposed metadata. Στόχος δεν είναι να εξάγεις όσο περισσότερη πληροφορία γίνεται αλλά να συλλέγεις το ελάχιστο evidence που απαιτείται για ένα authorized security question.</p>
+<blockquote>
+<p><strong>Όριο εξουσιοδοτημένης χρήσης:</strong> Κάνε enumeration μόνο σε services/accounts μέσα στο scope. Χρησιμοποίησε lab accounts και synthetic data. Μην κάνεις password guessing, user harvesting ή sensitive-data extraction χωρίς συγκεκριμένη άδεια.</p>
+</blockquote>
+<h2>Scanning εναντίον enumeration</h2>
+<p>Scanning συνήθως απαντά αν host/service είναι reachable. Enumeration απαντά τι εκθέτει και πώς συμπεριφέρεται. TCP/443 open είναι scan result· certificate, reverse proxy behavior, authentication flow και authorization policy είναι enumeration evidence.</p>
+<h2>HTTP/HTTPS</h2>
+<p>Ξεκίνα με normal request:</p>
+<pre><code class="language-bash">curl -I http://127.0.0.1:8000/
+</code></pre>
+<p>Κατέγραψε status, redirects, headers και expected exposure. Για TLS κράτησε certificate/hostname validation. Μην θεωρείς το <code>Server</code> header definitive product/version evidence.</p>
+<h2>SSH</h2>
+<p>Σε SSH assessment έλεγξε αν πρέπει να είναι reachable, ποια authentication methods επιτρέπονται, αν privileged accounts μπορούν να κάνουν direct login, ποια host keys/algorithms χρησιμοποιούνται και αν τα access decisions γίνονται log. Μην μετατρέπεις enumeration σε credential attack.</p>
+<h2>DNS</h2>
+<p>DNS enumeration μπορεί να δείξει address records, mail routing, NS relationships και security records. Zone-transfer tests γίνονται μόνο σε δικό σου authoritative lab server ή όταν υπάρχει ρητή άδεια.</p>
+<h2>SMB και file shares</h2>
+<p>Χρησιμοποίησε account που δημιουργήθηκε για το assessment. Έλεγξε guest/anonymous access, share permissions και expected policy. Readable share δεν είναι αυτόματα vulnerability αν είναι σχεδιασμένο να είναι public.</p>
+<h2>SNMP</h2>
+<p>SNMP μπορεί να εκθέσει operational/inventory data. Προτίμησε authenticated/encrypted configurations όπου υποστηρίζονται. Μην brute-forceάρεις community strings· χρησιμοποίησε supplied lab credential ή local configuration review.</p>
+<h2>LDAP και directories</h2>
+<p>Κατέγραψε bind identity, search base, returned attributes και αν εκτίθενται unnecessary sensitive attributes. Για Active Directory συνέχισε στα Modules 32 και 72.</p>
+<h2>Fingerprints ως hypotheses</h2>
+<p>Banners, headers και protocol negotiation δίνουν ενδείξεις. Backported fixes και intermediaries μπορούν να αλλάξουν το πραγματικό state. Για σημαντικό finding επιβεβαίωσε με inventory, package data, authenticated management information ή owner evidence.</p>
+<h2>Authorization matrix</h2>
+<p>Χρήσιμο μοντέλο:</p>
+<table>
+<thead>
+<tr>
+  <th>Identity</th>
+  <th>Resource</th>
+  <th style="text-align:right">Read</th>
+  <th style="text-align:right">Write</th>
+  <th style="text-align:right">Admin</th>
+  <th>Expected?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>anonymous</td>
+  <td>public share</td>
+  <td style="text-align:right">yes</td>
+  <td style="text-align:right">no</td>
+  <td style="text-align:right">no</td>
+  <td>yes</td>
+</tr>
+<tr>
+  <td>test-user</td>
+  <td>team share</td>
+  <td style="text-align:right">yes</td>
+  <td style="text-align:right">no</td>
+  <td style="text-align:right">no</td>
+  <td>yes</td>
+</tr>
+<tr>
+  <td>test-admin</td>
+  <td>team share</td>
+  <td style="text-align:right">yes</td>
+  <td style="text-align:right">yes</td>
+  <td style="text-align:right">yes</td>
+  <td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Έλεγξε μόνο τα rows που χρειάζονται για να αποδείξεις την policy.</p>
+<h2>Συχνά λάθη</h2>
+<ul>
+<li>Αναφορά anonymous access χωρίς expected policy.</li>
+<li>Credential guessing αντί approved accounts.</li>
+<li>Απόλυτη εμπιστοσύνη σε banners.</li>
+<li>Συλλογή περισσότερων data από όσα απαιτεί ο στόχος.</li>
+<li>Result χωρίς identity context.</li>
+<li>Παράβλεψη server-side logs.</li>
+</ul>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Σε VM/container δικό σου, expose ένα HTTP service και ένα authenticated service. Φτιάξε δύο identities με διαφορετικά permissions, δημιούργησε authorization matrix και κράτησε server-side evidence για allowed/denied actions.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ol>
+<li>Τι διαφορά έχει enumeration από scanning;</li>
+<li>Γιατί κάθε result πρέπει να αναφέρει identity;</li>
+<li>Γιατί banner-based versioning δεν αρκεί;</li>
+<li>Πώς βοηθά authorization matrix;</li>
+<li>Πότε ένα SNMP/SMB observation γίνεται security finding;</li>
+</ol>
+<h2>Καθοδηγούμενη μελέτη</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>. Εστίασε σε evidence, identity context και expected policy.</p>
+<h3>Συνέχεια</h3>
+<p>Προτεινόμενα μαθήματα: <strong>05, 13, 32, 33</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

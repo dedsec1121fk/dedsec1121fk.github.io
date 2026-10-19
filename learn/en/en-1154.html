@@ -1,0 +1,65 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQL parameterization — glossary definition — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1154.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="SQL parameterization — data stays data The trust boundary A SQL parameter placeholder represents a value , not executable query syntax. Binding values prevents user text from changing SQL…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SQL parameterization — glossary definition — DedSec Project">
+<meta property="og:description" content="SQL parameterization — data stays data The trust boundary A SQL parameter placeholder represents a value , not executable query syntax. Binding values prevents user text from changing SQL…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1154.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SQL parameterization — glossary definition — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL parameterization — glossary definition — DedSec Project">
+<meta name="twitter:description" content="SQL parameterization — data stays data The trust boundary A SQL parameter placeholder represents a value , not executable query syntax. Binding values prevents user text from changing SQL…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SQL parameterization — glossary definition — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>SQL parameterization — glossary definition — DedSec Project</h1><p>SQL parameterization — data stays data The trust boundary A SQL parameter placeholder represents a value , not executable query syntax. Binding values prevents user text from changing SQL…</p><section><h1>SQL parameterization — data stays data</h1>
+<h2>The trust boundary</h2>
+<p>A SQL parameter placeholder represents a <strong>value</strong>, not executable query syntax. Binding values prevents user text from changing SQL structure, but it does not validate business rules or grant database permissions. Table names and ORDER BY column identifiers require explicit allowlists; placeholders cannot safely stand in for arbitrary identifiers.</p>
+<h2>Runnable sqlite3 exercise</h2>
+<pre><code class="language-python">import sqlite3
+
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;CREATE TABLE inventory (sku TEXT PRIMARY KEY, qty INTEGER)&quot;)
+db.executemany(
+    &quot;INSERT INTO inventory(sku, qty) VALUES (?, ?)&quot;,
+    [(&quot;bolt&quot;, 4), (&quot;nut&quot;, 2)],
+)
+input_sku = &quot;bolt' OR 1=1 --&quot;
+found = db.execute(
+    &quot;SELECT qty FROM inventory WHERE sku = ?&quot;, (input_sku,)
+).fetchall()
+assert found == []
+valid = db.execute(
+    &quot;SELECT qty FROM inventory WHERE sku = ?&quot;, (&quot;bolt&quot;,)
+).fetchone()
+assert valid == (4,)
+db.close()
+</code></pre>
+<p>A parameter is transmitted as a value; the apostrophe in the malicious-looking string cannot create an OR clause. The negative test returns no matching SKU. Dynamic SQL created by string concatenation would not have this separation.</p>
+<h2>Deeper checks</h2>
+<ol>
+<li>Use a positive test with a quote inside a legitimate SKU. Query it exactly with a bound value.</li>
+<li>Try replacing the table name using a placeholder and record the syntax error. Choose a table name from a fixed, reviewed mapping instead.</li>
+<li>For a user-selected sort order, map a symbolic option to a known literal SQL fragment; do not concatenate raw user input.</li>
+<li>Test invalid quantities separately: parameterization does not reject -5 unless a CHECK constraint or application validation requires it.</li>
+<li>Wrap multiple writes in a transaction and test a deliberate constraint violation. Confirm the database state after rollback.</li>
+</ol>
+<h2>Acceptance and limits</h2>
+<p>Run the assertions in a temporary in-memory SQLite database, review the query text and check that no user value is concatenated into SQL. Other database drivers use different placeholder syntax. Parameterization does not replace authorization or least-privilege database accounts.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

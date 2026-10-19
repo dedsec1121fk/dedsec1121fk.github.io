@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Release archives: reproducibility, hashing and safe extraction — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/expanded-en-ops-27-reproducible-builds-and-zips.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="A successful ZIP operation is not a verified release Define the source of truth A release should record the exact source revision, license, dependency versions, target OS/architecture and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Release archives: reproducibility, hashing and safe extraction — DedSec Project">
+<meta property="og:description" content="A successful ZIP operation is not a verified release Define the source of truth A release should record the exact source revision, license, dependency versions, target OS/architecture and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/expanded-en-ops-27-reproducible-builds-and-zips.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Release archives: reproducibility, hashing and safe extraction — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Release archives: reproducibility, hashing and safe extraction — DedSec Project">
+<meta name="twitter:description" content="A successful ZIP operation is not a verified release Define the source of truth A release should record the exact source revision, license, dependency versions, target OS/architecture and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Release archives: reproducibility, hashing and safe extraction — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Release archives: reproducibility, hashing and safe extraction — DedSec Project</h1><p>A successful ZIP operation is not a verified release Define the source of truth A release should record the exact source revision, license, dependency versions, target OS/architecture and…</p><section><h1>A successful ZIP operation is not a verified release</h1>
+<h2>Define the source of truth</h2>
+<p>A release should record the exact source revision, license, dependency versions, target OS/architecture and command used for packaging. Collect files from an explicit allowlist rather than packaging every development cache and local credential. Normalize entry paths and preserve a clear top-level directory structure that works for Windows, Linux and Android ZIP viewers.</p>
+<pre><code class="language-sh">python -m compileall -q scripts
+sha256sum release.zip
+unzip -t release.zip
+unzip -Z1 release.zip | head -30
+</code></pre>
+<h2>Threat model the archive itself</h2>
+<p>A ZIP can contain <code>../</code> entries, absolute paths, symlinks, duplicate filenames or huge compressed members. Verify the members before extracting untrusted archives. Never unzip unknown content directly into your home folder or a server document root. A SHA-256 digest detects changed bytes when compared to a trusted published checksum, but it does not establish who produced the release by itself.</p>
+<h2>Make the build repeatable</h2>
+<p>Timestamps, file ordering and platform-dependent separators can change archive hashes between runs. Sort entries and use stable metadata when byte-for-byte reproducibility is required. Compare the final archive's manifest against actual filenames and record the exact Python/zip tooling version. Keeping only final files avoids publishing accidentally generated test data and authentication tokens.</p>
+<h2>Acceptance exercise</h2>
+<p>Package two small sample files and compute their file hashes. Then make a fresh extraction into a disposable directory, validate expected content and try a second build from the same sources. State whether hashes match and why they might differ. Do not claim reproduction without recording both observed digests.</p>
+<h2>Normalize archive metadata before comparing release hashes</h2>
+<p>Two ZIP files containing the same document text can have different hashes because entry order, timestamps, permissions or compression settings differ. Reproducibility requires controlling the packaging process as well as the source contents. Sort paths, choose a deliberate timestamp and document whether compression output is expected to remain identical across tool versions.</p>
+<p>Use a temporary staging tree and never normalize timestamps by modifying the user's working files. The fixture creates two deterministic uncompressed archives in memory. It demonstrates byte reproducibility for this controlled recipe, not for every ZIP compressor.</p>
+<pre><code class="language-python">import io, zipfile, hashlib
+def release():
+    output=io.BytesIO()
+    with zipfile.ZipFile(output,&quot;w&quot;,compression=zipfile.ZIP_STORED) as z:
+        for name,data in sorted({&quot;b.txt&quot;:b&quot;two&quot;, &quot;a.txt&quot;:b&quot;one&quot;}.items()):
+            entry=zipfile.ZipInfo(name,date_time=(2020,1,1,0,0,0))
+            entry.create_system=3
+            entry.external_attr=0o100644 &lt;&lt; 16
+            z.writestr(entry,data)
+    return output.getvalue()
+a,b=release(),release()
+assert a == b
+print(hashlib.sha256(a).hexdigest())
+</code></pre>
+<p>Change one input byte and verify that the release hash changes. Record toolchain and packaging settings next to the manifest. Reproducible packaging does not establish that an archive is safe to extract; path traversal and decompression limits remain separate checks.</p>
+<p><a href="https://docs.python.org/3/library/zipfile.html">Technical reference</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

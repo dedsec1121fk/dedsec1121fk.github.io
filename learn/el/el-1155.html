@@ -1,0 +1,79 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Μηχανές καταστάσεων και αμετάβλητες συνθήκες — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1155.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Μηχανές καταστάσεων — λήψη μόνο μετά από συγκατάθεση Συμβόλαιο λειτουργίας Σχεδίασε ελεγκτή λήψης με καταστάσεις new, ready, active, paused, blocked, done και failed. Πραγματική δικτυακή…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Μηχανές καταστάσεων και αμετάβλητες συνθήκες — DedSec Project">
+<meta property="og:description" content="Μηχανές καταστάσεων — λήψη μόνο μετά από συγκατάθεση Συμβόλαιο λειτουργίας Σχεδίασε ελεγκτή λήψης με καταστάσεις new, ready, active, paused, blocked, done και failed. Πραγματική δικτυακή…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1155.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Μηχανές καταστάσεων και αμετάβλητες συνθήκες — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Μηχανές καταστάσεων και αμετάβλητες συνθήκες — DedSec Project">
+<meta name="twitter:description" content="Μηχανές καταστάσεων — λήψη μόνο μετά από συγκατάθεση Συμβόλαιο λειτουργίας Σχεδίασε ελεγκτή λήψης με καταστάσεις new, ready, active, paused, blocked, done και failed. Πραγματική δικτυακή…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Μηχανές καταστάσεων και αμετάβλητες συνθήκες — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Μηχανές καταστάσεων και αμετάβλητες συνθήκες — DedSec Project</h1><p>Μηχανές καταστάσεων — λήψη μόνο μετά από συγκατάθεση Συμβόλαιο λειτουργίας Σχεδίασε ελεγκτή λήψης με καταστάσεις new, ready, active, paused, blocked, done και failed. Πραγματική δικτυακή…</p><section><h1>Μηχανές καταστάσεων — λήψη μόνο μετά από συγκατάθεση</h1>
+<h2>Συμβόλαιο λειτουργίας</h2>
+<p>Σχεδίασε ελεγκτή λήψης με καταστάσεις new, ready, active, paused, blocked, done και failed. Πραγματική δικτυακή λειτουργία επιτρέπεται μόνο αφού υπάρξει νόμιμη μετάβαση από ready σε active. Νέο αίτημα δεν ξεκινά πριν από ρητή αποδοχή. Η άρνηση οδηγεί σε blocked χωρίς συντόμευση προς active. Τα γεγονότα έχουν συγκεκριμένους κανόνες και ένα μη επιτρεπτό ζεύγος πρέπει να προκαλεί σφάλμα, όχι να αλλάζει αυθαίρετα την κατάσταση. Το παράδειγμα εξετάζει μόνο τη λογική, χωρίς πραγματικές λήψεις.</p>
+<h2>Εκτελέσιμο πρόγραμμα Python 3</h2>
+<p>Αποθήκευσε ως state_lab.py και εκτέλεσε python3 state_lab.py. Οι δοκιμές ελέγχουν επιτρεπόμενες μεταβάσεις, τέσσερις απορριπτέες ενέργειες και ότι όλες οι δηλωμένες καταστάσεις είναι προσιτές.</p>
+<pre><code class="language-python">from collections import deque
+
+NEXT = {
+    ('new', 'accept'): 'ready', ('new', 'decline'): 'blocked',
+    ('ready', 'start'): 'active', ('active', 'pause'): 'paused',
+    ('paused', 'resume'): 'active', ('active', 'finish'): 'done',
+    ('active', 'fail'): 'failed', ('failed', 'retry'): 'ready'
+}
+
+def step(state, event):
+    try: return NEXT[(state, event)]
+    except KeyError as exc: raise ValueError(f'forbidden: {state}/{event}') from exc
+
+assert step('new', 'accept') == 'ready'
+assert step('ready', 'start') == 'active'
+assert step('active', 'pause') == 'paused'
+assert step('paused', 'resume') == 'active'
+assert step('active', 'finish') == 'done'
+for forbidden in [('new', 'start'), ('blocked', 'start'),
+                  ('done', 'start'), ('paused', 'finish')]:
+    try: step(*forbidden)
+    except ValueError: pass
+    else: raise AssertionError('invalid transition accepted')
+seen, queue = {'new'}, deque(['new'])
+while queue:
+    state = queue.popleft()
+    for (source, event), destination in NEXT.items():
+        if state == source and destination not in seen:
+            seen.add(destination)
+            queue.append(destination)
+assert seen == {'new', 'ready', 'active', 'paused', 'blocked', 'done', 'failed'}
+print('PASS state: consent boundary, illegal events and reachable states')
+</code></pre>
+<h2>Τι αποδεικνύει ο έλεγχος</h2>
+<p>Ο πίνακας NEXT περιγράφει ρητά τα επιτρεπτά βήματα. Η step επιστρέφει τη νέα κατάσταση χωρίς να μεταβάλλει κοινόχρηστα δεδομένα: σε ValueError ο καλών μπορεί να κρατήσει την προηγούμενη έγκυρη κατάσταση. Η αναζήτηση κατά πλάτος εξετάζει ότι και οι επτά καταστάσεις μπορούν να προκύψουν από τη new με επιτρεπόμενα γεγονότα. Δεν εγγυάται ότι μία πραγματική εφαρμογή αποτρέπει όλες τις παρακάμψεις. Ξεχωριστός προσαρμογέας πρέπει να ξεκινά τη δικτυακή λειτουργία μόνο μετά από έγκυρη ready/start. Οι ασύγχρονες απαντήσεις, η ακύρωση, η απελευθέρωση πόρων, οι επαναλήψεις και τα διπλά πατήματα χρειάζονται πρόσθετες δοκιμές. Η ύπαρξη κουμπιού λήψης δεν αποτελεί απόδειξη συγκατάθεσης.</p>
+<h2>Σαφείς ασκήσεις και έλεγχοι</h2>
+<ol>
+<li>Δημιούργησε πλήρη πίνακα κατάστασης και γεγονότος. Κάθε μη δηλωμένο ζεύγος πρέπει να προκαλεί ValueError.</li>
+<li>Πρόσθεσε κατάσταση cancelled. Αποφάσισε από ποιες καταστάσεις επιτρέπεται η ακύρωση και τι πρέπει να κάνει η δεύτερη προσπάθεια.</li>
+<li>Πρόσθεσε ψεύτικο προσαρμογέα που καταγράφει αιτήματα start. Επιβεβαίωσε ότι δεν υπάρχουν εγγραφές μετά από new/start ή blocked/start.</li>
+<li>Προσομοίωσε διπλό active/pause, failed/retry και active/finish. Εξήγησε πότε επιτρέπεται επανάληψη και γιατί δεν γίνεται πραγματική σύνδεση στο διαδίκτυο.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> PASS, πίνακας μεταβάσεων, κανόνας συγκατάθεσης και σχέδιο δοκιμής του πραγματικού μηχανισμού λήψης.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,58 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1111.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths 04. Φιλτράρισμα γραμμών JSON Μία JSON τιμή ανά φυσική γραμμή Το 04_jsonl_filter.py παίρνει iterable γραμμών και κάνει decode σε καθεμία…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths — DedSec Project">
+<meta property="og:description" content="Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths 04. Φιλτράρισμα γραμμών JSON Μία JSON τιμή ανά φυσική γραμμή Το 04_jsonl_filter.py παίρνει iterable γραμμών και κάνει decode σε καθεμία…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1111.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths — DedSec Project">
+<meta name="twitter:description" content="Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths 04. Φιλτράρισμα γραμμών JSON Μία JSON τιμή ανά φυσική γραμμή Το 04_jsonl_filter.py παίρνει iterable γραμμών και κάνει decode σε καθεμία…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths — DedSec Project</h1><p>Πρακτικά scripts: JSONL, SHA-256 και ασφαλή paths 04. Φιλτράρισμα γραμμών JSON Μία JSON τιμή ανά φυσική γραμμή Το 04_jsonl_filter.py παίρνει iterable γραμμών και κάνει decode σε καθεμία…</p><section><h2>04. Φιλτράρισμα γραμμών JSON</h2>
+<h3>Μία JSON τιμή ανά φυσική γραμμή</h3>
+<p>Το 04_jsonl_filter.py παίρνει iterable γραμμών και κάνει decode σε καθεμία ανεξάρτητα. Κάθε τιμή πρέπει να είναι object με integer level. Τα booleans απορρίπτονται παρά τη σχέση bool/int στην Python. Levels μικρότερα από min_level είναι έγκυρα αλλά φιλτραρισμένα, όχι errors.</p>
+<h3>Ερμηνεία αποτελέσματος</h3>
+<p>Τρέξε python 04_jsonl_filter.py. Οι τιμές εισόδου είναι level 1, level 3, άκυρο κείμενο, boolean true, level 2 και κενή γραμμή. Για threshold 2, οι αποδεκτές είναι [3,2] και τα errors [3,4,6]. Η συνάρτηση δοκιμάζεται επίσης με generator και απορρίπτει min_level=True. Το JSONL δεν είναι ένας JSON array.</p>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Άνοιξε local αρχείο με encoding=&quot;utf-8&quot; και δώσε το file handle απευθείας ως iterator. Πρόσθεσε μέγιστο μήκος γραμμής πριν από json.loads για μη έμπιστο αρχείο. Αποφάσισε αν blank lines πρέπει να αγνοούνται ή να καταγράφονται: εδώ καταγράφονται. Πρόσθεσε χωριστό πλήθος valid-but-filtered εγγραφών.</p>
+<h3>Περιορισμός μνήμης</h3>
+<p>Η είσοδος μπορεί να διαβάζεται σταδιακά, αλλά accepted rows και error positions αποθηκεύονται σε lists. Σε μεγάλα logs χρειάζεται generator εξόδου και bounded error sink. Κώδικας: 04_jsonl_filter.py. Προδιαγραφή: https://jsonlines.org/</p>
+<h2>05. SHA-256 για ακεραιότητα</h2>
+<h3>Δύο διαφορετικές λειτουργίες</h3>
+<p>Η sha256_bytes(data) υπολογίζει digest από ήδη φορτωμένα bytes. Η sha256_file(path) διαβάζει το αρχείο σε chunks 65.536 bytes εξ ορισμού, χωρίς να φορτώνει τεράστιο αρχείο στη μνήμη. Απορρίπτει μηδενικό, αρνητικό και boolean chunk_size. Επιστρέφει lowercase hex digest.</p>
+<h3>Δοκιμαστική γνωστή τιμή</h3>
+<p>Τρέξε python 05_sha256_memory.py. Το SHA-256 του abc πρέπει να είναι ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad. Το test γράφει αρχείο σε προσωρινό directory, το διαβάζει με chunks ενός byte, αλλάζει ένα byte και ελέγχει διαφορά hash. Καλύπτει και κενό input χωρίς εξωτερικά πακέτα.</p>
+<h3>Digest δεν σημαίνει γνησιότητα</h3>
+<p>Ένα hash αποδεικνύει ισότητα σε σχέση με έμπιστη αναφορά. Ένας attacker μπορεί να δημοσιεύσει κακόβουλο αρχείο μαζί με το δικό του σωστό hash. Για releases χρειάζονται αξιόπιστα metadata ή υπογραφή από authenticated πηγή. Matching hash από την ίδια αναξιόπιστη σελίδα δεν αποδεικνύει publisher identity.</p>
+<h3>Επέκταση</h3>
+<p>Σύγκρινε chunked hash με hashlib.sha256(Path(...).read_bytes()) σε μικρό fixture και μέτρησε μνήμη σε μεγαλύτερο συνθετικό αρχείο. Το αρχείο μπορεί να αλλάξει κατά την ανάγνωση και τα symlinks οδηγούν σε άλλες θέσεις· το hashing δεν είναι sandbox. Πηγή: https://docs.python.org/3/library/hashlib.html</p>
+<h2>06. Έλεγχος διαδρομής στον χώρο εργασίας</h2>
+<h3>Τι ελέγχει πραγματικά η allowed()</h3>
+<p>Το 06_path_containment.py κάνει strict resolve στον υπάρχοντα root. Τα relative candidate paths ερμηνεύονται ως σχετικά με τον root, τα absolute διατηρούνται absolute, και ο έλεγχος γίνεται στα πραγματικά Path parent components. Έτσι απορρίπτεται sibling με όνομα workspace-extra που θα περνούσε από απλό string startswith.</p>
+<h3>Ασφαλή tests</h3>
+<p>Τρέξε python 06_path_containment.py. Δημιουργεί προσωρινό workspace και δοκιμάζει υπαρκτό αρχείο, σχετική διαδρομή, parent traversal, παρόμοιο sibling και (αν το OS επιτρέπει) symlink προς έξω. Αναμενόμενη έξοδος: resolved containment checks passed (not race-free).</p>
+<h3>Κρίσιμο όριο ασφαλείας</h3>
+<p>Το αποτέλεσμα ισχύει για τη συγκεκριμένη στιγμή. Αν attacker μπορεί να αλλάξει symlink μεταξύ resolve() και open(), η αρχικά έγκυρη διαδρομή μπορεί να οδηγεί αλλού. Αυτό είναι time-of-check/time-of-use race: η allowed() δεν αποτελεί μοναδικό μέτρο προστασίας. Για εχθρικό filesystem χρειάζονται directory-relative opens, no-follow πολιτική και έλεγχος του ανοιγμένου file descriptor.</p>
+<h3>Άσκηση</h3>
+<p>Σύγκρινε allowed(root, Path(&quot;hello.txt&quot;)) με allowed(root, Path(&quot;../escape.txt&quot;)). Βεβαιώσου ότι αν λείπει ο root παίρνεις exception λόγω strict=True. Δημιούργησε symlink προς εξωτερικό αρχείο και έλεγξε απόρριψη. Κώδικας: 06_path_containment.py. Πηγή: https://docs.python.org/3/library/pathlib.html</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

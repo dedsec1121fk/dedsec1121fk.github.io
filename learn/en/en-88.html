@@ -1,0 +1,78 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>ValueError — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-88.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="ValueError: distinguish format, range and type What fails and when ValueError usually means the type is acceptable but its value violates the operation&#x27;s requirements. int(&#x27;12x&#x27;) accepts a…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="ValueError — DedSec Project">
+<meta property="og:description" content="ValueError: distinguish format, range and type What fails and when ValueError usually means the type is acceptable but its value violates the operation&#x27;s requirements. int(&#x27;12x&#x27;) accepts a…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-88.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ValueError — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ValueError — DedSec Project">
+<meta name="twitter:description" content="ValueError: distinguish format, range and type What fails and when ValueError usually means the type is acceptable but its value violates the operation&#x27;s requirements. int(&#x27;12x&#x27;) accepts a…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="ValueError — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>ValueError — DedSec Project</h1><p>ValueError: distinguish format, range and type What fails and when ValueError usually means the type is acceptable but its value violates the operation&#x27;s requirements. int(&#x27;12x&#x27;) accepts a…</p><section><h1>ValueError: distinguish format, range and type</h1>
+<h2>What fails and when</h2>
+<p>ValueError usually means the type is acceptable but its value violates the operation's requirements. int('12x') accepts a string argument but not that string's content. Similarly, an out-of-range port number can be an int yet invalid. Validation should preserve the source of the bad value for a useful message without echoing secrets.</p>
+<h2>Self-contained executable example</h2>
+<p>Save this as 007_ValueError.py and run <code>python3 007_ValueError.py</code>. The example checks both the error and a valid case.</p>
+<pre><code class="language-python">def parse_port(text):
+    try:
+        port = int(text, 10)
+    except ValueError as exc:
+        raise ValueError(&quot;port must be a decimal integer&quot;) from exc
+    if not 1 &lt;= port &lt;= 65535:
+        raise ValueError(&quot;port outside 1..65535&quot;)
+    return port
+assert parse_port(&quot;443&quot;) == 443
+for invalid in (&quot;abc&quot;, &quot;0&quot;, &quot;65536&quot;):
+    try:
+        parse_port(invalid)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError(invalid)
+</code></pre>
+<h2>Diagnostic sequence and safe repair</h2>
+<p>Separate parsing from semantic validation: first interpret input, then check its permitted domain. A broad except Exception clause would also swallow programming bugs; catch ValueError at the boundary you can handle. If zero, whitespace and signs have special meaning in your protocol, write those decisions down rather than relying on int() defaults.</p>
+<h2>Practical lab and boundary test</h2>
+<p>Decide whether ' +80 ' is permitted and whether '80.0' should be rejected. Implement the policy without changing the accepted numeric range; test min, max, just below and just above.</p>
+<h2>Strict port input: grammar before integer conversion</h2>
+<p>A permissive int() call accepts whitespace and signs. For a network configuration file that promises one to five ASCII digits, enforce that grammar before conversion; the length limit also bounds the work done on hostile input. Leading zeros are allowed here only while the total input remains at most five characters.</p>
+<pre><code class="language-python">def parse_port(text):
+    if not isinstance(text, str):
+        raise TypeError('port must be text')
+    if len(text) &gt; 5 or not text.isascii() or not text.isdecimal():
+        raise ValueError('port must be 1..5 ASCII digits')
+    port = int(text)
+    if not 1 &lt;= port &lt;= 65535:
+        raise ValueError('port outside 1..65535')
+    return port
+
+assert parse_port('080') == 80
+assert parse_port('65535') == 65535
+for bad in ('', '000080', '65536', '８０', '-1', ' 80 '):
+    try: parse_port(bad)
+    except ValueError: pass
+    else: raise AssertionError(bad)
+</code></pre>
+<h2>Diagnosis and mastery check</h2>
+<p>If the conversion fails, distinguish an invalid character from an out-of-range number; do not log secret configuration values. Verify that '0' and '65536' are range failures, while '８０' and ' 80 ' are grammar failures. The exercise is complete when a test suite covers both bounds, non-ASCII digits, leading zeros, the empty string and non-string inputs, without catching unrelated exceptions.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

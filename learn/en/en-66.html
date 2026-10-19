@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unicode normalization and text — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-66.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Unicode text — searchable keys and preserved originals Scenario A bilingual offline knowledge library stores original Greek and English titles for display and creates a separate search key…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Unicode normalization and text — DedSec Project">
+<meta property="og:description" content="Unicode text — searchable keys and preserved originals Scenario A bilingual offline knowledge library stores original Greek and English titles for display and creates a separate search key…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-66.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Unicode normalization and text — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unicode normalization and text — DedSec Project">
+<meta name="twitter:description" content="Unicode text — searchable keys and preserved originals Scenario A bilingual offline knowledge library stores original Greek and English titles for display and creates a separate search key…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Unicode normalization and text — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Unicode normalization and text — DedSec Project</h1><p>Unicode text — searchable keys and preserved originals Scenario A bilingual offline knowledge library stores original Greek and English titles for display and creates a separate search key…</p><section><h1>Unicode text — searchable keys and preserved originals</h1>
+<h2>Scenario</h2>
+<p>A bilingual offline knowledge library stores original Greek and English titles for display and creates a separate search key for case-insensitive matching. Visually identical words can contain distinct code-point sequences. A normalized search key may collide across distinct original titles, so it is unsuitable as an irreversible replacement for stored text or as a unique database identifier.</p>
+<h2>Executable Python 3 experiment</h2>
+<p>Save as unicode_lab.py and run python3 unicode_lab.py. The tests cover precomposed and decomposed accents, Greek sigma variants, Turkish dotted I, an emoji joined by U+200D and an invalid UTF-8 byte boundary.</p>
+<pre><code class="language-python">import unicodedata as ud
+
+def search_key(text):
+    if not isinstance(text, str):
+        raise TypeError('expected Unicode text')
+    return ud.normalize('NFC', ud.normalize('NFC', text).casefold())
+
+assert search_key('café') == search_key('cafe\u0301')
+assert search_key('Σ') == search_key('ς')
+assert search_key('İ') != search_key('i')
+assert len('👩\u200d💻') == 3  # three code points, one displayed emoji
+raw = 'έ'.encode('utf-8')
+try:
+    raw[:1].decode('utf-8')
+except UnicodeDecodeError:
+    pass
+else:
+    raise AssertionError('partial UTF-8 decoded unexpectedly')
+assert ud.normalize('NFD', 'έ') != 'έ'
+print('PASS unicode: NFC, casefold, UTF-8 boundary')
+</code></pre>
+<h2>Interpreting the experiment</h2>
+<p>The visible letter é may be a single precomposed code point, or Latin e plus a combining accent. NFC maps canonically equivalent sequences to a common form; NFD decomposes many accented letters. The casefold operation is useful for comparison but is not reversible: both capital Greek sigma and final sigma can fold to the same value. Turkish dotted capital İ is not equivalent to plain Latin i under ordinary casefolding. Python len measures Unicode code points, not human-perceived grapheme clusters. The woman-technologist emoji consists of three code points but usually appears as one grapheme. UTF-8 encoding uses variable-length byte sequences, so arbitrary byte cuts can create invalid text.</p>
+<h2>Bounded exercises</h2>
+<ol>
+<li>Print repr and Unicode code-point names for café and its decomposed equivalent. Preserve both original values and compare their normalized keys.</li>
+<li>Insert titles Σ and ς into a test search index. A collision must return both original titles rather than silently overwrite one.</li>
+<li>Compare a Greek accented title and a mixed-script lookalike. Normalization is not transliteration or a defense against confusable identifiers.</li>
+<li>Cut a Greek UTF-8 sequence after the first byte and capture UnicodeDecodeError. Explain why code-point slicing is still not the same as grapheme-aware display truncation.</li>
+</ol>
+<p><strong>Evidence:</strong> PASS, code-point listings, one deliberate search-key collision and a demonstrated UTF-8 decode error.</p>
+<h2>Further engineering detail</h2>
+<p>Encoding boundaries matter before normalization begins. A byte chunk can end halfway through a UTF-8 character, so decode incrementally and flush the decoder at the real end of input. Only then apply text normalization and record parsing; replacement characters introduced too early can alter identifiers and invalidate later comparisons.</p>
+<p><a href="../en/fieldnotes-en-41.html">Incremental UTF-8 decoding across chunk boundaries</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

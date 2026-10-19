@@ -1,0 +1,61 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Μεταβλητές και τύποι — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1068.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Μεταβλητές και τύποι — μετατροπή εισόδου πριν τους υπολογισμούς Η έννοια και το αναμενόμενο αποτέλεσμα Μία μεταβλητή αναφέρεται σε τιμή η οποία στην Python έχει τύπο. Το &quot;12&quot; είναι κείμενο…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Μεταβλητές και τύποι — DedSec Project">
+<meta property="og:description" content="Μεταβλητές και τύποι — μετατροπή εισόδου πριν τους υπολογισμούς Η έννοια και το αναμενόμενο αποτέλεσμα Μία μεταβλητή αναφέρεται σε τιμή η οποία στην Python έχει τύπο. Το &quot;12&quot; είναι κείμενο…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1068.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Μεταβλητές και τύποι — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Μεταβλητές και τύποι — DedSec Project">
+<meta name="twitter:description" content="Μεταβλητές και τύποι — μετατροπή εισόδου πριν τους υπολογισμούς Η έννοια και το αναμενόμενο αποτέλεσμα Μία μεταβλητή αναφέρεται σε τιμή η οποία στην Python έχει τύπο. Το &quot;12&quot; είναι κείμενο…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Μεταβλητές και τύποι — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Μεταβλητές και τύποι — DedSec Project</h1><p>Μεταβλητές και τύποι — μετατροπή εισόδου πριν τους υπολογισμούς Η έννοια και το αναμενόμενο αποτέλεσμα Μία μεταβλητή αναφέρεται σε τιμή η οποία στην Python έχει τύπο. Το &quot;12&quot; είναι κείμενο…</p><section><h1>Μεταβλητές και τύποι — μετατροπή εισόδου πριν τους υπολογισμούς</h1>
+<h2>Η έννοια και το αναμενόμενο αποτέλεσμα</h2>
+<p>Μία μεταβλητή αναφέρεται σε τιμή η οποία στην Python έχει τύπο. Το <code>&quot;12&quot;</code> είναι κείμενο, ενώ το <code>12</code> είναι ακέραιος· δεν είναι ισοδύναμα στις αριθμητικές πράξεις. Οι φόρμες και τα ορίσματα τερματικού συνήθως δίνουν συμβολοσειρές. Ορίζουμε σαφή μετατροπή: επιτρέπονται μόνο δεκαδικά ψηφία ASCII, χωρίς περιττά αρχικά μηδενικά και με μέγιστη τιμή 50 τεμάχια.</p>
+<h2>Εκτελέσιμη άσκηση Python 3</h2>
+<p>Αποθήκευσε ως <code>02_Variables_and_types.py</code> και εκτέλεσε με Python 3. Πρώτα πρόβλεψε το αποτέλεσμα· όλοι οι έλεγχοι χρησιμοποιούν απλές τεχνητές τιμές χωρίς δίκτυο.</p>
+<pre><code class="language-python">def parse_units(token):
+    if type(token) is not str or not token.isascii() or not token.isdecimal():
+        raise ValueError(&quot;ASCII decimal text required&quot;)
+    if len(token) &gt; 1 and token.startswith(&quot;0&quot;):
+        raise ValueError(&quot;no leading zeros&quot;)
+    number = int(token)
+    if number &gt; 50: raise ValueError(&quot;limit 50&quot;)
+    return number
+count = parse_units(&quot;12&quot;)
+label = &quot;pieces&quot;
+assert count == 12 and type(count) is int
+assert type(label) is str
+assert f&quot;{count} {label}&quot; == &quot;12 pieces&quot;
+for bad in (&quot;03&quot;,&quot;-2&quot;,&quot;2.0&quot;,&quot;٢&quot;,True,&quot;51&quot;):
+    try: parse_units(bad)
+    except ValueError: pass
+    else: raise AssertionError(&quot;bad text accepted&quot;)
+print(&quot;PASS typed quantity conversion&quot;)
+</code></pre>
+<h2>Γιατί λειτουργεί</h2>
+<p>Η σκέτη <code>int(token)</code> μπορεί να δεχτεί μορφές εκτός των απαιτήσεων της διεπαφής. Ο έλεγχος ASCII απορρίπτει αριθμητικά σύμβολα άλλων αλφαβήτων· είναι επιλογή του συγκεκριμένου προγράμματος, όχι γενική κρίση για όλες τις γλώσσες. Ο <code>type(token) is str</code> δεν αφήνει την True ή έναν ήδη υπάρχοντα ακέραιο να περνούν ως κείμενο. Το τελικό f-string μετατρέπει τον ελεγμένο αριθμό σε κείμενο μόνο όταν σχηματίζεται το μήνυμα εμφάνισης.</p>
+<h2>Καθοδηγούμενη εξάσκηση</h2>
+<p>Πριν τρέξεις το πρόγραμμα, πρόβλεψε <code>&quot;12&quot; + &quot;3&quot;</code> και <code>12 + 3</code>. Εξήγησε γιατί η πρώτη πράξη συνενώνει χαρακτήρες αντί να δίνει 15. Δοκίμασε '0', '50', '51', '03', '٢' και '-1'. Αν μία πραγματική εφαρμογή πρέπει να δέχεται άλλα αριθμητικά σύμβολα, σχεδίασε νέο σαφή αναλυτή. Πρόσθεσε έλεγχο ότι η μεταβλητή label παραμένει str.</p>
+<h2>Αντιμετώπιση λαθών</h2>
+<p>Το TypeError συχνά δείχνει ασυμβατότητα μεταξύ τύπων και πράξεων, όχι ανάγκη να μετατρέψεις τα πάντα σε κείμενο. Για απρόβλεπτα ψηφία διατήρησε την αρχική είσοδο και εξήγησε τη σωστή μορφή. Μην αντικαθιστάς κάθε άκυρη τιμή με μηδέν, γιατί το μηδέν μπορεί να είναι έγκυρο.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

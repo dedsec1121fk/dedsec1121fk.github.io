@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>SQL parameters and transactions — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-69.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="SQLite — parameter binding, rollbacks and query plans Scenario and acceptance criteria A local notes database holds note rows and labels referring to existing notes. The acceptance rule is…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="SQL parameters and transactions — DedSec Project">
+<meta property="og:description" content="SQLite — parameter binding, rollbacks and query plans Scenario and acceptance criteria A local notes database holds note rows and labels referring to existing notes. The acceptance rule is…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-69.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SQL parameters and transactions — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SQL parameters and transactions — DedSec Project">
+<meta name="twitter:description" content="SQLite — parameter binding, rollbacks and query plans Scenario and acceptance criteria A local notes database holds note rows and labels referring to existing notes. The acceptance rule is…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="SQL parameters and transactions — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>SQL parameters and transactions — DedSec Project</h1><p>SQLite — parameter binding, rollbacks and query plans Scenario and acceptance criteria A local notes database holds note rows and labels referring to existing notes. The acceptance rule is…</p><section><h1>SQLite — parameter binding, rollbacks and query plans</h1>
+<h2>Scenario and acceptance criteria</h2>
+<p>A local notes database holds note rows and labels referring to existing notes. The acceptance rule is that a transaction inserting a note and then an invalid label must leave no new note behind. Titles are always bound as values rather than interpolated into SQL. A deliberately malicious-looking title must be treated as text, not executable SQL.</p>
+<h2>Executable lab — Python 3 standard library</h2>
+<p>Save the example as <code>07_sql.py</code> and run it with Python 3. It uses synthetic data only and prints PASS when the assertions succeed. The same code appears in both translations.</p>
+<pre><code class="language-python">import sqlite3
+db = sqlite3.connect(&quot;:memory:&quot;)
+db.execute(&quot;PRAGMA foreign_keys=ON&quot;)
+db.executescript(&quot;&quot;&quot;
+CREATE TABLE note(id INTEGER PRIMARY KEY, title TEXT NOT NULL);
+CREATE TABLE label(id INTEGER PRIMARY KEY, note_id INTEGER NOT NULL
+  REFERENCES note(id), name TEXT NOT NULL);
+&quot;&quot;&quot;)
+with db:
+    db.execute(&quot;INSERT INTO note VALUES (?, ?)&quot;, (1, &quot;first&quot;))
+before = db.execute(&quot;SELECT count(*) FROM note&quot;).fetchone()[0]
+try:
+    with db:
+        db.execute(&quot;INSERT INTO note VALUES (?, ?)&quot;, (2, &quot;temporary&quot;))
+        db.execute(&quot;INSERT INTO label VALUES (?, ?, ?)&quot;, (8, 99, &quot;bad&quot;))
+except sqlite3.IntegrityError:
+    pass
+assert db.execute(&quot;SELECT count(*) FROM note&quot;).fetchone()[0] == before
+attack = &quot;' OR 1=1 --&quot;
+assert db.execute(&quot;SELECT count(*) FROM note WHERE title=?&quot;, (attack,)).fetchone()[0] == 0
+db.execute(&quot;CREATE INDEX note_title_idx ON note(title)&quot;)
+plan = db.execute(&quot;EXPLAIN QUERY PLAN SELECT * FROM note WHERE title=?&quot;, (&quot;first&quot;,)).fetchall()
+assert any(&quot;note_title_idx&quot; in row[3] for row in plan)
+assert db.execute(&quot;PRAGMA foreign_keys&quot;).fetchone()[0] == 1
+db.close()
+print(&quot;PASS sqlite transaction and bindings&quot;)
+</code></pre>
+<h2>Technical explanation</h2>
+<p>Placeholders (?) separate query syntax from user values and prevent SQL injection at that boundary. SQLite foreign-key enforcement must be enabled for each connection and can be checked with PRAGMA foreign_keys. A transaction groups dependent writes; raising IntegrityError from the second insert causes the first insert to roll back. A secondary index may improve equality lookups at the expense of additional writes and storage; inspect EXPLAIN QUERY PLAN rather than assuming an index is always used.</p>
+<h2>Bounded practice</h2>
+<p>Run with and without PRAGMA foreign_keys on a disposable database and record the row counts. Insert a valid label, then attempt one with an unknown note ID. Compare <code>?</code> binding to unsafe string concatenation conceptually without executing the concatenated query. Test two connections and explain what the second can see before the first commits.</p>
+<h2>Diagnostics and completion evidence</h2>
+<p>If an invalid reference succeeds, check the foreign_keys pragma on the exact connection executing the write. If a lookup appears slow, inspect index use and row counts, not just wall-clock time on a single tiny fixture. For concurrent writes, bound busy retries and record SQLITE_BUSY rather than swallowing it.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,114 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Advanced Web Request Processing and Parser Differentials — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-069.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Advanced Web Request Processing and Parser Differentials Purpose: Understand the web request path deeply enough to reason about proxy/backend disagreement, routing ambiguity, cache…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Advanced Web Request Processing and Parser Differentials — DedSec Project">
+<meta property="og:description" content="Advanced Web Request Processing and Parser Differentials Purpose: Understand the web request path deeply enough to reason about proxy/backend disagreement, routing ambiguity, cache…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-069.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Advanced Web Request Processing and Parser Differentials — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Advanced Web Request Processing and Parser Differentials — DedSec Project">
+<meta name="twitter:description" content="Advanced Web Request Processing and Parser Differentials Purpose: Understand the web request path deeply enough to reason about proxy/backend disagreement, routing ambiguity, cache…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Advanced Web Request Processing and Parser Differentials — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Advanced Web Request Processing and Parser Differentials — DedSec Project</h1><p>Advanced Web Request Processing and Parser Differentials Purpose: Understand the web request path deeply enough to reason about proxy/backend disagreement, routing ambiguity, cache…</p><section><blockquote>
+<p><strong>Purpose:</strong> Understand the web request path deeply enough to reason about proxy/backend disagreement, routing ambiguity, cache behavior, request normalization, and server-side request boundaries in controlled labs.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Trace an HTTP request through DNS, TLS termination, CDN/WAF, reverse proxy, application server, framework, and handler.</li>
+<li>Explain how parser or normalization differences create security risk.</li>
+<li>Understand request desynchronization, cache confusion, host handling, path canonicalization, and SSRF at a conceptual/defensive level.</li>
+<li>Design regression tests that ensure intermediaries agree.</li>
+<li>Analyze raw HTTP safely against localhost services you own.</li>
+</ul>
+<h2>One request, many parsers</h2>
+<p>A browser-visible URL may be interpreted by DNS resolvers, proxies, CDNs, TLS terminators, WAFs, load balancers, web servers, frameworks, routers, and application code. Each layer may parse host, path, query, headers, body framing, encodings, and connection state.</p>
+<p>The dangerous condition is <strong>semantic disagreement</strong>: layer A believes input means one thing while layer B believes it means another. Security controls placed at A can then protect the wrong interpretation of what B executes.</p>
+<h2>Message framing</h2>
+<p>HTTP/1.x messages use start lines, headers, and body-framing rules. HTTP/2 and HTTP/3 use binary framing and multiplexed streams with their own translation considerations when intermediaries convert protocols.</p>
+<p>A defensive architecture should reject ambiguous framing rather than guessing. Normalize and validate at one well-defined boundary, use updated intermediaries, and avoid configurations where multiple independent parsers reinterpret the same raw message differently.</p>
+<h2>Request desynchronization concept</h2>
+<p>Request desynchronization occurs when front and back components disagree about where one request ends and the next begins. Historically this has involved conflicting or malformed length/framing semantics. The risk is that subsequent bytes can be associated with the wrong logical request.</p>
+<p>For safety, this guide does not provide attack payload sequences. The engineering takeaway is to test supported proxy/backend combinations with vendor guidance and purpose-built local regression suites, and to reject ambiguous framing consistently.</p>
+<h2>HTTP/2 and downgrade boundaries</h2>
+<p>An edge may accept HTTP/2 while forwarding HTTP/1.1 internally. Translation must preserve a single unambiguous interpretation. Pay attention to prohibited/normalized headers, pseudo-headers, authority/host translation, body length, and connection-specific fields.</p>
+<p>Protocol translation is a trust boundary and deserves version-aware security testing.</p>
+<h2>Host and authority handling</h2>
+<p>Applications often use host/authority values for routing, absolute links, password-reset URLs, tenant selection, cache keys, and security policy. A reverse proxy may know the external host while the backend sees an internal hostname.</p>
+<p>Define one trusted source for external scheme/host after verifying the proxy relationship. Never blindly trust forwarding headers from arbitrary clients.</p>
+<h2>Forwarded headers</h2>
+<p>Headers such as <code>Forwarded</code> or <code>X-Forwarded-*</code> can carry original client/protocol information. They are safe only when the application knows which proxy added them and strips/replaces untrusted incoming versions.</p>
+<p>A robust deployment documents the trusted proxy chain and tests direct-backend access separately.</p>
+<h2>Path normalization</h2>
+<p>Paths can contain percent encodings, repeated separators, dot segments, Unicode, case variation, and framework-specific decoding. A WAF, web server, and application router may normalize in a different order.</p>
+<p>Create local tests for canonical equivalents and assert that authorization is evaluated on the same canonical resource that the handler ultimately uses.</p>
+<h2>Cache keys and security context</h2>
+<p>A cache key must include every request property that changes the response's security meaning. Common dimensions include host, path, query, language/encoding negotiation, authenticated state, tenant, and selected headers.</p>
+<p>Cache poisoning and cache deception are both fundamentally about disagreement between cache identity and application identity. Test that personalized or authorization-sensitive responses are not stored under a key reusable by another context.</p>
+<h2>Origin versus cache response</h2>
+<p>When debugging cache security, record whether a response came from origin or intermediary, the cache status, age, vary metadata, and relevant key inputs. A response that changes only after cache warm-up is a different class of problem from an origin authorization failure.</p>
+<h2>SSRF as a trust-boundary problem</h2>
+<p>Server-Side Request Forgery occurs when an application causes a server-side network request to a destination influenced by untrusted input without adequate policy. The important property is not merely “the server can fetch URLs.” It is whether the caller can cross a network/identity boundary using the server's connectivity or credentials.</p>
+<p>Defenses include destination allowlists when feasible, DNS/IP validation with careful re-resolution handling, blocked private/link-local ranges where not needed, egress controls, metadata-service protections, protocol restrictions, request timeouts, and avoiding credential forwarding.</p>
+<h2>URL parser differentials</h2>
+<p>URLs contain scheme, authority, userinfo, host, port, path, query, and fragment concepts, with complex encoding and Unicode/IDNA rules. Different libraries can interpret unusual input differently.</p>
+<p>A safe lab is to pass a synthetic corpus through two standard-library URL parsers and compare normalized host/path values. Do not use the results to probe external systems.</p>
+<h2>Redirect handling</h2>
+<p>A destination can change after an HTTP redirect. If an application validates only the first URL but follows redirects automatically, the final destination may violate policy. Security-sensitive fetchers should validate every hop and constrain protocols, redirect counts, DNS resolution, and destination classes.</p>
+<h2>Server-side templates and interpreters</h2>
+<p>Template engines, query builders, shell invocation, and expression languages form further parser boundaries. The deep rule is: keep data as data. Use parameterized APIs, context-aware output encoding, and structured libraries rather than concatenating input into another language.</p>
+<h2>Raw HTTP localhost lab</h2>
+<p>Create a localhost-only Python HTTP service that logs the request method, path, host, and selected headers. Send normal requests using <code>curl</code> and observe what the framework exposes. Put a local reverse proxy in front only if you already know how to configure it safely. Compare host/path values at each layer.</p>
+<p>The objective is understanding transformation, not crafting desynchronization payloads.</p>
+<h2>Deployment regression checklist</h2>
+<ul>
+<li>one supported interpretation of request framing;</li>
+<li>updated proxy/web-server/framework versions;</li>
+<li>strict forwarding-header trust configuration;</li>
+<li>direct backend not publicly reachable where inappropriate;</li>
+<li>canonical path tested before authorization;</li>
+<li>cache key includes security-relevant dimensions;</li>
+<li>authenticated responses have correct cache controls;</li>
+<li>server-side fetchers enforce egress/destination policy;</li>
+<li>protocol translation covered by integration tests;</li>
+<li>ambiguous requests rejected.</li>
+</ul>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete Modules 11, 13, 14, 22, 52, 61, and 68.</p>
+<h3>Practice task</h3>
+<p>Map a localhost request through client → optional local proxy → application. Record raw and parsed method/host/path/query/body-length values. Add regression tests for canonical path and forwarding-header behavior.</p>
+<h3>Evidence to keep</h3>
+<p>Architecture diagram, raw benign requests, parsed values at each layer, cache/redirect observations, and regression tests.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>assuming every HTTP component uses identical parsing rules;</li>
+<li>trusting forwarding headers from arbitrary clients;</li>
+<li>validating only the first redirect hop;</li>
+<li>testing parser ambiguity against public services;</li>
+<li>confusing a cache issue with origin authorization.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>Explain how two individually “correct” components can become unsafe when they disagree about request meaning.</p>
+<h3>Continue with</h3>
+<p>Modules <strong>70, 71, 76, 78, and 84</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

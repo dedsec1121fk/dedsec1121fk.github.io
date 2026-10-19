@@ -1,0 +1,83 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>perl — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-232.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="perl — συγκεντρωτικός οδηγός Perl Μοντέλο λειτουργίας Η Perl ξεχωρίζει scalar, array και hash contexts και έχει ισχυρή επεξεργασία κειμένου· το context μπορεί να αλλάξει αποτέλεσμα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="perl — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="perl — συγκεντρωτικός οδηγός Perl Μοντέλο λειτουργίας Η Perl ξεχωρίζει scalar, array και hash contexts και έχει ισχυρή επεξεργασία κειμένου· το context μπορεί να αλλάξει αποτέλεσμα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-232.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="perl — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="perl — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="perl — συγκεντρωτικός οδηγός Perl Μοντέλο λειτουργίας Η Perl ξεχωρίζει scalar, array και hash contexts και έχει ισχυρή επεξεργασία κειμένου· το context μπορεί να αλλάξει αποτέλεσμα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="perl — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>perl — συγκεντρωτικός οδηγός — DedSec Project</h1><p>perl — συγκεντρωτικός οδηγός Perl Μοντέλο λειτουργίας Η Perl ξεχωρίζει scalar, array και hash contexts και έχει ισχυρή επεξεργασία κειμένου· το context μπορεί να αλλάξει αποτέλεσμα…</p><section><h2>Perl</h2>
+<h3>Μοντέλο λειτουργίας</h3>
+<p>Η Perl ξεχωρίζει scalar, array και hash contexts και έχει ισχυρή επεξεργασία κειμένου· το context μπορεί να αλλάξει αποτέλεσμα.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-text">my @values = (1, 2, 3);
+print scalar(@values), &quot;\n&quot;;
+</code></pre>
+<h3>Δοκίμασέ το με νόημα</h3>
+<p>Εξήγησε γιατί scalar(@values) δίνει πλήθος στοιχείων και σύγκρινέ το με join.</p>
+<h3>Σφάλμα που πρέπει να ξεχωρίσεις</h3>
+<p>Οι regular expressions χρειάζονται σαφείς παραδοχές· ένα match δεν σημαίνει πλήρες validation.</p>
+<p>Για να κρίνεις την άσκηση, κατέγραψε την αρχική είσοδο, την πρόβλεψη και την παρατήρηση σε πραγματικό, συμβατό περιβάλλον Perl. Δώσε ξεχωριστό παράδειγμα όπου αλλάζει μόνο μία μεταβλητή ή ένα όρισμα. Αν εργάζεσαι χωρίς την αναγκαία εφαρμογή, μελέτησε τη σύνταξη ως παράδειγμα και μην παρουσιάζεις το κείμενο ως εκτελεσμένο test.</p>
+<h2>Perl — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Πραγματικό αρχικό δείγμα</h3>
+<pre><code class="language-text">use strict;
+use warnings;
+sub greet { my ($name) = @_; return &quot;Hello, $name!&quot;; }
+print greet(&quot;Ada&quot;), &quot;\n&quot;;
+</code></pre>
+<p><strong>Περιβάλλον:</strong> perl hello.pl.. Επιβεβαίωσε ότι έχεις το σωστό compiler, host ή simulator πριν θεωρήσεις την έξοδο αξιόπιστη. Για scripts με πρόσβαση σε προσωπικά αρχεία ή ρυθμίσεις, χρησιμοποίησε προσωρινά και read-only δεδομένα.</p>
+<h3>Συγκεκριμένος στόχος υλοποίησης</h3>
+<p>Διάβασε UTF-8 με lexical filehandle, μέτρησε regex matches και χειρίσου αποτυχία open(). Σύγκρινε captures με noncapturing groups.</p>
+<h3>Κρίσιμο λάθος που πρέπει να αναγνωρίζεις</h3>
+<p>Στην Perl scalar/list context αλλάζει αποτέλεσμα· δήλωσε encoding. Μην φορτώνεις τεράστια αρχεία ή εκτελείς untrusted input.</p>
+<h2>Perl — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>perl {file}</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Perl — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Θεμελιώδης κατανόηση</h3>
+<p>Το <code>use strict</code> επιβάλλει ρητές δηλώσεις μεταβλητών και το <code>use warnings</code> αποκαλύπτει ύποπτες πράξεις. Ένα hash μετρά εμφανίσεις αποτελεσματικά, όμως η σειρά διάσχισης δεν είναι σταθερή για εμφάνιση. Ταξινόμησε τα keys πριν από την έξοδο. Μη χρησιμοποιείς <code>eval</code> για να αναλύεις κείμενο χρήστη. Ξεχώρισε parsing και καταμέτρηση και όρισε κανόνα για κενά και πεζά/κεφαλαία.</p>
+<h3>Κώδικας προς δοκιμή</h3>
+<pre><code class="language-perl">use strict;
+use warnings;
+my @words = qw(alpha beta alpha);
+my %counts;
+for my $word (@words) { $counts{$word}++ }
+for my $word (sort keys %counts) {
+    print &quot;$word\t$counts{$word}\n&quot;;
+}
+die &quot;bad count\n&quot; unless $counts{alpha} == 2 &amp;&amp; $counts{beta} == 1;
+</code></pre>
+<h3>Εκτέλεση και ερμηνεία</h3>
+<p>Αποθήκευσε ως <code>counts.pl</code>. Τρέξε <code>perl -c counts.pl</code> για σύνταξη και μετά <code>perl counts.pl</code> για συμπεριφορά. Περίμενε <code>alpha&lt;TAB&gt;2</code>, <code>beta&lt;TAB&gt;1</code> με αυτήν τη σειρά και επιτυχημένο exit. Ένα λάθος όνομα μεταβλητής με <code>strict</code> πρέπει να εντοπίζεται νωρίς. Ο συντακτικός έλεγχος δεν αποδεικνύει ότι οι καταμετρήσεις είναι σωστές.</p>
+<h3>Πρακτική εργασία</h3>
+<p>Διάβασε λέξεις από STDIN αντί για σταθερό πίνακα. Όρισε συμπεριφορά για κενές γραμμές, κράτησε διαφορετικά τα <code>Alpha</code> και <code>alpha</code> και αποφάσισε αν αφαιρείται trailing whitespace. Έλεγξε κενή είσοδο, επαναλήψεις και διαφορετική σειρά εγγραφών. Η ταξινόμηση των keys επιτρέπει σταθερό golden-file test.</p>
+<h2>Perl — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Scalars, arrays και hashes έχουν διαφορετικά sigils και συμπεριφορά ανά context.</li>
+<li>Το regex δεν είναι γενικός parser για κάθε εμφώλευση.</li>
+<li>Σε συντηρήσιμο Perl κώδικα ενεργοποίησε strict και warnings και έλεγξε την είσοδο.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

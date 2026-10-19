@@ -1,0 +1,156 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Debugging, Crash Triage and Root-Cause Analysis — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-065.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Debugging, Crash Triage and Root-Cause Analysis Purpose: Turn crashes and anomalous behavior in software you own into reproducible engineering evidence. The focus is diagnosis and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Debugging, Crash Triage and Root-Cause Analysis — DedSec Project">
+<meta property="og:description" content="Debugging, Crash Triage and Root-Cause Analysis Purpose: Turn crashes and anomalous behavior in software you own into reproducible engineering evidence. The focus is diagnosis and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-065.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Debugging, Crash Triage and Root-Cause Analysis — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Debugging, Crash Triage and Root-Cause Analysis — DedSec Project">
+<meta name="twitter:description" content="Debugging, Crash Triage and Root-Cause Analysis Purpose: Turn crashes and anomalous behavior in software you own into reproducible engineering evidence. The focus is diagnosis and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Debugging, Crash Triage and Root-Cause Analysis — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Debugging, Crash Triage and Root-Cause Analysis — DedSec Project</h1><p>Debugging, Crash Triage and Root-Cause Analysis Purpose: Turn crashes and anomalous behavior in software you own into reproducible engineering evidence. The focus is diagnosis and…</p><section><blockquote>
+<p><strong>Purpose:</strong> Turn crashes and anomalous behavior in software you own into reproducible engineering evidence. The focus is diagnosis and remediation, not exploit weaponization.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Build a disciplined crash-triage workflow.</li>
+<li>Distinguish access violations, assertions, aborts, resource failures, races, and logic faults.</li>
+<li>Read stack traces and register/memory context at a high level.</li>
+<li>Use sanitizers, core dumps, debuggers, and minimal reproducers safely.</li>
+<li>Separate crashability from security exploitability.</li>
+</ul>
+<h2>Why a crash is only the beginning</h2>
+<p>A crash tells you that one execution violated an assumption. It does not automatically tell you root cause or security impact. The same visible fault can result from an out-of-bounds access, null dereference, use-after-free, integer bug, concurrency issue, corrupted input, failed assertion, or resource exhaustion.</p>
+<p>Good triage works backward from evidence while preserving reproducibility.</p>
+<h2>First-response checklist</h2>
+<p>When your own application crashes:</p>
+<ol>
+<li>preserve the exact input and environment;</li>
+<li>record executable/library hashes and build identifiers;</li>
+<li>capture logs, exit code, signal/exception type, and stack trace;</li>
+<li>reproduce without changing multiple variables;</li>
+<li>determine whether the crash is deterministic;</li>
+<li>reduce the input or action sequence;</li>
+<li>classify the likely bug family;</li>
+<li>inspect the earliest corrupting event, not only the final crash;</li>
+<li>fix root cause;</li>
+<li>add a regression test.</li>
+</ol>
+<h2>Crash classes</h2>
+<h3>Invalid memory access</h3>
+<p>A process reads/writes/executes an address that is not valid under current mappings/permissions. The faulting instruction and address provide clues, but corruption may have occurred earlier.</p>
+<h3>Assertion or explicit abort</h3>
+<p>The application intentionally terminates because an invariant failed. Assertions can reveal logic errors and corrupted state, but an assertion failure is not equivalent to arbitrary code execution.</p>
+<h3>Stack exhaustion</h3>
+<p>Deep recursion or unusually large stack use can exhaust guard limits. Determine whether input controls recursion depth and whether a bounded algorithm is possible.</p>
+<h3>Resource exhaustion</h3>
+<p>Memory allocation, descriptor limits, thread limits, disk capacity, or queue growth can terminate or stall software. This can be availability-relevant without being memory corruption.</p>
+<h3>Race-related fault</h3>
+<p>Crashes that disappear under a debugger or vary between runs may involve concurrency. Record timing, thread IDs, and synchronization state. Sanitizers specialized for thread races can help in owned code.</p>
+<h2>Build for diagnosis</h2>
+<p>Debug builds improve observability. On C/C++ projects you own, retain symbols and enable warnings. Sanitizers can convert silent corruption into precise diagnostic failures near the root cause.</p>
+<p>A typical local development example with a modern compiler may look like:</p>
+<pre><code class="language-console">cc -g -O1 -Wall -Wextra -fsanitize=address,undefined demo.c -o demo
+</code></pre>
+<p>Toolchain support varies. Use the compiler documentation for your environment. Sanitizers are development diagnostics, not production hardening by themselves.</p>
+<h2>Reading a stack trace</h2>
+<p>A stack trace shows nested call frames at the time of observation. Start at the top faulting frame, then ask which caller supplied the relevant object, pointer, index, or length. If symbols are missing, addresses may require symbolization against the exact build.</p>
+<p>Optimized builds can inline functions, omit frames, or rearrange code. Treat the trace as evidence constrained by optimization, not a perfect source-level history.</p>
+<h2>Registers and fault context</h2>
+<p>For native crashes, debugger output may include the instruction pointer, stack pointer, general registers, and flags. Your task is to identify which operand caused the fault and how that operand was derived.</p>
+<p>Do not jump from “instruction pointer contains unusual bytes” to an exploitability claim. Security impact requires understanding attacker control, mitigations, reachable privileges, and whether control is reliable.</p>
+<h2>Core dumps and minidumps</h2>
+<p>A dump is a snapshot of selected process state after a crash. It can contain sensitive data from memory, so protect it like potentially confidential evidence. Store only in the lab, restrict access, and delete it when no longer needed.</p>
+<p>Dump analysis is most useful when paired with exact binaries and symbols. A dump from build A analyzed using build B can produce misleading stacks.</p>
+<h2>Minimize the reproducer</h2>
+<p>A minimal reproducer removes irrelevant complexity. If a 10 MB file triggers a parser crash, determine whether a tiny input preserves the fault. If a 20-step UI sequence crashes, find the shortest sequence that does.</p>
+<p>Reduction improves root-cause reasoning, regression testing, and remediation confidence. Automated test-case minimizers are especially useful after fuzzing.</p>
+<h2>Triage memory corruption</h2>
+<p>For an owned program, ask:</p>
+<ul>
+<li>was the invalid access a read, write, or execute?</li>
+<li>was the address null-like, near a valid object, freed, or wildly invalid?</li>
+<li>did a sanitizer report the allocation/free stack?</li>
+<li>which input controlled the index or size?</li>
+<li>did integer conversion occur before allocation/copy?</li>
+<li>is object lifetime shared across threads?</li>
+<li>does the issue cross a trust boundary?</li>
+</ul>
+<p>The goal is locating the first invariant violation.</p>
+<h2>Exploitability is a separate assessment</h2>
+<p>A memory bug may be security-critical, low impact, or non-exploitable under realistic constraints. Factors include control over corrupted data, ability to repeat, reachable security boundary, memory layout, mitigations, sandboxing, process privileges, and available disclosures.</p>
+<p>For this guide, stop at <strong>root cause + security impact reasoning + fix</strong>. Do not build a weaponized payload.</p>
+<h2>Patch quality</h2>
+<p>A strong fix addresses the class of failure. If an index can exceed a buffer, fix bounds/ownership logic rather than catching one crashing input. Add a regression test that represents the invalid class and, where practical, a fuzzing target for the trust boundary.</p>
+<p>Review nearby code for sibling patterns. One discovered bug may indicate a repeated API misuse.</p>
+<h2>Safe debugger lab</h2>
+<p>Use the benign C program below:</p>
+<pre><code class="language-c">#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+int main(void) {
+    int *p = malloc(sizeof(int));
+    if (!p) return 1;
+    free(p);
+    puts(&quot;allocation lifecycle completed&quot;);
+    return 0;
+}
+</code></pre>
+<p>Compile with debug information and step through allocation and free. Inspect the call stack before and after the calls. Do <strong>not</strong> add use-after-free behavior; the learning goal is debugger navigation and object lifetime.</p>
+<p>Then create a separate harmless assertion failure in your own code and practice distinguishing deliberate abort from memory fault.</p>
+<h2>Crash-report template</h2>
+<ul>
+<li>build/hash;</li>
+<li>platform/architecture;</li>
+<li>trigger input or action;</li>
+<li>deterministic? yes/no;</li>
+<li>exception/signal;</li>
+<li>top relevant frames;</li>
+<li>suspected object/length/state;</li>
+<li>root cause;</li>
+<li>security boundary crossed?;</li>
+<li>mitigation/hardening context;</li>
+<li>fix commit;</li>
+<li>regression test;</li>
+<li>residual uncertainty.</li>
+</ul>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete Modules 53, 62, 63, and 64.</p>
+<h3>Practice task</h3>
+<p>Create three controlled failures in programs you own: an assertion, a handled parser error, and a resource-limit failure. Capture evidence and explain why each class is different. Optionally use sanitizer diagnostics on a deliberately buggy toy program from a recognized training lab.</p>
+<h3>Evidence to keep</h3>
+<p>Keep exact source/build hashes, minimal reproducers, selected traces, and regression tests. Treat dumps as sensitive.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>changing code before preserving the reproducer;</li>
+<li>debugging against mismatched symbols;</li>
+<li>declaring exploitability from a crash alone;</li>
+<li>fixing only the sample input;</li>
+<li>sharing memory dumps containing secrets.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>Given a crash report, explain what is known, what remains unknown, and the next experiment that would reduce uncertainty.</p>
+<h3>Continue with</h3>
+<p>Modules <strong>66, 67, 68, 79, 81, and 84</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

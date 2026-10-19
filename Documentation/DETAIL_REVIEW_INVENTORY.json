@@ -1,0 +1,485 @@
+{
+  "topic_pairs": 24,
+  "records": [
+    {
+      "id": "en-592",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Programming_Languages/General/Python.md",
+      "sha256": "0d54a1432673dab32caac447133213c5e3b1d5acad409c0eb0f6e2d10e43f8e6",
+      "added_characters": 1566,
+      "code": "import subprocess, sys\nname = \"report; this is data.txt\"\nrun = subprocess.run([sys.executable, \"-c\", \"import sys; print(sys.argv[1])\", name],\n                     text=True, capture_output=True, timeout=2, check=True)\nassert run.stdout.strip() == name\nfailed = subprocess.run([sys.executable, \"-c\", \"raise SystemExit(7)\"], timeout=2)\nassert failed.returncode == 7\nprint(\"argument and exit boundaries verified\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "el-389",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Γλώσσες_Προγραμματισμού/Γλώσσες γενικής χρήσης/Python.md",
+      "sha256": "ff2e9fea527a1ae23036e2f69116545b0824ecd355dd06fa2e08bd86ea4fa0a8",
+      "added_characters": 1479,
+      "code": "import subprocess, sys\nname = \"report; this is data.txt\"\nrun = subprocess.run([sys.executable, \"-c\", \"import sys; print(sys.argv[1])\", name],\n                     text=True, capture_output=True, timeout=2, check=True)\nassert run.stdout.strip() == name\nfailed = subprocess.run([sys.executable, \"-c\", \"raise SystemExit(7)\"], timeout=2)\nassert failed.returncode == 7\nprint(\"argument and exit boundaries verified\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-language-5-async-fetch-timeout",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Programming_Languages/Web/JavaScript/05_Async_Fetch_Timeout.md",
+      "sha256": "e23f2a49c33f6a2b454d40cc5ce25ec823b287a8570bbb7d99ffe1266a399002",
+      "added_characters": 1576,
+      "code": "let current = 0;\nfunction begin() { const version = ++current; return value => version === current ? value : null; }\nconst oldResult = begin();\nconst newResult = begin();\nif (oldResult(\"old\") !== null || newResult(\"new\") !== \"new\") throw Error(\"stale result accepted\");\nconst controller = new AbortController();\ncontroller.abort();\nif (!controller.signal.aborted) throw Error(\"cancellation not observable\");\nconsole.log(\"stale response ignored\");",
+      "language": "javascript",
+      "run": "javascript"
+    },
+    {
+      "id": "expanded-el-language-5-async-fetch-timeout",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/JavaScript/05_Async_Fetch_Timeout.md",
+      "sha256": "b517ddba24fc4e8d3272292833aefbc2fe42b9b00333c2a2f382439bf5ffe2ae",
+      "added_characters": 1490,
+      "code": "let current = 0;\nfunction begin() { const version = ++current; return value => version === current ? value : null; }\nconst oldResult = begin();\nconst newResult = begin();\nif (oldResult(\"old\") !== null || newResult(\"new\") !== \"new\") throw Error(\"stale result accepted\");\nconst controller = new AbortController();\ncontroller.abort();\nif (!controller.signal.aborted) throw Error(\"cancellation not observable\");\nconsole.log(\"stale response ignored\");",
+      "language": "javascript",
+      "run": "javascript"
+    },
+    {
+      "id": "expanded-en-language-5-bounded-read",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Programming_Languages/Systems/C/05_Bounded_Read.md",
+      "sha256": "d675be8ff3c44a3ecb7023b2da7ac68bcfb0905993185f6fce58411876030551",
+      "added_characters": 1548,
+      "code": "#include <assert.h>\n#include <errno.h>\n#include <stdlib.h>\nstatic int parse(const char *s, long *out) {\n    if (!*s) return 0;\n    for (const char *p=s; *p; ++p) if (*p<'0' || *p>'9') return 0;\n    errno=0; char *end; long value=strtol(s,&end,10);\n    if (errno==ERANGE || *end || value>1000) return 0;\n    *out=value; return 1;\n}\nint main(void) { long x; assert(parse(\"12\",&x)&&x==12); assert(!parse(\"12junk\",&x)); assert(!parse(\"-1\",&x)); assert(!parse(\"1001\",&x)); }",
+      "language": "c",
+      "run": "c"
+    },
+    {
+      "id": "expanded-el-language-5-bounded-read",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/C/05_Bounded_Read.md",
+      "sha256": "217ca0630511e0b473374429bca7da09020fb198c4e553108003bfc72d24cf59",
+      "added_characters": 1419,
+      "code": "#include <assert.h>\n#include <errno.h>\n#include <stdlib.h>\nstatic int parse(const char *s, long *out) {\n    if (!*s) return 0;\n    for (const char *p=s; *p; ++p) if (*p<'0' || *p>'9') return 0;\n    errno=0; char *end; long value=strtol(s,&end,10);\n    if (errno==ERANGE || *end || value>1000) return 0;\n    *out=value; return 1;\n}\nint main(void) { long x; assert(parse(\"12\",&x)&&x==12); assert(!parse(\"12junk\",&x)); assert(!parse(\"-1\",&x)); assert(!parse(\"1001\",&x)); }",
+      "language": "c",
+      "run": "c"
+    },
+    {
+      "id": "en-893",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Programming_Languages/Systems/C_Plus_Plus.md",
+      "sha256": "f9bb75b83e075b9173de0d138b9784afda04f1b0a5dae3c4fe7fed77d8e6c053",
+      "added_characters": 1495,
+      "code": "#include <cassert>\n#include <memory>\n#include <stdexcept>\nstruct Resource {\n    static int live;\n    Resource() { ++live; }\n    ~Resource() { --live; }\n    Resource(const Resource&)=delete;\n    Resource& operator=(const Resource&)=delete;\n};\nint Resource::live=0;\nint main() {\n    try { auto item=std::make_unique<Resource>(); throw std::runtime_error(\"fixture\"); }\n    catch (const std::runtime_error&) {}\n    assert(Resource::live==0);\n}",
+      "language": "cpp",
+      "run": "cpp"
+    },
+    {
+      "id": "el-668",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/C_Plus_Plus.md",
+      "sha256": "d523042f833eba9fecb5ffe942b776aa6b938d8ff92165bfba81dd7a43e38215",
+      "added_characters": 1404,
+      "code": "#include <cassert>\n#include <memory>\n#include <stdexcept>\nstruct Resource {\n    static int live;\n    Resource() { ++live; }\n    ~Resource() { --live; }\n    Resource(const Resource&)=delete;\n    Resource& operator=(const Resource&)=delete;\n};\nint Resource::live=0;\nint main() {\n    try { auto item=std::make_unique<Resource>(); throw std::runtime_error(\"fixture\"); }\n    catch (const std::runtime_error&) {}\n    assert(Resource::live==0);\n}",
+      "language": "cpp",
+      "run": "cpp"
+    },
+    {
+      "id": "expanded-en-language-5-ownership-parsing",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Programming_Languages/Systems/Rust/05_Ownership_Parsing.md",
+      "sha256": "7bcdf03a532575169fe5c19ba104aa9724321369cd659f13bb6629186712ca9e",
+      "added_characters": 1315,
+      "code": "fn main() {\n    let text = \"γa\";\n    assert_eq!(text.len(), 3);\n    assert!(text.get(0..1).is_none());\n    assert_eq!(text.get(0..2), Some(\"γ\"));\n    assert!(std::str::from_utf8(&[0xce]).is_err());\n    assert_eq!(text.chars().count(), 2);\n}",
+      "language": "rust",
+      "run": null
+    },
+    {
+      "id": "expanded-el-language-5-ownership-parsing",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Γλώσσες_Προγραμματισμού/Προγραμματισμός συστημάτων/Rust/05_Ownership_Parsing.md",
+      "sha256": "05f3690d80ccf213d24456e3f4bab379a2718e0e3983b5e75ecb3570948fb333",
+      "added_characters": 1220,
+      "code": "fn main() {\n    let text = \"γa\";\n    assert_eq!(text.len(), 3);\n    assert!(text.get(0..1).is_none());\n    assert_eq!(text.get(0..2), Some(\"γ\"));\n    assert!(std::str::from_utf8(&[0xce]).is_err());\n    assert_eq!(text.chars().count(), 2);\n}",
+      "language": "rust",
+      "run": null
+    },
+    {
+      "id": "en-1025",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Programming_Languages/Web/TypeScript.md",
+      "sha256": "3bcfeb9ce84a5b8c1e1e2d1ddbce8e7fcb5f8d6b64b76057c15fc7623a8a601e",
+      "added_characters": 1585,
+      "code": "type Item = { id: number; name: string };\nfunction isItem(value: unknown): value is Item {\n  if (typeof value !== \"object\" || value === null) return false;\n  const row = value as Record<string, unknown>;\n  return typeof row.id === \"number\" && Number.isSafeInteger(row.id) && row.id > 0 &&\n         typeof row.name === \"string\" && row.name.length > 0;\n}\nif (isItem({id: \"7\", name: \"fixture\"})) throw Error(\"string ID accepted\");\nif (!isItem({id: 7, name: \"fixture\"})) throw Error(\"valid item rejected\");",
+      "language": "typescript",
+      "run": null
+    },
+    {
+      "id": "el-483",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Γλώσσες_Προγραμματισμού/Γλώσσες διαδικτύου/TypeScript.md",
+      "sha256": "7733ad721c7c63cfde04ded27dda4c4075d8e8de2347e7b563213ec852633ff0",
+      "added_characters": 1498,
+      "code": "type Item = { id: number; name: string };\nfunction isItem(value: unknown): value is Item {\n  if (typeof value !== \"object\" || value === null) return false;\n  const row = value as Record<string, unknown>;\n  return typeof row.id === \"number\" && Number.isSafeInteger(row.id) && row.id > 0 &&\n         typeof row.name === \"string\" && row.name.length > 0;\n}\nif (isItem({id: \"7\", name: \"fixture\"})) throw Error(\"string ID accepted\");\nif (!isItem({id: 7, name: \"fixture\"})) throw Error(\"valid item rejected\");",
+      "language": "typescript",
+      "run": null
+    },
+    {
+      "id": "expanded-en-language-5-transaction-migration",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Programming_Languages/Data/SQL_SQLite/05_Transaction_Migration.md",
+      "sha256": "f349e83e382a93309f8761b6142a925dcdbc99b4c03c23f6cebfd95c3120bf79",
+      "added_characters": 1500,
+      "code": "import sqlite3\nfrom contextlib import closing\nwith closing(sqlite3.connect(\":memory:\")) as db:\n    db.execute(\"CREATE TABLE items(id INTEGER PRIMARY KEY)\")\n    db.execute(\"BEGIN\")\n    db.execute(\"INSERT INTO items VALUES (1)\")\n    db.execute(\"SAVEPOINT optional_item\")\n    db.execute(\"INSERT INTO items VALUES (2)\")\n    db.execute(\"ROLLBACK TO optional_item\")\n    db.execute(\"RELEASE optional_item\")\n    db.commit()\n    assert db.execute(\"SELECT id FROM items\").fetchall() == [(1,)]\nprint(\"outer work preserved\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-language-5-transaction-migration",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Γλώσσες_Προγραμματισμού/Βάσεις και επεξεργασία δεδομένων/SQL_SQLite/05_Transaction_Migration.md",
+      "sha256": "cc75cb4827fb227653062dee4c1d7ba87287a534ae469512053fe87be4bfffba",
+      "added_characters": 1441,
+      "code": "import sqlite3\nfrom contextlib import closing\nwith closing(sqlite3.connect(\":memory:\")) as db:\n    db.execute(\"CREATE TABLE items(id INTEGER PRIMARY KEY)\")\n    db.execute(\"BEGIN\")\n    db.execute(\"INSERT INTO items VALUES (1)\")\n    db.execute(\"SAVEPOINT optional_item\")\n    db.execute(\"INSERT INTO items VALUES (2)\")\n    db.execute(\"ROLLBACK TO optional_item\")\n    db.execute(\"RELEASE optional_item\")\n    db.commit()\n    assert db.execute(\"SELECT id FROM items\").fetchall() == [(1,)]\nprint(\"outer work preserved\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-language-5-paths-and-safe-shell",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Programming_Languages/Scripting/Bash/05_Paths_And_Safe_Shell.md",
+      "sha256": "37bf1c8df0e97caf0f2040eb91a5d067ad6c754fae1ae15a3c8f3c385c9ae02a",
+      "added_characters": 1284,
+      "code": "set -u\nset +o pipefail\n(exit 7) | cat >/dev/null\nnormal=$?\nset -o pipefail\n(exit 7) | cat >/dev/null\nstrict=$?\n[[ \"$normal\" == 0 && \"$strict\" == 7 ]] || exit 1\nprintf 'pipeline statuses: %s %s\\n' \"$normal\" \"$strict\"",
+      "language": "bash",
+      "run": "bash"
+    },
+    {
+      "id": "expanded-el-language-5-paths-and-safe-shell",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Γλώσσες_Προγραμματισμού/Αυτοματισμός και σενάρια/Bash/05_Paths_And_Safe_Shell.md",
+      "sha256": "517abd71d0bc610a06bc4add8c3cadac5b94c4e910fe7e008199f1fe439b15fd",
+      "added_characters": 1221,
+      "code": "set -u\nset +o pipefail\n(exit 7) | cat >/dev/null\nnormal=$?\nset -o pipefail\n(exit 7) | cat >/dev/null\nstrict=$?\n[[ \"$normal\" == 0 && \"$strict\" == 7 ]] || exit 1\nprintf 'pipeline statuses: %s %s\\n' \"$normal\" \"$strict\"",
+      "language": "bash",
+      "run": "bash"
+    },
+    {
+      "id": "en-28",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Algorithms_Practice/06_bfs.md",
+      "sha256": "ee0bfef51dac95b6ef679de6dc1e371ced5bcf6cc6010b40f7530af87cfa6a07",
+      "added_characters": 1383,
+      "code": "from collections import deque\ngraph = {0:[1], 1:[0,2], 2:[1,3], 3:[2], 4:[]}\nsources = [0,3]\ndistance = dict.fromkeys(sources, 0)\nqueue = deque(distance)\nwhile queue:\n    node = queue.popleft()\n    for nxt in graph[node]:\n        if nxt not in distance:\n            distance[nxt] = distance[node] + 1\n            queue.append(nxt)\nassert distance == {0:0, 3:0, 1:1, 2:1}\nassert 4 not in distance\nprint(distance)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "el-11",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Αλγόριθμοι_Ασκήσεις/06_bfs.md",
+      "sha256": "ba5772e60809d8dd7db48d6aee2e5ff405338acc65a3837e1bca3c5ccbcf9d7b",
+      "added_characters": 1281,
+      "code": "from collections import deque\ngraph = {0:[1], 1:[0,2], 2:[1,3], 3:[2], 4:[]}\nsources = [0,3]\ndistance = dict.fromkeys(sources, 0)\nqueue = deque(distance)\nwhile queue:\n    node = queue.popleft()\n    for nxt in graph[node]:\n        if nxt not in distance:\n            distance[nxt] = distance[node] + 1\n            queue.append(nxt)\nassert distance == {0:0, 3:0, 1:1, 2:1}\nassert 4 not in distance\nprint(distance)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "en-30",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Algorithms_Practice/07_dfs.md",
+      "sha256": "d3313107363d51fd03bbdbf7fbf69c263a52f62f79ada966371f66974b8585d6",
+      "added_characters": 1355,
+      "code": "children = {\"a\":[\"b\",\"c\"], \"b\":[\"d\"], \"c\":[], \"d\":[]}\nstack = [(\"a\", False)]\npostorder = []\nwhile stack:\n    node, exiting = stack.pop()\n    if exiting:\n        postorder.append(node)\n    else:\n        stack.append((node, True))\n        stack.extend((child, False) for child in reversed(children[node]))\nassert postorder == [\"d\",\"b\",\"c\",\"a\"]\nprint(postorder)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "el-13",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Αλγόριθμοι_Ασκήσεις/07_dfs.md",
+      "sha256": "453beec0733a1bd862b83b3e0847e12549ca6086f4934f5ca9d8b9cdb8303a0e",
+      "added_characters": 1238,
+      "code": "children = {\"a\":[\"b\",\"c\"], \"b\":[\"d\"], \"c\":[], \"d\":[]}\nstack = [(\"a\", False)]\npostorder = []\nwhile stack:\n    node, exiting = stack.pop()\n    if exiting:\n        postorder.append(node)\n    else:\n        stack.append((node, True))\n        stack.extend((child, False) for child in reversed(children[node]))\nassert postorder == [\"d\",\"b\",\"c\",\"a\"]\nprint(postorder)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "en-36",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Algorithms_Practice/10_dijkstra.md",
+      "sha256": "1c25996cf9c0828c8c45a171a13d825a55db961f0d8fc935f522ce27d653c782",
+      "added_characters": 1581,
+      "code": "import heapq\ngraph = {\"a\":[(\"b\",9),(\"c\",1)], \"b\":[], \"c\":[(\"b\",2)]}\nassert all(weight >= 0 for edges in graph.values() for _,weight in edges)\nbest = {\"a\":0}; heap = [(0,\"a\")]\nwhile heap:\n    cost,node = heapq.heappop(heap)\n    if cost != best[node]: continue\n    for nxt,weight in graph[node]:\n        candidate = cost + weight\n        if candidate < best.get(nxt,float(\"inf\")):\n            best[nxt] = candidate\n            heapq.heappush(heap,(candidate,nxt))\nassert best[\"b\"] == 3\nprint(best)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "el-19",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Αλγόριθμοι_Ασκήσεις/10_dijkstra.md",
+      "sha256": "b4cadbbe0b79d91b4b100501657bed4f49be70f48777493ac119c9391be0e8b7",
+      "added_characters": 1410,
+      "code": "import heapq\ngraph = {\"a\":[(\"b\",9),(\"c\",1)], \"b\":[], \"c\":[(\"b\",2)]}\nassert all(weight >= 0 for edges in graph.values() for _,weight in edges)\nbest = {\"a\":0}; heap = [(0,\"a\")]\nwhile heap:\n    cost,node = heapq.heappop(heap)\n    if cost != best[node]: continue\n    for nxt,weight in graph[node]:\n        candidate = cost + weight\n        if candidate < best.get(nxt,float(\"inf\")):\n            best[nxt] = candidate\n            heapq.heappush(heap,(candidate,nxt))\nassert best[\"b\"] == 3\nprint(best)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "en-38",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Algorithms_Practice/11_topological_sort.md",
+      "sha256": "83359175161520679cc7202ba746feb3dcb67cbefd21f7b3517b06676eb18a95",
+      "added_characters": 1488,
+      "code": "from collections import deque\ngraph = {\"a\":[\"b\"], \"b\":[\"a\",\"c\"], \"c\":[], \"free\":[]}\nindegree = dict.fromkeys(graph,0)\nfor edges in graph.values():\n    for node in edges: indegree[node] += 1\nqueue = deque(n for n,d in indegree.items() if d == 0); order=[]\nwhile queue:\n    node=queue.popleft(); order.append(node)\n    for nxt in graph[node]:\n        indegree[nxt] -= 1\n        if indegree[nxt] == 0: queue.append(nxt)\nblocked = set(graph) - set(order)\nassert order == [\"free\"] and blocked == {\"a\",\"b\",\"c\"}\nprint(\"cycle blocks\",sorted(blocked))",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "el-21",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Αλγόριθμοι_Ασκήσεις/11_topological_sort.md",
+      "sha256": "ae75739bf326830a370eeced19b936be5ee4bbbece5446d8621a8a7dc4d5a917",
+      "added_characters": 1378,
+      "code": "from collections import deque\ngraph = {\"a\":[\"b\"], \"b\":[\"a\",\"c\"], \"c\":[], \"free\":[]}\nindegree = dict.fromkeys(graph,0)\nfor edges in graph.values():\n    for node in edges: indegree[node] += 1\nqueue = deque(n for n,d in indegree.items() if d == 0); order=[]\nwhile queue:\n    node=queue.popleft(); order.append(node)\n    for nxt in graph[node]:\n        indegree[nxt] -= 1\n        if indegree[nxt] == 0: queue.append(nxt)\nblocked = set(graph) - set(order)\nassert order == [\"free\"] and blocked == {\"a\",\"b\",\"c\"}\nprint(\"cycle blocks\",sorted(blocked))",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-ops-19-pip-native-dependencies",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/19_Pip_Native_Dependencies.md",
+      "sha256": "7d486566a79bbc8d383ff7c63f0aefe7b4d9e6e9a9426d93a674bac641764b3e",
+      "added_characters": 1416,
+      "code": "import platform, sys, sysconfig\nfacts = {\"python\":sys.version.split()[0], \"machine\":platform.machine(),\n         \"platform\":sysconfig.get_platform(),\n         \"extension_suffix\":sysconfig.get_config_var(\"EXT_SUFFIX\")}\nassert facts[\"python\"] and facts[\"platform\"]\nprint(facts)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-ops-19-pip-native-dependencies",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/19_Pip_Native_Dependencies.md",
+      "sha256": "874ec5042125ef7e5ee1a0dc3e970e2fbb25246da4aaf74af492e6fadc22d728",
+      "added_characters": 1260,
+      "code": "import platform, sys, sysconfig\nfacts = {\"python\":sys.version.split()[0], \"machine\":platform.machine(),\n         \"platform\":sysconfig.get_platform(),\n         \"extension_suffix\":sysconfig.get_config_var(\"EXT_SUFFIX\")}\nassert facts[\"python\"] and facts[\"platform\"]\nprint(facts)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-ops-20-android-process-limits",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/20_Android_Process_Limits.md",
+      "sha256": "f8213331172258f5f99480429f846e9bbcb5070f3ae9726afed6bd81fb4bf563",
+      "added_characters": 1323,
+      "code": "completed=set(); effects=[]\nfor item in [\"a\",\"b\",\"a\",\"c\",\"b\"]:\n    if item in completed: continue\n    effects.append(item)\n    completed.add(item)\nassert effects == [\"a\",\"b\",\"c\"]\nprint(\"replayed items suppressed\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-ops-20-android-process-limits",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/20_Android_Process_Limits.md",
+      "sha256": "e2e82e35b6df6041eb2c7ef5c6df49fdaa09300e6d8c2b53e76f5d2cebbf20ac",
+      "added_characters": 1198,
+      "code": "completed=set(); effects=[]\nfor item in [\"a\",\"b\",\"a\",\"c\",\"b\"]:\n    if item in completed: continue\n    effects.append(item)\n    completed.add(item)\nassert effects == [\"a\",\"b\",\"c\"]\nprint(\"replayed items suppressed\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-ops-27-reproducible-builds-and-zips",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/27_Reproducible_Builds_And_Zips.md",
+      "sha256": "b51130146ddca00d9828d5302cca1f705b920dd027b06bff7ded0e3fc93420ea",
+      "added_characters": 1566,
+      "code": "import io, zipfile, hashlib\ndef release():\n    output=io.BytesIO()\n    with zipfile.ZipFile(output,\"w\",compression=zipfile.ZIP_STORED) as z:\n        for name,data in sorted({\"b.txt\":b\"two\", \"a.txt\":b\"one\"}.items()):\n            entry=zipfile.ZipInfo(name,date_time=(2020,1,1,0,0,0))\n            entry.create_system=3\n            entry.external_attr=0o100644 << 16\n            z.writestr(entry,data)\n    return output.getvalue()\na,b=release(),release()\nassert a == b\nprint(hashlib.sha256(a).hexdigest())",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-ops-27-reproducible-builds-and-zips",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/27_Reproducible_Builds_And_Zips.md",
+      "sha256": "04947c015e1ca827770b9752edf82bb13c8b0c8345e5380414902f99bd9be01c",
+      "added_characters": 1369,
+      "code": "import io, zipfile, hashlib\ndef release():\n    output=io.BytesIO()\n    with zipfile.ZipFile(output,\"w\",compression=zipfile.ZIP_STORED) as z:\n        for name,data in sorted({\"b.txt\":b\"two\", \"a.txt\":b\"one\"}.items()):\n            entry=zipfile.ZipInfo(name,date_time=(2020,1,1,0,0,0))\n            entry.create_system=3\n            entry.external_attr=0o100644 << 16\n            z.writestr(entry,data)\n    return output.getvalue()\na,b=release(),release()\nassert a == b\nprint(hashlib.sha256(a).hexdigest())",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-ops-23-linux-disk-inodes-mounts",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/23_Linux_Disk_Inodes_Mounts.md",
+      "sha256": "991a208b1b702f94ddd97ebc47369bb673b88ec10b2f4451d596a21efcc20c3a",
+      "added_characters": 1379,
+      "code": "import os, tempfile\nfrom pathlib import Path\nwith tempfile.TemporaryDirectory() as folder:\n    path=Path(folder)/\"open.txt\"\n    path.write_bytes(b\"still referenced\")\n    with path.open(\"rb\") as stream:\n        path.unlink()\n        assert not path.exists()\n        assert stream.read() == b\"still referenced\"\nprint(\"open handle retains data\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-ops-23-linux-disk-inodes-mounts",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/23_Linux_Disk_Inodes_Mounts.md",
+      "sha256": "a7674a3b9f87dfff9e99e50cbd17195d50dc46c004b9805daa60715ee2831e7e",
+      "added_characters": 1253,
+      "code": "import os, tempfile\nfrom pathlib import Path\nwith tempfile.TemporaryDirectory() as folder:\n    path=Path(folder)/\"open.txt\"\n    path.write_bytes(b\"still referenced\")\n    with path.open(\"rb\") as stream:\n        path.unlink()\n        assert not path.exists()\n        assert stream.read() == b\"still referenced\"\nprint(\"open handle retains data\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-ops-30-ssh-connection-triage",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/30_SSH_Connection_Triage.md",
+      "sha256": "d9ac97d666f25883ddd2d47b15419df6ef14e0204c917ee5f76c60fa477c2918",
+      "added_characters": 1396,
+      "code": "def accept_change(expected, observed, independent_confirmation):\n    return expected == observed and independent_confirmation\nassert not accept_change(\"SHA256:fixtureA\",\"SHA256:fixtureB\",True)\nassert not accept_change(\"SHA256:fixtureA\",\"SHA256:fixtureA\",False)\nassert accept_change(\"SHA256:fixtureA\",\"SHA256:fixtureA\",True)\nprint(\"trust evidence required\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-ops-30-ssh-connection-triage",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/30_SSH_Connection_Triage.md",
+      "sha256": "9023455d67949afa36a71bc4dd38d10517b1f732eb77fcc7fb219cc18dca5eba",
+      "added_characters": 1244,
+      "code": "def accept_change(expected, observed, independent_confirmation):\n    return expected == observed and independent_confirmation\nassert not accept_change(\"SHA256:fixtureA\",\"SHA256:fixtureB\",True)\nassert not accept_change(\"SHA256:fixtureA\",\"SHA256:fixtureA\",False)\nassert accept_change(\"SHA256:fixtureA\",\"SHA256:fixtureA\",True)\nprint(\"trust evidence required\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-ops-29-systemd-journal-diagnostics",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Advanced_Engineering_Labs/29_Systemd_Journal_Diagnostics.md",
+      "sha256": "b87b9bf0c76a4a9e1c16dc1485467aeb920ec7da75e4771e5e13d7165c8f9f4e",
+      "added_characters": 1495,
+      "code": "import os, subprocess, sys, tempfile\nwith tempfile.TemporaryDirectory() as folder:\n    result=subprocess.run([sys.executable,\"-c\",\n        \"import os; print(os.getcwd()); print(os.environ.get('APP_MODE'))\"],\n        cwd=folder,env={\"APP_MODE\":\"fixture\"},text=True,capture_output=True,\n        timeout=2,check=True)\n    lines=result.stdout.splitlines()\n    assert lines == [folder,\"fixture\"]\nprint(\"service inputs explicit\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-ops-29-systemd-journal-diagnostics",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Προχωρημένα_Εργαστήρια_Μηχανικής/29_Systemd_Journal_Diagnostics.md",
+      "sha256": "41cd061f0934a779734f6ac5b62011beb5b8e29742e8d90f1522b9508c109a1b",
+      "added_characters": 1414,
+      "code": "import os, subprocess, sys, tempfile\nwith tempfile.TemporaryDirectory() as folder:\n    result=subprocess.run([sys.executable,\"-c\",\n        \"import os; print(os.getcwd()); print(os.environ.get('APP_MODE'))\"],\n        cwd=folder,env={\"APP_MODE\":\"fixture\"},text=True,capture_output=True,\n        timeout=2,check=True)\n    lines=result.stdout.splitlines()\n    assert lines == [folder,\"fixture\"]\nprint(\"service inputs explicit\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "rev-en-3",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Reverse Engineering/English/03_BYTES.md",
+      "sha256": "5a243c02734c9f9ff842d4dbbf32b100f68839a365283b39a061288db5933124",
+      "added_characters": 1303,
+      "code": "raw=bytes.fromhex(\"01 02 03 04\")\nlittle=int.from_bytes(raw,\"little\")\nbig=int.from_bytes(raw,\"big\")\nassert little == 0x04030201 and big == 0x01020304\nassert little.to_bytes(4,\"little\") == raw\nassert big.to_bytes(4,\"big\") == raw\nassert little != big\nprint(hex(little),hex(big))",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "rev-el-3",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Reverse Engineering/Greek/03_BYTES.md",
+      "sha256": "d60e14565b4d66d928099dd5e7e3859e9d49faee8fa88143ef5b0cb31ff968f2",
+      "added_characters": 1139,
+      "code": "raw=bytes.fromhex(\"01 02 03 04\")\nlittle=int.from_bytes(raw,\"little\")\nbig=int.from_bytes(raw,\"big\")\nassert little == 0x04030201 and big == 0x01020304\nassert little.to_bytes(4,\"little\") == raw\nassert big.to_bytes(4,\"big\") == raw\nassert little != big\nprint(hex(little),hex(big))",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "rev-en-4",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Reverse Engineering/English/04_STRINGS.md",
+      "sha256": "e42d0690ec470f2648d2aea55918d791e0dfd00149ffee26ff143ed5acbf21fa",
+      "added_characters": 1387,
+      "code": "marker=\"LAB_NOTE\"\nblob=b\"\\x00\\xff\"+marker.encode(\"ascii\")+b\"\\x00\"+marker.encode(\"utf-16le\")\nascii_offset=blob.index(marker.encode(\"ascii\"))\nwide_offset=blob.index(marker.encode(\"utf-16le\"))\nassert ascii_offset == 2 and wide_offset > ascii_offset\nassert blob[wide_offset:].decode(\"utf-16le\") == marker\nprint({\"ascii_offset\":ascii_offset,\"utf16_offset\":wide_offset})",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "rev-el-4",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Reverse Engineering/Greek/04_STRINGS.md",
+      "sha256": "cc847401dd6252ef93c6270149d748723905317a62ca174ef65c6d6a91eb910e",
+      "added_characters": 1217,
+      "code": "marker=\"LAB_NOTE\"\nblob=b\"\\x00\\xff\"+marker.encode(\"ascii\")+b\"\\x00\"+marker.encode(\"utf-16le\")\nascii_offset=blob.index(marker.encode(\"ascii\"))\nwide_offset=blob.index(marker.encode(\"utf-16le\"))\nassert ascii_offset == 2 and wide_offset > ascii_offset\nassert blob[wide_offset:].decode(\"utf-16le\") == marker\nprint({\"ascii_offset\":ascii_offset,\"utf16_offset\":wide_offset})",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-reverse-21-elf-and-pe-read-only",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Reverse Engineering/English/21_ELF_And_PE_Read_Only.md",
+      "sha256": "edc85e02b268deb0c4258be96a920fe21c4096cd7c42811b1328cea8efb23f23",
+      "added_characters": 1489,
+      "code": "def mapped_offset(address, virtual_start, file_start, stored_size, virtual_size):\n    delta=address-virtual_start\n    if delta < 0 or delta >= virtual_size: return None\n    if delta >= stored_size: return None\n    return file_start+delta\nassert mapped_offset(0x1010,0x1000,0x200,0x40,0x80) == 0x210\nassert mapped_offset(0x1060,0x1000,0x200,0x40,0x80) is None\nassert mapped_offset(0x0fff,0x1000,0x200,0x40,0x80) is None\nprint(\"file-backed range checked\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-reverse-21-elf-and-pe-read-only",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Reverse Engineering/Greek/21_ELF_And_PE_Read_Only.md",
+      "sha256": "f22f2d60a5b1d73837f188521fe09777c29d7b128289502a2357676e730ded91",
+      "added_characters": 1348,
+      "code": "def mapped_offset(address, virtual_start, file_start, stored_size, virtual_size):\n    delta=address-virtual_start\n    if delta < 0 or delta >= virtual_size: return None\n    if delta >= stored_size: return None\n    return file_start+delta\nassert mapped_offset(0x1010,0x1000,0x200,0x40,0x80) == 0x210\nassert mapped_offset(0x1060,0x1000,0x200,0x40,0x80) is None\nassert mapped_offset(0x0fff,0x1000,0x200,0x40,0x80) is None\nprint(\"file-backed range checked\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-reverse-24-pcap-protocol-triage",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Reverse Engineering/English/24_PCAP_Protocol_Triage.md",
+      "sha256": "2d9a1a64efaaa895d3b45dff70727e72a302366f31c08785ae04bf177feb0227",
+      "added_characters": 1412,
+      "code": "observations=[{\"time\":10,\"source\":\"left\",\"packet\":2},\n              {\"time\":9,\"source\":\"right\",\"packet\":1},\n              {\"time\":10,\"source\":\"left\",\"packet\":1}]\ntimeline=sorted(observations,key=lambda r:(r[\"time\"],r[\"source\"],r[\"packet\"]))\nassert [(r[\"source\"],r[\"packet\"]) for r in timeline] == [(\"right\",1),(\"left\",1),(\"left\",2)]\nassert len(timeline) == len(observations)\nprint(timeline)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-reverse-24-pcap-protocol-triage",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Reverse Engineering/Greek/24_PCAP_Protocol_Triage.md",
+      "sha256": "c1bc964f083b1e625e581a797da150c6ff7d20445072537bd5b186b5ba0d236a",
+      "added_characters": 1284,
+      "code": "observations=[{\"time\":10,\"source\":\"left\",\"packet\":2},\n              {\"time\":9,\"source\":\"right\",\"packet\":1},\n              {\"time\":10,\"source\":\"left\",\"packet\":1}]\ntimeline=sorted(observations,key=lambda r:(r[\"time\"],r[\"source\"],r[\"packet\"]))\nassert [(r[\"source\"],r[\"packet\"]) for r in timeline] == [(\"right\",1),(\"left\",1),(\"left\",2)]\nassert len(timeline) == len(observations)\nprint(timeline)",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "en-1047",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Security_Engineering/01_THREAT_MODEL.md",
+      "sha256": "cd798dc4e16d53b28698ec9622e760581a6c9351ece484be39de71a578cebf3d",
+      "added_characters": 1449,
+      "code": "objects={\"note-a\":{\"owner\":\"alice\",\"body\":\"fixture\"}}\ndef allowed(actor, object_id, action):\n    item=objects.get(object_id)\n    return bool(item and item[\"owner\"]==actor and action in {\"read\",\"update\"})\nassert allowed(\"alice\",\"note-a\",\"read\")\nassert not allowed(\"bob\",\"note-a\",\"read\")\nassert not allowed(\"alice\",\"missing\",\"read\")\nassert not allowed(\"alice\",\"note-a\",\"delete\")\nprint(\"object and action both checked\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "el-1088",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Μηχανική_Ασφάλειας/01_THREAT_MODEL.md",
+      "sha256": "2c3386a92d5d768c57ee377f176bea544d9ea005347ddb4623d4bd3c1d901207",
+      "added_characters": 1281,
+      "code": "objects={\"note-a\":{\"owner\":\"alice\",\"body\":\"fixture\"}}\ndef allowed(actor, object_id, action):\n    item=objects.get(object_id)\n    return bool(item and item[\"owner\"]==actor and action in {\"read\",\"update\"})\nassert allowed(\"alice\",\"note-a\",\"read\")\nassert not allowed(\"bob\",\"note-a\",\"read\")\nassert not allowed(\"alice\",\"missing\",\"read\")\nassert not allowed(\"alice\",\"note-a\",\"delete\")\nprint(\"object and action both checked\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-en-security-15-secrets-incident-response",
+      "locale": "en",
+      "source": "Developer's Mind/Keep Programming Alive/English/Security_Engineering/15_Secrets_Incident_Response.md",
+      "sha256": "26c9b344bc23296b65d06f739e05bceda0a53c2d11adc904ca52bcadc5932e44",
+      "added_characters": 1506,
+      "code": "incident={\"replacement_created\":True,\"consumers_verified\":False,\n          \"old_revoked\":False,\"scope_reviewed\":True}\ndef rotation_complete(row):\n    return all(row[k] for k in (\"replacement_created\",\"consumers_verified\",\"old_revoked\",\"scope_reviewed\"))\nassert not rotation_complete(incident)\nincident.update(consumers_verified=True,old_revoked=True)\nassert rotation_complete(incident)\nprint(\"completion requires revocation evidence\")",
+      "language": "python",
+      "run": "python"
+    },
+    {
+      "id": "expanded-el-security-15-secrets-incident-response",
+      "locale": "el",
+      "source": "Developer's Mind/Keep Programming Alive/Greek/Μηχανική_Ασφάλειας/15_Secrets_Incident_Response.md",
+      "sha256": "d3ec3cdef582405cf7bf0308396eb40ebef36172a27692c5552205d87f851bb9",
+      "added_characters": 1344,
+      "code": "incident={\"replacement_created\":True,\"consumers_verified\":False,\n          \"old_revoked\":False,\"scope_reviewed\":True}\ndef rotation_complete(row):\n    return all(row[k] for k in (\"replacement_created\",\"consumers_verified\",\"old_revoked\",\"scope_reviewed\"))\nassert not rotation_complete(incident)\nincident.update(consumers_verified=True,old_revoked=True)\nassert rotation_complete(incident)\nprint(\"completion requires revocation evidence\")",
+      "language": "python",
+      "run": "python"
+    }
+  ]
+}

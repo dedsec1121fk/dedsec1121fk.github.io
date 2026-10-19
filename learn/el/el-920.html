@@ -1,0 +1,118 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-920.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι Εκδόσεις και συμβατότητα Αρχή σχεδιασμού Semantic versioning χρησιμοποιεί major.minor.patch σύμφωνα με public API…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι — DedSec Project">
+<meta property="og:description" content="Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι Εκδόσεις και συμβατότητα Αρχή σχεδιασμού Semantic versioning χρησιμοποιεί major.minor.patch σύμφωνα με public API…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-920.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι — DedSec Project">
+<meta name="twitter:description" content="Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι Εκδόσεις και συμβατότητα Αρχή σχεδιασμού Semantic versioning χρησιμοποιεί major.minor.patch σύμφωνα με public API…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι — DedSec Project</h1><p>Παράδοση λογισμικού: εκδόσεις, ρυθμίσεις, επαναφορά και τελικοί έλεγχοι Εκδόσεις και συμβατότητα Αρχή σχεδιασμού Semantic versioning χρησιμοποιεί major.minor.patch σύμφωνα με public API…</p><section><h2>Εκδόσεις και συμβατότητα</h2>
+<h3>Αρχή σχεδιασμού</h3>
+<p>Semantic versioning χρησιμοποιεί major.minor.patch σύμφωνα με public API. Breaking signature change απαιτεί major version κατά SemVer· συμβατή επέκταση μπορεί να είναι minor.</p>
+<h3>Πρακτική περίπτωση</h3>
+<pre><code class="language-text">1.4.2 -&gt; 1.4.3  bug fix
+1.4.3 -&gt; 1.5.0  compatible feature
+1.5.0 -&gt; 2.0.0  breaking public API
+</code></pre>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Κατάταξε removed parameter, νέο optional flag και security fix. Εξήγησε γιατί pre-1.0 packages χρειάζονται δηλωμένο stability policy.</p>
+<h3>Τεκμήρια για review</h3>
+<p>Για Semantic versioning and compatibility, αναγνώρισε αποτυχία πέρα από το happy path και πρότεινε συγκεκριμένο test. Κατάγραψε πρώτα expected result και έλεγξε το boundary σε ασφαλές δοκιμαστικό περιβάλλον.</p>
+<h2>Τεκμηρίωση που παραμένει σωστή</h2>
+<h3>Αρχή σχεδιασμού</h3>
+<p>Documentation παλιώνει όταν αλλάζουν commands/files χωρίς ενημέρωση. Runnable snippets, platform prerequisites και σαφής υπεύθυνος maintenance βοηθούν έλεγχο.</p>
+<h3>Πρακτική περίπτωση</h3>
+<pre><code class="language-text">For every changed CLI flag:
+1. update help output
+2. update the usage example
+3. run the example in a scratch workspace
+4. check EN/EL parity
+</code></pre>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Χάλασε ένα command σε duplicated README παράδειγμα, διόρθωσε canonical source και έλεγξε EN/EL parity.</p>
+<h3>Τεκμήρια για review</h3>
+<p>Για Documentation that stays accurate, αναγνώρισε αποτυχία πέρα από το happy path και πρότεινε συγκεκριμένο test. Κατάγραψε πρώτα expected result και έλεγξε το boundary σε ασφαλές δοκιμαστικό περιβάλλον.</p>
+<h2>Διακόπτες λειτουργιών και επαναφορά</h2>
+<h3>Αρχή σχεδιασμού</h3>
+<p>Feature flag επιλέγει συμπεριφορά χωρίς άμεσο code rollback, αλλά flags απαιτούν tests και cleanup. Schema change δεν αναιρείται πάντα με κλείσιμο UI.</p>
+<h3>Πρακτική περίπτωση</h3>
+<pre><code class="language-python">def total(items, enhanced=False):
+    if enhanced:return sum(x for x in items if x&gt;=0)
+    return sum(items)
+assert total([3,-1],True)==3
+</code></pre>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Έλεγξε δύο flag states και αλλαγή κατά active requests. Τι γίνεται με δεδομένα που έγραψε το νέο path αν κλείσει flag;</p>
+<h3>Τεκμήρια για review</h3>
+<p>Για Feature flags and rollback, αναγνώρισε αποτυχία πέρα από το happy path και πρότεινε συγκεκριμένο test. Κατάγραψε πρώτα expected result και έλεγξε το boundary σε ασφαλές δοκιμαστικό περιβάλλον.</p>
+<h2>Αρθρωτή αρχιτεκτονική</h2>
+<h3>Αρχή σχεδιασμού</h3>
+<p>Modules χρειάζονται συνεκτική ευθύνη και explicit dependencies. Circular imports/shared globals δυσκολεύουν isolation, ενώ interface boundary επιτρέπει ανεξάρτητο testing.</p>
+<h3>Πρακτική περίπτωση</h3>
+<pre><code class="language-python">def parse(raw): return int(raw)
+def present(number): return f'count={number}'
+assert present(parse('4'))=='count=4'
+</code></pre>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Χώρισε parse και present σε modules και κάνε CLI integration. Επιβεβαίωσε ότι imports δεν προκαλούν file writes.</p>
+<h3>Τεκμήρια για review</h3>
+<p>Για Modular architecture, αναγνώρισε αποτυχία πέρα από το happy path και πρότεινε συγκεκριμένο test. Κατάγραψε πρώτα expected result και έλεγξε το boundary σε ασφαλές δοκιμαστικό περιβάλλον.</p>
+<h2>Επίπεδα ρυθμίσεων</h2>
+<h3>Αρχή σχεδιασμού</h3>
+<p>Configuration layering συνδυάζει defaults, environment και explicit overrides. Χωρίς σταθερό precedence μια production ρύθμιση μπορεί να αντικατασταθεί από stale local value.</p>
+<h3>Πρακτική περίπτωση</h3>
+<pre><code class="language-python">defaults={'port':8000,'debug':False}
+override={'port':9000}
+settings={**defaults,**override}
+assert settings['port']==9000
+</code></pre>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Πρόσθεσε τρίτο layer, όρισε precedence και απέρριψε unknown keys. Σύγκρινε missing με empty environment values.</p>
+<h3>Τεκμήρια για review</h3>
+<p>Για Configuration layering, αναγνώρισε αποτυχία πέρα από το happy path και πρότεινε συγκεκριμένο test. Κατάγραψε πρώτα expected result και έλεγξε το boundary σε ασφαλές δοκιμαστικό περιβάλλον.</p>
+<h2>Επαλήθευση εκδόσεων και αρχείων</h2>
+<h3>Αρχή σχεδιασμού</h3>
+<p>Release verification συνδέει artifact με commit, toolchain και independently trusted digest/signature. Hash από την ίδια attacker-controlled πηγή δεν εγγυάται γνησιότητα.</p>
+<h3>Πρακτική περίπτωση</h3>
+<pre><code class="language-sh">git rev-parse HEAD
+sha256sum path/to/release.zip
+# Compare against independently trusted release metadata.
+</code></pre>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Φτιάξε synthetic binary, κατέγραψε hash, άλλαξε byte και έλεγξε mismatch. Εξήγησε γιατί υπογραφή χρειάζεται πέρα από checksum.</p>
+<h3>Τεκμήρια για review</h3>
+<p>Για Release and artifact verification, αναγνώρισε αποτυχία πέρα από το happy path και πρότεινε συγκεκριμένο test. Κατάγραψε πρώτα expected result και έλεγξε το boundary σε ασφαλές δοκιμαστικό περιβάλλον.</p>
+<h2>Λίστα ελέγχου έκδοσης και τεκμηρίωση</h2>
+<p>Πριν τη δημοσίευση: διάβασε τις αλλαγές, εκτέλεσε tests, δοκίμασε πραγματική εγκατάσταση, διατήρησε νομικά κείμενα και credits, έλεγξε το αρχείο και περιέγραψε περιορισμούς. Το πράσινο CI δεν αντικαθιστά έλεγχο σε συσκευή.</p>
+<h3>Λυμένο παράδειγμα</h3>
+<pre><code class="language-text">python -m compileall -q Scripts tests
+python -m pytest -q tests
+git diff --check
+</code></pre>
+<h3>Άσκηση</h3>
+<p>Ονόμασε τρεις ελέγχους που χρειάζονται πραγματική συσκευή Termux.</p>
+<h3>Λύση / υπόδειξη</h3>
+<p>Δικαιώματα Android, αρχική εγκατάσταση, διαδραστικό μενού.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,48 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Αποσφαλμάτωση CSS specificity και επικαλύψεων — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/deep-dive-css-cascade-el.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Αποσφαλμάτωση CSS specificity και επικαλύψεων Τι συμβαίνει Όταν κανόνας αγνοείται, έλεγξε το computed style αντί να προσθέτεις συνεχώς !important. Δες specificity, σειρά αρχείων, animation…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Αποσφαλμάτωση CSS specificity και επικαλύψεων — DedSec Project">
+<meta property="og:description" content="Αποσφαλμάτωση CSS specificity και επικαλύψεων Τι συμβαίνει Όταν κανόνας αγνοείται, έλεγξε το computed style αντί να προσθέτεις συνεχώς !important. Δες specificity, σειρά αρχείων, animation…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/deep-dive-css-cascade-el.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Αποσφαλμάτωση CSS specificity και επικαλύψεων — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Αποσφαλμάτωση CSS specificity και επικαλύψεων — DedSec Project">
+<meta name="twitter:description" content="Αποσφαλμάτωση CSS specificity και επικαλύψεων Τι συμβαίνει Όταν κανόνας αγνοείται, έλεγξε το computed style αντί να προσθέτεις συνεχώς !important. Δες specificity, σειρά αρχείων, animation…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Αποσφαλμάτωση CSS specificity και επικαλύψεων — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Αποσφαλμάτωση CSS specificity και επικαλύψεων — DedSec Project</h1><p>Αποσφαλμάτωση CSS specificity και επικαλύψεων Τι συμβαίνει Όταν κανόνας αγνοείται, έλεγξε το computed style αντί να προσθέτεις συνεχώς !important. Δες specificity, σειρά αρχείων, animation…</p><section><h2>Τι συμβαίνει</h2>
+<p>Όταν κανόνας αγνοείται, έλεγξε το computed style αντί να προσθέτεις συνεχώς !important. Δες specificity, σειρά αρχείων, animation και κληρονομούμενες τιμές.</p>
+<h2>Πρακτικός έλεγχος</h2>
+<p>Για επικαλυπτόμενες μπάρες έλεγξε position, z-index, isolation και stacking contexts. Ένα παιδί μπορεί να επαναφέρει visibility ενώ ο γονέας είναι κρυφός.</p>
+<h2>Συνήθεις παγίδες</h2>
+<p>Κάνε browser regression test για ορατότητα και αντίθεση σε πλάτη 390px και 1280px. Διατήρησε ένδειξη focus πληκτρολογίου ακόμη κι αν αφαιρείς touch highlights.</p>
+<h2>Μικρό παράδειγμα για προσαρμογή</h2>
+<pre><code class="language-text">document.querySelector('.panel') &amp;&amp; getComputedStyle(document.querySelector('.panel')).backgroundColor
+</code></pre>
+<h2>Ξεχώρισε απόκρυψη και stacking contexts</h2>
+<p>Ένας descendant μπορεί να υπερκαλύψει inherited <code>visibility:hidden</code> με <code>visibility:visible</code>. Δεν μπορεί να αναιρέσει ancestor με <code>display:none</code>, ενώ το opacity γονέα επηρεάζει ολόκληρο composited subtree. Πριν αλλάξεις z-index, βρες ποιος ακριβώς μηχανισμός κρύβει το control.</p>
+<pre><code class="language-css">.wrapper { position: relative; z-index: 1; }
+.dialog { position: fixed; z-index: 9999; }
+.peer { position: relative; z-index: 2; }
+</code></pre>
+<p>Αν το dialog ανήκει στο stacking context του wrapper, το μεγάλο τοπικό z-index δεν το βάζει αυτόματα πάνω από το ξεχωριστό context του peer. Εξέτασε όρια και ancestors με transform, opacity, isolation ή positioning μέσω developer tools. Αφαίρεσε το diagnostic outline μετά τη διερεύνηση.</p>
+<p>Σε theme regression δες computed foreground και το πραγματικό background πίσω από το κείμενο. Η δήλωση CSS variable δεν αποδεικνύει ότι εφαρμόζεται· μπορεί να επικρατεί legacy selector ή important rule. Μετά από αλλαγή overlay hit-testing έλεγξε keyboard focus: ορατό κουμπί κάτω από άλλο element μπορεί να παραμένει μη λειτουργικό.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

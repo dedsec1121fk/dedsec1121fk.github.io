@@ -1,0 +1,66 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>HTTP, JSON and API boundaries — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-195.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="HTTP, JSON and API boundaries A browser UI sends HTTP requests to a server. Validate all input on the server, check status codes, and never trust that a button click implies a saved state…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="HTTP, JSON and API boundaries — DedSec Project">
+<meta property="og:description" content="HTTP, JSON and API boundaries A browser UI sends HTTP requests to a server. Validate all input on the server, check status codes, and never trust that a button click implies a saved state…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-195.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="HTTP, JSON and API boundaries — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HTTP, JSON and API boundaries — DedSec Project">
+<meta name="twitter:description" content="HTTP, JSON and API boundaries A browser UI sends HTTP requests to a server. Validate all input on the server, check status codes, and never trust that a button click implies a saved state…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="HTTP, JSON and API boundaries — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>HTTP, JSON and API boundaries — DedSec Project</h1><p>HTTP, JSON and API boundaries A browser UI sends HTTP requests to a server. Validate all input on the server, check status codes, and never trust that a button click implies a saved state…</p><section><p>A browser UI sends HTTP requests to a server. Validate all input on the server, check status codes, and never trust that a button click implies a saved state. For DedSec OS, trace the client event to the /api/ handler and persisted file.</p>
+<h2>Worked example</h2>
+<pre><code class="language-text">import json
+payload = {&quot;ok&quot;: True, &quot;count&quot;: 3}
+encoded = json.dumps(payload)
+print(json.loads(encoded)[&quot;count&quot;])
+</code></pre>
+<h2>Practice</h2>
+<p>Add a &quot;version&quot; key without breaking the old &quot;count&quot; consumer.</p>
+<h2>Corrected result / hint</h2>
+<p>Adding an optional JSON field keeps this read compatible.</p>
+<h2>Separate transport, protocol and application failure</h2>
+<p>An HTTP request may fail before reaching a server (DNS, connection, TLS), return an HTTP error (400, 404, 429, 503) or succeed at HTTP level but carry invalid JSON. Implement finite timeouts, validate returned structure and retry only transient failures where repeating the operation is safe.</p>
+<pre><code class="language-python">import json
+def read_items(response_text):
+    obj=json.loads(response_text)
+    if not isinstance(obj,dict) or not isinstance(obj.get(&quot;items&quot;),list):
+        raise ValueError(&quot;expected an object with items array&quot;)
+    return obj[&quot;items&quot;]
+assert read_items('{&quot;items&quot;:[]}')==[]
+</code></pre>
+<p>When using a real client, distinguish <code>401</code> credentials from <code>403</code> access policy, <code>404</code> missing resource, <code>429</code> backoff/rate limit. Never indiscriminately retry a money transfer or non-idempotent POST.</p>
+<p><strong>Exercise:</strong> supply malformed JSON, JSON with the wrong root type and JSON with missing items; add specific error handling for each without masking the failure.</p>
+<h2>Test the application contract without a network request</h2>
+<pre><code class="language-python">import json
+payload = json.loads('{&quot;items&quot;:[{&quot;id&quot;:1},{&quot;id&quot;:2}]}')
+assert [item[&quot;id&quot;] for item in payload[&quot;items&quot;]] == [1, 2]
+try:
+    json.loads('{&quot;items&quot;:[')
+except json.JSONDecodeError:
+    pass
+else:
+    raise AssertionError(&quot;invalid JSON accepted&quot;)
+</code></pre>
+<p>An HTTP 200 alone does not establish a valid schema. Treat malformed JSON, missing <code>items</code>, a 404 response and a 429 rate limit as <strong>different</strong> failure classes. A paginated client should stop when the documented next-page cursor is absent, rather than fetching page one forever. Keep credentials out of logs; simulate server errors with a stub response instead of hitting a live endpoint. Independent task: define bounded retry/backoff for transient 503 failures but not for a malformed local payload. Reference: https://www.rfc-editor.org/rfc/rfc9110</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

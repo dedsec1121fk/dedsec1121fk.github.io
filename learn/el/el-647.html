@@ -1,0 +1,145 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>systemverilog — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-647.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="systemverilog — συγκεντρωτικός οδηγός SystemVerilog Συνήθης χρήση: Περιγραφή υλικού. Προτεινόμενη επέκταση αρχείου: .sv . Εκτέλεση / περιβάλλον: Εκτέλεση με προσομοιωτή SystemVerilog…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="systemverilog — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="systemverilog — συγκεντρωτικός οδηγός SystemVerilog Συνήθης χρήση: Περιγραφή υλικού. Προτεινόμενη επέκταση αρχείου: .sv . Εκτέλεση / περιβάλλον: Εκτέλεση με προσομοιωτή SystemVerilog…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-647.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="systemverilog — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="systemverilog — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="systemverilog — συγκεντρωτικός οδηγός SystemVerilog Συνήθης χρήση: Περιγραφή υλικού. Προτεινόμενη επέκταση αρχείου: .sv . Εκτέλεση / περιβάλλον: Εκτέλεση με προσομοιωτή SystemVerilog…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="systemverilog — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>systemverilog — συγκεντρωτικός οδηγός — DedSec Project</h1><p>systemverilog — συγκεντρωτικός οδηγός SystemVerilog Συνήθης χρήση: Περιγραφή υλικού. Προτεινόμενη επέκταση αρχείου: .sv . Εκτέλεση / περιβάλλον: Εκτέλεση με προσομοιωτή SystemVerilog…</p><section><h2>SystemVerilog</h2>
+<p><strong>Συνήθης χρήση:</strong> Περιγραφή υλικού.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.sv</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> Εκτέλεση με προσομοιωτή SystemVerilog.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>module hello;
+  initial begin
+    string name = &quot;Ada&quot;;
+    $display(&quot;Hello, %s!&quot;, name);
+    $finish;
+  end
+endmodule
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Διαθέτει πλουσιότερους τύπους και δυνατότητες ελέγχου από τη Verilog.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Διαθέτει πλουσιότερους τύπους και δυνατότητες ελέγχου από τη Verilog. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h2>SystemVerilog — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Μικρή αφετηρία πηγαίου κώδικα</h3>
+<pre><code class="language-text">module hello;
+  initial begin
+    string name = &quot;Ada&quot;;
+    $display(&quot;Hello, %s!&quot;, name);
+    $finish;
+  end
+endmodule
+</code></pre>
+<p><strong>Περιβάλλον:</strong> Run with a SystemVerilog-capable simulator.. Κράτησε αντίγραφο του αρχικού κώδικα και σημείωσε έκδοση εργαλείου. Ξεχώρισε αν η εκτέλεση επιστρέφει τιμή, εμφανίζει κείμενο ή αλλάζει state. Για τις πρώτες δοκιμές χρησιμοποίησε απομονωμένο περιβάλλον, όχι πραγματικούς λογαριασμούς ή δεδομένα.</p>
+<h3>Ανάλυση του ιδιαίτερου μηχανισμού</h3>
+<p>Φτιάξε register με always_ff @(posedge clk), testbench με assertions και εξήγησε blocking έναντι nonblocking assignments σε sequential process.</p>
+<h3>Διάγνωση κρίσιμου ορίου</h3>
+<p>Μη θεωρείς ότι τα simulation delta cycles είναι πραγματικό hardware delay. Δες lint και simulator πριν από synthesis.</p>
+<h2>SystemVerilog — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Πρακτικές εργασίες</h3>
+<ol>
+<li>Περιέγραψε καταχωρητή με ενημέρωση στο μέτωπο ρολογιού σε προσομοιωτή.</li>
+<li>Φτιάξε testbench με αρχικές τιμές και ακολουθίες εισόδου.</li>
+<li>Έλεγξε παραδοχές χρονισμού και ξεχώρισε προσομοίωση από σύνθεση.</li>
+</ol>
+<h3>Ερωτήσεις ουσίας</h3>
+<ul>
+<li>Περιγράφει παράλληλο υλικό αντί διαδοχικών εντολών;</li>
+<li>Ποια εργαλεία εκτελούν ή ελέγχουν το παράδειγμα και σε ποια έκδοση;</li>
+<li>Ποιο είναι το μικρότερο ελεγμένο πρόγραμμα; Ποιες είναι οι παρενέργειες;</li>
+<li>Πώς γίνεται διάκριση μεταξύ σφάλματος σύνταξης, λογικής και περιβάλλοντος;</li>
+<li>Πώς δοκιμάζονται άκυρα δεδομένα χωρίς βλάβη σε αρχεία ή σύστημα;</li>
+</ul>
+<h2>VHDL</h2>
+<p><strong>Συνήθης χρήση:</strong> Περιγραφή υλικού.</p>
+<p><strong>Προτεινόμενη επέκταση αρχείου:</strong> <code>.vhd</code>.</p>
+<p><strong>Εκτέλεση / περιβάλλον:</strong> Μεταγλώττιση και προσομοίωση με GHDL ή ισοδύναμο.</p>
+<h3>Αρχικό παράδειγμα</h3>
+<pre><code>entity hello is end entity;
+architecture demo of hello is
+begin
+  process begin
+    report &quot;Hello, Ada!&quot;;
+    wait;
+  end process;
+end architecture;
+</code></pre>
+<h3>Πώς διαβάζεται</h3>
+<p>Τα σήματα και η παραλληλία είναι βασικά στην περιγραφή υλικού.</p>
+<h3>Συνηθισμένο λάθος</h3>
+<p>Τα σήματα και η παραλληλία είναι βασικά στην περιγραφή υλικού. Έλεγξε την έκδοση διερμηνευτή/μεταγλωττιστή και μην εκλαμβάνεις το δείγμα ως έτοιμη εφαρμογή παραγωγής.</p>
+<h2>VHDL — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Μικρή αφετηρία πηγαίου κώδικα</h3>
+<pre><code class="language-text">entity hello is end entity;
+architecture demo of hello is
+begin
+  process begin
+    report &quot;Hello, Ada!&quot;;
+    wait;
+  end process;
+end architecture;
+</code></pre>
+<p><strong>Περιβάλλον:</strong> Compile and simulate with GHDL or equivalent.. Κράτησε αντίγραφο του αρχικού κώδικα και σημείωσε έκδοση εργαλείου. Ξεχώρισε αν η εκτέλεση επιστρέφει τιμή, εμφανίζει κείμενο ή αλλάζει state. Για τις πρώτες δοκιμές χρησιμοποίησε απομονωμένο περιβάλλον, όχι πραγματικούς λογαριασμούς ή δεδομένα.</p>
+<h3>Ανάλυση του ιδιαίτερου μηχανισμού</h3>
+<p>Φτιάξε D flip-flop entity και testbench με rising_edge(clk). Έλεγξε reset, ενημέρωση σε clock edge και σταθερή έξοδο ενδιάμεσα.</p>
+<h3>Διάγνωση κρίσιμου ορίου</h3>
+<p>Τα signals ενημερώνονται μέσω προγραμματισμένων events, ενώ οι variables διαφορετικά. Simulation δεν αποδεικνύει synthesizeable design.</p>
+<h2>VHDL — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>RTL ενός σύγχρονου καταχωρητή</h3>
+<p>Η VHDL περιγράφει κυκλώματα παράλληλης συμπεριφοράς. Μέσα σε clocked process, το signal assignment &lt;= προγραμματίζει ενημέρωση του σήματος και όχι άμεση ανάθεση όπως σε μια τοπική μεταβλητή imperative προγράμματος.</p>
+<pre><code class="language-vhdl">library ieee;
+use ieee.std_logic_1164.all;
+
+entity reg8 is
+  port(clk, en : in std_logic;
+       d : in std_logic_vector(7 downto 0);
+       q : out std_logic_vector(7 downto 0));
+end entity;
+
+architecture rtl of reg8 is
+  signal stored : std_logic_vector(7 downto 0) := (others =&gt; '0');
+begin
+  process(clk)
+  begin
+    if rising_edge(clk) then
+      if en = '1' then
+        stored &lt;= d;
+      end if;
+    end if;
+  end process;
+  q &lt;= stored;
+end architecture;
+</code></pre>
+<p>Το q κρατά την προηγούμενη τιμή όσο en='0'. Μόνο σε rising edge με en='1' μπορεί να φορτωθεί το d. Η αρχική τιμή (others=&gt;'0') λειτουργεί ως δήλωση για την προσομοίωση, αλλά η εγγύηση εκκίνησης πραγματικού ASIC/FPGA εξαρτάται από την τεχνολογία και την υλοποίηση.</p>
+<h3>Testbench, όχι μόνο εμφάνιση κυματομορφής</h3>
+<p>Δημιούργησε ρολόι με περίοδο 10 ns και input d=0x35. Κράτα enable χαμηλό σε δύο μέτωπα, μετά ανέβασέ το για ένα. Έλεγξε q μετά από κατάλληλο simulation delta delay, όχι στο ίδιο delta ακριβώς με τη μεταβολή clk. Κατέγραψε assertions για «αμετάβλητο πριν» και «0x35 μετά» με συγκεκριμένες χρονικές στιγμές.</p>
+<h3>Τι θα ήταν latch</h3>
+<p>Γράψε ξεχωριστό combinational process χωρίς ανάθεση output σε κάθε κλάδο. Η διατήρηση παλιάς τιμής σε combinational λογική μπορεί να δημιουργήσει inferred latch. Μη συγχέεις αυτό με το edge-triggered storage του παραπάνω register. Σύγκρινε synthesis reports αν διαθέτεις εργαλεία αντί να βασίζεσαι μόνο σε οπτική ερμηνεία.</p>
+<h3>Κριτήρια επαλήθευσης</h3>
+<p>Παράδωσε source του testbench, κύματα για enable 0/1, GHDL ή άλλη simulator version και σαφή διάκριση simulation από synthesis. Τα setup/hold και η μετασταθερότητα δεν αποδεικνύονται από απλή RTL προσομοίωση. Δοκίμασε αλλαγή d ανάμεσα σε μέτωπα και εξήγησε γιατί το q πρέπει να μείνει ίδιο.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

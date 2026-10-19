@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Unit integration property and regression tests — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-72.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Testing — examples, boundaries and invariant sweeps Scenario and acceptance criteria A quantity normalizer must accept decimal digits representing 0 through 99 and reject absent, negative…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Unit integration property and regression tests — DedSec Project">
+<meta property="og:description" content="Testing — examples, boundaries and invariant sweeps Scenario and acceptance criteria A quantity normalizer must accept decimal digits representing 0 through 99 and reject absent, negative…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-72.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Unit integration property and regression tests — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Unit integration property and regression tests — DedSec Project">
+<meta name="twitter:description" content="Testing — examples, boundaries and invariant sweeps Scenario and acceptance criteria A quantity normalizer must accept decimal digits representing 0 through 99 and reject absent, negative…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Unit integration property and regression tests — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Unit integration property and regression tests — DedSec Project</h1><p>Testing — examples, boundaries and invariant sweeps Scenario and acceptance criteria A quantity normalizer must accept decimal digits representing 0 through 99 and reject absent, negative…</p><section><h1>Testing — examples, boundaries and invariant sweeps</h1>
+<h2>Scenario and acceptance criteria</h2>
+<p>A quantity normalizer must accept decimal digits representing 0 through 99 and reject absent, negative, fractional, textual or over-limit input. A test suite needs a normal example, both boundaries and invalid values, not a single happy path. Separately check the invariant for every valid integer in the small bounded domain.</p>
+<h2>Executable lab — Python 3 standard library</h2>
+<p>Save the example as <code>10_testing.py</code> and run it with Python 3. It uses synthetic data only and prints PASS when the assertions succeed. The same code appears in both translations.</p>
+<pre><code class="language-python">import unittest
+def normalize_quantity(text):
+    if not isinstance(text, str) or not text.isdecimal():
+        raise ValueError(&quot;decimal digits required&quot;)
+    n = int(text)
+    if n &gt; 99: raise ValueError(&quot;quantity too high&quot;)
+    return n
+class QuantityTests(unittest.TestCase):
+    def test_examples(self):
+        for text, expected in [(&quot;0&quot;, 0), (&quot;7&quot;, 7), (&quot;99&quot;, 99)]:
+            with self.subTest(text=text):
+                self.assertEqual(normalize_quantity(text), expected)
+    def test_boundaries(self):
+        for text in [&quot;-1&quot;, &quot;&quot;, &quot;100&quot;, &quot;1.2&quot;, &quot;abc&quot;, None]:
+            with self.subTest(text=text):
+                with self.assertRaises(ValueError):
+                    normalize_quantity(text)
+    def test_invariant(self):
+        for n in range(100):
+            self.assertEqual(normalize_quantity(str(n)), n)
+suite = unittest.defaultTestLoader.loadTestsFromTestCase(QuantityTests)
+outcome = unittest.TextTestRunner(verbosity=0).run(suite)
+assert outcome.wasSuccessful()
+print(&quot;PASS unit tests&quot;)
+</code></pre>
+<h2>Technical explanation</h2>
+<p>Unit tests run pure logic without files or network. subTest reports which fixture failed while allowing the remaining samples to execute. The invariant sweep checks 100 inputs, but it is not a mathematical proof of correctness beyond this bounded domain. Integration tests additionally verify parsing, storage and UI contracts; a browser smoke test cannot replace unit assertions, and a mocked network transport cannot prove live service availability.</p>
+<h2>Bounded practice</h2>
+<p>Introduce a regression bug by changing <code>n &gt; 99</code> to <code>n &gt; 100</code>; check whether the boundary test fails. Add non-ASCII decimal digits and decide whether Unicode digits are allowed or ASCII-only input is required. Create one integration test writing a report into TemporaryDirectory. Add a browser-level acceptance step that checks the visible error message when invalid input is submitted.</p>
+<h2>Diagnostics and completion evidence</h2>
+<p>If a test passes only when run alone, search for leaked global state and shared test fixtures. If an assertion is intermittent, record the seed, timing and environment, then minimize the failing input. Report actually executed test counts and runner version, never '100% tested' from passing fixtures.</p>
+<h2>Further engineering detail</h2>
+<p>Failure injection should assert the number of attempts as well as the final output. A temporary timeout can justify retrying an idempotent read, while a permanent validation error should stop immediately. Inject the failing dependency and clock so the test exercises the intended state transition without depending on real delays or public services.</p>
+<p><a href="../en/fieldnotes-en-50.html">Deterministic failure injection and recovery assertions</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

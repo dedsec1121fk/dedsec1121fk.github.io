@@ -1,0 +1,67 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Αυτόνομος έλεγχος παλινδρόμησης — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1058.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Συνταγή: έλεγχοι παλινδρόμησης με ιδιότητες αντί μόνο παραδείγματα Σενάριο και κριτήρια επιτυχίας Περιόρισε έναν ακέραιο στο κλειστό διάστημα από 0 έως 10. Μερικοί απλοί έλεγχοι καλύπτουν…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Αυτόνομος έλεγχος παλινδρόμησης — DedSec Project">
+<meta property="og:description" content="Συνταγή: έλεγχοι παλινδρόμησης με ιδιότητες αντί μόνο παραδείγματα Σενάριο και κριτήρια επιτυχίας Περιόρισε έναν ακέραιο στο κλειστό διάστημα από 0 έως 10. Μερικοί απλοί έλεγχοι καλύπτουν…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1058.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Αυτόνομος έλεγχος παλινδρόμησης — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Αυτόνομος έλεγχος παλινδρόμησης — DedSec Project">
+<meta name="twitter:description" content="Συνταγή: έλεγχοι παλινδρόμησης με ιδιότητες αντί μόνο παραδείγματα Σενάριο και κριτήρια επιτυχίας Περιόρισε έναν ακέραιο στο κλειστό διάστημα από 0 έως 10. Μερικοί απλοί έλεγχοι καλύπτουν…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Αυτόνομος έλεγχος παλινδρόμησης — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Αυτόνομος έλεγχος παλινδρόμησης — DedSec Project</h1><p>Συνταγή: έλεγχοι παλινδρόμησης με ιδιότητες αντί μόνο παραδείγματα Σενάριο και κριτήρια επιτυχίας Περιόρισε έναν ακέραιο στο κλειστό διάστημα από 0 έως 10. Μερικοί απλοί έλεγχοι καλύπτουν…</p><section><h1>Συνταγή: έλεγχοι παλινδρόμησης με ιδιότητες αντί μόνο παραδείγματα</h1>
+<h2>Σενάριο και κριτήρια επιτυχίας</h2>
+<p>Περιόρισε έναν ακέραιο στο κλειστό διάστημα από 0 έως 10. Μερικοί απλοί έλεγχοι καλύπτουν την αναμενόμενη συμπεριφορά, αλλά μπορείς επιπλέον να αποδείξεις με δοκιμές ότι κάθε αποτέλεσμα μένει μέσα στο όριο και ότι μεγαλύτερη είσοδος δεν δίνει μικρότερη έξοδο. Οι ιδιότητες εξετάζονται σε συγκεκριμένο πεπερασμένο εύρος τεχνητών τιμών.</p>
+<h2>Πλήρες εκτελέσιμο παράδειγμα</h2>
+<p>Αποθήκευσε ως <code>05_Unit_tests.py</code> και εκτέλεσε με Python 3 και την ενσωματωμένη βιβλιοθήκη. Δεν απαιτείται διαδίκτυο ή πρόσβαση σε πραγματικά αρχεία σου.</p>
+<pre><code class="language-python">import unittest
+def clamp(value, bottom=0, top=10):
+    if type(value) is not int or bottom &gt; top:
+        raise ValueError(&quot;invalid domain&quot;)
+    return min(top,max(bottom,value))
+class ClampTests(unittest.TestCase):
+    def test_examples(self):
+        self.assertEqual(clamp(-2),0)
+        self.assertEqual(clamp(5),5)
+        self.assertEqual(clamp(11),10)
+    def test_invariant(self):
+        for n in range(-100,101):
+            with self.subTest(n=n):
+                self.assertTrue(0&lt;=clamp(n)&lt;=10)
+    def test_monotonicity(self):
+        for n in range(-20,20):
+            self.assertLessEqual(clamp(n),clamp(n+1))
+    def test_invalid(self):
+        with self.assertRaises(ValueError):
+            clamp(True)
+suite=unittest.defaultTestLoader.loadTestsFromTestCase(ClampTests)
+result=unittest.TextTestRunner(verbosity=0).run(suite)
+assert result.wasSuccessful()
+print(&quot;PASS bounded clamp regression suite&quot;)
+</code></pre>
+<h2>Τεχνική εξήγηση</h2>
+<p>Η test_invariant ελέγχει 201 εισόδους και η subTest δείχνει ποια ακριβώς απέτυχε. Η μονοτονία συγκρίνει διαδοχικές τιμές χωρίς να χρειάζεται ξεχωριστό αναμενόμενο αποτέλεσμα για κάθε μία. Ο έλεγχος <code>type(value) is int</code> αποκλείει τη λογική τιμή True, παρότι η bool κληρονομεί από int. Η επιτυχία 201 περιπτώσεων δεν αποτελεί μαθηματική απόδειξη για κάθε αυθαίρετα μεγάλο ακέραιο ή για άλλα όρια.</p>
+<h2>Περιορισμένες ασκήσεις</h2>
+<p>Αντικατάστησε προσωρινά την έκφραση περιορισμού με λανθασμένη σειρά min και max και παρατήρησε ποιοι έλεγχοι αποτυγχάνουν. Πρόσθεσε διαφορετικά κάτω και άνω όρια και απόρριψη όταν το κάτω είναι μεγαλύτερο. Δοκίμασε δύο εκδόσεις Python και κατέγραψε πραγματικό περιβάλλον. Εισήγαγε σκόπιμο λάθος κατά μία μονάδα και κράτησε τη δοκιμή που το ανιχνεύει.</p>
+<h2>Διάγνωση και ασφάλεια</h2>
+<p>Αν ένας έλεγχος αποτυγχάνει μόνο όταν τρέχει όλη η σουίτα, αναζήτησε κοινή μεταβλητή κατάσταση ή εξάρτηση από τη σειρά. Αν ο runner εμφανίζει επιτυχία χωρίς να εξετάζονται κρίσιμα όρια, εξακολουθεί να υπάρχει κενό κάλυψης. Διατήρησε τα αρνητικά παραδείγματα μαζί με τον κώδικα μετά την επιδιόρθωση.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

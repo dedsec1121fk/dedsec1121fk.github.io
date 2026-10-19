@@ -1,0 +1,4 @@
+function greet
+  echo "Hello, $argv[1]!"
+end
+greet Ada

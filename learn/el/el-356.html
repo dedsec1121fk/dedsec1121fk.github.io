@@ -1,0 +1,88 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>cython — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-356.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="cython — συγκεντρωτικός οδηγός Cython Η Cython μεταγλωττίζει κώδικα τύπου Python σε extension. Κάνε profiling πρώτα: η μεταγλώττιση δεν εγγυάται επιτάχυνση. Χρειάζονται C compiler, Cython…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="cython — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="cython — συγκεντρωτικός οδηγός Cython Η Cython μεταγλωττίζει κώδικα τύπου Python σε extension. Κάνε profiling πρώτα: η μεταγλώττιση δεν εγγυάται επιτάχυνση. Χρειάζονται C compiler, Cython…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-356.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="cython — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="cython — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="cython — συγκεντρωτικός οδηγός Cython Η Cython μεταγλωττίζει κώδικα τύπου Python σε extension. Κάνε profiling πρώτα: η μεταγλώττιση δεν εγγυάται επιτάχυνση. Χρειάζονται C compiler, Cython…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="cython — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>cython — συγκεντρωτικός οδηγός — DedSec Project</h1><p>cython — συγκεντρωτικός οδηγός Cython Η Cython μεταγλωττίζει κώδικα τύπου Python σε extension. Κάνε profiling πρώτα: η μεταγλώττιση δεν εγγυάται επιτάχυνση. Χρειάζονται C compiler, Cython…</p><section><h2>Cython</h2>
+<p>Η Cython μεταγλωττίζει κώδικα τύπου Python σε extension. Κάνε profiling πρώτα: η μεταγλώττιση δεν εγγυάται επιτάχυνση. Χρειάζονται C compiler, Cython και setuptools.</p>
+<h3>Δύο αρχεία</h3>
+<p>Αποθήκευσε fastmath.pyx:</p>
+<pre><code class="language-cython"># cython: boundscheck=True, wraparound=False
+cpdef long sum_squares(long[:] values):
+    cdef Py_ssize_t i
+    cdef long total = 0
+    for i in range(values.shape[0]):
+        total += values[i] * values[i]
+    return total
+</code></pre>
+<p>Δημιούργησε setup.py:</p>
+<pre><code class="language-python">from setuptools import setup
+from Cython.Build import cythonize
+setup(ext_modules=cythonize(&quot;fastmath.pyx&quot;, language_level=3))
+</code></pre>
+<p>Σε προσωρινό φάκελο εκτέλεσε:</p>
+<pre><code class="language-sh">python setup.py build_ext --inplace
+python -c &quot;from array import array; from fastmath import sum_squares; assert sum_squares(array('l',[2,3,5])) == 38&quot;
+</code></pre>
+<p>Το παράδειγμα μεταγλωττίστηκε και ελέγχθηκε τοπικά.</p>
+<h3>Εξήγηση</h3>
+<p>Η cpdef δέχεται κλήσεις από Python. Το long[:] απαιτεί συμβατό buffer, όπως array('l'), όχι list. Ο C long έχει πεπερασμένο εύρος και μπορεί να υπερχειλίσει.</p>
+<h3>Ασκήσεις</h3>
+<p>Δοκίμασε κενό array: αποτέλεσμα μηδέν. Δώσε list και εξέτασε το σφάλμα μετατροπής. Σύγκρινε με Python αφού επιβεβαιώσεις ίσα αποτελέσματα, συμπεριλαμβάνοντας το κόστος δημιουργίας buffer.</p>
+<p>Τεκμηρίωση: https://cython.readthedocs.io/en/latest/src/userguide/memoryviews.html</p>
+<h2>Εργαστήριο εξάσκησης: Cython</h2>
+<h3>Μεταγλώττισε το πραγματικό αρχικό αρχείο</h3>
+<p>Το <code>00_starter.pyx</code> ορίζει <code>def square(int x): return x * x</code>. Αντέγραψέ το σε ξεχωριστό δοκιμαστικό φάκελο ως <code>cy_lab.pyx</code>, ώστε το όνομα της μονάδας να μπορεί να εισαχθεί κανονικά από Python. Χρειάζονται Python, Cython και μεταγλωττιστής C. Στον προσωρινό φάκελο δοκίμασε:</p>
+<pre><code class="language-sh">cythonize -i cy_lab.pyx
+python -c &quot;import cy_lab; assert cy_lab.square(-3) == 9; assert cy_lab.square(0) == 0; print(cy_lab.square(12))&quot;
+</code></pre>
+<p>Η αναμενόμενη εκτύπωση είναι <code>144</code>. Οι εντολές είναι <strong>προτεινόμενες δοκιμές, όχι επιβεβαιωμένη εκτέλεση</strong>. Κατέγραψε την έκδοση Python και Cython, τον μεταγλωττιστή και την πραγματική έξοδο. Μην εγκαθιστάς άγνωστα πακέτα από μη έμπιστους φακέλους.</p>
+<h3>Εντόπισε το όριο των τύπων</h3>
+<p>Η παράμετρος <code>int x</code> μετατρέπει δεδομένα του καλούντος Python σε αριθμό τύπου C. Δοκίμασε χωριστά <code>12</code>, <code>-3</code>, <code>0</code>, <code>3.5</code> και έναν πολύ μεγάλο ακέραιο. Διαχώρισε το σφάλμα μετατροπής από τον υπολογισμό. Το <code>int</code> της C έχει περιορισμένο εύρος ανά πλατφόρμα· επιτυχία σε μικρές τιμές δεν αποδεικνύει ασφαλή συμπεριφορά σε υπερχείλιση.</p>
+<h3>Σύγκριση με έλεγχο αναφοράς</h3>
+<p>Φτιάξε σε απλό αρχείο Python τη <code>def py_square(x): return x*x</code>. Επιβεβαίωσε ότι <code>py_square(46341) == 2147488281</code>. Μη θεωρήσεις ότι η μεταγλωττισμένη συνάρτηση έχει την ίδια συμπεριφορά για τιμές έξω από το εύρος του τύπου C. Άλλαξε σκόπιμα τον τύπο της παραμέτρου, ξανακάνε μεταγλώττιση και χρησιμοποίησε ακριβώς τα ίδια δεδομένα εισόδου. Έτσι συγκρίνεις δύο υλοποιήσεις χωρίς να μπερδεύεις την ταχύτητα με την ορθότητα.</p>
+<h3>Αστοχία και ανεξάρτητη άσκηση</h3>
+<p>Σε αποτυχία μεταγλώττισης έλεγξε χωριστά αν λείπει το Cython, αν απουσιάζει μεταγλωττιστής C ή αν υπάρχει συντακτικό λάθος στο <code>.pyx</code>. Κράτησε την πρώτη πλήρη διάγνωση και την εντολή αναπαραγωγής. Πρόσθεσε δική σου συνάρτηση για άθροισμα τετραγώνων μιας μικρής λίστας: έλεγξε κενή λίστα, μηδέν, αρνητικούς και ακατάλληλους τύπους. Εξήγησε σε ποιο σημείο εμφανίζεται κάθε σφάλμα. Τεκμηρίωση: https://cython.readthedocs.io/</p>
+<h2>Cython — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Στάδιο 1: κατανόηση εκτέλεσης</h3>
+<p>Γράψε .pyx function που αθροίζει memoryview doubles με typed loop index και accumulator. Κάνε build με μικρό setup/pyproject και σύγκρινε με Python sum().</p>
+<h3>Στάδιο 2: απόδειξη με ελεγχόμενες δοκιμές</h3>
+<p>Έλεγξε type και contiguity του memoryview. Μέτρησε χρόνο σε πολλά μεγέθη και μην συμπεριλάβεις compilation/import. Τα typed loops βοηθούν, αλλά Python object operations μπορεί να κυριαρχούν.</p>
+<h3>Στάδιο 3: μικρό ολοκληρωμένο έργο</h3>
+<p>Δοκίμασε out-of-bounds μόνο με ενεργό bounds checking και κράτησε diagnostic. Η απενεργοποίηση boundscheck για ταχύτητα απαιτεί αποδεδειγμένα invariants.</p>
+<h3>Επαναλήψιμο εργαστήριο Cython με typed memoryview</h3>
+<pre><code class="language-cython"># fastsum.pyx
+def total(int[:] values):
+    cdef Py_ssize_t i
+    cdef long accumulator = 0
+    for i in range(values.shape[0]):
+        accumulator += values[i]
+    return accumulator
+</code></pre>
+<p>Φτιάξε Python array.array('i', [1, -2, 5]) και βεβαιώσου ότι η total επιστρέφει τέσσερα. Σύγκρινε με τη Python sum() στην ίδια ακριβώς είσοδο, με πολλές μετρήσεις αφού προθερμάνεις τις δύο υλοποιήσεις. Μια απλή Python list δεν ικανοποιεί το συμβόλαιο buffer του typed memoryview. Κατέγραψε εκδόσεις Python, Cython και C compiler. Έλεγξε κενό array και περιέγραψε overflow όταν το άθροισμα υπερβεί το εύρος του C long. Η ταχύτητα δεν δικαιολογεί λανθασμένο αποτέλεσμα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,73 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Processes, threads, races and locks — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/curated-en-2000.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Processes, threads, races and locks Processes and threads Track: Systems Core explanation Processes generally have independent memory spaces, whereas threads within a process share memory…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Processes, threads, races and locks — DedSec Project">
+<meta property="og:description" content="Processes, threads, races and locks Processes and threads Track: Systems Core explanation Processes generally have independent memory spaces, whereas threads within a process share memory…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/curated-en-2000.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Processes, threads, races and locks — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Processes, threads, races and locks — DedSec Project">
+<meta name="twitter:description" content="Processes, threads, races and locks Processes and threads Track: Systems Core explanation Processes generally have independent memory spaces, whereas threads within a process share memory…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Processes, threads, races and locks — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Processes, threads, races and locks — DedSec Project</h1><p>Processes, threads, races and locks Processes and threads Track: Systems Core explanation Processes generally have independent memory spaces, whereas threads within a process share memory…</p><section><h2>Processes and threads</h2>
+<p><strong>Track:</strong> Systems</p>
+<h3>Core explanation</h3>
+<p>Processes generally have independent memory spaces, whereas threads within a process share memory. Concurrency helps responsiveness but introduces coordination and lifecycle problems.</p>
+<h3>Hands-on application</h3>
+<p>Contrast one worker process with two threads modifying shared counters.</p>
+<h3>How the system actually behaves</h3>
+<p>A process has its own address space and operating-system resource table; threads within one process share memory but have independent execution stacks. Threads help coordinate blocking I/O, while CPU parallelism depends on language runtime and platform. Python's common CPython GIL does not make compound state updates a safe protocol.</p>
+<h3>Runnable controlled experiment</h3>
+<pre><code class="language-python">import threading
+seen=[]
+def record(x): seen.append(x)
+threads=[threading.Thread(target=record,args=(i,)) for i in range(3)]
+for t in threads: t.start()
+for t in threads: t.join()
+assert sorted(seen)==[0,1,2]
+</code></pre>
+<h3>Failure analysis and extension</h3>
+<p>Replace list appends with a compound read/modify/write state operation, then enforce the invariant with a Lock. Compare thread scheduling with a multiprocessing.Queue where data must cross a process boundary.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/threading.html</p>
+<h2>Race conditions and locks</h2>
+<p><strong>Track:</strong> Systems</p>
+<h3>Core explanation</h3>
+<p>A race occurs when correctness depends on unpredictable event ordering. Prefer message passing or immutability where possible; locks require a documented acquisition order to avoid deadlocks.</p>
+<h3>Hands-on application</h3>
+<p>Explain why read-increment-write is not automatically atomic.</p>
+<h3>How the system actually behaves</h3>
+<p>A race condition means correctness depends on unpredictable interleaving. Protect an invariant with one lock spanning the entire read-modify-write critical section, not separate locks around reads and writes. A mutex makes an operation exclusive but excessive locking can cause contention or deadlock.</p>
+<h3>Runnable controlled experiment</h3>
+<pre><code class="language-python">import threading
+counter=[0]; lock=threading.Lock()
+def increment():
+    for _ in range(1000):
+        with lock: counter[0]+=1
+threads=[threading.Thread(target=increment) for _ in range(2)]
+for t in threads:t.start()
+for t in threads:t.join()
+assert counter[0]==2000
+</code></pre>
+<h3>Failure analysis and extension</h3>
+<p>Introduce a second lock and describe a lock-order inversion that would deadlock. Repair by imposing a global acquisition order; avoid testing deadlocks without a timeout and disposable process.</p>
+<p><strong>Reference:</strong> https://docs.python.org/3/library/threading.html#lock-objects</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

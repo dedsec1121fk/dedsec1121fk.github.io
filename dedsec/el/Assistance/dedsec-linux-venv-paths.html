@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html data-deployment="main" data-repository="dedsec1121fk/dedsec1121fk.github.io" lang="el">
+<head><script src="../../../assets/boot.js?v=ddc8a5999f0f"></script>
+<link href="../../Favicons/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>DedSec Linux venv &amp; Paths - DedSec Project</title>
+<meta content="#07060d" name="theme-color"/>
+<meta content="dark light" name="color-scheme"/>
+
+<meta content="Fix Broken DedSec Install, Termux, Android Termux, no root Android, DedSec Project, Termux guide, Termux help" name="keywords"/>
+<link href="../../Favicons/favicon.ico" rel="icon" sizes="any"/>
+<link href="../../Favicons/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../../Favicons/favicon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="../../Favicons/favicon-16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="../../Favicons/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="../../site.webmanifest" rel="manifest"/>
+<link href="../../Assets/vendor/fontawesome/css/all.min.css?v=74005d7c17d4" rel="stylesheet"/>
+<link href="../../style.css?v=0f1fd6376938" rel="stylesheet"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta content="DedSec Project" name="author"/>
+
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
+
+<meta content="nosniff" http-equiv="X-Content-Type-Options"/>
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ded-sec.space/#organization",
+      "name": "DedSec Project",
+      "url": "https://ded-sec.space/",
+      "logo": "https://ded-sec.space/Assets/Images/Logos/Black%20Purple%20Butterfly%20Logo.jpeg",
+      "sameAs": [
+        "https://github.com/dedsec1121fk/DedSec",
+        "https://github.com/dedsec1121fk",
+        "https://t.me/dedsecproject"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ded-sec.space/#website",
+      "name": "DedSec Project",
+      "url": "https://ded-sec.space/",
+      "publisher": {
+        "@id": "https://ded-sec.space/#organization"
+      }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html#breadcrumb",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "DedSec Project",
+          "item": "https://ded-sec.space/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Βοήθεια",
+          "item": "https://ded-sec.space/el/Pages/assistance.html"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Επιδιόρθωση χαλασμένης εγκατάστασης του DedSec",
+          "item": "https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html"
+        }
+      ]
+    },
+    {
+      "@type": "TechArticle",
+      "@id": "https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html#article",
+      "url": "https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html",
+      "headline": "DedSec Linux venv & Paths",
+      "description": "Κατανόησε το Linux environment και τα file locations που χρησιμοποιεί το DedSec ώστε να κάνεις troubleshooting χωρίς λάθος αλλαγές. Περιλαμβάνει commands, paths κ.",
+      "inLanguage": "el",
+      "dateModified": "2026-07-24",
+      "author": {
+        "@id": "https://ded-sec.space/#organization"
+      },
+      "publisher": {
+        "@id": "https://ded-sec.space/#organization"
+      },
+      "isPartOf": {
+        "@id": "https://ded-sec.space/#website"
+      },
+      "breadcrumb": {
+        "@id": "https://ded-sec.space/el/Assistance/fix-dedsec-broken-install.html#breadcrumb"
+      },
+      "articleSection": "DedSec Project",
+      "keywords": "Broken, DedSec, Install, Termux, Android, DedSec Project",
+      "about": [
+        {
+          "@type": "Thing",
+          "name": "Broken"
+        },
+        {
+          "@type": "Thing",
+          "name": "DedSec"
+        },
+        {
+          "@type": "Thing",
+          "name": "Install"
+        }
+      ]
+    }
+  ]
+}</script>
+<link href="../../Assets/assistance.css?v=3f385ebaab55" rel="stylesheet"/><link href="../../Assets/premium-theme.css?v=b3af24f65055" rel="stylesheet"/><link rel="stylesheet" href="../../Assets/vendor/fontawesome/css/all.min.css?v=74005d7c17d4"><link rel="stylesheet" href="../../Assets/merged-retro.css?v=c8d5320d6d67"><script defer src="../../Assets/merged-retro.js?v=f3fae97262c2"></script>
+<link rel="stylesheet" href="../../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/el/Assistance/dedsec-linux-venv-paths.html">
+<meta name="description" content="Κατανόησε το Linux environment και τα file locations που χρησιμοποιεί το DedSec ώστε να κάνεις troubleshooting χωρίς λάθος αλλαγές. Περιλαμβάνει commands, paths κ.">
+<meta name="robots" content="noindex,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="DedSec Linux venv &amp; Paths - DedSec Project">
+<meta property="og:description" content="Κατανόησε το Linux environment και τα file locations που χρησιμοποιεί το DedSec ώστε να κάνεις troubleshooting χωρίς λάθος αλλαγές. Περιλαμβάνει commands, paths κ.">
+<meta property="og:url" content="https://ded-sec.space/el/Assistance/dedsec-linux-venv-paths.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="DedSec Linux venv &amp; Paths - DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="DedSec Linux venv &amp; Paths - DedSec Project">
+<meta name="twitter:description" content="Κατανόησε το Linux environment και τα file locations που χρησιμοποιεί το DedSec ώστε να κάνεις troubleshooting χωρίς λάθος αλλαγές. Περιλαμβάνει commands, paths κ.">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="DedSec Linux venv &amp; Paths - DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head>
+<body class="dark-theme"><header class="merged-topbar"><a class="merged-brand" href="../../../index.html"><img src="../../Assets/Images/Logos/White%20Purple%20Butterfly%20Logo.jpeg" alt=""><span>DedSec Project</span></a><div class="merged-actions"><a id="merged-search" class="merged-search" href="../../../index.html#library" aria-label="Search the knowledge archive" title="Search the knowledge archive"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"><circle cx="10.4" cy="10.4" r="6.4"/><path d="m15.3 15.3 6 6"/></svg></a><button type="button" id="merged-theme" class="merged-action" aria-label="Change theme"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.7 16.1A8.9 8.9 0 0 1 7.9 3.3a9.2 9.2 0 1 0 12.8 12.8Z"/></svg></button><button type="button" id="merged-lang" class="merged-action" aria-label="Change language">ΕΛ</button><a id="merged-home" class="merged-home" href="../../../index.html" aria-label="Home" title="Home"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 10.2 9.5-7.6 9.5 7.6V21h-6.6v-7H9.1v7H2.5z"/></svg></a></div></header><a class="assist-skip-link" data-en="Skip to Assistance content" data-gr="Μετάβαση στο περιεχόμενο βοήθειας" href="#main-content">Μετάβαση στο περιεχόμενο βοήθειας</a>
+
+<main class="page-content assistance-page assistance-article-page" id="main-content" tabindex="-1">
+<div class="page-header"><h1>DedSec Linux venv &amp; Paths</h1><p>Κατανόησε το Linux environment και τα file locations που χρησιμοποιεί το DedSec ώστε να κάνεις troubleshooting χωρίς λάθος αλλαγές.</p></div>
+<article class="content-section assistance-article assistance-article-v3" data-category="linux" data-guide="dedsec-linux-venv-paths"><nav aria-label="Breadcrumb" class="assistance-breadcrumb"><a href="../../el/Pages/assistance.html">Βοήθεια</a><span aria-hidden="true">›</span><span aria-current="page">DedSec Linux venv &amp; Paths</span></nav><section class="assistance-guide-section assistance-guide-summary"><h2>Γρήγορη Περίληψη</h2><p>Κατανόησε το Linux environment και τα file locations που χρησιμοποιεί το DedSec ώστε να κάνεις troubleshooting χωρίς λάθος αλλαγές.</p></section><section class="assistance-guide-section" id="section-1"><h2>Project Environment</h2><p>Το desktop Linux χρησιμοποιεί τοπικό <code>.venv</code> μέσα στο DedSec repository. Τρέξε <code>./Run.sh</code> αντί να αναμειγνύεις global Python packages με το project.</p></section><section class="assistance-guide-section" id="section-2"><h2>Έλεγχος Environment</h2><pre><code>cd ~/DedSec
+pwd
+./.venv/bin/python --version
+printf "%s\n" "$PATH"</code></pre></section><section class="assistance-guide-section" id="section-3"><h2>Compatibility Layer</h2><p>Το <code>Compat/bin</code> παρέχει desktop-safe replacements ή shims για commands που περιμένουν portable scripts. Το <code>Run.sh</code> το προσθέτει αυτόματα.</p></section><section class="assistance-guide-section" id="section-4"><h2>Downloads</h2><p>Τα portable εργαλεία συνήθως αποθηκεύουν στο <code>~/Downloads/</code> σε Ubuntu, Kali Linux και Linux Mint. Τα ακριβή paths ανά εργαλείο βρίσκονται στη σελίδα Μάθε Για Τα Εργαλεία.</p></section><section class="assistance-guide-section" id="section-5"><h2>Shell Files</h2><p>Ubuntu και Linux Mint συνήθως χρησιμοποιούν <code>~/.bashrc</code>. Το Kali μπορεί να χρησιμοποιεί <code>~/.zshrc</code>. Το Termux χρησιμοποιεί <code>$PREFIX/etc/bash.bashrc</code>.</p></section><section class="assistance-guide-section" id="next-steps"><h2>Επόμενα Βήματα</h2><p>Για platform-specific save paths, δες τη σελίδα Μάθε Για Τα Εργαλεία. Για γενικά προβλήματα, επέστρεψε στη Βοήθεια.</p><div class="assistance-related-grid"><a class="starter-path-btn" href="../../el/Pages/learn-about-the-tools.html">Μάθε Για Τα Εργαλεία</a><a class="starter-path-btn" href="../../el/Pages/assistance.html">Όλοι Οι Οδηγοί Βοήθειας</a></div></section></article>
+
+</main>
+
+<footer class="merged-footer"><div class="footer-buttons"><a href="https://github.com/dedsec1121fk/DedSec" data-en="Main DedSec Project Repository" data-gr="Κύριο Repository DedSec Project">Main DedSec Project Repository</a></div><div class="footer-buttons"><a href="https://www.google.com/preferences/source?q=ded-sec.space" data-en="Set DedSec Project as Preferred Google Source" data-gr="Επιλογή DedSec Project ως προτιμώμενης πηγής Google">Set DedSec Project as Preferred Google Source</a></div><p data-en="If the main website is unavailable, use our backups." data-gr="Αν η κύρια ιστοσελίδα δεν λειτουργεί, χρησιμοποίησε τις εφεδρικές.">Αν η κύρια ιστοσελίδα δεν λειτουργεί, χρησιμοποίησε τις εφεδρικές.</p><div class="footer-buttons"><a href="https://ded-sec.online" data-en="Backup Website" data-gr="Εφεδρική Ιστοσελίδα">Backup Website</a><a href="https://github.com/sal-scar/DedSec" data-en="Backup Repository" data-gr="Εφεδρικό Repository">Backup Repository</a></div><p>© 2024–2026 DedSec Project. All Rights Reserved.</p><p>Made by dedsec1121fk.</p></footer><script src="../../../assets/page-controls.js?v=3294bd926d29"></script></body>
+</html>

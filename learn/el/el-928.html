@@ -1,0 +1,84 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Χρονικά όρια και επαναπροσπάθειες δικτύου — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-928.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Αποτυχίες δικτύου — περιορισμένες επαναπροσπάθειες και αποφυγή διπλών εγγραφών Τι σημαίνει πραγματικά ένα χρονικό όριο Όταν τελειώσει ο χρόνος αναμονής, ο πελάτης γνωρίζει μόνο ότι δεν…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Χρονικά όρια και επαναπροσπάθειες δικτύου — DedSec Project">
+<meta property="og:description" content="Αποτυχίες δικτύου — περιορισμένες επαναπροσπάθειες και αποφυγή διπλών εγγραφών Τι σημαίνει πραγματικά ένα χρονικό όριο Όταν τελειώσει ο χρόνος αναμονής, ο πελάτης γνωρίζει μόνο ότι δεν…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-928.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Χρονικά όρια και επαναπροσπάθειες δικτύου — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Χρονικά όρια και επαναπροσπάθειες δικτύου — DedSec Project">
+<meta name="twitter:description" content="Αποτυχίες δικτύου — περιορισμένες επαναπροσπάθειες και αποφυγή διπλών εγγραφών Τι σημαίνει πραγματικά ένα χρονικό όριο Όταν τελειώσει ο χρόνος αναμονής, ο πελάτης γνωρίζει μόνο ότι δεν…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Χρονικά όρια και επαναπροσπάθειες δικτύου — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Χρονικά όρια και επαναπροσπάθειες δικτύου — DedSec Project</h1><p>Αποτυχίες δικτύου — περιορισμένες επαναπροσπάθειες και αποφυγή διπλών εγγραφών Τι σημαίνει πραγματικά ένα χρονικό όριο Όταν τελειώσει ο χρόνος αναμονής, ο πελάτης γνωρίζει μόνο ότι δεν…</p><section><h1>Αποτυχίες δικτύου — περιορισμένες επαναπροσπάθειες και αποφυγή διπλών εγγραφών</h1>
+<h2>Τι σημαίνει πραγματικά ένα χρονικό όριο</h2>
+<p>Όταν τελειώσει ο χρόνος αναμονής, ο πελάτης γνωρίζει μόνο ότι δεν παρέλαβε απάντηση. Ο διακομιστής μπορεί να έχει ήδη ολοκληρώσει την ενέργεια. Αν χαθεί η απάντηση μετά από πληρωμή ή καταχώριση, η επόμενη προσπάθεια δεν πρέπει να δημιουργήσει δεύτερη πράξη. Ξεχώρισε μόνιμα σφάλματα, όπως 400 και 401, από ενδεχομένως προσωρινά 429 και 503. Σε κανονικό πρόγραμμα χρειάζονται επίσης όρια χρόνου σύνδεσης και ανάγνωσης, μέγιστο πλήθος προσπαθειών, συνολική προθεσμία και τήρηση του Retry-After όταν είναι έγκυρο.</p>
+<h2>Εκτελέσιμο εργαστήριο (Python 3)</h2>
+<p>Αποθήκευσε ως retry_lab.py και εκτέλεσε python3 retry_lab.py. Όλα γίνονται στη μνήμη: δεν αποστέλλονται HTTP αιτήματα και δεν πραγματοποιούνται συναλλαγές. Η πρώτη απάντηση χάνεται σκόπιμα αφού έχει αποθηκευτεί η ενέργεια.</p>
+<pre><code class="language-python">def plan(statuses, max_attempts=3):
+    visits = []
+    for status in statuses[:max_attempts]:
+        visits.append(status)
+        if status == 200:
+            return (&quot;OK&quot;, visits)
+        if status not in (429, 503):
+            raise ValueError(&quot;permanent HTTP failure&quot;)
+    raise TimeoutError(&quot;attempt budget exhausted&quot;)
+
+assert plan([503, 429, 200]) == (&quot;OK&quot;, [503, 429, 200])
+for bad in ([400, 200], [503, 503, 503]):
+    try:
+        plan(bad)
+    except (ValueError, TimeoutError):
+        pass
+    else:
+        raise AssertionError(&quot;bad retry accepted&quot;)
+
+ledger = {}
+def post(key, fail_response=False):
+    if not key:
+        raise ValueError(&quot;idempotency key required&quot;)
+    if key not in ledger:
+        ledger[key] = len(ledger) + 1
+    if fail_response:
+        raise TimeoutError(&quot;reply lost after commit&quot;)
+    return ledger[key]
+
+try:
+    post(&quot;order-7&quot;, True)
+except TimeoutError:
+    pass
+else:
+    raise AssertionError(&quot;missing simulated timeout&quot;)
+assert post(&quot;order-7&quot;) == 1 and len(ledger) == 1
+print(&quot;PASS: bounded retries and no double commit&quot;)
+</code></pre>
+<h2>Η ακεραιότητα δεν επιτυγχάνεται με τυφλή επανάληψη</h2>
+<p>Το παράδειγμα σταματά σε μόνιμο σφάλμα και αποτυγχάνει όταν εξαντληθούν οι προσπάθειες. Το σταθερό κλειδί order-7 συνδέει δύο προσπάθειες με την ίδια λογική πράξη. Σε πραγματικό διακομιστή το κλειδί και το αποτέλεσμα πρέπει να αποθηκεύονται με ατομικό τρόπο μαζί με την αλλαγή δεδομένων. Ένα λεξικό στη μνήμη δεν επιβιώνει από επανεκκίνηση. Αν τα κλειδιά λήγουν ύστερα από χρονικό διάστημα, η εφαρμογή πρέπει να περιορίζει τις επαναπροσπάθειες μέσα σε αυτό το παράθυρο.</p>
+<h2>Ασκήσεις και διάγνωση</h2>
+<ol>
+<li>Βάλε απαντήσεις [503, 400, 200]. Η δεύτερη πρέπει να διακόψει την προσπάθεια και η τρίτη να μη χρησιμοποιηθεί.</li>
+<li>Προσομοίωσε δύο εγγραφές χωρίς σταθερό κλειδί, κατάγραψε το διπλό αποτέλεσμα και έπειτα αποκατάστησε την αποφυγή διπλοτύπων.</li>
+<li>Υπολόγισε εκθετικά αυξανόμενες καθυστερήσεις με μέγιστο όριο και ψευδοτυχαία διακύμανση σταθερής αρχικής τιμής. Μην χρησιμοποιείς πραγματική αναμονή μέσα στις δοκιμές.</li>
+<li>Σχεδίασε συνολική προθεσμία δύο δευτερολέπτων και ξεχωριστό χρονικό όριο ανά αίτημα. Δείξε πότε απομένει χρόνος για άλλη προσπάθεια.</li>
+</ol>
+<p><strong>Παραδοτέα:</strong> PASS, πίνακας χειρισμού 429/503/400, ίχνος χαμένης απάντησης και εξήγηση γιατί η μόνιμη αποθήκευση του κλειδιού είναι ευθύνη του διακομιστή.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

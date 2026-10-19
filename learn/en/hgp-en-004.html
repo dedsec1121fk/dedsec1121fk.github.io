@@ -1,0 +1,137 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Service Enumeration and Protocol-Aware Validation — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-004.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Service Enumeration and Protocol-Aware Validation Enumeration turns a basic “service exists” observation into a structured understanding of protocol behavior, identities, configuration, and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Service Enumeration and Protocol-Aware Validation — DedSec Project">
+<meta property="og:description" content="Service Enumeration and Protocol-Aware Validation Enumeration turns a basic “service exists” observation into a structured understanding of protocol behavior, identities, configuration, and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-004.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Service Enumeration and Protocol-Aware Validation — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Service Enumeration and Protocol-Aware Validation — DedSec Project">
+<meta name="twitter:description" content="Service Enumeration and Protocol-Aware Validation Enumeration turns a basic “service exists” observation into a structured understanding of protocol behavior, identities, configuration, and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Service Enumeration and Protocol-Aware Validation — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Service Enumeration and Protocol-Aware Validation — DedSec Project</h1><p>Service Enumeration and Protocol-Aware Validation Enumeration turns a basic “service exists” observation into a structured understanding of protocol behavior, identities, configuration, and…</p><section><p>Enumeration turns a basic “service exists” observation into a structured understanding of protocol behavior, identities, configuration, and exposed metadata. The objective is not to extract everything possible; it is to collect the minimum evidence needed to evaluate an authorized security question.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> Enumerate only services and accounts included in scope. Use lab accounts, synthetic data, and read-only requests where possible. Do not attempt password guessing, user harvesting, or sensitive-data extraction unless a controlled test explicitly authorizes it.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>distinguish scanning from enumeration;</li>
+<li>understand protocol-aware evidence collection;</li>
+<li>enumerate HTTP, SSH, DNS, SMB, SNMP, and directory services safely;</li>
+<li>recognize authentication and authorization boundaries;</li>
+<li>avoid false conclusions caused by banners, anonymous access, or stale metadata;</li>
+<li>document evidence in a reproducible way.</li>
+</ul>
+<h2>Scanning versus enumeration</h2>
+<p>Scanning normally asks whether a host or service is reachable. Enumeration asks what the service exposes and how it behaves. For example, a scan might show TCP/443 open; enumeration might establish that a reverse proxy presents a specific certificate, routes to an application, requires an identity provider, and exposes certain security headers.</p>
+<h2>HTTP and HTTPS</h2>
+<p>Start with normal application behavior:</p>
+<pre><code class="language-bash">curl -I http://127.0.0.1:8000/
+</code></pre>
+<p>Record response status, redirect behavior, headers, and whether the service is supposed to be available from your location. For TLS, also record certificate subject/issuer and hostname validation. Do not infer the backend technology solely from a <code>Server</code> header.</p>
+<h2>SSH</h2>
+<p>SSH enumeration should focus on configuration and trust boundaries, not credential attacks. Useful questions include:</p>
+<ul>
+<li>Is SSH supposed to be reachable from this segment?</li>
+<li>Which protocol and host-key algorithms are enabled?</li>
+<li>Is password authentication allowed or are keys required?</li>
+<li>Are privileged accounts allowed to log in directly?</li>
+<li>Are access decisions logged centrally?</li>
+</ul>
+<p>If you administer the lab host, validate configuration from the server as well as from the network.</p>
+<h2>DNS</h2>
+<p>DNS enumeration can reveal address records, mail routing, name-server relationships, and security records. Zone transfers should be tested only against your own authoritative lab server or when explicitly authorized; an unrestricted transfer on a production domain may expose an internal naming inventory.</p>
+<h2>SMB and file-sharing services</h2>
+<p>For a Windows/Samba lab, validate shares using an account created for the assessment. Check whether guest/anonymous access exists, which permissions are granted, and whether write access is appropriate. The security question is authorization: can this identity perform an action it should not be able to perform?</p>
+<p>Never treat a readable share as automatically vulnerable; it may be intentionally public. Record the expected access policy.</p>
+<h2>SNMP</h2>
+<p>SNMP can expose operational and inventory data. Modern environments should prefer authenticated and encrypted configurations where supported. During an assessment, do not brute-force community strings. Use credentials supplied for the lab or inspect configuration on a device you administer.</p>
+<h2>LDAP and directory services</h2>
+<p>Directory enumeration must distinguish public directory metadata from authenticated data. Record bind type, identity, search base, returned attributes, and whether sensitive attributes are unnecessarily exposed. For Active Directory depth, continue with Modules 32 and 72.</p>
+<h2>Service fingerprints are hypotheses</h2>
+<p>Banners, response headers, protocol negotiation, and error messages can suggest a product or version, but backported fixes and intermediary devices complicate interpretation. Confirm high-impact version claims with asset inventory, package information, authenticated management data, or owner-provided evidence.</p>
+<h2>Authorization matrix</h2>
+<p>A simple way to test access control is to build a matrix:</p>
+<table>
+<thead>
+<tr>
+  <th>Identity</th>
+  <th>Resource</th>
+  <th style="text-align:right">Read</th>
+  <th style="text-align:right">Write</th>
+  <th style="text-align:right">Admin</th>
+  <th>Expected?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>anonymous</td>
+  <td>public share</td>
+  <td style="text-align:right">yes</td>
+  <td style="text-align:right">no</td>
+  <td style="text-align:right">no</td>
+  <td>yes</td>
+</tr>
+<tr>
+  <td>test-user</td>
+  <td>team share</td>
+  <td style="text-align:right">yes</td>
+  <td style="text-align:right">no</td>
+  <td style="text-align:right">no</td>
+  <td>yes</td>
+</tr>
+<tr>
+  <td>test-admin</td>
+  <td>team share</td>
+  <td style="text-align:right">yes</td>
+  <td style="text-align:right">yes</td>
+  <td style="text-align:right">yes</td>
+  <td>yes</td>
+</tr>
+</tbody>
+</table>
+<p>Test only the rows required to prove the policy. Avoid collecting unrelated data.</p>
+<h2>Common mistakes</h2>
+<ul>
+<li>Treating anonymous access as a vulnerability without checking policy.</li>
+<li>Guessing credentials instead of using approved test accounts.</li>
+<li>Trusting banners as authoritative version evidence.</li>
+<li>Enumerating more data than the objective requires.</li>
+<li>Forgetting to record the identity used for each result.</li>
+<li>Ignoring service-side logs and authorization decisions.</li>
+</ul>
+<h2>Safe lab</h2>
+<p>On a VM or container you own, expose one HTTP service and one authenticated service. Create two test identities with different permissions. Build an authorization matrix, make only the requests required to validate it, and record server-side evidence for allowed and denied actions.</p>
+<h2>Knowledge check</h2>
+<ol>
+<li>What distinguishes enumeration from scanning?</li>
+<li>Why must an enumeration result record the identity used?</li>
+<li>Why is banner-based versioning insufficient for high-confidence findings?</li>
+<li>How does an authorization matrix reduce unnecessary testing?</li>
+<li>What makes an SNMP or SMB observation a security finding rather than merely information?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. Focus on evidence, identity context, and expected policy rather than tool output volume.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>05, 13, 32, 33</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

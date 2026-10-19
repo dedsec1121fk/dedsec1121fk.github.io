@@ -1,0 +1,58 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>CS0246 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-1003.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="CS0246 — Δεν αναγνωρίζεται τύπος ή namespace Περιβάλλον: μεταγλώττιση C και επίλυση τύπων/χώρων ονομάτων. Τι λείπει πραγματικά Το CS0246 αφορά τύπο ή namespace , όχι απαραίτητα απλή τοπική…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="CS0246 — DedSec Project">
+<meta property="og:description" content="CS0246 — Δεν αναγνωρίζεται τύπος ή namespace Περιβάλλον: μεταγλώττιση C και επίλυση τύπων/χώρων ονομάτων. Τι λείπει πραγματικά Το CS0246 αφορά τύπο ή namespace , όχι απαραίτητα απλή τοπική…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-1003.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="CS0246 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CS0246 — DedSec Project">
+<meta name="twitter:description" content="CS0246 — Δεν αναγνωρίζεται τύπος ή namespace Περιβάλλον: μεταγλώττιση C και επίλυση τύπων/χώρων ονομάτων. Τι λείπει πραγματικά Το CS0246 αφορά τύπο ή namespace , όχι απαραίτητα απλή τοπική…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="CS0246 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>CS0246 — DedSec Project</h1><p>CS0246 — Δεν αναγνωρίζεται τύπος ή namespace Περιβάλλον: μεταγλώττιση C και επίλυση τύπων/χώρων ονομάτων. Τι λείπει πραγματικά Το CS0246 αφορά τύπο ή namespace , όχι απαραίτητα απλή τοπική…</p><section><h1>CS0246 — Δεν αναγνωρίζεται τύπος ή namespace</h1>
+<p><strong>Περιβάλλον:</strong> μεταγλώττιση C# και επίλυση τύπων/χώρων ονομάτων.</p>
+<h2>Τι λείπει πραγματικά</h2>
+<p>Το CS0246 αφορά <strong>τύπο ή namespace</strong>, όχι απαραίτητα απλή τοπική μεταβλητή όπως συχνά το CS0103. Μπορεί να λείπει ένα <code>using</code>, αναφορά σε άλλο project ή package, να υπάρχει διαφορετική γραφή, ασυμβατό target framework ή μη προσβάσιμος τύπος.</p>
+<h2>Ελεγχόμενο παράδειγμα</h2>
+<p>Σε project χωρίς implicit/global import για <code>System.Collections.Generic</code>, η δήλωση αποτυγχάνει:</p>
+<pre><code class="language-csharp">using System;
+// List&lt;int&gt; values = new(); // CS0246 χωρίς το κατάλληλο import
+</code></pre>
+<p>Η σωστή έκδοση είναι:</p>
+<pre><code class="language-csharp">using System.Collections.Generic;
+List&lt;int&gt; values = new() { 2, 4, 6 };
+System.Console.WriteLine(values.Count);
+</code></pre>
+<p>Εναλλακτικά χρησιμοποίησε <code>System.Collections.Generic.List&lt;int&gt;</code>. <strong>Έξοδος:</strong> <code>3</code>. Σε σύγχρονο template τα implicit global usings ίσως έχουν ήδη εισαγάγει αυτόν τον χώρο ονομάτων· δοκίμασε με απενεργοποιημένη τη δυνατότητα για βέβαιη αναπαραγωγή.</p>
+<h2>Η διαφορά import και dependency</h2>
+<p>Το <code>using</code> <strong>δεν εγκαθιστά</strong> βιβλιοθήκη. Αν λείπει εξωτερικός τύπος, εξέτασε <code>.csproj</code>, <code>PackageReference</code> / <code>ProjectReference</code>, target framework και εκτέλεσε <code>dotnet restore</code> όταν πρόκειται για dependencies. Για δικό σου τύπο έλεγξε την πραγματική δήλωση <code>namespace</code> και την ορατότητα (<code>public</code>) μεταξύ projects.</p>
+<h2>Σειρά αντιμετώπισης</h2>
+<ol>
+<li>Διάβασε το πρώτο μήνυμα CS0246 και κατέγραψε το ακριβές όνομα.</li>
+<li>Δοκίμασε το πλήρως προσδιορισμένο όνομα για να ξεχωρίσεις missing import από missing assembly.</li>
+<li>Έλεγξε ορθογραφία και κεφαλαία/πεζά του namespace.</li>
+<li>Έλεγξε αναφορές έργων, package restore, SDK και target framework.</li>
+<li>Κάνε rebuild μετά τη σωστή αλλαγή, όχι τυχαία εγκατάσταση πακέτων με παρόμοιο όνομα.</li>
+</ol>
+<h2>Οριακή περίπτωση</h2>
+<p>Αν το <code>List&lt;int&gt;</code> λειτουργεί χωρίς <code>using</code>, δες πρώτα <code>ImplicitUsings</code> και τα global usings. Η ίδια γραμμή κώδικα μπορεί να μεταγλωττίζεται διαφορετικά σε δύο projects.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

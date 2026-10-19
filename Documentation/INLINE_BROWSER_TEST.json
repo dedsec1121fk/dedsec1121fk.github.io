@@ -1,0 +1,114 @@
+{
+  "status": "partial browser smoke passed; full local HTTP/file URL navigation blocked by environment",
+  "runs": [
+    {
+      "viewport": "390x844",
+      "locale_requested": "en",
+      "facts": {
+        "en": 634,
+        "el": 634,
+        "head": "DedSec Project",
+        "nav": true,
+        "home": true,
+        "bodyChars": 1866,
+        "scroll": 390
+      },
+      "javascript_errors": [],
+      "interaction": {
+        "language_state": {
+          "label": "EN",
+          "body": "DedSec Project.\n\nΧρησιμοποίησε το DedSec Project από Termux σε Android ή από υποστηριζόμενα Linux de"
+        },
+        "theme_class": "theme-light",
+        "search_open": true,
+        "search_value": "Unicode",
+        "search_results_text": "Αναζήτηση στη Βιβλιοθήκη.\n\nΑναζήτησε τα μαθήματα, τα scripts και τα σφάλματα σε όλη τη βιβλιοθήκη.\n\nΚωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο.\n\nΤι συμβαίνε"
+      },
+      "method": "inline DOM/CSS/JS without URL navigation",
+      "mode": "HTML/CSS/JS embedded into Chromium document; tested without network navigation"
+    },
+    {
+      "viewport": "1280x800",
+      "locale_requested": "en",
+      "facts": {
+        "en": 634,
+        "el": 634,
+        "head": "DedSec Project",
+        "nav": true,
+        "home": true,
+        "bodyChars": 1866,
+        "scroll": 1280
+      },
+      "javascript_errors": [],
+      "interaction": {
+        "language_state": {
+          "label": "EN",
+          "body": "DedSec Project.\n\nΧρησιμοποίησε το DedSec Project από Termux σε Android ή από υποστηριζόμενα Linux de"
+        },
+        "theme_class": "theme-light",
+        "search_open": true,
+        "search_value": "Unicode",
+        "search_results_text": "Αναζήτηση στη Βιβλιοθήκη.\n\nΑναζήτησε τα μαθήματα, τα scripts και τα σφάλματα σε όλη τη βιβλιοθήκη.\n\nΚωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο.\n\nΤι συμβαίνε"
+      },
+      "method": "inline DOM/CSS/JS without URL navigation",
+      "mode": "HTML/CSS/JS embedded into Chromium document; tested without network navigation"
+    },
+    {
+      "viewport": "390x844",
+      "locale_requested": "el",
+      "facts": {
+        "en": 634,
+        "el": 634,
+        "head": "DedSec Project",
+        "nav": true,
+        "home": true,
+        "bodyChars": 1866,
+        "scroll": 390
+      },
+      "javascript_errors": [],
+      "interaction": {
+        "language_state": {
+          "label": "EN",
+          "body": "DedSec Project.\n\nΧρησιμοποίησε το DedSec Project από Termux σε Android ή από υποστηριζόμενα Linux de"
+        },
+        "theme_class": "theme-light",
+        "search_open": true,
+        "search_value": "Unicode",
+        "search_results_text": "Αναζήτηση στη Βιβλιοθήκη.\n\nΑναζήτησε τα μαθήματα, τα scripts και τα σφάλματα σε όλη τη βιβλιοθήκη.\n\nΚωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο.\n\nΤι συμβαίνε"
+      },
+      "method": "inline DOM/CSS/JS without URL navigation",
+      "mode": "HTML/CSS/JS embedded into Chromium document; tested without network navigation"
+    },
+    {
+      "viewport": "1280x800",
+      "locale_requested": "el",
+      "facts": {
+        "en": 634,
+        "el": 634,
+        "head": "DedSec Project",
+        "nav": true,
+        "home": true,
+        "bodyChars": 1866,
+        "scroll": 1280
+      },
+      "javascript_errors": [],
+      "interaction": {
+        "language_state": {
+          "label": "EN",
+          "body": "DedSec Project.\n\nΧρησιμοποίησε το DedSec Project από Termux σε Android ή από υποστηριζόμενα Linux de"
+        },
+        "theme_class": "theme-light",
+        "search_open": true,
+        "search_value": "Unicode",
+        "search_results_text": "Αναζήτηση στη Βιβλιοθήκη.\n\nΑναζήτησε τα μαθήματα, τα scripts και τα σφάλματα σε όλη τη βιβλιοθήκη.\n\nΚωδικοποιήσεις, Unicode και αλλοιωμένο κείμενο.\n\nΤι συμβαίνε"
+      },
+      "method": "inline DOM/CSS/JS without URL navigation",
+      "mode": "HTML/CSS/JS embedded into Chromium document; tested without network navigation"
+    }
+  ],
+  "limitations": [
+    "Image and font assets cannot load from relative URLs under the temporary about:blank document; screenshot results are not pixel-accurate",
+    "Hash URL transitions and routes were not fully exercised",
+    "No real Android or Windows browser was used"
+  ]
+}

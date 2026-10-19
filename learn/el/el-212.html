@@ -1,0 +1,69 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>hy — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-212.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="hy — συγκεντρωτικός οδηγός Hy Τι προσφέρει η γλώσσα Η Hy χρησιμοποιεί εκφράσεις Lisp πάνω στο μοντέλο αντικειμένων της Python. Τα macros επεξεργάζονται σύνταξη πριν από την εκτέλεση, ενώ…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="hy — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="hy — συγκεντρωτικός οδηγός Hy Τι προσφέρει η γλώσσα Η Hy χρησιμοποιεί εκφράσεις Lisp πάνω στο μοντέλο αντικειμένων της Python. Τα macros επεξεργάζονται σύνταξη πριν από την εκτέλεση, ενώ…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-212.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="hy — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="hy — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="hy — συγκεντρωτικός οδηγός Hy Τι προσφέρει η γλώσσα Η Hy χρησιμοποιεί εκφράσεις Lisp πάνω στο μοντέλο αντικειμένων της Python. Τα macros επεξεργάζονται σύνταξη πριν από την εκτέλεση, ενώ…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="hy — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>hy — συγκεντρωτικός οδηγός — DedSec Project</h1><p>hy — συγκεντρωτικός οδηγός Hy Τι προσφέρει η γλώσσα Η Hy χρησιμοποιεί εκφράσεις Lisp πάνω στο μοντέλο αντικειμένων της Python. Τα macros επεξεργάζονται σύνταξη πριν από την εκτέλεση, ενώ…</p><section><h2>Hy</h2>
+<h3>Τι προσφέρει η γλώσσα</h3>
+<p>Η Hy χρησιμοποιεί εκφράσεις Lisp πάνω στο μοντέλο αντικειμένων της Python. Τα macros επεξεργάζονται σύνταξη πριν από την εκτέλεση, ενώ υπάρχουν εισαγωγές Python.</p>
+<h3>Μικρό παράδειγμα προς μελέτη</h3>
+<pre><code class="language-text">(setv readings [2 4 6])
+(print (sum readings))
+</code></pre>
+<p>Δοκίμασε λίστα με μηδέν και αρνητική τιμή και υπολόγισε την αναμενόμενη αλλαγή. Σύγκρινε τη χρήση quote με την εκτέλεση μιας φόρμας.</p>
+<h3>Τι να επαληθεύσεις</h3>
+<p>Κατάγραψε την πραγματική έκδοση εργαλείου, τις απαιτούμενες εξαρτήσεις και την έξοδο σε δοκιμαστικά δεδομένα για τη Hy. Πρόβλεψε το αποτέλεσμα πριν το ελέγξεις και διατήρησε την αρχική και τη διορθωμένη εκδοχή ώστε να φαίνεται η αιτιώδης διαφορά. Μην αποκαλείς ένα απόσπασμα εκτελεσμένο αν δεν έχεις το κατάλληλο περιβάλλον.</p>
+<h3>Παγίδα ειδική για το θέμα</h3>
+<p>Τα macros και οι κλήσεις συναρτήσεων εκτελούνται σε διαφορετικά στάδια· η σύνταξη Hy δεν είναι αυτούσιος κώδικας Python.</p>
+<h3>Αυτόνομη άσκηση</h3>
+<p>Μετέτρεψε το βασικό παράδειγμα σε δεύτερη παραλλαγή που δέχεται μία διαφορετική είσοδο. Σημείωσε μία δοκιμή ορίου και μία περίπτωση στην οποία η συμπεριφορά εξαρτάται από το περιβάλλον. Αν η γλώσσα δεν υποστηρίζεται στο τρέχον σύστημά σου, αξιολόγησε τη σημασιολογία του αποσπάσματος χωρίς να παρουσιάζεις υποθετική έξοδο ως πραγματικό test.</p>
+<h2>Εργαστήριο εξάσκησης: Hy</h2>
+<h3>Ξεκίνα από πραγματική εκτέλεση</h3>
+<p>Το <code>00_starter.hy</code> εκτυπώνει <code>Hello, Hy!</code>. Σε προσωρινό περιβάλλον με εγκατεστημένη Hy εκτέλεσε αυτό το αρχείο και κατέγραψε εκδόσεις Hy και Python. Η Hy μεταφράζει εκφράσεις τύπου Lisp σε συμπεριφορά συμβατή με Python· η διαφορετική σύνταξη δεν καταργεί τις εξαιρέσεις του υποκείμενου runtime.</p>
+<h3>Μετασχημάτισε μία μικρή συλλογή</h3>
+<p>Σε αρχείο <code>squares.hy</code> γράψε:</p>
+<pre><code class="language-hy">(setv values [1 2 3])
+(setv squares (list (map (fn [n] (* n n)) values)))
+(print squares)
+(print (sum squares))
+</code></pre>
+<p>Αναμένονται τετράγωνα 1, 4, 9 και άθροισμα 14. Διάβασε την έκφραση από μέσα προς τα έξω: η <code>fn</code> δημιουργεί συνάρτηση μίας παραμέτρου, η <code>map</code> την εφαρμόζει σε κάθε τιμή, η <code>list</code> υλοποιεί τον επαναλήπτη και η <code>sum</code> αθροίζει. Μην μπερδεύεις έναν iterator με έτοιμη λίστα. Η μορφή εκτύπωσης πρέπει να επιβεβαιώνεται στην πραγματική έκδοση του διερμηνευτή.</p>
+<h3>Παρατήρησε μία εξαίρεση</h3>
+<p>Σε ξεχωριστή δοκιμή αξιολόγησε <code>(print (/ 1 0))</code>. Η διαίρεση με μηδέν πρέπει να αποτύχει αντί να επιστρέψει κανονικό αριθμό. Κράτησε όλο το traceback και εντόπισε ως πηγή την αριθμητική έκφραση, όχι την τελική <code>print</code>. Μη βάζεις γενικό χειριστή εξαιρέσεων πριν κατανοήσεις την αιτία, γιατί θα κρύψει πραγματικές ατέλειες των εισόδων.</p>
+<h3>Σύγκρινε σημασία, όχι εμφάνιση</h3>
+<p>Σύγκρινε <code>(list (map (fn [n] (+ n 1)) [1 2 3]))</code> με αντίστοιχη list comprehension γραμμένη σε κανονική Python. Το αποτέλεσμα μπορεί να είναι ίδιο παρότι η σύνταξη διαφέρει. Δοκίμασε κενή λίστα και ύστερα συλλογή που περιέχει συμβολοσειρές. Διαχώρισε την έγκυρη κενή έξοδο από το σφάλμα τύπου στη πρόσθεση. Η Hy δεν μετατρέπει αυθαίρετα το κείμενο σε αριθμό.</p>
+<h3>Τελική άσκηση</h3>
+<p>Σχεδίασε συνάρτηση που υπολογίζει άθροισμα τετραγώνων μη αρνητικών τιμών και ορίζει ρητά τι θα γίνει σε αρνητική είσοδο. Έλεγξε <code>[]</code>, <code>[0]</code>, <code>[-1]</code> και <code>[2 3]</code>. Το φιλτράρισμα, η απόρριψη και η κανονικοποίηση είναι διαφορετικές πολιτικές. Παρατήρησε τις πραγματικές εξόδους σε απομονωμένο περιβάλλον και κατέγραψε τις διαγνώσεις. Τεκμηρίωση: https://hylang.org/</p>
+<h2>Hy — Διαδρομή ουσιαστικής εξάσκησης</h2>
+<h3>Θεμελιώδης άσκηση</h3>
+<p>Γράψε Hy script που εισάγει Python standard-library function και την καλεί με Lisp-style expressions.</p>
+<h3>Άσκηση επίλυσης προβλήματος</h3>
+<p>Υλοποίησε list mapping και predicate σε Hy και σύγκρινε με Python. Ξεχώρισε quoted data από evaluated forms.</p>
+<h3>Ανεξάρτητο έργο</h3>
+<p>Φτιάξε read-only file summarizer σε προσωρινό UTF-8 fixture. Κατάγραψε Hy release γιατί macros και syntax αλλάζουν.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

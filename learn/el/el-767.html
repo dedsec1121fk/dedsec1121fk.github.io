@@ -1,0 +1,64 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>common_lisp — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-767.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="common_lisp — συγκεντρωτικός οδηγός Common Lisp Βασική ιδέα Η Common Lisp είναι πολυπαραδειγματική Lisp με macros, packages και condition system. Μικρό εκπαιδευτικό απόσπασμα Άσκηση…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="common_lisp — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="common_lisp — συγκεντρωτικός οδηγός Common Lisp Βασική ιδέα Η Common Lisp είναι πολυπαραδειγματική Lisp με macros, packages και condition system. Μικρό εκπαιδευτικό απόσπασμα Άσκηση…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-767.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="common_lisp — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="common_lisp — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="common_lisp — συγκεντρωτικός οδηγός Common Lisp Βασική ιδέα Η Common Lisp είναι πολυπαραδειγματική Lisp με macros, packages και condition system. Μικρό εκπαιδευτικό απόσπασμα Άσκηση…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="common_lisp — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>common_lisp — συγκεντρωτικός οδηγός — DedSec Project</h1><p>common_lisp — συγκεντρωτικός οδηγός Common Lisp Βασική ιδέα Η Common Lisp είναι πολυπαραδειγματική Lisp με macros, packages και condition system. Μικρό εκπαιδευτικό απόσπασμα Άσκηση…</p><section><h2>Common Lisp</h2>
+<h3>Βασική ιδέα</h3>
+<p>Η Common Lisp είναι πολυπαραδειγματική Lisp με macros, packages και condition system.</p>
+<h3>Μικρό εκπαιδευτικό απόσπασμα</h3>
+<pre><code class="language-text">(defun double (n) (* n 2))
+(double 5)
+</code></pre>
+<h3>Άσκηση βασισμένη στη συγκεκριμένη συμπεριφορά</h3>
+<p>Σύγκρινε quoted form με εκτέλεση double και φτιάξε συνάρτηση για λίστα αριθμών.</p>
+<h3>Διάγνωση και όρια</h3>
+<p>Τα package symbols και οι lexical variables είναι διαφορετικές έννοιες· απόφυγε συγκρούσεις.</p>
+<p>Κάνε την άσκηση με πραγματικά δοκιμαστικά δεδομένα και με έκδοση Common_Lisp που ταιριάζει στον κώδικα. Σημείωσε μία αρχική πρόβλεψη και την πραγματική έξοδο. Για περίπλοκο ή μη διαθέσιμο runtime, παρουσίασε τη στατική ανάλυση ως τέτοια, όχι ως επιτυχημένη εκτέλεση. Δοκίμασε ξεχωριστά την κανονική περίπτωση και μία οριακή τιμή, χωρίς πραγματικά προσωπικά ή παραγωγικά δεδομένα.</p>
+<h2>Common_Lisp — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Τιμή και σήμα ύπαρξης</h3>
+<p>Στην Common Lisp η <code>car</code> πάνω σε NIL επιστρέφει NIL. Αν χρησιμοποιήσεις μόνο NIL ως ένδειξη κενού, μπορεί να το μπερδέψεις με νόμιμο πρώτο στοιχείο NIL. Δύο τιμές επιστροφής λύνουν το πρόβλημα:</p>
+<pre><code class="language-lisp">(defun safe-first (items)
+  (if (consp items)
+      (values (car items) t)
+      (values nil nil)))
+
+(multiple-value-bind (item present) (safe-first '(10 20))
+  (assert (and present (= item 10))))
+(multiple-value-bind (item present) (safe-first nil)
+  (assert (and (null item) (not present))))
+(format t &quot;checks passed~%&quot;)
+</code></pre>
+<p>Δοκίμασε σε Common Lisp, όπως SBCL, και σημείωσε έκδοση. Αναμένεται <code>checks passed</code>. Οι <code>values</code> και <code>multiple-value-bind</code> είναι ιδιαίτεροι μηχανισμοί της γλώσσας, όχι απλά στοιχεία λίστας. Σύγκρινε με κλήση που χρησιμοποιεί μόνο την κύρια τιμή επιστροφής.</p>
+<h3>Γιατί το nil δεν σημαίνει πάντα απουσία</h3>
+<p>Έλεγξε <code>(safe-first '(nil 5))</code>. Η πρώτη επιστροφή πρέπει να είναι NIL, αλλά η δεύτερη ένδειξη ύπαρξης να είναι αληθής. Ο καλών που αγνοεί τη δεύτερη τιμή μπορεί να συμπεράνει λανθασμένα ότι η λίστα ήταν κενή. Πρόκειται για διαφορετικό συμβόλαιο από μία συλλογή κειμένων όπου το άδειο string είναι κανονική τιμή.</p>
+<h3>Σκόπιμο σφάλμα τύπων</h3>
+<p>Εκτέλεσε <code>(+ &quot;2&quot; 3)</code> σε απομονωμένο REPL και φύλαξε την πραγματική διάγνωση τύπου. Μην υποθέσεις ότι κάθε υλοποίηση εμφανίζει ίδια debugger restarts ή interactive prompts. Διόρθωσε την αιτία της ασυμφωνίας χωρίς αυθαίρετη μετατροπή όλων των τιμών σε συμβολοσειρές.</p>
+<h3>Αυτόνομη επέκταση</h3>
+<p>Υλοποίησε <code>safe-last</code> που ξεχωρίζει άδεια σωστή λίστα από λίστα με τελευταίο στοιχείο NIL. Δοκίμασε <code>()</code>, <code>(1 2)</code> και <code>(1 nil)</code>. Εξήγησε τη διαφορά ανάμεσα στο <code>listp</code> και στον έλεγχο ύπαρξης <code>cons</code>. Σε δεύτερη συνάρτηση διερεύνησε optional/keyword parameters. Αναφορά: https://www.lispworks.com/documentation/HyperSpec/Front/</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

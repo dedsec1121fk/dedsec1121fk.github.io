@@ -1,0 +1,7 @@
+# Offline is an engineering contract
+
+A project can be offline-first only when core reading, searching, and saved state work without fetching from a server. Identify every external dependency, separate update-only network calls, and test in airplane mode. Termux, Ubuntu, Kali Linux and Linux Mint should share meaningful behavior even if their startup commands and storage permissions differ.
+
+## Verification scenario
+
+Disable Wi-Fi and mobile data, open the local site, search a Python error, change to Greek, save a bookmark, and refresh. Check whether each action still works. In a disposable copy, remove data/el.js and observe the failure. This is a repeatable test of offline dependencies, not a promise that outbound GitHub counters or Sponsor links also work without internet. Record the actual evidence.

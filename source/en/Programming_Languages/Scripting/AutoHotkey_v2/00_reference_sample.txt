@@ -1,0 +1,2 @@
+name := "Ada"
+MsgBox("Hello, " name "!")

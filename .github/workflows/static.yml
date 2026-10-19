@@ -1,0 +1,74 @@
+name: Validate portable DedSec site and deploy Test
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: dedsec-portable-${{ github.repository }}
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Audit bilingual knowledge, links and code fixtures
+        run: |
+          python3 scripts/build_site_search.py --check
+          python3 scripts/audit_knowledge.py
+          python3 scripts/audit_knowledge_depth.py --strict
+          python3 scripts/audit_offline_links.py
+          python3 scripts/audit_near_duplicates.py
+          python3 scripts/audit_complete_catalogue.py
+          node scripts/test_knowledge_renderer.mjs
+          node scripts/test_knowledge_search.mjs
+          node scripts/test_search_passages.mjs
+          node scripts/test_offline_worker.mjs
+          python3 scripts/verify_reviewed_examples.py
+          python3 -m unittest discover -s scripts -p 'test_*.py'
+          python3 scripts/validate.py
+          node --check DedSec-Project-Website/assets/boot.js
+          node --check DedSec-Project-Website/assets/ui.js
+          node --check DedSec-Project-Website/data/apply-lesson-expansions.js
+          node --check scripts/browser_audit.mjs
+      - name: Install Markdown renderer for searchable, accessible lesson previews
+        run: |
+          python3 -m venv /tmp/dedsec-portable-venv
+          /tmp/dedsec-portable-venv/bin/python -m pip install --disable-pip-version-check mistune==3.2.0
+      - name: Build for this repository (main, Test or sal-scar backup)
+        run: /tmp/dedsec-portable-venv/bin/python scripts/build_portable_site.py --target auto --output .site-publish
+      - name: Validate all generated static SEO and link preview URLs
+        run: |
+          python3 scripts/test_portable_site.py --output .site-publish
+          python3 scripts/audit_publication.py --output .site-publish --report browser-screenshots/publication-audit.json
+      - name: Check source UI in real mobile and desktop Chromium
+        run: |
+          npm install --prefix /tmp/dedsec-browser --no-save --no-audit --no-fund playwright-core@1.58.2
+          python3 -m http.server 8765 --bind 127.0.0.1 >/tmp/dedsec-http.log 2>&1 &
+          node scripts/browser_audit.mjs
+      - name: Publish browser screenshots as an audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dedsec-browser-audit
+          path: browser-screenshots/
+          retention-days: 7
+          if-no-files-found: ignore
+      # Main and sal-scar backup currently use custom-domain hosting. Configure
+      # their Cloudflare Pages builds per Documentation/English/17_PORTABLE_SITE.md.
+      # Do not turn on an unrelated GitHub Pages deployment for those repos.
+      - uses: actions/configure-pages@v5
+        if: github.repository == 'dedsec1121fk/Test'
+      - uses: actions/upload-pages-artifact@v3
+        if: github.repository == 'dedsec1121fk/Test'
+        with:
+          path: .site-publish
+      - id: deployment
+        uses: actions/deploy-pages@v5
+        if: github.repository == 'dedsec1121fk/Test'
+        with:
+          artifact_name: github-pages

@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Glossary: encoding, exceptions and expressions — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-1100.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Glossary: encoding, exceptions and expressions Encoding Meaning and constraints An encoding maps characters to bytes and back. UTF-8 represents the same Unicode text with a variable number…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Glossary: encoding, exceptions and expressions — DedSec Project">
+<meta property="og:description" content="Glossary: encoding, exceptions and expressions Encoding Meaning and constraints An encoding maps characters to bytes and back. UTF-8 represents the same Unicode text with a variable number…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-1100.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Glossary: encoding, exceptions and expressions — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Glossary: encoding, exceptions and expressions — DedSec Project">
+<meta name="twitter:description" content="Glossary: encoding, exceptions and expressions Encoding Meaning and constraints An encoding maps characters to bytes and back. UTF-8 represents the same Unicode text with a variable number…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Glossary: encoding, exceptions and expressions — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Glossary: encoding, exceptions and expressions — DedSec Project</h1><p>Glossary: encoding, exceptions and expressions Encoding Meaning and constraints An encoding maps characters to bytes and back. UTF-8 represents the same Unicode text with a variable number…</p><section><h2>Encoding</h2>
+<h3>Meaning and constraints</h3>
+<p>An encoding maps characters to bytes and back. UTF-8 represents the same Unicode text with a variable number of bytes per code point. Decoding arbitrary bytes with the wrong encoding fails or corrupts text; a byte offset is not the same as a character index.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">text = 'Γεια'
+data = text.encode('utf-8')
+assert data.decode('utf-8') == text
+assert len(data) &gt; len(text)
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Write the bytes to a scratch binary file and test decode with utf-8. Introduce invalid UTF-8 byte <code>b'\xff'</code> and catch UnicodeDecodeError. Do not use errors='ignore' to hide data loss.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/howto/unicode.html</p>
+<h2>Exception</h2>
+<h3>Meaning and constraints</h3>
+<p>An exception reports an abnormal condition and transfers control to a matching handler. Catching a specific error close to the boundary lets expected failures be handled while unexpected programming defects remain visible. Catching every exception and returning success conceals faults.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">def port(text):
+    try: number = int(text)
+    except ValueError as exc: raise ValueError('port must be decimal') from exc
+    if not 1 &lt;= number &lt;= 65535: raise ValueError('port out of range')
+    return number
+assert port('443') == 443
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Test 'abc', '0' and '65536' separately. Trace where exceptions are raised versus caught and preserve original cause using <code>raise ... from ...</code> when translating an error between layers.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/tutorial/errors.html</p>
+<h2>Expression</h2>
+<h3>Meaning and constraints</h3>
+<p>An expression evaluates to a value; a statement performs an action in the language grammar. Operators, precedence and side effects affect the value produced. Parentheses clarify intent even when precedence rules would produce the same result.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">a, b, c = 2, 3, 4
+assert a + b * c == 14
+assert (a + b) * c == 20
+square = lambda n: n * n
+assert square(a + 1) == 9
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Write the syntax tree for <code>2+3*4</code> and <code>(2+3)*4</code>. Distinguish <code>n = 5</code> (assignment statement) from <code>n == 5</code> (comparison expression) in Python, then predict the result before running.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/reference/expressions.html</p>
+<h2>File descriptor</h2>
+<h3>Meaning and constraints</h3>
+<p>On POSIX-like systems a file descriptor is a small integer handle that a process uses for an open file, pipe or socket. Standard input, output and error commonly occupy descriptors 0, 1 and 2. A descriptor refers to an open resource, not directly to a filename.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">import os
+read_fd, write_fd = os.pipe()
+try:
+    os.write(write_fd, b'ok')
+    assert os.read(read_fd, 2) == b'ok'
+finally:
+    os.close(read_fd); os.close(write_fd)
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Explain why both pipe ends must be closed on failure and success. Investigate what happens if a long-lived process leaks descriptors. POSIX descriptor APIs may differ on Windows; this example requires os.pipe support.</p>
+<p><strong>Further reading:</strong> https://docs.python.org/3/library/os.html#file-descriptor-operations</p>
+<h2>Finite state machine</h2>
+<h3>Meaning and constraints</h3>
+<p>A finite-state machine models a system using a limited set of states and explicitly permitted transitions. Rather than scattering booleans such as is_loading/is_done/is_error that can contradict one another, an enum makes mutually exclusive states representable.</p>
+<h3>A concrete use</h3>
+<pre><code class="language-python">from enum import Enum
+class Status(Enum): IDLE=1; LOADING=2; DONE=3
+allowed = {Status.IDLE:{Status.LOADING}, Status.LOADING:{Status.DONE}, Status.DONE:set()}
+assert Status.DONE in allowed[Status.LOADING]
+</code></pre>
+<h3>Challenge and misconception</h3>
+<p>Design a retry transition DONE→LOADING only if your product genuinely permits it. Test an invalid direct IDLE→DONE jump and explain which code layer must reject it.</p>
+<p><strong>Further reading:</strong> https://en.wikipedia.org/wiki/Finite-state_machine</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

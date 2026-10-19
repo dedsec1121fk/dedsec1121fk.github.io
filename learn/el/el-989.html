@@ -1,0 +1,64 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>E0277 — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-989.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Rust E0277 — λείπει απαιτούμενο trait Απαίτηση κατά το compile Μια λειτουργία μπορεί να απαιτεί Debug, Display, Clone ή Send. Αν ο τύπος δεν υλοποιεί αυτό το trait, ο compiler απορρίπτει τη…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="E0277 — DedSec Project">
+<meta property="og:description" content="Rust E0277 — λείπει απαιτούμενο trait Απαίτηση κατά το compile Μια λειτουργία μπορεί να απαιτεί Debug, Display, Clone ή Send. Αν ο τύπος δεν υλοποιεί αυτό το trait, ο compiler απορρίπτει τη…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-989.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="E0277 — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="E0277 — DedSec Project">
+<meta name="twitter:description" content="Rust E0277 — λείπει απαιτούμενο trait Απαίτηση κατά το compile Μια λειτουργία μπορεί να απαιτεί Debug, Display, Clone ή Send. Αν ο τύπος δεν υλοποιεί αυτό το trait, ο compiler απορρίπτει τη…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="E0277 — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>E0277 — DedSec Project</h1><p>Rust E0277 — λείπει απαιτούμενο trait Απαίτηση κατά το compile Μια λειτουργία μπορεί να απαιτεί Debug, Display, Clone ή Send. Αν ο τύπος δεν υλοποιεί αυτό το trait, ο compiler απορρίπτει τη…</p><section><h1>Rust E0277 — λείπει απαιτούμενο trait</h1>
+<h2>Απαίτηση κατά το compile</h2>
+<p>Μια λειτουργία μπορεί να απαιτεί Debug, Display, Clone ή Send. Αν ο τύπος δεν υλοποιεί αυτό το trait, ο compiler απορρίπτει τη χρήση, ακόμη κι αν έχει απλά fields.</p>
+<pre><code class="language-rust">// struct Record { number: i32 }
+// println!(&quot;{:?}&quot;, Record { number: 3 }); // E0277
+
+#[derive(Debug)]
+struct Record { number: i32 }
+
+fn main() {
+    let record = Record { number: 3 };
+    println!(&quot;{:?}&quot;, record);
+}
+</code></pre>
+<h2>Χρησιμοποίησε το σωστό trait</h2>
+<p>Τα Debug και Display δεν είναι ίδια. Το Debug χρησιμοποιείται για διάγνωση και το Display για αναγνώσιμες τιμές. Μια generic συνάρτηση δηλώνει τη σύμβαση:</p>
+<pre><code class="language-rust">fn show&lt;T: std::fmt::Display&gt;(value: T) -&gt; String {
+    format!(&quot;{value}&quot;)
+}
+</code></pre>
+<p>Δοκίμασε show(42) και show(&quot;Ada&quot;), έπειτα show(Record { number: 3 }) ως compile-fail μέχρι να υλοποιήσεις Display.</p>
+<h2>Ασφάλεια</h2>
+<p>Το derive(Debug) μπορεί να εκθέσει κωδικούς και άλλα ευαίσθητα πεδία σε logs. Εξέτασε αν χρειάζεται πράγματι trait. Μην προσθέτεις unsafe implementations για thread-bound traits χωρίς τεκμηριωμένα invariants.</p>
+<p>Αναφορά: https://doc.rust-lang.org/error_codes/E0277.html</p>
+<h2>Πραγματική υλοποίηση του απαιτούμενου συμβολαίου</h2>
+<p>Για να δουλέψει <code>show(Record { number: 3 })</code>, πρόσθεσε Display με σαφή, ασφαλή μορφοποίηση:</p>
+<pre><code class="language-rust">impl std::fmt::Display for Record {
+    fn fmt(&amp;self, f: &amp;mut std::fmt::Formatter&lt;'_&gt;) -&gt; std::fmt::Result {
+        write!(f, &quot;record #{}&quot;, self.number)
+    }
+}
+</code></pre>
+<p>Το αναμενόμενο αποτέλεσμα της <code>show</code> είναι <code>&quot;record #3&quot;</code>, ενώ η εκτύπωση <code>{:?}</code> εξακολουθεί να χρησιμοποιεί διαφορετικό trait (<code>Debug</code>). Αν ο τύπος περιέχει tokens ή passwords, μην τα αποκαλύπτεις σε οποιοδήποτε format. Σε generic functions το E0277 μπορεί να σημαίνει <strong>ελλιπές bound</strong> και όχι λανθασμένο τύπο: αποφάσισε αν το API οφείλει να απαιτεί Display ή αν χρειάζεται άλλον τρόπο παρουσίασης.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

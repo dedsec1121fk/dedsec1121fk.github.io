@@ -1,0 +1,75 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>elixir — συγκεντρωτικός οδηγός — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-771.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="elixir — συγκεντρωτικός οδηγός Elixir Μοντέλο λειτουργίας Η Elixir τρέχει στην BEAM και προτιμά immutable values, pattern matching και concurrent processes. Παράδειγμα Δοκίμασέ το με νόημα…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="elixir — συγκεντρωτικός οδηγός — DedSec Project">
+<meta property="og:description" content="elixir — συγκεντρωτικός οδηγός Elixir Μοντέλο λειτουργίας Η Elixir τρέχει στην BEAM και προτιμά immutable values, pattern matching και concurrent processes. Παράδειγμα Δοκίμασέ το με νόημα…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-771.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="elixir — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="elixir — συγκεντρωτικός οδηγός — DedSec Project">
+<meta name="twitter:description" content="elixir — συγκεντρωτικός οδηγός Elixir Μοντέλο λειτουργίας Η Elixir τρέχει στην BEAM και προτιμά immutable values, pattern matching και concurrent processes. Παράδειγμα Δοκίμασέ το με νόημα…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="elixir — συγκεντρωτικός οδηγός — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>elixir — συγκεντρωτικός οδηγός — DedSec Project</h1><p>elixir — συγκεντρωτικός οδηγός Elixir Μοντέλο λειτουργίας Η Elixir τρέχει στην BEAM και προτιμά immutable values, pattern matching και concurrent processes. Παράδειγμα Δοκίμασέ το με νόημα…</p><section><h2>Elixir</h2>
+<h3>Μοντέλο λειτουργίας</h3>
+<p>Η Elixir τρέχει στην BEAM και προτιμά immutable values, pattern matching και concurrent processes.</p>
+<h3>Παράδειγμα</h3>
+<pre><code class="language-text">nums = [1, 2, 3]
+Enum.map(nums, fn n -&gt; n * 2 end)
+</code></pre>
+<h3>Δοκίμασέ το με νόημα</h3>
+<p>Σύγκρινε Enum.map με lazy Stream.map και επιβεβαίωσε ότι η αρχική λίστα δεν αλλάζει.</p>
+<h3>Σφάλμα που πρέπει να ξεχωρίσεις</h3>
+<p>Τα concurrent messages είναι ασύγχρονα· χρησιμοποίησε receive patterns και timeouts στα tests.</p>
+<p>Για να κρίνεις την άσκηση, κατέγραψε την αρχική είσοδο, την πρόβλεψη και την παρατήρηση σε πραγματικό, συμβατό περιβάλλον Elixir. Δώσε ξεχωριστό παράδειγμα όπου αλλάζει μόνο μία μεταβλητή ή ένα όρισμα. Αν εργάζεσαι χωρίς την αναγκαία εφαρμογή, μελέτησε τη σύνταξη ως παράδειγμα και μην παρουσιάζεις το κείμενο ως εκτελεσμένο test.</p>
+<h2>Elixir — Αναλυτικός οδηγός εξάσκησης</h2>
+<h3>Ανάλυσε όλη την είσοδο</h3>
+<p>Δημιούργησε προσωρινό αρχείο <code>parse_scores.exs</code> όπου η επιτυχία και η αποτυχία έχουν διαφορετικές μορφές:</p>
+<pre><code class="language-elixir">defmodule Score do
+  def parse(text) do
+    case Integer.parse(text) do
+      {n, &quot;&quot;} -&gt; {:ok, n}
+      _ -&gt; {:error, :invalid_integer}
+    end
+  end
+end
+IO.inspect(Score.parse(&quot;12&quot;))
+IO.inspect(Score.parse(&quot;bad&quot;))
+IO.inspect(Score.parse(&quot;12x&quot;))
+</code></pre>
+<p>Αναμένονται <code>{:ok, 12}</code> και δύο φορές <code>{:error, :invalid_integer}</code>. Η <code>Integer.parse</code> μπορεί να αναγνωρίσει αριθμητικό πρόθεμα στο <code>&quot;12x&quot;</code>, όμως η άσκηση απαιτεί να μην απομένει κείμενο. Πρόκειται για επιλογή επικύρωσης πεδίου και όχι απλώς για συντακτική λεπτομέρεια. Δοκίμασε <code>elixir parse_scores.exs</code> και κατέγραψε εκδόσεις Elixir/OTP· δεν έχουμε πραγματική εκτέλεση εδώ.</p>
+<h3>Pattern matching και απόφαση</h3>
+<p>Το <code>case</code> ταιριάζει την τιμή με συγκεκριμένα μοτίβα tuple. Άλλαξε δοκιμαστικά τον επιτυχή κανόνα ώστε να δέχεται οποιοδήποτε υπόλοιπο και εξήγησε γιατί τότε περνά το <code>&quot;12x&quot;</code>. Δοκίμασε <code>&quot;0&quot;</code>, <code>&quot;-3&quot;</code> και κενή συμβολοσειρά. Ξεχώρισε αριθμητικά έγκυρο μηδέν από αποτυχία. Ένας γενικός χειριστής εξαιρέσεων που επιστρέφει πάντα 0 θα κατέστρεφε αυτή τη διάκριση.</p>
+<h3>Καταμέτρηση αμετάβλητων δεδομένων</h3>
+<p>Εκτέλεσε <code>Enum.frequencies([&quot;ada&quot;, &quot;lin&quot;, &quot;ada&quot;])</code> και σύγκρινε με <code>%{&quot;ada&quot; =&gt; 2, &quot;lin&quot; =&gt; 1}</code>. Για χάρτες η ουσία είναι οι συσχετισμοί κλειδιών και τιμών, όχι η σειρά εμφάνισης. Πρόσθεσε διαφορετικά πεζά/κεφαλαία και όρισε αν απαιτείται ρητή κανονικοποίηση.</p>
+<h3>Ανεξάρτητη άσκηση</h3>
+<p>Φτιάξε ExUnit tests για όλες τις περιπτώσεις, συμπεριλαμβανομένης εισόδου που δεν είναι String. Αποφάσισε αν για λάθος τύπο η συνάρτηση επιστρέφει tuple αποτυχίας ή πετά εξαίρεση, και κράτησε συνεπή συμπεριφορά. Εξήγησε τη διαφορά ανάμεσα σε αμετάβλητους χάρτες, pattern matching και μεταβολή κοινού μετρητή. Αναφορά: https://hexdocs.pm/elixir/</p>
+<h2>Elixir — Παραδείγματα πραγματικού κώδικα</h2>
+<h3>Εκτέλεση των παραδειγμάτων</h3>
+<p>Τα παραδείγματα είναι μικρά και αυτοτελή. Χρησιμοποίησε τη σχετική εγκατεστημένη γλώσσα. Ενδεικτικά: <code>elixir {file}</code>. Μη συγχέεις τα ονόματα αρχείων με αυτόματη εγκατάσταση. Δούλεψε σε δοκιμαστικό φάκελο.</p>
+<h2>Elixir — Τεχνικά σημεία και συχνές παγίδες</h2>
+<h3>Τεχνική γνώση</h3>
+<ol>
+<li>Η αμετάβλητη κατάσταση και το pattern matching είναι βασικά χαρακτηριστικά.</li>
+<li>Ελαφριές διεργασίες ανταλλάσσουν μηνύματα και δεν είναι νήματα λειτουργικού.</li>
+<li>Η επίβλεψη οργανώνει επανεκκινήσεις· δεν πρέπει να κρύβει επαναλαμβανόμενα σφάλματα.</li>
+</ol>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

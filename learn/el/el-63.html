@@ -1,0 +1,62 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Αναπαραγώγιμες εκδόσεις, αντίγραφα και επαναφορά — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-63.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Παραγωγή έκδοσης — αναπαραγώγιμο αρχείο και δυνατότητα επαναφοράς Σενάριο και κριτήρια επιτυχίας Συσκεύασε μία μικρή στατική ιστοσελίδα χωρίς διαδίκτυο σε ZIP με δύο δοκιμαστικά αρχεία…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Αναπαραγώγιμες εκδόσεις, αντίγραφα και επαναφορά — DedSec Project">
+<meta property="og:description" content="Παραγωγή έκδοσης — αναπαραγώγιμο αρχείο και δυνατότητα επαναφοράς Σενάριο και κριτήρια επιτυχίας Συσκεύασε μία μικρή στατική ιστοσελίδα χωρίς διαδίκτυο σε ZIP με δύο δοκιμαστικά αρχεία…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-63.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Αναπαραγώγιμες εκδόσεις, αντίγραφα και επαναφορά — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Αναπαραγώγιμες εκδόσεις, αντίγραφα και επαναφορά — DedSec Project">
+<meta name="twitter:description" content="Παραγωγή έκδοσης — αναπαραγώγιμο αρχείο και δυνατότητα επαναφοράς Σενάριο και κριτήρια επιτυχίας Συσκεύασε μία μικρή στατική ιστοσελίδα χωρίς διαδίκτυο σε ZIP με δύο δοκιμαστικά αρχεία…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Αναπαραγώγιμες εκδόσεις, αντίγραφα και επαναφορά — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Αναπαραγώγιμες εκδόσεις, αντίγραφα και επαναφορά — DedSec Project</h1><p>Παραγωγή έκδοσης — αναπαραγώγιμο αρχείο και δυνατότητα επαναφοράς Σενάριο και κριτήρια επιτυχίας Συσκεύασε μία μικρή στατική ιστοσελίδα χωρίς διαδίκτυο σε ZIP με δύο δοκιμαστικά αρχεία…</p><section><h1>Παραγωγή έκδοσης — αναπαραγώγιμο αρχείο και δυνατότητα επαναφοράς</h1>
+<h2>Σενάριο και κριτήρια επιτυχίας</h2>
+<p>Συσκεύασε μία μικρή στατική ιστοσελίδα χωρίς διαδίκτυο σε ZIP με δύο δοκιμαστικά αρχεία. Ίδια δεδομένα, σειρά, ημερομηνίες και δικαιώματα πρέπει να παράγουν πανομοιότυπα byte σε επαναλαμβανόμενες εκτελέσεις του ίδιου περιβάλλοντος. Υπολόγισε SHA-256, άνοιξε ξανά το ZIP και σύγκρινε κάθε εγγραφή με το αρχικό περιεχόμενο. Η αλλοίωση πρέπει να γίνεται αντιληπτή πριν την δημοσίευση.</p>
+<h2>Εκτελέσιμο εργαστήριο</h2>
+<p>Αποθήκευσε ως <code>18_release.py</code> και εκτέλεσε με Python 3 και την ενσωματωμένη βιβλιοθήκη. Τα δεδομένα είναι τεχνητά, χωρίς πρόσβαση σε προσωπικά αρχεία ή δίκτυο.</p>
+<pre><code class="language-python">import hashlib, io, zipfile
+FILES = {&quot;docs/readme.txt&quot;:b&quot;hello\n&quot;,&quot;site/index.html&quot;:b&quot;&lt;h1&gt;Offline&lt;/h1&gt;\n&quot;}
+def build():
+    buffer = io.BytesIO()
+    with zipfile.ZipFile(buffer,&quot;w&quot;,compression=zipfile.ZIP_STORED) as z:
+        for name, data in sorted(FILES.items()):
+            info = zipfile.ZipInfo(name, date_time=(1980,1,1,0,0,0))
+            info.compress_type = zipfile.ZIP_STORED
+            info.external_attr = 0o100644 &lt;&lt; 16
+            z.writestr(info,data)
+    return buffer.getvalue()
+a,b = build(),build()
+assert a == b
+digest = hashlib.sha256(a).hexdigest()
+with zipfile.ZipFile(io.BytesIO(a)) as archive:
+    assert sorted(archive.namelist()) == sorted(FILES)
+    assert all(archive.read(name)==data for name,data in FILES.items())
+assert hashlib.sha256(a+b&quot;x&quot;).hexdigest() != digest
+print(&quot;PASS reproducible fixture ZIP:&quot;,digest[:12])
+</code></pre>
+<h2>Τεχνική ερμηνεία</h2>
+<p>Κάθε μέλος ZIP περιέχει όνομα, χρονοσήμανση, δικαιώματα, ρυθμίσεις συμπίεσης και περιεχόμενο. Αν αλλάξουν τα μεταδεδομένα ή η σειρά, η αναπαραγωγιμότητα μπορεί να χαθεί παρότι η σελίδα δείχνει ίδια. Η άσκηση ορίζει σταθερά μεταδεδομένα και χρησιμοποιεί ZIP_STORED για να αποφεύγει διαφορές εκδόσεων συμπίεσης. Σε πραγματικά builds πρέπει να δεσμεύονται επίσης εκδόσεις εργαλείων, εξαρτήσεις και αρχεία εισόδου. Ίδια αποτυπώματα δεν αποδεικνύουν από μόνα τους ότι το λογισμικό είναι ασφαλές.</p>
+<h2>Περιορισμένες δοκιμές</h2>
+<p>Άλλαξε ένα byte στο δείγμα και κατάγραψε το νέο SHA-256. Άλλαξε τη σειρά εισαγωγής και βεβαιώσου ότι η ταξινόμηση δίνει ίδιο αποτέλεσμα. Αφαίρεσε τις σταθερές ημερομηνίες και παρατήρησε γιατί το αποτέλεσμα μπορεί να διαφέρει. Κράτησε προηγούμενη γνωστή σωστή έκδοση και δοκίμασε επαναφορά σε προσωρινό κατάλογο.</p>
+<h2>Διάγνωση</h2>
+<p>Αν διαφέρουν τα αποτυπώματα, εξέτασε τη σειρά μελών, τις ημερομηνίες, τα δικαιώματα, τις εκδόσεις εργαλείων και τα δεδομένα. Πριν τη δημοσίευση χρειάζεται πραγματική εξαγωγή, επιβεβαίωση όλων των αρχείων και έλεγχος τοπικών συνδέσμων. Το μικρό παράδειγμα στη μνήμη δεν σημαίνει ότι ελέγχθηκε η πραγματική ιστοσελίδα.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

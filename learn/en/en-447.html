@@ -1,0 +1,42 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Brainfuck — Expanded practice workbook — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-447.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Brainfuck — trace memory cells to produce one ASCII byte Walk through the program, instruction by instruction Assuming zero-initialized byte cells and an 8-bit ASCII output policy, the…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Brainfuck — Expanded practice workbook — DedSec Project">
+<meta property="og:description" content="Brainfuck — trace memory cells to produce one ASCII byte Walk through the program, instruction by instruction Assuming zero-initialized byte cells and an 8-bit ASCII output policy, the…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-447.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Brainfuck — Expanded practice workbook — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Brainfuck — Expanded practice workbook — DedSec Project">
+<meta name="twitter:description" content="Brainfuck — trace memory cells to produce one ASCII byte Walk through the program, instruction by instruction Assuming zero-initialized byte cells and an 8-bit ASCII output policy, the…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Brainfuck — Expanded practice workbook — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Brainfuck — Expanded practice workbook — DedSec Project</h1><p>Brainfuck — trace memory cells to produce one ASCII byte Walk through the program, instruction by instruction Assuming zero-initialized byte cells and an 8-bit ASCII output policy, the…</p><section><h1>Brainfuck — trace memory cells to produce one ASCII byte</h1>
+<h2>Walk through the program, instruction by instruction</h2>
+<pre><code class="language-brainfuck">++++++++[&gt;++++++++&lt;-]&gt;+.
+</code></pre>
+<p>Assuming zero-initialized byte cells and an 8-bit ASCII output policy, the first cell starts at 8. Eight loop iterations each add 8 to the next cell and subtract 1 from the first. At loop exit the cells contain 0 and 64; the final &gt;+. increments the second cell to 65 and writes A. The bracket tests the current cell, so the pointer must return to cell zero before ].</p>
+<h2>Break the invariant deliberately</h2>
+<p>Remove &lt; from the loop. The closing bracket then tests a different cell, making the termination argument invalid. Return it, then replace the last + with -: the final byte should be 63, ASCII question mark. Keep a trace of pointer index and both cell values before and after each iteration.</p>
+<h2>Work out runtime differences</h2>
+<p>Test on a chosen interpreter. Determine whether cells wrap modulo 256, whether tape expansion is allowed, and how output bytes are rendered. Include 0, 1, 4 and 8 as trace checkpoints. Label all expected outputs until independently observed; no Brainfuck interpreter run is claimed here.</p>
+<h2>Use a loop invariant to prove termination</h2>
+<p>At the beginning of iteration k (counting from zero), the first cell is 8-k and the second is 8k. The body preserves their sum in a weighted sense: decreasing cell zero by one contributes eight increments to cell one. Once k reaches 8, the controlling cell is zero and the loop stops. If your interpreter uses wrapping bytes and you accidentally decrement an already-zero controlling cell, it may wrap to 255 and run unexpectedly many iterations. Check final pointer position separately: a correct output byte does not guarantee the tape pointer is back at the origin.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

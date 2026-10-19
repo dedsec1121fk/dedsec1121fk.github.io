@@ -1,0 +1,72 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>apex — consolidated language guide — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-540.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="apex — consolidated language guide Apex Working model Salesforce Apex is a server-side object-oriented language with transaction governor limits and an explicit test model. Focused source…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="apex — consolidated language guide — DedSec Project">
+<meta property="og:description" content="apex — consolidated language guide Apex Working model Salesforce Apex is a server-side object-oriented language with transaction governor limits and an explicit test model. Focused source…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-540.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="apex — consolidated language guide — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="apex — consolidated language guide — DedSec Project">
+<meta name="twitter:description" content="apex — consolidated language guide Apex Working model Salesforce Apex is a server-side object-oriented language with transaction governor limits and an explicit test model. Focused source…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="apex — consolidated language guide — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>apex — consolidated language guide — DedSec Project</h1><p>apex — consolidated language guide Apex Working model Salesforce Apex is a server-side object-oriented language with transaction governor limits and an explicit test model. Focused source…</p><section><h2>Apex</h2>
+<h3>Working model</h3>
+<p>Salesforce Apex is a server-side object-oriented language with transaction governor limits and an explicit test model.</p>
+<h3>Focused source example</h3>
+<pre><code class="language-text">Integer total = 0;
+for (Integer n : new List&lt;Integer&gt;{1,2,3}) {
+    total += n;
+}
+System.debug(total);
+</code></pre>
+<p>Trace the sum, then consider how a query placed inside a loop would scale when processing hundreds of records.</p>
+<h3>Evidence to collect</h3>
+<p>Record the exact Apex compiler or runtime version, required dependencies, and output from harmless test data. Predict an observation before checking it, and keep both the initial and revised source to show which change caused the result. Do not claim that a displayed fragment was executed if the platform is unavailable.</p>
+<h3>Failure mode worth investigating</h3>
+<p>Governor limits are enforced within Salesforce execution contexts; Java's or C#'s runtime behavior is not equivalent.</p>
+<h2>Apex: applied exercises</h2>
+<p>Apex runs inside Salesforce, where one request or trigger execution has limits on database operations, heap and CPU. Start with a list exercise before writing to any organization data; Console / Execute Anonymous is sufficient when you have an authorized developer sandbox.</p>
+<h3>Exercise: sum a list, then challenge an invariant</h3>
+<pre><code class="language-apex">List&lt;Integer&gt; quantities = new List&lt;Integer&gt;{2, 5, 3};
+Integer total = 0;
+for (Integer qty : quantities) {
+    total += qty;
+}
+System.debug(total);
+</code></pre>
+<p>The expected debug value is 10. In this exercise the loop invariant is that total equals the sum of elements already visited. Predict the result for an empty list and confirm that the accumulator remains zero. Next replace the collection with {2, -5, 3}; a signed quantity is valid as an Integer, so the expected sum is zero. Whether negative stock makes business sense is a separate validation rule and should not be confused with an Apex syntax error.</p>
+<h3>Exercise: distinguish lists from maps</h3>
+<p>Build a Map&lt;String, Integer&gt; from the entries ('apple', 2) and ('pear', 5). Use containsKey before reading a possibly missing item, and specify what your application should do with unknown SKUs. A missing key is not the same thing as a missing Apex variable. Compare a list's positional indexing with a map's keyed lookup, documenting where ordering matters.</p>
+<h3>Exercise: avoid hidden governor-limit problems</h3>
+<p>Sketch a trigger receiving 200 records. Mark the difference between querying once for all relevant IDs and querying inside a loop for each record. Do not run DML against a live organization for this teaching task. Explain why doing SOQL/DML per record risks transaction limits; bulkification is an architectural constraint, not an optimization reserved for large datasets.</p>
+<h3>Evidence to keep</h3>
+<p>Record the org/runtime version, the exact anonymous execution context, and the expected debug values. The code here is an illustrative exercise, not a claim of an executed Salesforce test. Before moving from the sandbox, check validation rules, object permissions, and how transaction rollbacks affect the result. Do not treat a successful in-memory List example as proof that a database update is authorized.</p>
+<h2>Apex — Focused mastery pathway</h2>
+<h3>Stage 1: understand the execution model</h3>
+<p>In a Salesforce sandbox, write an Apex class that queries records using a bound variable rather than concatenating a user string into SOQL. Explain how governor limits differ from ordinary database limits.</p>
+<h3>Stage 2: prove the rule with controlled cases</h3>
+<p>Build an Apex test method using isolated test data, asserting both an authorized and unauthorized access decision. Study with sharing and inherited sharing, and check field-level/object permissions before exposing records.</p>
+<h3>Stage 3: build a small, reviewable project</h3>
+<p>Simulate a bulk operation over 200 records, counting SOQL queries and DML operations. Refactor queries out of loops and record test coverage and limits. Never run these experiments against live customer data.</p>
+<h3>Apex query-budget and access-control experiment</h3>
+<p>Create a test-only trigger that processes a batch of 200 records with repeated foreign keys. Count the SOQL calls when querying inside the record loop, then redesign by collecting IDs into a Set&lt;Id&gt; and querying outside the loop. The number of unique foreign keys, not raw record count, should determine work. Verify both the resulting updates and governor-limit counters with Test.startTest/Test.stopTest. Add one rejected update from a principal lacking field-level authorization. Do not run production DML or use SeeAllData=true. Distinguish sharing rules from object and field permissions: without the correct checks, bulkification alone does not make the operation safe.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

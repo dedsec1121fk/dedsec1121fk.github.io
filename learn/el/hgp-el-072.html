@@ -1,0 +1,85 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Kerberos, Active Directory και Enterprise Identity Internals — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/hgp-el-072.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Kerberos, Active Directory και Enterprise Identity Internals Ελληνική έκδοση — Μάθημα 072. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Kerberos, Active Directory και Enterprise Identity Internals — DedSec Project">
+<meta property="og:description" content="Kerberos, Active Directory και Enterprise Identity Internals Ελληνική έκδοση — Μάθημα 072. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/hgp-el-072.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Kerberos, Active Directory και Enterprise Identity Internals — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kerberos, Active Directory και Enterprise Identity Internals — DedSec Project">
+<meta name="twitter:description" content="Kerberos, Active Directory και Enterprise Identity Internals Ελληνική έκδοση — Μάθημα 072. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Kerberos, Active Directory και Enterprise Identity Internals — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Kerberos, Active Directory και Enterprise Identity Internals — DedSec Project</h1><p>Kerberos, Active Directory και Enterprise Identity Internals Ελληνική έκδοση — Μάθημα 072. Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου…</p><section><blockquote>
+<p><strong>Ελληνική έκδοση — Μάθημα 072.</strong> Οι διεθνείς τεχνικοί όροι, protocol names, standards και commands διατηρούνται στα Αγγλικά όπου αυτό βοηθά την ακρίβεια.</p>
+</blockquote>
+<h2>Στόχος του μαθήματος</h2>
+<p>Σε αυτό το μάθημα εστιάζεις ειδικά στο <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>. Στο τέλος πρέπει να μπορείς να περιγράψεις το security model με δικά σου λόγια, να αναγνωρίζεις τα βασικά failure modes, να σχεδιάζεις ασφαλή test cases και να εξηγείς ποιο evidence χρειάζεται για να στηριχθεί ένα συμπέρασμα.</p>
+<h2>Θέματα που καλύπτονται</h2>
+<ul>
+<li><strong>Domain identity as a graph</strong>
+Για το <strong>Domain identity as a graph</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Kerberos actors</strong>
+Για το <strong>Kerberos actors</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>TGT and service-ticket flow</strong>
+Για το <strong>TGT and service-ticket flow</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>SPNs</strong>
+Για το <strong>SPNs</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>PAC and authorization data</strong>
+Για το <strong>PAC and authorization data</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>NTLM coexistence</strong>
+Για το <strong>NTLM coexistence</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Directory ACLs</strong>
+Για το <strong>Directory ACLs</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Group Policy</strong>
+Για το <strong>Group Policy</strong>, σύνδεσε το τεχνικό control με asset owner, data classification, business impact, retention και ανθρώπινη διαδικασία. Μέτρα αν μειώνει πραγματικό risk και αν μπορεί να επαληθευτεί με κατάλληλο audit evidence.</li>
+<li><strong>Delegation</strong>
+Για το <strong>Delegation</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Service accounts</strong>
+Για το <strong>Service accounts</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Trusts</strong>
+Για το <strong>Trusts</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Privileged administration tiers</strong>
+Για το <strong>Privileged administration tiers</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Attack-path thinking without credential theft</strong>
+Για το <strong>Attack-path thinking without credential theft</strong>, χαρτογράφησε principal/subject, credential ή authentication context, permissions, lifetime και revocation. Ξεχώρισε ποιο component πιστοποιεί την ταυτότητα από εκείνο που παίρνει την τελική authorization απόφαση.</li>
+<li><strong>Telemetry</strong>
+Στο <strong>Telemetry</strong>, όρισε πρώτα την αναμενόμενη συμπεριφορά και τις telemetry sources που πρέπει να τη δείχνουν. Συσχέτισε identity, process, network και χρόνο, κατέγραψε blind spots και ξεχώρισε observation από inference.</li>
+<li><strong>Safe domain lab</strong>
+Για το <strong>Safe domain lab</strong>, στο πλαίσιο του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, κατέγραψε (1) ποιο component ή actor έχει authority, (2) ποιο state/data αλλάζει, (3) ποια validation πρέπει να γίνει πριν από την αλλαγή και (4) ποιο log, trace, configuration ή test result αποδεικνύει ότι το control λειτουργεί.</li>
+<li><strong>Current-reference note</strong>
+Για το <strong>Current-reference note</strong>, ξεχώρισε normative specification από tutorial ή vendor summary. Κατέγραψε έκδοση/ημερομηνία, ποιο requirement στηρίζει το συμπέρασμα και ποιο μέρος του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong> χρειάζεται επανέλεγχο όταν αλλάξει η πηγή.</li>
+</ul>
+<h2>Μέθοδος ανάλυσης</h2>
+<p>Χρησιμοποίησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a> για scope, evidence, note-taking και κριτήρια ολοκλήρωσης. Για το <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>, πριν κάνεις οποιοδήποτε test σχεδίασε τα components, σημείωσε πού αλλάζει η εμπιστοσύνη και γράψε μία πρόταση που περιγράφει το security invariant που θέλεις να ελέγξεις.</p>
+<h2>Καθοδηγούμενο εργαστήριο</h2>
+<p>Ακολούθησε τη <a href="../el/hacking-authorized-lab-el.html">Μεθοδολογία Μελέτης</a>: γράψε expected result πριν το test, άλλαξε μία μεταβλητή κάθε φορά, κράτησε sanitized evidence και κάνε retest μετά το hardening του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong>.</p>
+<h2>Έλεγχος γνώσεων</h2>
+<ul>
+<li>Μπορείς να εξηγήσεις το βασικό trust boundary του <strong>Kerberos, Active Directory και Enterprise Identity Internals</strong> χωρίς σημειώσεις;</li>
+<li>Μπορείς να δώσεις ένα failure mode και να πεις ποιο evidence θα το επιβεβαίωνε;</li>
+<li>Μπορείς να ξεχωρίσεις symptom, root cause και compensating control;</li>
+<li>Μπορείς να σχεδιάσεις ασφαλές retest που δεν επεκτείνει το scope;</li>
+</ul>
+<h2>Πλήρες αγγλικό μάθημα</h2>
+<p><a href="../en/hgp-en-072.html">English Module 072</a></p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,64 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Browser security boundaries — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-271.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Browser security boundaries — origins, DOM text and authorization A static website&#x27;s trust boundaries A link or API URL is not safe just because its string begins with the expected…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Browser security boundaries — DedSec Project">
+<meta property="og:description" content="Browser security boundaries — origins, DOM text and authorization A static website&#x27;s trust boundaries A link or API URL is not safe just because its string begins with the expected…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-271.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Browser security boundaries — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Browser security boundaries — DedSec Project">
+<meta name="twitter:description" content="Browser security boundaries — origins, DOM text and authorization A static website&#x27;s trust boundaries A link or API URL is not safe just because its string begins with the expected…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Browser security boundaries — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Browser security boundaries — DedSec Project</h1><p>Browser security boundaries — origins, DOM text and authorization A static website&#x27;s trust boundaries A link or API URL is not safe just because its string begins with the expected…</p><section><h1>Browser security boundaries — origins, DOM text and authorization</h1>
+<h2>A static website's trust boundaries</h2>
+<p>A link or API URL is not safe just because its string begins with the expected hostname. The browser's same-origin policy compares scheme, host and port, not prefix text. The URL https://docs.example.test.evil/ is a different host, and https://docs.example.test@evil.example/ uses docs.example.test as username with evil.example as the actual host. Parse URLs before comparing origins. Even correct same-origin checks do not replace server-side authorization or input validation.</p>
+<h2>Executable Node 18+ URL fixture</h2>
+<p>Save as origin_lab.cjs and run node origin_lab.cjs. It exercises the standard URL parser without starting a browser, making any request or executing page scripts.</p>
+<pre><code class="language-javascript">const assert = require('node:assert/strict');
+const base = 'https://docs.example.test/';
+function sameOrigin(input) {
+  let url;
+  try { url = new URL(input, base); }
+  catch { return false; }
+  return url.protocol === 'https:' &amp;&amp;
+    url.origin === new URL(base).origin &amp;&amp;
+    !url.username &amp;&amp; !url.password;
+}
+assert(sameOrigin('/guide'));
+assert(sameOrigin('https://docs.example.test/article'));
+assert(!sameOrigin('https://docs.example.test.evil/'));
+assert(!sameOrigin('http://docs.example.test/'));
+assert(!sameOrigin('javascript:alert(1)'));
+assert(!sameOrigin('https://docs.example.test@evil.example/'));
+console.log('PASS: parsed origins and deceptive URLs');
+</code></pre>
+<h2>DOM and network distinctions</h2>
+<p>Use textContent for untrusted plain text; assigning it to innerHTML can turn data into HTML with active elements and event handlers. If rich HTML is unavoidable, use a vetted sanitizer and appropriate Content Security Policy; CSP helps defense-in-depth but does not eliminate the need for safe DOM construction. CORS is a browser mechanism controlling whether one origin can read specified cross-origin responses. It is not authentication, authorization, a CSRF defense, or a guarantee that a non-browser caller cannot issue the request. Cookies require appropriate SameSite, Secure and HttpOnly settings depending on the application's threat model.</p>
+<h2>Bounded verification</h2>
+<ol>
+<li>Test an exact same-origin path, a different subdomain, a scheme downgrade and a deceptive @ URL. State each resulting parsed origin.</li>
+<li>Build two elements in a disposable local HTML fixture: one inserts a sample string using textContent, the other innerHTML. Do not put attacker-controlled content on a live page; explain the difference.</li>
+<li>Change the allowed base port and see why origin equality changes even with the same hostname.</li>
+<li>Sketch a server route requiring user authorization. Show why setting Access-Control-Allow-Origin would not be sufficient to protect sensitive data.</li>
+</ol>
+<p><strong>Evidence:</strong> Node PASS, six URL cases, an explanation of XSS sink selection and a distinction between CORS and authorization. A real browser regression check is still separate.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

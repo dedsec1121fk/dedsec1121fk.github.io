@@ -1,0 +1,86 @@
+<!doctype html><html lang="el"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Συντομότερες διαδρομές Dijkstra — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/el/el-19.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Dijkstra — μη αρνητικά βάρη και ουρά προτεραιότητας Python 3 reference program Μηχανισμός Ο γράφος αντιστοιχίζει κάθε κόμβο σε ακμές (neighbor, weight). Η heap ανασύρει τη μικρότερη…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Συντομότερες διαδρομές Dijkstra — DedSec Project">
+<meta property="og:description" content="Dijkstra — μη αρνητικά βάρη και ουρά προτεραιότητας Python 3 reference program Μηχανισμός Ο γράφος αντιστοιχίζει κάθε κόμβο σε ακμές (neighbor, weight). Η heap ανασύρει τη μικρότερη…">
+<meta property="og:url" content="https://ded-sec.space/learn/el/el-19.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Συντομότερες διαδρομές Dijkstra — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Συντομότερες διαδρομές Dijkstra — DedSec Project">
+<meta name="twitter:description" content="Dijkstra — μη αρνητικά βάρη και ουρά προτεραιότητας Python 3 reference program Μηχανισμός Ο γράφος αντιστοιχίζει κάθε κόμβο σε ακμές (neighbor, weight). Η heap ανασύρει τη μικρότερη…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Συντομότερες διαδρομές Dijkstra — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Εναλλαγή φωτεινού ή σκοτεινού θέματος">☾ / ☀</button></header>
+ <main><h1>Συντομότερες διαδρομές Dijkstra — DedSec Project</h1><p>Dijkstra — μη αρνητικά βάρη και ουρά προτεραιότητας Python 3 reference program Μηχανισμός Ο γράφος αντιστοιχίζει κάθε κόμβο σε ακμές (neighbor, weight). Η heap ανασύρει τη μικρότερη…</p><section><h1>Dijkstra — μη αρνητικά βάρη και ουρά προτεραιότητας</h1>
+<h2>Python 3 reference program</h2>
+<pre><code class="language-python">import heapq
+def distances(graph, start):
+    dist = {start: 0}; heap = [(0, start)]
+    while heap:
+        cost, node = heapq.heappop(heap)
+        if cost != dist[node]: continue
+        for neighbor, weight in graph.get(node, []):
+            if weight &lt; 0: raise ValueError('negative weight')
+            candidate = cost + weight
+            if candidate &lt; dist.get(neighbor, float('inf')):
+                dist[neighbor] = candidate
+                heapq.heappush(heap, (candidate, neighbor))
+    return dist
+assert distances({'a':[('b',3),('c',1)],'c':[('b',1)]},'a')['b'] == 2
+</code></pre>
+<h2>Μηχανισμός</h2>
+<p>Ο γράφος αντιστοιχίζει κάθε κόμβο σε ακμές (neighbor, weight). Η heap ανασύρει τη μικρότερη προσωρινή απόσταση. Αν το ζεύγος που βγαίνει δεν συμφωνεί με dist[node], είναι παλιά εγγραφή και αγνοείται. Η ορθότητα της μεθόδου στηρίζεται σε <strong>μη αρνητικά βάρη</strong> των ακμών.</p>
+<h2>Ερμηνεία εξόδου</h2>
+<p>Για a→b=3, a→c=1 και c→b=1, η ελάχιστη απόσταση έως b είναι 2 μέσω c. Η συνάρτηση επιστρέφει <strong>αποστάσεις</strong>, όχι τις ίδιες τις διαδρομές. Μη προσβάσιμοι κόμβοι απουσιάζουν από το dict. Όταν η heap συγκρίνει tuples ίσου κόστους, οι κόμβοι πρέπει να μπορούν να συγκριθούν μεταξύ τους ή να χρησιμοποιηθεί tie-breaker counter.</p>
+<h2>Δοκιμές</h2>
+<ol>
+<li>Πρόσθεσε self-loop βάρους 0. Δεν πρέπει να δημιουργείται συνεχής βελτίωση της ίδιας απόστασης.</li>
+<li>Πρόσθεσε προσβάσιμη αρνητική ακμή. Η συνάρτηση δίνει ValueError· δεν υποστηρίζει αρνητικά shortest paths.</li>
+<li>Βάλε αρνητική ακμή σε αποσυνδεδεμένο τμήμα. Ίσως δεν εξεταστεί ποτέ, άρα η υλοποίηση δεν ελέγχει εκ των προτέρων <strong>ολόκληρο</strong> τον γράφο.</li>
+<li>Δοκίμασε δύο ισότιμα μονοπάτια. Η απόσταση πρέπει να είναι σωστή, όχι απαραίτητα κάποια συγκεκριμένη επιλογή predecessor.</li>
+<li>Ξεκίνα από κόμβο χωρίς adjacency. Το αποτέλεσμα περιέχει αυτόν με απόσταση 0.</li>
+</ol>
+<h2>Επέκταση</h2>
+<p>Αποθήκευσε predecessor σε κάθε επιτυχημένη relaxation για ανακατασκευή διαδρομής. Για αρνητικά βάρη μελέτησε Bellman–Ford και κύκλους. Με binary heap το συνηθισμένο κόστος είναι O((V+E)log V), με πιθανό χώρο heap ανάλογο του αριθμού relaxations.</p>
+<h2>10 dijkstra — έλεγχος ορίων</h2>
+<p>Η Dijkstra επιλέγει πρώτα τη μικρότερη προσωρινή απόσταση. Η ουρά μπορεί να περιέχει παλιές εγγραφές· ο έλεγχος <code>cost != dist[node]</code> τις αγνοεί. Αρνητικά βάρη ακυρώνουν τη λογική της μεθόδου.</p>
+<p>Μη προσβάσιμοι κόμβοι λείπουν από τον πίνακα αποστάσεων. Έλεγξε ακμές βάρους μηδέν και διαδρομή που βελτιώνεται μετά από αρχική ακριβότερη διαδρομή.</p>
+<p>&lt;!-- [curated-algorithm-detail:10_dijkstra.md] --&gt;</p>
+<h2>Παρωχημένες εγγραφές ουράς προτεραιότητας στον Dijkstra</h2>
+<p>Χωρίς decrease-key, μια συνηθισμένη υλοποίηση εισάγει νέο υποψήφιο όταν βρίσκει συντομότερη διαδρομή. Οι παλιές εγγραφές μένουν στον σωρό. Κατά την αφαίρεση σύγκρινε την υποψήφια απόσταση με την τρέχουσα καλύτερη και παράλειψε παρωχημένες τιμές. Αλλιώς η ίδια κορυφή επεκτείνεται ξανά και αλλάζει η ανάλυση απόδοσης.</p>
+<p>Ο Dijkstra απαιτεί μη αρνητικά βάρη. Έλεγχος μόνο ακμών προσβάσιμων από μία αφετηρία μπορεί να χάσει αρνητική ακμή αλλού· όρισε το εύρος επικύρωσης. Το δείγμα χρησιμοποιεί ακεραίους και ελέγχει μεταγενέστερη βελτίωση ακριβής διαδρομής.</p>
+<pre><code class="language-python">import heapq
+graph = {&quot;a&quot;:[(&quot;b&quot;,9),(&quot;c&quot;,1)], &quot;b&quot;:[], &quot;c&quot;:[(&quot;b&quot;,2)]}
+assert all(weight &gt;= 0 for edges in graph.values() for _,weight in edges)
+best = {&quot;a&quot;:0}; heap = [(0,&quot;a&quot;)]
+while heap:
+    cost,node = heapq.heappop(heap)
+    if cost != best[node]: continue
+    for nxt,weight in graph[node]:
+        candidate = cost + weight
+        if candidate &lt; best.get(nxt,float(&quot;inf&quot;)):
+            best[nxt] = candidate
+            heapq.heappush(heap,(candidate,nxt))
+assert best[&quot;b&quot;] == 3
+print(best)
+</code></pre>
+<p>Δοκίμασε μηδενικά βάρη και αποσυνδεδεμένες κορυφές. Αν τα αντικείμενα κόμβων δεν συγκρίνονται, πρόσθεσε αύξον κριτήριο ισοπαλίας αντί σύγκρισής τους στον σωρό. Απόφυγε βάρη NaN που καταστρέφουν τις παραδοχές διάταξης.</p>
+<p><a href="https://docs.python.org/3/library/heapq.html">Τεχνική αναφορά</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Αρχική</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Αποθετήριο Ιστοσελίδας</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

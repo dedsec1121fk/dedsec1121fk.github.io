@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html data-deployment="test" data-repository="dedsec1121fk/Test" lang="el">
+<head><script src="../../../assets/boot.js"></script>
+<!--MAINTAIN_PAGE: MAINTENANCE: Update title/description/canonical if you rename this page URL.-->
+<link href="../../Favicons/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>ButSystem.py — Δωρεάν μέσα στο DedSec Project</title>
+<meta content="#07060d" name="theme-color"/>
+<meta content="dark light" name="color-scheme"/>
+<meta content="Το ButSystem.py περιλαμβάνεται δωρεάν μέσα στο DedSec Project. Δες τι κάνει και πώς εντάσσεται στο local-first περιβάλλον του project." name="description"/>
+<link href="../../Favicons/favicon.ico" rel="icon" sizes="any"/>
+<link href="../../Favicons/favicon-32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="../../Favicons/favicon-48.png" rel="icon" sizes="48x48" type="image/png"/>
+<link href="../../Favicons/favicon-16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="../../Favicons/favicon-180.png" rel="apple-touch-icon" sizes="180x180"/>
+<link href="../../site.webmanifest" rel="manifest"/>
+<link href="../../Assets/vendor/fontawesome/css/all.min.css?v=20260807q" rel="stylesheet"/>
+<link href="../../style.css?v=20261009a" rel="stylesheet"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<meta content="DedSec Project" name="author"/>
+<meta content="strict-origin-when-cross-origin" name="referrer"/>
+
+
+
+<script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://ded-sec.space/#organization",
+      "name": "DedSec Project",
+      "url": "https://ded-sec.space/",
+      "logo": "https://ded-sec.space/Assets/Images/Logos/Black%20Purple%20Butterfly%20Logo.jpeg",
+      "sameAs": [
+        "https://github.com/dedsec1121fk/DedSec"
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://ded-sec.space/#website",
+      "url": "https://ded-sec.space/",
+      "name": "DedSec Project",
+      "publisher": {
+        "@id": "https://ded-sec.space/#organization"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://ded-sec.space/el/Pages/butsystem-exclusive.html#webpage",
+      "url": "https://ded-sec.space/el/Pages/butsystem-exclusive.html",
+      "name": "ButSystem.py — Δωρεάν μέσα στο DedSec Project",
+      "isPartOf": {
+        "@id": "https://ded-sec.space/#website"
+      },
+      "about": {
+        "@id": "https://ded-sec.space/#organization"
+      },
+      "inLanguage": "el"
+    }
+  ]
+}</script>
+<style>
+    .callout{border:1px solid rgba(255,255,255,.14); background:rgba(255,255,255,.04); padding:14px 16px; border-radius: 0px !important; margin-top:14px;}
+    .muted{opacity:.86;}
+    .nice-list{margin:10px 0 0 0; padding-left:18px;}
+    .nice-list li{margin:6px 0;}
+    .accordion{margin-top:10px;}
+    .acc-item{border:1px solid rgba(255,255,255,.12); border-radius: 0px !important; padding:10px 12px; margin:10px 0; background:rgba(255,255,255,.03);}
+    .acc-item summary{cursor:pointer; list-style:none; font-weight:800; display:flex; align-items:center;}
+    .acc-item summary::-webkit-details-marker{display:none;}
+    .acc-body{margin-top:10px;}
+
+    .butsystem-desc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:12px;}
+    .butsystem-desc-card{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);padding:16px 18px;border-radius: 0px !important;}
+    .butsystem-desc-card h3{margin:0 0 10px 0;font-size:1.02rem;line-height:1.3;display:flex;align-items:center;gap:10px;}
+    .butsystem-desc-card p{margin:0;}
+    .butsystem-desc-card i{opacity:.92;min-width:16px;text-align:center;}
+    @media (max-width: 820px){.butsystem-desc-grid{grid-template-columns:1fr;}}
+
+
+/* Compact ButSystem feature summary cards */
+.but-feature-summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;align-items:stretch;}
+.but-feature-summary .feature-card{padding:14px 16px !important;min-height:0 !important;height:auto !important;aspect-ratio:auto !important;border-radius: 0px !important;display:flex;flex-direction:column;justify-content:flex-start;}
+.but-feature-summary .feature-card-compact-head{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.but-feature-summary .feature-card i{font-size:1.45rem;margin:0;line-height:1;flex:0 0 auto;}
+.but-feature-summary .feature-card h3{margin:0;font-size:1.08rem;line-height:1.2;}
+.but-feature-summary .feature-card p{margin:0;font-size:.96rem;line-height:1.45;}
+@media (max-width:640px){
+  .but-feature-summary{grid-template-columns:repeat(2,minmax(0,1fr)) !important;}
+  .but-feature-summary .feature-card{padding:9px 7px !important;min-width:0 !important;}
+  .but-feature-summary .feature-card h3{font-size:.68rem !important;line-height:1.12 !important;}
+  .but-feature-summary .feature-card p{font-size:.56rem !important;line-height:1.22 !important;}
+}
+
+
+  </style>
+<link href="../../Assets/premium-theme.css?v=20261012safe1" rel="stylesheet"/><meta name="robots" content="noindex,nofollow"><link rel="stylesheet" href="../../Assets/vendor/fontawesome/css/all.min.css"><link rel="stylesheet" href="../../Assets/merged-retro.css"><script defer src="../../Assets/merged-retro.js"></script><!-- DEDSEC_TEST_SOCIAL_START -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="DedSec Project — Test">
+<meta property="og:title" content="ButSystem.py — Δωρεάν μέσα στο DedSec Project">
+<meta property="og:description" content="Το ButSystem.py περιλαμβάνεται δωρεάν μέσα στο DedSec Project. Δες τι κάνει και πώς εντάσσεται στο local-first περιβάλλον του project.">
+<meta property="og:url" content="https://ded-sec.space/Test/DedSec-Project-Website/dedsec/el/Pages/butsystem-exclusive.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:image" content="https://ded-sec.space/Test/DedSec-Project-Website/dedsec/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Test/DedSec-Project-Website/dedsec/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ButSystem.py — Δωρεάν μέσα στο DedSec Project — Προεπισκόπηση DedSec Project">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ButSystem.py — Δωρεάν μέσα στο DedSec Project">
+<meta name="twitter:description" content="Το ButSystem.py περιλαμβάνεται δωρεάν μέσα στο DedSec Project. Δες τι κάνει και πώς εντάσσεται στο local-first περιβάλλον του project.">
+<meta name="twitter:image" content="https://ded-sec.space/Test/DedSec-Project-Website/dedsec/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="ButSystem.py — Δωρεάν μέσα στο DedSec Project — Προεπισκόπηση DedSec Project">
+<!-- DEDSEC_TEST_SOCIAL_END -->
+<link rel="stylesheet" href="../../../assets/page-controls.css"></head>
+<body class="dark-theme butsystem-page"><header class="merged-topbar"><a class="merged-brand" href="../../../index.html"><img src="../../Assets/Images/Logos/White%20Purple%20Butterfly%20Logo.jpeg" alt=""><span>DedSec Project</span></a><div class="merged-actions"><a id="merged-search" class="merged-search" href="../../../index.html#library" aria-label="Search the knowledge archive" title="Search the knowledge archive"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"><circle cx="10.4" cy="10.4" r="6.4"/><path d="m15.3 15.3 6 6"/></svg></a><button type="button" id="merged-theme" class="merged-action" aria-label="Change theme"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M20.7 16.1A8.9 8.9 0 0 1 7.9 3.3a9.2 9.2 0 1 0 12.8 12.8Z"/></svg></button><button type="button" id="merged-lang" class="merged-action" aria-label="Change language">ΕΛ</button><a id="merged-home" class="merged-home" href="../../../index.html" aria-label="Home" title="Home"><svg class="ds-nav-glyph" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"><path d="m2.5 10.2 9.5-7.6 9.5 7.6V21h-6.6v-7H9.1v7H2.5z"/></svg></a></div></header>
+<!--MAINTAIN_SITE: Key maintenance: NAV links must match real files; global theme/language logic is in /script.js?v=20260807q -->
+
+<div class="page-content">
+<div class="page-header">
+<h1 data-en="ButSystem.py" data-gr="ButSystem.py">ButSystem.py</h1>
+<p data-en="ButSystem.py is a self-hosted, local-first private workspace for Termux that combines private communication, encrypted records, an advanced file vault, news and weather tools, and automatically generated local, Cloudflared, and Tor access links in one browser interface." data-gr="Το ButSystem.py είναι ένας αυτοφιλοξενούμενος, local-first ιδιωτικός χώρος εργασίας για Termux που συνδυάζει ιδιωτική επικοινωνία, κρυπτογραφημένες εγγραφές, προηγμένο vault αρχείων, ειδήσεις και καιρό, καθώς και αυτόματα δημιουργημένους τοπικούς συνδέσμους, Cloudflared και Tor σε ένα ενιαίο περιβάλλον browser.">Το ButSystem.py είναι ένας αυτοφιλοξενούμενος, local-first ιδιωτικός χώρος εργασίας για Termux που συνδυάζει ιδιωτική επικοινωνία, κρυπτογραφημένες εγγραφές, προηγμένο vault αρχείων, ειδήσεις και καιρό, καθώς και αυτόματα δημιουργημένους τοπικούς συνδέσμους, Cloudflared και Tor σε ένα ενιαίο περιβάλλον browser.</p>
+</div><div class="butsystem-free-banner"><i aria-hidden="true" class="fas fa-gift"></i><div><strong data-en="Exclusive to DedSec Project — included free" data-gr="Αποκλειστικό στο DedSec Project — περιλαμβάνεται δωρεάν">Αποκλειστικό στο DedSec Project — περιλαμβάνεται δωρεάν</strong><p data-en="ButSystem is one of the project’s most distinctive all-in-one systems, built specifically for the DedSec Project ecosystem. Despite that exclusive positioning, the version documented here is available free through the project files and repository." data-gr="Το ButSystem είναι ένα από τα πιο ξεχωριστά ολοκληρωμένα συστήματα του project και έχει δημιουργηθεί ειδικά για το οικοσύστημα του DedSec Project. Παρότι αποτελεί ένα από τα πιο αποκλειστικά εργαλεία του, η έκδοση που περιγράφεται εδώ διατίθεται δωρεάν μέσα από τα αρχεία και το repository.">Το ButSystem είναι ένα από τα πιο ξεχωριστά ολοκληρωμένα συστήματα του project και έχει δημιουργηθεί ειδικά για το οικοσύστημα του DedSec Project. Παρότι αποτελεί ένα από τα πιο αποκλειστικά εργαλεία του, η έκδοση που περιγράφεται εδώ διατίθεται δωρεάν μέσα από τα αρχεία και το repository.</p></div></div>
+<div class="content-section">
+<h2 data-en="Core ButSystem Feature Areas" data-gr="Βασικές Περιοχές Λειτουργιών Του ButSystem">Βασικές Περιοχές Λειτουργιών Του ButSystem</h2>
+<div class="callout">
+<p data-en="ButSystem.py brings chats, groups, stories, files, profiles, encrypted records, weather, news, security controls, admin tools, and flexible local or remote access together in one self-hosted interface." data-gr="Το ButSystem.py συγκεντρώνει συνομιλίες, ομάδες, stories, αρχεία, προφίλ, κρυπτογραφημένες εγγραφές, καιρό, ειδήσεις, ελέγχους ασφάλειας, εργαλεία διαχείρισης και ευέλικτη τοπική ή απομακρυσμένη πρόσβαση σε ένα αυτοφιλοξενούμενο περιβάλλον.">Το ButSystem.py συγκεντρώνει συνομιλίες, ομάδες, stories, αρχεία, προφίλ, κρυπτογραφημένες εγγραφές, καιρό, ειδήσεις, ελέγχους ασφάλειας, εργαλεία διαχείρισης και ευέλικτη τοπική ή απομακρυσμένη πρόσβαση σε ένα αυτοφιλοξενούμενο περιβάλλον.</p>
+</div>
+<div class="features-grid but-feature-summary">
+<div class="feature-card">
+<div class="feature-card-compact-head">
+<i class="fas fa-comments"></i>
+<h3 data-en="Chats, Groups &amp; Stories" data-gr="Συνομιλίες, Ομάδες &amp; Stories">Συνομιλίες, Ομάδες &amp; Stories</h3>
+</div>
+<p data-en="Live direct messages, group chats, saved messages, GIFs, voice notes, file sharing, the discussion room, stories, and call flows where browser and device support allow it." data-gr="Ζωντανά προσωπικά μηνύματα, ομαδικές συνομιλίες, αποθηκευμένα μηνύματα, GIFs, φωνητικές σημειώσεις, κοινή χρήση αρχείων, χώρος συζήτησης, stories και λειτουργίες κλήσεων όπου το browser και η συσκευή το υποστηρίζουν.">Ζωντανά προσωπικά μηνύματα, ομαδικές συνομιλίες, αποθηκευμένα μηνύματα, GIFs, φωνητικές σημειώσεις, κοινή χρήση αρχείων, χώρος συζήτησης, stories και λειτουργίες κλήσεων όπου το browser και η συσκευή το υποστηρίζουν.</p>
+</div>
+<div class="feature-card">
+<div class="feature-card-compact-head">
+<i class="fas fa-shield-halved"></i>
+<h3 data-en="Security, Access &amp; Control" data-gr="Ασφάλεια, Πρόσβαση &amp; Έλεγχος">Ασφάλεια, Πρόσβαση &amp; Έλεγχος</h3>
+</div>
+<p data-en="User approval, device access requests, remembered-device login, optional security-question 2FA, chat PIN locks, online status, reports, admin pages, and appearance or account settings." data-gr="Έγκριση χρηστών, αιτήματα πρόσβασης συσκευών, σύνδεση από αποθηκευμένη συσκευή, προαιρετικό 2FA με ερωτήσεις ασφαλείας, κλειδώματα συνομιλιών με PIN, κατάσταση σύνδεσης, αναφορές, σελίδες διαχείρισης και ρυθμίσεις εμφάνισης ή λογαριασμού.">Έγκριση χρηστών, αιτήματα πρόσβασης συσκευών, σύνδεση από αποθηκευμένη συσκευή, προαιρετικό 2FA με ερωτήσεις ασφαλείας, κλειδώματα συνομιλιών με PIN, κατάσταση σύνδεσης, αναφορές, σελίδες διαχείρισης και ρυθμίσεις εμφάνισης ή λογαριασμού.</p>
+</div>
+<div class="feature-card">
+<div class="feature-card-compact-head">
+<i class="fas fa-folder-open"></i>
+<h3 data-en="Profiles, Vault &amp; Tools" data-gr="Προφίλ, Vault &amp; Εργαλεία">Προφίλ, Vault &amp; Εργαλεία</h3>
+</div>
+<p data-en="Profile editing, an advanced private file vault, opt-in live locations, encrypted Profiler records with search, import, export, and combine tools, administrator bounty controls, and the built-in Face Detector." data-gr="Επεξεργασία προφίλ, προηγμένο ιδιωτικό vault αρχείων, προαιρετικές ζωντανές τοποθεσίες, κρυπτογραφημένες εγγραφές Profiler με αναζήτηση, εισαγωγή, εξαγωγή και συνδυασμό, διαχείριση bounties από administrator και το ενσωματωμένο Face Detector.">Επεξεργασία προφίλ, προηγμένο ιδιωτικό vault αρχείων, προαιρετικές ζωντανές τοποθεσίες, κρυπτογραφημένες εγγραφές Profiler με αναζήτηση, εισαγωγή, εξαγωγή και συνδυασμό, διαχείριση bounties από administrator και το ενσωματωμένο Face Detector.</p>
+</div>
+<div class="feature-card">
+<div class="feature-card-compact-head">
+<i class="fas fa-cloud-sun"></i>
+<h3 data-en="Weather, Links &amp; Sharing" data-gr="Καιρός, Σύνδεσμοι &amp; Κοινή Χρήση">Καιρός, Σύνδεσμοι &amp; Κοινή Χρήση</h3>
+</div>
+<p data-en="Search weather by place or current location, view detailed forecasts for up to 14 days, and use generated HTTPS, Cloudflared, or Tor links with downloadable QR codes. Vault files can also be shared through controlled links with optional passwords, expiry, and revocation." data-gr="Αναζήτησε καιρό βάσει τοποθεσίας ή τρέχουσας θέσης, δες αναλυτική πρόγνωση έως 14 ημερών και χρησιμοποίησε συνδέσμους HTTPS, Cloudflared ή Tor με QR κωδικούς για λήψη. Τα αρχεία του vault μπορούν επίσης να κοινοποιούνται μέσω ελεγχόμενων συνδέσμων με προαιρετικό κωδικό, λήξη και ανάκληση.">Αναζήτησε καιρό βάσει τοποθεσίας ή τρέχουσας θέσης, δες αναλυτική πρόγνωση έως 14 ημερών και χρησιμοποίησε συνδέσμους HTTPS, Cloudflared ή Tor με QR κωδικούς για λήψη. Τα αρχεία του vault μπορούν επίσης να κοινοποιούνται μέσω ελεγχόμενων συνδέσμων με προαιρετικό κωδικό, λήξη και ανάκληση.</p>
+</div>
+</div>
+</div>
+<div class="content-section">
+<h2 data-en="All Screens &amp; Buttons (Complete)" data-gr="Όλες Οι Οθόνες &amp; Κουμπιά (Πλήρες)">Όλες Οι Οθόνες &amp; Κουμπιά (Πλήρες)</h2>
+<p data-en="Instead of a long button-by-button list, this section explains each ButSystem area the same way the Learn page explains tools: by feature area, what you do there, and what kind of controls you will find when you open it." data-gr="Αντί για μια μεγάλη λίστα κουμπί-προς-κουμπί, αυτή η ενότητα εξηγεί κάθε περιοχή του ButSystem όπως η σελίδα Learn εξηγεί τα εργαλεία: ανά περιοχή λειτουργιών, τι κάνεις εκεί και τι είδους χειριστήρια θα βρεις όταν την ανοίξεις.">Αντί για μια μεγάλη λίστα κουμπί-προς-κουμπί, αυτή η ενότητα εξηγεί κάθε περιοχή του ButSystem όπως η σελίδα Learn εξηγεί τα εργαλεία: ανά περιοχή λειτουργιών, τι κάνεις εκεί και τι είδους χειριστήρια θα βρεις όταν την ανοίξεις.</p>
+<div class="butsystem-desc-grid">
+<div class="butsystem-desc-card">
+<h3 data-en="Navigation &amp; Menu Flow" data-gr="Πλοήγηση &amp; Ροή Μενού">Πλοήγηση &amp; Ροή Μενού<i class="fas fa-bars"></i><span>Navigation &amp; Menu Flow</span></h3>
+<p data-en="The burger menu is the main control hub of ButSystem. From there you move between chats, saved messages, discussion, groups, calls, stories, live locations, files, news, weather, profiles, Profiler, reports, notifications, admin pages, settings, help, and login or logout actions, while the language toggle keeps the interface available in both English and Greek." data-gr="Το μενού πλοήγησης είναι ο βασικός κόμβος ελέγχου του ButSystem. Από εκεί μετακινείσαι ανάμεσα σε συνομιλίες, αποθηκευμένα μηνύματα, συζητήσεις, ομάδες, κλήσεις, stories, ζωντανές τοποθεσίες, αρχεία, ειδήσεις, καιρό, προφίλ, Profiler, αναφορές, ειδοποιήσεις, σελίδες διαχείρισης, ρυθμίσεις, βοήθεια και ενέργειες σύνδεσης ή αποσύνδεσης. Η επιλογή γλώσσας διατηρεί το περιβάλλον διαθέσιμο στα Αγγλικά και στα Ελληνικά.">Το μενού πλοήγησης είναι ο βασικός κόμβος ελέγχου του ButSystem. Από εκεί μετακινείσαι ανάμεσα σε συνομιλίες, αποθηκευμένα μηνύματα, συζητήσεις, ομάδες, κλήσεις, stories, ζωντανές τοποθεσίες, αρχεία, ειδήσεις, καιρό, προφίλ, Profiler, αναφορές, ειδοποιήσεις, σελίδες διαχείρισης, ρυθμίσεις, βοήθεια και ενέργειες σύνδεσης ή αποσύνδεσης. Η επιλογή γλώσσας διατηρεί το περιβάλλον διαθέσιμο στα Αγγλικά και στα Ελληνικά.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Authentication &amp; Access" data-gr="Ταυτοποίηση &amp; Πρόσβαση">Ταυτοποίηση &amp; Πρόσβαση<i class="fas fa-key"></i><span>Authentication &amp; Access</span></h3>
+<p data-en="ButSystem opens through its landing, loading, login, and signup flow, then adds extra access control where needed. That includes user approval, device access requests, remembered-device login, optional security-question two-factor checks, and password recovery or reset actions so access stays tied to approved users and approved devices." data-gr="Το ButSystem ανοίγει μέσα από ροή αρχικής σελίδας, φόρτωσης, σύνδεσης και εγγραφής και μετά προσθέτει επιπλέον έλεγχο πρόσβασης όπου χρειάζεται. Αυτό περιλαμβάνει έγκριση χρήστη, αιτήματα πρόσβασης συσκευών, σύνδεση από αποθηκευμένη συσκευή, προαιρετικούς ελέγχους δύο παραγόντων με ερωτήσεις ασφαλείας και ενέργειες ανάκτησης ή επαναφοράς κωδικού ώστε η πρόσβαση να μένει δεμένη με εγκεκριμένους χρήστες και συσκευές.">Το ButSystem ανοίγει μέσα από ροή αρχικής σελίδας, φόρτωσης, σύνδεσης και εγγραφής και μετά προσθέτει επιπλέον έλεγχο πρόσβασης όπου χρειάζεται. Αυτό περιλαμβάνει έγκριση χρήστη, αιτήματα πρόσβασης συσκευών, σύνδεση από αποθηκευμένη συσκευή, προαιρετικούς ελέγχους δύο παραγόντων με ερωτήσεις ασφαλείας και ενέργειες ανάκτησης ή επαναφοράς κωδικού ώστε η πρόσβαση να μένει δεμένη με εγκεκριμένους χρήστες και συσκευές.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Direct Messages" data-gr="Άμεσα Μηνύματα">Άμεσα Μηνύματα<i class="fas fa-comments"></i><span>Direct Messages</span></h3>
+<p data-en="The DM area is built for day-to-day private conversation. You can open a chat, write and send text, edit or delete messages, search conversation content, attach media or files, use GIFs, record or play voice notes, and work with chat protections such as PIN locks and visible online status where those controls are enabled." data-gr="Η περιοχή προσωπικών μηνυμάτων είναι σχεδιασμένη για καθημερινές ιδιωτικές συνομιλίες. Μπορείς να στείλεις, να επεξεργαστείς ή να διαγράψεις μηνύματα, να αναζητήσεις περιεχόμενο, να επισυνάψεις πολυμέσα ή αρχεία, να χρησιμοποιήσεις GIF, να ηχογραφήσεις φωνητικές σημειώσεις και να ενεργοποιήσεις προστασίες όπως κλείδωμα με PIN και ένδειξη σύνδεσης.">Η περιοχή προσωπικών μηνυμάτων είναι σχεδιασμένη για καθημερινές ιδιωτικές συνομιλίες. Μπορείς να στείλεις, να επεξεργαστείς ή να διαγράψεις μηνύματα, να αναζητήσεις περιεχόμενο, να επισυνάψεις πολυμέσα ή αρχεία, να χρησιμοποιήσεις GIF, να ηχογραφήσεις φωνητικές σημειώσεις και να ενεργοποιήσεις προστασίες όπως κλείδωμα με PIN και ένδειξη σύνδεσης.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Discussion Room" data-gr="Discussion Room">Discussion Room<i class="fas fa-comment-dots"></i><span>Discussion Room</span></h3>
+<p data-en="Discussion works more like a shared stream than a one-to-one chat. It is the place for broader entries, category-based posting, search, refresh, loading more content, and opening a specific entry when you want a calmer shared space separate from normal DMs." data-gr="Η περιοχή «Συζήτηση» λειτουργεί ως κοινή ροή και όχι ως προσωπική συνομιλία. Προσφέρει δημοσιεύσεις ανά κατηγορία, αναζήτηση, ανανέωση, φόρτωση επιπλέον περιεχομένου και άνοιγμα συγκεκριμένων καταχωρήσεων σε έναν ήρεμο κοινόχρηστο χώρο, ξεχωριστό από τα προσωπικά μηνύματα.">Η περιοχή «Συζήτηση» λειτουργεί ως κοινή ροή και όχι ως προσωπική συνομιλία. Προσφέρει δημοσιεύσεις ανά κατηγορία, αναζήτηση, ανανέωση, φόρτωση επιπλέον περιεχομένου και άνοιγμα συγκεκριμένων καταχωρήσεων σε έναν ήρεμο κοινόχρηστο χώρο, ξεχωριστό από τα προσωπικά μηνύματα.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Groups" data-gr="Ομάδες">Ομάδες<i class="fas fa-user-group"></i><span>Groups</span></h3>
+<p data-en="The Groups area lets users build shared spaces with roles and moderation controls. You can create a group, invite or add members, check the member list, manage owner or admin actions such as promote, demote, or remove, leave a group when needed, and continue the conversation through the related group chat with messages and attachments." data-gr="Η περιοχή «Ομάδες» επιτρέπει τη δημιουργία κοινόχρηστων χώρων με ρόλους και εργαλεία εποπτείας. Μπορείς να δημιουργήσεις ομάδα, να προσκαλέσεις ή να προσθέσεις μέλη, να ελέγξεις τη λίστα τους, να διαχειριστείς ενέργειες ιδιοκτήτη ή διαχειριστή, να αποχωρήσεις όταν χρειάζεται και να συνεχίσεις τη συζήτηση στην αντίστοιχη ομαδική συνομιλία με μηνύματα και συνημμένα.">Η περιοχή «Ομάδες» επιτρέπει τη δημιουργία κοινόχρηστων χώρων με ρόλους και εργαλεία εποπτείας. Μπορείς να δημιουργήσεις ομάδα, να προσκαλέσεις ή να προσθέσεις μέλη, να ελέγξεις τη λίστα τους, να διαχειριστείς ενέργειες ιδιοκτήτη ή διαχειριστή, να αποχωρήσεις όταν χρειάζεται και να συνεχίσεις τη συζήτηση στην αντίστοιχη ομαδική συνομιλία με μηνύματα και συνημμένα.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Calls &amp; Live Communication" data-gr="Κλήσεις &amp; Live Επικοινωνία">Κλήσεις &amp; Live Επικοινωνία<i class="fas fa-phone"></i><span>Calls &amp; Live Communication</span></h3>
+<p data-en="Where browser support and device permissions allow it, ButSystem includes call flows for starting, joining, accepting, denying, muting, and ending a live call. The exact experience depends on microphone permissions and the current browser environment, so the call layer is treated as a live feature area rather than a static page." data-gr="Όπου το επιτρέπουν το πρόγραμμα περιήγησης και τα δικαιώματα της συσκευής, το ButSystem υποστηρίζει έναρξη, συμμετοχή, αποδοχή, απόρριψη, σίγαση και τερματισμό ζωντανής κλήσης. Η εμπειρία εξαρτάται από την άδεια μικροφώνου και το τρέχον περιβάλλον του προγράμματος περιήγησης.">Όπου το επιτρέπουν το πρόγραμμα περιήγησης και τα δικαιώματα της συσκευής, το ButSystem υποστηρίζει έναρξη, συμμετοχή, αποδοχή, απόρριψη, σίγαση και τερματισμό ζωντανής κλήσης. Η εμπειρία εξαρτάται από την άδεια μικροφώνου και το τρέχον περιβάλλον του προγράμματος περιήγησης.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Stories &amp; Live Locations" data-gr="Stories &amp; Live Τοποθεσίες">Stories &amp; Live Τοποθεσίες<i class="fas fa-location-dot"></i><span>Stories &amp; Live Locations</span></h3>
+<p data-en="ButSystem also covers lighter live-sharing tools. Stories provide creation, viewing, and reaction controls, while Live Locations is reserved for opt-in location sharing with start, stop, refresh, and clear consent or warning prompts before location data is actively shared." data-gr="Το ButSystem καλύπτει και πιο ελαφριά εργαλεία ζωντανής κοινοποίησης. Τα Stories παρέχουν χειριστήρια δημιουργίας, προβολής και αντιδράσεων, ενώ το Live Locations προορίζεται για προαιρετική κοινοποίηση τοποθεσίας με έναρξη, διακοπή, ανανέωση και σαφή μηνύματα συναίνεσης ή προειδοποίησης πριν κοινοποιηθεί ενεργά η τοποθεσία.">Το ButSystem καλύπτει και πιο ελαφριά εργαλεία ζωντανής κοινοποίησης. Τα Stories παρέχουν χειριστήρια δημιουργίας, προβολής και αντιδράσεων, ενώ το Live Locations προορίζεται για προαιρετική κοινοποίηση τοποθεσίας με έναρξη, διακοπή, ανανέωση και σαφή μηνύματα συναίνεσης ή προειδοποίησης πριν κοινοποιηθεί ενεργά η τοποθεσία.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Files, Vault &amp; Saved Media" data-gr="Αρχεία, Vault &amp; Αποθηκευμένα Media">Αρχεία, Vault &amp; Αποθηκευμένα Media<i class="fas fa-folder-open"></i><span>Files, Vault &amp; Saved Media</span></h3>
+<p data-en="The Files and Vault area works like a private server-style file manager. It supports folders and navigation, normal or chunked uploads with cancellation, search, categories, file-type filters, sorting, previews, opening and downloading, rename, move, bulk actions, deletion, comments, activity history, detailed size, MIME, and date metadata, optional SHA-256, and controlled share links with optional passwords, expiry times, and revocation." data-gr="Η περιοχή Αρχεία και Vault λειτουργεί σαν ιδιωτικός server-style file manager. Υποστηρίζει φακέλους και πλοήγηση, κανονικά ή τμηματικά uploads με ακύρωση, αναζήτηση, κατηγορίες, φίλτρα τύπου αρχείου, ταξινόμηση, προεπισκοπήσεις, άνοιγμα και λήψη, μετονομασία, μετακίνηση, μαζικές ενέργειες, διαγραφή, σχόλια, ιστορικό δραστηριότητας, αναλυτικά στοιχεία μεγέθους, MIME και ημερομηνιών, προαιρετικό SHA-256 και ελεγχόμενους συνδέσμους κοινής χρήσης με προαιρετικό κωδικό, χρόνο λήξης και ανάκληση.">Η περιοχή Αρχεία και Vault λειτουργεί σαν ιδιωτικός server-style file manager. Υποστηρίζει φακέλους και πλοήγηση, κανονικά ή τμηματικά uploads με ακύρωση, αναζήτηση, κατηγορίες, φίλτρα τύπου αρχείου, ταξινόμηση, προεπισκοπήσεις, άνοιγμα και λήψη, μετονομασία, μετακίνηση, μαζικές ενέργειες, διαγραφή, σχόλια, ιστορικό δραστηριότητας, αναλυτικά στοιχεία μεγέθους, MIME και ημερομηνιών, προαιρετικό SHA-256 και ελεγχόμενους συνδέσμους κοινής χρήσης με προαιρετικό κωδικό, χρόνο λήξης και ανάκληση.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Profile, Account &amp; Appearance" data-gr="Προφίλ, Λογαριασμός &amp; Εμφάνιση">Προφίλ, Λογαριασμός &amp; Εμφάνιση<i class="fas fa-user"></i><span>Profile, Account &amp; Appearance</span></h3>
+<p data-en="Your own profile area handles identity and account presentation. From there users can view or edit profile data, save changes, upload or remove a profile picture, adjust account settings, control appearance options, and access stronger account actions such as account deletion or the self-destruct danger zone where that workflow is enabled." data-gr="Η δική σου περιοχή προφίλ διαχειρίζεται την ταυτότητα και την παρουσίαση του λογαριασμού. Από εκεί οι χρήστες μπορούν να βλέπουν ή να επεξεργάζονται δεδομένα προφίλ, να αποθηκεύουν αλλαγές, να ανεβάζουν ή να αφαιρούν εικόνα προφίλ, να ρυθμίζουν ρυθμίσεις λογαριασμού, να ελέγχουν επιλογές εμφάνισης και να έχουν πρόσβαση σε ισχυρότερα ενέργειες λογαριασμού όπως διαγραφή λογαριασμού ή το επικίνδυνη ζώνη οριστικής διαγραφής όπου αυτό το ροή εργασίας είναι ενεργό.">Η δική σου περιοχή προφίλ διαχειρίζεται την ταυτότητα και την παρουσίαση του λογαριασμού. Από εκεί οι χρήστες μπορούν να βλέπουν ή να επεξεργάζονται δεδομένα προφίλ, να αποθηκεύουν αλλαγές, να ανεβάζουν ή να αφαιρούν εικόνα προφίλ, να ρυθμίζουν ρυθμίσεις λογαριασμού, να ελέγχουν επιλογές εμφάνισης και να έχουν πρόσβαση σε ισχυρότερα ενέργειες λογαριασμού όπως διαγραφή λογαριασμού ή το επικίνδυνη ζώνη οριστικής διαγραφής όπου αυτό το ροή εργασίας είναι ενεργό.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Profiler, Bounty &amp; Face Detector" data-gr="Profiler, Διαχείριση Υποθέσεων &amp; Face Detector">Profiler, Διαχείριση Υποθέσεων &amp; Face Detector<i class="fas fa-id-card"></i><span>Profiler, Bounty &amp; Face Detector</span></h3>
+<p data-en="The Profiler side is where ButSystem becomes a structured information workspace. It supports encrypted profiler entries, view and edit flows, local search, export and combine tools, bounty management where that module is enabled, and the built-in Face Detector area used for local face-detection workflows and similarity-style comparison support inside the broader ButSystem environment." data-gr="Η πλευρά του Profiler είναι εκεί όπου το ButSystem γίνεται δομημένος χώρος πληροφοριών. Υποστηρίζει κρυπτογραφημένες εγγραφές Profiler, ροές προβολής και επεξεργασίας, τοπική αναζήτηση, εργαλεία εξαγωγής και συνδυασμού, διαχείριση bounties όπου αυτό το module είναι ενεργό και την ενσωματωμένη περιοχή Face Detector που χρησιμοποιείται για τοπικές διαδικασίες ανίχνευσης προσώπου και υποστήριξη σύγκρισης ομοιότητας μέσα στο ευρύτερο περιβάλλον του ButSystem.">Η πλευρά του Profiler είναι εκεί όπου το ButSystem γίνεται δομημένος χώρος πληροφοριών. Υποστηρίζει κρυπτογραφημένες εγγραφές Profiler, ροές προβολής και επεξεργασίας, τοπική αναζήτηση, εργαλεία εξαγωγής και συνδυασμού, διαχείριση bounties όπου αυτό το module είναι ενεργό και την ενσωματωμένη περιοχή Face Detector που χρησιμοποιείται για τοπικές διαδικασίες ανίχνευσης προσώπου και υποστήριξη σύγκρισης ομοιότητας μέσα στο ευρύτερο περιβάλλον του ButSystem.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Reports, Admin &amp; Security Settings" data-gr="Reports, Admin &amp; Ρυθμίσεις Ασφάλειας">Reports, Admin &amp; Ρυθμίσεις Ασφάλειας<i class="fas fa-shield-halved"></i><span>Reports, Admin &amp; Security Settings</span></h3>
+<p data-en="The control layer of ButSystem is split across reports, admin pages, and security settings. This is where users create or update reports, where admins approve or deny access and device requests, manage people and user files, and where account holders configure two-factor settings, device-login rules, password-reset paths, privacy options, and other safeguards that keep the workspace organized and controlled." data-gr="Το επίπεδο ελέγχου του ButSystem χωρίζεται σε αναφορές, σελίδες διαχείρισης και ρυθμίσεις ασφάλειας. Εδώ οι χρήστες δημιουργούν ή ενημερώνουν αναφορές, εδώ οι διαχειριστές εγκρίνουν ή απορρίπτουν αιτήματα πρόσβασης και συσκευών, διαχειρίζονται άτομα και αρχεία χρηστών και εδώ οι κάτοχοι λογαριασμού ρυθμίζουν ρυθμίσεις ελέγχου δύο παραγόντων, κανόνες σύνδεσης συσκευών, διαδικασίες επαναφοράς κωδικού, επιλογές ιδιωτικότητας και άλλες δικλείδες που κρατούν το χώρος εργασίας οργανωμένο και ελεγχόμενο.">Το επίπεδο ελέγχου του ButSystem χωρίζεται σε αναφορές, σελίδες διαχείρισης και ρυθμίσεις ασφάλειας. Εδώ οι χρήστες δημιουργούν ή ενημερώνουν αναφορές, εδώ οι διαχειριστές εγκρίνουν ή απορρίπτουν αιτήματα πρόσβασης και συσκευών, διαχειρίζονται άτομα και αρχεία χρηστών και εδώ οι κάτοχοι λογαριασμού ρυθμίζουν ρυθμίσεις ελέγχου δύο παραγόντων, κανόνες σύνδεσης συσκευών, διαδικασίες επαναφοράς κωδικού, επιλογές ιδιωτικότητας και άλλες δικλείδες που κρατούν το χώρος εργασίας οργανωμένο και ελεγχόμενο.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="News &amp; Topic Feed" data-gr="Νέα &amp; Θεματική Ροή">Νέα &amp; Θεματική Ροή<i class="fas fa-newspaper"></i><span>News &amp; Topic Feed</span></h3>
+<p data-en="The News area gives the workspace a dedicated place for topic-based updates without mixing them into private chats. Users can open the feed, move between available topics, refresh the current view, and read updates from the same local interface used for the rest of ButSystem." data-gr="Η περιοχή Ειδήσεις δίνει στο χώρος εργασίας έναν ξεχωριστό χώρο για θεματικές ενημερώσεις χωρίς να ανακατεύονται με τα ιδιωτικές συνομιλίες. Οι χρήστες μπορούν να ανοίγουν το ροή ειδήσεων, να κινούνται ανάμεσα στα διαθέσιμα θέματα, να κάνουν ανανέωση στην τρέχουσα προβολή και να διαβάζουν ενημερώσεις από το ίδιο τοπικό περιβάλλον που χρησιμοποιείται για το υπόλοιπο ButSystem.">Η περιοχή Ειδήσεις δίνει στο χώρος εργασίας έναν ξεχωριστό χώρο για θεματικές ενημερώσεις χωρίς να ανακατεύονται με τα ιδιωτικές συνομιλίες. Οι χρήστες μπορούν να ανοίγουν το ροή ειδήσεων, να κινούνται ανάμεσα στα διαθέσιμα θέματα, να κάνουν ανανέωση στην τρέχουσα προβολή και να διαβάζουν ενημερώσεις από το ίδιο τοπικό περιβάλλον που χρησιμοποιείται για το υπόλοιπο ButSystem.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Weather &amp; Forecasts" data-gr="Καιρός &amp; Προβλέψεις">Καιρός &amp; Προβλέψεις<i class="fas fa-cloud-sun-rain"></i><span>Weather &amp; Forecasts</span></h3>
+<p data-en="Search by city, village, or postal code, use the device's current location, refresh results, and view current conditions plus forecasts for up to 14 days. The page can show current and apparent temperature, humidity, wind and gusts, precipitation, cloud cover, pressure, rain probability, UV, sunrise, and sunset. Coordinates are used for the request and are not saved by ButSystem." data-gr="Μπορείς να αναζητήσεις πόλη, χωριό ή ταχυδρομικό κώδικα, να χρησιμοποιήσεις την τρέχουσα τοποθεσία της συσκευής, να ανανεώσεις τα αποτελέσματα και να δεις τρέχουσες συνθήκες μαζί με πρόγνωση έως 14 ημερών. Η σελίδα μπορεί να εμφανίσει πραγματική και αισθητή θερμοκρασία, υγρασία, άνεμο και ριπές, βροχόπτωση, νεφοκάλυψη, πίεση, πιθανότητα βροχής, UV, ανατολή και δύση. Οι συντεταγμένες χρησιμοποιούνται για το αίτημα και δεν αποθηκεύονται από το ButSystem.">Μπορείς να αναζητήσεις πόλη, χωριό ή ταχυδρομικό κώδικα, να χρησιμοποιήσεις την τρέχουσα τοποθεσία της συσκευής, να ανανεώσεις τα αποτελέσματα και να δεις τρέχουσες συνθήκες μαζί με πρόγνωση έως 14 ημερών. Η σελίδα μπορεί να εμφανίσει πραγματική και αισθητή θερμοκρασία, υγρασία, άνεμο και ριπές, βροχόπτωση, νεφοκάλυψη, πίεση, πιθανότητα βροχής, UV, ανατολή και δύση. Οι συντεταγμένες χρησιμοποιούνται για το αίτημα και δεν αποθηκεύονται από το ButSystem.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Generated HTTPS, Cloudflared &amp; Tor Links" data-gr="Αυτόματοι Σύνδεσμοι HTTPS, Cloudflared &amp; Tor">Αυτόματοι Σύνδεσμοι HTTPS, Cloudflared &amp; Tor<i class="fas fa-link"></i><span>Generated HTTPS, Cloudflared &amp; Tor Links</span></h3>
+<p data-en="At startup, ButSystem serves local HTTPS with a generated self-signed certificate, prints LAN and localhost URLs, and automatically attempts a Cloudflared quick tunnel and a Tor hidden service. The landing page displays whichever links are available and generates a fresh downloadable QR code for each one." data-gr="Κατά την εκκίνηση, το ButSystem σερβίρει τοπικό HTTPS με αυτοδημιούργητο self-signed certificate, εμφανίζει συνδέσμους LAN και localhost και δοκιμάζει αυτόματα να δημιουργήσει Cloudflared quick tunnel και Tor hidden service. Η αρχική σελίδα εμφανίζει όσους συνδέσμους είναι διαθέσιμοι και δημιουργεί νέο QR κωδικό για λήψη για καθέναν από αυτούς.">Κατά την εκκίνηση, το ButSystem σερβίρει τοπικό HTTPS με αυτοδημιούργητο self-signed certificate, εμφανίζει συνδέσμους LAN και localhost και δοκιμάζει αυτόματα να δημιουργήσει Cloudflared quick tunnel και Tor hidden service. Η αρχική σελίδα εμφανίζει όσους συνδέσμους είναι διαθέσιμοι και δημιουργεί νέο QR κωδικό για λήψη για καθέναν από αυτούς.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Presence, Delivery &amp; Live State" data-gr="Παρουσία, Παράδοση &amp; Live Κατάσταση">Παρουσία, Παράδοση &amp; Live Κατάσταση<i class="fas fa-signal"></i><span>Presence, Delivery &amp; Live State</span></h3>
+<p data-en="ButSystem keeps active areas responsive with heartbeat-based online status, unread message counts, delivery and read state, polling for new direct or group messages, and live refresh paths for discussion, locations, calls, and other changing data. This makes the interface feel current without needing a separate desktop client." data-gr="Το ButSystem κρατά τις ενεργές περιοχές άμεσο και ενημερωμένο με κατάσταση σύνδεσης μέσω περιοδικού ελέγχου, μετρητές μη αναγνωσμένα μηνύματα, κατάσταση παράδοσης και ανάγνωσης, περιοδικό έλεγχο για νέα προσωπικά ή ομαδικά μηνύματα και ζωντανές διαδικασίες ανανέωσης για συζητήσεις, locations, calls και άλλα δεδομένα που αλλάζουν. Έτσι το περιβάλλον παραμένει ενημερωμένο χωρίς να χρειάζεται ξεχωριστό εφαρμογή υπολογιστή.">Το ButSystem κρατά τις ενεργές περιοχές άμεσο και ενημερωμένο με κατάσταση σύνδεσης μέσω περιοδικού ελέγχου, μετρητές μη αναγνωσμένα μηνύματα, κατάσταση παράδοσης και ανάγνωσης, περιοδικό έλεγχο για νέα προσωπικά ή ομαδικά μηνύματα και ζωντανές διαδικασίες ανανέωσης για συζητήσεις, locations, calls και άλλα δεδομένα που αλλάζουν. Έτσι το περιβάλλον παραμένει ενημερωμένο χωρίς να χρειάζεται ξεχωριστό εφαρμογή υπολογιστή.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Attachments, Previews &amp; Large Uploads" data-gr="Συνημμένα, Προεπισκοπήσεις &amp; Μεγάλα Αρχεία">Συνημμένα, Προεπισκοπήσεις &amp; Μεγάλα Αρχεία<i class="fas fa-paperclip"></i><span>Attachments, Previews &amp; Large Uploads</span></h3>
+<p data-en="Files are handled according to where they are used. Direct messages, groups, discussion, and stories support the relevant file, image, voice, or media attachments; profiles support profile pictures; and the vault adds previews, metadata, organization, sharing, and chunked transfer for larger uploads so they are not forced through one fragile request." data-gr="Τα αρχεία διαχειρίζονται ανάλογα με το σημείο χρήσης τους. Τα προσωπικά μηνύματα, οι ομάδες, οι συζητήσεις και τα stories υποστηρίζουν τα αντίστοιχα συνημμένα αρχεία, εικόνες, φωνητικό ή άλλο πολυμεσικό υλικό, τα προφίλ υποστηρίζουν εικόνες προφίλ και το vault προσθέτει προεπισκοπήσεις, metadata, οργάνωση, κοινή χρήση και τμηματική μεταφορά για μεγαλύτερα uploads ώστε να μην εξαρτώνται από ένα μόνο εύθραυστο αίτημα.">Τα αρχεία διαχειρίζονται ανάλογα με το σημείο χρήσης τους. Τα προσωπικά μηνύματα, οι ομάδες, οι συζητήσεις και τα stories υποστηρίζουν τα αντίστοιχα συνημμένα αρχεία, εικόνες, φωνητικό ή άλλο πολυμεσικό υλικό, τα προφίλ υποστηρίζουν εικόνες προφίλ και το vault προσθέτει προεπισκοπήσεις, metadata, οργάνωση, κοινή χρήση και τμηματική μεταφορά για μεγαλύτερα uploads ώστε να μην εξαρτώνται από ένα μόνο εύθραυστο αίτημα.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Local Data Protection &amp; Persistence" data-gr="Τοπική Προστασία Δεδομένων &amp; Μόνιμη Αποθήκευση">Τοπική Προστασία Δεδομένων &amp; Μόνιμη Αποθήκευση<i class="fas fa-database"></i><span>Local Data Protection &amp; Persistence</span></h3>
+<p data-en="Account records, settings, messages, encrypted text fields, keys, logs, and workspace data are kept in ButSystem's own local folders. The script prefers the phone's shared Homework storage when available so important app state can survive a Termux reinstall, while sensitive text and Profiler content use the built-in encryption layer." data-gr="Τα αρχεία λογαριασμών, ρυθμίσεις, messages, κρυπτογραφημένα πεδία κειμένου, κλειδιά, αρχεία καταγραφής και δεδομένα χώρου εργασίας διατηρούνται στους δικούς του τοπικούς φακέλους του ButSystem. Το script προτιμά το κοινόχρηστο φάκελο Homework του κινητού όταν είναι διαθέσιμο ώστε σημαντικό κατάσταση της εφαρμογής να μπορεί να επιβιώσει από επανεγκατάσταση του Termux, ενώ το ευαίσθητο κείμενο και το Profiler content χρησιμοποιούν το ενσωματωμένο επίπεδο κρυπτογράφησης.">Τα αρχεία λογαριασμών, ρυθμίσεις, messages, κρυπτογραφημένα πεδία κειμένου, κλειδιά, αρχεία καταγραφής και δεδομένα χώρου εργασίας διατηρούνται στους δικούς του τοπικούς φακέλους του ButSystem. Το script προτιμά το κοινόχρηστο φάκελο Homework του κινητού όταν είναι διαθέσιμο ώστε σημαντικό κατάσταση της εφαρμογής να μπορεί να επιβιώσει από επανεγκατάσταση του Termux, ενώ το ευαίσθητο κείμενο και το Profiler content χρησιμοποιούν το ενσωματωμένο επίπεδο κρυπτογράφησης.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Search, Export &amp; Record Workflows" data-gr="Αναζήτηση, Εξαγωγή &amp; Διαχείριση Εγγραφών">Αναζήτηση, Εξαγωγή &amp; Διαχείριση Εγγραφών<i class="fas fa-magnifying-glass"></i><span>Search, Export &amp; Record Workflows</span></h3>
+<p data-en="Several areas are designed for finding, filtering, and moving information instead of only displaying it. Users can search conversations, discussion entries, vault files, reports, and Profiler records; filter and sort the vault; open focused details; import, export, or combine Profiler records; and download attachments when a local copy is needed." data-gr="Αρκετές περιοχές είναι σχεδιασμένες για αναζήτηση, φιλτράρισμα και μετακίνηση πληροφοριών, όχι μόνο για προβολή. Οι χρήστες μπορούν να αναζητούν συνομιλίες, καταχωρήσεις συζητήσεων, αρχεία του vault, αναφορές και εγγραφές Profiler, να φιλτράρουν και να ταξινομούν το vault, να ανοίγουν αναλυτικές προβολές, να εισάγουν, να εξάγουν ή να συνδυάζουν εγγραφές Profiler και να κατεβάζουν συνημμένα όταν χρειάζονται τοπικό αντίγραφο.">Αρκετές περιοχές είναι σχεδιασμένες για αναζήτηση, φιλτράρισμα και μετακίνηση πληροφοριών, όχι μόνο για προβολή. Οι χρήστες μπορούν να αναζητούν συνομιλίες, καταχωρήσεις συζητήσεων, αρχεία του vault, αναφορές και εγγραφές Profiler, να φιλτράρουν και να ταξινομούν το vault, να ανοίγουν αναλυτικές προβολές, να εισάγουν, να εξάγουν ή να συνδυάζουν εγγραφές Profiler και να κατεβάζουν συνημμένα όταν χρειάζονται τοπικό αντίγραφο.</p>
+</div>
+<div class="butsystem-desc-card">
+<h3 data-en="Privacy Pause, Logs &amp; Recovery Controls" data-gr="Παύση Απορρήτου, Αρχεία Καταγραφής &amp; Έλεγχοι Ανάκτησης">Παύση Απορρήτου, Αρχεία Καταγραφής &amp; Έλεγχοι Ανάκτησης<i class="fas fa-user-shield"></i><span>Privacy Pause, Logs &amp; Recovery Controls</span></h3>
+<p data-en="The system includes operational safeguards for moments when access must be stopped or reviewed. Privacy pause and resume actions can temporarily protect the workspace, security events are written to local logs, admins can inspect log files, and recovery tools cover forgotten passwords, approved devices, forced sign-out, account deletion, and full reset workflows." data-gr="Το σύστημα περιλαμβάνει λειτουργικές δικλείδες ασφαλείας για στιγμές όπου η πρόσβαση πρέπει να σταματήσει ή να ελεγχθεί. Τα ενέργειες παύσης και επαναφοράς απορρήτου μπορούν να προστατεύσουν προσωρινά το χώρος εργασίας, τα συμβάντα ασφαλείας γράφονται σε τοπικά αρχεία καταγραφής, οι διαχειριστές μπορούν να επιθεωρούν αρχεία καταγραφής και τα εργαλεία ανάκτησης καλύπτουν ξεχασμένους κωδικούς, εγκεκριμένες συσκευές, υποχρεωτική αποσύνδεση, διαγραφή λογαριασμού και διαδικασίες πλήρους επαναφοράς.">Το σύστημα περιλαμβάνει λειτουργικές δικλείδες ασφαλείας για στιγμές όπου η πρόσβαση πρέπει να σταματήσει ή να ελεγχθεί. Τα ενέργειες παύσης και επαναφοράς απορρήτου μπορούν να προστατεύσουν προσωρινά το χώρος εργασίας, τα συμβάντα ασφαλείας γράφονται σε τοπικά αρχεία καταγραφής, οι διαχειριστές μπορούν να επιθεωρούν αρχεία καταγραφής και τα εργαλεία ανάκτησης καλύπτουν ξεχασμένους κωδικούς, εγκεκριμένες συσκευές, υποχρεωτική αποσύνδεση, διαγραφή λογαριασμού και διαδικασίες πλήρους επαναφοράς.</p>
+</div>
+</div>
+</div>
+<div class="content-section butsystem-reset-section">
+<h2 data-en="Forgot The Password? Start ButSystem Fresh" data-gr="Ξέχασες Τον Κωδικό; Ξεκίνα Το ButSystem Από Την Αρχή">Ξέχασες Τον Κωδικό; Ξεκίνα Το ButSystem Από Την Αρχή</h2>
+<p data-en="Use this only when recovery is impossible and you accept losing every old ButSystem account, password, setting, message, vault file, key, and log. Stop ButSystem first, then run the reset command for your platform and start ButSystem.py again so it creates a completely fresh workspace." data-gr="Χρησιμοποίησέ το μόνο όταν η ανάκτηση είναι αδύνατη και αποδέχεσαι ότι θα χαθούν όλοι οι παλιοί λογαριασμοί, κωδικοί, ρυθμίσεις, μηνύματα, αρχεία vault, κλειδιά και logs του ButSystem. Σταμάτησε πρώτα το ButSystem, τρέξε την εντολή reset για την πλατφόρμα σου και μετά άνοιξε ξανά το ButSystem.py ώστε να δημιουργήσει έναν εντελώς νέο χώρο εργασίας.">Χρησιμοποίησέ το μόνο όταν η ανάκτηση είναι αδύνατη και αποδέχεσαι ότι θα χαθούν όλοι οι παλιοί λογαριασμοί, κωδικοί, ρυθμίσεις, μηνύματα, αρχεία vault, κλειδιά και logs του ButSystem. Σταμάτησε πρώτα το ButSystem, τρέξε την εντολή reset για την πλατφόρμα σου και μετά άνοιξε ξανά το ButSystem.py ώστε να δημιουργήσει έναν εντελώς νέο χώρο εργασίας.</p>
+<div class="note note-warning"><p data-en="Warning: these commands permanently delete the saved ButSystem data folders. They do not delete the ButSystem.py script itself." data-gr="Προειδοποίηση: αυτές οι εντολές διαγράφουν μόνιμα τους φακέλους αποθηκευμένων δεδομένων του ButSystem. Δεν διαγράφουν το ίδιο το script ButSystem.py.">Προειδοποίηση: αυτές οι εντολές διαγράφουν μόνιμα τους φακέλους αποθηκευμένων δεδομένων του ButSystem. Δεν διαγράφουν το ίδιο το script ButSystem.py.</p></div>
+<h4>Termux (Android)</h4>
+<div class="code-container butsystem-reset-command"><button class="copy-btn" data-en="Copy" data-gr="Αντιγραφή" onclick="copyToClipboard(this, 'butsystem_reset_termux')" type="button">Αντιγραφή</button><code id="butsystem_reset_termux">rm -rf "$HOME/storage/shared/Homework/ButSystem" "/storage/emulated/0/Homework/ButSystem" "$HOME/Homework/ButSystem" "$HOME/ButSystem" "$HOME/.ButSystem_tor"</code></div>
+<h4>Ubuntu</h4>
+<div class="code-container butsystem-reset-command"><button class="copy-btn" data-en="Copy" data-gr="Αντιγραφή" onclick="copyToClipboard(this, 'butsystem_reset_ubuntu')" type="button">Αντιγραφή</button><code id="butsystem_reset_ubuntu">rm -rf "$HOME/Homework/ButSystem" "$HOME/ButSystem" "$HOME/.ButSystem_tor"</code></div>
+<h4>Kali Linux</h4>
+<div class="code-container butsystem-reset-command"><button class="copy-btn" data-en="Copy" data-gr="Αντιγραφή" onclick="copyToClipboard(this, 'butsystem_reset_kali')" type="button">Αντιγραφή</button><code id="butsystem_reset_kali">rm -rf "$HOME/Homework/ButSystem" "$HOME/ButSystem" "$HOME/.ButSystem_tor"</code></div>
+<h4>Linux Mint</h4>
+<div class="code-container butsystem-reset-command"><button class="copy-btn" data-en="Copy" data-gr="Αντιγραφή" onclick="copyToClipboard(this, 'butsystem_reset_mint')" type="button">Αντιγραφή</button><code id="butsystem_reset_mint">rm -rf "$HOME/Homework/ButSystem" "$HOME/ButSystem" "$HOME/.ButSystem_tor"</code></div>
+</div>
+</div>
+
+
+<footer class="merged-footer"><div class="footer-buttons"><a href="https://github.com/dedsec1121fk/DedSec" data-en="Main DedSec Project Repository" data-gr="Κύριο Repository DedSec Project">Main DedSec Project Repository</a></div><div class="footer-buttons"><a href="https://www.google.com/preferences/source?q=ded-sec.space" data-en="Set DedSec Project as Preferred Google Source" data-gr="Επιλογή DedSec Project ως προτιμώμενης πηγής Google">Set DedSec Project as Preferred Google Source</a></div><p data-en="If the main website is unavailable, use our backups." data-gr="Αν η κύρια ιστοσελίδα δεν λειτουργεί, χρησιμοποίησε τις εφεδρικές.">Αν η κύρια ιστοσελίδα δεν λειτουργεί, χρησιμοποίησε τις εφεδρικές.</p><div class="footer-buttons"><a href="https://ded-sec.online" data-en="Backup Website" data-gr="Εφεδρική Ιστοσελίδα">Backup Website</a><a href="https://github.com/sal-scar/DedSec" data-en="Backup Repository" data-gr="Εφεδρικό Repository">Backup Repository</a></div><p>© 2024–2026 DedSec Project. All Rights Reserved.</p><p>Made by dedsec1121fk.</p></footer><script src="../../../assets/page-controls.js"></script></body>
+</html>

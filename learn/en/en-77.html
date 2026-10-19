@@ -1,0 +1,69 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Logging metrics tracing and privacy — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-77.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Observability — structured events without leaking private inputs Scenario and acceptance criteria Record only bounded diagnostic metadata for an offline import: severity, stable…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Logging metrics tracing and privacy — DedSec Project">
+<meta property="og:description" content="Observability — structured events without leaking private inputs Scenario and acceptance criteria Record only bounded diagnostic metadata for an offline import: severity, stable…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-77.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Logging metrics tracing and privacy — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Logging metrics tracing and privacy — DedSec Project">
+<meta name="twitter:description" content="Observability — structured events without leaking private inputs Scenario and acceptance criteria Record only bounded diagnostic metadata for an offline import: severity, stable…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Logging metrics tracing and privacy — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Logging metrics tracing and privacy — DedSec Project</h1><p>Observability — structured events without leaking private inputs Scenario and acceptance criteria Record only bounded diagnostic metadata for an offline import: severity, stable…</p><section><h1>Observability — structured events without leaking private inputs</h1>
+<h2>Scenario and acceptance criteria</h2>
+<p>Record only bounded diagnostic metadata for an offline import: severity, stable machine-readable error code, short correlation ID, elapsed milliseconds and attempt number. Never include raw file contents, email addresses, authorization tokens or passwords. If someone tries to attach an unexpected field, fail instead of silently serializing sensitive data.</p>
+<h2>Executable lab</h2>
+<p>Save as <code>15_observability.py</code> and run with Python 3 and the standard library. The fixture does not use real personal files or network services.</p>
+<pre><code class="language-python">import json, re
+ALLOWED = {&quot;duration_ms&quot;, &quot;attempt&quot;}
+def event(level, code, trace_id, **fields):
+    if level not in {&quot;INFO&quot;,&quot;ERROR&quot;}:
+        raise ValueError(&quot;invalid severity&quot;)
+    if not re.fullmatch(r&quot;[a-f0-9]{8}&quot;, trace_id):
+        raise ValueError(&quot;invalid correlation ID&quot;)
+    if set(fields) - ALLOWED:
+        raise ValueError(&quot;unexpected or sensitive field&quot;)
+    if &quot;duration_ms&quot; in fields and (type(fields[&quot;duration_ms&quot;]) is not int or fields[&quot;duration_ms&quot;] &lt; 0):
+        raise ValueError(&quot;duration outside range&quot;)
+    if &quot;attempt&quot; in fields and (type(fields[&quot;attempt&quot;]) is not int or fields[&quot;attempt&quot;] &lt; 1):
+        raise ValueError(&quot;invalid attempt&quot;)
+    return json.dumps({&quot;level&quot;:level,&quot;code&quot;:code,&quot;trace&quot;:trace_id,**fields},
+                      ensure_ascii=False,sort_keys=True)
+line = event(&quot;ERROR&quot;,&quot;IMPORT_FAILED&quot;,&quot;deadbeef&quot;,duration_ms=12,attempt=1)
+assert json.loads(line)[&quot;duration_ms&quot;] == 12
+assert &quot;\n&quot; not in line
+for extra in ({&quot;password&quot;:&quot;secret&quot;},{&quot;email&quot;:&quot;a@example.invalid&quot;}):
+    try: event(&quot;INFO&quot;,&quot;TRY&quot;,&quot;deadbeef&quot;,**extra)
+    except ValueError: pass
+    else: raise AssertionError(&quot;sensitive field accepted&quot;)
+print(&quot;PASS structured log allowlist&quot;)
+</code></pre>
+<h2>Technical interpretation</h2>
+<p>A structured JSON event can be parsed and aggregated without fragile string splitting. Correlation IDs let separate events from the same operation be connected; they must not become a replacement for secret session tokens. Severity and error codes should describe verified outcomes: a UI click is not evidence that a file save completed. Whitelisting metadata is safer than repeatedly trying to scrub unknown data structures. Event volume, retention and storage access also need explicit limits in a real application.</p>
+<h2>Bounded experiments</h2>
+<p>Add a test for an unknown field and invalid correlation ID. Print a valid Greek error message using ensure_ascii=False while preserving a stable ASCII event code. Inject newlines into a field and confirm the JSON encoder cannot create extra physical log records. Distinguish import_start from import_success and log the latter only after a completed write.</p>
+<h2>Diagnostics</h2>
+<p>If logs appear empty, check whether code paths emit events after actual success or failure. If a field contains private text, remove it at the logging call boundary rather than relying solely on later redaction. Test dashboard counts against known synthetic outcomes to detect missing or doubled events.</p>
+<h2>Further engineering detail</h2>
+<p>Filter structured event fields before serialization and before forwarding to any sink. A regular expression over a final log line cannot reliably find a secret nested inside an exception or request object. Include negative fixtures with fake credentials and check the retained diagnostic fields as well as the absence of the secrets.</p>
+<p><a href="../en/fieldnotes-en-44.html">Structured log redaction before serialization</a></p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

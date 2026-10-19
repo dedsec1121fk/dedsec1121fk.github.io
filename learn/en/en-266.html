@@ -1,0 +1,106 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Web platform fundamentals: protocols, accessibility and async state — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/en-266.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Web platform fundamentals: protocols, accessibility and async state HTTP request and response Practical explanation An HTTP request has a method, target and headers, while a response…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Web platform fundamentals: protocols, accessibility and async state — DedSec Project">
+<meta property="og:description" content="Web platform fundamentals: protocols, accessibility and async state HTTP request and response Practical explanation An HTTP request has a method, target and headers, while a response…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/en-266.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Web platform fundamentals: protocols, accessibility and async state — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Web platform fundamentals: protocols, accessibility and async state — DedSec Project">
+<meta name="twitter:description" content="Web platform fundamentals: protocols, accessibility and async state HTTP request and response Practical explanation An HTTP request has a method, target and headers, while a response…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Web platform fundamentals: protocols, accessibility and async state — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Web platform fundamentals: protocols, accessibility and async state — DedSec Project</h1><p>Web platform fundamentals: protocols, accessibility and async state HTTP request and response Practical explanation An HTTP request has a method, target and headers, while a response…</p><section><h2>HTTP request and response</h2>
+<h3>Practical explanation</h3>
+<p>An HTTP request has a method, target and headers, while a response carries a status and headers followed by a body when appropriate. Successful TCP transport does not imply HTTP 2xx.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-http">GET /health HTTP/1.1
+Host: example.test
+Accept: application/json
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+
+{&quot;ok&quot;:true}
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Compare status 200, 404 and 503. Describe whether each should be retried and how the client checks Content-Type before attempting JSON parsing.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for HTTP request and response from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+<h2>REST and resource modeling</h2>
+<h3>Practical explanation</h3>
+<p>A resource-oriented API uses stable identifiers and HTTP method semantics. GET should be safe, PUT is idempotent by definition when properly implemented, while repeated POST can create duplicate resources.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-http">GET /tasks/5 HTTP/1.1
+Host: example.test
+
+PUT /tasks/5 HTTP/1.1
+Host: example.test
+Content-Type: application/json
+
+{&quot;title&quot;:&quot;Ready&quot;}
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Design a 404 response for missing task 5 and test repeated identical PUTs. Explain how URI identifies a resource independent of its representation.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for REST and resource modeling from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+<h2>Caching and freshness</h2>
+<h3>Problem and mental model</h3>
+<p>Freshness and storage lifetime are different. Cache-Control: max-age=60 permits a cached representation to be reused while fresh; once stale, an If-None-Match request can ask whether the ETag changed. An HTTP 304 reuses the existing body under cache rules; a changed representation returns a fresh 200.</p>
+<h3>Reproducible illustration</h3>
+<pre><code class="language-http">HTTP/1.1 200 OK
+Cache-Control: public, max-age=60
+ETag: &quot;guide-v1&quot;
+
+GET /guide HTTP/1.1
+If-None-Match: &quot;guide-v1&quot;
+</code></pre>
+<h3>Independent validation</h3>
+<p>Draw a timeline: at t=0 the 200 is cached; at t=30 it can be reused without revalidation; at t=61 a conditional request checks the origin. Test both a 304 and updated 200. Never publicly cache private account responses; compare private, no-store, and Vary.</p>
+<p><strong>Authoritative documentation:</strong> https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching</p>
+<h2>HTML accessibility</h2>
+<h3>Practical explanation</h3>
+<p>Accessible HTML communicates roles and labels through semantics: a button is interactive, a heading structures content and a label names a form control. Visual appearance alone is insufficient.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-html">&lt;label for=&quot;search&quot;&gt;Search lessons&lt;/label&gt;
+&lt;input id=&quot;search&quot; type=&quot;search&quot;&gt;
+&lt;button type=&quot;button&quot;&gt;Open results&lt;/button&gt;
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Navigate only with a keyboard, verify focus order and run a screen-reader check. Replace button with div and explain what keyboard behavior is lost.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for HTML accessibility from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+<h2>JavaScript events and asynchronous state</h2>
+<h3>Practical explanation</h3>
+<p>Event handlers can initiate asynchronous work whose results arrive out of order. Assign an increasing request ID to prevent an old response from overwriting a newer search result.</p>
+<h3>Worked illustration</h3>
+<pre><code class="language-javascript">let latest=0;
+async function search(term,fetchRows){
+  const ticket=++latest;
+  const rows=await fetchRows(term);
+  return ticket===latest?rows:null;
+}
+</code></pre>
+<h3>Realistic exercise</h3>
+<p>Create two controlled Promises, resolve the newer request first and prove the older result is ignored. Distinguish debounce from stale-result cancellation.</p>
+<h3>Review the actual contract</h3>
+<p>Describe how a caller can distinguish valid behavior for JavaScript events and asynchronous state from a silent failure. Check both a normal input and a boundary input, recording the source version and observed result.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

@@ -1,0 +1,129 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Container and Kubernetes Isolation Internals — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-075.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Container and Kubernetes Isolation Internals Purpose: Move from basic container security into runtime internals, workload identity, Kubernetes authorization, pod security boundaries, and…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Container and Kubernetes Isolation Internals — DedSec Project">
+<meta property="og:description" content="Container and Kubernetes Isolation Internals Purpose: Move from basic container security into runtime internals, workload identity, Kubernetes authorization, pod security boundaries, and…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-075.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Container and Kubernetes Isolation Internals — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Container and Kubernetes Isolation Internals — DedSec Project">
+<meta name="twitter:description" content="Container and Kubernetes Isolation Internals Purpose: Move from basic container security into runtime internals, workload identity, Kubernetes authorization, pod security boundaries, and…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Container and Kubernetes Isolation Internals — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Container and Kubernetes Isolation Internals — DedSec Project</h1><p>Container and Kubernetes Isolation Internals Purpose: Move from basic container security into runtime internals, workload identity, Kubernetes authorization, pod security boundaries, and…</p><section><blockquote>
+<p><strong>Purpose:</strong> Move from basic container security into runtime internals, workload identity, Kubernetes authorization, pod security boundaries, and cluster-level blast-radius reasoning.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>Explain how container runtime isolation is assembled from Linux primitives.</li>
+<li>Understand Kubernetes API authentication, authorization, admission, controllers, and workload identity.</li>
+<li>Identify dangerous pod/runtime configuration without attempting container escape.</li>
+<li>Reason about service accounts, RBAC, secrets, network policy, admission, and node trust.</li>
+<li>Design safe cluster validation tests.</li>
+</ul>
+<h2>Container boundary recap</h2>
+<p>A container is a process isolated by namespaces and constrained using capabilities, cgroups, seccomp/LSM policy, filesystem mounts, and runtime configuration. It shares the host kernel. Therefore, a container boundary depends on both runtime configuration and kernel correctness.</p>
+<p>The highest-risk configurations intentionally remove isolation: privileged mode, host PID/network namespaces, broad host mounts, device access, excessive capabilities, or access to the runtime socket.</p>
+<h2>Kubernetes control plane</h2>
+<p>Kubernetes adds an orchestration/control plane around workloads. Major security-relevant components include:</p>
+<ul>
+<li>API server;</li>
+<li>authentication mechanisms;</li>
+<li>RBAC/authorization;</li>
+<li>admission control;</li>
+<li>controllers;</li>
+<li>scheduler;</li>
+<li>kubelet/node agents;</li>
+<li>etcd/state storage;</li>
+<li>cluster networking;</li>
+<li>workload/service-account identity.</li>
+</ul>
+<p>The API server is the central policy gateway for desired-state changes.</p>
+<h2>Authentication and authorization</h2>
+<p>Kubernetes can authenticate users and workloads through several mechanisms. After authentication, authorization—commonly RBAC—determines whether a subject may perform a verb on a resource within a scope.</p>
+<p>RBAC is powerful because permissions can create other permissions. A role that can create pods may indirectly gain access to service-account tokens, mounted secrets, or node capabilities depending on cluster policy. Analyze effective privilege, not only role names.</p>
+<h2>Service accounts</h2>
+<p>Pods often run with a Kubernetes service account. Tokens should have only the API permissions the workload requires. Modern projected service-account tokens are audience/lifetime bounded compared with historical long-lived token patterns.</p>
+<p>Disable automatic token mounting for workloads that do not call the Kubernetes API.</p>
+<h2>Admission control</h2>
+<p>Admission controllers evaluate API objects after authentication/authorization but before persistence. They can enforce pod security, image policy, required labels, allowed registries, resource limits, signature checks, or organization-specific invariants.</p>
+<p>Authorization answers “may this caller create a pod?” Admission can answer “is this pod specification acceptable?”</p>
+<h2>Pod security settings</h2>
+<p>Review workloads for:</p>
+<ul>
+<li>non-root user;</li>
+<li>no privilege escalation;</li>
+<li>minimal/drop capabilities;</li>
+<li>read-only root filesystem where feasible;</li>
+<li>seccomp profile;</li>
+<li>SELinux/AppArmor policy where available;</li>
+<li>no privileged mode;</li>
+<li>no host namespaces unless required;</li>
+<li>no broad hostPath mounts;</li>
+<li>controlled device access;</li>
+<li>resource limits.</li>
+</ul>
+<p>These settings constrain the consequences of a compromised application.</p>
+<h2>Secrets</h2>
+<p>Kubernetes Secrets are API objects, not a magical hardware vault. Access depends on RBAC, etcd encryption/configuration, node/pod exposure, and external secret integration. A pod that can read a secret effectively possesses it during runtime.</p>
+<p>Prefer workload identity and short-lived credentials where services support them.</p>
+<h2>Network policy</h2>
+<p>By default, many clusters allow broad pod-to-pod communication unless a network plugin/policy restricts it. NetworkPolicy can define allowed ingress/egress at workload labels/namespaces depending on implementation.</p>
+<p>Segmentation reduces lateral reach but does not replace application authentication.</p>
+<h2>Node trust</h2>
+<p>A node runs many pods and interacts with the control plane. Node compromise can affect workloads scheduled there and potentially credentials/tokens available to that node. Protect kubelet interfaces, node credentials, host OS, runtime, kernel, and cloud instance permissions.</p>
+<p>Separate highly sensitive workloads where stronger isolation is required; consider sandboxed runtimes or VM-based isolation for specific threat models.</p>
+<h2>Runtime socket risk</h2>
+<p>Access to a container runtime management socket can grant extremely broad control over host workloads. Do not mount runtime sockets into ordinary application containers merely for convenience. If an automation component truly needs runtime management, isolate and constrain it as privileged infrastructure.</p>
+<h2>Image supply chain</h2>
+<p>Images should have known provenance, minimal content, pinned dependencies, vulnerability scanning, signature/attestation where appropriate, and reproducible build metadata. Runtime policy should complement CI controls.</p>
+<p>Avoid mutable tags for security-critical deployment decisions when immutable digests are available.</p>
+<h2>Kubernetes audit telemetry</h2>
+<p>API audit logs can show who requested which resource operation, from where, and with what result, depending on policy. Combine them with workload, node, cloud, admission, and network telemetry for investigation.</p>
+<p>A detection should identify a meaningful behavior, such as unexpected privileged pod creation, broad RBAC changes, secret access anomalies, or service-account use from unusual contexts.</p>
+<h2>Safe cluster lab</h2>
+<p>Use a disposable local cluster such as a VM-based or development cluster. Create two namespaces and synthetic service accounts. Grant one account read-only access to ConfigMaps in its namespace. Verify allowed and denied API operations using supported administrative tooling.</p>
+<p>Then deploy a benign pod with deliberately weak security settings, inspect why policy allows it, and tighten an admission/pod security configuration. Do not attempt node/container escape.</p>
+<h2>Attack-path reasoning</h2>
+<p>A cluster privilege graph can include:</p>
+<p><code>service account → RBAC create pods → pod can use stronger service account → access to namespace secret → cloud credential → external resource</code>.</p>
+<p>The correct remediation can be at any edge: reduce RBAC, block service-account selection, remove secret, use workload identity, constrain network/cloud IAM, or isolate workloads.</p>
+<h2>Guided study workflow</h2>
+<h3>Before you begin</h3>
+<p>Complete Modules 19, 21, 24, 41, 49, 74, and 76 when available.</p>
+<h3>Practice task</h3>
+<p>Build a Kubernetes privilege graph for a tiny local cluster: users, service accounts, roles, role bindings, namespaces, secrets, pods, nodes, and external identity. Remove one unnecessary privilege edge and verify denial.</p>
+<h3>Evidence to keep</h3>
+<p>RBAC manifests, pod security settings, denied/allowed API evidence, privilege graph, and audit excerpt if enabled.</p>
+<h3>Common mistakes to avoid</h3>
+<ul>
+<li>assuming RBAC names imply actual privilege;</li>
+<li>granting cluster-admin to fix deployment problems;</li>
+<li>mounting runtime sockets casually;</li>
+<li>treating Secrets as automatically encrypted from every threat;</li>
+<li>attempting escape techniques instead of proving dangerous configuration through policy evidence.</li>
+</ul>
+<h3>Mastery check</h3>
+<p>Explain how Kubernetes authorization and Linux isolation combine, then trace one hypothetical workload-to-cloud attack path and identify controls at each edge.</p>
+<h3>Continue with</h3>
+<p>Modules <strong>76, 80, 81, and 85</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

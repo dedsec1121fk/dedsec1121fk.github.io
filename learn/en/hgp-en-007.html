@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Malware Concepts, Analysis and Defensive Triage — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-007.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Malware Concepts, Analysis and Defensive Triage Malware is software or code intentionally used to violate a security property: steal information, disrupt operations, gain unauthorized…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Malware Concepts, Analysis and Defensive Triage — DedSec Project">
+<meta property="og:description" content="Malware Concepts, Analysis and Defensive Triage Malware is software or code intentionally used to violate a security property: steal information, disrupt operations, gain unauthorized…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-007.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Malware Concepts, Analysis and Defensive Triage — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Malware Concepts, Analysis and Defensive Triage — DedSec Project">
+<meta name="twitter:description" content="Malware Concepts, Analysis and Defensive Triage Malware is software or code intentionally used to violate a security property: steal information, disrupt operations, gain unauthorized…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Malware Concepts, Analysis and Defensive Triage — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Malware Concepts, Analysis and Defensive Triage — DedSec Project</h1><p>Malware Concepts, Analysis and Defensive Triage Malware is software or code intentionally used to violate a security property: steal information, disrupt operations, gain unauthorized…</p><section><p>Malware is software or code intentionally used to violate a security property: steal information, disrupt operations, gain unauthorized control, persist, spy, encrypt data, or abuse system resources. Security professionals need to understand malware behavior without developing or deploying harmful code.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> Analyze malware only in an isolated environment you control and only when you are authorized to possess the sample. Prefer harmless training samples, known test strings, prerecorded telemetry, or intentionally non-malicious binaries when learning.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>classify malware by behavior rather than sensational labels;</li>
+<li>understand infection, execution, persistence, command-and-control, and impact as behavioral stages;</li>
+<li>perform safe static and behavioral triage;</li>
+<li>identify useful host and network evidence;</li>
+<li>distinguish indicators of compromise from durable behavioral detections;</li>
+<li>design containment and recovery steps.</li>
+</ul>
+<h2>Malware categories</h2>
+<p>Common labels include trojan, worm, ransomware, spyware, downloader, bot, rootkit, wiper, cryptominer, and information stealer. Real malware can combine several behaviors, so defenders should record what the sample actually does rather than assuming the label describes every capability.</p>
+<h2>Initial triage</h2>
+<p>Before execution, collect basic evidence:</p>
+<ul>
+<li>cryptographic hash;</li>
+<li>file type and architecture;</li>
+<li>digital-signature status;</li>
+<li>size and timestamps, while remembering timestamps can be misleading;</li>
+<li>printable strings and embedded configuration where safe;</li>
+<li>import/library information;</li>
+<li>packaging or compression indicators;</li>
+<li>source and chain of custody.</li>
+</ul>
+<p>Do not upload confidential samples or documents to public analysis services unless policy explicitly permits it.</p>
+<h2>Static analysis</h2>
+<p>Static analysis inspects a file without running it. It can reveal executable format, imported APIs, strings, resources, metadata, and code structure. Obfuscation and packing reduce visibility, so absence of obvious malicious strings is not evidence of safety.</p>
+<p>Modules 64, 67, and 79 cover executable formats, reverse engineering, and malware analysis in greater depth.</p>
+<h2>Behavioral analysis</h2>
+<p>Behavioral analysis observes what a sample does in a controlled sandbox. Useful evidence includes:</p>
+<ul>
+<li>process tree and parent/child relationships;</li>
+<li>file and registry/configuration changes;</li>
+<li>service or scheduled-task changes;</li>
+<li>DNS and network destinations;</li>
+<li>loaded libraries;</li>
+<li>authentication or privilege events;</li>
+<li>security-control changes;</li>
+<li>created mutexes, sockets, pipes, or other IPC objects.</li>
+</ul>
+<p>A learning lab should use a harmless program that performs known actions, such as creating a file, starting a child process, and making a request to a localhost service. The objective is learning telemetry, not creating malicious behavior.</p>
+<h2>Persistence and privilege</h2>
+<p>Persistence describes mechanisms that cause code to execute again later. Privilege describes the authority available to that code. They are separate questions: a persistent process can have low privilege, while a one-time process can execute with high privilege.</p>
+<p>Defenders should baseline services, scheduled tasks, startup items, extensions, and other autorun mechanisms and investigate unexpected changes.</p>
+<h2>Command-and-control concepts</h2>
+<p>Remote-control malware needs some way to receive instructions or exfiltrate results. Defenders analyze protocol, destination reputation, certificate/DNS metadata, timing, beacon regularity, process ownership, and the relationship between network traffic and host activity. Do not reproduce real command-and-control infrastructure for learning; use localhost or prerecorded packet captures.</p>
+<h2>Ransomware and destructive behavior</h2>
+<p>Ransomware resilience depends on prevention, detection, segmentation, least privilege, protected backups, restoration testing, and incident response. Never test encryption or destructive payloads against real user data. Module 38 covers ransomware resilience and recovery.</p>
+<h2>Indicators and detections</h2>
+<p>An <strong>indicator of compromise (IOC)</strong> might be a hash, domain, filename, or registry path. IOCs can be useful but often change quickly. Behavioral detections can be more durable because they describe suspicious relationships, such as an unexpected office application spawning a script interpreter or an unsigned process changing a protected startup location.</p>
+<p>High-quality detections include context: actor/process, target resource, operation, result, time, and expected baseline.</p>
+<h2>Containment and recovery</h2>
+<p>A generic response sequence is:</p>
+<ol>
+<li>validate the alert and preserve evidence;</li>
+<li>isolate affected systems if necessary;</li>
+<li>identify impacted identities and secrets;</li>
+<li>stop propagation while maintaining investigation visibility;</li>
+<li>eradicate the root cause;</li>
+<li>restore from trusted sources;</li>
+<li>rotate compromised credentials or keys;</li>
+<li>monitor for recurrence;</li>
+<li>document lessons learned.</li>
+</ol>
+<h2>Common mistakes</h2>
+<ul>
+<li>Executing unknown samples on a personal device.</li>
+<li>Disabling security controls just to make a sample run.</li>
+<li>Treating one antivirus label as a complete analysis.</li>
+<li>Focusing only on hashes and ignoring behavior.</li>
+<li>Uploading confidential samples to public services.</li>
+<li>Restoring systems without addressing the initial access path.</li>
+</ul>
+<h2>Safe lab</h2>
+<p>Write a small benign script that creates a temporary file, launches a harmless child process, and writes one log entry. Observe the process tree and filesystem changes using built-in tools. Document what telemetry would allow a defender to distinguish the activity from normal software behavior.</p>
+<h2>Knowledge check</h2>
+<ol>
+<li>Why is a malware family label insufficient for analysis?</li>
+<li>What is the difference between an IOC and a behavioral detection?</li>
+<li>Why should static and behavioral analysis be combined?</li>
+<li>What evidence should be collected before executing a suspicious sample?</li>
+<li>Why is restoration alone insufficient after ransomware?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. Keep all practical work harmless and isolated; the goal is analysis, detection, containment, and recovery.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>23, 37, 67, 79, 81</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

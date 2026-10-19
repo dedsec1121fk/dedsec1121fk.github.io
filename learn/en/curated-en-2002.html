@@ -1,0 +1,53 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Search indexing, relevance and verification — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/curated-en-2002.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Search indexing, relevance and verification Search engines, inverted indexes and relevance ranking A simple substring scan compares the query with every document. An inverted index maps…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Search indexing, relevance and verification — DedSec Project">
+<meta property="og:description" content="Search indexing, relevance and verification Search engines, inverted indexes and relevance ranking A simple substring scan compares the query with every document. An inverted index maps…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/curated-en-2002.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Search indexing, relevance and verification — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Search indexing, relevance and verification — DedSec Project">
+<meta name="twitter:description" content="Search indexing, relevance and verification Search engines, inverted indexes and relevance ranking A simple substring scan compares the query with every document. An inverted index maps…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Search indexing, relevance and verification — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Search indexing, relevance and verification — DedSec Project</h1><p>Search indexing, relevance and verification Search engines, inverted indexes and relevance ranking A simple substring scan compares the query with every document. An inverted index maps…</p><section><h2>Search engines, inverted indexes and relevance ranking</h2>
+<p>A simple substring scan compares the query with every document. An <em>inverted index</em> maps each token to the documents containing it; SQLite FTS5 provides one such structure for offline use. Tokenization, casefolding, accent normalization and word boundaries affect recall and precision. Full-text ranking is useful but cannot infer the user's intent as an LLM might.</p>
+<h3>Tiny toy inverted index</h3>
+<pre><code class="language-python">from collections import defaultdict
+texts = ['python syntax error', 'rust compile error']
+index = defaultdict(set)
+for position, text in enumerate(texts):
+    for word in text.casefold().split():
+        index[word].add(position)
+assert index['error'] == {0, 1}
+</code></pre>
+<h3>Practice</h3>
+<ol>
+<li>Make phrase queries require adjacent tokens.</li>
+<li>Rank title matches above body-only matches.</li>
+<li>Avoid leaking private content from search preview.</li>
+<li>Compare index size and scan time using 1000 documents.</li>
+</ol>
+<h2>Reproducible inverted-index fixture</h2>
+<p>For three independent documents <code>d1=&quot;cat dog&quot;</code>, <code>d2=&quot;dog fox&quot;</code>, and <code>d3=&quot;cat&quot;</code>, tokenization on whitespace gives postings <code>cat → {d1,d3}</code>, <code>dog → {d1,d2}</code> and <code>fox → {d2}</code>. A conjunctive query <code>cat AND dog</code> returns only <code>d1</code>; the union returns all three documents. This separates indexing semantics from relevance scoring: membership is deterministic while ranking requires an explicit rule.</p>
+<p>Define an exact-term search before introducing case folding, stemming or fuzzy matching. A query for <code>CAT</code> is not equivalent to <code>cat</code> unless the index and query apply the same normalization pipeline. Store the original display text separately from normalized tokens so a search result can show the accurate spelling. For multilingual Greek, test both an accented and unaccented token and document whether accent folding is intentional.</p>
+<p>For an incremental index, delete a document's old postings before inserting its revised tokens. Otherwise outdated terms remain searchable. Validate the invariant with a fixture: change <code>d2</code> from <code>dog fox</code> to <code>fox</code>; a subsequent search for <code>dog</code> must no longer include <code>d2</code>. Tests need no external network, hidden telemetry or real user content.</p>
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>

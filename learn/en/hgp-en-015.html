@@ -1,0 +1,130 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><script src="../../assets/boot.js?v=ddc8a5999f0f"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>Penetration Testing: Scope, Evidence, Reporting and Retest — DedSec Project</title>
+ <script>(function(){var t;try{t=JSON.parse(localStorage.getItem('dedsec:theme'));}catch(e){}document.documentElement.dataset.theme=t==='light'?'light':'dark';})();</script>
+ <style>:root{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}:root[data-theme=light]{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}html{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}body{max-width:860px;margin:0 auto;padding:1.2rem}a{color:var(--link)}button{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}header{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}main{padding-bottom:3rem}h1,h2,h3{line-height:1.28}h1{font-size:2rem}h2{margin-top:2rem}pre{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}code{overflow-wrap:anywhere}blockquote{border-left:3px solid #8f73c0;padding-left:1rem}table{display:block;overflow-x:auto}img{max-width:100%}.back{padding:.5rem .75rem;border:1px solid #8064af}</style><link rel="stylesheet" href="../../assets/page-controls.css?v=f804bef6df4c">
+<!-- DEDSEC_SOCIAL_STATIC_START -->
+<link rel="canonical" href="https://ded-sec.space/learn/en/hgp-en-015.html">
+<link rel="icon" type="image/png" href="../../Favicons/favicon-48.png">
+<meta name="description" content="Penetration Testing: Scope, Evidence, Reporting and Retest Penetration testing is an authorized security assessment that combines discovery, validation, controlled exploitation where…">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="DedSec Project">
+<meta property="og:title" content="Penetration Testing: Scope, Evidence, Reporting and Retest — DedSec Project">
+<meta property="og:description" content="Penetration Testing: Scope, Evidence, Reporting and Retest Penetration testing is an authorized security assessment that combines discovery, validation, controlled exploitation where…">
+<meta property="og:url" content="https://ded-sec.space/learn/en/hgp-en-015.html">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="el_GR">
+<meta property="og:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:secure_url" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Penetration Testing: Scope, Evidence, Reporting and Retest — DedSec Project — DedSec Project preview">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Penetration Testing: Scope, Evidence, Reporting and Retest — DedSec Project">
+<meta name="twitter:description" content="Penetration Testing: Scope, Evidence, Reporting and Retest Penetration testing is an authorized security assessment that combines discovery, validation, controlled exploitation where…">
+<meta name="twitter:image" content="https://ded-sec.space/Assets/Images/og/og-dark.jpg">
+<meta name="twitter:image:alt" content="Penetration Testing: Scope, Evidence, Reporting and Retest — DedSec Project — DedSec Project preview">
+<!-- DEDSEC_SOCIAL_STATIC_END -->
+</head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="Switch light or dark theme">☾ / ☀</button></header>
+ <main><h1>Penetration Testing: Scope, Evidence, Reporting and Retest — DedSec Project</h1><p>Penetration Testing: Scope, Evidence, Reporting and Retest Penetration testing is an authorized security assessment that combines discovery, validation, controlled exploitation where…</p><section><p>Penetration testing is an authorized security assessment that combines discovery, validation, controlled exploitation where necessary, evidence collection, and reporting. A professional test is judged by accuracy, safety, reproducibility, and the usefulness of its remediation—not by the amount of access obtained.</p>
+<blockquote>
+<p><strong>Authorized-use boundary:</strong> A penetration test requires explicit permission, defined systems, allowed techniques, data-handling rules, contacts, and stop conditions. If a requested action is outside scope, do not perform it merely because it is technically possible.</p>
+</blockquote>
+<h2>Learning objectives</h2>
+<ul>
+<li>create a rules-of-engagement document;</li>
+<li>design tests around security objectives;</li>
+<li>manage accounts, test data, and evidence safely;</li>
+<li>validate findings with minimal impact;</li>
+<li>communicate severity, uncertainty, and limitations;</li>
+<li>retest remediation and close findings cleanly.</li>
+</ul>
+<h2>Pre-engagement</h2>
+<p>Clarify:</p>
+<ul>
+<li>legal/organizational owner of the systems;</li>
+<li>in-scope and out-of-scope assets;</li>
+<li>source addresses and test accounts;</li>
+<li>dates/time windows;</li>
+<li>allowed and prohibited techniques;</li>
+<li>social engineering or physical testing, if any;</li>
+<li>production-safety constraints;</li>
+<li>third-party and cloud-provider restrictions;</li>
+<li>emergency/stop contacts;</li>
+<li>data retention and encryption;</li>
+<li>reporting expectations.</li>
+</ul>
+<h2>Threat model and objectives</h2>
+<p>A useful test begins with questions such as:</p>
+<ul>
+<li>Can a normal user access another tenant's object?</li>
+<li>Can an Internet-facing service reach an internal management network?</li>
+<li>Can a compromised workstation identity modify a protected build artifact?</li>
+<li>Will monitoring detect a known benign simulation of a specific behavior?</li>
+</ul>
+<p>This makes testing measurable.</p>
+<h2>Discovery</h2>
+<p>Use inventories and passive evidence first. Active scanning should be bounded to the scope and rate needed. Record every source of truth and note uncertainty.</p>
+<h2>Validation and controlled proof</h2>
+<p>Prefer the smallest proof that demonstrates impact. Examples include reading a synthetic test object, creating a harmless marker, invoking a non-destructive test function, or reproducing a crash in a local copy.</p>
+<p>Avoid collecting real data merely to strengthen a screenshot. Do not create persistent access unless explicitly required—and even then, prefer a benign simulation whenever possible.</p>
+<h2>Evidence management</h2>
+<p>Evidence should include:</p>
+<ul>
+<li>timestamp and tester identity;</li>
+<li>affected asset/version;</li>
+<li>request/configuration/test input;</li>
+<li>relevant response or log excerpt;</li>
+<li>authentication/authorization context;</li>
+<li>expected versus observed behavior;</li>
+<li>screenshots only when they add information;</li>
+<li>hashes for downloaded artifacts when appropriate.</li>
+</ul>
+<p>Redact secrets and personal data from the report.</p>
+<h2>Severity and risk</h2>
+<p>Separate technical severity from business risk. Describe prerequisites, exploitability, blast radius, asset criticality, existing controls, and confidence. If you did not validate an assumption, say so.</p>
+<h2>Reporting structure</h2>
+<p>A useful finding contains:</p>
+<ol>
+<li>title and affected assets;</li>
+<li>concise summary;</li>
+<li>evidence/reproduction using safe steps;</li>
+<li>impact in the tested environment;</li>
+<li>root cause;</li>
+<li>remediation;</li>
+<li>retest criteria;</li>
+<li>references.</li>
+</ol>
+<p>An executive summary should describe themes and business consequences rather than listing tool output.</p>
+<h2>Retest</h2>
+<p>A retest repeats the original security invariant after remediation. Confirm both that the weakness is fixed and that the intended functionality still works. If the remediation is partial, document residual risk and next actions.</p>
+<h2>Cleanup</h2>
+<p>Remove test accounts, synthetic records, temporary files, and configuration changes that were created by the assessment. Preserve legitimate audit and security logs. Return credentials/secrets through the agreed process and confirm data-retention requirements.</p>
+<h2>Common mistakes</h2>
+<ul>
+<li>Treating a scanner report as a penetration test.</li>
+<li>Expanding scope informally.</li>
+<li>Collecting unnecessary production data.</li>
+<li>Creating persistence or destructive impact to “prove” severity.</li>
+<li>Hiding uncertainty.</li>
+<li>Reporting only technical details without remediation.</li>
+<li>Failing to retest.</li>
+</ul>
+<h2>Safe lab</h2>
+<p>Write rules of engagement for a fictional two-host lab. Define one authorization objective, one network-exposure objective, and one detection objective. For each, state evidence, safe stop condition, and retest criteria. Then write one sample finding using only synthetic data.</p>
+<h2>Knowledge check</h2>
+<ol>
+<li>What makes rules of engagement different from a target list?</li>
+<li>Why is minimal proof preferred?</li>
+<li>What should be redacted from evidence?</li>
+<li>How does a retest differ from simply checking that a patch installed?</li>
+<li>Why should logs be preserved during cleanup?</li>
+</ol>
+<h2>Guided study workflow</h2>
+<p>Use the shared <a href="../en/hacking-authorized-lab-en.html">Study Method</a>. A completed lab should produce a scope document and a professional finding, not merely command output.</p>
+<h3>Continue with</h3>
+<p>Recommended next modules: <strong>26, 27, 43, 50, 85</strong>.</p>
+<hr />
+</section></main>
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">Home</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">Website Repository</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{localStorage.setItem('dedsec:theme',JSON.stringify(t));}catch(e){}});</script><script src="../../assets/page-controls.js?v=3294bd926d29"></script></body></html>
