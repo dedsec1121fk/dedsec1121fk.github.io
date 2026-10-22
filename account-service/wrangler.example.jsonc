@@ -13,8 +13,8 @@
   },
   "d1_databases": [{
     "binding": "DB",
-    "database_name": "dedsec-test-accounts",
-    "database_id": "df9434b4-d713-491c-b170-1d599cf54145",
+    "database_name": "dedsec-accounts",
+    "database_id": "dc89a3c4-cb67-4eee-a17a-06b458a881e1",
     "migrations_dir": "migrations"
   }],
   "triggers": {"crons": ["17 * * * *"]}

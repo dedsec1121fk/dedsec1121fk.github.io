@@ -40,4 +40,10 @@
 
 Ο editor και οι ενέργειές του κρύβονται μέχρι να ανοιχτεί ή να δημιουργηθεί TXT. Η διαγραφή του επιλεγμένου αρχείου τα κρύβει ξανά· η λίστα αρχείων και φακέλων παραμένει διαθέσιμη. Το ενσωματωμένο παράθυρο δεν εμφανίζει σύνδεσμο ξεχωριστής πύλης.
 
-Ο ιδιοκτήτης βλέπει τις εγγραφές στη βάση Cloudflare D1 `dedsec-test-accounts`, πίνακας `account_users`, από Studio ή SQL console. Ελάχιστη ανάγνωση: `SELECT email, given_name, family_name, email_verified_at, created_at FROM account_users ORDER BY created_at DESC;`. Σύνολο: `SELECT COUNT(*) AS registered_accounts FROM account_users;`. Οι κωδικοί δεν ανακτώνται από αυτή τη διεπαφή. Για απλό έλεγχο εγγραφών δεν χρειάζονται πίνακες credentials ή tokens συνεδρίας.
+Ο ιδιοκτήτης βλέπει τις εγγραφές στη βάση Cloudflare D1 `dedsec-accounts`, πίνακας `account_users`, από Studio ή SQL console. Ελάχιστη ανάγνωση: `SELECT email, given_name, family_name, email_verified_at, created_at FROM account_users ORDER BY created_at DESC;`. Σύνολο: `SELECT COUNT(*) AS registered_accounts FROM account_users;`. Οι κωδικοί δεν ανακτώνται από αυτή τη διεπαφή. Για απλό έλεγχο εγγραφών δεν χρειάζονται πίνακες credentials ή tokens συνεδρίας.
+
+## Όνομα βάσης παραγωγής — 23 Οκτωβρίου 2026
+
+Η ενεργή βάση είναι `dedsec-accounts` (`dc89a3c4-cb67-4eee-a17a-06b458a881e1`). Το D1 δεν τεκμηριώνει αλλαγή ονόματος στην ίδια βάση. Μετά τη διαγραφή των δύο λογαριασμών κατόπιν αιτήματος του ιδιοκτήτη, πλήρες SQL snapshot εισήχθη στη νέα βάση. Πριν την αλλαγή του DB binding ελέγχθηκαν και οι 20 πίνακες εφαρμογής, τα 38 αντικείμενα schema, όλα τα περιεχόμενα και τα foreign keys. Η παλιά βάση αποσύρθηκε αφού επιβεβαιώθηκε ότι δεν είχε δεχτεί νέους λογαριασμούς.
+
+Η έκδοση Worker `a58d1ff2-3f76-4684-b97d-daac168684f7` χρησιμοποιεί τη νέα βάση και κληρονομεί τα υπάρχοντα μυστικά. Το τεχνικό όνομα και URL Worker παραμένουν `dedsec-test-accounts` για συμβατότητα συνδέσμων· διαφέρουν από το όνομα βάσης στο D1. Μην επαναφέρεις παλιά έκδοση Worker με το binding της αποσυρμένης βάσης. Για επαναφορά παλιού κώδικα δημιούργησε έκδοση με το τρέχον DB binding και κληρονομημένα secrets. Ο ζωντανός έλεγχος status επέστρεψε active/connected, μηδέν λογαριασμούς και mail-ready· αυτό επιβεβαιώνει ρύθμιση, όχι νέα δοκιμή παράδοσης email. Τα παλιά χρονολογημένα audits διατηρούν τα αρχικά ονόματα.
