@@ -1002,13 +1002,14 @@ for(const [locale,theme,width] of [['en','dark',320],['gr','light',390],['en','l
  await p.addInitScript(({locale,theme})=>{localStorage.setItem('dedsec:language',JSON.stringify(locale));localStorage.setItem('dedsec:theme',JSON.stringify(theme));localStorage.setItem('dedsec:cookie-choice','decline');},{locale,theme});
  await p.route('**/assets/account-config.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.DEDSEC_ACCOUNT_CONFIG={apiBase:location.origin+"/api/account",turnstileSite:"local-ui-fixture"};'}));
  await p.route('https://challenges.cloudflare.com/turnstile/v0/api.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.turnstile={render(node,options){this.options=options;node.textContent="Local challenge fixture";options.callback("local-fixture-token");return 1;},remove(){},reset(){this.options.callback("local-fixture-token");}};'}));
- let signed=false,cloudEntries=[],cloudRevision=0,conflict=false,unlocked=false,registeredPayload=null,deleteFails=true;
+ let signed=false,cloudEntries=[],cloudRevision=0,conflict=false,unlocked=false,registeredPayload=null,deleteFails=true,blockLoginSession=true;
  const scriptBytes=Buffer.from('print("Local download fixture")\n'),{createHash}=await import('node:crypto'),sha=createHash('sha256').update(scriptBytes).digest('hex');
  const scripts=[{id:'fixture-en',filename:'Fixture (English).py',language:'en',sha256:sha,version:'v2',description:{en:'Local UI fixture',el:'Τοπικό δείγμα διεπαφής'}}];
  await p.route('**/api/account/**',async route=>{const r=route.request(),name=new URL(r.url()).pathname.split('/api/account/')[1],method=r.method();let payload;try{payload=r.postDataJSON();}catch{}
   const answer=(data,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(data)});
   if(name==='status')return answer({version:1,mode:'active',connected:true,counts:{registered:signed?1:0,active:signed?1:0}});
   if(name==='challenge')return answer({version:1,salt:'12'.repeat(16),iterations:600000,hash:'SHA-256'});
+  if(name==='login'){signed=!blockLoginSession;return answer({signedIn:true});}
   if(name==='register'){registeredPayload=payload;signed=true;return answer({created:true,recoveryCode:'ab'.repeat(32)},201);}
   if(name==='me'&&method==='DELETE'){
    check(r.headers()['x-csrf-token']==='fixture-csrf','Deletion omitted CSRF');
@@ -1022,8 +1023,27 @@ for(const [locale,theme,width] of [['en','dark',320],['gr','light',390],['en','l
   if(name==='logout'){signed=false;return answer({signedOut:true});}
   return answer({error:'not_found'},404);
  });
- const prefix=gr?'dedsec/el/Pages/':'dedsec/Pages/';await p.goto(base+prefix+'account.html',{waitUntil:'networkidle'});
+ const prefix=gr?'dedsec/el/Pages/':'dedsec/Pages/';await p.goto(base+prefix+'account.html?site=main&parent=https%3A%2F%2Fded-sec.space&bridge='+ 'ab'.repeat(16),{waitUntil:'networkidle'});
  check(await p.locator('[data-account-panel]').evaluateAll(xs=>xs.every(x=>x.hidden)),'Live forms must start closed');await p.locator('[data-account-tab="account-login-panel"]').click();check(await p.locator('#account-login-panel input').count()===2&&!await p.locator('#account-register-panel').isVisible(),'Live sign-in shows extra registration fields');await p.locator('[data-account-tab="account-register-panel"]').click();
+ // A successful credential response without a session must give a durable,
+ // actionable error, preserve the email and never navigate or silently reset.
+ const portalURL=p.url(),loginForm=p.locator('#account-login-panel form');
+ await p.locator('[data-account-tab="account-login-panel"]').click();
+ await loginForm.locator('[name=email]').fill('ui@example.test');await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();
+ await p.locator('#account-session-notice').waitFor({state:'visible'});
+ check(p.url()===portalURL,'Blocked login navigated away');
+ check(await loginForm.locator('[name=email]').inputValue()==='ui@example.test','Blocked login erased the email');
+ check(await loginForm.locator('[name=password]').inputValue()==='','Blocked login retained the password');
+ const fallbackURL=new URL(await p.locator('#account-session-notice a').getAttribute('href'));
+ check(fallbackURL.searchParams.get('site')==='main'&&!fallbackURL.searchParams.has('parent')&&!fallbackURL.searchParams.has('bridge'),'Session fallback lost the site or retained embed context');
+ blockLoginSession=false;await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();await p.locator('#account-profile').waitFor({state:'visible'});
+ check(p.url()===portalURL,'Successful login navigated away');
+ await p.locator('#account-demo-exit').click();await p.locator('#account-auth').waitFor({state:'visible'});
+ check(p.url()===portalURL,'Sign-out dropped portal session context');
+ await p.locator('[data-account-tab="account-login-panel"]').click();await loginForm.locator('[name=email]').fill('ui@example.test');await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();await p.locator('#account-profile').waitFor({state:'visible'});
+ await p.locator('#account-demo-exit').click();await p.locator('#account-auth').waitFor({state:'visible'});
+ check(p.url()===portalURL,'Repeated sign-in/out changed portal context');
+ await p.locator('[data-account-tab="account-register-panel"]').click();
  const form=p.locator('#account-register-panel form');await form.locator('[name=given-name]').fill('Test');await form.locator('[name=family-name]').fill('Fixture');await form.locator('[name=email]').fill('ui@example.test');await form.locator('[name=email-repeat]').fill('ui@example.test');check(await form.locator('[name=age]').count()===0,'Age must be derived from date of birth');await form.locator('[name=date-of-birth]').fill('2001-01-01');await form.locator('[name=referral-code]').fill('CD'.repeat(16));await form.locator('[name=password]').fill('a long local test password');await form.locator('[name=password-repeat]').fill('a long local test password');await form.locator('[name=terms]').check();await form.locator('[type=submit]').click();
  await p.locator('#account-profile').waitFor({state:'visible'});
  // The embedded portal must not retain the standalone fixed-launcher spacer.
