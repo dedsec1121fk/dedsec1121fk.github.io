@@ -1,4 +1,4 @@
-/* DedSec Test: keep the explicit cookie-consent decision and functional theme/language
+/* DedSec Project: keep the explicit cookie-consent decision and functional theme/language
    preferences between visits. No saved lessons, bookmarks, or tracking cookies. */
 (function(){"use strict";
 if(window.DedSecCookies)return;
@@ -42,8 +42,8 @@ function refresh(){
  var title=dialog.querySelector("#dedsec-cookie-title"),paragraph=dialog.querySelector("#dedsec-cookie-text"),status=dialog.querySelector("#dedsec-cookie-state");
  title.textContent=say("Your cookie choice","Επιλογές cookies");
  paragraph.textContent=say(
-  "This preview remembers your theme, language and cookie-consent choice between visits. It does not save lessons, bookmarks or reading history. Verified GitHub star/fork counts are shown as a snapshot; accepting lets them refresh from GitHub. Reading and searching work either way.",
-  "Η δοκιμαστική ιστοσελίδα θυμάται το θέμα, τη γλώσσα και την επιλογή cookies ανάμεσα στις επισκέψεις. Δεν αποθηκεύει μαθήματα, σελιδοδείκτες ή ιστορικό ανάγνωσης. Οι αριθμοί GitHub εμφανίζονται ως αποθηκευμένο στιγμιότυπο· με αποδοχή μπορούν να ενημερωθούν από το GitHub. Η βιβλιοθήκη λειτουργεί και με απόρριψη."
+  "This website remembers your theme, language and cookie-consent choice between visits. It does not save lessons, bookmarks or reading history. Verified GitHub star/fork counts are shown as a snapshot; accepting lets them refresh from GitHub. Reading and searching work either way.",
+  "Η ιστοσελίδα θυμάται το θέμα, τη γλώσσα και την επιλογή cookies ανάμεσα στις επισκέψεις. Δεν αποθηκεύει μαθήματα, σελιδοδείκτες ή ιστορικό ανάγνωσης. Οι αριθμοί GitHub εμφανίζονται ως αποθηκευμένο στιγμιότυπο· με αποδοχή μπορούν να ενημερωθούν από το GitHub. Η βιβλιοθήκη λειτουργεί και με απόρριψη."
  );
  status.textContent=choice()==="accept"?say("Current choice: optional GitHub statistics enabled","Τρέχουσα επιλογή: στατιστικά GitHub ενεργά"):
  choice()==="decline"?say("Current choice: optional requests disabled","Τρέχουσα επιλογή: προαιρετικά αιτήματα ανενεργά"):
@@ -71,8 +71,10 @@ function decide(value){
  document.dispatchEvent(new CustomEvent("dedsec:cookiechoice",{detail:{optional:allow()}}));
 }
 function create(){
- if(document.getElementById("dedsec-cookie-overlay"))return;
  migrateAndClean();
+ // The account portal uses another origin; never ask there or in a frame.
+ if(window.self!==window.top||!document.getElementById("app")){enhance();return;}
+ if(document.getElementById("dedsec-cookie-overlay"))return;
  dialog=document.createElement("div");
  dialog.id="dedsec-cookie-overlay";dialog.hidden=true;dialog.setAttribute("aria-hidden","true");
  dialog.innerHTML='<div class="dedsec-cookie-panel" role="dialog" aria-modal="true" aria-labelledby="dedsec-cookie-title" aria-describedby="dedsec-cookie-text"><div class="dedsec-cookie-hero"><span aria-hidden="true">✦</span><h2 id="dedsec-cookie-title"></h2></div><p id="dedsec-cookie-text"></p><a id="dedsec-cookie-privacy" href="#"></a><p id="dedsec-cookie-state" aria-live="polite"></p><div class="dedsec-cookie-actions"><button type="button" data-dedsec-cookie="decline"></button><button type="button" data-dedsec-cookie="accept"></button></div></div>';

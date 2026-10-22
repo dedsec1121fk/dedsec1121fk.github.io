@@ -32,6 +32,59 @@ const all=[];
 const faults=[];
 function check(cond,msg){if(!cond)faults.push(msg)}
 function rgbaTransparent(c){return c==="transparent"||/rgba?\([^)]*,\s*0(?:\.0+)?\s*\)$/.test(c)}
+/* First-visit consent: accessible immediately after the page has initialized. */
+const firstVisit=await browser.newPage({viewport:{width:390,height:844}});
+await firstVisit.addInitScript(()=>{
+ if(!sessionStorage.getItem("cookie-first-visit-fixture")){localStorage.removeItem("dedsec:cookie-choice");sessionStorage.setItem("cookie-first-visit-fixture","1");}
+ localStorage.setItem("dedsec:language",JSON.stringify("en"));
+ localStorage.setItem("dedsec:theme",JSON.stringify("dark"));
+});
+await firstVisit.goto(base+"index.html",{waitUntil:"domcontentloaded",timeout:25000});
+await firstVisit.waitForFunction(()=>window.__DEDSEC_BOOT__?.status==="ready");
+await firstVisit.locator("#dedsec-cookie-overlay:not([hidden])").waitFor({timeout:8000});
+check(await firstVisit.locator("#dedsec-cookie-overlay").isVisible(),"First-visit consent missing after boot");
+await firstVisit.locator('[data-dedsec-cookie="decline"]').click();
+await firstVisit.reload({waitUntil:'networkidle'});
+check(await firstVisit.locator('#dedsec-cookie-overlay:not([hidden])').count()===0,'Saved homepage consent was asked again');
+await firstVisit.close();
+// Fresh direct visits to Account and subpages must never ask for consent.
+for(const rel of ['dedsec/Pages/account.html','dedsec/el/Pages/account.html','dedsec/Pages/faq.html']){
+ const p=await browser.newPage({viewport:{width:390,height:844}});
+ await p.addInitScript(()=>localStorage.removeItem('dedsec:cookie-choice'));
+ await p.goto(base+rel,{waitUntil:'networkidle'});
+ await p.waitForFunction(()=>!!window.DedSecCookies);
+ check(await p.locator('#dedsec-cookie-overlay,#dedsec-cookie-banner,.dedsec-cookie-settings').count()===0,'Consent UI leaked into '+rel);
+ await p.close();
+}
+// Exercise the actual account HTML at a separate origin in an iframe, with
+// empty origin storage. This catches the production duplicate-dialog bug.
+for(const locale of ['en','gr']){
+ const p=await browser.newPage({viewport:{width:390,height:844}});
+ await p.route('http://127.0.0.1:8765/**',async route=>{if(new URL(route.request().url()).pathname.endsWith('/startup-manifest.json'))return route.fallback();const response=await route.fetch();return route.fulfill({response,headers:{...response.headers(),'access-control-allow-origin':'*'}});});
+ await p.route('https://dedsec-test-accounts.dedsec-project.workers.dev/**',async route=>{
+  const u=new URL(route.request().url());
+  if(!u.pathname.endsWith('/account.html'))return route.abort();
+  const rel=locale==='gr'?'dedsec/el/Pages/account.html':'dedsec/Pages/account.html';
+  let html=fs.readFileSync('DedSec-Project-Website/'+rel,'utf8');
+  html=html.replace('<head>','<head><base href="'+base+rel+'">');
+  await route.fulfill({status:200,contentType:'text/html',body:html});
+ });
+ await p.addInitScript(locale=>{localStorage.removeItem('dedsec:cookie-choice');localStorage.setItem('dedsec:language',JSON.stringify(locale));},locale);
+ await p.goto(base+'index.html',{waitUntil:'networkidle'});
+ await p.locator('#dedsec-cookie-overlay:not([hidden])').waitFor();
+ await p.locator('[data-dedsec-cookie="decline"]').click();
+ await p.locator('#nav-home').click();
+ const frame=p.frameLocator('#dedsec-account-window iframe');
+ await frame.locator('#account-auth').waitFor();
+ const child=p.frames().find(f=>f.url().startsWith('https://dedsec-test-accounts.dedsec-project.workers.dev/'));
+ await child.waitForFunction(()=>!!window.DedSecCookies);
+ check(await frame.locator('#dedsec-cookie-overlay,#dedsec-cookie-banner,.dedsec-cookie-settings').count()===0,'Separate-origin Account asked for cookies: '+locale);
+ check(await p.locator('#dedsec-cookie-overlay:not([hidden])').count()===0,'Homepage consent reopened when Account was tapped');
+ await p.close();
+}
+
+
+
 // Same-page account overlay, trusted frame messages and close/reopen floating TXT.
 for(const [surface,locale,width] of [['source','en',320],['source','gr',390],['published','en',320],['published','gr',390]]){
  const p=await browser.newPage({viewport:{width,height:844}});p.on('pageerror',e=>console.log('OVERLAY_JS_ERROR',e.message));
@@ -666,20 +719,6 @@ check(await tikPage.locator('#feed [data-kind="repo"] .repo-title').isVisible(),
 await tikPage.screenshot({path:path.join(dir,"tikdev-mobile.png")});
 check(await tikPage.locator('.page-back').count()===1,'TikDev Back missing after feed updates');
 await tikPage.close();
-
-/* First-visit consent: accessible immediately after the page has initialized. */
-const firstVisit=await browser.newPage({viewport:{width:390,height:844}});
-await firstVisit.addInitScript(()=>{
- localStorage.removeItem("dedsec:cookie-choice");
- localStorage.setItem("dedsec:language",JSON.stringify("en"));
- localStorage.setItem("dedsec:theme",JSON.stringify("dark"));
-});
-await firstVisit.goto(base+"index.html",{waitUntil:"domcontentloaded",timeout:25000});
-await firstVisit.waitForFunction(()=>window.__DEDSEC_BOOT__?.status==="ready");
-await firstVisit.locator("#dedsec-cookie-overlay:not([hidden])").waitFor({timeout:8000});
-check(await firstVisit.locator("#dedsec-cookie-overlay").isVisible(),"First-visit consent missing after boot");
-await firstVisit.close();
-
 
 // User-facing controls and smart search: bilingual, both themes, mobile + desktop.
 for(const locale of ['en','gr'])for(const light of [false,true])for(const width of [390,1280]){

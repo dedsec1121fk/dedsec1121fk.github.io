@@ -23,6 +23,9 @@ try{
  assert(sent.body.htmlContent.includes(token));
  await deliverEmailChange(env,'recipient@example.test',token,'old');assert(sent.body.textContent.includes('/change-email?stage=old&token='+token));
  await deliverEmailChange(env,'recipient@example.test',token,'new');assert(sent.body.textContent.includes('/change-email?stage=new&token='+token));
+ await deliverVerification(env,'recipient@example.test',token,'main','el');
+ const mainVerification=new URL(sent.body.textContent.match(/https:\/\/\S+/)[0]);assert.equal(mainVerification.searchParams.get('site'),'main');assert.equal(mainVerification.searchParams.get('lang'),'el');
+ for(const step of ['old','new']){await deliverEmailChange(env,'recipient@example.test',token,step,'main');const link=new URL(sent.body.textContent.match(/https:\/\/\S+/)[0]);assert.equal(link.searchParams.get('site'),'main');assert.equal(link.searchParams.get('stage'),step);}
  await deliverSecurityCode(env,'recipient@example.test','123456');assert(sent.body.textContent.includes('123456'));assert(!sent.body.textContent.includes('/verify?token='));
  await deliverAccountDeleted(env,'recipient@example.test');assert(sent.body.subject.includes('Account deleted'));assert(!sent.body.textContent.includes(token));assert(sent.body.textContent.includes('διαγράφηκαν'));
  const legacy={MAIL_API_KEY:'legacy-fixture',MAIL_FROM:'Test <test@example.test>'};

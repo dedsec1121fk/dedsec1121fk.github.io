@@ -166,6 +166,7 @@
     }
 
     function createInterface() {
+        if (window.DedSecCookies || window.self !== window.top || !document.getElementById('app')) return;
         injectStyles();
         const t = text();
         const banner = document.createElement('section');
