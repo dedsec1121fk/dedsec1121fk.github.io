@@ -13,9 +13,9 @@ html body:is(.theme-light,.merged-light):not(#clean-a):not(#clean-b):not(#clean-
 /* No cards, colored slabs, outlines or borders behind ordinary information.
    The fixed navbar remains solid for correct scroll contrast. Cookie consent
    dialog is deliberately excluded as a required interaction surface. */
-html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d) #app *:not(.search-hit),
+html body:is(.theme-dark,.theme-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d) #app *:not(.search-hit):not(.page-home):not(.page-back),
 html body:is(.merged-dark,.merged-light):not(#clean-a):not(#clean-b):not(#clean-c):not(#clean-d)
- :is(.page-content,.main-content,.page-main,.content-container,.guide-container) *:not(.search-hit){
+ :is(.page-content,.main-content,.page-main,.content-container,.guide-container) *:not(.search-hit):not(.page-home):not(.page-back){
   border:0!important;border-radius:0!important;
   background-color:transparent!important;background-image:none!important;
   box-shadow:none!important;

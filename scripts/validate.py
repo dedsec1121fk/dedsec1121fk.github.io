@@ -292,8 +292,8 @@ if not (REPO_ROOT/".github/workflows/tikdev-weekly.yml").exists() or not (ROOT/"
 cookie_js=(ROOT/"assets/cookie-consent.js").read_text(encoding="utf-8")
 if 'id="boot-screen"' in html or 'class="theme-dark booting"' in html:
     errors.append("Startup splash screen must not be reintroduced")
-if 'dedsec:cookie-choice' not in cookie_js or 'if(!choice())open();' not in cookie_js:
-    errors.append("Cookie consent must initialize without waiting for a loading screen")
+if 'dedsec:cookie-choice' not in cookie_js or 'if(ready())open();' not in cookie_js or "window.__DEDSEC_BOOT__?.status==='ready'" not in cookie_js:
+    errors.append("Cookie consent must wait for the loading screen to finish before opening")
 if "assets/refinement.css" not in html or "dedsec-refinement-style" not in (ROOT / "dedsec/Assets/merged-retro.js").read_text(encoding="utf-8"):
     errors.append("Shared final polish CSS missing from root or imported pages")
 if "dedsec/el/" not in ui:

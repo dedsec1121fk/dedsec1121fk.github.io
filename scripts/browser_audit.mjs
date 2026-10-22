@@ -32,6 +32,66 @@ const all=[];
 const faults=[];
 function check(cond,msg){if(!cond)faults.push(msg)}
 function rgbaTransparent(c){return c==="transparent"||/rgba?\([^)]*,\s*0(?:\.0+)?\s*\)$/.test(c)}
+// Same-page account overlay, trusted frame messages and close/reopen floating TXT.
+for(const [surface,locale,width] of [['source','en',320],['source','gr',390],['published','en',320],['published','gr',390]]){
+ const p=await browser.newPage({viewport:{width,height:844}});p.on('pageerror',e=>console.log('OVERLAY_JS_ERROR',e.message));
+ await p.addInitScript(locale=>{localStorage.setItem('dedsec:language',JSON.stringify(locale));localStorage.setItem('dedsec:theme',JSON.stringify(locale==='gr'?'light':'dark'));localStorage.setItem('dedsec:cookie-choice','decline');},locale);
+ await p.route('https://dedsec-test-accounts.dedsec-project.workers.dev/**',route=>{
+  const url=new URL(route.request().url()),parent=url.searchParams.get('parent'),bridge=url.searchParams.get('bridge');
+  const html='<!doctype html><html><body><button id="fixture-create">Create account</button><button id="fixture-login">Sign in</button><button id="fixture-float">Float TXT</button><textarea id="fixture-note"></textarea><script>const parentOrigin='+JSON.stringify(parent)+',bridge='+JSON.stringify(bridge)+';document.getElementById("fixture-login").onclick=()=>window.parent.postMessage({type:"dedsec-account-state",bridge,signedIn:true},parentOrigin);document.getElementById("fixture-float").onclick=()=>window.parent.postMessage({type:"dedsec-account-float",bridge},parentOrigin);document.body.dataset.fixtureReady="true";<'+ '/script></body></html>';
+  return route.fulfill({status:200,contentType:'text/html',body:html});
+ });
+ await p.goto((surface==='published'?'http://127.0.0.1:8765/.site-publish/':base)+'index.html',{waitUntil:'networkidle'});await p.waitForFunction(()=>window.__DEDSEC_BOOT__?.status==='ready'&&!document.getElementById('site-loader'));await p.evaluate(()=>{window.fixtureMessages=[];addEventListener('message',e=>{if(e.data?.type?.startsWith('dedsec-account-'))window.fixtureMessages.push({type:e.data.type,origin:e.origin,signedIn:e.data.signedIn,frame:e.source===document.querySelector('#dedsec-account-window iframe')?.contentWindow});});});const startingURL=p.url();
+ check(await p.locator('#nav-home').getAttribute('aria-label')===(locale==='gr'?'Λογαριασμός':'Account'),'Account replaced navbar Home');
+ await p.locator('#nav-theme-switcher').click();await p.locator('#nav-home').click();await p.locator('#dedsec-account-window[open]').waitFor();
+ check(await p.locator('#dedsec-account-window').evaluate((el,locale)=>getComputedStyle(el).backgroundColor===(locale==='gr'?'rgb(16, 9, 30)':'rgb(243, 234, 255)'),locale),'Account overlay did not follow a changed theme');
+ check(p.url()===startingURL,'Account overlay navigated the current page');
+ const frame=p.frameLocator('#dedsec-account-window iframe');await frame.locator('body[data-fixture-ready="true"]').waitFor();await frame.locator('#fixture-create').waitFor();
+ check(await p.locator('#dedsec-txt-window-toggle').isHidden(),'Signed-out view shows private TXT toggle');
+ await frame.locator('#fixture-login').click();await frame.locator('#fixture-note').fill('Retain this private fixture in the frame');await frame.locator('#fixture-float').click();
+ try{await p.waitForFunction(()=>document.querySelector('#dedsec-account-window')?.classList.contains('is-floating'),{},{timeout:10000});}catch(e){console.log('OVERLAY_DIAGNOSTIC',locale,await p.evaluate(()=>({messages:window.fixtureMessages,dialog:document.querySelector('#dedsec-account-window')?.outerHTML,theme:document.body.className})));throw e;}
+ check(await p.locator('#dedsec-account-window').evaluate(el=>el.classList.contains('is-floating')&&!el.matches(':modal')),'TXT floating window blocks the page');
+ const dims=await p.locator('#dedsec-account-window').evaluate(el=>{const r=el.getBoundingClientRect();return {w:r.width,h:r.height,vw:innerWidth,vh:innerHeight};});
+ check(Math.abs(dims.w-dims.vw/2)<=2&&Math.abs(dims.h-dims.vh/2)<=2,'Floating window must be half the viewport: '+JSON.stringify(dims));
+ const grip=p.locator('.account-resize-handle');
+ await grip.waitFor();
+ // Wait for two layout frames before measuring the corner after opening a dialog.
+ await grip.evaluate(el=>new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve))));
+ await grip.hover();
+ const bounds=await grip.boundingBox();
+ await p.mouse.move(bounds.x+bounds.width/2,bounds.y+bounds.height/2);
+ await p.mouse.down();
+ await p.mouse.move(bounds.x+bounds.width/2+45,bounds.y+bounds.height/2+55,{steps:5});
+ await p.mouse.up();
+ // Pointer/ResizeObserver layout is asynchronous in Chromium; inspect the settled geometry.
+ await p.waitForFunction(({w,h})=>{
+  const box=document.querySelector('#dedsec-account-window').getBoundingClientRect();
+  return box.width>w+12&&box.height>h+12;
+ },{w:dims.w,h:dims.h},{timeout:2000}).catch(()=>{});
+ const stretched=await p.locator('#dedsec-account-window').boundingBox();
+ check(stretched.width>dims.w+12&&stretched.height>dims.h+12,'Floating window corner drag did not resize: '+JSON.stringify({dims,stretched}));
+
+ await p.getByRole('button',{name:locale==='gr'?'Ελαχιστοποίηση λογαριασμού':'Minimize account',exact:true}).click();
+ check(await p.locator('#dedsec-account-window').isHidden(),'Minimize must hide the whole account window');
+ const circle=await p.locator('#dedsec-txt-window-toggle').evaluate(el=>{const box=el.getBoundingClientRect();return {w:box.width,h:box.height,r:getComputedStyle(el).borderRadius};});check(circle.w===circle.h&&circle.w===56&&circle.r==='0px','Minimized account must be a compact square '+JSON.stringify(circle));
+ await p.locator('#dedsec-txt-window-toggle').click();
+ check(await frame.locator('#fixture-note').inputValue()==='Retain this private fixture in the frame','Closing floating TXT discarded its draft');
+ check(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Account overlay horizontal overflow');
+ // X hides the minimized control; reopening Account restores it without losing the draft.
+ await p.getByRole('button',{name:locale==='gr'?'Ελαχιστοποίηση λογαριασμού':'Minimize account',exact:true}).click();
+ await p.locator('#dedsec-txt-float-dismiss').click();
+ check(await p.locator('#dedsec-txt-float-controls').isHidden(),'Dismiss did not hide minimized account');
+ await p.locator('#nav-home').click();await p.locator('#dedsec-account-window[open]').waitFor();
+ check(await frame.locator('#fixture-note').inputValue()==='Retain this private fixture in the frame','Reopening dismissed account discarded its draft');
+ await p.screenshot({path:path.join(dir,'account-overlay-'+surface+'-'+locale+'-'+width+'.png')});
+ const returned=p.waitForEvent('framenavigated',{predicate:f=>f===p.mainFrame(),timeout:10000});
+ await frame.locator('body').evaluate(()=>{
+  window.parent.postMessage({type:'dedsec-account-deleted',bridge},parentOrigin);
+ });
+ await returned;check(p.url()===startingURL,'Embedded deletion returned to wrong homepage');
+ await p.close();
+}
+
 await auditStartup();
 for(const [view,width,height,light,url,locale] of [
  ["home-mobile-dark",390,844,false,"index.html"],
@@ -40,7 +100,12 @@ for(const [view,width,height,light,url,locale] of [
  ["home-small-greek-light",320,844,true,"index.html","gr"],
  ["installation-mobile-dark",390,844,false,"dedsec/Pages/guide-for-installation.html"],
  ["installation-mobile-light",390,844,true,"dedsec/Pages/guide-for-installation.html"],
- ["home-desktop-dark",1280,800,false,"index.html"],
+ ["home-desktop-dark",1280,900,false,"index.html"],
+ ["home-desktop-light",1440,900,true,"index.html"],
+ ["installation-desktop-dark",1280,900,false,"dedsec/Pages/guide-for-installation.html"],
+ ["installation-desktop-greek-light",1440,900,true,"dedsec/el/Pages/guide-for-installation.html","gr"],
+ ["knowledge-desktop-light",1280,900,true,"index.html#category:method"],
+ ["lesson-desktop-dark",1440,900,false,"index.html#read:method-contrast-en"],
  ["knowledge-mobile-dark",390,844,false,"index.html#category:method"],
  ["knowledge-mobile-light",390,844,true,"index.html#category:method"],
  ["lesson-mobile-dark",390,844,false,"index.html#read:method-contrast-en"],
@@ -102,6 +167,8 @@ for(const [view,width,height,light,url,locale] of [
   const svg=cookie?.querySelector("svg");
   const group=document.querySelector(".home-trust");
   const desc=document.querySelector(".home-about-summary");
+  const reflectionCount=document.querySelectorAll('.desktop-home .start-reflection').length;
+  const extraExplanation=document.querySelectorAll('.aristotle-explanation').length;
   const heading=document.querySelector(".archive-heading .page-heading");
   const subtitle=document.querySelector(".archive-heading .page-subtitle");
   const lesson=document.querySelector(".lesson-content");
@@ -112,8 +179,33 @@ for(const [view,width,height,light,url,locale] of [
    pageHeading.textContent.trim().toLowerCase()===firstBodyHeading.textContent.trim().toLowerCase());
   return {title:document.title,bodyClasses:document.body.className,viewport:innerWidth,scrollWidth:document.documentElement.scrollWidth,nav,
    probes,cookie:{present:!!cookie,svg:!!svg,paths:svg?.querySelectorAll("path,rect,circle,line,ellipse").length||0,text:cookie?.innerText||""},
-   trust:group?css(group):null,description:desc?{text:desc.innerText,length:desc.innerText.length,...css(desc)}:null,heading:heading?css(heading):null,subtitle:subtitle?css(subtitle):null,lessonSamples:samples,redundantTitle};
+   reflectionCount,extraExplanation,trust:group?css(group):null,description:desc?{text:desc.innerText,length:desc.innerText.length,...css(desc)}:null,heading:heading?css(heading):null,subtitle:subtitle?css(subtitle):null,lessonSamples:samples,redundantTitle};
  });
+ if(view.startsWith('home-')){
+  check(audit.reflectionCount===1&&audit.extraExplanation===0,view+' must show one merged reflection');
+ }
+ const navCopy=await page.evaluate(()=>{
+  const account=document.querySelector('#nav-home,#merged-home'),search=document.querySelector('#nav-search,#merged-search'),language=document.querySelector('#nav-lang-switcher,#merged-lang');
+  const header=document.querySelector('#topbar,.merged-topbar');
+  const rects=[account,search,language].map(el=>{const r=el.getBoundingClientRect();return {left:r.left,right:r.right,top:r.top,bottom:r.bottom};});
+  return {account:account?.querySelector('.ds-nav-caption')?.textContent,search:search?.querySelector('.ds-nav-caption')?.textContent,language:language?.textContent,theme:document.querySelector('#nav-theme-switcher .ds-nav-caption,#merged-theme .ds-nav-caption')?.textContent,globe:language?.querySelectorAll('.ds-language-globe').length,rects,headerBottom:header.getBoundingClientRect().bottom};
+ });
+ const isGreek=(locale==='gr');
+ check(navCopy.account===(isGreek?'Λογαριασμός':'Account'),view+' missing visible Account label');
+ check(navCopy.search===(isGreek?'Αναζήτηση':'Search'),view+' missing visible Search label');
+ check(navCopy.language===(isGreek?'English':'Ελληνικά'),view+' abbreviated language label');
+ check(navCopy.theme===(isGreek?'Θέμα':'Theme'),view+' theme caption missing');
+ check(navCopy.globe===1,view+' globe missing or duplicated');
+ if(width<=760){
+  const center=await page.locator('#brand span,.merged-brand span').first().evaluate(el=>{const r=el.getBoundingClientRect();return Math.abs((r.left+r.right)/2-innerWidth/2);});
+  check(center<2,view+' mobile brand title not centered: '+center);
+ }
+ if(view.startsWith('home-')){
+  const centeredHeading=await page.locator('#home-title').evaluate(el=>{const r=el.getBoundingClientRect();return Math.abs((r.left+r.right)/2-innerWidth/2)<2&&getComputedStyle(el).textAlign==='center';});
+  check(centeredHeading,view+' homepage heading not centered');
+ }
+ check(navCopy.rects.every(r=>r.left>=0&&r.right<=width+1&&r.bottom<=navCopy.headerBottom+1),view+' navbar clipped');
+ if(view.startsWith('home-'))check(await page.locator('#dedsec-account-launcher').count()===0,view+' duplicate Account launcher');
  all.push({view,...audit});
  check(audit.bodyClasses.includes(light?"light":"dark"),view+" did not load requested theme "+audit.bodyClasses);
  check(audit.scrollWidth<=width+2,view+" horizontal overflow "+audit.scrollWidth+"/"+width);
@@ -127,15 +219,22 @@ for(const [view,width,height,light,url,locale] of [
  });
  check(navGeometry.arr.length===4&&navGeometry.arr.every(a=>Math.abs(a.width-navGeometry.arr[0].width)<2),
   view+" navbar control sizes uneven: "+JSON.stringify(navGeometry));
- check(navGeometry.glyphs.length===3&&navGeometry.glyphs.every(g=>g.width>=22&&g.width<=26),
-  view+" one of the Search/Moon/Home SVGs missing or wrongly sized: "+JSON.stringify(navGeometry));
+ check(navGeometry.glyphs.length===4&&navGeometry.glyphs.every(g=>g.width>=22&&g.width<=26),
+  view+" one of the Search/Theme/Language/Account SVGs missing or wrongly sized: "+JSON.stringify(navGeometry));
 
+ if(view.startsWith('installation')){
+  const separated=await page.locator('.code-container:has(> .copy-btn)').evaluateAll(nodes=>nodes.every(node=>{
+   const button=node.querySelector(':scope > .copy-btn'),code=node.querySelector(':scope > code');
+   return !code||button.getBoundingClientRect().bottom<=code.getBoundingClientRect().top+1;
+  }));
+  check(separated,view+' copy control overlaps command text');
+ }
  const expectedInk=light?"rgb(17, 17, 17)":"rgb(255, 255, 255)";
  for(const action of audit.nav){
   check(action.color===expectedInk,view+" action "+action.id+" wrong theme text: "+action.color);
   check(action.iconColor===expectedInk,view+" action "+action.id+" wrong icon: "+action.iconColor);
   check(action.borderRadius==="0px",view+" rounded action "+action.id);
-  check(action.borderWidth==="0px",view+" framed navbar action "+action.id);
+  check(action.borderWidth===(/search/.test(action.id)?"1px":"0px"),view+" navbar search frame "+action.id);
   check(action.fontFamily.includes("Tahoma")||action.fontFamily.includes("MS Sans Serif"),view+" missing retro font "+action.id);
  }
  if(view.startsWith("knowledge")||view.startsWith("lesson")){
@@ -164,7 +263,7 @@ for(const [view,width,height,light,url,locale] of [
   check(trust.border==='1px'&&trust.rule==='3px'&&trust.cards.length===3&&trust.cards.every(c=>c.border==='1px'),view+' trust reference frame/panels missing: '+JSON.stringify(trust));
   check(rgbaTransparent(trust.background)&&trust.cards.every(c=>rgbaTransparent(c.background)),view+' trust surfaces must reveal the galaxy');
   check(trust.badges.length===2&&trust.badges.every(b=>b.icons===1&&b.inside&&b.count&&b.ink==='rgb(48, 48, 48)'),view+' GitHub badges clipped or unreadable: '+JSON.stringify(trust));
-  check(audit.description?.length>0 && audit.description.length<=180,view+" description length");
+  check(audit.description?.length>0 && audit.description.length<=700,view+" description length");
   check(audit.trust?.width<=900 && audit.trust?.width >= (width<600?Math.min(320,width*.82):600),view+" trust group must grow without overflow: "+audit.trust?.width);
  }else{
   const items=audit.probes.filter(x=>/page-header|content-section|note/.test(x.className));
@@ -376,7 +475,7 @@ for(const relative of importedPaths){
   check(await sweepPage.locator('.page-back').count()===1,relative+' missing Back');
   check(result.nav===4&&result.top&&result.footer,relative+" missing shared navbar/footer");
   if(relative==="dedsec/404.html")check(await sweepPage.locator(".not-found-actions a.dedsec-text-link").count()>=3,"404 destinations missing neutral links");
-  check(result.navBorder==="0px",relative+" navbar action still has a frame: "+result.navBorder);
+  check(result.navBorder==="1px",relative+" Search frame missing: "+result.navBorder);
   check(result.opaque.length===0,relative+" painted/framed elements: "+result.opaque.join(","));
   check(result.badLinks.length===0,relative+" text links not in theme ink: "+result.badLinks.join(","));
  }catch(e){faults.push(relative+" browser audit failed: "+e.message);}
@@ -630,7 +729,8 @@ for(const locale of ['en','gr'])for(const light of [false,true])for(const width 
 }
 for(const url of ['dedsec/Pages/faq.html','dedsec/el/Pages/faq.html','../.site-publish/dedsec/Pages/faq.html','../.site-publish/learn/el/fieldnotes-el-34.html']){
  const page=await browser.newPage({viewport:{width:390,height:844}});await page.goto(base+url,{waitUntil:'domcontentloaded'});
- await page.locator('.page-back').waitFor();check(await page.locator('.page-back').count()===1,url+' needs exactly one Back');
+ await page.locator('.page-back').waitFor();check(await page.locator('.page-back').count()===1&&await page.locator('.page-home').count()===1,url+' needs one Home and one Back');
+ check(await page.locator('.page-back-row').evaluate(row=>{const home=row.querySelector('.page-home'),back=row.querySelector('.page-back');return home.getBoundingClientRect().left<back.getBoundingClientRect().left&&parseFloat(getComputedStyle(back).borderTopWidth)>=1;}),url+' Home/Back order or border');
  check(await page.locator('.page-back').evaluate(b=>b.getBoundingClientRect().left>innerWidth/2),url+' Back should be on right');
  if(url.includes('/learn/'))check(await page.locator('.lesson-copy').count()===1,url+' preview Copy missing');
  await page.close();
@@ -687,6 +787,20 @@ await found.locator('.result-card').first().click();await found.locator('.lesson
 check(await found.locator('.lesson-content mark.search-hit').first().isVisible(),'SPA lesson passage was not highlighted');
 await found.close();
 
+// First successful startup is remembered per tab/scope, never private profile data.
+{
+ const p=await browser.newPage({viewport:{width:390,height:844}});
+ await p.goto(base+'index.html',{waitUntil:'networkidle'});await p.waitForFunction(()=>window.__DEDSEC_BOOT__?.status==='ready');
+ let unblock;const release=new Promise(resolve=>{unblock=resolve;});
+ await p.route('**/assets/refinement.css',async route=>{await release;await route.continue();});
+ await p.goto(base+'dedsec/Pages/faq.html',{waitUntil:'commit'});
+ await p.waitForFunction(()=>Boolean(window.__DEDSEC_BOOT__));
+ check(await p.evaluate(()=>window.__DEDSEC_BOOT__.presentation==='background'&&!document.documentElement.classList.contains('site-loading')&&!document.getElementById('site-loader')),'Navigation showed another full-screen loader');
+ unblock();await p.waitForFunction(()=>window.__DEDSEC_BOOT__?.status==='ready');
+ await p.reload({waitUntil:'networkidle'});check(await p.evaluate(()=>!document.documentElement.classList.contains('site-loading')&&!document.getElementById('site-loader')),'Reload repeated the successful splash');
+ await p.close();
+}
+
 // Slow critical resources keep the loader visible until the page can be used.
 for(const locale of ['en','gr'])for(const theme of ['dark','light']){
  const p=await browser.newPage({viewport:{width:390,height:844}});
@@ -703,6 +817,8 @@ for(const locale of ['en','gr'])for(const theme of ['dark','light']){
  check(before.status==='loading'&&before.value<100,'Loader reports ready while critical data is blocked');
  check(Math.abs((before.logo.left+before.logo.width/2)-195)<3&&before.bar.top>=before.logo.bottom,'Loader logo/bar must be centered and vertically ordered');
  check(before.gradient.includes('gradient'),'Loader progress needs the requested color gradient');
+ check(await p.locator('#site-loader .startup-number').evaluate(el=>getComputedStyle(el).display==='none'),'Loader percentage text must be hidden');
+ check(await p.locator('#site-loader .startup-status').evaluate(el=>el.getBoundingClientRect().height<=1),'Loader status text must be screen-reader only');
  check(locale==='gr'?before.text.includes('Φόρτωση'):before.text.includes('Loading'),'Loader localization missing');
  // Playwright screenshots await document.fonts.ready, which can itself wait for
  // the deliberately blocked deferred script. Capture this pre-ready frame with
@@ -763,6 +879,167 @@ await alias.close();
 
 
 
+// Owner-requested Others, preservation inventory and public project disclosure.
+for(const locale of ['en','gr']){
+ const p=await browser.newPage({viewport:{width:320,height:844}});
+ await p.addInitScript(l=>{localStorage.setItem('dedsec:language',JSON.stringify(l));localStorage.setItem('dedsec:cookie-choice','decline');},locale);
+ await p.goto(base+'index.html',{waitUntil:'networkidle'});
+ check(await p.locator('.launcher-settings h2').innerText()===(locale==='gr'?'Άλλα.':'Others.'),'Others heading translation');
+ check(await p.locator('.launcher-settings .app-icon-btn').count()===2,'Only cookies and preservation launchers remain');
+ if(locale==='en')check(await p.locator('a[href="dedsec/Pages/about-founder.html"] .app-label').innerText()==="Founder's story and project vision",'Sentence case preserves brands without capitalizing generic project');
+ const geometry=await p.locator('.launcher-settings .app-grid').evaluate(grid=>{const items=[...grid.children].map(x=>x.getBoundingClientRect());const r=grid.getBoundingClientRect();return Math.abs((items[0].left+items[items.length-1].right)/2-(r.left+r.right)/2)<4;});
+ check(geometry,'Others icon row should be centered');
+ const prefix=locale==='gr'?'dedsec/el/Pages/':'dedsec/Pages/';
+ await p.route('https://raw.githubusercontent.com/dedsec1121fk/Save-DedSec-Project/main/README.md',r=>r.abort());
+ await p.goto(base+prefix+'save-dedsec-project.html',{waitUntil:'networkidle'});
+ const links=await p.locator('#save-archive-links a').evaluateAll(xs=>xs.map(x=>x.href));
+ check(links.length===42&&new Set(links).size===42,'Bundled archive inventory unique/complete');
+ check((await p.locator('#save-links-status').innerText()).includes(locale==='gr'?'αποθηκευμένα':'bundled'),'Honest offline archive fallback');
+ await p.goto(base+prefix+'about-founder.html',{waitUntil:'networkidle'});
+ const projects=p.locator('#other-projects details');
+ check(await projects.count()===1&&!await projects.evaluate(x=>x.open),'Other projects closed by default');
+ check(await projects.locator('li a').count()===11,'All public GitHub projects');
+ await projects.locator('summary').click();
+ check(await projects.locator('li p').first().isVisible(),'Project descriptions visible on expansion');
+ await p.close();
+}
+
+
+// Disconnected account template: no credentials sent, real UTF-8 TXT/ZIP operations.
+for(const [locale,theme,width] of [['en','dark',320],['gr','light',320],['gr','dark',390],['en','light',1280]]){
+ const p=await browser.newPage({viewport:{width,height:844}});const errors=[],api=[];
+ p.on('pageerror',e=>errors.push(e.message));p.on('request',r=>{if(r.url().includes('/api/account/'))api.push(r.method());});
+ await p.addInitScript(({locale,theme})=>{localStorage.setItem('dedsec:language',JSON.stringify(locale));localStorage.setItem('dedsec:theme',JSON.stringify(theme));localStorage.setItem('dedsec:cookie-choice','decline');},{locale,theme});
+ const prefix=locale==='gr'?'dedsec/el/Pages/':'dedsec/Pages/';
+ await p.goto(base+prefix+'account.html',{waitUntil:'networkidle'});
+ check(await p.locator('[data-account-panel]').evaluateAll(xs=>xs.every(x=>x.hidden)),'Account forms must start closed');
+ await p.locator('[data-account-tab="account-register-panel"]').click();
+ check(await p.locator('#account-terms').count()===0,'Account terms dropdown was not moved to privacy');
+ const stats=await p.locator('.account-stat').evaluateAll(items=>items.map(el=>el.getBoundingClientRect().top));check(stats.length===2&&Math.abs(stats[0]-stats[1])<2,'Account counters must share one row');
+ check(await p.locator('[name=age]').count()===0&&await p.locator('[name=date-of-birth]').count()===1,'Registration must derive age from date of birth');
+ check(await p.locator('.account-terms-copy a').getAttribute('href')==='privacy-policy.html#account-privacy','Terms must link to privacy policy');
+ const termsGeometry=await p.locator('.account-check').evaluate(label=>{const box=label.querySelector('input').getBoundingClientRect(),copy=label.querySelector('.account-terms-copy').getBoundingClientRect();return {box:box.width,height:box.height,text:copy.width,right:copy.right,viewport:innerWidth,labelHeight:label.getBoundingClientRect().height};});
+ check(termsGeometry.box<=24&&termsGeometry.height<=24&&termsGeometry.text>120&&termsGeometry.right<=termsGeometry.viewport&&termsGeometry.labelHeight<200,'Terms checkbox/text geometry broken '+JSON.stringify(termsGeometry));
+ check(await p.locator('#account-register-panel input').evaluateAll(xs=>xs.every(x=>x.matches(':disabled'))),'Account template must not accept personal details/passwords');
+ check(await p.locator('#account-active-count').innerText()==='— / 444'&&await p.locator('#account-registered-count').innerText()==='— / 300','Disconnected counters must be unknown');
+ await p.locator('[data-account-tab="account-login-panel"]').click();check(await p.locator('#account-login-panel').isVisible()&&!await p.locator('#account-register-panel').isVisible(),'Sign-in must show only its own form');
+ await p.locator('#account-demo-start').click();check(await p.locator('#account-profile').isVisible(),'TXT preview did not open');
+ const create=async(name,kind)=>{await p.locator('#account-fab').click();await p.locator(kind==='folder'?'#account-new-folder':'#account-new-file').click();await p.locator('#account-name').fill(name);await p.locator('#account-dialog-confirm').click();};
+ await create('Σημειώσεις','folder');await p.locator('.account-open').filter({hasText:'Σημειώσεις'}).click();await create('Πρώτο','file');
+ const content='Αυτή είναι μια σημείωση.\n<script>window.badNote=true</script>\nLine two.';
+ await p.locator('#account-editor').fill(content);await p.locator('#account-save').click();
+ check(await p.locator('#account-current-file').innerText()==='Σημειώσεις/Πρώτο.txt','TXT filename spelling changed');
+ check(await p.evaluate(()=>window.badNote===undefined),'Note content executed as HTML');
+ const pin=p.locator('.account-pin');await pin.click();check(await p.locator('#account-pins button').count()===1,'Existing TXT pin failed');
+ await p.locator('#account-files input[type=checkbox]').check();
+ let downloadPromise=p.waitForEvent('download');await p.locator('#account-export').click();let download=await downloadPromise;
+ check(download.suggestedFilename()==='Πρώτο.txt','Single selection must export TXT');
+ check(fs.readFileSync(await download.path(),'utf8')===content,'TXT export changed user text');
+ if(locale==='en'&&width===320){const used=await p.locator('#account-usage').innerText();await p.locator('#account-editor').fill('x'.repeat(900001));await p.locator('#account-save').click();check(await p.locator('#account-usage').innerText()===used,'Failed quota save changed stored usage');check(await p.locator('#account-editor').inputValue().then(x=>x.length===900001),'Quota failure discarded edits');await p.locator('#account-editor').fill(content);await p.locator('#account-save').click();}
+ await p.locator('#account-root').click();await p.locator('.account-pin').click();check(await p.locator('#account-pins button').count()===2,'Folder pin failed');
+ await create('second','file');await p.locator('#account-editor').fill('Second note');await p.locator('#account-save').click();
+ await p.locator('#account-file-input').setInputFiles({name:'εισαγωγή.txt',mimeType:'text/plain',buffer:Buffer.from('Imported ελληνικό κείμενο')});
+ await p.locator('.account-open').filter({hasText:'εισαγωγή.txt'}).waitFor();
+ downloadPromise=p.waitForEvent('download');await p.locator('#account-export-all').click();download=await downloadPromise;
+ check(download.suggestedFilename().endsWith('.zip'),'Multiple files/folders must export ZIP');
+ const {execFileSync}=await import('node:child_process');
+ execFileSync('python3',['-c',"import zipfile,sys\nwith zipfile.ZipFile(sys.argv[1]) as z:\n assert z.testzip() is None\n assert set(z.namelist())=={'Σημειώσεις/','Σημειώσεις/Πρώτο.txt','second.txt','εισαγωγή.txt'}\n assert z.read('Σημειώσεις/Πρώτο.txt').decode('utf8')==sys.argv[2]\n assert z.read('εισαγωγή.txt').decode('utf8')=='Imported ελληνικό κείμενο'",await download.path(),content]);
+ check(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Account workspace horizontal overflow '+locale+' '+width);
+ await p.screenshot({path:path.join(dir,`account-${locale}-${theme}-${width}.png`),fullPage:false});
+ check(await p.locator('#account-active-count').innerText()==='— / 444','Preview must not increment real counters');
+ check(await p.locator('#account-profile section').last().locator('button').isDisabled(),'Missing sponsor scripts must not be downloadable');
+ await p.locator('#account-demo-exit').click();await p.locator('#account-dialog-confirm').click();check(!await p.locator('#account-profile').isVisible(),'Discard preview failed');
+ await p.locator('#account-demo-start').click();check(await p.locator('#account-files input').count()===0,'Discarded TXT data survived preview reset');
+ check(api.length===0,'Unconfigured template made backend requests');check(errors.length===0,'Account template JS errors '+JSON.stringify(errors));
+ check(await p.evaluate(()=>Object.keys(localStorage).every(k=>!/^dedsec:(account|note|password)/i.test(k))),'Account preview persisted private data');
+ await p.close();
+}
+
+// Authenticated portal UI on an isolated mock transport. No real accounts,
+// provider challenges, personal notes or sponsor source bytes are used here.
+for(const [locale,theme,width] of [['en','dark',320],['gr','light',390],['en','light',1280],['gr','dark',1440]]){
+ const p=await browser.newPage({viewport:{width,height:844}}),gr=locale==='gr',errors=[];
+ p.on('pageerror',e=>errors.push(e.message));
+ await p.addInitScript(({locale,theme})=>{localStorage.setItem('dedsec:language',JSON.stringify(locale));localStorage.setItem('dedsec:theme',JSON.stringify(theme));localStorage.setItem('dedsec:cookie-choice','decline');},{locale,theme});
+ await p.route('**/assets/account-config.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.DEDSEC_ACCOUNT_CONFIG={apiBase:location.origin+"/api/account",turnstileSite:"local-ui-fixture"};'}));
+ await p.route('https://challenges.cloudflare.com/turnstile/v0/api.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.turnstile={render(node,options){this.options=options;node.textContent="Local challenge fixture";options.callback("local-fixture-token");return 1;},remove(){},reset(){this.options.callback("local-fixture-token");}};'}));
+ let signed=false,cloudEntries=[],cloudRevision=0,conflict=false,unlocked=false,registeredPayload=null,deleteFails=true;
+ const scriptBytes=Buffer.from('print("Local download fixture")\n'),{createHash}=await import('node:crypto'),sha=createHash('sha256').update(scriptBytes).digest('hex');
+ const scripts=[{id:'fixture-en',filename:'Fixture (English).py',language:'en',sha256:sha,version:'v2',description:{en:'Local UI fixture',el:'Τοπικό δείγμα διεπαφής'}}];
+ await p.route('**/api/account/**',async route=>{const r=route.request(),name=new URL(r.url()).pathname.split('/api/account/')[1],method=r.method();let payload;try{payload=r.postDataJSON();}catch{}
+  const answer=(data,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(data)});
+  if(name==='status')return answer({version:1,mode:'active',connected:true,counts:{registered:signed?1:0,active:signed?1:0}});
+  if(name==='challenge')return answer({version:1,salt:'12'.repeat(16),iterations:600000,hash:'SHA-256'});
+  if(name==='register'){registeredPayload=payload;signed=true;return answer({created:true,recoveryCode:'ab'.repeat(32)},201);}
+  if(name==='me'&&method==='DELETE'){
+   check(r.headers()['x-csrf-token']==='fixture-csrf','Deletion omitted CSRF');
+   check(/^[0-9a-f]{64}$/.test(payload.prehash)&&!JSON.stringify(payload).includes('a long local test password'),'Deletion credential contract');
+   if(deleteFails)return answer({error:'invalid_credentials'},401);
+   signed=false;return answer({deleted:true});
+  }
+  if(name==='me')return signed?answer({user:{storageId:'isolated-fixture-account-id',givenName:'Test',familyName:'Fixture',email:'ui@example.test',ageAtRegistration:25,dateOfBirth:'2001-01-01',verified:unlocked},csrf:'fixture-csrf',counts:{registered:1,active:1},revision:cloudRevision,entries:cloudEntries,mailReady:false,rewards:{qualified:unlocked?3:0,pending:0,required:3,unlocked,unlockedCount:unlocked?1:0,code:'cd'.repeat(16),release:'v2',scripts:scripts.map((script,i)=>({...script,requiredReferrals:(i+1)*3,unlocked:unlocked&&i===0}))}}):answer({error:'sign_in_required'},401);
+  if(name==='notes'&&method==='PUT'){check(r.headers()['x-csrf-token']==='fixture-csrf','Portal omitted CSRF');if(conflict)return answer({error:'workspace_conflict'},409);check(payload.revision===cloudRevision,'Portal revision contract');cloudEntries=payload.entries;cloudRevision++;return answer({revision:cloudRevision});}
+  if(name==='sponsor/fixture-en')return route.fulfill({status:unlocked?200:403,contentType:'text/x-python',body:unlocked?scriptBytes:Buffer.from('locked')});
+  if(name==='logout'){signed=false;return answer({signedOut:true});}
+  return answer({error:'not_found'},404);
+ });
+ const prefix=gr?'dedsec/el/Pages/':'dedsec/Pages/';await p.goto(base+prefix+'account.html',{waitUntil:'networkidle'});
+ check(await p.locator('[data-account-panel]').evaluateAll(xs=>xs.every(x=>x.hidden)),'Live forms must start closed');await p.locator('[data-account-tab="account-login-panel"]').click();check(await p.locator('#account-login-panel input').count()===2&&!await p.locator('#account-register-panel').isVisible(),'Live sign-in shows extra registration fields');await p.locator('[data-account-tab="account-register-panel"]').click();
+ const form=p.locator('#account-register-panel form');await form.locator('[name=given-name]').fill('Test');await form.locator('[name=family-name]').fill('Fixture');await form.locator('[name=email]').fill('ui@example.test');await form.locator('[name=email-repeat]').fill('ui@example.test');check(await form.locator('[name=age]').count()===0,'Age must be derived from date of birth');await form.locator('[name=date-of-birth]').fill('2001-01-01');await form.locator('[name=referral-code]').fill('CD'.repeat(16));await form.locator('[name=password]').fill('a long local test password');await form.locator('[name=password-repeat]').fill('a long local test password');await form.locator('[name=terms]').check();await form.locator('[type=submit]').click();
+ await p.locator('#account-profile').waitFor({state:'visible'});
+ // The embedded portal must not retain the standalone fixed-launcher spacer.
+ await p.evaluate(()=>document.documentElement.dataset.accountEmbedded='true');
+ const embeddedSpacing=await p.locator('.account-template').evaluate(el=>({padding:parseFloat(getComputedStyle(el).paddingBottom),body:parseFloat(getComputedStyle(document.body).paddingBottom)}));
+ check(embeddedSpacing.padding<=12&&embeddedSpacing.body===0,'Embedded account retains bottom spacer: '+JSON.stringify(embeddedSpacing));
+ await p.evaluate(()=>delete document.documentElement.dataset.accountEmbedded);
+check(registeredPayload&&/^[0-9a-f]{64}$/.test(registeredPayload.prehash),'Registration did not derive credential');check(!JSON.stringify(registeredPayload).includes('a long local test password'),'Original password left the browser');check(await p.locator('#account-workspace-title').innerText()==='Test Fixture','Profile name spelling changed');
+ check(registeredPayload.referralCode==='cd'.repeat(16),'Referral code not normalized or submitted');check(await p.locator('#account-change-password button').isDisabled(),'Unverified user can change password');check(await p.locator('#account-referral-code').inputValue()==='cd'.repeat(16),'Referral code missing');check(registeredPayload.dateOfBirth==='2001-01-01'&&!('age' in registeredPayload),'Registration must send date of birth without manual age');check(await p.locator('#account-registered-count').innerText()==='1 / 300','Live account counter');check(await p.locator('#account-recovery-notice code').innerText()==='ab'.repeat(32),'Recovery code display');
+ let pendingDownload=p.waitForEvent('download');await p.locator('#account-recovery-notice button').first().click();let downloaded=await pendingDownload;check(downloaded.suggestedFilename()==='DedSec-recovery-code.txt','Recovery download name');await p.locator('#account-recovery-notice button').last().click();
+ check(await p.locator('#account-rewards .account-script button').isDisabled(),'Locked rewards became downloadable');
+ await p.locator('#account-fab').click();await p.locator('#account-new-file').click();await p.locator('#account-name').fill('Live note');await p.locator('#account-dialog-confirm').click();await p.locator('#account-editor').fill('Private local fixture Ελληνικά');await p.locator('#account-save').click();await p.waitForFunction(()=>document.getElementById('account-sync-status').textContent.includes('private account')||document.getElementById('account-sync-status').textContent.includes('ιδιωτικό λογαριασμό'));
+ check(cloudEntries.some(e=>e.content==='Private local fixture Ελληνικά'),'Private editor did not sync');
+ p.on('dialog',dialog=>dialog.accept());
+ await p.locator('#account-use-local').click();await p.locator('#account-use-cloud').waitFor({state:'visible'});
+ await p.locator('#account-files .account-open').first().click();await p.locator('#account-editor').fill('Browser-only durable note Ελληνικά');await p.locator('#account-save').click();
+ await p.waitForFunction(()=>document.getElementById('account-sync-status').textContent.includes('only in this browser')||document.getElementById('account-sync-status').textContent.includes('μόνο σε αυτόν'));
+ check(!cloudEntries.some(e=>e.content==='Browser-only durable note Ελληνικά'),'Local mode uploaded a private edit');
+ await p.reload({waitUntil:'networkidle'});await p.locator('#account-use-cloud').waitFor({state:'visible'});await p.locator('#account-files .account-open').first().click();
+ check(await p.locator('#account-editor').inputValue()==='Browser-only durable note Ελληνικά','Browser notes did not survive reload');
+ cloudEntries=cloudEntries.map(e=>e.kind==='file'?{...e,content:'Newer cloud version'}:e);cloudRevision++;
+ await p.locator('#account-use-cloud').click();await p.locator('#account-use-local').waitFor({state:'visible'});
+ check(cloudEntries.some(e=>e.content==='Newer cloud version')&&cloudEntries.some(e=>e.content==='Browser-only durable note Ελληνικά'),'Transfer overwrote conflicting cloud/local text');
+ check(new Set(cloudEntries.map(e=>e.path.toLowerCase())).size===cloudEntries.length,'Transfer created duplicate paths');
+ await p.locator('#account-files .account-open').first().click();
+ // IndexedDB compare-and-swap rejects concurrent local writers and leaves
+ // another owner/profile untouched. No real account or private fixture used.
+ const localCAS=await p.evaluate(async()=>{const l=window.DedSecAccountLocal,a=await l.key('isolated-a@example.test','test'),b=await l.key('isolated-a@example.test','main');const note=[{path:'test.txt',kind:'file',pinned:false,content:'fixture'}];await l.write(a,0,note,'local');const results=await Promise.allSettled([l.write(a,1,note,'local'),l.write(a,1,note,'local')]);const other=await l.read(b);await l.remove(a);return {ok:results.filter(x=>x.status==='fulfilled').length,conflict:results.filter(x=>x.reason?.code==='local_conflict').length,other};});
+ check(localCAS.ok===1&&localCAS.conflict===1&&localCAS.other===null,'Local revision/profile isolation failed');
+
+ unlocked=true;await p.locator('#account-rewards > button').last().click();await p.waitForFunction(()=>document.querySelector('#account-rewards .account-script button')?.disabled===false);check(await p.locator('#account-rewards .account-script button').isEnabled(),'Refreshed rewards did not unlock');check(await p.locator('#account-rewards h3').innerText()==='Fixture (English).py','Script filename spelling changed');
+ pendingDownload=p.waitForEvent('download');await p.locator('#account-rewards .account-script button').click();downloaded=await pendingDownload;check(fs.readFileSync(await downloaded.path()).equals(scriptBytes),'Verified mock sponsor download changed bytes');
+ conflict=true;await p.locator('#account-editor').fill('Unsynced conflict copy');await p.locator('#account-save').click();await p.waitForFunction(()=>document.getElementById('account-feedback').textContent.includes('another tab')||document.getElementById('account-feedback').textContent.includes('άλλη καρτέλα'));check(await p.locator('#account-editor').inputValue()==='Unsynced conflict copy','Conflict discarded local notes');
+ check(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Live account horizontal overflow');check(errors.length===0,'Live account JS errors '+JSON.stringify(errors));check(await p.evaluate(()=>Object.keys(localStorage).every(k=>!/^dedsec:(account|note|password)/i.test(k))),'Live account stored private data in localStorage');
+ await p.screenshot({path:path.join(dir,`account-live-${locale}-${theme}-${width}.png`),fullPage:false});
+ const deleteAccount=async()=>{
+  await p.locator('#account-delete-account').click();
+  await p.locator('dialog[open] input[type="password"]').fill('a long local test password');
+  const deletionResponse=p.waitForResponse(r=>r.request().method()==='DELETE'&&new URL(r.url()).pathname.endsWith('/api/account/me'));
+  await p.locator('dialog[open] button[type="submit"]').click();await deletionResponse;
+ };
+ await deleteAccount();
+ await p.waitForFunction(()=>document.getElementById('account-feedback')?.classList.contains('account-toast-error'));
+ check(await p.locator('#account-deleted-success').count()===0,'Rejected deletion showed success');
+ check(await p.locator('#account-profile').isVisible(),'Rejected deletion hid private workspace');
+ deleteFails=false;
+ await p.route('https://dedsec1121fk.github.io/Test/',route=>route.fulfill({status:200,contentType:'text/html',body:'<h1 id="deletion-home">Home fixture</h1>'}));
+ await deleteAccount();await p.locator('#account-deleted-success').waitFor();
+ check((await p.locator('#account-deleted-success h1').innerText())===(gr?'Η διαγραφή λογαριασμού ολοκληρώθηκε επιτυχώς':'Account deleted successfully'),'Deletion success translation');
+ check((await p.locator('#account-deleted-success a').getAttribute('href'))==='https://dedsec1121fk.github.io/Test/','Deletion fallback points to account route');
+ await p.waitForURL('https://dedsec1121fk.github.io/Test/',{timeout:10000});
+ check(await p.locator('#deletion-home').isVisible(),'Deletion did not return to homepage');
+ await p.close();
+}
+
 await browser.close();
 fs.writeFileSync(path.join(dir,"audit.json"),JSON.stringify({audits:all,failures:faults},null,2));
 for(const x of all){
@@ -774,3 +1051,5 @@ for(const x of all){
 }
 if(faults.length){console.error("BROWSER_FAILURES "+JSON.stringify(faults));process.exitCode=1;}
 else console.log("CHROMIUM_SMOKE_PASS: "+all.length+" viewports, screenshots and computed CSS attached");
+
+

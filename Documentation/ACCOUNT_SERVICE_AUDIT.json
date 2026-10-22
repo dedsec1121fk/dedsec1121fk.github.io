@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-20",
+  "worker_version": "fa115608-1188-44b8-bd25-deab94459807",
+  "worker": "dedsec-test-accounts",
+  "database": "dedsec-test-accounts",
+  "checks": {
+    "three_referrals_unlock": true,
+    "nested_txt_saved": true,
+    "other_account_isolated": true,
+    "stale_revision_rejected": true,
+    "exact_900000_byte_limit_saved": true,
+    "over_limit_rejected": true,
+    "failed_write_preserved_saved_notes": true,
+    "server_only_decryption_face-detector-en": true,
+    "server_only_decryption_face-detector-el": true,
+    "server_only_decryption_steganography-en": true,
+    "server_only_decryption_steganography-el": true,
+    "eligibility_rechecked_on_every_download": true
+  },
+  "fixtures_removed": true,
+  "final_counts": {
+    "registered": 0,
+    "active": 0
+  },
+  "mail_ready": false,
+  "plaintext_transferred_for_download_test": false,
+  "limitations": [
+    "Human Turnstile sign-up remains to be exercised by the owner.",
+    "Email delivery requires a connected sender.",
+    "Camera, tunnel and Android script runtimes were not executed."
+  ],
+  "scope": "Test only; live API storage/authorization and bodyless server-side sponsor decryption tests.",
+  "storage_boundary_checks_version": "336d2794-727c-490c-861d-a4fe7e1a38a2",
+  "final_version_checks": [
+    "private notes write and cross-account isolation",
+    "revision conflict preserves data",
+    "four HEAD downloads decrypt and verify inside Cloudflare without plaintext transfer",
+    "disposable fixtures removed; counters zero"
+  ],
+  "local_packager_checks": [
+    "independent AES-GCM round trip",
+    "no plaintext or key in output",
+    "world-readable key file rejected"
+  ]
+}

@@ -1,0 +1,29 @@
+name: Set up Test account email
+on:
+  workflow_dispatch:
+    inputs:
+      replace_existing:
+        description: Replace existing email secrets (leave false for normal setup)
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: dedsec-test-email-setup
+  cancel-in-progress: false
+jobs:
+  setup-email:
+    if: github.repository == 'dedsec1121fk/Test' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure existing Test Worker from private Actions secrets
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          MAIL_PROVIDER: brevo
+          ACCOUNT_PUBLIC_ORIGIN: https://dedsec-test-accounts.dedsec-project.workers.dev
+          MAIL_API_KEY: ${{ secrets.MAIL_API_KEY }}
+          MAIL_FROM: ${{ secrets.MAIL_FROM }}
+          REPLACE_EMAIL_SECRETS: ${{ inputs.replace_existing }}
+        run: python3 scripts/setup_account_email.py

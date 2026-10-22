@@ -1,70 +1,93 @@
-# Complete Test website maintenance: human and AI
+# System map, reconstruction and operations
 
-## Purpose, ownership and safe boundaries
-The `dedsec1121fk/Test` repository is an isolated static GitHub Pages staging site. Never push to production DedSec or delete the Developer Mind repository through this workflow. The mirror under `dedsec/` preserves the original public DedSec HTML and assets. The programming archives `data/en.js`, `data/el.js`, and `data/methods.js` are read-only searchable snapshots. The separately supplied Developer Mind ZIP is source reference material, **not proof of complete migration**. Preserve rights, context and provenance if expanding it. See `10_DEVELOPER_MIND_ARCHIVE_AND_COOKIE_CONSENT.md`.
+This is the current implementation map, replacing the chronological notes formerly in this chapter. All paths below are relative to the repository root. Public source is a static HTML/CSS/JavaScript application with a Python publication pipeline. Optional accounts run in a separate Cloudflare Worker with D1. `cloudflared` is a tunnel client; connecting Cloudflare does not turn static GitHub Pages into a database or provide unlimited email/storage.
 
-## File ownership and maintenance map
-| File | Single responsibility |
-| --- | --- |
-| `index.html` | Root document, four-action navbar, five-second branded boot, footer, preload order |
-| `assets/ui.js` | Launcher registry, category intros, search, 21 app shortcuts, lesson reader, bilingual UI, Home cookie button, Easter egg |
-| `assets/ui.css` | Root layout, 3-column portrait and 6-column landscape/desktop, centered intros, transparent result cards, equal-size header actions |
-| `assets/galaxy.css` | Shared dark/light galaxy, contrast tokens, transparent overlays and cookie modal styles |
-| `assets/starfield-dark.svg`, `assets/starfield-light.svg` | Lightweight static natural butterfly/planet/stars artwork |
-| `assets/cookie-consent.js` | One bilingual consent dialog, saved Accept/Decline decision, optional GitHub count refresh gating |
-| `dedsec/Assets/merged-retro.css` | Last compatibility CSS for all imported HTML pages; transparent old panels, responsive navbar |
-| `dedsec/Assets/merged-retro.js` | Imported header Home/Search/theme/language, fallback titles, cookie dialog hook, reversible Easter egg |
-| `dedsec/Pages/privacy-policy.html` and `dedsec/el/Pages/privacy-policy.html` | Accurate Test privacy disclosures |
-| `scripts/import_dedsec.py` | First-import source mirror; inspect before ever allowing a forced reimport |
-| `scripts/validate.py` | Fast Python structural checks before any push |
-| `.github/workflows/static.yml` | Single validation and GitHub Pages deploy workflow on main |
-| `Documentation/English`, `Documentation/Greek` | Parallel human and AI maintenance reference |
+## How the system was assembled
 
-## How the interface must behave
-There are 21 launcher tiles. The first eight follow the original screenshot's top-down navigation excluding Home: Installation, Learn About Tools, Assistance, FAQ, Privacy, Contact, Founder, Sponsor; education proceeds from Foundations to Advanced Engineering. Full Greek/English labels appear without cosmetic filename extensions; actual link destinations and file formats remain unchanged. **Saved Lessons and every bookmark feature are removed.**
+The existing DedSec project guides and their Greek counterparts were retained beneath `DedSec-Project-Website/dedsec/`. A shared homepage and presentation layer wrap those guides, the learning archive and integrated `TikDev.html`. Archived examples and authored bilingual expansions supply the lesson catalogue. Publication now generates portable static pages and crawler metadata from these local sources; it does not depend on re-downloading the original ZIP or cloning upstream during every build.
 
-Home and Search work without saved lessons; theme and language choices persist in localStorage between visits. The root/imported header contains exactly **Search, Theme, Language, Home** in that order; Home is the far-right control on **every** page, including archive category and full lesson pages. Give all four controls reserved fixed widths. On narrow screens let the brand title wrap onto two lines but never hide any action. Root home icons show 3 columns on portrait mobile (up to 760px) and 6 on landscape/desktop. Titles, category descriptions, form controls and results are centered consistently. Keep lesson bodies/code readable with proper left alignment.
+The interface uses shared navigation/theme/consent components instead of independent implementations per article. Knowledge is requested only when reading/searching. Basic-page readiness and a small verified offline cache avoid downloading the entire archive on entry. The optional account module adds a separate private origin, database-enforced limits and encrypted reward delivery without putting user data into the public site.
 
-For every root archive view, `sectionIntro()` renders a centered real title and useful bilingual subtitle. `categoryIntro` has twelve topic-specific entries. `completeHeadings()` on imported full guides adds only *missing* H1 or available metadata subtitle and must never repeat existing author text.
+## Ownership map
 
-Backgrounds of archive panels, cards, search controls and imported content wrappers are transparent to reveal the galaxy. Keep borders for grouping and enough ink contrast; lightly tinted code blocks and cookie dialogs are exceptions because full transparency would harm legibility. The galaxy must remain local and still, with natural butterfly silhouettes, planets and stars rather than continuous CPU-heavy effects. Avoid repeated stylesheet overrides when a canonical final selector can be edited directly.
+| Source | Responsibility | Safe update point |
+|---|---|---|
+| Root `index.html` | Source-package entry redirect | Preserve query and hash |
+| `DedSec-Project-Website/index.html` | Homepage shell, inline nav, stylesheet/script order | Keep critical loader early; knowledge declarations inert |
+| `assets/ui.js` under website source | Launchers, groups, routes, reader, global search UI | Paired labels; stable IDs; escaped text |
+| `assets/knowledge-renderer.js` | Article Markdown/code rendering | Preserve code and prevent unsafe markup |
+| `assets/knowledge-search.js` | Query parsing, normalization and ranking | Phrase/filter/exclusion and typo fixtures |
+| `assets/page-controls.js`, `.css` | Passages/highlights, Copy, Back, footer integration | One control per target; never execute copied commands |
+| `assets/ui.css`, `galaxy.css`, `clean-skin.css`, `refinement.css` | Root appearance in declared cascade order | Inspect winning selectors; fixed galaxy; theme parity |
+| `dedsec/Assets/merged-retro.js` and associated styles | Imported-page compatibility and shared navbar | Keep four inline actions visible on small screens |
+| `assets/boot.js`, `offline-worker.js` | Resource readiness, progress and verified basic cache | No full knowledge preload; failure escape |
+| `assets/cookie-consent.js` | Consent and permitted optional refreshes | Equal Accept/Decline; accurate privacy text |
+| `assets/save-links.js`, Save page sources | Public Save DedSec resource list | Check actual URLs and translated descriptions |
+| `TikDev.html`, `data/tikdev-weekly.json` | Integrated public GitHub discovery | Distinguish bundled data from online refresh |
+| `data/*.js` | Deployable lesson records and enrichment layers | Read `scripts/knowledge_catalogue.py` and index script order first |
+| `Developer's Mind/` | Anonymized archived examples/source material | Preserve provenance, no personal data |
+| `scripts/build_site_search.py` | Extract public page passages into `data/site-search.js` | Regenerate after article/form/terms changes |
+| `scripts/build_portable_site.py` | Public page aliases, lesson previews, raw links, SEO and asset versions | Build output is disposable |
+| `scripts/startup_manifest.py` | Basic-page dependency allowlist and hashes | Keep data/learn/raw out of startup |
+| `account-service/` | Private Worker, SQL policy, credentials and ciphertext catalogue | Follow chapter 21, preserve secrets |
+| `.github/workflows/` | Test validation/Pages and weekly TikDev refresh | Read exact conditions/permissions before changes |
+| `Documentation/`, `README.md` | Paired maintenance instructions and file index | Same commit as functional changes |
 
-## Privacy and consent
-There are **no saved lessons, bookmarks or reading history**. Theme and language persist under `dedsec:theme` and `dedsec:language` in localStorage. The Accept/Decline choice persists under `dedsec:cookie-choice` in localStorage, so visitors are not asked repeatedly. These are local browser storage entries, not HTTP cookies. The controller cleans only the obsolete `dedsec:bookmarks` key and migrates an existing prior-session consent choice when available. Decline and Accept are equal choices. No Google Analytics/Tag Manager is added by Test. A **non-floating Cookie Preferences button belongs on the Home intro**, at the end of the launcher grid. Users can return there via the top-right Home action. The consent dialog may appear on any page if no session choice exists.
+## Pages, navigation and visual contracts
 
-## Manual maintenance without AI
-1. Clone only Test. Record the current working main SHA before changing files.
-2. Inspect the precise current HTML, JS, and winning CSS declarations; identify whether the issue is root `#app` or imported `dedsec/`.
-3. For root titles/categories, edit `assets/ui.js` once. Avoid duplicating category descriptions or cutting titles with CSS.
-4. For imported guide styling, modify the common compatibility CSS/JS rather than 179 individual pages. Keep original content, links, licenses and translations intact. Verify all HTML are still present.
-5. For archive data changes, work from approved original sources, compare unique IDs, languages, body hashes and test examples; do not copy boilerplate templates.
-6. Run `python3 scripts/validate.py` and `node --check assets/ui.js assets/cookie-consent.js dedsec/Assets/merged-retro.js` individually (Node takes one file per call). Run a local static server to inspect mobile and desktop.
-7. Test widths 320, 360, 390, 760, 1280 CSS px, portrait/landscape, dark/light, Greek/English, and a real Android browser. Check root Home, a category, a result, Installation, FAQ and Privacy.
-8. Verify no client-side saved controls, saved theme/language/consent values across reload, no optional image requests on Decline, the Home cookie button on Home **only**, and accurate privacy links.
-9. Commit and deploy in **one batched push**. Read GitHub Actions failures before retrying to conserve minutes. Compare live Pages rendering. Revert using the saved SHA if needed.
+The homepage groups 22 primary launcher entries and an Others group. Cookies, Save DedSec and account access belong to the existing Others UI. Founder projects are a collapsed section of the founder article. TikDev is part of the website, with public repository discovery as its online feature. External footer links do not authorize deployment to those repositories.
 
-## Maintenance with AI
-Ask the AI to first inspect exact current source files, identify selectors and test constraints, and provide a minimal reviewable diff. Demand a list of actual checks run, any unmet browser QA, and an explicit declaration that production and Developer Mind originals were untouched. AI must not silently delete source files, duplicate template lessons, infer platform parity, or report visual verification from static CI.
+Root routes such as `#home`, `#library`, `#category:…` and `#read:ID` render into the shared application. Imported guides are physical HTML; build aliases preserve older `Pages/`, `el/Pages/` and Assistance URLs. Generated `learn/en/ID.html` and `learn/el/ID.html` are crawlable article previews. Do not create duplicate catalogue entries for those aliases.
 
-## Recovery
-A stuck boot screen must offer Skip intro; it calls `dedsecBootReady()` after initial render. Search errors usually mean missing local `data/*.js` files; check browser console and the original file paths. If navbar Home disappears, inspect four reserved grid columns and `.merged-home` in the imported shared script. If solid backgrounds reappear, inspect computed CSS and eliminate the responsible source-era declaration without dropping content or making code unreadable. If consent is wrong, check localStorage consent and deferred badge URLs, not HTTP cookies. The Easter egg is visual-only and Restores without deleting content.
+Shared controls are Search, Theme, Language, Account. Back appears at the upper right inside non-home content and has a safe destination for direct links. Copy buttons reuse the existing guide treatment and read exact command text, with clipboard fallback and honest failure state. Titles use sentence case while preserving brand/program names. Final icon rows with one or two items are centered. Content/trust surfaces stay transparent with readable code/input contrast. Do not add Share/Preview or the removed bottom Main Website button.
 
-## Evidence limits
-Structural CI can prove file presence, syntax and the stated invariants, not exact body-content equivalence, device performance or perfect appearance on the user's phone. Record outstanding browser tests explicitly.
+Theme/language/consent are local preferences, not authentication. Inspect actual localStorage keys in their modules when changing them; notes, recovery codes and passwords must not enter those keys. Consent controls optional external refreshes, while bundled public content remains readable. Imported article localization and root labels must stay aligned. Navbar icons exist in HTML before scripts execute.
 
+## Search, reader and startup data flow
 
-**Maintenance note (16 October 2026):** GitHub Stars (**914**) and Forks (**380**) are verified bundled snapshots visible even after Decline. Consent enables an optional direct GitHub API refresh, with network failure leaving the snapshot intact. Cookie Preferences is now a pixel-art app-style icon tile below the trust row, and Accept/Decline buttons have separate icons. All four navbar controls share equal sizes, theme-consistent colors and wider gaps. Imported pages have stronger transparent background overrides for page headers, requirements and notes; code/input contrast is preserved.
+The shell loads theme/readiness code and the current page's presentation dependencies. On published HTTPS/localhost, the startup manifest prepares only basic project pages and their required local assets. The loader reports resource progress, waits for fonts/images/styles and paint, and exposes Retry/Continue on failure. It uses a centered logo and colorful bar over a fixed galaxy. It has no artificial wait and no guarantee of zero lag on every device.
 
+Opening knowledge or search loads the inert catalogue declarations sequentially, applies enrichment layers and normalizes the effective index in yielding batches. Search merges public website passages and knowledge. Supported query forms are tested in `test_knowledge_search.mjs`; examples include `"exact phrase"`, `lang:en`, `type:page`, `in:title`, `topic:website`, OR and exclusions. TikDev repository discovery is a separate online operation, not the homepage index.
 
-### Static sharing preview maintenance (16 October 2026)
-`scripts/social_previews.py` generates real HTML-head metadata for Home and every imported page: unique `og:title`, `og:description`, `og:url`, locale, a 1200×630 branded `og:image`, image alt text, and Twitter card/title/description/image. All links and the shared social image use **https://ded-sec.space/Test/**, never the original production site. Generation is idempotent and enforced by `scripts/validate.py` before each deployment. See `Documentation/English/11_SOCIAL_LINK_PREVIEWS.md`.
+Results preserve complete relevant passages. Public fragments carry the excerpt locator, not account content. `page-controls.js` maps normalized Greek accents/spacing back onto DOM ranges, opens enclosing details and scrolls/highlights the result. Plain text creation avoids injecting query markup. Lesson results use stable IDs; generated static pages and SPA readers must agree. The basic offline cache verifies resource hashes and activates only after its bundle succeeds. Requested knowledge may be cached by the browser; it is not proactively fetched as a complete offline archive.
 
+## Recreate the public site from a clean checkout
 
-## Real-browser visual inspection (October 2026)
-The build runs `scripts/browser_audit.mjs` with **headless Google Chrome/Chromium through playwright-core**, serving the generated pages locally at 127.0.0.1:8765. Audit points: 390px dark/light Home, 390px dark/light Installation, 1280px desktop Home; four navbar controls, actual pixel-cookie SVG visible, approximately 20% smaller trust section, sub-180-character localized descriptive copy, transparent legacy content panels, and zero horizontal overflow. The step uploads five PNG screenshots and `audit.json` as GitHub Actions artifact `test-chromium-audit`. Check that artifact; CSS-computed values are also printed in workflow logs. This does not imply the actual public Test domain or a personal Android phone is accessible from the browser harness. If a computed-style assertion fails, inspect the selectors and rerun only after a fix.
+1. Obtain the full authorized repository and its history: `git clone --branch main https://github.com/dedsec1121fk/Test.git`, then `cd Test`. Record the commit. Do not substitute an empty framework project.
+2. Install Python 3.10+ and Node 24. Create the isolated Markdown environment and run the exact commands in chapter 03. Build with `--target test`, never infer a production target from a footer URL.
+3. Inspect `.site-publish/deployment-manifest.json`: the Test base is `https://dedsec1121fk.github.io/Test/`, not the legacy source metadata host. Source social markers are replaced during build.
+4. Serve the build over localhost HTTP and inspect home, imported article, both languages/themes, knowledge reader, whole-site search and static lesson preview. Verify Copy, Back, consent, details, fixed background and narrow layouts.
+5. In the Test repository, select GitHub Actions as the Pages publishing source if not already configured. The included workflow requires Pages permissions and publishes the build after all checks. Verify the exact successful run and then open the real HTTPS Test URL.
+6. Keep Test noindex. The builder generates `sitemap.xml`, `robots.txt`, `llms.txt`, `llms-full.txt` and preview metadata per deployment profile; inspect those generated files, not obsolete source-era URLs. Never include private user data in crawler files.
 
-The cookie icon bug was caused by a localization function using `querySelector("span")` and overwriting the SVG container. It now targets `.app-label` only. Never use a generic span query when a control contains both an icon and text. Imported fixed topbars intentionally have an opaque `--space-start` background; article headers and cards must remain transparent.
+A rebuild needs no database to serve general public content. The static account page deliberately remains disconnected, with a memory-only TXT preview and a link to the private portal. Its disabled forms must not collect personal information on a static origin.
 
+## Recreate or update private accounts
 
-## Unique knowledge titles without deleting real material (16 October 2026)
-The full knowledge audit covers all **2,406** English, Greek and reasoning records, including each source body's individual lines. Source filenames such as `00_reference_sample.txt` legitimately repeat across different programming languages; identical titles must **not** cause two different files to become indistinguishable. `assets/ui.js` now prefixes globally repeated titles within a locale with their final two source directories, e.g. `Array / APL — 00 reference sample` and `Array / BQN — 00 reference sample`. The category view and reader use the same display title. Source IDs, bodies and ordering are preserved. `scripts/audit_knowledge.py` now rejects any identical **rendered** title within the same knowledge dataset, in addition to duplicate IDs, source paths and complete bodies. This is machine-assisted line-by-line validation, **not** a claim that every example was manually or experimentally verified.
+The current Test Worker is `dedsec-test-accounts`, hosted under `dedsec-project.workers.dev`. Its only portal routes are `/dedsec/Pages/account.html` and `/dedsec/el/Pages/account.html`; API routes begin `/api/account/`. D1 is bound as `DB`. `account-service/wrangler.example.jsonc` records the current Test identifiers and hourly cleanup schedule. Do not copy its D1 ID into an unrelated installation.
+
+For a clean installation, create a Free Worker and D1 database in the owner's account; set a new Worker name/database ID and matching portal/static base URLs in configuration/code. Create a Turnstile widget for the exact portal hostname and expected actions `register`, `login`, `recover`. Apply migrations 0001, 0002 and 0003 exactly once and in order to the empty database. On the existing Test database, 0001/0002 were applied directly through the D1 API: apply only 0003 after schema inspection. Wrangler's `d1_migrations` ledger is distinct from our `account_schema_migrations`; never blindly ask Wrangler to reapply old migrations to an API-initialized database.
+
+Use current Wrangler or the authenticated Cloudflare API. For explicit one-file execution from `account-service/`, use `wrangler d1 execute dedsec-test-accounts --remote --config wrangler.example.jsonc --file migrations/0003_account_capacity_and_birth.sql` only after proving 0001/0002 exist and 0003 is absent. Substitute the correct new database name for a fresh installation and execute its three files in order. Back up before schema writes, temporarily disable registration during migration, verify the ledger and `PRAGMA table_info(account_users)`, then deploy the matching Worker. This operation changes schema and must never target production by accident.
+
+Configure `SERVICE_MODE`, `TURNSTILE_SITE` and D1. Required server secrets are `PASSWORD_PEPPER`, `HMAC_SECRET`, `TURNSTILE_SECRET` and, for rewards, `SPONSOR_KEY`. Generate strong independent keys privately on a new installation. On an existing installation, inherit the existing secrets when uploading a version; do not extract them or regenerate them. Preserve runtime compatibility settings and all bindings, because Worker version upload does not automatically copy them. The deployed modules are Worker, crypto, limits, ciphertext catalogue and the imported account core. Uploading a version is separate from assigning traffic to it. Keep logging free of personal data and maintain the hourly `17 * * * *` cleanup schedule.
+
+The existing public catalogue was encrypted with an owner-held key. A new key cannot decrypt it. Reuse the matching private recovery key or rebuild the catalogue from owner-provided originals with `scripts/package_sponsors.py`. Its `--help` lists manifest/source-dir/key-file/output/release arguments; source files, manifest and key stay outside Git. For a new installation without those private materials, use an empty catalogue and keep rewards unavailable. Do not claim encrypted public bytes can reconstruct missing plaintext.
+
+Optional verified email uses `MAIL_API_KEY` and `MAIL_FROM` for Resend. A connected Cloudflare account alone is insufficient. Verify the sender domain and connect a free email account before enabling real rewards. No paid Cloudflare outbound email plan is required or enabled by this application. Free providers impose quotas and may suspend requests; limits and current pricing must be checked before publication. Details, retention and failure behavior are in chapter 21.
+
+## Operating and recovering the system
+
+Keep a release record containing source commit, Pages run, Worker version, migration ledger and non-secret resource IDs. Keep secrets and encrypted private database backups in owner-controlled recovery storage separate from Git; the public repository is not a user backup. Test restore into an isolated database before relying on a backup. Notes exports are user-controlled TXT/ZIP; they do not restore credentials, referrals or sessions.
+
+If registration stops at 300, deletion frees an existing-account place; the cap is not 300 lifetime signups. Daily activity is unique accounts per Athens date, not concurrent sockets. It remains capped at 444, independently of the smaller existing-account cap. The UI must show server counts or unknown, never invented demo activity. Storage is decimal 400 MB overall and 900 KB per account; 300 personal ceilings total 270 MB, leaving the global cap unchanged.
+
+For a stuck loader, inspect failed local resources, startup hashes and console/network errors; use its failure controls. Do not fix it by loading all knowledge or hiding a failed theme. For missing search results, regenerate public passages and compare effective catalogue IDs, selected language/filters and data load errors. For stale styles, inspect generated content-hashed URLs and service-worker activation. For `portal_not_published`, confirm the static Pages run deployed account HTML and its fingerprinted config script is replaced by the Worker. For `email_not_configured`, connect the sender; never mark users verified manually as a public workaround. For conflicts, export the unsynced copy before reloading. For rewards, inspect real verification, referral age/activity and network qualification before inspecting encryption.
+
+Roll back public changes through Git history and a new build. For account incidents, disable `SERVICE_MODE` or deploy a schema-compatible known-good Worker while preserving D1. Version 0003 adds a column, so the old positional `INSERT INTO account_users VALUES(...)` Worker is not compatible with new registrations: patch it to explicit columns or retain the new validated registration path. Do not remove DOB or drop user tables as a shortcut. Restore D1 only from a verified private recovery point with an explicit data-loss decision.
+
+## Evidence and limits
+
+The test suite uses real SQLite transactions locally and controlled Turnstile/email transports. Chromium checks source and generated UI with mock accounts, and produces screenshots. These checks establish specified behavior, not independent security certification, verified legal policy, perfect translations or guaranteed free capacity for every traffic pattern. Before public referral use, test real CAPTCHA signup, email ownership, two-day referral maturation and authenticated downloads in the owner-controlled environment. Keep any pending provider connection visible in the release report.
+
+Official operational references: [D1 migrations](https://developers.cloudflare.com/d1/reference/migrations/), [Worker version upload and inherited bindings](https://developers.cloudflare.com/api/resources/workers/subresources/scripts/subresources/versions/methods/create/), [D1 recovery](https://developers.cloudflare.com/d1/reference/time-travel/). Pin dependencies and review official changes before future upgrades.

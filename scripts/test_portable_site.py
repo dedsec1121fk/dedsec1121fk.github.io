@@ -32,8 +32,10 @@ class HeadLinks(HTMLParser):
 
 def audit(out):
  manifest=json.loads((out/'deployment-manifest.json').read_text('utf8'))
- base=manifest['base_url'];parsed_base=urlsplit(base)
- errors=[];html_pages=list(out.rglob('*.html'))
+ base=manifest['base_url'];parsed_base=urlsplit(base);discovery=manifest['discovery_base_url']
+ errors=[]
+ if discovery!='https://ded-sec.space/':errors.append(('manifest','wrong discovery base',discovery))
+ html_pages=list(out.rglob('*.html'))
  for page in html_pages:
   rel=page.relative_to(out).as_posix()
   p=HeadLinks()
@@ -55,14 +57,15 @@ def audit(out):
  ns='{http://www.sitemaps.org/schemas/sitemap/0.9}'
  listed=[x.text for x in sitemap.iter(ns+'loc')]
  for uri in listed:
-  if not uri.startswith(base):errors.append(('sitemap','foreign URL',uri));continue
-  path=unquote(uri[len(base):])
+  if not uri.startswith(discovery):errors.append(('sitemap','foreign URL',uri));continue
+  path=unquote(uri[len(discovery):])
   target=out/path
   if path.endswith('/') or not path:target=target/'index.html'
   if not target.is_file():errors.append(('sitemap','missing target',path))
  for name in ('robots.txt','llms.txt','llms-full.txt'):
   source=(out/name).read_text('utf8')
-  if base not in source:errors.append((name,'missing base',base))
+  if discovery not in source:errors.append((name,'missing main discovery base',discovery))
+  if any(bad in source for bad in ('dedsec1121fk.github.io/Test/','ded-sec.online/')):errors.append((name,'non-main discovery URL','Test/backup URL found'))
  if manifest['profile']=='test':
   if 'Disallow: /' not in (out/'robots.txt').read_text('utf8'):errors.append(('robots.txt','staging indexing','should disallow'))
  else:

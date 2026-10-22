@@ -1,20 +1,38 @@
-# Build, deployment and recovery
+# Build, verify and release Test
 
-## Offline preview
-Clone or extract the Test repo. Open `index.html` directly in a browser or run `python3 -m http.server 8765` from the repository root and visit `http://127.0.0.1:8765/`. On Termux use the installed `python` executable. No npm build, paid host or cloud API is required for the archive.
+Run from the repository root with Python 3.10+ and Node 24 (the account test uses `node:sqlite`). Use an isolated Python environment with `mistune==3.2.0`; the regular build does not require BeautifulSoup or sponsor-packaging cryptography. Linux shell examples follow. On Windows use `py -3`/`python` and `.venv\Scripts\python.exe`; on Termux use its Python/Node packages. Real Android performance still needs a device check.
 
-## Importer and deployment
-The Pages workflow verifies files, optionally clones the publicly accessible DedSec website when its import marker changes, adapts links and styles, commits the resulting `dedsec/` copies to Test, then uploads a static Pages artifact. `dedsec/.full-import-ready` is the import marker; GalaxyV3 means the current visual integration. Do not delete this file merely to force unnecessary redeployment. The workflow's GITHUB_TOKEN commit may not create a second run, so examine the deployed artifact from the same run.
+```sh
+python3 -m venv .venv
+.venv/bin/python -m pip install mistune==3.2.0
+python3 scripts/build_site_search.py
+python3 scripts/build_site_search.py --check
+python3 scripts/validate.py
+python3 scripts/audit_knowledge.py
+python3 scripts/audit_knowledge_depth.py --strict
+python3 scripts/audit_offline_links.py
+python3 scripts/audit_near_duplicates.py
+python3 scripts/audit_complete_catalogue.py
+python3 -m unittest discover -s scripts -p 'test_*.py'
+node scripts/test_account_core.cjs
+node scripts/test_account_service.mjs
+node scripts/test_knowledge_renderer.mjs
+node scripts/test_knowledge_search.mjs
+node scripts/test_search_passages.mjs
+node scripts/test_save_links.cjs
+node scripts/test_offline_worker.mjs
+python3 scripts/verify_reviewed_examples.py
+.venv/bin/python scripts/build_portable_site.py --target test --output .site-publish
+python3 scripts/test_portable_site.py --output .site-publish
+python3 scripts/audit_publication.py --output .site-publish --report publication-audit.json
+```
 
-## Scope and exclusions
-Only Test is modified. Forbid files whose name starts with `sitemap` or `llms`, and `CNAME`; do not include a custom domain configuration. Do not silently publish this experimental integration as the production DedSec website.
+Generated search is committed with changed source. Build output, virtual environments and local reports are not authored source; keep them out of the commit. To inspect the publication, run `python3 -m http.server 8765 --directory .site-publish` and open `http://127.0.0.1:8765/`. Use HTTP instead of opening `file://`, because browser fetch, workers and module behavior differ.
 
-## Rollback
-Identify the last good SHA in the GitHub commit history and reverse your changes in a new commit rather than force pushing or rewriting history. Run validation; inspect Pages output; compare source paths and sample pages. For local backup, zip the repository excluding `.git`, after confirming both language indexes and the imported pages exist.
+For the exact browser harness, serve the **repository root** instead (same port, separate server session), leave `.site-publish` in place, install `playwright-core@1.58.2` under `/tmp/dedsec-browser`, and provide a Chromium executable through `CHROME_PATH` if it is not in one of the script's standard paths. Run `node scripts/browser_audit.mjs`. The absolute temporary dependency path is currently part of that harness. Windows users can run the exact harness in WSL or CI; do not claim it ran merely because static checks passed. Inspect `browser-screenshots/` and the audit result. Mock account tests do not contact a real user email or defeat CAPTCHA.
 
-## Browser release smoke test
-Validate home dark/light, logo and translation controls, 3/6 grid, title Easter egg, external GitHub Sponsor link, actual Greek and English article URLs, search, the absence of bookmark controls and persistent preferences, reader code scrolling and footer. Document any untested platforms.
+`.github/workflows/static.yml` performs the checks, installs its Markdown/browser dependencies, builds with `--target auto`, uploads browser evidence and publishes Pages only when `github.repository == 'dedsec1121fk/Test'` and prior steps pass. It does not clone upstream source or commit generated changes. Unknown automatic profiles fail closed. Other profiles in the builder exist for separately authorized releases; do not use them for this task.
 
+Commit once after local checks, preserve the parent SHA, and inspect that exact push run. A browser failure prevents Pages deployment. Check `deployment-manifest.json`, Test noindex/robots, both account page languages, relative assets, search destinations, loader, themes and footer after successful deployment. The static workflow does **not** deploy `account-service/worker.mjs`; follow the private account runbook separately. Live registration, email ownership and reward eligibility require live checks in addition to fixtures.
 
-### Current October 2026 layout and preservation note
-Portrait mobile uses **three** full-title launchers per row; every landscape and desktop uses **six**. The Black/White butterfly tracks theme in root and imported pages; both include a Search icon. The canonical `assets/galaxy.css` provides locally stored stars and a dim overlay; imported-page wrappers are transparent with translucent reading panels. Original DedSec pages are preserved under `dedsec/`, while source Markdown from Developer Mind still needs a separate provenance migration before any deletion. Full workflow: [09_COMPLETE_MAINTENANCE.md](09_COMPLETE_MAINTENANCE.md).
+Roll back public behavior with a normal revert commit and rebuild from source. For the Worker, retain a known previous version and its matching catalogue/secrets. Keep D1 backups before migration. Do not blindly run an old Worker that inserts positional rows against a newer schema; see the migration compatibility warning in chapter 21.

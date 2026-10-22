@@ -4,3 +4,9 @@
 .inline-command-copy{display:inline-block!important;font:inherit;color:inherit;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;margin-inline-start:.4rem;padding:.2rem .35rem;cursor:pointer}.inline-command-copy:focus-visible{outline:2px solid currentColor;outline-offset:2px}
 
 mark.search-hit{background:#ffe066!important;color:#1b1024!important;-webkit-text-fill-color:#1b1024!important;box-shadow:0 0 0 2px #ffd03c!important;scroll-margin-top:140px}mark.search-hit:focus{outline:2px solid #d89eff!important;outline-offset:3px}.result-card p{white-space:pre-wrap;overflow-wrap:anywhere}.result-card mark{background:#ffe066;color:#1b1024}
+
+.page-back-row{gap:8px!important;align-items:center!important}.page-back-row .page-back,.page-back-row .page-home{display:inline-flex!important;align-items:center!important;justify-content:center!important;border:1px solid currentColor!important;background:transparent!important;box-shadow:none!important;border-radius:0!important;padding:.5rem .75rem!important;color:inherit!important;font:inherit!important;text-decoration:none!important;min-height:40px;box-sizing:border-box}.page-home:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+/* Imported legacy themes use ID-specific important rules. Keep these two
+   navigation controls bordered and beside one another in every theme. */
+html body .page-back-row:not(#dedsec-nav-controls-a):not(#dedsec-nav-controls-b){display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;gap:8px!important;justify-content:flex-end!important}
+html body .page-back-row:not(#dedsec-nav-controls-a):not(#dedsec-nav-controls-b)>:is(.page-home,.page-back){border:1px solid currentColor!important;border-width:1px!important;border-style:solid!important;border-color:currentColor!important;background:transparent!important;position:static!important;width:auto!important;flex:0 0 auto!important;margin:0!important}

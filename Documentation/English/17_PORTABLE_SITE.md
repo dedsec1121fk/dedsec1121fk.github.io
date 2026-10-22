@@ -34,7 +34,7 @@ For `ded-sec.online`, use the same command with `--target backup`. Set **build o
 
 ### GitHub Pages — Test
 
-The included workflow detects `dedsec1121fk/Test`, generates previews and sitemap under `/Test/`, and deploys the resulting `.site-publish` directory to GitHub Pages if enabled. The Test robots file disallows indexing and its HTML pages contain `noindex` tags. Verify the actual Pages deployment URL in GitHub settings. Adjust the optional `SITE_URL` if it is not the default project path.
+The included workflow detects `dedsec1121fk/Test`, generates working pages and previews under `/Test/` while discovery exports always use `https://ded-sec.space/`, and deploys the resulting `.site-publish` directory to GitHub Pages if enabled. The Test robots file disallows indexing and its HTML pages contain `noindex` tags. Verify the actual Pages deployment URL in GitHub settings. Adjust the optional `SITE_URL` if it is not the default project path.
 
 ### Manual, Termux, Windows or Linux
 
@@ -45,7 +45,7 @@ Build into `.site-publish`, then serve that directory: `cd .site-publish && pyth
 - Root `index.html`: unified DedSec Project homepage. Legacy `/Pages/...`, `/el/Pages/...` and assistance routes remain as physical aliases. The integrated UI also retains its `/dedsec/...` internal paths.
 - Every static HTML page receives *one* canonical URL, a page-specific HTML title and description, Open Graph `og:title`, `og:description`, `og:url`, localized OG locale, and Twitter large-image metadata using the existing 1200×630 JPEG preview image.
 - Every indexed learning/reference card has a stable HTML sharing page, `/learn/en/ID.html` or `/learn/el/ID.html`. These pages expose full human-readable content and use links back to the interactive knowledge interface. Share these static URLs rather than `#read:ID` fragments: crawlers cannot distinguish hash fragments as separate HTML pages.
-- `/sitemap.xml` contains the reachable public pages and learning previews, with translated alternates for actual matching static pages. The Test sitemap points to its own URL but is **not** submitted for indexing.
+- `/sitemap.xml` contains the reachable public pages and learning previews, with translated alternates for actual matching static pages. Sitemap URLs and their translated alternates always point to `https://ded-sec.space/`, including Test and backup packages. Test remains noindex and is **not** submitted for indexing.
 - `/robots.txt` allows public main and backup pages, and disallows the Test environment.
 - `/llms.txt` describes the real DedSec project and directs readers to selected EN/EL guides; `/llms-full.txt` enumerates all indexed EN/EL records. These are discovery aids, not a guarantee AI systems will index the content.
 - `/deployment-manifest.json` records the chosen domain and counts. The publisher never substitutes test.example URLs into production cards.

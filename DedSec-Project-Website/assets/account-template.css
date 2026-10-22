@@ -1,0 +1,61 @@
+@layer account-template {
+ .account-template {max-width:1080px!important;margin-inline:auto!important;padding-bottom:105px!important;}
+ .account-template :is(button,input,textarea,select){font:inherit!important;color:var(--space-ink,#fff)!important;box-sizing:border-box!important;border-radius:0!important;}
+ .account-template :is(button,input,textarea,select){border:1px solid currentColor!important;background:transparent!important;max-width:100%!important;}
+ .account-template :is(button,input,select){min-height:44px!important;padding:9px 12px!important;}
+ .account-template button {cursor:pointer!important;white-space:normal!important;}
+ .account-template button:disabled,.account-template fieldset:disabled {opacity:.55!important;cursor:not-allowed!important;}
+ .account-template :is(button,a,input,textarea,summary):focus-visible {outline:3px solid #aa85ef!important;outline-offset:3px!important;}
+ .account-template [hidden],.account-floating[hidden]{display:none!important;}
+ .account-template .account-panel {border:1px solid #9472b5!important;padding:clamp(12px,3vw,24px)!important;margin-block:18px!important;min-width:0!important;background:transparent!important;}
+ .account-template .account-stats,.account-template .account-tabs,.account-template .account-toolbar {display:flex!important;flex-wrap:wrap!important;gap:10px!important;justify-content:center!important;align-items:center!important;}
+ .account-template .account-stats {display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;align-items:stretch!important;gap:8px!important;max-width:440px!important;margin-inline:auto!important;}
+ .account-template .account-stat {min-width:0!important;text-align:center!important;padding:6px!important;font-size:.78rem!important;border:1px solid #9472b5!important;}
+ .account-template .account-stat strong {display:block!important;font-size:1rem!important;margin-top:3px!important;}
+ .account-template .account-tab[aria-pressed=true]{outline:2px solid #aa85ef!important;outline-offset:2px!important;}
+ .account-template .account-fields {display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:14px!important;border:0!important;margin:12px 0!important;padding:0!important;}
+ .account-template label {display:flex!important;flex-direction:column!important;gap:6px!important;text-align:start!important;min-width:0!important;}
+ .account-template .account-wide {grid-column:1/-1!important;}
+ .account-template .account-check {display:flex!important;flex-direction:row!important;align-items:center!important;gap:8px!important;}
+ .account-template .account-check input {width:22px!important;min-width:22px!important;max-width:22px!important;height:22px!important;min-height:22px!important;max-height:22px!important;padding:0!important;margin:2px 0!important;flex:0 0 22px!important;align-self:flex-start!important;}
+ .account-template .account-check .account-terms-copy {flex:1 1 0!important;min-width:0!important;overflow-wrap:break-word!important;line-height:1.5!important;}
+ .account-template .account-layout {display:grid!important;grid-template-columns:minmax(220px,1fr) minmax(0,2fr)!important;gap:18px!important;}
+ .account-template .account-layout>* {min-width:0!important;}
+ .account-template .account-files,.account-template .account-pins {list-style:none!important;padding:0!important;margin:12px 0!important;display:grid!important;gap:9px!important;}
+ .account-template .account-file {border:1px solid #9472b5!important;padding:8px!important;display:grid!important;grid-template-columns:26px minmax(0,1fr) auto auto!important;gap:7px!important;align-items:center!important;}
+ .account-template .account-file .account-open {overflow-wrap:anywhere!important;text-align:start!important;}
+ .account-template .account-file input {min-height:24px!important;width:22px!important;}
+ .account-template .account-pins button {overflow-wrap:anywhere!important;width:100%!important;text-align:start!important;}
+ .account-template .account-fields input:not([type=checkbox]) {width:100%!important;min-width:0!important;}
+ .account-template .account-editor {width:100%!important;min-height:300px!important;resize:vertical!important;padding:14px!important;line-height:1.65!important;text-align:start!important;white-space:pre-wrap!important;}
+ .account-template .account-editor:disabled {opacity:.6!important;}
+ .account-template .account-file-actions {display:flex!important;flex-wrap:wrap!important;gap:7px!important;margin-top:10px!important;justify-content:center!important;}
+ .account-template .account-path {overflow-wrap:anywhere!important;text-align:start!important;}
+ .account-template .account-feedback {min-height:1.6em!important;text-align:center!important;overflow-wrap:anywhere!important;}
+ .account-template meter {width:100%!important;height:20px!important;accent-color:#aa85ef!important;}
+ .account-template .account-floating {position:fixed!important;right:max(16px,env(safe-area-inset-right))!important;bottom:max(16px,env(safe-area-inset-bottom))!important;z-index:90!important;max-width:calc(100vw - 32px)!important;}
+ .account-template .account-floating button {background:var(--space-header,#171020)!important;}
+ .account-template .account-fab {font-size:1.1rem!important;font-weight:700!important;box-shadow:0 0 14px #9d75d455!important;}
+ .account-template .account-fab-menu {width:min(300px,calc(100vw - 32px))!important;box-sizing:border-box!important;display:grid!important;gap:8px!important;margin-bottom:10px!important;padding:10px!important;background:var(--space-header,#171020)!important;border:1px solid #9472b5!important;max-height:60vh!important;overflow-y:auto!important;}
+ .account-template dialog {color:var(--space-ink,#fff)!important;background:var(--space-header,#171020)!important;border:1px solid #aa85ef!important;border-radius:0!important;max-width:min(460px,calc(100vw - 36px))!important;padding:24px!important;}
+ .account-template dialog::backdrop {background:#000b!important;}
+ .account-template .account-dialog-form {display:grid!important;gap:15px!important;}
+ @media(max-width:650px){.account-template .account-layout,.account-template .account-fields{grid-template-columns:minmax(0,1fr)!important;}.account-template .account-toolbar>*{flex:1 1 120px!important;}.account-template .account-panel{padding:12px!important;}}
+}
+@layer account-template {
+ .account-template #account-recovery-notice code { display:block!important; overflow-wrap:anywhere!important; white-space:pre-wrap!important; padding:12px!important; }
+ .account-template .account-script { border-top:1px solid currentColor!important; margin-top:16px!important; padding-top:12px!important; }
+ .account-template details { margin:16px 0!important; }
+ .account-template [hidden] { display:none!important; }
+ .account-template input[readonly] { width:100%!important; min-width:0!important; }
+ .account-template #account-challenge { margin:12px auto!important; width:100%!important; overflow:hidden!important; }
+}
+
+
+/* Embedded notes have no fixed launcher/footer requiring a bottom spacer.
+   Keep this in the original important layer so legacy padding cannot win. */
+@layer account-template {
+ html[data-account-embedded="true"] body,html.account-embedded body{min-height:0!important;height:auto!important;padding-bottom:0!important;}
+ html[data-account-embedded="true"] .page-content.account-template,html.account-embedded .page-content.account-template{min-height:0!important;margin-bottom:0!important;padding-bottom:12px!important;}
+ html[data-account-embedded="true"] #account-profile> :last-child,html.account-embedded #account-profile> :last-child{margin-bottom:0!important;}
+}

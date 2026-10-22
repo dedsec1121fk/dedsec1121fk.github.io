@@ -60,13 +60,31 @@ function websiteRepository(){
  }
  const label=greek()?'Αποθετήριο Ιστοσελίδας':'Website Repository';if(link.textContent!==label)link.textContent=label;
 }
+function sentenceHeadings(){
+ const proper=new Set('DedSec Project TikDev GitHub Google Microsoft Apple Samsung OpenAI Anthropic Meta Amazon Cloudflare Mozilla Firefox Chrome Chromium Safari Opera Brave Visual Studio Oracle Cisco NVIDIA AMD Intel IBM Ubuntu Fedora Alpine Arch Gentoo Manjaro Linux Mint .NET Vim Neovim Emacs VS VSCodium Android Studio Xcode Godot Unity Unreal Blender NumPy SciPy PyTorch TensorFlow Pandas Flask Django FastAPI Express Svelte Laravel Symfony Rails Elixir Erlang Haskell Scala Perl Lua R Julia MATLAB Octave Clojure Lisp Scheme Prolog COBOL Fortran Pascal Delphi Assembly WebAssembly Zig Nim Crystal Vala Solidity Vyper Scratch Racket Elm PureScript Reason ReScript OCaml F# Objective-C Common Lisp Loukas Floros Λουκάς Φλώρος PostgreSQL SQLite MariaDB OpenSSL OpenSSH Wireshark Nmap Burp Ghidra IDA Metasploit Termux Android Linux Windows macOS Ubuntu Debian Kali Python Java JavaScript TypeScript Rust Go Ruby PHP Swift Kotlin Dart Flutter React Node Vue Angular Docker Kubernetes SQLite PostgreSQL MySQL MongoDB Redis Bash PowerShell C C++ C# HTML CSS SQL API HTTP HTTPS JSON YAML XML AI OSINT Git Internet Archive Software Heritage Wayback Loukas Floros Keep Open Call Duty Ghosts Pocket Corrupted Files Praying Offline Survival Hacking Guide Language Befunge English Greek'.split(' '));
+ ['Project','Archive','Software','Heritage','Keep','Open','Call','Duty','Ghosts','Pocket','Corrupted','Files','Praying','Offline','Survival','Hacking','Guide','Language'].forEach(word=>proper.delete(word));
+ document.querySelectorAll('h1,h2,h3,h4,.app-label,.result-card strong,.folder-card strong').forEach(node=>{
+  if(node.closest('.other-projects-list,.feed-card[data-kind="repo"],.account-template .account-path'))return;
+  const walker=document.createTreeWalker(node,NodeFilter.SHOW_TEXT,{acceptNode:n=>n.parentElement.closest('code,pre,svg')?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT});
+  let n,first=true;while((n=walker.nextNode())){
+   const old=n.nodeValue;const protectedNames=[...old.matchAll(/\b(?:Save DedSec Project|DedSec Project|Internet Archive|Software Heritage|Wayback Machine|Visual Studio Code|Keep Android Open|Call of Duty: Ghosts|Pocket AI|Corrupted Files|Praying Project|Offline Survival|Hacking Guide Project|Language Project|Ghost Project)\b/g)].map(m=>[m.index,m.index+m[0].length]);
+   const next=old.replace(/[\p{L}][\p{L}\p{N}+#]*/gu,(word,offset)=>{
+    if(first||/[.!?]\s+$/.test(old.slice(0,offset))){first=false;return proper.has(word)?word:word.charAt(0).toLocaleUpperCase()+word.slice(1);}
+    if(protectedNames.some(([a,b])=>offset>=a&&offset<b)||proper.has(word)||(word.length>1&&word===word.toLocaleUpperCase())||/[a-z][A-Z]/.test(word))return word;
+    return word.toLocaleLowerCase();
+   });if(/[.!?]\s*$/.test(old))first=true;if(next!==old)n.nodeValue=next;
+  }
+ });
+}
 function mount(){
+ sentenceHeadings();
  websiteRepository();
  document.querySelectorAll('pre > code').forEach(code=>{const pre=code.parentElement;if(pre.dataset.copyReady||pre.querySelector('button')||pre.parentElement.matches('.code-container,.assistance-code'))return;pre.dataset.copyReady='1';const b=document.createElement('button');b.type='button';b.className='copy-btn lesson-copy';b.textContent=greek()?'Αντιγραφή':'Copy';b.setAttribute('aria-label',greek()?'Αντιγραφή κώδικα':'Copy code');b.addEventListener('click',e=>{e.stopPropagation();copy(b,code);});pre.before(b);});
  document.querySelectorAll('p code,li code,td code').forEach(code=>{
   if(code.dataset.copyReady||code.closest('pre,.code-container,.assistance-code')||! /^(?:\$ |PS> )?(?:sudo |pkg |apt(?:-get)? |python(?:3)? |pip(?:3)? |git |curl |wget |ssh |ls |cd |mkdir |chmod |find |rg |node |npm |bash |sh |systemctl |journalctl )/.test(code.textContent.trim()))return;
   code.dataset.copyReady='1';const b=document.createElement('button');b.type='button';b.className='copy-btn inline-command-copy';b.textContent=greek()?'Αντιγραφή':'Copy';b.setAttribute('aria-label',greek()?'Αντιγραφή εντολής':'Copy command');b.addEventListener('click',e=>{e.stopPropagation();copy(b,code);});code.after(b);
  });
+ document.querySelectorAll('.page-home').forEach(h=>{const text=greek()?'⌂ Αρχική':'⌂ Home';if(h.textContent!==text)h.textContent=text;});
  const locale=greek()?'el':'en';
  document.querySelectorAll('.lesson-copy,.inline-command-copy').forEach(b=>{if(b.dataset.locale!==locale){b.dataset.locale=locale;b.textContent=greek()?'Αντιγραφή':'Copy';b.setAttribute('aria-label',greek()?'Αντιγραφή κώδικα':'Copy code');}});
  document.querySelectorAll('.page-back').forEach(b=>{const label=greek()?'← Πίσω':'← Back';if(b.textContent!==label)b.textContent=label;});
@@ -78,7 +96,7 @@ function mount(){
   if(routeStack.length){goingBack=true;location.href=routeStack.pop();return;}
   goingBack=true;
   if(isMain&&location.hash.startsWith('#read:'))location.hash='library';else if(isMain)location.hash='home';else {let target=home.href;try{const ref=new URL(document.referrer);if(ref.origin===home.origin&&ref.pathname.startsWith(new URL('.',home).pathname)&&ref.href!==location.href)target=ref.href;}catch(e){}location.href=target;}
- });row.append(b);if(host.id==='feed'){row.classList.add('feed-back-row');document.body.append(row);}else host.prepend(row);}
+ });const h=document.createElement('a');h.className='page-home';h.href=home.href;h.textContent=greek()?'⌂ Αρχική':'⌂ Home';row.append(h,b);if(host.id==='feed'){row.classList.add('feed-back-row');document.body.append(row);}else host.prepend(row);}
 }
 window.DedSecPageControls={mount,focusSearch};
 window.addEventListener('hashchange',()=>{if(location.href!==lastRoute){if(!goingBack){routeStack.push(lastRoute);if(routeStack.length>100)routeStack.shift();}goingBack=false;lastRoute=location.href;}mount();});

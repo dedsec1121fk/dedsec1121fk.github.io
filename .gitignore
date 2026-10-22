@@ -3,3 +3,10 @@ __pycache__/
 .site-publish/
 browser-screenshots/
 Deployment/Generated/
+# Owner packaging material and runtime secrets are never publication files.
+.dev.vars
+.env
+.env.*
+*.key
+sponsor-sources/
+account-secrets*

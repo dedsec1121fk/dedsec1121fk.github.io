@@ -412,3 +412,14 @@ html body #app.is-home .desktop-home .app-grid>.app-icon-btn{flex:0 0 calc((100%
   .home-trust .trust-stat-number::before{width:5px!important;height:5px!important;left:-4px!important;border-width:0 0 1px 1px!important}
  }
 }
+
+@layer homepage-sizing {
+ html body #app .desktop-home .home-intro h1 {font-size:clamp(37px,5.8vw,73px)!important;}
+ @media(max-width:760px){html body #app .desktop-home .home-intro h1 {font-size:clamp(36px,9.5vw,48px)!important;}}
+ html body #app .desktop-home .app-grid .app-icon svg.pixel-glyph {width:clamp(52px,7.7vw,68px)!important;height:clamp(52px,7.7vw,68px)!important;}
+ html body #app .desktop-home .app-grid .app-label {font-size:clamp(12px,1.3vw,15px)!important;line-height:1.45!important;overflow-wrap:anywhere!important;}
+ html body #app .desktop-home .launcher-group-heading h2 {font-size:clamp(21px,2.5vw,29px)!important;}
+}
+.other-projects-list,.save-links-list {display:grid;gap:1rem;padding-inline-start:1.3rem;}
+.other-projects-list li,.save-links-list li {min-width:0;overflow-wrap:anywhere;}
+.other-projects-list h3 {margin-bottom:.35rem;}

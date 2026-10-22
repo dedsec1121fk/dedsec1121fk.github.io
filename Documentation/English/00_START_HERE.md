@@ -1,29 +1,20 @@
-# DedSec Project — Test Site Maintenance Map
+# DedSec Project maintenance reference
 
-## Purpose and boundaries
-This repository is the private staging integration of the original DedSec website and the Developer Mind bilingual learning archive. Production repositories and custom domains remain unchanged. It is a **static website**, not an executable Python toolkit. `.py`, `.sh`, and `.md` shortcut extensions are thematic UI labels; they open HTML pages and browser-based lessons, not local programs.
+Current architecture: 21 October 2026. Read `../RULES.md` before changing files. Only `dedsec1121fk/Test` is authorized for this work; main production and backup are separate deployment targets.
 
-## Directory responsibilities
-- `index.html`: one fixed header, butterfly logo, one theme button, one language button, desktop container and original-style footer.
-- `assets/ui.js`: navigation, 21 unique launchers, app titles and actions, language/theme state, locally searchable read-only lesson records and title-tap collapse.
-- `assets/ui.css`: galaxy dark/light themes, six-column desktop and three-column mobile portrait grid, accessible controls, internal reader and main footer.
-- `data/en.js`, `data/el.js`, `data/methods.js`: self-contained exported lesson bodies and titles, NOT pointers to the private repo at runtime.
-- `dedsec/`: staged copy of original website pages and assets, with adapted paths.
-- `dedsec/Assets/merged-retro.css` and `merged-retro.js`: shared themes and navigation behaviour on imported pages.
-- `scripts/import_dedsec.py`: public-site importer, only re-runs when its marker version changes.
-- `scripts/validate.py`: structural smoke checks.
-- `.github/workflows/static.yml`: GitHub Pages validation, one-time import and static deployment.
-- `Documentation/Greek/` and `Documentation/English/`: mirrored guidance for maintainers and AI assistants.
+Start with [the system map and reconstruction runbook](09_COMPLETE_MAINTENANCE.md). It identifies source files, public build output, private services, prerequisites and recovery dependencies. Follow [human maintenance](01_HUMAN_MAINTENANCE.md) for normal edits, [AI maintenance](02_AI_MAINTENANCE.md) for an agent handoff, and [build and release](03_BUILD_AND_RELEASE.md) for exact local/CI checks.
 
-## Deployment identity
-Never add CNAME, sitemap or llms files to Test. Keep noindex/nofollow metadata. Test links must stay relative to this GitHub Pages project subpath; do not point internal routes at production except explicitly named footer and sponsorship links.
+Specialist references:
 
-## What this merge does NOT yet replace
-The learning index contains complete published lesson text and is usable without Developer Mind online. However, original lesson-by-lesson Markdown source files and non-site scripts from the private Developer-Mind-Project are **not all present** here. Export, verify and commit that entire original source tree before ever deleting that repository. This is a mandatory migration gate, not a future assumption.
-\n## Source transfer\nThe optional full-source copier and verifier is `scripts/migrate_developer_mind.py`. Follow [full migration instructions](07_SOURCE_MIGRATION_GATE.md) and do not delete the original repository.\n
+- [Portable hosting and crawler output](17_PORTABLE_SITE.md): deployment profiles, canonical aliases, social cards, sitemap and LLM files.
+- [Search, startup and reader](19_FIELD_NOTES_AND_READER.md): whole-site paragraph search, highlighting, deferred knowledge and basic-page readiness.
+- [Private accounts](21_PRIVATE_ACCOUNTS.md): authentication, D1 schema, 300 total accounts, 444 daily unique authenticated users, date of birth, TXT workspace, referrals, protected downloads and email prerequisites.
+- [Publication audit](20_PUBLICATION_AUDIT.md): inspect generated output and interpret validation limits.
+- [Content rules](05_CONTENT_AND_NO_DUPLICATES.md), [depth checks](15_KNOWLEDGE_DEPTH_AUDIT.md) and [catalogue review](18_COMPLETE_CATALOGUE_REVIEW.md): paired authored lessons and duplicate detection.
 
-### Current October 2026 layout and preservation note
-Portrait mobile uses **three** full-title launchers per row; every landscape and desktop uses **six**. The Black/White butterfly tracks theme in root and imported pages; both include a Search icon. The canonical `assets/galaxy.css` provides locally stored stars and a dim overlay; imported-page wrappers are transparent with translucent reading panels. Original DedSec pages are preserved under `dedsec/`, while source Markdown from Developer Mind still needs a separate provenance migration before any deletion. Full workflow: [09_COMPLETE_MAINTENANCE.md](09_COMPLETE_MAINTENANCE.md).
+Earlier numbered chapters also record historical implementations and audits. For present architecture, paths, counts, loader and deployment instructions, the current runbook and specialist chapters above take precedence over historical examples. Do not revive an old five-second loader, missing-source migration gate, 21-tile layout, or root-level `assets/` paths. Website source assets live below `DedSec-Project-Website/`.
+
+The README is the bilingual, closed-by-default entry point. TikDev is an integrated website page. Public source is sufficient to rebuild public pages; private database contents, keys, original reward scripts and provider authorizations are separate recovery dependencies. A successful static build does not establish that live accounts or email delivery work.
 
 
-**Update:** Home is the last right-hand navbar button, not a launcher tile. The 22 shortcut labels hide filename suffixes, while guide panels are translucent. See `09_COMPLETE_MAINTENANCE.md` for maintenance.
+- [Account release / Έκδοση λογαριασμών — 2026-10-22](24_ACCOUNT_RELEASE_AND_PRODUCTION.md)

@@ -89,7 +89,19 @@ function create(){
   if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}
  });
  refresh();enhance();
- if(!choice())open();
+ if(!choice()){
+  const ready=()=>window.__DEDSEC_BOOT__?.status==='ready'&&!document.getElementById('site-loader');
+  if(ready())open();
+  else{
+   let tries=0;const showAfterBoot=()=>{
+    if(choice())return;
+    if(ready()||tries++>180){open();return;}
+    setTimeout(showAfterBoot,100);
+   };
+   document.addEventListener('dedsec:ready',showAfterBoot,{once:true});
+   setTimeout(showAfterBoot,100);
+  }
+ }
 }
 window.DedSecCookies={allowOptional:allow,enhance:enhance,refresh:refresh,open:open,choice:choice};
 migrateAndClean();

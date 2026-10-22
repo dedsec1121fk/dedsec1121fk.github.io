@@ -15,11 +15,11 @@ from startup_manifest import manifest as expected_startup_manifest
 
 def audit(out):
  portable_audit(out)
- manifest=json.loads((out/'deployment-manifest.json').read_text());base=manifest['base_url'];issues=[]
+ manifest=json.loads((out/'deployment-manifest.json').read_text());base=manifest['base_url'];discovery=manifest['discovery_base_url'];issues=[]
  ns='{http://www.sitemaps.org/schemas/sitemap/0.9}'
  urls=[e.text for e in ET.parse(out/'sitemap.xml').getroot().iter(ns+'loc')]
  if len(urls)!=len(set(urls)):issues.append('Duplicate sitemap URL')
- expected={base+f'learn/{r["l"]}/{r["id"]}.html' for r in effective_rows()}
+ expected={discovery+f'learn/{r["l"]}/{r["id"]}.html' for r in effective_rows()}
  if not expected<=set(urls):issues.append('Sitemap omits effective lesson URLs')
  canonical=set();scripts=set();inline=set();css_refs=0;pages=0;versioned_resources=0
  for path in out.rglob('*.html'):
@@ -72,11 +72,11 @@ def audit(out):
  full=(out/'llms-full.txt').read_text('utf8');sources=re.findall(r'^Source-URL: (https?://\S+)',full,re.M)
  if len(sources)!=len(effective_rows())+len(site_rows()):issues.append('LLM full content coverage differs')
  for row in effective_rows():
-  uri=base+f'learn/{row["l"]}/{row["id"]}.html'
+  uri=discovery+f'learn/{row["l"]}/{row["id"]}.html'
   if sources.count(uri)!=1:issues.append('LLM missing or duplicate lesson: '+row['id'])
  for uri in sources:
-  if not uri.startswith(base):issues.append('LLM source uses foreign origin');continue
-  local=out/unquote(urlsplit(uri).path[len(urlsplit(base).path):])
+  if not uri.startswith(discovery):issues.append('LLM source uses foreign origin');continue
+  local=out/unquote(urlsplit(uri).path[len(urlsplit(discovery).path):])
   if local.is_dir():local=local/'index.html'
   if not local.is_file():issues.append('Missing LLM target: '+uri)
  # Prose references in the full text must resolve independently of the original
@@ -86,17 +86,17 @@ def audit(out):
  for uri in re.findall(r'\]\(([^\n)]+)\)',prose):
   parts=urlsplit(uri)
   if not parts.scheme and not parts.netloc:issues.append('Relative llms-full prose link: '+uri);continue
-  if uri.startswith(base):
-   target=out/unquote(parts.path[len(urlsplit(base).path):]);target=target/'index.html' if target.is_dir() else target
+  if uri.startswith(discovery):
+   target=out/unquote(parts.path[len(urlsplit(discovery).path):]);target=target/'index.html' if target.is_dir() else target
    if not target.is_file():issues.append('Broken llms-full prose link: '+uri)
  for uri in re.findall(r'\]\((https?://[^\s)]+)\)',(out/'llms.txt').read_text()):
-  if uri.startswith(base):
-   target=out/unquote(urlsplit(uri).path[len(urlsplit(base).path):]);target=target/'index.html' if target.is_dir() else target
+  if uri.startswith(discovery):
+   target=out/unquote(urlsplit(uri).path[len(urlsplit(discovery).path):]);target=target/'index.html' if target.is_dir() else target
    if not target.is_file():issues.append('Broken llms.txt link: '+uri)
  if manifest['profile']=='test' and (out/'CNAME').exists():issues.append('Test must not claim production CNAME')
  if manifest['profile']!='test' and (out/'CNAME').read_text().strip()!=urlsplit(base).hostname:issues.append('Wrong public CNAME')
  for uri in canonical:
-  if uri not in urls and not urlsplit(uri).path.endswith('404.html'):issues.append('Canonical omitted from sitemap: '+uri)
+  if discovery+uri[len(base):] not in urls and not urlsplit(uri).path.endswith('404.html'):issues.append('Canonical omitted from sitemap: '+uri)
  for file in ('LICENSE',):
   if not (ROOT/file).is_file():issues.append('Missing required license: '+file)
  result={'profile':manifest['profile'],'base_url':base,'html_pages':pages,'sitemap_urls':len(urls),'unique_canonical_urls':len(canonical),'llm_full_records':len(sources),'css_resource_references':css_refs,'fingerprinted_resource_references':versioned_resources,'startup_resources':len(preload['resources']),'startup_bytes':preload['bytes'],'javascript_files_checked':len(scripts),'unique_inline_scripts_checked':len(inline),'issues':issues,'limits':['External website/API availability is not an offline guarantee.','Static checks do not certify every technical claim or all hardware/toolchains.','Test is noindex staging; production and backup repositories are not modified.']}

@@ -1,0 +1,24 @@
+{
+  "name": "dedsec-test-accounts",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-20",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "observability": {"enabled": false},
+  "vars": {
+    "SERVICE_MODE": "active",
+    "MAIL_PROVIDER": "brevo",
+    "ACCOUNT_PUBLIC_ORIGIN": "https://dedsec-test-accounts.dedsec-project.workers.dev",
+    "TURNSTILE_SITE": "0x4AAAAAAFeTRcT9pNEqmqb8"
+  },
+  "d1_databases": [{
+    "binding": "DB",
+    "database_name": "dedsec-test-accounts",
+    "database_id": "df9434b4-d713-491c-b170-1d599cf54145",
+    "migrations_dir": "migrations"
+  }],
+  "triggers": {"crons": ["17 * * * *"]}
+  // Required secrets: PASSWORD_PEPPER, HMAC_SECRET, TURNSTILE_SECRET, SPONSOR_KEY.
+  // Optional email secrets: MAIL_API_KEY and MAIL_FROM (verified sender for the selected provider).
+  // Never enable a paid Workers subscription automatically.
+}

@@ -1,0 +1,52 @@
+[
+  {
+    "filename": "Face Detector (English).py",
+    "sha256": "a031bac36ac5b3b580a8f454fcf73daa7ddd2f703454706d0adb414d04ee70a6",
+    "checks": [
+      "capture upload success",
+      "no filename overwrite",
+      "traversal rejected",
+      "content type rejected",
+      "invalid signature/base64 rejected",
+      "storage cap enforced"
+    ],
+    "scope": "isolated functions and Python syntax; full camera/tunnel/Android runtime not executed"
+  },
+  {
+    "filename": "Face Detector (Ελληνικά).py",
+    "sha256": "e614a5de506bdd3a7d2af38512efca4241fcb55bebdc8ac618bf5c22936eafb7",
+    "checks": [
+      "capture upload success",
+      "no filename overwrite",
+      "traversal rejected",
+      "content type rejected",
+      "invalid signature/base64 rejected",
+      "storage cap enforced"
+    ],
+    "scope": "isolated functions and Python syntax; full camera/tunnel/Android runtime not executed"
+  },
+  {
+    "filename": "Steganography (English).py",
+    "sha256": "b34eacb5c1b1227c7ecfe2dcd459672220323af87e381cfdb21c40eaa95287d3",
+    "checks": [
+      "random salt changes ciphertext",
+      "Greek/emoji round trip",
+      "wrong password rejected",
+      "malformed envelope rejected",
+      "legacy payload remains readable"
+    ],
+    "scope": "isolated functions and Python syntax; full camera/tunnel/Android runtime not executed"
+  },
+  {
+    "filename": "Steganography (Ελληνικά).py",
+    "sha256": "322c9a21246d50c26228a3144ea37c97a73161b80d4b0ed16de1372395c096fb",
+    "checks": [
+      "random salt changes ciphertext",
+      "Greek/emoji round trip",
+      "wrong password rejected",
+      "malformed envelope rejected",
+      "legacy payload remains readable"
+    ],
+    "scope": "isolated functions and Python syntax; full camera/tunnel/Android runtime not executed"
+  }
+]

@@ -251,10 +251,10 @@ def create_article(out,base,language,row,index_by_path):
  other_text='Πίσω' if language=='el' else 'Back'
  raw=f'''<!doctype html><html lang="{language}"><head><meta charset="utf-8"><script src="../../assets/boot.js"></script><meta name="viewport" content="width=device-width,initial-scale=1"><title>{esc(title)}</title>
  <script>(function(){{var t;try{{t=JSON.parse(localStorage.getItem('dedsec:theme'));}}catch(e){{}}document.documentElement.dataset.theme=t==='light'?'light':'dark';}})();</script>
- <style>:root{{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}}:root[data-theme=light]{{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}}html{{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}}body{{max-width:860px;margin:0 auto;padding:1.2rem}}a{{color:var(--link)}}button{{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}}header{{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}}main{{padding-bottom:3rem}}h1,h2,h3{{line-height:1.28}}h1{{font-size:2rem}}h2{{margin-top:2rem}}pre{{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}}code{{overflow-wrap:anywhere}}blockquote{{border-left:3px solid #8f73c0;padding-left:1rem}}table{{display:block;overflow-x:auto}}img{{max-width:100%}}.back{{padding:.5rem .75rem;border:1px solid #8064af}}</style><link rel="stylesheet" href="../../assets/page-controls.css"></head><body>
- <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="{'Εναλλαγή φωτεινού ή σκοτεινού θέματος' if language=='el' else 'Switch light or dark theme'}">☾ / ☀</button></header>
+ <style>:root{{color-scheme:dark;--paper:#090615;--ink:#fff;--link:#e4caff;--code:#171029;--line:#8064af}}:root[data-theme=light]{{color-scheme:light;--paper:#fefbff;--ink:#111;--link:#4b246b;--code:#f0e8fa;--line:#705285}}html{{background:var(--paper);color:var(--ink);font:16px/1.65 Tahoma,"MS Sans Serif",sans-serif}}body{{max-width:860px;margin:0 auto;padding:1.2rem}}a{{color:var(--link)}}button{{font:inherit;color:var(--ink);background:transparent;border:1px solid var(--line);padding:.5rem .75rem;cursor:pointer}}header{{display:flex;gap:1rem;justify-content:space-between;flex-wrap:wrap;padding:1rem 0;border-bottom:1px solid #44345c}}main{{padding-bottom:3rem}}h1,h2,h3{{line-height:1.28}}h1{{font-size:2rem}}h2{{margin-top:2rem}}pre{{white-space:pre;overflow:auto;padding:1rem;background:var(--code);border:1px solid var(--line)}}code{{overflow-wrap:anywhere}}blockquote{{border-left:3px solid #8f73c0;padding-left:1rem}}table{{display:block;overflow-x:auto}}img{{max-width:100%}}.back{{padding:.5rem .75rem;border:1px solid #8064af}}</style><link rel="stylesheet" href="../../assets/page-controls.css"><link rel="stylesheet" href="../../assets/account-shell.css"></head><body>
+ <header><strong>DedSec Project</strong><button id="article-theme" type="button" aria-label="{'Εναλλαγή φωτεινού ή σκοτεινού θέματος' if language=='el' else 'Switch light or dark theme'}">☾ / ☀</button><a data-account-toggle="" href="#account" role="button" aria-label="{'Λογαριασμός' if language=='el' else 'Account'}"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="4"/><path d="M4 22v-3a8 8 0 0 1 16 0v3"/></svg></a></header>
  <main><h1>{esc(title)}</h1><p>{esc(desc)}</p><section>{content}</section></main>
- <footer>© 2024–2026 DedSec Project · <a href="../../index.html">{"Αρχική" if language=="el" else "Home"}</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">{"Αποθετήριο Ιστοσελίδας" if language=="el" else "Website Repository"}</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){{var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{{localStorage.setItem('dedsec:theme',JSON.stringify(t));}}catch(e){{}}}});</script><script src="../../assets/page-controls.js"></script></body></html>'''
+ <footer>© 2024–2026 DedSec Project · <a href="../../index.html">{"Αρχική" if language=="el" else "Home"}</a> · <a href="https://github.com/dedsec1121fk/dedsec1121fk.github.io" target="_blank" rel="noopener noreferrer">{"Αποθετήριο Ιστοσελίδας" if language=="el" else "Website Repository"}</a></footer><script>document.getElementById('article-theme').addEventListener('click',function(){{var t=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=t;try{{localStorage.setItem('dedsec:theme',JSON.stringify(t));}}catch(e){{}}}});</script><script src="../../assets/page-controls.js"></script><script src="../../assets/account-shell-config.js"></script><script src="../../assets/account-shell.js"></script></body></html>'''
  raw=metadata(raw,file_rel,file_rel,base,'test' if '/Test/' in base else 'main',(title,desc),lang_hint=language)
  dst=out/file_rel;dst.parent.mkdir(parents=True,exist_ok=True);dst.write_text(raw,'utf8')
  return file_rel
@@ -274,12 +274,14 @@ def sitemap_xml(base,paths,alternates):
 
 def build(target,out,base_override=None):
  repo,base=PROFILES[target]
+ discovery_base=PROFILES["main"][1]
  if base_override:
   base=base_override.strip().rstrip('/')+'/'
   if not re.fullmatch(r'https://[^/#?]+(?:/[A-Za-z0-9._~-]+)*/',base):raise ValueError('SITE_URL must be an HTTPS origin plus optional path')
  if out.resolve()==SOURCE.resolve() or out.resolve()==BASE.resolve():raise ValueError('Unsafe output path')
  if out.exists():shutil.rmtree(out)
  shutil.copytree(SOURCE,out)
+ (out/'assets/account-shell-config.js').write_text('window.DEDSEC_ACCOUNT_SHELL=Object.freeze('+json.dumps({'profile':target,'portal':'https://dedsec-test-accounts.dedsec-project.workers.dev'})+');\n','utf8')
  (out/"data/site-search.js").write_text(website_search_generate(),"utf8")
  # Put the imported official DedSec pages/assets at the exact established root
  # URLs too; preserve the integrated UI's own /dedsec/... references.
@@ -349,25 +351,25 @@ def build(target,out,base_override=None):
   alt_map['']={'en':'','el':'el/','x-default':''}
  indexed=[x for x in indexed if x!='el/index.html']
  if 'el/index.html' in [p.relative_to(out).as_posix() for p in pagefiles]:indexed.append('el/')
- (out/'sitemap.xml').write_bytes(sitemap_xml(base,indexed,alt_map))
+ (out/'sitemap.xml').write_bytes(sitemap_xml(discovery_base,indexed,alt_map))
  (out/'robots.txt').write_text(
   ('# Private staging / no search indexing\nUser-agent: *\nDisallow: /\n' if target=='test' else '# DedSec Project public website\nUser-agent: *\nAllow: /\n')+
-  '\nSitemap: '+url_for(base,'sitemap.xml')+'\n','utf8')
+  '\nSitemap: '+url_for(discovery_base,'sitemap.xml')+'\n','utf8')
  nav=[('Home / Αρχική',''),('Installation / Εγκατάσταση','Pages/guide-for-installation.html'),('Tools / Εργαλεία','Pages/learn-about-the-tools.html'),('Assistance / Βοήθεια','Pages/assistance.html'),('FAQ / Συχνές ερωτήσεις','Pages/faq.html'),('TikDev','TikDev.html')]
  intro='''# DedSec Project — official bilingual website and learning library\n\n> DedSec Project provides a free Android/Termux and Linux toolkit, documentation, programming lessons, troubleshooting, and defensive security education. Public toolkit: https://github.com/dedsec1121fk/DedSec. Ethical and authorized use only.\n\n'''
- links='\n'.join('- ['+t+']('+url_for(base,p)+')' for t,p in nav)
+ links='\n'.join('- ['+t+']('+url_for(discovery_base,p)+')' for t,p in nav)
  choices=[]
  for lang in ('en','el'):
-  for row in lessons[lang][:28]:choices.append('- ['+title_text(row['t'])+']('+url_for(base,f'learn/{lang}/{row["id"]}.html')+')')
- (out/'llms.txt').write_text(intro+'## Official pages\n'+links+'\n\n## Selected practical guides (English and Greek)\n'+'\n'.join(choices)+'\n\n## Full index\n- [Full website and lesson content]('+url_for(base,'llms-full.txt')+')\n- [XML sitemap]('+url_for(base,'sitemap.xml')+')\n\n## Notes\nInstructional articles are maintained in paired English/Greek source files. Verify version-specific commands, APIs and permissions against current documentation; avoid implying that all platform-specific examples were executed.\n','utf8')
+  for row in lessons[lang][:28]:choices.append('- ['+title_text(row['t'])+']('+url_for(discovery_base,f'learn/{lang}/{row["id"]}.html')+')')
+ (out/'llms.txt').write_text(intro+'## Official pages\n'+links+'\n\n## Selected practical guides (English and Greek)\n'+'\n'.join(choices)+'\n\n## Full index\n- [Full website and lesson content]('+url_for(discovery_base,'llms-full.txt')+')\n- [XML sitemap]('+url_for(discovery_base,'sitemap.xml')+')\n\n## Notes\nInstructional articles are maintained in paired English/Greek source files. Verify version-specific commands, APIs and permissions against current documentation; avoid implying that all platform-specific examples were executed.\n','utf8')
  fulltext=[intro,'## Website pages / Σελίδες ιστοσελίδας\n']
  for page in website_search_rows():
   public=page['url'][7:] if page['url'].startswith('dedsec/') else page['url']
-  fulltext.extend(['\n### '+title_text(page['t'])+' ['+page['l']+']\n','Source-URL: '+url_for(base,public.split('#')[0])+('#'+public.split('#',1)[1] if '#' in public else '')+'\n',page['b']+'\n'])
+  fulltext.extend(['\n### '+title_text(page['t'])+' ['+page['l']+']\n','Source-URL: '+url_for(discovery_base,public.split('#')[0])+('#'+public.split('#',1)[1] if '#' in public else '')+'\n',page['b']+'\n'])
  for lang in ('en','el'):
   fulltext.append('\n## '+('English lessons' if lang=='en' else 'Ελληνικά μαθήματα')+'\n')
   for row in lessons[lang]:
-   fulltext.extend(['\n### '+title_text(row['t'])+'\n','Source-URL: '+url_for(base,f'learn/{lang}/{row["id"]}.html')+'\n',(llm_markdown(row['b'],lang,row,indexes[lang],base) if row['p'].endswith('.md') else row['b'])+'\n'])
+   fulltext.extend(['\n### '+title_text(row['t'])+'\n','Source-URL: '+url_for(discovery_base,f'learn/{lang}/{row["id"]}.html')+'\n',(llm_markdown(row['b'],lang,row,indexes[lang],discovery_base) if row['p'].endswith('.md') else row['b'])+'\n'])
  (out/'llms-full.txt').write_text('\n'.join(fulltext),'utf8')
  if target in ('main','backup'):
   (out/'CNAME').write_text(urlsplit(base).hostname+'\n','utf8')
@@ -392,7 +394,7 @@ def build(target,out,base_override=None):
   raw=re.sub(r'((?:src|href)=["\'])([^"\']+)(["\'])',version_resource,raw)
   document.write_text(raw,'utf8')
  (out/'.nojekyll').touch()
- manifest={'profile':target,'repository':repo,'base_url':base,'html_static_count':static_count,'preview_pages_by_language':{k:len(v) for k,v in lessons.items()},'sitemap_urls':len(indexed),'sitemap_location':url_for(base,'sitemap.xml'),'robots_policy':'noindex' if target=='test' else 'index'}
+ manifest={'profile':target,'repository':repo,'base_url':base,'html_static_count':static_count,'preview_pages_by_language':{k:len(v) for k,v in lessons.items()},'sitemap_urls':len(indexed),'discovery_base_url':discovery_base,'sitemap_location':url_for(discovery_base,'sitemap.xml'),'robots_policy':'noindex' if target=='test' else 'index'}
  (out/'deployment-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n','utf8')
  write_startup_manifest(out)
  print(json.dumps(manifest,ensure_ascii=False))

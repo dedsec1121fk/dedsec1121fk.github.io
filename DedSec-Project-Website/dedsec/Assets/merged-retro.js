@@ -29,9 +29,9 @@ function updateTheme(){
  var b=document.getElementById("merged-theme");if(b){b.innerHTML=mode==="light"?"<svg class=\"ds-nav-glyph\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"4.1\"/><path d=\"M12 2v2m0 16v2M2 12h2m16 0h2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4m0-14.2-1.4 1.4M6.3 17.7l-1.4 1.4\"/></svg>":"<svg class=\"ds-nav-glyph\" viewBox=\"0 0 24 24\" aria-hidden=\"true\"><path fill=\"currentColor\" d=\"M20.7 16.1A8.9 8.9 0 0 1 7.9 3.3a9.2 9.2 0 1 0 12.8 12.8Z\"/></svg>";b.setAttribute("aria-label",mode==="light"?"Switch to dark galaxy":"Switch to lavender galaxy");}
  var logo=document.querySelector(".merged-brand img");
  if(logo){var source=logo.getAttribute("src")||"",next=source.replace(/(?:Black|White)(?:%20| )Purple(?:%20| )Butterfly(?:%20| )Logo\.jpeg/i,(mode==="light"?"White":"Black")+"%20Purple%20Butterfly%20Logo.jpeg");if(next!==source)logo.setAttribute("src",next);}
- var l=document.getElementById("merged-lang");if(l)l.textContent=lang==="gr"?"EN":"ΕΛ";
+ var l=document.getElementById("merged-lang");if(l)l.textContent=lang==="gr"?"English":"Ελληνικά";
  var search=document.getElementById("merged-search");if(search){search.setAttribute("aria-label",lang==="gr"?"Αναζήτηση στην ιστοσελίδα":"Search the website");search.title=search.getAttribute("aria-label");}
- var homeLink=document.getElementById("merged-home");if(homeLink){homeLink.setAttribute("aria-label",lang==="gr"?"Αρχική":"Home");homeLink.title=homeLink.getAttribute("aria-label");}
+ var homeLink=document.getElementById("merged-home");if(homeLink){homeLink.setAttribute("aria-label",lang==="gr"?"Λογαριασμός":"Account");homeLink.title=homeLink.getAttribute("aria-label");}
  applyNavContrast();
  if(window.DedSecCookies)window.DedSecCookies.refresh();
  root.style.colorScheme=mode==="light"?"light":"dark";document.querySelectorAll(".merged-footer [data-en][data-gr]").forEach(function(x){x.textContent=x.getAttribute(lang==="gr"?"data-gr":"data-en");});
@@ -300,8 +300,8 @@ function ready(){
  var actions=document.querySelector(".merged-actions"),home=document.querySelector(".merged-brand");
  if(actions&&home&&!document.getElementById("merged-home")){
   var homeLink=document.createElement("a");homeLink.id="merged-home";homeLink.className="merged-home";
-  homeLink.href=home.href;homeLink.setAttribute("aria-label",lang==="gr"?"Αρχική":"Home");homeLink.title=homeLink.getAttribute("aria-label");
-  homeLink.innerHTML="<svg class=\"ds-nav-glyph\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m2.5 10.2 9.5-7.6 9.5 7.6V21h-6.6v-7H9.1v7H2.5z\"/></svg>";actions.appendChild(homeLink);
+  homeLink.href="#account";homeLink.dataset.accountToggle="";homeLink.setAttribute("role","button");homeLink.setAttribute("aria-label",lang==="gr"?"Λογαριασμός":"Account");homeLink.title=homeLink.getAttribute("aria-label");
+  homeLink.innerHTML="<svg class=\"ds-nav-glyph\" viewBox=\"0 0 24 24\" aria-hidden=\"true\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.7\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M4 22v-3a8 8 0 0 1 16 0v3M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0\"/></svg>";actions.appendChild(homeLink);
  }
  // Keep the Home button last even if the importer or a historical page
  // already contributed one. Do not let a preceding control hide it.
