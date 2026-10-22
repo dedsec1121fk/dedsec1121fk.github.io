@@ -97,8 +97,8 @@ def audit(out):
  if manifest['profile']!='test' and (out/'CNAME').read_text().strip()!=urlsplit(base).hostname:issues.append('Wrong public CNAME')
  for uri in canonical:
   if discovery+uri[len(base):] not in urls and not urlsplit(uri).path.endswith('404.html'):issues.append('Canonical omitted from sitemap: '+uri)
- for file in ('LICENSE',):
-  if not (ROOT/file).is_file():issues.append('Missing required license: '+file)
+ if not any((ROOT/name).is_file() for name in ('LICENSE','LICENSE.txt')):
+  issues.append('Missing license notice: LICENSE or LICENSE.txt')
  result={'profile':manifest['profile'],'base_url':base,'html_pages':pages,'sitemap_urls':len(urls),'unique_canonical_urls':len(canonical),'llm_full_records':len(sources),'css_resource_references':css_refs,'fingerprinted_resource_references':versioned_resources,'startup_resources':len(preload['resources']),'startup_bytes':preload['bytes'],'javascript_files_checked':len(scripts),'unique_inline_scripts_checked':len(inline),'issues':issues,'limits':['External website/API availability is not an offline guarantee.','Static checks do not certify every technical claim or all hardware/toolchains.','Test is noindex staging; production and backup repositories are not modified.']}
  return result
 if __name__=='__main__':
