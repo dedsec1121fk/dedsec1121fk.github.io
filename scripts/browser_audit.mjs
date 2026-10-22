@@ -82,9 +82,9 @@ for(const [locale,theme,width] of [['en','dark',320],['gr','light',390],['en','l
  check(p.url()===portalURL,'Blocked login navigated away');
  check(await loginForm.locator('[name=email]').inputValue()==='ui@example.test','Blocked login erased the email');
  check(await loginForm.locator('[name=password]').inputValue()==='','Blocked login retained the password');
- const fallbackURL=new URL(await p.locator('#account-session-notice a').getAttribute('href'));
- check(fallbackURL.searchParams.get('site')==='main'&&!fallbackURL.searchParams.has('parent')&&!fallbackURL.searchParams.has('bridge'),'Session fallback lost the site or retained embed context');
+ check(await p.locator('#account-session-notice a').count()===0,'Blocked-session notice retained a portal link');
  blockLoginSession=false;await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();await p.locator('#account-profile').waitFor({state:'visible'});
+ check(!await p.locator('#account-editor').isVisible(),'Empty editor remains visible before opening a file');
  check(p.url()===portalURL,'Successful login navigated away');
  await p.locator('#account-demo-exit').click();await p.locator('#account-auth').waitFor({state:'visible'});
  check(p.url()===portalURL,'Sign-out dropped portal session context');
@@ -103,7 +103,7 @@ check(registeredPayload&&/^[0-9a-f]{64}$/.test(registeredPayload.prehash),'Regis
  check(registeredPayload.referralCode==='cd'.repeat(16),'Referral code not normalized or submitted');check(await p.locator('#account-change-password button').isDisabled(),'Unverified user can change password');check(await p.locator('#account-referral-code').inputValue()==='cd'.repeat(16),'Referral code missing');check(registeredPayload.dateOfBirth==='2001-01-01'&&!('age' in registeredPayload),'Registration must send date of birth without manual age');check(await p.locator('#account-registered-count').innerText()==='1 / 300','Live account counter');check(await p.locator('#account-recovery-notice code').innerText()==='ab'.repeat(32),'Recovery code display');
  let pendingDownload=p.waitForEvent('download');await p.locator('#account-recovery-notice button').first().click();let downloaded=await pendingDownload;check(downloaded.suggestedFilename()==='DedSec-recovery-code.txt','Recovery download name');await p.locator('#account-recovery-notice button').last().click();
  check(await p.locator('#account-rewards .account-script button').isDisabled(),'Locked rewards became downloadable');
- await p.locator('#account-fab').click();await p.locator('#account-new-file').click();await p.locator('#account-name').fill('Live note');await p.locator('#account-dialog-confirm').click();await p.locator('#account-editor').fill('Private local fixture Ελληνικά');await p.locator('#account-save').click();await p.waitForFunction(()=>document.getElementById('account-sync-status').textContent.includes('private account')||document.getElementById('account-sync-status').textContent.includes('ιδιωτικό λογαριασμό'));
+ await p.locator('#account-fab').click();await p.locator('#account-new-file').click();await p.locator('#account-name').fill('Live note');await p.locator('#account-dialog-confirm').click();check(await p.locator('#account-editor').isVisible(),'Created note did not open the editor');await p.locator('#account-editor').fill('Private local fixture Ελληνικά');await p.locator('#account-save').click();await p.waitForFunction(()=>document.getElementById('account-sync-status').textContent.includes('private account')||document.getElementById('account-sync-status').textContent.includes('ιδιωτικό λογαριασμό'));
  check(cloudEntries.some(e=>e.content==='Private local fixture Ελληνικά'),'Private editor did not sync');
  p.on('dialog',dialog=>dialog.accept());
  await p.locator('#account-use-local').click();await p.locator('#account-use-cloud').waitFor({state:'visible'});

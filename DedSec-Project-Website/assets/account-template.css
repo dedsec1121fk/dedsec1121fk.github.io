@@ -59,3 +59,6 @@
  html[data-account-embedded="true"] .page-content.account-template,html.account-embedded .page-content.account-template{min-height:0!important;margin-bottom:0!important;padding-bottom:12px!important;}
  html[data-account-embedded="true"] #account-profile> :last-child,html.account-embedded #account-profile> :last-child{margin-bottom:0!important;}
 }
+
+.account-template .account-layout>[hidden]{display:none!important}
+.account-template .account-layout:has(>[hidden]){grid-template-columns:minmax(0,1fr)!important}

@@ -9,6 +9,7 @@
  updateBirthBounds();birthInput?.addEventListener('focus',updateBirthBounds);
  const t=gr?el:en,$=id=>document.getElementById(id),feedback=$('account-feedback'),editor=$('account-editor'),dialog=$('account-dialog');
  let entries=core.create(),folder='',current=null,active=false,revision=0,exportedRevision=-1,dialogAction=null,deletionTarget=null,generation=0;
+ const editorPanel=editor.closest('.account-layout > div');editorPanel.hidden=true;
  const selection=new Set();
  function element(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e;}
  function message(text,error=false){if(window.DedSecAccountToast)window.DedSecAccountToast(text,error);else {feedback.textContent=text;feedback.setAttribute('role',error?'alert':'status');}}
@@ -16,7 +17,7 @@
  function commit(next){entries=next;revision++;if(live?.signedIn)live.changed(entries);for(const p of selection)if(!entries.some(e=>e.path===p))selection.delete(p);}
  function saveCurrent(announce=false){if(!current)return true;const old=entries.find(e=>e.path===current);if(!old||old.content===editor.value)return true;try{commit(core.save(entries,current,editor.value));renderUsage();if(announce)message(live?.signedIn?(gr?'Αποθηκεύτηκε στην καρτέλα· έλεγξε την ένδειξη συγχρονισμού.':'Saved in this tab; check the sync status.'):t.saved);return true;}catch(e){error(e);return false;}}
  function renderUsage(){const n=core.usage(entries);$('account-usage').textContent=(n/1000).toLocaleString(gr?'el-GR':'en-GB',{maximumFractionDigits:1})+' / 900 KB';$('account-meter').value=n;}
- function openEntry(item){if(!saveCurrent())return;if(item.kind==='folder'){folder=item.path;render();return;}current=item.path;editor.disabled=false;editor.value=item.content;$('account-current-file').textContent=item.path;$('account-save').disabled=false;$('account-rename').disabled=false;$('account-delete').disabled=false;editor.focus();}
+ function openEntry(item){if(!saveCurrent())return;if(item.kind==='folder'){folder=item.path;render();return;}current=item.path;editorPanel.hidden=false;editor.disabled=false;editor.value=item.content;$('account-current-file').textContent=item.path;$('account-save').disabled=false;$('account-rename').disabled=false;$('account-delete').disabled=false;editor.focus();}
  function renderPins(){const list=$('account-pins');list.replaceChildren();const pinned=entries.filter(e=>e.pinned);if(!pinned.length)list.append(element('li',t.noPins));for(const e of pinned){const li=element('li'),b=element('button',e.path);b.type='button';b.addEventListener('click',()=>openEntry(e));li.append(b);list.append(li);}}
  function renderList(){const list=$('account-files');list.replaceChildren();const visible=entries.filter(e=>e.path.split('/').slice(0,-1).join('/')===folder).sort((a,b)=>a.kind.localeCompare(b.kind)||a.path.localeCompare(b.path));
   if(!visible.length)list.append(element('li',t.empty));
@@ -27,7 +28,7 @@
   }
  }
  function render(){renderList();renderPins();renderUsage();$('account-path').textContent=folder||t.root;$('account-folder-up').disabled=!folder;
-  if(!current||!entries.some(e=>e.path===current)){current=null;editor.value='';editor.disabled=true;$('account-current-file').textContent=t.selectFile;for(const id of ['account-save','account-rename','account-delete'])$(id).disabled=true;}
+  if(!current||!entries.some(e=>e.path===current)){current=null;editorPanel.hidden=true;editor.value='';editor.disabled=true;$('account-current-file').textContent=t.selectFile;for(const id of ['account-save','account-rename','account-delete'])$(id).disabled=true;}
  }
  function closeActions(){const b=$('account-fab');$('account-fab-menu').hidden=true;b.setAttribute('aria-expanded','false');}
  function ask(action,name='',confirmation=false){closeActions();dialogAction=action;$('account-dialog-title').textContent=confirmation?name:action==='rename'?t.rename:action==='folder'?t.newFolder:t.newFile;$('account-name-label').hidden=confirmation;$('account-name').required=!confirmation;$('account-name').value=confirmation?'':name;$('account-dialog-confirm').textContent=confirmation?t.remove:action==='rename'?t.rename:t.create;dialog.showModal();(confirmation?$('account-dialog-confirm'):$('account-name')).focus();}
