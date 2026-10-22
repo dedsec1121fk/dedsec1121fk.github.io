@@ -161,6 +161,17 @@ assert.equal((await submitChange('new',newCode)).status,400);
 delete env['DedSec-Project-Email'];delete env.MAIL_PROVIDER;delete env.MAIL_FROM;delete env.ACCOUNT_PUBLIC_ORIGIN;
 globalThis.fetch=async(url,init)=>{assert.equal(url,'https://challenges.cloudflare.com/turnstile/v0/siteverify');return Response.json({success:true,hostname:'account.example.test',action:init.body.get('response')});};
 
+// Cloudflare Pages canonicalizes .html to the same extensionless path.
+for(const language of ['', 'el/']){
+ const target='https://ded-sec.space/dedsec/'+language+'Pages/account.html';let calls=0;
+ globalThis.fetch=async(url,init)=>{assert.equal(init.redirect,'manual');calls++;if(calls===1){assert.equal(url,target);return new Response(null,{status:308,headers:{Location:new URL(target).pathname.replace(/\.html$/,'')}});}assert.equal(url,target.replace(/\.html$/,''));return new Response(readFileSync(new URL('../DedSec-Project-Website/dedsec/'+language+'Pages/account.html',import.meta.url),'utf8'));};
+ const portal=await worker.fetch(new Request('https://account.example.test/dedsec/'+language+'Pages/account.html?site=main'),env);assert.equal(portal.status,200);assert.equal(calls,2);assert((await portal.text()).includes('DEDSEC_ACCOUNT_CONFIG'));
+}
+for(const location of ['https://evil.example/account','/dedsec/Pages/privacy-policy','/dedsec/Pages/account?token=bad','/dedsec/Pages/account#bad']){
+ let calls=0;globalThis.fetch=async()=>{calls++;return new Response(null,{status:301,headers:{Location:location}});};
+ const result=await worker.fetch(new Request('https://account.example.test/dedsec/Pages/account.html?site=main'),env);assert.equal(result.status,503);assert.equal(calls,1);
+}
+
 // The live portal must replace fingerprinted config URLs and resolve assets on Test.
 globalThis.fetch=async (url,init)=>{assert.equal(init.redirect,'manual');assert.equal(url,'https://dedsec1121fk.github.io/Test/dedsec/Pages/account.html');return new Response(readFileSync(new URL('../DedSec-Project-Website/dedsec/Pages/account.html',import.meta.url),'utf8').replace('account-config.js','account-config.js?v=abcdef123456'));};
 const portal=await worker.fetch(new Request('https://account.example.test/dedsec/Pages/account.html'),env);assert.equal(portal.status,200);const html=await portal.text();assert(html.includes('<base href="https://dedsec1121fk.github.io/Test/dedsec/Pages/account.html">'));assert(html.includes('"apiBase":"https://account.example.test/api/account"'));assert(!html.includes('account-config.js'));assert(portal.headers.get('Content-Security-Policy').includes("frame-ancestors 'none'"));
