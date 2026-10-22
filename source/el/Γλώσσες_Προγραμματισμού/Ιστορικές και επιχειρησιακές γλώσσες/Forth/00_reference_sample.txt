@@ -1,2 +1,0 @@
-: greet  ." Hello, Ada!" cr ;
-greet

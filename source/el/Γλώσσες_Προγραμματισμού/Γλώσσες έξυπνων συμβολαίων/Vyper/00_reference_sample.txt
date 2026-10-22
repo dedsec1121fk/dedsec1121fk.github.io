@@ -1,5 +1,0 @@
-# pragma version ^0.4.0
-message: public(String[64])
-@deploy
-def __init__():
-    self.message = "Hello, Ada!"

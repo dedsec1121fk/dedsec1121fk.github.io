@@ -1,2 +1,0 @@
--- Spark SQL: παράδειγμα σύνθεσης κειμένου με τη συνάρτηση concat.
-SELECT concat('Hello, ', 'Ada', '!') AS greeting;

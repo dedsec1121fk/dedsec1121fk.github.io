@@ -1,2 +1,0 @@
--- Apache Spark SQL reference: concat handles string columns and expressions.
-SELECT concat('Hello, ', 'Ada', '!') AS greeting;

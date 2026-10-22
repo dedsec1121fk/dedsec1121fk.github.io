@@ -1,2 +1,0 @@
--- MySQL reference: CONCAT combines text expressions and is NULL-propagating.
-SELECT CONCAT('Hello, ', 'Ada', '!') AS greeting;

@@ -1,3 +1,0 @@
-import std.stdio;
-string greet(string name) { return "Hello, " ~ name ~ "!"; }
-void main() { writeln(greet("Ada")); }

@@ -1,8 +1,0 @@
-entity hello is end entity;
-architecture demo of hello is
-begin
-  process begin
-    report "Hello, Ada!";
-    wait;
-  end process;
-end architecture;

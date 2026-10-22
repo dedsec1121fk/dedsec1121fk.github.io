@@ -1,5 +1,0 @@
-# DedSec Project public website
-User-agent: *
-Allow: /
-
-Sitemap: https://ded-sec.space/sitemap.xml

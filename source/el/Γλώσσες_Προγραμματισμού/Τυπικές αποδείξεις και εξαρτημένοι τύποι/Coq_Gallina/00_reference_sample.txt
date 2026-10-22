@@ -1,2 +1,0 @@
-Definition answer : nat := 42.
-Compute answer.

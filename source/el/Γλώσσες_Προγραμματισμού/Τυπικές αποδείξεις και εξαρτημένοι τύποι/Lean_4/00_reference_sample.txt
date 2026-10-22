@@ -1,2 +1,0 @@
-def greet (name : String) : String := "Hello, " ++ name ++ "!"
-#eval greet "Ada"

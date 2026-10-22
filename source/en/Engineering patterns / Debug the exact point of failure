@@ -1,7 +1,0 @@
-# Debug the exact point of failure
-
-When a button or steering control feels broken, separate input event, state transition, renderer output, and performance. Fixing superficial style cannot repair an input map. Reproduce, find the first failing boundary, change the smallest component, then verify other controls still work.
-
-## Verification scenario
-
-Suppose the left-steering button animates but a vehicle never turns. Check pointerdown, the stored steering value, the physics update and the renderer, in that order. Locate the first failing transition before changing code. Retest the right button, keyboard and touch controls after the repair. A button animation without a changed heading is a clear counterexample to working gameplay.

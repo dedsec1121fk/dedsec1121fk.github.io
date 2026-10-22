@@ -1,7 +1,0 @@
-# Spend build minutes only on needed evidence
-
-Run fast syntax, link, Unicode, static content, and archive consistency checks first. Batch changes. Trigger expensive CI only when the affected feature needs it, and reserve minutes for real failures. A green build is not a hardware test.
-
-## Verification scenario
-
-For a CSS-only website change, do syntax, local-link and responsive viewport checks first. Building an Android game will not prove text contrast or tap-target sizes on the website. For changed controls, focus on actual runtime input tests instead. Group changes after inexpensive validation, reserve deployment minutes for recovery, and report only the tests genuinely completed.

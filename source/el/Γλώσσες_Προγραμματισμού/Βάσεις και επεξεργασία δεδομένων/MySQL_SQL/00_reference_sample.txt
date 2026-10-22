@@ -1,2 +1,0 @@
--- MySQL: η CONCAT ενώνει συμβολοσειρές και δίνει NULL αν κάποιο όρισμα είναι NULL.
-SELECT CONCAT('Hello, ', 'Ada', '!') AS greeting;

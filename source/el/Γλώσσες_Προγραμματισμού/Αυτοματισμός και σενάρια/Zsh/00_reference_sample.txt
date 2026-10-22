@@ -1,2 +1,0 @@
-greet() { print -r -- "Hello, $1!" }
-greet Ada

@@ -1,2 +1,0 @@
-let greet = name => "Hello, " ++ name ++ "!"
-Js.log(greet("Ada"))

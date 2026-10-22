@@ -1,2 +1,0 @@
-var name = "Ada";
-show_debug_message("Hello, " + name + "!");

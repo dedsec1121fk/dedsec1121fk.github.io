@@ -1,5 +1,0 @@
-program Hello;
-{$APPTYPE CONSOLE}
-begin
-  Writeln('Hello, Ada!');
-end.

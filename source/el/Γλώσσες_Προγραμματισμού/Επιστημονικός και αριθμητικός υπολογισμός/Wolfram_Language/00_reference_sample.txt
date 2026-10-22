@@ -1,2 +1,0 @@
-greet[name_] := "Hello, " <> name <> "!";
-Print[greet["Ada"]];

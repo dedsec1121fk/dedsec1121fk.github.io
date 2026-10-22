@@ -3,7 +3,7 @@
 <details>
 <summary><strong>English</strong></summary>
 
-This repository contains the bilingual DedSec Project website, the programming and troubleshooting knowledge library, and the tools that build and audit the site. This is the production source repository for [ded-sec.space](https://ded-sec.space/). Cloudflare builds and audits the `main` profile into `.site-publish` on each main-branch update; legacy generated root files are not the deployed input. Test and backup repositories remain separate.
+This repository contains the bilingual DedSec Project website, the programming and troubleshooting knowledge library, and the tools that build and audit the site. This is the production source repository for [ded-sec.space](https://ded-sec.space/). Cloudflare builds and audits the `main` profile into `.site-publish` on each main-branch update; generated root folders have been removed from source control and are recreated only in the build output. Test and backup repositories remain separate.
 
 <details><summary><strong>Files and folders explained</strong></summary>
 
@@ -73,7 +73,7 @@ Run `python3 scripts/validate.py` and `python3 -m unittest discover -s scripts -
 <details>
 <summary><strong>Ελληνικά</strong></summary>
 
-Το αποθετήριο περιέχει τη δίγλωσση ιστοσελίδα DedSec Project, τη βιβλιοθήκη προγραμματισμού και αντιμετώπισης προβλημάτων, καθώς και τα εργαλεία δημιουργίας και ελέγχου. Αποτελεί την πηγή της παραγωγικής ιστοσελίδας [ded-sec.space](https://ded-sec.space/). Το Cloudflare δημιουργεί και ελέγχει το προφίλ `main` στον φάκελο `.site-publish` σε κάθε ενημέρωση του main· τα παλιά παραγόμενα αρχεία της ρίζας δεν δημοσιεύονται. Test και backup παραμένουν ξεχωριστά.
+Το αποθετήριο περιέχει τη δίγλωσση ιστοσελίδα DedSec Project, τη βιβλιοθήκη προγραμματισμού και αντιμετώπισης προβλημάτων, καθώς και τα εργαλεία δημιουργίας και ελέγχου. Αποτελεί την πηγή της παραγωγικής ιστοσελίδας [ded-sec.space](https://ded-sec.space/). Το Cloudflare δημιουργεί και ελέγχει το προφίλ `main` στον φάκελο `.site-publish` σε κάθε ενημέρωση του main· οι παραγόμενοι φάκελοι αφαιρέθηκαν από το repository και αναδημιουργούνται μόνο στην έξοδο build. Test και backup παραμένουν ξεχωριστά.
 
 <details><summary><strong>Τι περιέχουν τα αρχεία και οι φάκελοι</strong></summary>
 

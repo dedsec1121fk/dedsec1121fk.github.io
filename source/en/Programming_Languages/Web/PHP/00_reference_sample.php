@@ -1,3 +1,0 @@
-<?php
-function greet(string $name): string { return "Hello, $name!"; }
-echo greet("Ada"), PHP_EOL;

@@ -1,7 +1,0 @@
-# Quality is not the number of files
-
-A hundred near-identical lessons create noise. Prefer examples that define an invariant, show a failure, explain a repair, and offer one exercise. Index generation must track the source files; claims of full coverage require evidence, not inflated counts.
-
-## Verification scenario
-
-Two articles share the title 'Binary search'. One explains why data must be sorted; another implements an iterative algorithm. Both have distinct educational value. Inventory ID, language, source path and normalized complete text; compare exact bodies before merging. When duplicate bodies are confirmed, preserve a canonical source and update references. Do not delete Greek translations or independent code examples just because keywords coincide.

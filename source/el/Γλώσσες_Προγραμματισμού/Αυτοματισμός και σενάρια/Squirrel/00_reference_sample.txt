@@ -1,2 +1,0 @@
-function greet(name) { return "Hello, " + name + "!"; }
-print(greet("Ada") + "\n");
