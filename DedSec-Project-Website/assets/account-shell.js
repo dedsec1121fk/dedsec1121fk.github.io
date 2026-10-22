@@ -53,7 +53,7 @@
   const enhancement=document.createElement('script');enhancement.id='dedsec-account-float-script';
   enhancement.src=new URL('test-account-float.js',script.src).href;document.head.append(enhancement);
  }
- const home=new URL('../index.html',script.src),portal=new URL(config.portal||'https://dedsec-test-accounts.dedsec-project.workers.dev');
+ const home=new URL('../index.html',script.src),portal=new URL(config.portal||'https://dedsec-accounts.dedsec-project.workers.dev');
  let dialog,frame,floatButton,opener,mode='modal',signedIn=false;
  const bridge=[...crypto.getRandomValues(new Uint8Array(16))].map(x=>x.toString(16).padStart(2,'0')).join('');
  function currentTheme(){return document.body.matches('.theme-light,.light-theme')?'light':document.body.matches('.theme-dark,.dark-theme')?'dark':document.documentElement.dataset.theme==='light'?'light':'dark';}

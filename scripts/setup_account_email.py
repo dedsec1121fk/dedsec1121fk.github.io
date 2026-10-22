@@ -9,7 +9,7 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 
 ACCOUNT = '3186441280053d723e7c85dc8ef3acc9'
-WORKER = 'dedsec-test-accounts'
+WORKER = 'dedsec-accounts'
 BASE = f'https://api.cloudflare.com/client/v4/accounts/{ACCOUNT}/workers/scripts/{WORKER}'
 
 def api(method, suffix='', data=None):
@@ -41,7 +41,7 @@ def main():
     key = os.environ.get('MAIL_API_KEY', '').strip()
     sender = os.environ.get('MAIL_FROM', '').strip()
     provider = os.environ.get('MAIL_PROVIDER', 'brevo').strip()
-    origin = os.environ.get('ACCOUNT_PUBLIC_ORIGIN', 'https://dedsec-test-accounts.dedsec-project.workers.dev').strip()
+    origin = os.environ.get('ACCOUNT_PUBLIC_ORIGIN', 'https://dedsec-accounts.dedsec-project.workers.dev').strip()
     from urllib.parse import urlsplit
     parsed = urlsplit(origin)
     if provider not in {'brevo', 'resend'} or parsed.scheme != 'https' or not parsed.netloc or parsed.username or parsed.password or parsed.path not in {'', '/'} or parsed.query or parsed.fragment:

@@ -2,7 +2,7 @@
 
 # Test account email-change and interface maintenance
 
-Applies **only** to `dedsec1121fk/Test` and the `dedsec-test-accounts` Worker. Do not copy these settings into production or the backup without an explicit security release review.
+Applies **only** to `dedsec1121fk/Test` and the `dedsec-accounts` Worker. Do not copy these settings into production or the backup without an explicit security release review.
 
 ## Two-address email change
 - The user must be signed in, have a verified current email and confirm the current password. The request is rate limited. The new email must be unused and must not conflict with canonicalized Gmail identities.

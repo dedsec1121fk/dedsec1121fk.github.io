@@ -281,7 +281,7 @@ def build(target,out,base_override=None):
  if out.resolve()==SOURCE.resolve() or out.resolve()==BASE.resolve():raise ValueError('Unsafe output path')
  if out.exists():shutil.rmtree(out)
  shutil.copytree(SOURCE,out)
- (out/'assets/account-shell-config.js').write_text('window.DEDSEC_ACCOUNT_SHELL=Object.freeze('+json.dumps({'profile':target,'portal':'https://dedsec-test-accounts.dedsec-project.workers.dev'})+');\n','utf8')
+ (out/'assets/account-shell-config.js').write_text('window.DEDSEC_ACCOUNT_SHELL=Object.freeze('+json.dumps({'profile':target,'portal':'https://dedsec-accounts.dedsec-project.workers.dev'})+');\n','utf8')
  (out/"data/site-search.js").write_text(website_search_generate(),"utf8")
  # Put the imported official DedSec pages/assets at the exact established root
  # URLs too; preserve the integrated UI's own /dedsec/... references.

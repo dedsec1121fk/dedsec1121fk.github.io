@@ -64,7 +64,7 @@ A rebuild needs no database to serve general public content. The static account 
 
 ## Recreate or update private accounts
 
-The current Test Worker is `dedsec-test-accounts`, hosted under `dedsec-project.workers.dev`. Its only portal routes are `/dedsec/Pages/account.html` and `/dedsec/el/Pages/account.html`; API routes begin `/api/account/`. D1 is bound as `DB`. `account-service/wrangler.example.jsonc` records the current Test identifiers and hourly cleanup schedule. Do not copy its D1 ID into an unrelated installation.
+The current Test Worker is `dedsec-accounts`, hosted under `dedsec-project.workers.dev`. Its only portal routes are `/dedsec/Pages/account.html` and `/dedsec/el/Pages/account.html`; API routes begin `/api/account/`. D1 is bound as `DB`. `account-service/wrangler.example.jsonc` records the current Test identifiers and hourly cleanup schedule. Do not copy its D1 ID into an unrelated installation.
 
 For a clean installation, create a Free Worker and D1 database in the owner's account; set a new Worker name/database ID and matching portal/static base URLs in configuration/code. Create a Turnstile widget for the exact portal hostname and expected actions `register`, `login`, `recover`. Apply migrations 0001, 0002 and 0003 exactly once and in order to the empty database. On the existing Test database, 0001/0002 were applied directly through the D1 API: apply only 0003 after schema inspection. Wrangler's `d1_migrations` ledger is distinct from our `account_schema_migrations`; never blindly ask Wrangler to reapply old migrations to an API-initialized database.
 

@@ -178,7 +178,7 @@ for(const rel of ['dedsec/Pages/account.html','dedsec/el/Pages/account.html','de
 for(const locale of ['en','gr']){
  const p=await browser.newPage({viewport:{width:390,height:844}});
  await p.route('http://127.0.0.1:8765/**',async route=>{if(new URL(route.request().url()).pathname.endsWith('/startup-manifest.json'))return route.fallback();const response=await route.fetch();return route.fulfill({response,headers:{...response.headers(),'access-control-allow-origin':'*'}});});
- await p.route('https://dedsec-test-accounts.dedsec-project.workers.dev/**',async route=>{
+ await p.route('https://dedsec-accounts.dedsec-project.workers.dev/**',async route=>{
   const u=new URL(route.request().url());
   if(!u.pathname.endsWith('/account.html'))return route.abort();
   const rel=locale==='gr'?'dedsec/el/Pages/account.html':'dedsec/Pages/account.html';
@@ -193,7 +193,7 @@ for(const locale of ['en','gr']){
  await p.locator('#nav-home').click();
  const frame=p.frameLocator('#dedsec-account-window iframe');
  await frame.locator('#account-auth').waitFor();
- const child=p.frames().find(f=>f.url().startsWith('https://dedsec-test-accounts.dedsec-project.workers.dev/'));
+ const child=p.frames().find(f=>f.url().startsWith('https://dedsec-accounts.dedsec-project.workers.dev/'));
  await child.waitForFunction(()=>!!window.DedSecCookies);
  check(await frame.locator('#dedsec-cookie-overlay,#dedsec-cookie-banner,.dedsec-cookie-settings').count()===0,'Separate-origin Account asked for cookies: '+locale);
  check(await p.locator('#dedsec-cookie-overlay:not([hidden])').count()===0,'Homepage consent reopened when Account was tapped');
@@ -206,7 +206,7 @@ for(const locale of ['en','gr']){
 for(const [surface,locale,width] of [['source','en',320],['source','gr',390],['published','en',320],['published','gr',390]]){
  const p=await browser.newPage({viewport:{width,height:844}});p.on('pageerror',e=>console.log('OVERLAY_JS_ERROR',e.message));
  await p.addInitScript(locale=>{localStorage.setItem('dedsec:language',JSON.stringify(locale));localStorage.setItem('dedsec:theme',JSON.stringify(locale==='gr'?'light':'dark'));localStorage.setItem('dedsec:cookie-choice','decline');},locale);
- await p.route('https://dedsec-test-accounts.dedsec-project.workers.dev/**',route=>{
+ await p.route('https://dedsec-accounts.dedsec-project.workers.dev/**',route=>{
   const url=new URL(route.request().url()),parent=url.searchParams.get('parent'),bridge=url.searchParams.get('bridge');
   const html='<!doctype html><html><body><button id="fixture-create">Create account</button><button id="fixture-login">Sign in</button><button id="fixture-float">Float TXT</button><textarea id="fixture-note"></textarea><script>const parentOrigin='+JSON.stringify(parent)+',bridge='+JSON.stringify(bridge)+';document.getElementById("fixture-login").onclick=()=>window.parent.postMessage({type:"dedsec-account-state",bridge,signedIn:true},parentOrigin);document.getElementById("fixture-float").onclick=()=>window.parent.postMessage({type:"dedsec-account-float",bridge},parentOrigin);document.body.dataset.fixtureReady="true";<'+ '/script></body></html>';
   return route.fulfill({status:200,contentType:'text/html',body:html});

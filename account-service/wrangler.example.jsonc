@@ -1,5 +1,5 @@
 {
-  "name": "dedsec-test-accounts",
+  "name": "dedsec-accounts",
   "main": "worker.mjs",
   "compatibility_date": "2026-10-20",
   "compatibility_flags": ["nodejs_compat"],
@@ -8,7 +8,7 @@
   "vars": {
     "SERVICE_MODE": "active",
     "MAIL_PROVIDER": "brevo",
-    "ACCOUNT_PUBLIC_ORIGIN": "https://dedsec-test-accounts.dedsec-project.workers.dev",
+    "ACCOUNT_PUBLIC_ORIGIN": "https://dedsec-accounts.dedsec-project.workers.dev",
     "TURNSTILE_SITE": "0x4AAAAAAFeTRcT9pNEqmqb8"
   },
   "d1_databases": [{

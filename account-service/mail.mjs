@@ -1,4 +1,4 @@
-const DEFAULT_ORIGIN='https://dedsec-test-accounts.dedsec-project.workers.dev';
+const DEFAULT_ORIGIN='https://dedsec-accounts.dedsec-project.workers.dev';
 
 export function mailConfig(env){
  const provider=env.MAIL_PROVIDER||'resend';

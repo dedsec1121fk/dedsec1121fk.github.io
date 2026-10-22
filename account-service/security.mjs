@@ -4,7 +4,7 @@ import {random,digest,mac,equal,verifier,unhex} from './crypto.mjs';
 import {deliverSecurityCode} from './mail.mjs';
 
 const SECOND=300, CHALLENGE=180;
-const origin='https://dedsec-test-accounts.dedsec-project.workers.dev';
+const origin='https://dedsec-accounts.dedsec-project.workers.dev';
 const rpId=new URL(origin).hostname;
 const enc=new TextEncoder();
 
