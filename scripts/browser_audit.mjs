@@ -32,6 +32,123 @@ const all=[];
 const faults=[];
 function check(cond,msg){if(!cond)faults.push(msg)}
 function rgbaTransparent(c){return c==="transparent"||/rgba?\([^)]*,\s*0(?:\.0+)?\s*\)$/.test(c)}
+// Authenticated portal UI on an isolated mock transport. No real accounts,
+// provider challenges, personal notes or sponsor source bytes are used here.
+for(const [locale,theme,width] of [['en','dark',320],['gr','light',390],['en','light',1280],['gr','dark',1440]]){
+ const p=await browser.newPage({viewport:{width,height:844}}),gr=locale==='gr',errors=[];
+ p.on('pageerror',e=>errors.push(e.message));
+ await p.addInitScript(({locale,theme})=>{localStorage.setItem('dedsec:language',JSON.stringify(locale));localStorage.setItem('dedsec:theme',JSON.stringify(theme));localStorage.setItem('dedsec:cookie-choice','decline');},{locale,theme});
+ await p.route('**/assets/account-config.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.DEDSEC_ACCOUNT_CONFIG={apiBase:location.origin+"/api/account",turnstileSite:"local-ui-fixture"};'}));
+ await p.route('https://challenges.cloudflare.com/turnstile/v0/api.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.turnstile={render(node,options){this.options=options;node.textContent="Local challenge fixture";options.callback("local-fixture-token");return 1;},remove(){},reset(){this.options.callback("local-fixture-token");}};'}));
+ let signed=false,cloudEntries=[],cloudRevision=0,conflict=false,unlocked=false,registeredPayload=null,deleteFails=true,blockLoginSession=true,rejectLogin=true;
+ const scriptBytes=Buffer.from('print("Local download fixture")\n'),{createHash}=await import('node:crypto'),sha=createHash('sha256').update(scriptBytes).digest('hex');
+ const scripts=[{id:'fixture-en',filename:'Fixture (English).py',language:'en',sha256:sha,version:'v2',description:{en:'Local UI fixture',el:'Τοπικό δείγμα διεπαφής'}}];
+ await p.route('**/api/account/**',async route=>{const r=route.request(),name=new URL(r.url()).pathname.split('/api/account/')[1],method=r.method();let payload;try{payload=r.postDataJSON();}catch{}
+  const answer=(data,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(data)});
+  if(name==='status')return answer({version:1,mode:'active',connected:true,counts:{registered:signed?1:0,active:signed?1:0}});
+  if(name==='challenge')return answer({version:1,salt:'12'.repeat(16),iterations:600000,hash:'SHA-256'});
+  if(name==='login'){if(rejectLogin)return answer({error:'invalid_credentials'},401);signed=!blockLoginSession;return answer({signedIn:true});}
+  if(name==='register'){registeredPayload=payload;signed=true;return answer({created:true,recoveryCode:'ab'.repeat(32)},201);}
+  if(name==='me'&&method==='DELETE'){
+   check(r.headers()['x-csrf-token']==='fixture-csrf','Deletion omitted CSRF');
+   check(/^[0-9a-f]{64}$/.test(payload.prehash)&&!JSON.stringify(payload).includes('a long local test password'),'Deletion credential contract');
+   if(deleteFails)return answer({error:'invalid_credentials'},401);
+   signed=false;return answer({deleted:true});
+  }
+  if(name==='me')return signed?answer({user:{storageId:'isolated-fixture-account-id',givenName:'Test',familyName:'Fixture',email:'ui@example.test',ageAtRegistration:25,dateOfBirth:'2001-01-01',verified:unlocked},csrf:'fixture-csrf',counts:{registered:1,active:1},revision:cloudRevision,entries:cloudEntries,mailReady:false,rewards:{qualified:unlocked?3:0,pending:0,required:3,unlocked,unlockedCount:unlocked?1:0,code:'cd'.repeat(16),release:'v2',scripts:scripts.map((script,i)=>({...script,requiredReferrals:(i+1)*3,unlocked:unlocked&&i===0}))}}):answer({error:'sign_in_required'},401);
+  if(name==='notes'&&method==='PUT'){check(r.headers()['x-csrf-token']==='fixture-csrf','Portal omitted CSRF');if(conflict)return answer({error:'workspace_conflict'},409);check(payload.revision===cloudRevision,'Portal revision contract');cloudEntries=payload.entries;cloudRevision++;return answer({revision:cloudRevision});}
+  if(name==='sponsor/fixture-en')return route.fulfill({status:unlocked?200:403,contentType:'text/x-python',body:unlocked?scriptBytes:Buffer.from('locked')});
+  if(name==='logout'){signed=false;return answer({signedOut:true});}
+  return answer({error:'not_found'},404);
+ });
+ const prefix=gr?'dedsec/el/Pages/':'dedsec/Pages/';await p.goto(base+prefix+'account.html?site=main&parent=https%3A%2F%2Fded-sec.space&bridge='+ 'ab'.repeat(16),{waitUntil:'networkidle'});
+ check(await p.locator('[data-account-panel]').evaluateAll(xs=>xs.every(x=>x.hidden)),'Live forms must start closed');await p.locator('[data-account-tab="account-login-panel"]').click();check(await p.locator('#account-login-panel input').count()===2&&!await p.locator('#account-register-panel').isVisible(),'Live sign-in shows extra registration fields');await p.locator('[data-account-tab="account-register-panel"]').click();
+ // A successful credential response without a session must give a durable,
+ // actionable error, preserve the email and never navigate or silently reset.
+ const portalURL=p.url(),loginForm=p.locator('#account-login-panel form');
+ await p.locator('[data-account-tab="account-login-panel"]').click();
+ await loginForm.locator('[name=email]').fill('ui@example.test');await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();
+ // Match the real embedded portal selectors, including the attribute/class
+ // that used to override visible notifications with opacity:0.
+ await p.evaluate(()=>{document.documentElement.dataset.accountEmbedded='true';document.documentElement.classList.add('account-embedded');});
+ await p.locator('.account-auth-error').waitFor({state:'visible'});
+ await p.waitForFunction(()=>{const el=document.getElementById('account-feedback'),s=getComputedStyle(el);return s.opacity==='1'&&s.visibility==='visible';});
+ const errorToast=await p.locator('#account-feedback').evaluate(el=>{const s=getComputedStyle(el),r=el.getBoundingClientRect();return {background:s.backgroundColor,color:s.color,top:r.top,bottom:r.bottom,view:innerHeight,parent:el.parentElement.tagName};});
+ check(errorToast.background==='rgb(159, 25, 37)'&&errorToast.color==='rgb(255, 255, 255)'&&errorToast.top>=0&&errorToast.bottom<=errorToast.view&&errorToast.parent==='BODY','Embedded authentication error toast is hidden, clipped or has the wrong colors: '+JSON.stringify(errorToast));
+ check(p.url()===portalURL,'Rejected credentials navigated the portal');
+ rejectLogin=false;await loginForm.locator('[type=submit]').click();
+ await p.locator('#account-session-notice').waitFor({state:'visible'});
+ await p.evaluate(()=>{delete document.documentElement.dataset.accountEmbedded;document.documentElement.classList.remove('account-embedded');});
+ check(p.url()===portalURL,'Blocked login navigated away');
+ check(await loginForm.locator('[name=email]').inputValue()==='ui@example.test','Blocked login erased the email');
+ check(await loginForm.locator('[name=password]').inputValue()==='','Blocked login retained the password');
+ const fallbackURL=new URL(await p.locator('#account-session-notice a').getAttribute('href'));
+ check(fallbackURL.searchParams.get('site')==='main'&&!fallbackURL.searchParams.has('parent')&&!fallbackURL.searchParams.has('bridge'),'Session fallback lost the site or retained embed context');
+ blockLoginSession=false;await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();await p.locator('#account-profile').waitFor({state:'visible'});
+ check(p.url()===portalURL,'Successful login navigated away');
+ await p.locator('#account-demo-exit').click();await p.locator('#account-auth').waitFor({state:'visible'});
+ check(p.url()===portalURL,'Sign-out dropped portal session context');
+ await p.locator('[data-account-tab="account-login-panel"]').click();await loginForm.locator('[name=email]').fill('ui@example.test');await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();await p.locator('#account-profile').waitFor({state:'visible'});
+ await p.locator('#account-demo-exit').click();await p.locator('#account-auth').waitFor({state:'visible'});
+ check(p.url()===portalURL,'Repeated sign-in/out changed portal context');
+ await p.locator('[data-account-tab="account-register-panel"]').click();
+ const form=p.locator('#account-register-panel form');await form.locator('[name=given-name]').fill('Test');await form.locator('[name=family-name]').fill('Fixture');await form.locator('[name=email]').fill('ui@example.test');await form.locator('[name=email-repeat]').fill('ui@example.test');check(await form.locator('[name=age]').count()===0,'Age must be derived from date of birth');await form.locator('[name=date-of-birth]').fill('2001-01-01');await form.locator('[name=referral-code]').fill('CD'.repeat(16));await form.locator('[name=password]').fill('a long local test password');await form.locator('[name=password-repeat]').fill('a long local test password');await form.locator('[name=terms]').check();await form.locator('[type=submit]').click();
+ await p.locator('#account-profile').waitFor({state:'visible'});
+ // The embedded portal must not retain the standalone fixed-launcher spacer.
+ await p.evaluate(()=>document.documentElement.dataset.accountEmbedded='true');
+ const embeddedSpacing=await p.locator('.account-template').evaluate(el=>({padding:parseFloat(getComputedStyle(el).paddingBottom),body:parseFloat(getComputedStyle(document.body).paddingBottom)}));
+ check(embeddedSpacing.padding<=12&&embeddedSpacing.body===0,'Embedded account retains bottom spacer: '+JSON.stringify(embeddedSpacing));
+ await p.evaluate(()=>delete document.documentElement.dataset.accountEmbedded);
+check(registeredPayload&&/^[0-9a-f]{64}$/.test(registeredPayload.prehash),'Registration did not derive credential');check(!JSON.stringify(registeredPayload).includes('a long local test password'),'Original password left the browser');check(await p.locator('#account-workspace-title').innerText()==='Test Fixture','Profile name spelling changed');
+ check(registeredPayload.referralCode==='cd'.repeat(16),'Referral code not normalized or submitted');check(await p.locator('#account-change-password button').isDisabled(),'Unverified user can change password');check(await p.locator('#account-referral-code').inputValue()==='cd'.repeat(16),'Referral code missing');check(registeredPayload.dateOfBirth==='2001-01-01'&&!('age' in registeredPayload),'Registration must send date of birth without manual age');check(await p.locator('#account-registered-count').innerText()==='1 / 300','Live account counter');check(await p.locator('#account-recovery-notice code').innerText()==='ab'.repeat(32),'Recovery code display');
+ let pendingDownload=p.waitForEvent('download');await p.locator('#account-recovery-notice button').first().click();let downloaded=await pendingDownload;check(downloaded.suggestedFilename()==='DedSec-recovery-code.txt','Recovery download name');await p.locator('#account-recovery-notice button').last().click();
+ check(await p.locator('#account-rewards .account-script button').isDisabled(),'Locked rewards became downloadable');
+ await p.locator('#account-fab').click();await p.locator('#account-new-file').click();await p.locator('#account-name').fill('Live note');await p.locator('#account-dialog-confirm').click();await p.locator('#account-editor').fill('Private local fixture Ελληνικά');await p.locator('#account-save').click();await p.waitForFunction(()=>document.getElementById('account-sync-status').textContent.includes('private account')||document.getElementById('account-sync-status').textContent.includes('ιδιωτικό λογαριασμό'));
+ check(cloudEntries.some(e=>e.content==='Private local fixture Ελληνικά'),'Private editor did not sync');
+ p.on('dialog',dialog=>dialog.accept());
+ await p.locator('#account-use-local').click();await p.locator('#account-use-cloud').waitFor({state:'visible'});
+ await p.locator('#account-files .account-open').first().click();await p.locator('#account-editor').fill('Browser-only durable note Ελληνικά');await p.locator('#account-save').click();
+ await p.waitForFunction(()=>document.getElementById('account-sync-status').textContent.includes('only in this browser')||document.getElementById('account-sync-status').textContent.includes('μόνο σε αυτόν'));
+ check(!cloudEntries.some(e=>e.content==='Browser-only durable note Ελληνικά'),'Local mode uploaded a private edit');
+ await p.reload({waitUntil:'networkidle'});await p.locator('#account-use-cloud').waitFor({state:'visible'});await p.locator('#account-files .account-open').first().click();
+ check(await p.locator('#account-editor').inputValue()==='Browser-only durable note Ελληνικά','Browser notes did not survive reload');
+ cloudEntries=cloudEntries.map(e=>e.kind==='file'?{...e,content:'Newer cloud version'}:e);cloudRevision++;
+ await p.locator('#account-use-cloud').click();await p.locator('#account-use-local').waitFor({state:'visible'});
+ check(cloudEntries.some(e=>e.content==='Newer cloud version')&&cloudEntries.some(e=>e.content==='Browser-only durable note Ελληνικά'),'Transfer overwrote conflicting cloud/local text');
+ check(new Set(cloudEntries.map(e=>e.path.toLowerCase())).size===cloudEntries.length,'Transfer created duplicate paths');
+ await p.locator('#account-files .account-open').first().click();
+ // IndexedDB compare-and-swap rejects concurrent local writers and leaves
+ // another owner/profile untouched. No real account or private fixture used.
+ const localCAS=await p.evaluate(async()=>{const l=window.DedSecAccountLocal,a=await l.key('isolated-a@example.test','test'),b=await l.key('isolated-a@example.test','main');const note=[{path:'test.txt',kind:'file',pinned:false,content:'fixture'}];await l.write(a,0,note,'local');const results=await Promise.allSettled([l.write(a,1,note,'local'),l.write(a,1,note,'local')]);const other=await l.read(b);await l.remove(a);return {ok:results.filter(x=>x.status==='fulfilled').length,conflict:results.filter(x=>x.reason?.code==='local_conflict').length,other};});
+ check(localCAS.ok===1&&localCAS.conflict===1&&localCAS.other===null,'Local revision/profile isolation failed');
+
+ unlocked=true;await p.locator('#account-rewards > button').last().click();await p.waitForFunction(()=>document.querySelector('#account-rewards .account-script button')?.disabled===false);check(await p.locator('#account-rewards .account-script button').isEnabled(),'Refreshed rewards did not unlock');check(await p.locator('#account-rewards h3').innerText()==='Fixture (English).py','Script filename spelling changed');
+ pendingDownload=p.waitForEvent('download');await p.locator('#account-rewards .account-script button').click();downloaded=await pendingDownload;check(fs.readFileSync(await downloaded.path()).equals(scriptBytes),'Verified mock sponsor download changed bytes');
+ conflict=true;await p.locator('#account-editor').fill('Unsynced conflict copy');await p.locator('#account-save').click();await p.waitForFunction(()=>document.getElementById('account-feedback').textContent.includes('another tab')||document.getElementById('account-feedback').textContent.includes('άλλη καρτέλα'));check(await p.locator('#account-editor').inputValue()==='Unsynced conflict copy','Conflict discarded local notes');
+ check(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Live account horizontal overflow');check(errors.length===0,'Live account JS errors '+JSON.stringify(errors));check(await p.evaluate(()=>Object.keys(localStorage).every(k=>!/^dedsec:(account|note|password)/i.test(k))),'Live account stored private data in localStorage');
+ await p.screenshot({path:path.join(dir,`account-live-${locale}-${theme}-${width}.png`),fullPage:false});
+ const deleteAccount=async()=>{
+  await p.locator('#account-delete-account').click();
+  await p.locator('dialog[open] input[type="password"]').fill('a long local test password');
+  const deletionResponse=p.waitForResponse(r=>r.request().method()==='DELETE'&&new URL(r.url()).pathname.endsWith('/api/account/me'));
+  await p.locator('dialog[open] button[type="submit"]').click();await deletionResponse;
+ };
+ await deleteAccount();
+ await p.waitForFunction(()=>document.getElementById('account-feedback')?.classList.contains('account-toast-error'));
+ check(await p.locator('#account-deleted-success').count()===0,'Rejected deletion showed success');
+ check(await p.locator('#account-profile').isVisible(),'Rejected deletion hid private workspace');
+ deleteFails=false;
+ await p.route('https://dedsec1121fk.github.io/Test/',route=>route.fulfill({status:200,contentType:'text/html',body:'<h1 id="deletion-home">Home fixture</h1>'}));
+ await deleteAccount();await p.locator('#account-deleted-success').waitFor();
+ check((await p.locator('#account-deleted-success h1').innerText())===(gr?'Η διαγραφή λογαριασμού ολοκληρώθηκε επιτυχώς':'Account deleted successfully'),'Deletion success translation');
+ check((await p.locator('#account-deleted-success a').getAttribute('href'))==='https://dedsec1121fk.github.io/Test/','Deletion fallback points to account route');
+ await p.waitForURL('https://dedsec1121fk.github.io/Test/',{timeout:10000});
+ check(await p.locator('#deletion-home').isVisible(),'Deletion did not return to homepage');
+ await p.close();
+}
+
+if(faults.length){await browser.close();throw Error("ACCOUNT_BROWSER_FAILURES "+JSON.stringify(faults));}
+
 /* First-visit consent: accessible immediately after the page has initialized. */
 const firstVisit=await browser.newPage({viewport:{width:390,height:844}});
 await firstVisit.addInitScript(()=>{
@@ -994,110 +1111,6 @@ for(const [locale,theme,width] of [['en','dark',320],['gr','light',320],['gr','d
  await p.close();
 }
 
-// Authenticated portal UI on an isolated mock transport. No real accounts,
-// provider challenges, personal notes or sponsor source bytes are used here.
-for(const [locale,theme,width] of [['en','dark',320],['gr','light',390],['en','light',1280],['gr','dark',1440]]){
- const p=await browser.newPage({viewport:{width,height:844}}),gr=locale==='gr',errors=[];
- p.on('pageerror',e=>errors.push(e.message));
- await p.addInitScript(({locale,theme})=>{localStorage.setItem('dedsec:language',JSON.stringify(locale));localStorage.setItem('dedsec:theme',JSON.stringify(theme));localStorage.setItem('dedsec:cookie-choice','decline');},{locale,theme});
- await p.route('**/assets/account-config.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.DEDSEC_ACCOUNT_CONFIG={apiBase:location.origin+"/api/account",turnstileSite:"local-ui-fixture"};'}));
- await p.route('https://challenges.cloudflare.com/turnstile/v0/api.js*',route=>route.fulfill({contentType:'application/javascript',body:'window.turnstile={render(node,options){this.options=options;node.textContent="Local challenge fixture";options.callback("local-fixture-token");return 1;},remove(){},reset(){this.options.callback("local-fixture-token");}};'}));
- let signed=false,cloudEntries=[],cloudRevision=0,conflict=false,unlocked=false,registeredPayload=null,deleteFails=true,blockLoginSession=true;
- const scriptBytes=Buffer.from('print("Local download fixture")\n'),{createHash}=await import('node:crypto'),sha=createHash('sha256').update(scriptBytes).digest('hex');
- const scripts=[{id:'fixture-en',filename:'Fixture (English).py',language:'en',sha256:sha,version:'v2',description:{en:'Local UI fixture',el:'Τοπικό δείγμα διεπαφής'}}];
- await p.route('**/api/account/**',async route=>{const r=route.request(),name=new URL(r.url()).pathname.split('/api/account/')[1],method=r.method();let payload;try{payload=r.postDataJSON();}catch{}
-  const answer=(data,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(data)});
-  if(name==='status')return answer({version:1,mode:'active',connected:true,counts:{registered:signed?1:0,active:signed?1:0}});
-  if(name==='challenge')return answer({version:1,salt:'12'.repeat(16),iterations:600000,hash:'SHA-256'});
-  if(name==='login'){signed=!blockLoginSession;return answer({signedIn:true});}
-  if(name==='register'){registeredPayload=payload;signed=true;return answer({created:true,recoveryCode:'ab'.repeat(32)},201);}
-  if(name==='me'&&method==='DELETE'){
-   check(r.headers()['x-csrf-token']==='fixture-csrf','Deletion omitted CSRF');
-   check(/^[0-9a-f]{64}$/.test(payload.prehash)&&!JSON.stringify(payload).includes('a long local test password'),'Deletion credential contract');
-   if(deleteFails)return answer({error:'invalid_credentials'},401);
-   signed=false;return answer({deleted:true});
-  }
-  if(name==='me')return signed?answer({user:{storageId:'isolated-fixture-account-id',givenName:'Test',familyName:'Fixture',email:'ui@example.test',ageAtRegistration:25,dateOfBirth:'2001-01-01',verified:unlocked},csrf:'fixture-csrf',counts:{registered:1,active:1},revision:cloudRevision,entries:cloudEntries,mailReady:false,rewards:{qualified:unlocked?3:0,pending:0,required:3,unlocked,unlockedCount:unlocked?1:0,code:'cd'.repeat(16),release:'v2',scripts:scripts.map((script,i)=>({...script,requiredReferrals:(i+1)*3,unlocked:unlocked&&i===0}))}}):answer({error:'sign_in_required'},401);
-  if(name==='notes'&&method==='PUT'){check(r.headers()['x-csrf-token']==='fixture-csrf','Portal omitted CSRF');if(conflict)return answer({error:'workspace_conflict'},409);check(payload.revision===cloudRevision,'Portal revision contract');cloudEntries=payload.entries;cloudRevision++;return answer({revision:cloudRevision});}
-  if(name==='sponsor/fixture-en')return route.fulfill({status:unlocked?200:403,contentType:'text/x-python',body:unlocked?scriptBytes:Buffer.from('locked')});
-  if(name==='logout'){signed=false;return answer({signedOut:true});}
-  return answer({error:'not_found'},404);
- });
- const prefix=gr?'dedsec/el/Pages/':'dedsec/Pages/';await p.goto(base+prefix+'account.html?site=main&parent=https%3A%2F%2Fded-sec.space&bridge='+ 'ab'.repeat(16),{waitUntil:'networkidle'});
- check(await p.locator('[data-account-panel]').evaluateAll(xs=>xs.every(x=>x.hidden)),'Live forms must start closed');await p.locator('[data-account-tab="account-login-panel"]').click();check(await p.locator('#account-login-panel input').count()===2&&!await p.locator('#account-register-panel').isVisible(),'Live sign-in shows extra registration fields');await p.locator('[data-account-tab="account-register-panel"]').click();
- // A successful credential response without a session must give a durable,
- // actionable error, preserve the email and never navigate or silently reset.
- const portalURL=p.url(),loginForm=p.locator('#account-login-panel form');
- await p.locator('[data-account-tab="account-login-panel"]').click();
- await loginForm.locator('[name=email]').fill('ui@example.test');await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();
- await p.locator('#account-session-notice').waitFor({state:'visible'});
- check(p.url()===portalURL,'Blocked login navigated away');
- check(await loginForm.locator('[name=email]').inputValue()==='ui@example.test','Blocked login erased the email');
- check(await loginForm.locator('[name=password]').inputValue()==='','Blocked login retained the password');
- const fallbackURL=new URL(await p.locator('#account-session-notice a').getAttribute('href'));
- check(fallbackURL.searchParams.get('site')==='main'&&!fallbackURL.searchParams.has('parent')&&!fallbackURL.searchParams.has('bridge'),'Session fallback lost the site or retained embed context');
- blockLoginSession=false;await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();await p.locator('#account-profile').waitFor({state:'visible'});
- check(p.url()===portalURL,'Successful login navigated away');
- await p.locator('#account-demo-exit').click();await p.locator('#account-auth').waitFor({state:'visible'});
- check(p.url()===portalURL,'Sign-out dropped portal session context');
- await p.locator('[data-account-tab="account-login-panel"]').click();await loginForm.locator('[name=email]').fill('ui@example.test');await loginForm.locator('[name=password]').fill('a long local test password');await loginForm.locator('[type=submit]').click();await p.locator('#account-profile').waitFor({state:'visible'});
- await p.locator('#account-demo-exit').click();await p.locator('#account-auth').waitFor({state:'visible'});
- check(p.url()===portalURL,'Repeated sign-in/out changed portal context');
- await p.locator('[data-account-tab="account-register-panel"]').click();
- const form=p.locator('#account-register-panel form');await form.locator('[name=given-name]').fill('Test');await form.locator('[name=family-name]').fill('Fixture');await form.locator('[name=email]').fill('ui@example.test');await form.locator('[name=email-repeat]').fill('ui@example.test');check(await form.locator('[name=age]').count()===0,'Age must be derived from date of birth');await form.locator('[name=date-of-birth]').fill('2001-01-01');await form.locator('[name=referral-code]').fill('CD'.repeat(16));await form.locator('[name=password]').fill('a long local test password');await form.locator('[name=password-repeat]').fill('a long local test password');await form.locator('[name=terms]').check();await form.locator('[type=submit]').click();
- await p.locator('#account-profile').waitFor({state:'visible'});
- // The embedded portal must not retain the standalone fixed-launcher spacer.
- await p.evaluate(()=>document.documentElement.dataset.accountEmbedded='true');
- const embeddedSpacing=await p.locator('.account-template').evaluate(el=>({padding:parseFloat(getComputedStyle(el).paddingBottom),body:parseFloat(getComputedStyle(document.body).paddingBottom)}));
- check(embeddedSpacing.padding<=12&&embeddedSpacing.body===0,'Embedded account retains bottom spacer: '+JSON.stringify(embeddedSpacing));
- await p.evaluate(()=>delete document.documentElement.dataset.accountEmbedded);
-check(registeredPayload&&/^[0-9a-f]{64}$/.test(registeredPayload.prehash),'Registration did not derive credential');check(!JSON.stringify(registeredPayload).includes('a long local test password'),'Original password left the browser');check(await p.locator('#account-workspace-title').innerText()==='Test Fixture','Profile name spelling changed');
- check(registeredPayload.referralCode==='cd'.repeat(16),'Referral code not normalized or submitted');check(await p.locator('#account-change-password button').isDisabled(),'Unverified user can change password');check(await p.locator('#account-referral-code').inputValue()==='cd'.repeat(16),'Referral code missing');check(registeredPayload.dateOfBirth==='2001-01-01'&&!('age' in registeredPayload),'Registration must send date of birth without manual age');check(await p.locator('#account-registered-count').innerText()==='1 / 300','Live account counter');check(await p.locator('#account-recovery-notice code').innerText()==='ab'.repeat(32),'Recovery code display');
- let pendingDownload=p.waitForEvent('download');await p.locator('#account-recovery-notice button').first().click();let downloaded=await pendingDownload;check(downloaded.suggestedFilename()==='DedSec-recovery-code.txt','Recovery download name');await p.locator('#account-recovery-notice button').last().click();
- check(await p.locator('#account-rewards .account-script button').isDisabled(),'Locked rewards became downloadable');
- await p.locator('#account-fab').click();await p.locator('#account-new-file').click();await p.locator('#account-name').fill('Live note');await p.locator('#account-dialog-confirm').click();await p.locator('#account-editor').fill('Private local fixture Ελληνικά');await p.locator('#account-save').click();await p.waitForFunction(()=>document.getElementById('account-sync-status').textContent.includes('private account')||document.getElementById('account-sync-status').textContent.includes('ιδιωτικό λογαριασμό'));
- check(cloudEntries.some(e=>e.content==='Private local fixture Ελληνικά'),'Private editor did not sync');
- p.on('dialog',dialog=>dialog.accept());
- await p.locator('#account-use-local').click();await p.locator('#account-use-cloud').waitFor({state:'visible'});
- await p.locator('#account-files .account-open').first().click();await p.locator('#account-editor').fill('Browser-only durable note Ελληνικά');await p.locator('#account-save').click();
- await p.waitForFunction(()=>document.getElementById('account-sync-status').textContent.includes('only in this browser')||document.getElementById('account-sync-status').textContent.includes('μόνο σε αυτόν'));
- check(!cloudEntries.some(e=>e.content==='Browser-only durable note Ελληνικά'),'Local mode uploaded a private edit');
- await p.reload({waitUntil:'networkidle'});await p.locator('#account-use-cloud').waitFor({state:'visible'});await p.locator('#account-files .account-open').first().click();
- check(await p.locator('#account-editor').inputValue()==='Browser-only durable note Ελληνικά','Browser notes did not survive reload');
- cloudEntries=cloudEntries.map(e=>e.kind==='file'?{...e,content:'Newer cloud version'}:e);cloudRevision++;
- await p.locator('#account-use-cloud').click();await p.locator('#account-use-local').waitFor({state:'visible'});
- check(cloudEntries.some(e=>e.content==='Newer cloud version')&&cloudEntries.some(e=>e.content==='Browser-only durable note Ελληνικά'),'Transfer overwrote conflicting cloud/local text');
- check(new Set(cloudEntries.map(e=>e.path.toLowerCase())).size===cloudEntries.length,'Transfer created duplicate paths');
- await p.locator('#account-files .account-open').first().click();
- // IndexedDB compare-and-swap rejects concurrent local writers and leaves
- // another owner/profile untouched. No real account or private fixture used.
- const localCAS=await p.evaluate(async()=>{const l=window.DedSecAccountLocal,a=await l.key('isolated-a@example.test','test'),b=await l.key('isolated-a@example.test','main');const note=[{path:'test.txt',kind:'file',pinned:false,content:'fixture'}];await l.write(a,0,note,'local');const results=await Promise.allSettled([l.write(a,1,note,'local'),l.write(a,1,note,'local')]);const other=await l.read(b);await l.remove(a);return {ok:results.filter(x=>x.status==='fulfilled').length,conflict:results.filter(x=>x.reason?.code==='local_conflict').length,other};});
- check(localCAS.ok===1&&localCAS.conflict===1&&localCAS.other===null,'Local revision/profile isolation failed');
-
- unlocked=true;await p.locator('#account-rewards > button').last().click();await p.waitForFunction(()=>document.querySelector('#account-rewards .account-script button')?.disabled===false);check(await p.locator('#account-rewards .account-script button').isEnabled(),'Refreshed rewards did not unlock');check(await p.locator('#account-rewards h3').innerText()==='Fixture (English).py','Script filename spelling changed');
- pendingDownload=p.waitForEvent('download');await p.locator('#account-rewards .account-script button').click();downloaded=await pendingDownload;check(fs.readFileSync(await downloaded.path()).equals(scriptBytes),'Verified mock sponsor download changed bytes');
- conflict=true;await p.locator('#account-editor').fill('Unsynced conflict copy');await p.locator('#account-save').click();await p.waitForFunction(()=>document.getElementById('account-feedback').textContent.includes('another tab')||document.getElementById('account-feedback').textContent.includes('άλλη καρτέλα'));check(await p.locator('#account-editor').inputValue()==='Unsynced conflict copy','Conflict discarded local notes');
- check(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'Live account horizontal overflow');check(errors.length===0,'Live account JS errors '+JSON.stringify(errors));check(await p.evaluate(()=>Object.keys(localStorage).every(k=>!/^dedsec:(account|note|password)/i.test(k))),'Live account stored private data in localStorage');
- await p.screenshot({path:path.join(dir,`account-live-${locale}-${theme}-${width}.png`),fullPage:false});
- const deleteAccount=async()=>{
-  await p.locator('#account-delete-account').click();
-  await p.locator('dialog[open] input[type="password"]').fill('a long local test password');
-  const deletionResponse=p.waitForResponse(r=>r.request().method()==='DELETE'&&new URL(r.url()).pathname.endsWith('/api/account/me'));
-  await p.locator('dialog[open] button[type="submit"]').click();await deletionResponse;
- };
- await deleteAccount();
- await p.waitForFunction(()=>document.getElementById('account-feedback')?.classList.contains('account-toast-error'));
- check(await p.locator('#account-deleted-success').count()===0,'Rejected deletion showed success');
- check(await p.locator('#account-profile').isVisible(),'Rejected deletion hid private workspace');
- deleteFails=false;
- await p.route('https://dedsec1121fk.github.io/Test/',route=>route.fulfill({status:200,contentType:'text/html',body:'<h1 id="deletion-home">Home fixture</h1>'}));
- await deleteAccount();await p.locator('#account-deleted-success').waitFor();
- check((await p.locator('#account-deleted-success h1').innerText())===(gr?'Η διαγραφή λογαριασμού ολοκληρώθηκε επιτυχώς':'Account deleted successfully'),'Deletion success translation');
- check((await p.locator('#account-deleted-success a').getAttribute('href'))==='https://dedsec1121fk.github.io/Test/','Deletion fallback points to account route');
- await p.waitForURL('https://dedsec1121fk.github.io/Test/',{timeout:10000});
- check(await p.locator('#deletion-home').isVisible(),'Deletion did not return to homepage');
- await p.close();
-}
 
 await browser.close();
 fs.writeFileSync(path.join(dir,"audit.json"),JSON.stringify({audits:all,failures:faults},null,2));

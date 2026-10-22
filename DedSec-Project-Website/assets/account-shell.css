@@ -26,9 +26,9 @@ dialog.account-window[open].is-floating{width:50vw!important;height:50dvh!import
 .account-window .account-resize-handle::after{content:"◢";font-size:19px;line-height:1}
 .account-window:not(.is-floating) .account-resize-handle{display:none!important}
 .account-window.is-floating .account-window-fallback{padding-right:34px}
-html[data-account-embedded="true"] .account-template .account-feedback,html.account-embedded .account-template .account-feedback{position:fixed!important;left:50%!important;top:10px!important;transform:translateX(-50%)!important;z-index:2147483000!important;max-width:calc(100vw - 28px)!important;min-width:min(260px,calc(100vw - 28px))!important;margin:0!important;padding:12px 16px!important;background:#573780!important;color:#fff!important;border:2px solid #d5baff!important;text-align:center!important;box-shadow:0 9px 25px #000a!important;pointer-events:none!important;opacity:0!important;visibility:hidden!important;transition:opacity .18s ease,visibility .18s ease!important}
-.account-template .account-feedback.account-toast-visible{position:fixed!important;left:50%!important;top:12px!important;transform:translateX(-50%)!important;z-index:2147483000!important;max-width:calc(100vw - 28px)!important;min-width:min(260px,calc(100vw - 28px))!important;margin:0!important;padding:12px 16px!important;background:#573780!important;color:white!important;border:2px solid #d5baff!important;box-shadow:0 9px 25px #000a!important;opacity:1!important;visibility:visible!important;pointer-events:none!important}
-.account-template .account-feedback.account-toast-visible.account-toast-error{background:#9f1925!important;border-color:#ffdadb!important;color:#fff!important}
+html[data-account-embedded="true"] #account-feedback,html.account-embedded #account-feedback{position:fixed!important;left:50%!important;top:10px!important;transform:translateX(-50%)!important;z-index:2147483000!important;max-width:calc(100vw - 28px)!important;min-width:min(260px,calc(100vw - 28px))!important;margin:0!important;padding:12px 16px!important;background:#573780!important;color:#fff!important;border:2px solid #d5baff!important;text-align:center!important;box-shadow:0 9px 25px #000a!important;pointer-events:none!important;transition:opacity .18s ease,visibility .18s ease!important}
+#account-feedback.account-toast-visible{position:fixed!important;left:50%!important;top:12px!important;transform:translateX(-50%)!important;z-index:2147483000!important;max-width:calc(100vw - 28px)!important;min-width:min(260px,calc(100vw - 28px))!important;margin:0!important;padding:12px 16px!important;background:#573780!important;color:white!important;border:2px solid #d5baff!important;box-shadow:0 9px 25px #000a!important;opacity:1!important;visibility:visible!important;pointer-events:none!important}
+#account-feedback.account-toast-visible.account-toast-error{background:#9f1925!important;border-color:#ffdadb!important;color:#fff!important}
 .account-template .account-verified-status{display:inline-block;border:1px solid #cfa5f6;padding:7px 12px;margin:8px auto}
 .account-template .account-verified-status.is-verified{border:2px solid #9bdac5;color:inherit}
 html[data-account-embedded="true"]:has(#account-auth:not([hidden]) #account-login-panel:not([hidden])) .account-template #account-status-title,
@@ -42,7 +42,7 @@ html[data-account-embedded="true"]:has(#account-auth:not([hidden]) #account-logi
 
 .aristotle-explanation{font-size:.76rem;line-height:1.55;max-width:700px;margin:0 auto 16px;text-align:center;opacity:.9}
 
-.account-template .account-feedback:not(.account-toast-visible){display:none!important}
+#account-feedback:not(.account-toast-visible){display:none!important}
 
 /* Leave room to expand by dragging the bottom-right grip on mobile and desktop. */
 dialog.account-window[open].is-floating{inset:12vh auto auto 12vw!important;left:12vw!important;top:12vh!important;right:auto!important;bottom:auto!important}
@@ -103,3 +103,5 @@ html body :is(#topbar,header.merged-topbar) :is(#nav-lang-switcher,#merged-lang)
  html body :is(#topbar.topbar,header.merged-topbar) :is(#brand,.merged-brand) img{grid-column:1!important;grid-row:1!important;}
  html body :is(#topbar.topbar,header.merged-topbar) :is(#brand,.merged-brand) span{grid-column:2!important;grid-row:1!important;}
 }
+
+.account-auth-error{padding:10px!important;border:2px solid #ffdadb!important;background:#9f1925!important;color:#fff!important;overflow-wrap:anywhere!important}
