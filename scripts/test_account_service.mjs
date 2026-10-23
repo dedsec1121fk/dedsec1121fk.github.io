@@ -104,25 +104,25 @@ assert.equal((await worker.fetch(new Request('https://account.example.test/verif
 const securityAccount=await register('email-two-factor@example.test');
 db.prepare('UPDATE account_users SET email_verified_at=? WHERE email=?').run(new Date().toISOString(),securityAccount.email);
 env.MAIL_PROVIDER='brevo';env.MAIL_FROM='DedSec Project <contact@ded-sec.space>';env['DedSec-Project-Email']='fixture-only';
-let lastSecurityCode='';
+let lastSecurityCode='',lastSecurityEmail='';
 globalThis.fetch=async(url,init)=>{
  if(url==='https://challenges.cloudflare.com/turnstile/v0/siteverify')return Response.json({success:true,hostname:'account.example.test',action:init.body.get('response')});
  if(url==='https://api.brevo.com/v3/smtp/email'){
   assert.equal(init.headers['api-key'],'fixture-only');
   const data=JSON.parse(init.body);
-  lastSecurityCode=/code is ([0-9]{6})/.exec(data.textContent)?.[1]||'';
+  lastSecurityEmail=data.textContent;lastSecurityCode=/(?:code is|είναι) ([0-9]{6})/.exec(data.textContent)?.[1]||'';
   return Response.json({messageId:'fixture'},{status:201});
  }
  throw Error('unexpected external fetch '+url);
 };
 const securityMe=await read(await api('me',{cookie:securityAccount.cookie,ip:securityAccount.ip}));
 const securityPost=(p,payload)=>api(p,{method:'POST',cookie:securityAccount.cookie,csrf:securityMe.data.csrf,payload,ip:securityAccount.ip});
-const enroll=await read(await securityPost('2fa/setup',{prehash:securityAccount.prehash}));
-assert.equal(enroll.status,200);assert.match(lastSecurityCode,/^[0-9]{6}$/);
+const enroll=await read(await securityPost('2fa/setup',{prehash:securityAccount.prehash,language:'el'}));
+assert.equal(enroll.status,200);assert.match(lastSecurityCode,/^[0-9]{6}$/);assert(lastSecurityEmail.includes('Κωδικός')||lastSecurityEmail.includes('κωδικός'));assert(!lastSecurityEmail.includes('Your one-time'));
 const enabled=await read(await securityPost('2fa/setup/confirm',{token:enroll.data.token,code:lastSecurityCode}));
 assert.equal(enabled.data.enabled,true);
 const login2fa=await read(await api('login',{method:'POST',payload:{email:securityAccount.email,prehash:securityAccount.prehash,turnstile:'login'},ip:'192.0.2.245'}));
-assert.equal(login2fa.status,200);assert.equal(login2fa.data.secondFactor,'email');assert.equal(login2fa.cookie,undefined);
+assert(lastSecurityEmail.includes('Your one-time'));assert(!lastSecurityEmail.includes('Ο κωδικός'));assert.equal(login2fa.status,200);assert.equal(login2fa.data.secondFactor,'email');assert.equal(login2fa.cookie,undefined);
 assert.equal((await api('2fa/finish',{method:'POST',payload:{token:login2fa.data.token,code:'999999'},ip:'192.0.2.246'})).status,400);
 const authenticated=await read(await api('2fa/finish',{method:'POST',payload:{token:login2fa.data.token,code:lastSecurityCode},ip:'192.0.2.246'}));
 assert.equal(authenticated.status,200);assert(authenticated.cookie);
@@ -142,15 +142,15 @@ globalThis.fetch=async(url,init)=>{
 };
 const oldMe=await read(await api('me',{cookie:changedEmailUser.cookie,ip:changedEmailUser.ip}));
 const nextEmail='new-email-change@example.test';
-const changeRequest=await read(await api('email/change/request',{method:'POST',cookie:changedEmailUser.cookie,csrf:oldMe.data.csrf,payload:{newEmail:nextEmail,prehash:changedEmailUser.prehash},ip:changedEmailUser.ip}));
-assert.equal(changeRequest.status,200);assert.equal(changeMail.to[0].email,changedEmailUser.email);
+const changeRequest=await read(await api('email/change/request',{method:'POST',cookie:changedEmailUser.cookie,csrf:oldMe.data.csrf,payload:{newEmail:nextEmail,prehash:changedEmailUser.prehash,language:'el'},ip:changedEmailUser.ip}));
+assert(changeMail.subject.includes('Επιβεβαίωση'));assert.equal(changeRequest.status,200);assert.equal(changeMail.to[0].email,changedEmailUser.email);
 const oldCode=changeMail.textContent.match(/change-email\?stage=old&token=([a-f0-9]{64})/)[1];
-const changeLink=(stage,token)=>'https://account.example.test/change-email?stage='+stage+'&token='+token;
-const submitChange=async(stage,token)=>worker.fetch(new Request('https://account.example.test/change-email',{method:'POST',headers:{Origin:'https://account.example.test','Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({stage,token})}),env);
-assert.equal((await worker.fetch(new Request(changeLink('old',oldCode)),env)).status,200);
+const changeLink=(stage,token)=>'https://account.example.test/change-email?stage='+stage+'&token='+token+'&lang=el';
+const submitChange=async(stage,token)=>worker.fetch(new Request('https://account.example.test/change-email?lang=el',{method:'POST',headers:{Origin:'https://account.example.test','Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams({stage,token})}),env);
+const changePage=await worker.fetch(new Request(changeLink('old',oldCode)),env);assert.equal(changePage.status,200);assert((await changePage.text()).includes('&amp;lang=el'));
 assert.equal(db.prepare('SELECT stage FROM account_email_changes WHERE user_id=(SELECT id FROM account_users WHERE email=?)').get(changedEmailUser.email).stage,'old');
 assert.equal((await submitChange('old',oldCode)).status,200);
-assert.equal(changeMail.to[0].email,nextEmail);
+assert(changeMail.subject.includes('Επιβεβαίωση νέου'));assert.equal(changeMail.to[0].email,nextEmail);
 const newCode=changeMail.textContent.match(/change-email\?stage=new&token=([a-f0-9]{64})/)[1];
 assert.equal((await worker.fetch(new Request(changeLink('new',newCode)),env)).status,200);
 assert.equal(db.prepare('SELECT email FROM account_users WHERE id=(SELECT user_id FROM account_credentials WHERE identity_hash=?)').get(await mac(env.HMAC_SECRET,'identity:'+changedEmailUser.email)).email,changedEmailUser.email);

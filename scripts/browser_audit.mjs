@@ -44,6 +44,7 @@ for(const [locale,theme,width] of [['en','dark',320],['gr','light',390],['en','l
  const scriptBytes=Buffer.from('print("Local download fixture")\n'),{createHash}=await import('node:crypto'),sha=createHash('sha256').update(scriptBytes).digest('hex');
  const scripts=[{id:'fixture-en',filename:'Fixture (English).py',language:'en',sha256:sha,version:'v2',description:{en:'Local UI fixture',el:'Τοπικό δείγμα διεπαφής'}}];
  await p.route('**/api/account/**',async route=>{const r=route.request(),name=new URL(r.url()).pathname.split('/api/account/')[1],method=r.method();let payload;try{payload=r.postDataJSON();}catch{}
+  if(payload)check(payload.language===(gr?'el':'en'),'Account form omitted current page language: '+name);
   const answer=(data,status=200)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(data)});
   if(name==='status')return answer({version:1,mode:'active',connected:true,counts:{registered:signed?1:0,active:signed?1:0}});
   if(name==='challenge')return answer({version:1,salt:'12'.repeat(16),iterations:600000,hash:'SHA-256'});

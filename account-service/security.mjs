@@ -74,12 +74,12 @@ async function verifySignature(jwk,alg,authBytes,clientBytes,sig){
  return crypto.subtle.verify(alg===-7?{name:'ECDSA',hash:'SHA-256'}:imp,pk,alg===-7?derToRaw(sig):sig,data);
 }
 function code(){const a=new Uint32Array(1);crypto.getRandomValues(a);return String(a[0]%1000000).padStart(6,'0');}
-async function issueEmail(env,user,purpose){
+async function issueEmail(env,user,purpose,language){
  if(!user.email_verified_at)throw Error('email_not_verified');
  const token=random(32),otp=code(),tokenHash=await digest(token),codeHash=await mac(env.HMAC_SECRET,'2fa:'+purpose+':'+token+':'+otp);
  await env.DB.prepare('DELETE FROM account_2fa_codes WHERE user_id=? AND purpose=?').bind(user.id,purpose).run();
  await env.DB.prepare('INSERT INTO account_2fa_codes VALUES(?,?,?,?,?,0)').bind(tokenHash,user.id,codeHash,purpose,now()+SECOND).run();
- try{const response=await deliverSecurityCode(env,user.email,otp);if(!response.ok)throw Error('email_unavailable');}catch(e){await env.DB.prepare('DELETE FROM account_2fa_codes WHERE token_hash=?').bind(tokenHash).run();throw Error('email_unavailable');}
+ try{const response=await deliverSecurityCode(env,user.email,otp,language);if(!response.ok)throw Error('email_unavailable');}catch(e){await env.DB.prepare('DELETE FROM account_2fa_codes WHERE token_hash=?').bind(tokenHash).run();throw Error('email_unavailable');}
  return {token,expiresIn:SECOND};
 }
 async function consumeCode(env,purpose,token,otp){
@@ -104,7 +104,7 @@ async function takeChallenge(env,token,purpose,userId){
  return entry;
 }
 export async function needsEmail2fa(env,userId){await ensureAuthTables(env);return Boolean((await one(env,'SELECT enabled FROM account_2fa WHERE user_id=?',userId))?.enabled);}
-export async function startLogin2fa(env,userId){await ensureAuthTables(env);const user=await one(env,'SELECT id,email,email_verified_at FROM account_users WHERE id=?',userId);return {secondFactor:'email',...(await issueEmail(env,user,'login'))};}
+export async function startLogin2fa(env,userId,language){await ensureAuthTables(env);const user=await one(env,'SELECT id,email,email_verified_at FROM account_users WHERE id=?',userId);return {secondFactor:'email',...(await issueEmail(env,user,'login',language))};}
 export async function securityPublic(req,env,path,ctx){
  if(!['2fa/finish','passkey/auth/start','passkey/auth/finish'].includes(path))return null;
  await ensureAuthTables(env);await ctx.rate(env,'auth-security:'+req.headers.get('CF-Connecting-IP'),12,600);
@@ -144,7 +144,7 @@ export async function securityUser(req,env,path,s,ctx){
  if(path==='2fa/setup'&&req.method==='POST'){
   if(await needsEmail2fa(env,s.id))throw Error('two_factor_already_enabled');
   if(!await ctx.confirmPassword(env,s,b.prehash))throw Error('invalid_credentials');
-  return ctx.json(await issueEmail(env,s,'setup'));
+  return ctx.json(await issueEmail(env,s,'setup',b.language));
  }
  if(path==='2fa/setup/confirm'&&req.method==='POST'){
   const id=await consumeCode(env,'setup',b.token,b.code);if(id!==s.id)throw Error('invalid_2fa_code');
@@ -153,7 +153,7 @@ export async function securityUser(req,env,path,s,ctx){
  }
  if(path==='2fa/disable'&&req.method==='POST'){
   if(!await ctx.confirmPassword(env,s,b.prehash))throw Error('invalid_credentials');
-  return ctx.json({pendingDisable:true,...(await issueEmail(env,s,'disable'))});
+  return ctx.json({pendingDisable:true,...(await issueEmail(env,s,'disable',b.language))});
  }
  if(path==='2fa/disable/confirm'&&req.method==='POST'){
   const id=await consumeCode(env,'disable',b.token,b.code);if(id!==s.id)throw Error('invalid_2fa_code');

@@ -39,21 +39,22 @@ export async function requestEmailChange(env,s,b,helpers){
  await helpers.mailQuota(env);
  const token=random(32),hash=await digest(token),expires=now()+3600;
  await run(env,"INSERT INTO account_email_changes(user_id,pending_email,old_hash,new_hash,stage,expires_at,created_at) VALUES(?,?,?,NULL,'old',?,?) ON CONFLICT(user_id) DO UPDATE SET pending_email=excluded.pending_email,old_hash=excluded.old_hash,new_hash=NULL,stage='old',expires_at=excluded.expires_at,created_at=excluded.created_at",s.id,next,hash,expires,new Date().toISOString());
- try{const result=await deliverEmailChange(env,s.email,token,'old',b.site);if(!result.ok)throw Error('email_unavailable');}
+ try{const result=await deliverEmailChange(env,s.email,token,'old',b.site,b.language);if(!result.ok)throw Error('email_unavailable');}
  catch(e){await run(env,"DELETE FROM account_email_changes WHERE user_id=? AND old_hash=? AND stage='old'",s.id,hash);throw Error('email_unavailable');}
  return {sent:true,stage:'old'};
 }
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function renderPage(message,stage,token,status=200,profile='test'){
+function renderPage(message,stage,token,status=200,profile='test',language='en'){
  const sites={test:'https://dedsec1121fk.github.io/Test/',main:'https://ded-sec.space/',backup:'https://ded-sec.online/'},home=Object.hasOwn(sites,profile)?sites[profile]:sites.test,title='DedSec Project — Change email';
- const action=stage&&token?'<form method="POST" action="/change-email?site='+encodeURIComponent(profile)+'"><input type="hidden" name="token" value="'+esc(token)+'"><input type="hidden" name="stage" value="'+esc(stage)+'"><button type="submit">Confirm email change / Επιβεβαίωση αλλαγής</button></form>':'';
+ const action=stage&&token?'<form method="POST" action="/change-email?site='+encodeURIComponent(profile)+'&amp;lang='+(language==='el'?'el':'en')+'"><input type="hidden" name="token" value="'+esc(token)+'"><input type="hidden" name="stage" value="'+esc(stage)+'"><button type="submit">Confirm email change / Επιβεβαίωση αλλαγής</button></form>':'';
  const html='<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="referrer" content="no-referrer"><title>'+title+'</title><style>body{min-height:90vh;display:grid;place-items:center;background:#130a22;color:white;font:16px Tahoma,sans-serif;padding:18px;box-sizing:border-box}main{max-width:540px;text-align:center}p{line-height:1.6}button,a{display:inline-block;margin:16px;padding:14px;background:#b9a0ef;border:1px solid white;color:#180d25;font:inherit;cursor:pointer;text-decoration:none}</style></head><body><main><h1>'+title+'</h1><p>'+esc(message)+'</p>'+action+'<a href="'+home+'">DedSec Project</a></main></body></html>';
  return new Response(html,{status,headers:{'Content-Type':'text/html; charset=utf-8','Cache-Control':'no-store','Referrer-Policy':'no-referrer','X-Content-Type-Options':'nosniff','X-Robots-Tag':'noindex,nofollow','Content-Security-Policy':"default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'"}});
 }
 export async function emailChangeLink(req,env,helpers){
  await ensureEmailChange(env);
  const url=new URL(req.url),profile=['test','main','backup'].includes(url.searchParams.get('site'))?url.searchParams.get('site'):'test';
- const page=(message,stage,token,status=200)=>renderPage(message,stage,token,status,profile);
+ const language=url.searchParams.get('lang')==='el'?'el':'en';
+ const page=(message,stage,token,status=200)=>renderPage(message,stage,token,status,profile,language);
  let token,stage;
  if(req.method==='GET'){token=url.searchParams.get('token');stage=url.searchParams.get('stage');}
  else if(req.method==='POST'){
@@ -71,7 +72,7 @@ export async function emailChangeLink(req,env,helpers){
  if(stage==='old'){
   await helpers.mailQuota(env);
   const nextToken=random(32),nextHash=await digest(nextToken);
-  try{const response=await deliverEmailChange(env,record.pending_email,nextToken,'new',profile);if(!response.ok)throw Error('email_unavailable');}
+  try{const response=await deliverEmailChange(env,record.pending_email,nextToken,'new',profile,language);if(!response.ok)throw Error('email_unavailable');}
   catch{return page('Could not send to the new address. Please try again later. / Η αποστολή στο νέο email απέτυχε. Δοκίμασε αργότερα.',null,null,503);}
   const changed=await run(env,"UPDATE account_email_changes SET stage='new',new_hash=?,old_hash=?,expires_at=? WHERE user_id=? AND old_hash=? AND stage='old'",nextHash,await digest(random(32)),now()+3600,record.user_id,hash);
   if(!changed.meta?.changes)return page('Link already used / Ο σύνδεσμος χρησιμοποιήθηκε.',null,null,409);

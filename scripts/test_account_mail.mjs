@@ -17,7 +17,7 @@ try{
  assert.equal(sent.headers['api-key'],'named-test-secret');
  await deliverVerification(env,'recipient@example.test',token);
  assert.deepEqual(sent.body.sender,{name:'DedSec Project',email:'contact@ded-sec.space'});
- assert.deepEqual(sent.body.replyTo,sent.body.sender);assert.deepEqual(sent.body.to,[{email:'recipient@example.test'}]);
+ assert.equal(sent.body.replyTo,undefined);assert.deepEqual(sent.body.to,[{email:'recipient@example.test'}]);
  assert(sent.body.textContent.includes('https://accounts.example.test/verify?token='+token));
  assert(!JSON.stringify(sent.body).includes('gmail.com'));assert(!JSON.stringify(sent.body).includes('DedSec Test'));
  assert(sent.body.htmlContent.includes(token));
@@ -27,11 +27,26 @@ try{
  const mainVerification=new URL(sent.body.textContent.match(/https:\/\/\S+/)[0]);assert.equal(mainVerification.searchParams.get('site'),'main');assert.equal(mainVerification.searchParams.get('lang'),'el');
  for(const step of ['old','new']){await deliverEmailChange(env,'recipient@example.test',token,step,'main');const link=new URL(sent.body.textContent.match(/https:\/\/\S+/)[0]);assert.equal(link.searchParams.get('site'),'main');assert.equal(link.searchParams.get('stage'),step);}
  await deliverSecurityCode(env,'recipient@example.test','123456');assert(sent.body.textContent.includes('123456'));assert(!sent.body.textContent.includes('/verify?token='));
- await deliverAccountDeleted(env,'recipient@example.test');assert(sent.body.subject.includes('Account deleted'));assert(!sent.body.textContent.includes(token));assert(sent.body.textContent.includes('διαγράφηκαν'));
+ await deliverAccountDeleted(env,'recipient@example.test');assert(sent.body.subject.includes('Account deleted'));assert(!sent.body.textContent.includes(token));assert(sent.body.textContent.includes('have been deleted'));
+ await deliverAccountDeleted(env,'recipient@example.test','el');assert(sent.body.textContent.includes('διαγράφηκαν'));
+ for(const provider of ['brevo','resend'])for(const language of ['en','el']){
+  const localized={...env,MAIL_PROVIDER:provider};
+  const operations=[()=>deliverVerification(localized,'recipient@example.test',token,'main',language),()=>deliverSecurityCode(localized,'recipient@example.test','123456',language),()=>deliverEmailChange(localized,'recipient@example.test',token,'old','main',language),()=>deliverEmailChange(localized,'recipient@example.test',token,'new','main',language),()=>deliverAccountDeleted(localized,'recipient@example.test',language)];
+  for(const operation of operations){
+   await operation();const text=sent.body.textContent||sent.body.text,html=sent.body.htmlContent||sent.body.html;
+   assert.equal(/[Α-Ωα-ω]/u.test(text),language==='el');
+   assert.equal(/[Α-Ωα-ω]/u.test(sent.body.subject),language==='el');
+   assert(text.includes(language==='el'?'Αυτό είναι ένα αυτοματοποιημένο μήνυμα.':'This is an automated message.'));
+   assert(text.includes(language==='el'?'απαντώντας σε αυτό το email':'replying to this email'));
+   assert(text.endsWith('https://ded-sec.space/dedsec/'+(language==='el'?'el/':'')+'Pages/contact-credits.html'));
+   assert(html.includes('lang="'+language+'"'));assert(html.includes(language==='el'?'Αυτό είναι ένα αυτοματοποιημένο μήνυμα.':'This is an automated message.'));
+   const action=text.match(/https:\/\/accounts\.example\.test\/\S+/)?.[0];if(action)assert.equal(new URL(action).searchParams.get('lang'),language);
+  }
+ }
  const legacy={MAIL_API_KEY:'legacy-fixture',MAIL_FROM:'Test <test@example.test>'};
  await deliverVerification(legacy,'recipient@example.test',token);assert.equal(sent.url,'https://api.resend.com/emails');assert.equal(sent.headers.Authorization,'Bearer legacy-fixture');
  globalThis.fetch=async()=>{throw new Error('network failure')};await assert.rejects(deliverVerification(env,'recipient@example.test',token),/network failure/);
  await assert.rejects(deliverVerification(env,'recipient@example.test','bad'),/invalid_verification_token/);
- console.log('ACCOUNT_MAIL_PASS: Brevo and legacy authentication, private sender/reply-to, configurable origin, invalid configuration and network failure. No email sent.');
+ console.log('ACCOUNT_MAIL_PASS: Brevo and legacy authentication, private sender, configurable origin, both languages for every email and provider, automated footer, invalid configuration and network failure. No email sent.');
 }finally{globalThis.fetch=original;}
 
