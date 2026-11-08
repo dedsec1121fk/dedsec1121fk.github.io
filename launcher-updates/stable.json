@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "channel": "stable",
+  "packageName": "com.dedsec.applauncher",
+  "available": false,
+  "versionCode": 0,
+  "versionName": "",
+  "apkUrl": "",
+  "apkSha256": "",
+  "apkBytes": 0,
+  "publishedAt": "",
+  "changes_en": [],
+  "changes_el": []
+}
