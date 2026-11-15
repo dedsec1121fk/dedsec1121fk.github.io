@@ -4,10 +4,10 @@
  const host=document.getElementById('forum-inline');
  if(!host)return;
  const isLive=window.DEDSEC_FORUM_LIVE===true;
- const testForumOrigin='https://dedsec-forum.dedsec-project.workers.dev';
+ const forumOrigin='https://dedsec-forum.dedsec-project.workers.dev';
  if(!isLive&&location.origin==='https://ded-sec.space'&&
     new URLSearchParams(location.search).get('preview')!=='1'){
-  location.replace(testForumOrigin+'/forum');
+  location.replace(forumOrigin+'/forum');
   return;
  }
  const config=window.DEDSEC_ACCOUNT_SHELL||{};
@@ -80,12 +80,12 @@
    window.DEDSEC_FORUM_INLINE=true;
    const script=document.createElement('script');
    script.src=new URL('assets/forum-app.js',location.href).href;
-   script.onerror=()=>{host.replaceChildren();if(notice)notice.hidden=false;console.error('DedSec Test Forum script unavailable');};
+   script.onerror=()=>{host.replaceChildren();if(notice)notice.hidden=false;console.error('DedSec Forum script unavailable');};
    document.body.append(script);
   }catch(err){
    host.replaceChildren();
    if(notice)notice.hidden=false;
-   console.error('DedSec Test Forum local preview failed:',err);
+   console.error('DedSec Forum local preview failed:',err);
   }
  }
  window.addEventListener('message',event=>{
@@ -131,7 +131,7 @@
   script.src=new URL('assets/forum-live.js',document.baseURI).href;
   script.onerror=()=>{
    if(notice)notice.hidden=false;
-   console.error('DedSec Test Forum client unavailable');
+   console.error('DedSec Forum client unavailable');
   };
   document.body.append(script);
  }else{
