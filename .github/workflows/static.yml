@@ -34,6 +34,7 @@ jobs:
           node scripts/test_save_links.cjs
           node scripts/test_account_core.cjs
           node scripts/test_account_service.mjs
+          node scripts/test_standalone_forum.mjs
           node scripts/test_account_mail.mjs
           node scripts/test_offline_worker.mjs
           python3 scripts/verify_reviewed_examples.py
@@ -41,6 +42,10 @@ jobs:
           python3 scripts/validate.py
           node --check DedSec-Project-Website/assets/boot.js
           node --check DedSec-Project-Website/assets/ui.js
+          node --check DedSec-Project-Website/assets/forum-live.js
+          node --check DedSec-Project-Website/assets/forum-host.js
+          node --check DedSec-Project-Website/assets/unified-search.js
+          node --check forum-worker/worker.mjs
           node --check DedSec-Project-Website/data/apply-lesson-expansions.js
           node --check scripts/browser_audit.mjs
       - name: Keep the generated search index in Test main for downloadable copies

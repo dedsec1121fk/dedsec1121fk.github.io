@@ -6,6 +6,7 @@ APP_ICONS.home='<path d="M24 3 4 20v4h5v20h30V24h5v-4z" fill="#7854a8"/><path d=
 var APPS=[["Guide For Installation.sh","Οδηγός Εγκατάστασης.sh","install","dedsec/Pages/guide-for-installation.html","dedsec"],["Learn About The Tools.py","Μάθε για τα Εργαλεία.py","tools","dedsec/Pages/learn-about-the-tools.html","dedsec"],["Assistance and Troubleshooting.py","Βοήθεια και Αντιμετώπιση Προβλημάτων.py","assistance","dedsec/Pages/assistance.html","dedsec"],["Frequently Asked Questions.md","Συχνές Ερωτήσεις.md","faq","dedsec/Pages/faq.html","dedsec"],["Privacy Policy.txt","Πολιτική Απορρήτου.txt","privacy","dedsec/Pages/privacy-policy.html","dedsec"],["Contact and Credits.md","Επικοινωνία και Συντελεστές.md","contact","dedsec/Pages/contact-credits.html","dedsec"],["Founder's Story and Project Vision.md","Ιστορία Ιδρυτή και Όραμα του Έργου.md","story","dedsec/Pages/about-founder.html","dedsec"],["Sponsor Us.link","Γίνε Χορηγός.link","sponsor","https://github.com/sponsors/dedsec1121fk","dedsec"],["Foundations.md","Βασικές Αρχές.md","fund","#category:fund","view"],["Programming Glossary.txt","Γλωσσάρι Προγραμματισμού.txt","glossary","#category:glossary","view"],["Thinking Methods.md","Μέθοδοι Σκέψης.md","methods","#category:method","view"],["Learning Paths and Projects.sh","Διαδρομές Μάθησης και Έργα.sh","paths","#category:projects","view"],["Programming Knowledge Library.py","Βιβλιοθήκη Γνώσης Προγραμματισμού.py","languages","#library","view"],["TikDev","TikDev","tools","TikDev.html","view"],["Termux Troubleshooting.md","Οδηγός Διόρθωσης Termux.md","assistance","#category:termux","view"],["Code Examples and Laboratories.py","Παραδείγματα και Εργαστήρια Κώδικα.py","code","#category:code","view"],["Errors & Debugging.py","Σφάλματα & Αποσφαλμάτωση.py","errors","#category:errors","view"],["Algorithms and Problem Solving.py","Αλγόριθμοι και Επίλυση Προβλημάτων.py","algorithms","#category:algorithms","view"],["Knowledge Encyclopedia.md","Εγκυκλοπαίδεια Γνώσεων.md","knowledge","#category:knowledge","view"],["Hacking Guide and Security.sh","Οδηγός Hacking και Ασφάλειας.sh","security","#category:security","view"],["Reverse Engineering.py","Αντίστροφη Μηχανική.py","reverse","#category:reverse","view"],["Advanced Engineering.py","Προχωρημένη Μηχανική.py","advanced","#category:advanced","view"]];
 var CATS=[["termux","Termux Troubleshooting","Αντιμετώπιση Προβλημάτων Termux",["Termux_Troubleshooting","Αντιμετώπιση_Termux"]],["fund","Fundamentals","Βασικές Αρχές",["Foundations","Θεμέλια"]],["languages","Programming Languages","Γλώσσες Προγραμματισμού",["Programming_Languages","Γλώσσες_Προγραμματισμού"]],["errors","Errors and Debugging","Σφάλματα και Αποσφαλμάτωση",["Error_Encyclopedia","Εγχειρίδιο_Σφαλμάτων","Debugging_and_Fixed_Examples","Αποσφαλμάτωση_και_Διορθωμένα_Παραδείγματα"]],["security","Security Engineering","Μηχανική Ασφάλειας",["Security_Engineering","Μηχανική_Ασφάλειας"]],["algorithms","Algorithms and Logic","Αλγόριθμοι και Λογική",["Algorithms_Practice","Αλγόριθμοι_Ασκήσεις"]],["code","Code Laboratories","Εργαστήρια Κώδικα",["Practical_Script_Labs","Πρακτικά_Σενάρια_Κώδικα","Ready_to_Copy_Recipes","Έτοιμα_Παραδείγματα"]],["reverse","Reverse Engineering","Αντίστροφη Μηχανική",["Reverse_Engineering"]],["knowledge","Knowledge Encyclopedia","Εγκυκλοπαίδεια Γνώσεων",["Knowledge_Encyclopedia","Εγκυκλοπαίδεια_Γνώσης","Deep_Knowledge","Βαθύτερη_Γνώση"]],["glossary","Programming Glossary","Γλωσσάρι Προγραμματισμού",["Terminology_Glossary","Γλωσσάρι_Ορολογίας"]],["advanced","Advanced Engineering","Προχωρημένη Μηχανική",["Advanced_Engineering_Labs","Προχωρημένα_Εργαστήρια_Μηχανικής"]],["projects","Projects and Learning Paths","Project και Διαδρομές Μάθησης",["Learning_Paths","Διαδρομές_Εκμάθησης","Learning_Projects","Εκπαιδευτικά_Έργα"]],["method","Thinking and Logic","Σκέψη και Λογική",["Method"]]];
 var docs=[],byId={};
+if(window.DedSecUnifiedSearch)window.DedSecUnifiedSearch.configure(CATS);
 function collectKnowledge(){
 var seenEntries=new Set();
  docs=[].concat(window.ARCHIVE_EN||[],window.ARCHIVE_EL||[],window.ARCHIVE_METHODS||[],window.ARCHIVE_HACKING||[],window.ARCHIVE_TERMUX||[],window.ARCHIVE_DEEP_DIVE||[],window.ARCHIVE_HACKING_COMPLETE||[]).filter(function(d){
@@ -85,6 +86,7 @@ function updateGitHubStats(){
 function home(){
  var gr=language==="gr";
  var cookieButton='<button id="dedsec-cookie-manage" type="button" class="app-icon-btn cookie-app-icon-btn" aria-label="'+(gr?"Ρυθμίσεις cookies":"Cookie preferences")+'"><span class="app-icon cookie-pixel-icon" aria-hidden="true">'+icon("cookies")+'</span><span class="app-label">'+(gr?"Ρυθμίσεις cookies":"Cookie preferences")+'</span></button>';
+ var forumButton='<a id="dedsec-forum-launcher" class="app-icon-btn" href="forum.html"><span class="app-icon" aria-hidden="true">'+icon("story")+'</span><span class="app-label">'+(gr?"Φόρουμ Κοινότητας":"Community Forum")+'</span></a>';
  var saveButton='<a id="save-dedsec-launcher" class="app-icon-btn" href="'+(gr?'dedsec/el/Pages/':'dedsec/Pages/')+'save-dedsec-project.html"><span class="app-icon" aria-hidden="true">'+icon("knowledge")+'</span><span class="app-label">Save DedSec Project</span></a>';
  var intro=gr?"Χρησιμοποίησε το DedSec Project από Termux σε Android ή από υποστηριζόμενα Linux desktops με ένα κοινό cross-platform workflow.":"Use the DedSec Project from Termux on Android or from supported Linux desktops with one shared cross-platform workflow.";
  var about=gr?"Το DedSec Project είναι μια δωρεάν συλλογή εργαλείων κυβερνοασφάλειας και αυτοματισμού, διαθέσιμη για Android μέσω Termux και για υποστηριζόμενα συστήματα Linux.":"DedSec Project is a free cybersecurity and automation toolkit available for Android through Termux and supported Linux systems.";
@@ -99,7 +101,7 @@ function home(){
  ];
  function launcher(a){var dest=a[3];if(gr&&a[4]==="dedsec"&&dest.indexOf("dedsec/")===0)dest="dedsec/el/"+dest.slice(7);return '<a class="app-icon-btn" href="'+esc(dest)+'" title="'+esc(launcherLabel(a[gr?1:0]))+'"><span class="app-icon">'+icon(a[2])+'</span><span class="app-label">'+esc(launcherLabel(a[gr?1:0]))+'</span></a>';}
  var reflection=gr?'<aside class="start-reflection"><blockquote lang="grc">«ἔστι γὰρ φύσει δοῦλος ὁ δυνάμενος ἄλλου εἶναι»</blockquote><small>Αριστοτέλης, Πολιτικά Α΄ 5, 1254b20–23. Απόδοση αποσπάσματος: «Δούλος από τη φύση είναι εκείνος που μπορεί να ανήκει σε άλλον». Ιστορική θέση του Αριστοτέλη για τη δουλεία, όχι επιδοκιμασία της ούτε ρήση για εκούσια υποταγή. <a href="https://atlas.perseus.tufts.edu/library/passage/urn:cts:greekLit:tlg0086.tlg035.perseus-grc2:1.1254b-1.1256b/" target="_blank" rel="noopener noreferrer">Αρχαίο κείμενο</a></small></aside>':'<aside class="start-reflection"><blockquote lang="grc">“ἔστι γὰρ φύσει δοῦλος ὁ δυνάμενος ἄλλου εἶναι”</blockquote><small>Aristotle, Politics I.5, 1254b20–23. Excerpt translated: “A slave by nature is someone capable of belonging to another.” A historical claim about slavery, rather than an endorsement or a quotation about willing submission. <a href="https://atlas.perseus.tufts.edu/library/passage/urn:cts:greekLit:tlg0086.tlg035.perseus-grc2:1.1254b-1.1256b/" target="_blank" rel="noopener noreferrer">Greek source</a></small></aside>';
- var organized=groups.map(function(g){return '<section class="launcher-group launcher-'+g.key+'" aria-label="'+esc(g.name)+'"><header class="launcher-group-heading"><div><h2>'+esc(finishSentence(g.name))+'</h2>'+(g.key==='start'?reflection:'')+'<p>'+esc(finishSentence(g.desc))+'</p></div></header><div class="app-grid">'+APPS.slice(g.from,g.to).map(launcher).join("")+'</div></section>';}).join("");
+ var organized=groups.map(function(g){return '<section class="launcher-group launcher-'+g.key+'" aria-label="'+esc(g.name)+'"><header class="launcher-group-heading"><div><h2>'+esc(finishSentence(g.name))+'</h2>'+(g.key==='start'?reflection:'')+'<p>'+esc(finishSentence(g.desc))+'</p></div></header><div class="app-grid">'+(g.key==="project"?forumButton:"")+APPS.slice(g.from,g.to).map(launcher).join("")+'</div></section>';}).join("");
  return '<div class="desktop-home"><section class="home-intro" aria-labelledby="home-title"><h1 id="home-title">DedSec Project.</h1><p class="home-subtitle">'+esc(intro)+'</p>'+proof+'<p class="home-about-summary">'+esc(about)+'</p></section>'+organized+'<section class="launcher-group launcher-settings" aria-label="'+(gr?"Άλλα":"Others")+'"><header class="launcher-group-heading"><div><h2>'+(gr?"Άλλα.":"Others.")+'</h2></div></header><div class="app-grid">'+cookieButton+saveButton+'</div></section></div>';
 }
 /* Periods on displayed titles and preview descriptions, without doubling
@@ -146,7 +148,14 @@ function ensureKnowledge(){
 }
 function knowledgeNotice(){return '<section class="panel" role="status"><p>'+esc(language==='gr'?(knowledgeError?'Δεν φορτώθηκε η γνώση. Έλεγξε τη σύνδεση και προσπάθησε ξανά.':'Φόρτωση γνώσεων και αναζήτησης…'):(knowledgeError?'Knowledge could not load. Check your connection and retry.':'Loading knowledge and search…'))+'</p>'+(knowledgeError?'<button type="button" data-retry-knowledge>'+esc(language==='gr'?'Επανάληψη':'Retry')+'</button>':'')+'</section>';}
 
-function searchMatches(){return searchEngine?searchEngine.search(search,{language:language==="gr"?"el":"en",category:activeCat}):[];}
+function searchMatches(){
+ var unified=window.DedSecUnifiedSearch;
+ var matches=searchEngine?searchEngine.search(search,{
+  language:unified?unified.siteLanguage(language):(language==="gr"?"el":"en"),
+  category:unified?unified.siteCategory(activeCat):activeCat
+ }):[];
+ return unified?unified.filterSite(matches):matches;
+}
 
 /* Each record keeps its source identity. Reused generic titles are
    prefixed by the source directories, never by an arbitrary serial number.
@@ -195,9 +204,12 @@ function listing(view){
  var current=CATS.find(function(c){return c[0]===activeCat;});
  var heading=current?title(current):t("search");
  var intro=current?categoryIntro[current[0]]:null;
- var description=intro?intro[language==="gr"?1:0]:(language==="gr"?"Αναζήτησε σελίδες, εργαλεία, οδηγούς, μαθήματα και αναφορές σε όλη την ιστοσελίδα.":"Search all website pages, tools, guides, lessons and reference material.");
+ var description=intro?intro[language==="gr"?1:0]:(language==="gr"?"Αναζήτησε μαθήματα, οδηγούς, εργαλεία και δημόσιες συζητήσεις φόρουμ με φίλτρα πηγής και κατηγορίας.":"Search lessons, guides, tools and public Forum discussions with source and category filters.");
  var results=searchMatches();
- return '<section class="panel archive-panel" aria-label="'+esc(heading)+'">'+sectionIntro(heading,description)+tools()+(results.length?'<div class="result-grid">'+results.slice(0,shown).map(card).join("")+'</div>':'<div class="empty">'+esc(t("none"))+'</div>')+(results.length>shown?'<p class="load-more"><button class="small-btn" data-more="1">'+esc(t("more"))+'</button></p>':'')+'</section>';
+ var unified=window.DedSecUnifiedSearch,siteVisible=!unified||unified.showWebsite();
+ var siteContent=siteVisible?(results.length?'<div class="result-grid">'+results.slice(0,shown).map(card).join("")+'</div>':'<div class="empty">'+esc(t("none"))+'</div>'):'';
+ var more=siteVisible&&results.length>shown?'<p class="load-more"><button class="small-btn" data-more="1">'+esc(t("more"))+'</button></p>':'';
+ return '<section class="panel archive-panel" aria-label="'+esc(heading)+'">'+sectionIntro(heading,description)+tools()+siteContent+more+(unified?unified.placeholder(search):'')+'</section>';
 }
 function titleFor(key){return t(key);}
 
@@ -232,6 +244,7 @@ function render(){syncTop();document.body.classList.toggle('search-mode',searchO
  if(hash.indexOf("read:")===0){var id;try{id=decodeURIComponent(hash.slice(5).split(";find=")[0]);}catch(e){id="";}detail=id;output=lesson(id);}else if(hash.indexOf("category:")===0){activeCat=hash.slice(9);if(!CATS.some(function(c){return c[0]===activeCat;}))activeCat="all";detail=null;output=listing("search");}else if(hash==="library"){detail=null;output=listing("library");}else if(hash==="saved"){detail=null;output=listing("library");}else{detail=null;output=home();}
  document.body.classList.toggle("search-mode",searchOpen);
  el("app").innerHTML=output;
+ if(window.DedSecUnifiedSearch&&(hash==="library"||hash.startsWith("category:")))window.DedSecUnifiedSearch.mount(language,search);
  if(window.DedSecPageControls){window.DedSecPageControls.mount();requestAnimationFrame(window.DedSecPageControls.focusSearch);}
  decorateRootLinks();
  if(window.DedSecCookies){window.DedSecCookies.enhance(el("app"));window.DedSecCookies.refresh();}
@@ -253,6 +266,7 @@ function resetSearchFocus(){var inp=el("searchInput");if(inp){inp.placeholder=la
 document.addEventListener("click",function(e){var more=e.target.closest("[data-more]");if(more){shown+=36;render();return;}});
 document.addEventListener("input",function(e){if(e.target.id!=="searchInput")return;search=e.target.value.slice(0,250);shown=36;clearTimeout(debounce);debounce=setTimeout(function(){var h=location.hash;if(h!=="#library")history.replaceState(null,"","#library");activeCat="all";render();resetSearchFocus();},140);});
 document.addEventListener("change",function(e){if(e.target.id==="catSelect"){activeCat=e.target.value;shown=36;history.replaceState(null,"","#library");render();}});
+window.addEventListener("dedsec:search-filters-changed",function(){shown=36;searchOpen=true;render();});
 el("nav-search").addEventListener("click",function(e){e.preventDefault();searchOpen=!searchOpen;document.body.classList.toggle("search-mode",searchOpen);if(searchOpen){setTimeout(resetSearchFocus,0);}else{el("nav-search").focus({preventScroll:true});}});
  el("nav-lang-switcher").addEventListener("click",function(){language=language==="en"?"gr":"en";filter=language;prefSave("language",language);render();});
 el("nav-theme-switcher").addEventListener("click",function(){theme=theme==="dark"?"light":"dark";prefSave("theme",theme);render();});
