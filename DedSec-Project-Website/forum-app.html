@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en"><head><script src="assets/boot.js"></script>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow">
+<title>DedSec Community Forum</title>
+<link rel="stylesheet" href="assets/forum-app.css"><link rel="stylesheet" href="assets/galaxy.css"><link rel="stylesheet" href="assets/forum-skin.css"><script defer src="assets/forum-app.js"></script>
+</head><body>
+<div class="forum-page">
+ <div class="forum-topline"><div><strong>DedSec Community</strong><span id="forum-crumb">/ Discussions</span></div><div id="forum-auth" aria-live="polite"></div></div>
+ <div class="forum-toolbar"><div class="forum-tools-left"><button type="button" id="forum-all" class="secondary">All discussions</button><select id="forum-category" aria-label="Filter by category"><option value="">All categories</option></select></div><div class="forum-tools-right"><button type="button" id="forum-new" class="primary">+ New topic</button></div></div>
+ <div id="forum-alert" role="status" aria-live="polite" hidden></div>
+ <div id="forum-content" aria-live="polite"><p class="forum-loading">Loading discussions…</p></div>
+ <footer class="forum-footer"><span>DedSec Project Community</span><span>Be respectful · No private data · Responsible security discussion</span></footer>
+</div>
+<dialog id="forum-dialog"><form id="forum-form"><div class="dialog-title"><h2 id="forum-form-title">Create a topic</h2><button type="button" id="forum-cancel" aria-label="Close">×</button></div><div class="forum-form-fields" id="forum-title-fields"><label for="forum-new-category">Category</label><select id="forum-new-category" required></select><label for="forum-title">Title</label><input id="forum-title" maxlength="140" minlength="8" required placeholder="What would you like to discuss?"></div><label for="forum-body" id="forum-body-label">Message</label><textarea id="forum-body" rows="8" maxlength="10000" minlength="2" required placeholder="Write your message…"></textarea><div class="dialog-footer"><span id="forum-form-hint">Plain text only. Be respectful.</span><button class="primary" type="submit" id="forum-submit">Publish</button></div></form></dialog>
+</body></html>

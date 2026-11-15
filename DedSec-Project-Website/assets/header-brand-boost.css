@@ -1,0 +1,79 @@
+
+html body #topbar.topbar #brand.brand{
+  align-items:center!important;
+  gap:12px!important;
+  min-width:0!important;
+}
+html body #topbar.topbar #brand.brand img{
+  flex:0 0 57.6px!important;
+  width:57.6px!important;
+  height:57.6px!important;
+  max-width:57.6px!important;
+  max-height:57.6px!important;
+  object-fit:contain!important;
+}
+html body #topbar.topbar #brand.brand span{
+  font-size:clamp(24px,3.36vw,33.6px)!important;
+  line-height:1.08!important;
+  font-weight:900!important;
+  letter-spacing:-.025em!important;
+}
+@media(min-width:761px){
+  html body #topbar.topbar{
+    min-height:76px!important;
+    height:76px!important;
+  }
+}
+@media(max-width:760px){
+  html body #topbar.topbar{
+    height:124px!important;
+    min-height:124px!important;
+    padding:7px 8px!important;
+    align-content:center!important;
+    row-gap:5px!important;
+  }
+  html body #topbar.topbar #brand.brand{
+    height:44px!important;
+    grid-template-columns:38.4px max-content 38.4px!important;
+    column-gap:9px!important;
+    gap:9px!important;
+    justify-content:center!important;
+    max-width:100%!important;
+    width:100%!important;
+  }
+  html body #topbar.topbar #brand.brand img{
+    flex:0 0 38.4px!important;
+    width:38.4px!important;
+    height:38.4px!important;
+    max-width:38.4px!important;
+    max-height:38.4px!important;
+  }
+  html body #topbar.topbar #brand.brand span{
+    font-size:24px!important;
+    line-height:1.1!important;
+    white-space:nowrap!important;
+  }
+  html body #app,
+  html body #app.is-home{
+    padding-top:145px!important;
+  }
+  html body:is(.theme-dark,.theme-light) .forum-host-main{
+    padding-top:151px!important;
+  }
+}
+@media(max-width:359px){
+  html body #topbar.topbar #brand.brand{
+    grid-template-columns:36px max-content 36px!important;
+    column-gap:5px!important;
+    gap:5px!important;
+  }
+  html body #topbar.topbar #brand.brand img{
+    flex-basis:36px!important;
+    width:36px!important;
+    height:36px!important;
+  }
+  
+  html body #topbar.topbar #brand.brand span{
+    font-size:clamp(20px,6.67vw,24px)!important;
+  }
+}
