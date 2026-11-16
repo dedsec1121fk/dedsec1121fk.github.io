@@ -57,7 +57,7 @@ for(const width of [390,1280]){
  await page.locator('#forum-auth [data-action=logout]').waitFor({timeout:10000});
  await page.locator('[data-action=new-topic]').first().click();
  await page.locator('#forum-new-category').selectOption('development');
- await page.locator('#forum-new-section option[value=python]').waitFor({timeout:8000});
+ await page.locator('#forum-new-section option[value=python]').waitFor({state:'attached',timeout:8000});
  await page.locator('#forum-new-section').selectOption('python');
  await page.locator('#forum-live-dialog input[name=title]').fill('Python generators and iterators');
  await page.locator('#forum-live-dialog textarea[name=body]').fill('How can I yield values from a Python generator?');
