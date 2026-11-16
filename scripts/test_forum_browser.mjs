@@ -63,6 +63,7 @@ for(const width of [390,1280]){
  await page.locator('#forum-live-dialog textarea[name=body]').fill('How can I yield values from a Python generator?');
  await page.locator('#forum-live-form button[type=submit]').click();
  await page.waitForURL('**/forum/topic/'+tid,{timeout:10000});
+ await page.locator('.thread-header a.forum-tag').first().waitFor({timeout:10000});
  assert.equal(await page.locator('.thread-header a.forum-tag').count(),2);
  await page.locator('.forum-breadcrumbs a[href="/forum/section/python"]').click();
  await page.locator('a.forum-thread-row').waitFor({timeout:10000});
