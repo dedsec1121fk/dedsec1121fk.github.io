@@ -32,6 +32,13 @@ async function request(path,{method='GET',body,cookie,csrf,origin=ORIGIN}={}){
  return {status:r.status,data:await r.json(),cookie:r.headers.get('Set-Cookie')?.split(';')[0],
   cors:r.headers.get('Access-Control-Allow-Origin')};
 }
+const initialFeed=await request('feed?view=latest');
+assert.equal(initialFeed.status,200);
+assert.equal(initialFeed.data.total,0);
+assert.equal((await request('feed?view=mine')).status,401);
+assert.equal((await request('feed?view=unanswered')).data.total,0);
+assert.equal((await request('feed?view=trending')).data.total,0);
+assert.equal((await request('feed?view=invalid')).status,400);
 const categories=await request('categories');
 assert.equal(categories.status,200);
 assert.equal(categories.data.categories.length,52);
@@ -62,6 +69,10 @@ assert.equal(noCsrf.status,403);
 const created=await request('new-topic',{method:'POST',cookie,csrf,body:{section:'python',title:'What is a Python generator?',body:'Can anyone explain generators with a small example?'}});
 assert.equal(created.status,201,JSON.stringify(created.data));
 assert.match(created.data.id,/^[a-f0-9]{24}$/);
+assert.equal((await request('feed?view=latest')).data.topics[0].id,created.data.id);
+assert.equal((await request('feed?view=unanswered')).data.total,1);
+assert.equal((await request('feed?view=mine',{cookie})).data.total,1);
+assert.equal((await request('feed?view=featured')).data.total,0);
 assert(Array.isArray(created.data.tags));
 assert(created.data.tags.includes('python'));
 assert(created.data.tags.includes('generator'));
@@ -104,6 +115,8 @@ const createdReply=await request('reply',{method:'POST',cookie,csrf,body:{topicI
 assert.equal(createdReply.status,201,JSON.stringify(createdReply.data));
 const afterReply=await request('topic?id='+created.data.id);
 assert.equal(afterReply.data.posts.length,2);
+assert.equal((await request('feed?view=unanswered')).data.total,0);
+assert.equal((await request('feed?view=trending')).data.total,1);
 assert.equal(afterReply.data.posts[1].body,'A generator yields one value at a time.');
 assert.equal((await request('report',{method:'POST',cookie,csrf,body:{postId:createdReply.data.id,reason:'Review for moderation'}})).status,200);
 assert.equal((await request('post',{method:'DELETE',cookie,csrf,body:{postId:createdReply.data.id}})).status,200);

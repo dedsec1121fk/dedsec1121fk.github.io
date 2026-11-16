@@ -26,6 +26,12 @@ for(const width of [390,1280]){
   const section=sections.development[0];let data={},status=200;
   if(path==='me')data=logged?{signedIn:true,handle:'MockMember',userId:'member1',csrf:'csrfmock'}:{signedIn:false};
   else if(path==='categories')data={categories};
+  else if(path==='feed'){
+   const view=url.searchParams.get('view')||'latest';
+   const topics=topic&&((view==='mine'&&logged)||['latest','unanswered'].includes(view))?
+    [{id:tid,title:topic.title,section_slug:'python',category_slug:'development',category_en:'Programming',category_el:'Προγραμματισμός',author:'MockMember',created_at:date,updated_at:date,replies:0,tags:'python|generator'}]:[];
+   data={view,topics,total:topics.length,page:1,pages:1};
+  }
   else if(path==='sections')data={category,sections:sections[category?.slug]||[]};
   else if(path==='login'){
    assert.equal(req.postDataJSON().handle,'MockMember');
@@ -49,6 +55,11 @@ for(const width of [390,1280]){
  const page=await context.newPage();page.on('pageerror',e=>errors.push(String(e)));
  await page.goto('http://127.0.0.1:8765/DedSec-Project-Website/forum.html',{waitUntil:'domcontentloaded'});
  await page.locator('#forum-auth [data-action=login]').waitFor({timeout:15000});
+ await page.locator('.forum-feed-tabs button').first().waitFor({timeout:10000});
+ assert.equal(await page.locator('.forum-feed-tabs button').count(),5);
+ await page.locator('.forum-feed-tabs button[data-view=mine]').click();
+ await page.locator('#forum-feed-content [data-action=login]').waitFor({timeout:8000});
+ await page.locator('.forum-feed-tabs button[data-view=latest]').click();
  assert.equal(await page.locator('[data-action=new-topic]').count(),0);
  await page.locator('#forum-auth [data-action=login]').click();
  await page.locator('#forum-live-dialog input[name=handle]').fill('MockMember');
@@ -72,6 +83,12 @@ for(const width of [390,1280]){
  await page.locator('a.forum-thread-row').click();
  await page.waitForURL('**/forum/topic/'+tid,{timeout:10000});
  assert(topic);
+ await page.goto('http://127.0.0.1:8765/DedSec-Project-Website/forum.html',{waitUntil:'domcontentloaded'});
+ await page.locator('#forum-feed-content a.forum-thread-row').waitFor({timeout:12000});
+ await page.locator('.forum-feed-tabs button[data-view=mine]').click();
+ await page.locator('#forum-feed-content a.forum-thread-row').waitFor({timeout:8000});
+ await page.locator('.forum-feed-tabs button[data-view=unanswered]').click();
+ await page.locator('#forum-feed-content a.forum-thread-row').waitFor({timeout:8000});
  assert.equal(errors.length,0,errors.join('; '));
  await context.close();
 }
