@@ -126,7 +126,7 @@
    '<span class="forum-row-stats"><strong>'+count(s.topics)+'</strong>'+esc(T.topics)+'</span>'+
    '<span class="forum-row-last">'+(s.last_post_at?esc(age(s.last_post_at)):count(s.posts)+' '+esc(T.posts))+'</span></a>';
  }
- function topicTags(value,category){
+ function topicTags(value,category,interactive=true){
   const tags=Array.isArray(value)?value:String(value||'').split('|').filter(Boolean);
   if(!tags.length)return '';
   return '<div class="forum-auto-tags" aria-label="'+esc(T.tags)+'">'+tags.map(tag=>{
@@ -136,7 +136,7 @@
    target.searchParams.set('q',tag);
    if(category)target.searchParams.set('sf_cat',category);
    target.hash='library';
-   return '<a class="forum-tag" href="'+esc(target.href)+'">'+esc(tag)+'</a>';
+   return interactive?'<a class="forum-tag" href="'+esc(target.href)+'">'+esc(tag)+'</a>':'<span class="forum-tag">'+esc(tag)+'</span>';
   }).join('')+'</div>';
  }
  function createTopicButton(){
@@ -145,7 +145,7 @@
  function topicRow(t){
   return '<a class="forum-thread-row" href="'+href.topic(t.id)+'" data-route>'+
    '<span><strong class="forum-row-title">'+(t.pinned?'★ ':'')+esc(t.title)+(t.locked?' · 🔒':'')+'</strong>'+
-   '<span class="forum-row-subtitle">'+esc(t.author)+' · '+esc(age(t.created_at))+'</span>'+topicTags(t.tags)+'</span>'+
+   '<span class="forum-row-subtitle">'+esc(t.author)+' · '+esc(age(t.created_at))+'</span>'+topicTags(t.tags,null,false)+'</span>'+
    '<span class="forum-row-stats"><strong>'+count(t.replies)+'</strong>'+esc(T.replies)+'</span>'+
    '<span class="forum-row-last">'+esc(age(t.last_post_at||t.updated_at))+'</span></a>';
  }
