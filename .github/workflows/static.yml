@@ -1,4 +1,4 @@
-name: Validate portable DedSec site and deploy Test
+name: Validate DedSec site and deploy production or Test
 on:
   push:
     branches: [main]
@@ -6,6 +6,7 @@ on:
 permissions:
   contents: write
   pages: write
+  deployments: write
   id-token: write
 concurrency:
   group: dedsec-portable-${{ github.repository }}
@@ -82,9 +83,14 @@ jobs:
           path: browser-screenshots/
           retention-days: 7
           if-no-files-found: ignore
-      # Main and sal-scar backup currently use custom-domain hosting. Configure
-      # their Cloudflare Pages builds per Documentation/English/17_PORTABLE_SITE.md.
-      # Do not turn on an unrelated GitHub Pages deployment for those repos.
+      - name: Deploy validated production website to Cloudflare Pages
+        if: github.repository == 'dedsec1121fk/dedsec1121fk.github.io' && github.ref == 'refs/heads/main'
+        uses: cloudflare/wrangler-action@v4
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: 3186441280053d723e7c85dc8ef3acc9
+          command: pages deploy .site-publish --project-name=dedsec1121fk-github-io --branch=main
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/configure-pages@v5
         if: github.repository == 'dedsec1121fk/Test'
       - uses: actions/upload-pages-artifact@v3

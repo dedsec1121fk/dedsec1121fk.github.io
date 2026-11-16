@@ -30,7 +30,13 @@ For `ded-sec.space`, connect the main website repository to Cloudflare Pages and
 python3 -m pip install mistune==3.2.0 && python3 scripts/build_portable_site.py --target main --output .site-publish && python3 scripts/test_portable_site.py --output .site-publish
 ```
 
-For `ded-sec.online`, use the same command with `--target backup`. Set **build output directory** to `.site-publish` and **root directory** to the repository root. Add the corresponding custom domain in Cloudflare; DNS/SSL are configured there and are not modified by these files. Cloudflare Pages does not run GitHub Actions as its build step; you must configure this build command in Cloudflare Pages. The included GitHub workflow validates all repos but automatically runs the GitHub Pages publishing steps only for the Test repository.
+For `ded-sec.online`, use the same command with `--target backup`. Set **build output directory** to `.site-publish` and **root directory** to the repository root. Add the corresponding custom domain in Cloudflare; DNS/SSL are configured there and are not modified by these files. Cloudflare Pages does not run GitHub Actions as its build step; you must configure this build command in Cloudflare Pages. The GitHub workflow validates all repositories, deploys the validated main build to Cloudflare Pages, and runs GitHub Pages publishing steps only for the Test repository.
+
+### GitHub Actions — production Cloudflare Pages
+
+The production repository `dedsec1121fk/dedsec1121fk.github.io` deploys through the existing `.github/workflows/static.yml` workflow. On a `main` push or manual **Run workflow** (`workflow_dispatch`), the job first performs the knowledge, source, build, link/SEO and Chromium checks. Only after they pass, `cloudflare/wrangler-action@v4` uploads the tested `.site-publish` directory to the **existing** Cloudflare Pages project `dedsec1121fk-github-io` (custom domain `https://ded-sec.space/`), using the production `main` branch. The Cloudflare account ID is non-secret; the repository Actions secret `CLOUDFLARE_API_TOKEN` is restricted to Cloudflare Pages Edit and must never be logged or committed.
+
+This reuses the current build job, does not deploy GitHub Pages from production, and does not publish the backup repository. A failed check or missing/expired token blocks the GitHub upload while the last successful Pages version remains available. After verifying a successful GitHub-managed deploy, disable redundant Cloudflare automatic production-branch builds for this connected Git project without disconnecting the repository or domain. To roll back, revert the source commit on `main` and rerun the workflow, or restore a previous Pages deployment in Cloudflare. Verify the Actions deployment step, the Cloudflare deployment status, and smoke-test `https://ded-sec.space/` including Forum navigation.
 
 ### GitHub Pages — Test
 
