@@ -307,7 +307,15 @@ for(const [view,width,height,light,url,locale] of [
    check(await tile.getAttribute("href")==="forum.html",view+" Forum tile must link to production");
    check(await tile.locator(".app-label").innerText()===(locale==="gr"?"Φόρουμ":"Forum"),
     view+" Forum tile translation mismatches locale");
-   check(await tile.locator(".app-icon svg.pixel-glyph path").count()>0,view+" Forum icon is missing");
+   const artwork=await tile.locator(".app-icon svg.pixel-glyph").evaluate(svg=>{
+    const rect=svg.getBoundingClientRect(),shapes=[...svg.querySelectorAll("path,rect")];
+    return {width:rect.width,height:rect.height,visible:getComputedStyle(svg).visibility!=="hidden",
+     filled:shapes.filter(shape=>shape.hasAttribute("fill")&&getComputedStyle(shape).fill!=="none"
+       &&shape.getBoundingClientRect().width>0&&shape.getBoundingClientRect().height>0).length,
+     colors:new Set(shapes.map(shape=>getComputedStyle(shape).fill)).size};
+   });
+   check(artwork.width>=20&&artwork.height>=20&&artwork.visible&&artwork.filled>=4&&artwork.colors>=3,
+    view+" Forum speech-bubble artwork is blank or invisible: "+JSON.stringify(artwork));
    check(await page.locator(".launcher-project #dedsec-forum-launcher").count()===0,
     view+" Forum tile should appear only in Others");
   }
