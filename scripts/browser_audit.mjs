@@ -299,6 +299,17 @@ for(const [view,width,height,light,url,locale] of [
   check(!await page.evaluate(()=>document.body.classList.contains("booting")),view+" obsolete booting class remains");
   await page.locator(view.startsWith("home")?"#dedsec-cookie-manage":view.startsWith("knowledge")?".archive-heading .page-heading":".lesson-content").waitFor({timeout:12000});
   check(await page.locator("#topbar").isVisible(),view+" top navigation not immediately available");
+  if(view.startsWith("home")){
+   const forumEntry=page.locator("#site-forum-entry");
+   check(await forumEntry.isVisible(),view+" visible Forum shortcut missing");
+   check(await forumEntry.getAttribute("href")==="forum.html",view+" Forum shortcut destination incorrect");
+   const forumPosition=await forumEntry.evaluate(node=>{
+    const rect=node.getBoundingClientRect(),header=document.querySelector("#topbar").getBoundingClientRect();
+    return {top:rect.top,bottom:rect.bottom,headerBottom:header.bottom,viewport:innerHeight};
+   });
+   check(forumPosition.top>=forumPosition.headerBottom-1&&forumPosition.bottom<=forumPosition.viewport,
+    view+" Forum shortcut inaccessible below header: "+JSON.stringify(forumPosition));
+  }
  if(view==="knowledge-mobile-dark"){
   const algorithm=await page.evaluate(()=>window.__DEDSEC_ALGORITHM_ENRICHMENT__);
   check(algorithm?.en===15&&algorithm?.el===15&&algorithm.missing.length===0,
