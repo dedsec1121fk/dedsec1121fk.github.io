@@ -236,6 +236,40 @@ async function forum(req,env,part){
     `+from+conditions+' ORDER BY '+order+' LIMIT 30 OFFSET ?',...args,...extra,(page-1)*30);
    return json({results,total,page,pages:Math.max(1,Math.ceil(total/30))});
   }
+  if(part==='feed'){
+   const view=q.get('view')||'latest';
+   if(!['latest','trending','unanswered','featured','mine'].includes(view))fail('invalid_view');
+   const page=pageNumber(q.get('page')),args=[],filters=[];
+   if(view==='mine'){
+    const user=await member(req,env);
+    filters.push('t.author_id=?');args.push(user.id);
+   }
+   if(view==='featured')filters.push('t.pinned=1');
+   if(view==='unanswered')filters.push('(SELECT count(*) FROM forum_posts p WHERE p.topic_id=t.id AND p.deleted=0)<=1');
+   const recent=new Date(now()-30*86400000).toISOString();
+   if(view==='trending'){
+    filters.push('(SELECT count(*) FROM forum_posts p WHERE p.topic_id=t.id AND p.deleted=0)>1');
+    filters.push('EXISTS(SELECT 1 FROM forum_posts p WHERE p.topic_id=t.id AND p.created_at>=? AND p.deleted=0)');
+    args.push(recent);
+   }
+   const base=' FROM forum_topics t JOIN forum_sections s ON s.slug=t.section_slug JOIN forum_categories c ON c.slug=s.category_slug LEFT JOIN forum_members m ON m.id=t.author_id';
+   const where=filters.length?' WHERE '+filters.join(' AND '):'';
+   const total=(await one(env,'SELECT count(*) AS n'+base+where,...args))?.n||0;
+   const order=view==='trending'
+    ?'(SELECT count(*) FROM forum_posts p WHERE p.topic_id=t.id AND p.deleted=0 AND p.created_at>=?) DESC,t.updated_at DESC,t.id DESC'
+    :view==='unanswered'?'t.created_at DESC,t.id DESC'
+    :'t.updated_at DESC,t.id DESC';
+   const extra=view==='trending'?[recent]:[];
+   const topics=await rows(env,`SELECT t.id,t.title,t.section_slug,t.created_at,t.updated_at,t.pinned,t.locked,
+     s.category_slug,c.title_en AS category_en,c.title_el AS category_el,
+     s.title_en AS section_en,s.title_el AS section_el,
+     coalesce(m.handle,'Deleted member') AS author,
+     (SELECT max(p.created_at) FROM forum_posts p WHERE p.topic_id=t.id AND p.deleted=0) AS last_post_at,
+     (SELECT max(0,count(*)-1) FROM forum_posts p WHERE p.topic_id=t.id AND p.deleted=0) AS replies,
+     (SELECT group_concat(tt.tag,'|') FROM forum_topic_tags tt WHERE tt.topic_id=t.id) AS tags
+     `+base+where+' ORDER BY '+order+' LIMIT 12 OFFSET ?',...args,...extra,(page-1)*12);
+   return json({view,topics,total,page,pages:Math.max(1,Math.ceil(total/12))});
+  }
   if(part==='topics'){
    const slug=q.get('section');if(!validSlug(slug))fail('invalid_section');
    const section=await one(env,`SELECT s.*,c.title_en AS category_en,c.title_el AS category_el
@@ -285,6 +319,11 @@ async function forum(req,env,part){
   const exists=await one(env,'SELECT slug,title_en,title_el FROM forum_sections WHERE slug=?',section);
   if(!exists)fail('invalid_section');
   const title=checked(b.title,6,150,'invalid_title'),message=checked(b.body,10,10000,'invalid_body');
+  if((message.match(/https?:\/\/|www\./gi)||[]).length>3)fail('too_many_links',422);
+  const recent=await rows(env,'SELECT title FROM forum_topics WHERE author_id=? AND section_slug=? AND created_at>=? LIMIT 50',
+   s.id,section,new Date(now()-24*86400000).toISOString());
+  if(recent.some(x=>x.title.normalize('NFKC').toLocaleLowerCase()===title.normalize('NFKC').toLocaleLowerCase()))
+   fail('duplicate_topic',409);
   const topicId=id(),postId=id(),created=iso(),tags=makeTags(title,message,exists);
   await env.DB.batch([
    env.DB.prepare('INSERT INTO forum_topics(id,section_slug,author_id,title,created_at,updated_at) VALUES(?,?,?,?,?,?)').bind(topicId,section,s.id,title,created,created),
@@ -301,6 +340,7 @@ async function forum(req,env,part){
   if(!topic)fail('topic_not_found',404);
   if(topic.locked)fail('topic_locked',403);
   const message=checked(b.body,2,10000,'invalid_body'),postId=id(),created=iso();
+  if((message.match(/https?:\/\/|www\./gi)||[]).length>3)fail('too_many_links',422);
   await env.DB.batch([
    env.DB.prepare('INSERT INTO forum_posts(id,topic_id,author_id,body,created_at) VALUES(?,?,?,?,?)').bind(postId,b.topicId,s.id,message,created),
    env.DB.prepare('UPDATE forum_topics SET updated_at=? WHERE id=?').bind(created,b.topicId)
