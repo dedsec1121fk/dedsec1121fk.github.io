@@ -27,7 +27,7 @@
   deleted:'Your forum account was deleted.',topicLocked:'This discussion is locked.',
   guest:'Guest',mine:'You',forumMember:'Forum member',
   noSection:'This subforum does not exist.',noCategory:'This category does not exist.',
-  reportedAction:'Report this post',selectCategory:'Explore subforums',noPosts:'No posts here.'},
+  reportedAction:'Report this post',selectCategory:'Explore subforums',noPosts:'No posts here.',latestFeed:'Latest',trendingFeed:'Trending',unansweredFeed:'Unanswered',mineFeed:'My discussions',featuredFeed:'Featured',activityHeading:'Community activity',directoryHeading:'Explore all categories',activityIntro:'See the latest conversations and questions.',directoryIntro:'The complete directory remains available below.',feedLoading:'Loading discussions…',noActivity:'No discussions here yet.',guestMine:'Log in to see topics you started.',welcomeTitle:'Discuss, learn and build together',welcomeMessage:'Join a conversation or start your own topic.'},
  el:{home:'Κατηγορίες φόρουμ',forum:'Φόρουμ',subforums:'Υποενότητες',topics:'Θέματα',recent:'Πρόσφατα θέματα',
   topic:'Θέμα',replies:'Απαντήσεις',posts:'Δημοσιεύσεις',last:'Τελευταία δραστηριότητα',none:'Δεν υπάρχουν ακόμη θέματα. Ξεκίνα την πρώτη συζήτηση!',
   back:'Πίσω',newTopic:'Νέο θέμα',send:'Δημοσίευση',answer:'Απάντηση',quote:'Παράθεση',report:'Αναφορά',delete:'Διαγραφή',
@@ -52,12 +52,12 @@
   deleted:'Ο λογαριασμός φόρουμ διαγράφηκε.',topicLocked:'Αυτή η συζήτηση είναι κλειδωμένη.',
   guest:'Επισκέπτης',mine:'Εσύ',forumMember:'Μέλος φόρουμ',
   noSection:'Η υποενότητα δεν υπάρχει.',noCategory:'Η κατηγορία δεν υπάρχει.',
-  reportedAction:'Αναφορά δημοσίευσης',selectCategory:'Περιήγηση υποενοτήτων',noPosts:'Δεν υπάρχουν δημοσιεύσεις.'}
+  reportedAction:'Αναφορά δημοσίευσης',selectCategory:'Περιήγηση υποενοτήτων',noPosts:'Δεν υπάρχουν δημοσιεύσεις.',latestFeed:'Πρόσφατα',trendingFeed:'Δημοφιλή',unansweredFeed:'Χωρίς απάντηση',mineFeed:'Οι συζητήσεις μου',featuredFeed:'Προτεινόμενα',activityHeading:'Δραστηριότητα κοινότητας',directoryHeading:'Όλες οι κατηγορίες',activityIntro:'Δες τις τελευταίες συζητήσεις και ερωτήσεις.',directoryIntro:'Ο πλήρης κατάλογος βρίσκεται παρακάτω.',feedLoading:'Φόρτωση συζητήσεων…',noActivity:'Δεν υπάρχουν ακόμη συζητήσεις εδώ.',guestMine:'Συνδέσου για να δεις τις συζητήσεις σου.',welcomeTitle:'Συζήτησε, μάθε και δημιούργησε',welcomeMessage:'Συμμετείχε σε συζήτηση ή δημιούργησε το δικό σου θέμα.'}
  };
  let lang=document.documentElement.lang==='el'?'el':'en';
  let T=dict[lang];
  let auth={signedIn:false},categories=[],current={type:'home'},selected=null;
- let routeSequence=0,flash='',modal=null;
+ let routeSequence=0,flash='',modal=null,feedView='latest',feedPage=1,feedSerial=0;
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const title=x=>x?.['title_'+lang]||x?.title_en||'';
  const description=x=>x?.['description_'+lang]||x?.description_en||'';
@@ -171,6 +171,36 @@
    '<dialog id="forum-live-dialog" aria-label="'+esc(T.forum)+'"></dialog>';
   if(modal)renderModal();
  }
+ 
+ const feedViews=['latest','trending','unanswered','mine','featured'];
+ function feedNavigation(){
+  const names={latest:'latestFeed',trending:'trendingFeed',unanswered:'unansweredFeed',mine:'mineFeed',featured:'featuredFeed'};
+  return '<div class="forum-feed-tabs" role="group" aria-label="'+esc(T.activityHeading)+'">'+
+   feedViews.map(v=>'<button type="button" data-action="feed" data-view="'+v+'" aria-pressed="'+(v===feedView?'true':'false')+'">'+esc(T[names[v]])+'</button>').join('')+'</div>';
+ }
+ function feedPanel(){
+  return '<section class="forum-activity" aria-labelledby="forum-activity-title"><div class="forum-route-header"><h2 id="forum-activity-title">'+esc(T.activityHeading)+'</h2><p>'+esc(T.activityIntro)+'</p></div>'+
+   feedNavigation()+'<div id="forum-feed-content" class="forum-feed-content" aria-live="polite">'+esc(T.feedLoading)+'</div></section>';
+ }
+ async function updateFeed(){
+  if(current.type!=='home')return;
+  const serial=++feedSerial,view=feedView,p=feedPage;
+  const area=root.querySelector('#forum-feed-content');if(!area)return;
+  root.querySelectorAll('.forum-feed-tabs button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.view===view?'true':'false'));
+  if(view==='mine'&&!auth.signedIn){
+   area.innerHTML='<p class="forum-empty">'+esc(T.guestMine)+'</p><button data-action="login">'+esc(T.signin)+'</button>';return;
+  }
+  area.textContent=T.feedLoading;
+  try{
+   const data=await api('feed?'+new URLSearchParams({view,page:String(p)}));
+   if(serial!==feedSerial||current.type!=='home')return;
+   area.innerHTML='<div class="forum-thread-list">'+(data.topics.length?data.topics.map(topicRow).join(''):'<div class="forum-empty">'+esc(T.noActivity)+'</div>')+'</div>'+
+    (data.pages>1?'<div class="forum-pager"><button data-action="feed-page" data-page="'+(p-1)+'" '+(p===1?'disabled':'')+'>'+esc(T.previous)+'</button><span>'+esc(T.page)+' '+p+' / '+data.pages+'</span><button data-action="feed-page" data-page="'+(p+1)+'" '+(p>=data.pages?'disabled':'')+'>'+esc(T.next)+'</button></div>':'');
+  }catch(e){
+   if(serial!==feedSerial)return;
+   area.innerHTML='<p class="forum-empty">'+esc(e.message==='sign_in_required'?T.guestMine:T.error)+'</p>';
+  }
+ }
  function routeInfo(){
   const p=location.pathname.replace(/\/$/,'');
   const m=p.match(/^\/forum\/(category|section|topic)\/([a-z0-9-]+)$/);
@@ -183,9 +213,12 @@
    if(current.type==='home'){
     const data=await api('categories');if(sequence!==routeSequence)return;
     categories=data.categories;
-    wrapper(bread([])+createTopicButton()+sectionHeader(T.home, String(categories.length))+
-     '<div class="forum-category-groups">'+groupedCategories(categories)+'</div>');
+    wrapper(bread([])+'<section class="forum-welcome"><h2>'+esc(T.welcomeTitle)+'</h2><p>'+esc(T.welcomeMessage)+'</p>'+
+     (auth.signedIn?createTopicButton():'<div class="forum-toolbar"><button data-action="register">'+esc(T.signup)+'</button></div>')+'</section>'+
+     feedPanel()+'<section class="forum-directory"><div class="forum-route-header"><h2>'+esc(T.directoryHeading)+'</h2><p>'+esc(T.directoryIntro)+'</p></div>'+
+     sectionHeader(T.home,String(categories.length))+'<div class="forum-category-groups">'+groupedCategories(categories)+'</div></section>');
     document.title=T.home+' | DedSec Project';
+    updateFeed();
    }else if(current.type==='category'){
     const data=await api('sections?category='+encodeURIComponent(current.slug));if(sequence!==routeSequence)return;
     selected={category:data.category,sections:data.sections};
@@ -322,7 +355,16 @@
   if(el.matches('a[data-route]')){e.preventDefault();go(el.getAttribute('href'));return;}
   if(!el.dataset.action)return;
   const action=el.dataset.action;
-  if(action==='page'){
+  if(action==='feed'){
+    if(!feedViews.includes(el.dataset.view))return;
+    feedView=el.dataset.view;feedPage=1;await updateFeed();return;
+   }
+   if(action==='feed-page'){
+    const next=Number(el.dataset.page);
+    if(Number.isInteger(next)&&next>=1&&next<=200){feedPage=next;await updateFeed();}
+    return;
+   }
+   if(action==='page'){
    const url=new URL(location.href);url.searchParams.set('page',el.dataset.page);go(url.pathname+url.search);return;
   }
   if(['login','register','profile','new-topic','reply','delete-account'].includes(action)){await modalForm(action);return;}
