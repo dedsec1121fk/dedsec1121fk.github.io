@@ -399,3 +399,46 @@ body.theme-light #forum-inline{
  min-height:43px;border-bottom:2px solid var(--forum-ink)!important;
  padding:9px 19px!important;font-weight:800!important;
 }
+
+
+#forum-inline .forum-welcome{
+ margin:10px auto 22px;padding:25px 15px 18px;max-width:850px;
+ text-align:center;border-bottom:1px solid var(--forum-divider);
+}
+#forum-inline .forum-welcome h2{
+ font:800 clamp(23px,4vw,34px)/1.35 "MS Sans Serif",Tahoma,Arial,sans-serif;
+ margin:4px 0 10px;color:var(--forum-ink);
+}
+#forum-inline .forum-welcome p{
+ color:var(--forum-muted);line-height:1.6;margin:0 auto 12px;
+}
+#forum-inline .forum-welcome .forum-toolbar{justify-content:center!important;margin:15px auto 4px}
+#forum-inline .forum-activity{
+ margin:0 auto 28px;padding:8px 0 24px;max-width:1050px;
+ border-bottom:1px solid var(--forum-divider);text-align:center;
+}
+#forum-inline .forum-feed-tabs{
+ display:flex;flex-wrap:wrap;justify-content:center;align-items:center;
+ gap:6px;padding:8px 0 18px;
+}
+#forum-inline .forum-feed-tabs button{
+ border:0!important;border-bottom:1px solid var(--forum-divider)!important;
+ border-radius:0!important;background:transparent!important;box-shadow:none!important;
+ color:var(--forum-ink)!important;font:700 13px Tahoma,Arial,sans-serif;
+ padding:10px 12px;min-height:40px;cursor:pointer;
+}
+#forum-inline .forum-feed-tabs button[aria-pressed="true"]{
+ border-bottom:3px solid var(--forum-ink)!important;font-weight:900!important;
+}
+#forum-inline .forum-feed-tabs button:focus-visible{
+ outline:2px dotted var(--forum-ink)!important;outline-offset:3px;
+}
+#forum-inline .forum-feed-content{min-height:100px}
+#forum-inline .forum-feed-content .forum-thread-row{padding:15px 12px!important}
+#forum-inline .forum-directory{margin:0 auto 32px;text-align:center}
+#forum-inline .forum-directory>.forum-route-header{margin-bottom:8px}
+@media(max-width:700px){
+ #forum-inline .forum-feed-tabs{gap:3px}
+ #forum-inline .forum-feed-tabs button{padding:9px 7px;font-size:12px;min-height:38px}
+ #forum-inline .forum-welcome{padding:16px 7px}
+}
