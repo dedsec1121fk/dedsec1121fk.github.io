@@ -257,14 +257,14 @@
  function renderModal(){
   const dialog=root.querySelector('#forum-live-dialog');if(!dialog||!modal)return;
   const type=modal.type;
-  let title='',form='';
+  let modalTitle='',form='';
   if(type==='login'||type==='register'){
-   title=type==='login'?T.loginTitle:T.registerTitle;
+   modalTitle=type==='login'?T.loginTitle:T.registerTitle;
    form='<label>'+esc(T.handle)+'<input name="handle" type="text" autocomplete="username" minlength="3" maxlength="24" required></label>'+
     '<label>'+esc(T.password)+'<input name="password" type="password" autocomplete="'+(type==='register'?'new-password':'current-password')+'" minlength="'+(type==='register'?12:1)+'" maxlength="128" required></label>'+
     '<p>'+esc(T.separate)+'</p>';
   }else if(type==='new-topic'){
-   title=T.newTopic;
+   modalTitle=T.newTopic;
    const catChoice=current.type==='home'?'<label>'+esc(T.category)+'<select name="category" id="forum-new-category" required>'+categories.map(c=>'<option value="'+esc(c.slug)+'"'+(c.slug===modal.categorySlug?' selected':'')+'>'+esc(title(c))+'</option>').join('')+'</select></label>':'';
    const secChoice=current.type==='section'?'':'<label>'+esc(T.choose)+'<select name="section" id="forum-new-section" required>'+modal.sections.map(x=>'<option value="'+esc(x.slug)+'">'+esc(title(x))+'</option>').join('')+'</select></label>';
    form=catChoice+secChoice+
@@ -272,16 +272,16 @@
     '<label>'+esc(T.message)+'<textarea name="body" minlength="10" maxlength="10000" rows="8" required></textarea></label>'+
     '<p>'+esc(T.generatedTags)+'</p>';
   }else if(type==='reply'){
-   title=T.answer;
+   modalTitle=T.answer;
    form='<label>'+esc(T.message)+'<textarea name="body" minlength="2" maxlength="10000" rows="8" required>'+esc(modal.quote)+'</textarea></label>';
   }else if(type==='profile'){
-   title=T.editAccount;
+   modalTitle=T.editAccount;
    form='<label>'+esc(T.changeName)+'<input name="handle" value="'+esc(auth.handle)+'" minlength="3" maxlength="24" required></label>';
   }else if(type==='delete-account'){
-   title=T.accountDelete;
+   modalTitle=T.accountDelete;
    form='<p>'+esc(T.deleteAccountConfirm)+'</p><label>'+esc(T.password)+'<input name="password" type="password" required></label>';
   }else return;
-  dialog.innerHTML='<div class="dialog-title"><h2>'+esc(title)+'</h2><button type="button" data-action="close" aria-label="'+esc(T.close)+'">×</button></div>'+
+  dialog.innerHTML='<div class="dialog-title"><h2>'+esc(modalTitle)+'</h2><button type="button" data-action="close" aria-label="'+esc(T.close)+'">×</button></div>'+
    '<form id="forum-live-form" data-form="'+type+'"><div class="forum-form-fields">'+form+'</div>'+
    '<div class="dialog-footer"><button type="button" data-action="close">'+esc(T.cancel)+'</button>'+
    '<button type="submit" class="forum-primary">'+esc(type==='login'?T.signin:type==='register'?T.signup:type==='new-topic'?T.publish:type==='reply'?T.answer:T.send)+'</button></div></form>'+
