@@ -302,8 +302,8 @@ for(const [view,width,height,light,url,locale] of [
   if(view.startsWith("home")){
    check(await page.locator(".forum-quick-access,#site-forum-entry").count()===0,
     view+" extra Forum banner should be absent");
-   const tile=page.locator(".launcher-settings #dedsec-forum-launcher");
-   check(await tile.isVisible(),view+" Forum icon tile missing from Others");
+   const tile=page.locator(".launcher-project #dedsec-forum-launcher");
+   check(await tile.isVisible(),view+" Forum icon tile missing from Project and community");
    check(await tile.getAttribute("href")==="forum.html",view+" Forum tile must link to production");
    check(await tile.locator(".app-label").innerText()===(locale==="gr"?"Φόρουμ":"Forum"),
     view+" Forum tile translation mismatches locale");
@@ -316,8 +316,10 @@ for(const [view,width,height,light,url,locale] of [
    });
    check(artwork.width>=20&&artwork.height>=20&&artwork.visible&&artwork.filled>=4&&artwork.colors>=3,
     view+" Forum speech-bubble artwork is blank or invisible: "+JSON.stringify(artwork));
-   check(await page.locator(".launcher-project #dedsec-forum-launcher").count()===0,
-    view+" Forum tile should appear only in Others");
+   check(await page.locator(".launcher-settings #dedsec-forum-launcher").count()===0,
+    view+" Forum tile must not appear in Others");
+   check(await page.locator("#dedsec-forum-launcher").count()===1,
+    view+" Forum button must not be duplicated");
   }
  if(view==="knowledge-mobile-dark"){
   const algorithm=await page.evaluate(()=>window.__DEDSEC_ALGORITHM_ENRICHMENT__);
@@ -1062,8 +1064,8 @@ for(const locale of ['en','gr']){
  await p.addInitScript(l=>{localStorage.setItem('dedsec:language',JSON.stringify(l));localStorage.setItem('dedsec:cookie-choice','decline');},locale);
  await p.goto(base+'index.html',{waitUntil:'networkidle'});
  check(await p.locator('.launcher-settings h2').innerText()===(locale==='gr'?'Άλλα.':'Others.'),'Others heading translation');
- check(await p.locator('.launcher-settings .app-icon-btn').count()===3,'Forum, cookies and preservation launchers must appear once');
- check(await p.locator('.launcher-settings #dedsec-forum-launcher[href="forum.html"]').count()===1,'Production Forum app tile missing');
+ check(await p.locator('.launcher-settings .app-icon-btn').count()===2,'Only cookies and preservation launchers belong in Others');
+ check(await p.locator('.launcher-project #dedsec-forum-launcher[href="forum.html"]').count()===1,'Production Forum app tile missing from Project and community');
  if(locale==='en')check(await p.locator('a[href="dedsec/Pages/about-founder.html"] .app-label').innerText()==="Founder's story and project vision",'Sentence case preserves brands without capitalizing generic project');
  const geometry=await p.locator('.launcher-settings .app-grid').evaluate(grid=>{const items=[...grid.children].map(x=>x.getBoundingClientRect());const r=grid.getBoundingClientRect();return Math.abs((items[0].left+items[items.length-1].right)/2-(r.left+r.right)/2)<4;});
  check(geometry,'Others icon row should be centered');
